@@ -647,7 +647,7 @@ public abstract class TestConfigurationFieldsBase {
     if (configPropertiesWithNoDefaultConfig.isEmpty()) {
       LOG.error("Temp", new RuntimeException());
     } else {
-      configPropertiesWithNoDefaultConfig.forEach(c -> LOG.error("Temp", new RuntimeException());
+      configPropertiesWithNoDefaultConfig.forEach(c -> LOG.error("Temp", new RuntimeException()));
     }
     LOG.error("Temp", new RuntimeException());
 
@@ -660,7 +660,7 @@ public abstract class TestConfigurationFieldsBase {
     if (xmlPropertiesWithEmptyValue.isEmpty()) {
       LOG.error("Temp", new RuntimeException());
     } else {
-      xmlPropertiesWithEmptyValue.forEach(p -> LOG.error("Temp", new RuntimeException());
+      xmlPropertiesWithEmptyValue.forEach(p -> LOG.error("Temp", new RuntimeException()));
     }
     LOG.error("Temp", new RuntimeException());
 
@@ -671,7 +671,7 @@ public abstract class TestConfigurationFieldsBase {
       LOG.error("Temp", new RuntimeException());
     } else {
       xmlPropertiesMatchingConfigDefault.forEach(
-          (key, value) -> LOG.error("Temp", new RuntimeException());
+          (key, value) -> LOG.error("Temp", new RuntimeException()));
     }
     LOG.error("Temp", new RuntimeException());
   }

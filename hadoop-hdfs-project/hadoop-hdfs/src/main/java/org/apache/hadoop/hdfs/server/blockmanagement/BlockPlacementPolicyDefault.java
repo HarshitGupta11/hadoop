@@ -633,7 +633,6 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
               maxNodesPerRack, results, avoidStaleNodes, storageTypes);
         }
       }
-
       if (LOG.isDebugEnabled()) {
         LOG.debug("Failed to choose from local rack (location = " + localRack
             + "); the second replica is not found, retry choosing randomly", e);

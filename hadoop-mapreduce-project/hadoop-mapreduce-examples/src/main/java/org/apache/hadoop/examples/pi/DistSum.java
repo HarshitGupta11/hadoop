@@ -159,7 +159,7 @@ public final class DistSum extends Configured implements Tool {
     static void compute(Summation sigma,
         TaskInputOutputContext<?, ?, NullWritable, TaskResult> context
         ) throws IOException, InterruptedException {
-      String s;
+      String s = "sigma=" + sigma;
       LOG.error("Temp", new RuntimeException());
       context.setStatus(s);
 

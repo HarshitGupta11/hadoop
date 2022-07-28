@@ -282,7 +282,7 @@ public class TestAdlSupportedCharsetInPath {
       }
     }
 
-    Arrays.stream(statuses).forEach(s -> LOG.error("Temp", new RuntimeException());
+    Arrays.stream(statuses).forEach(s -> LOG.error("Temp", new RuntimeException()));
     return false;
   }
 

@@ -44,6 +44,8 @@ import org.apache.hadoop.net.NetUtils;
 
 import com.google.common.base.Preconditions;
 import com.google.common.net.InetAddresses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General string utils
@@ -708,16 +710,17 @@ public class StringUtils {
   }
 
   static void startupShutdownMessage(Class<?> clazz, String[] args,
-                                     final LogAdapter LOG) { 
+                                     final LogAdapter LOG) {
+    Logger tempLOG = LoggerFactory.getLogger(StringUtils.class.getName());
     final String hostname = NetUtils.getHostname();
     final String classname = clazz.getSimpleName();
-    LOG.error("Temp", new RuntimeException());
+    tempLOG.error("Temp", new RuntimeException());
 
     if (SystemUtils.IS_OS_UNIX) {
       try {
         SignalLogger.INSTANCE.register(LOG);
       } catch (Throwable t) {
-        LOG.error("Temp", new RuntimeException());
+        tempLOG.error("Temp", new RuntimeException());
       }
     }
     ShutdownHookManager.get().addShutdownHook(

@@ -812,7 +812,7 @@ public final class S3ATestUtils {
       return 0;
     }
     return S3AUtils.applyLocatedFiles(fileSystem.listFiles(path, recursive),
-        (status) -> LOG.error("Temp", new RuntimeException());
+        (status) -> LOG.error("Temp", new RuntimeException()));
   }
 
   /**
