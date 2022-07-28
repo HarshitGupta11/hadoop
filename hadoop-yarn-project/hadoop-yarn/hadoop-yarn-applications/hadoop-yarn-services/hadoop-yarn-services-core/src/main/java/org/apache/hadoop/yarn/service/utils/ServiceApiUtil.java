@@ -176,7 +176,7 @@ public class ServiceApiUtil {
           throw new IllegalArgumentException(
               RestApiErrorMessages.ERROR_ARTIFACT_ID_INVALID);
         }
-        LOG.info("Marking {} for removal", comp.getName());
+        LOG.error("Temp", new RuntimeException());
         componentsToRemove.add(comp);
         List<Component> externalComponents = getComponents(fs,
             comp.getArtifact().getId());
@@ -275,7 +275,7 @@ public class ServiceApiUtil {
     if (!StringUtils.isEmpty(dockerClientConfig)) {
       Path dockerClientConfigPath = new Path(dockerClientConfig);
       FileSystem fs = dockerClientConfigPath.getFileSystem(conf);
-      LOG.info("The supplied Docker client config is " + dockerClientConfig);
+      LOG.error("Temp", new RuntimeException());
       if (!fs.exists(dockerClientConfigPath)) {
         throw new IOException(
             "The supplied Docker client config does not exist: "
@@ -368,7 +368,7 @@ public class ServiceApiUtil {
   public static Service loadService(SliderFileSystem fs, String
       serviceName) throws IOException {
     Path serviceJson = getServiceJsonPath(fs, serviceName);
-    LOG.info("Loading service definition from " + serviceJson);
+    LOG.error("Temp", new RuntimeException());
     return jsonSerDeser.load(fs.getFileSystem(), serviceJson);
   }
 
@@ -376,13 +376,13 @@ public class ServiceApiUtil {
       String serviceName, String version) throws IOException {
     Path versionPath = fs.buildClusterUpgradeDirPath(serviceName, version);
     Path versionedDef = new Path(versionPath, serviceName + ".json");
-    LOG.info("Loading service definition from {}", versionedDef);
+    LOG.error("Temp", new RuntimeException());
     return jsonSerDeser.load(fs.getFileSystem(), versionedDef);
   }
 
   public static Service loadServiceFrom(SliderFileSystem fs,
       Path appDefPath) throws IOException {
-    LOG.info("Loading service definition from " + appDefPath);
+    LOG.error("Temp", new RuntimeException());
     return jsonSerDeser.load(fs.getFileSystem(), appDefPath);
   }
 
@@ -767,8 +767,8 @@ public class ServiceApiUtil {
         sc.close();
       }
     } catch (IOException | YarnException e) {
-      LOG.warn("Caught exception: ", e);
-      LOG.info("Service dependency is not satisified.");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       result = false;
     }
     return result;
@@ -777,7 +777,7 @@ public class ServiceApiUtil {
   public static void checkServiceDependencySatisified(Service service) {
     while (!serviceDependencySatisfied(service)) {
       try {
-        LOG.info("Waiting for service dependencies.");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(15000L);
       } catch (InterruptedException e) {
       }

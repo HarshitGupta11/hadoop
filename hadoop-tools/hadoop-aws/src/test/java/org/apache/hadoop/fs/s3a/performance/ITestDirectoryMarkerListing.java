@@ -779,7 +779,7 @@ public class ITestDirectoryMarkerListing extends AbstractS3ATestBase {
   private <T> List<T> dump(List<T> l) {
     int c = 1;
     for (T t : l) {
-      LOG.info("{}\t{}", c++, t);
+      LOG.error("Temp", new RuntimeException());
     }
     return l;
   }

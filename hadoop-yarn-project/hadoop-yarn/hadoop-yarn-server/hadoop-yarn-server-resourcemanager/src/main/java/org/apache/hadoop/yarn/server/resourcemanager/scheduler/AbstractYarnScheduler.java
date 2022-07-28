@@ -438,7 +438,7 @@ public abstract class AbstractYarnScheduler
       ApplicationAttemptId appAttemptId) {
     SchedulerApplicationAttempt attempt = getApplicationAttempt(appAttemptId);
     if (attempt == null) {
-      LOG.debug("Request for appInfo of unknown attempt {}", appAttemptId);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return new SchedulerAppReport(attempt);
@@ -449,7 +449,7 @@ public abstract class AbstractYarnScheduler
       ApplicationAttemptId appAttemptId) {
     SchedulerApplicationAttempt attempt = getApplicationAttempt(appAttemptId);
     if (attempt == null) {
-      LOG.debug("Request for appInfo of unknown attempt {}", appAttemptId);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return attempt.getResourceUsageReport();
@@ -543,7 +543,7 @@ public abstract class AbstractYarnScheduler
           continue;
         }
 
-        LOG.info("Recovering container " + container);
+        LOG.error("Temp", new RuntimeException());
         SchedulerApplicationAttempt schedulerAttempt =
             schedulerApp.getCurrentAppAttempt();
 
@@ -609,7 +609,7 @@ public abstract class AbstractYarnScheduler
                       .createAbnormalContainerStatus(container.getContainerId(),
                           SchedulerUtils.RELEASED_CONTAINER),
                   RMContainerEventType.RELEASED));
-          LOG.info(container.getContainerId() + " is released by application.");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } finally {
@@ -672,7 +672,7 @@ public abstract class AbstractYarnScheduler
       @Override
       public void run() {
         clearPendingContainerCache();
-        LOG.info("Release request cache is cleaned up");
+        LOG.error("Temp", new RuntimeException());
       }
     }, nmExpireInterval);
   }
@@ -808,7 +808,7 @@ public abstract class AbstractYarnScheduler
       try {
         getQueueInfo(destQueue, false, false);
       } catch (IOException e) {
-        LOG.warn(e.toString());
+        LOG.error("Temp", new RuntimeException());
         throw new YarnException(e);
       }
 
@@ -1120,7 +1120,7 @@ public abstract class AbstractYarnScheduler
     List<ContainerId> untrackedContainerIdList = new ArrayList<ContainerId>();
     for (ContainerStatus completedContainer : completedContainers) {
       ContainerId containerId = completedContainer.getContainerId();
-      LOG.debug("Container FINISHED: {}", containerId);
+      LOG.error("Temp", new RuntimeException());
       RMContainer container = getRMContainer(containerId);
       completedContainer(container,
           completedContainer, RMContainerEventType.FINISHED);
@@ -1292,7 +1292,7 @@ public abstract class AbstractYarnScheduler
       Resources.addTo(unallocated, container.getAllocatedResource());
 
       if (Resources.fitsIn(rc, ZERO_RESOURCE, unallocated)) {
-        LOG.debug("Enough unallocated resources {}", unallocated);
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
@@ -1336,7 +1336,7 @@ public abstract class AbstractYarnScheduler
     List<UpdateContainerRequest> promotionRequests =
         updates.getPromotionRequests();
     if (promotionRequests != null && !promotionRequests.isEmpty()) {
-      LOG.info("Promotion Update requests : " + promotionRequests);
+      LOG.error("Temp", new RuntimeException());
       // Promotion is technically an increase request from
       // 0 resources to target resources.
       handleIncreaseRequests(appAttempt, promotionRequests);
@@ -1344,13 +1344,13 @@ public abstract class AbstractYarnScheduler
     List<UpdateContainerRequest> increaseRequests =
         updates.getIncreaseRequests();
     if (increaseRequests != null && !increaseRequests.isEmpty()) {
-      LOG.info("Resource increase requests : " + increaseRequests);
+      LOG.error("Temp", new RuntimeException());
       handleIncreaseRequests(appAttempt, increaseRequests);
     }
     List<UpdateContainerRequest> demotionRequests =
         updates.getDemotionRequests();
     if (demotionRequests != null && !demotionRequests.isEmpty()) {
-      LOG.info("Demotion Update requests : " + demotionRequests);
+      LOG.error("Temp", new RuntimeException());
       // Demotion is technically a decrease request from initial
       // to 0 resources
       handleDecreaseRequests(appAttempt, demotionRequests);
@@ -1358,7 +1358,7 @@ public abstract class AbstractYarnScheduler
     List<UpdateContainerRequest> decreaseRequests =
         updates.getDecreaseRequests();
     if (decreaseRequests != null && !decreaseRequests.isEmpty()) {
-      LOG.info("Resource decrease requests : " + decreaseRequests);
+      LOG.error("Temp", new RuntimeException());
       handleDecreaseRequests(appAttempt, decreaseRequests);
     }
   }
@@ -1497,7 +1497,7 @@ public abstract class AbstractYarnScheduler
 
     if (Resources.fitsIn(rmContainer.getLastConfirmedResource(),
         rmContainer.getContainer().getResource())) {
-      LOG.info("Roll back resource for container " + containerId);
+      LOG.error("Temp", new RuntimeException());
       handleDecreaseRequests(app, Arrays.asList(
           UpdateContainerRequest.newInstance(
               rmContainer.getContainer().getVersion(),
@@ -1529,7 +1529,7 @@ public abstract class AbstractYarnScheduler
    */
   public Resource getMinimumAllocation() {
     Resource ret = ResourceUtils.getResourceTypesMinimumAllocation();
-    LOG.info("Minimum allocation = " + ret);
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 
@@ -1541,7 +1541,7 @@ public abstract class AbstractYarnScheduler
 
   public Resource getMaximumAllocation() {
     Resource ret = ResourceUtils.getResourceTypesMaximumAllocation();
-    LOG.info("Maximum allocation = " + ret);
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 
@@ -1592,7 +1592,7 @@ public abstract class AbstractYarnScheduler
           }
           update();
         } catch (InterruptedException ie) {
-          LOG.warn("Scheduler UpdateThread interrupted. Exiting.");
+          LOG.error("Temp", new RuntimeException());
           return;
         } catch (Exception e) {
           LOG.error("Exception in scheduler UpdateThread", e);
@@ -1615,7 +1615,7 @@ public abstract class AbstractYarnScheduler
   public void reinitialize(Configuration conf, RMContext rmContext)
       throws IOException {
     try {
-      LOG.info("Reinitializing SchedulingMonitorManager ...");
+      LOG.error("Temp", new RuntimeException());
       schedulingMonitorManager.reinitialize(rmContext, conf);
     } catch (YarnException e) {
       throw new IOException(e);

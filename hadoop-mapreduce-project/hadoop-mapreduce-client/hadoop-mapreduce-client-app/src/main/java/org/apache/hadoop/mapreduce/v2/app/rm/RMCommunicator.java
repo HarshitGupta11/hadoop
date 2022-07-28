@@ -168,9 +168,9 @@ public abstract class RMCommunicator extends AbstractService
         setClientToAMToken(response.getClientToAMTokenMasterKey());        
       }
       this.applicationACLs = response.getApplicationACLs();
-      LOG.info("maxContainerCapability: " + maxContainerCapability);
+      LOG.error("Temp", new RuntimeException());
       String queue = response.getQueue();
-      LOG.info("queue: " + queue);
+      LOG.error("Temp", new RuntimeException());
       job.setQueueName(queue);
       this.schedulerResourceTypes.addAll(response.getSchedulerResourceTypes());
     } catch (Exception are) {
@@ -214,10 +214,10 @@ public abstract class RMCommunicator extends AbstractService
     for (String s : job.getDiagnostics()) {
       sb.append(s).append("\n");
     }
-    LOG.info("Setting job diagnostics to " + sb.toString());
+    LOG.error("Temp", new RuntimeException());
 
     String historyUrl = context.getHistoryUrl();
-    LOG.info("History url is " + historyUrl);
+    LOG.error("Temp", new RuntimeException());
     FinishApplicationMasterRequest request =
         FinishApplicationMasterRequest.newInstance(finishState,
           sb.toString(), historyUrl);
@@ -234,7 +234,7 @@ public abstract class RMCommunicator extends AbstractService
           raContext.markSuccessfulUnregistration();
           break;
         }
-        LOG.info("Waiting for application to be successfully unregistered.");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(rmPollInterval);
       }
     } catch (ApplicationMasterNotRegisteredException e) {
@@ -260,7 +260,7 @@ public abstract class RMCommunicator extends AbstractService
       try {
         allocatorThread.join();
       } catch (InterruptedException ie) {
-        LOG.warn("InterruptedException while stopping", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (isApplicationMasterRegistered && shouldUnregister) {
@@ -291,7 +291,7 @@ public abstract class RMCommunicator extends AbstractService
           executeHeartbeatCallbacks();
         } catch (InterruptedException e) {
           if (!stopped.get()) {
-            LOG.warn("Allocated thread interrupted. Returning.");
+            LOG.error("Temp", new RuntimeException());
           }
           return;
         }

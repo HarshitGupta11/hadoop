@@ -94,7 +94,7 @@ public class BalanceJournalInfoHDFS implements BalanceJournal {
     } finally {
       IOUtils.closeStream(out);
     }
-    LOG.debug("Save journal of job={}", job);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -107,7 +107,7 @@ public class BalanceJournalInfoHDFS implements BalanceJournal {
       FileSystem fs = FileSystem.get(workUri, conf);
       in = fs.open(logPath);
       job.readFields(in);
-      LOG.debug("Recover job={} from journal.", job);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (in != null) {
         in.close();
@@ -123,7 +123,7 @@ public class BalanceJournalInfoHDFS implements BalanceJournal {
     try {
       statuses = fs.listStatus(workPath);
     } catch (FileNotFoundException e) {
-      LOG.debug("Create work path {}", workPath);
+      LOG.error("Temp", new RuntimeException());
       fs.mkdirs(workPath);
       return new BalanceJob[0];
     }
@@ -141,7 +141,7 @@ public class BalanceJournalInfoHDFS implements BalanceJournal {
       }
     }
     builder.append("]");
-    LOG.debug(builder.toString());
+    LOG.error("Temp", new RuntimeException());
     return jobs;
   }
 
@@ -152,7 +152,7 @@ public class BalanceJournalInfoHDFS implements BalanceJournal {
     if (fs.exists(jobBase)) {
       fs.delete(jobBase, true);
     }
-    LOG.debug("Clear journal of job=" + job);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

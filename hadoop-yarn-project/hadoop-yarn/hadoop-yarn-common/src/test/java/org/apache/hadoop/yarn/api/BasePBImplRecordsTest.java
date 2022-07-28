@@ -249,7 +249,7 @@ public class BasePBImplRecordsTest {
       GetSetPair gsp = cur.getValue();
       if ((gsp.getMethod == null) ||
           (gsp.setMethod == null)) {
-        LOG.info(String.format("Exclude potential property: %s\n", gsp.propertyName));
+        LOG.error("Temp", new RuntimeException());
         itr.remove();
       } else if ((excluded != null && excluded.contains(gsp.propertyName))) {
         LOG.info(String.format(
@@ -257,9 +257,9 @@ public class BasePBImplRecordsTest {
             gsp.propertyName));
         itr.remove();
       } else {
-        LOG.info(String.format("New property: %s type: %s", gsp.toString(), gsp.type));
+        LOG.error("Temp", new RuntimeException());
         gsp.testValue = genTypeValue(gsp.type);
-        LOG.info(String.format(" testValue: %s\n", gsp.testValue));
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return ret;

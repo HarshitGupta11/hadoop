@@ -112,7 +112,7 @@ public class TestDFSUpgradeFromImage {
     if ( dfsDir.exists() && !FileUtil.fullyDelete(dfsDir) ) {
       throw new IOException("Could not delete dfs directory '" + dfsDir + "'");
     }
-    LOG.info("Unpacking " + tarFile);
+    LOG.error("Temp", new RuntimeException());
     FileUtil.unTar(new File(tarFile), dataDir);
     //Now read the reference info
     
@@ -151,7 +151,7 @@ public class TestDFSUpgradeFromImage {
     }
     
     if ( printChecksum ) {
-      LOG.info("CRC info for reference file : " + path + " \t " + checksum);
+      LOG.error("Temp", new RuntimeException());
     } else {
       if ( !refIter.hasNext() ) {
         throw new IOException("Checking checksum for " + path +
@@ -184,7 +184,7 @@ public class TestDFSUpgradeFromImage {
         throw exc;
       }
       try {
-        LOG.info("Open failed. " + tries + " times. Retrying.");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(1000);
       } catch (InterruptedException ignored) {}
     }
@@ -607,7 +607,7 @@ public class TestDFSUpgradeFromImage {
       DFSClient dfsClient = dfs.dfs;
       //Safemode will be off only after upgrade is complete. Wait for it.
       while ( dfsClient.setSafeMode(HdfsConstants.SafeModeAction.SAFEMODE_GET) ) {
-        LOG.info("Waiting for SafeMode to be OFF.");
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(1000);
         } catch (InterruptedException ignored) {}
@@ -686,7 +686,7 @@ public class TestDFSUpgradeFromImage {
       batch = TestDFSInotifyEventInputStream.waitForNextEvents(ieis);
       assertEquals(1, batch.getEvents().length);
       if (batch.getEvents()[0].getEventType() != Event.EventType.CREATE) {
-        FSImage.LOG.debug("");
+        FSImage.LOG.error("Temp", new RuntimeException());
       }
       assertTrue(batch.getEvents()[0].getEventType() == Event.EventType.CREATE);
 

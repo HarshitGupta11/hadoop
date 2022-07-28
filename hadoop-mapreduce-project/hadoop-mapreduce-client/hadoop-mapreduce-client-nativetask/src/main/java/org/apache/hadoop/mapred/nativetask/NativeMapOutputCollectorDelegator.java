@@ -166,7 +166,7 @@ public class NativeMapOutputCollectorDelegator<K, V> implements MapOutputCollect
       throw new IOException(message, e);
     }
 
-    LOG.info("Native output collector can be successfully enabled!");
+    LOG.error("Temp", new RuntimeException());
   }
 
 }

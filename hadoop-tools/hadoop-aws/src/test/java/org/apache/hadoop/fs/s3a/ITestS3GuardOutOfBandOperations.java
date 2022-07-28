@@ -328,7 +328,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
   public void testTombstoneExpiryGuardedDeleteRawCreate() throws Exception {
     boolean allowAuthoritative = authoritative;
     Path testFilePath = path("TEGDRC-" + UUID.randomUUID() + "/file");
-    LOG.info("Allow authoritative param: {}",  allowAuthoritative);
+    LOG.error("Temp", new RuntimeException());
     String originalText = "some test";
     String newText = "the new originalText for test";
 
@@ -384,7 +384,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
         checkListingContainsPath(guardedFs, testFilePath);
 
         // we can assert that the originalText is the new one, which created raw
-        LOG.info("Old: {}, New: {}, Read: {}", originalText, newText, newRead);
+        LOG.error("Temp", new RuntimeException());
         assertEquals("The text should be modified with a new.", newText,
             newRead);
       }
@@ -426,7 +426,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
    */
   @Test
   public void testCreateNonRecursiveFailsIfParentDeleted() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
 
     String dirToDelete = methodName + UUID.randomUUID().toString();
     String fileToTry = dirToDelete + "/theFileToTry";
@@ -486,7 +486,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
    */
   @Test
   public void testLastUpdatedZeroWontExpire() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
 
     String testFile = methodName + UUID.randomUUID().toString() +
         "/theFileToTry";
@@ -535,7 +535,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
    */
   @Test
   public void deleteAfterTombstoneExpiryOobCreate() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
 
     String testFile = methodName + UUID.randomUUID().toString() +
         "/theFileToTry";
@@ -693,7 +693,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
       throws Exception {
     boolean allowAuthoritative = authoritative;
     Path testFilePath = path("OverwriteFileTest-" + UUID.randomUUID());
-    LOG.info("Allow authoritative param: {}",  allowAuthoritative);
+    LOG.error("Temp", new RuntimeException());
     try {
       // Create initial file
       writeTextFile(
@@ -754,7 +754,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
       throws Exception {
     boolean allowAuthoritative = authoritative;
 
-    LOG.info("Authoritative mode enabled: {}", allowAuthoritative);
+    LOG.error("Temp", new RuntimeException());
     String rUUID = UUID.randomUUID().toString();
     String testDir = "dir-" + rUUID + "/";
     String testFile = testDir + "file-1-" + rUUID;
@@ -946,7 +946,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
   public void testListingDelete() throws Exception {
 
     boolean allowAuthoritative = authoritative;
-    LOG.info("Authoritative mode enabled: {}", allowAuthoritative);
+    LOG.error("Temp", new RuntimeException());
     String rUUID = UUID.randomUUID().toString();
     String testDir = "dir-" + rUUID + "/";
     String testFile = testDir + "file-1-" + rUUID;
@@ -982,7 +982,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
       // File status will be still readable from s3guard
       S3AFileStatus status = (S3AFileStatus)
           guardedFs.getFileStatus(testFilePath);
-      LOG.info("authoritative: {} status: {}", allowAuthoritative, status);
+      LOG.error("Temp", new RuntimeException());
       if (isVersionedChangeDetection() && status.getVersionId() != null) {
         // when the status entry has a version ID, then that may be used
         // when opening the file on what is clearly a versioned store.
@@ -1135,7 +1135,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
     // create a file under the store
     createAndAwaitFs(guardedFs, testFilePath, "Original File is long");
     // Delete the file leaving a tombstone in the metastore
-    LOG.info("Initial delete of guarded FS dir {}", dir);
+    LOG.error("Temp", new RuntimeException());
     guardedFs.delete(dir, true);
 //    deleteFile(guardedFs, testFilePath);
     awaitDeletedFileDisappearance(guardedFs, testFilePath);
@@ -1149,9 +1149,9 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
     guardedFs.mkdirs(sibling);
     // now do a delete of the parent dir. This is required to also
     // check the underlying fs.
-    LOG.info("Deleting guarded FS dir {} with OOB child", dir);
+    LOG.error("Temp", new RuntimeException());
     guardedFs.delete(dir, true);
-    LOG.info("Now waiting for child to be deleted in raw fs: {}", testFilePath);
+    LOG.error("Temp", new RuntimeException());
 
     // so eventually the file will go away.
     // this is required to be true in auth as well as non-auth.
@@ -1169,7 +1169,7 @@ public class ITestS3GuardOutOfBandOperations extends AbstractS3ATestBase {
       final Path dir,
       final Path testFilePath)
       throws Exception {
-    LOG.info("Awaiting list of {} to include {}", dir, testFilePath);
+    LOG.error("Temp", new RuntimeException());
     eventually(
         STABILIZATION_TIME, PROBE_INTERVAL_MILLIS,
         () -> {

@@ -121,7 +121,7 @@ public class TestApplicationMasterLauncher {
         startContainers(StartContainersRequest requests)
             throws YarnException {
       StartContainerRequest request = requests.getStartContainerRequests().get(0);
-      LOG.info("Container started by MyContainerManager: " + request);
+      LOG.error("Temp", new RuntimeException());
       launched = true;
       Map<String, String> env =
           request.getContainerLaunchContext().getEnvironment();
@@ -151,7 +151,7 @@ public class TestApplicationMasterLauncher {
     @Override
     public StopContainersResponse stopContainers(StopContainersRequest request)
         throws YarnException {
-      LOG.info("Container cleaned up by MyContainerManager");
+      LOG.error("Temp", new RuntimeException());
       cleanedup = true;
       return null;
     }

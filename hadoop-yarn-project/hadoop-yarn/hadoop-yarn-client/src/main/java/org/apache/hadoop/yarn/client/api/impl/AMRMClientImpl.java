@@ -495,9 +495,9 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
       String nodeId = token.getNodeId().toString();
       if (LOG.isDebugEnabled()) {
         if (getNMTokenCache().containsToken(nodeId)) {
-          LOG.debug("Replacing token for : " + nodeId);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.debug("Received new token for : " + nodeId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       getNMTokenCache().setToken(nodeId, token.getToken());
@@ -520,7 +520,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
         if (response.getIsUnregistered()) {
           break;
         }
-        LOG.info("Waiting for application to be successfully unregistered.");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(100);
       }
     } catch (InterruptedException e) {
@@ -770,7 +770,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
         // Ensure node requests are accompanied by requests for
         // corresponding rack
         if (rack == null) {
-          LOG.warn("Failed to resolve rack for node " + node + ".");
+          LOG.error("Temp", new RuntimeException());
         } else {
           racks.add(rack);
         }
@@ -941,7 +941,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
     addResourceRequestToAsk(resourceRequestInfo.remoteRequest);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Adding request to ask " + resourceRequestInfo.remoteRequest);
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("addResourceRequest:" + " applicationId="
           + " priority=" + priority.getPriority()
           + " resourceName=" + resourceName + " numContainers="

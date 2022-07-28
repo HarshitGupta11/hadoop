@@ -136,7 +136,7 @@ public abstract class AbstractContractStreamIOStatisticsTest
       // always call the output stream to check that behavior
       statistics = extractStatistics(out);
       final String strVal = statistics.toString();
-      LOG.info("Statistics = {}", strVal);
+      LOG.error("Temp", new RuntimeException());
       verifyStatisticCounterValue(statistics, STREAM_WRITE_BYTES, 1);
     } finally {
       fs.delete(path, false);
@@ -159,7 +159,7 @@ public abstract class AbstractContractStreamIOStatisticsTest
       final long len = bytes.length;
       out.write(bytes);
       out.flush();
-      LOG.info("stats {}", demandStatsString);
+      LOG.error("Temp", new RuntimeException());
       IOStatistics statistics = extractStatistics(out);
       verifyStatisticCounterValue(statistics, STREAM_WRITE_BYTES,
           writesInBlocks ? 0 : len);
@@ -169,7 +169,7 @@ public abstract class AbstractContractStreamIOStatisticsTest
           writesInBlocks ? 0 : len * 2);
       // close the stream
       out.close();
-      LOG.info("stats {}", demandStatsString);
+      LOG.error("Temp", new RuntimeException());
       // statistics are still valid after the close
       // always call the output stream to check that behavior
       statistics = extractStatistics(out);

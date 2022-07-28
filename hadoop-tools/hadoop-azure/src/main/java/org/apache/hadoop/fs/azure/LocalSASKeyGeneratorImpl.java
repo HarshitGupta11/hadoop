@@ -80,7 +80,7 @@ public class LocalSASKeyGeneratorImpl extends SASKeyGeneratorImpl {
   public URI getContainerSASUri(String accountName, String container)
       throws SASKeyGenerationException {
 
-    LOG.debug("Retrieving Container SAS URI For {}@{}", container, accountName);
+    LOG.error("Temp", new RuntimeException());
     try {
 
       CachedSASKeyEntry cacheKey = new CachedSASKeyEntry(accountName, container, "/");
@@ -119,7 +119,7 @@ public class LocalSASKeyGeneratorImpl extends SASKeyGeneratorImpl {
    */
   private CloudStorageAccount getSASKeyBasedStorageAccountInstance(
       String accountName) throws SASKeyGenerationException {
-    LOG.debug("Creating SAS key from account instance {}", accountName);
+    LOG.error("Temp", new RuntimeException());
     try {
 
       String accountNameWithoutDomain =

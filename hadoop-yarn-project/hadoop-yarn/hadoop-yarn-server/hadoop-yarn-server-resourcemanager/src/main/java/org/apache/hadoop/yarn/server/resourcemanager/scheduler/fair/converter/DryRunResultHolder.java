@@ -60,28 +60,28 @@ public class DryRunResultHolder {
   }
 
   public void printDryRunResults() {
-    LOG.info("");
-    LOG.info("Results of dry run:");
-    LOG.info("");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     int noOfErrors = errors.size();
     int noOfWarnings = warnings.size();
 
-    LOG.info("Number of errors: {}", noOfErrors);
-    LOG.info("Number of warnings: {}", noOfWarnings);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Verification result: {}",
         verificationFailed ? "FAILED" : "PASSED");
 
     if (noOfErrors > 0) {
-      LOG.info("");
-      LOG.info("List of errors:");
-      errors.forEach(s -> LOG.info(s));
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      errors.forEach(s -> LOG.error("Temp", new RuntimeException());
     }
 
     if (noOfWarnings > 0) {
-      LOG.info("");
-      LOG.info("List of warnings:");
-      warnings.forEach(s -> LOG.info(s));
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      warnings.forEach(s -> LOG.error("Temp", new RuntimeException());
     }
   }
 }

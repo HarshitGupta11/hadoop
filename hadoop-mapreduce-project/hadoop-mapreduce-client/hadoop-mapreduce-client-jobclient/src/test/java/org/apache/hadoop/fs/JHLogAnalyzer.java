@@ -245,7 +245,7 @@ public class JHLogAnalyzer {
         int prevValue = 0;
         while(numFinishedThreads < numRunningThreads) {
           if(prevValue < numFinishedThreads) {
-            LOG.info("Finished " + numFinishedThreads + " threads out of " + numRunningThreads);
+            LOG.error("Temp", new RuntimeException());
             prevValue = numFinishedThreads;
           }
           try {Thread.sleep(500);} catch (InterruptedException e) {}
@@ -256,9 +256,9 @@ public class JHLogAnalyzer {
 
   private static void createControlFile(FileSystem fs, Path jhLogDir
   ) throws IOException {
-    LOG.info("creating control file: JH log dir = " + jhLogDir);
+    LOG.error("Temp", new RuntimeException());
     FileCreateDaemon.createControlFile(fs, jhLogDir);
-    LOG.info("created control file: JH log dir = " + jhLogDir);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static String getFileName(int fIdx) {
@@ -703,18 +703,18 @@ public class JHLogAnalyzer {
         FSDataInputStream stm = fs.open(filePath);
         stm.seek(offset);
         in = stm;
-        LOG.info("Opened " + filePath);
+        LOG.error("Temp", new RuntimeException());
         reporter.setStatus("Opened " + filePath);
         // get a compression filter if specified
         if(compressionClass != null) {
           CompressionCodec codec = (CompressionCodec)
             ReflectionUtils.newInstance(compressionClass, new Configuration());
           in = codec.createInputStream(stm);
-          LOG.info("Codec created " + filePath);
+          LOG.error("Temp", new RuntimeException());
           reporter.setStatus("Codec created " + filePath);
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        LOG.info("Reader created " + filePath);
+        LOG.error("Temp", new RuntimeException());
         // skip to the next job log start
         long processed = 0L;
         if(jobDelimiterPattern != null) {
@@ -740,14 +740,14 @@ public class JHLogAnalyzer {
             String txt = "Processing " + filePath + " at " + processed
                     + " # tasks = " + numTasks;
             reporter.setStatus(txt);
-            LOG.info(txt);
+            LOG.error("Temp", new RuntimeException());
           }
           if(isEndOfJobLog(line)) {
             if(jh.JOBID != null) {
               LOG.info("Finished parsing job: " + jh.JOBID
                      + " line count = " + jobLineCount);
               collectJobStats(jh, output, reporter);
-              LOG.info("Collected stats for job: " + jh.JOBID);
+              LOG.error("Temp", new RuntimeException());
             }
             jh = new JobHistoryLog();
             jobLineCount = 0;
@@ -903,8 +903,8 @@ public class JHLogAnalyzer {
           + "  Reduces = " + jh.TOTAL_REDUCES);
       LOG.info("Finished Maps = " + jh.FINISHED_MAPS
           + "  Reduces = " + jh.FINISHED_REDUCES);
-      LOG.info("numAttempts = " + numAttempts);
-      LOG.info("totalTime   = " + totalTime);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       LOG.info("averageAttemptTime = " 
           + (numAttempts==0 ? 0 : totalTime/numAttempts));
       LOG.info("jobTotalTime = " + (jh.FINISH_TIME <= jh.SUBMIT_TIME? 0 :
@@ -970,7 +970,7 @@ public class JHLogAnalyzer {
 
   private static class LoggingCollector implements OutputCollector<Text, Text> {
     public void collect(Text key, Text value) throws IOException {
-      LOG.info(key + " == " + value);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1023,7 +1023,7 @@ public class JHLogAnalyzer {
         return;
       }
       if(testFile != null) {
-        LOG.info("Start JHLA test ============ ");
+        LOG.error("Temp", new RuntimeException());
         LocalFileSystem lfs = FileSystem.getLocal(conf);
         conf.set("fs.defaultFS", "file:///");
         JHLAMapper map = new JHLAMapper(conf);
@@ -1077,7 +1077,7 @@ public class JHLogAnalyzer {
                                      long execTime,
                                      Path resFileName
                                      ) throws IOException {
-    LOG.info("Analyzing results ...");
+    LOG.error("Temp", new RuntimeException());
     DataOutputStream out = null;
     BufferedWriter writer = null;
     try {
@@ -1119,11 +1119,11 @@ public class JHLogAnalyzer {
       if(writer != null) writer.close();
       if(out != null) out.close();
     }
-    LOG.info("Analyzing results ... done.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static void cleanup(Configuration conf) throws IOException {
-    LOG.info("Cleaning up test files");
+    LOG.error("Temp", new RuntimeException());
     FileSystem fs = FileSystem.get(conf);
     fs.delete(new Path(JHLA_ROOT_DIR), true);
   }

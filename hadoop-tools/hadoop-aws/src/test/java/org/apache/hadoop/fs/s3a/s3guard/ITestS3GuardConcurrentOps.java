@@ -86,7 +86,7 @@ public class ITestS3GuardConcurrentOps extends AbstractS3ATestBase {
       table.delete();
       table.waitForDelete();
     } catch (ResourceNotFoundException e) {
-      LOG.warn("Failed to delete {}, as it was not found", tableName, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -75,7 +75,7 @@ public class IngressPortBasedResolver extends SaslPropertiesResolver {
           SaslRpcServer.QualityOfProtection.PRIVACY);
       portPropMapping.put(port, props);
     }
-    LOG.debug("Configured with port to QOP mapping as:" + portPropMapping);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

@@ -150,11 +150,11 @@ public interface GetSpaceUsed {
 
         getSpaceUsed = cons.newInstance(this);
       } catch (InstantiationException e) {
-        LOG.warn("Error trying to create an instance of " + getKlass(), e);
+        LOG.error("Temp", new RuntimeException());
       } catch (IllegalAccessException e) {
-        LOG.warn("Error trying to create " + getKlass(), e);
+        LOG.error("Temp", new RuntimeException());
       } catch (InvocationTargetException e) {
-        LOG.warn("Error trying to create " + getKlass(), e);
+        LOG.error("Temp", new RuntimeException());
       } catch (NoSuchMethodException e) {
         LOG.warn("Doesn't look like the class " + getKlass() +
             " have the needed constructor", e);

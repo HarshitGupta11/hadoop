@@ -95,7 +95,7 @@ public class MultiNodeSorter<N extends SchedulerNode> extends AbstractService {
 
   @Override
   public void serviceStart() throws Exception {
-    LOG.info("Starting SchedulingMonitor=" + getName());
+    LOG.error("Temp", new RuntimeException());
     assert !stopped : "starting when already stopped";
     ses = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
       public Thread newThread(Runnable r) {
@@ -117,7 +117,7 @@ public class MultiNodeSorter<N extends SchedulerNode> extends AbstractService {
   public void serviceStop() throws Exception {
     stopped = true;
     if (handler != null) {
-      LOG.info("Stop " + getName());
+      LOG.error("Temp", new RuntimeException());
       handler.cancel(true);
       ses.shutdown();
     }

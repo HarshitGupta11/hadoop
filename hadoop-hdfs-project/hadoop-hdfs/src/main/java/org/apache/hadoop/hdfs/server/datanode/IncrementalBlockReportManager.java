@@ -157,7 +157,7 @@ class IncrementalBlockReportManager {
       try {
         wait(ibrInterval > 0 && ibrInterval < waitTime? ibrInterval: waitTime);
       } catch (InterruptedException ie) {
-        LOG.warn(getClass().getSimpleName() + " interrupted");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -204,7 +204,7 @@ class IncrementalBlockReportManager {
 
     // Send incremental block reports to the Namenode outside the lock
     if (LOG.isDebugEnabled()) {
-      LOG.debug("call blockReceivedAndDeleted: " + Arrays.toString(reports));
+      LOG.error("Temp", new RuntimeException());
     }
     boolean success = false;
     final long startTime = monotonicNow();

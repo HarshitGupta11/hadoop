@@ -187,7 +187,7 @@ public class DFSInputStream extends FSInputStream
   }
 
   protected void removeFromLocalDeadNodes(DatanodeInfo dnInfo) {
-    DFSClient.LOG.debug("Remove {} from local dead nodes.", dnInfo);
+    DFSClient.LOG.error("Temp", new RuntimeException());
     deadNodes.remove(dnInfo);
   }
 
@@ -333,7 +333,7 @@ public class DFSInputStream extends FSInputStream
     if (locatedBlocks == null || refresh) {
       newInfo = dfsClient.getLocatedBlocks(src, 0);
     }
-    DFSClient.LOG.debug("newInfo = {}", newInfo);
+    DFSClient.LOG.error("Temp", new RuntimeException());
     if (newInfo == null) {
       throw new IOException("Cannot open filename " + src);
     }
@@ -719,7 +719,7 @@ public class DFSInputStream extends FSInputStream
     if (Thread.currentThread().isInterrupted() &&
         (e instanceof ClosedByInterruptException ||
             e instanceof InterruptedIOException)) {
-      DFSClient.LOG.debug("The reading thread has been interrupted.", e);
+      DFSClient.LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -762,7 +762,7 @@ public class DFSInputStream extends FSInputStream
   public synchronized void close() throws IOException {
     try {
       if (!closed.compareAndSet(false, true)) {
-        DFSClient.LOG.debug("DFSInputStream has been closed already");
+        DFSClient.LOG.error("Temp", new RuntimeException());
         return;
       }
       dfsClient.checkOpen();
@@ -910,7 +910,7 @@ public class DFSInputStream extends FSInputStream
         } catch (IOException e) {
           checkInterrupted(e);
           if (retries == 1) {
-            DFSClient.LOG.warn("DFS Read", e);
+            DFSClient.LOG.error("Temp", new RuntimeException());
           }
           blockEnd = -1;
           if (currentNode != null) {
@@ -1009,7 +1009,7 @@ public class DFSInputStream extends FSInputStream
 
     DatanodeInfo[] nodes = block.getLocations();
     if (nodes == null || nodes.length == 0) {
-      DFSClient.LOG.info("No node available for " + blockInfo);
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
     DFSClient.LOG.info("Could not obtain " + block.getBlock()
         + " from any node: " + errMsg
@@ -1088,7 +1088,7 @@ public class DFSInputStream extends FSInputStream
     }
     final String dnAddr =
         chosenNode.getXferAddr(dfsClient.getConf().isConnectToDnViaHostname());
-    DFSClient.LOG.debug("Connecting to datanode {}", dnAddr);
+    DFSClient.LOG.error("Temp", new RuntimeException());
     boolean uriCacheEnabled = dfsClient.getConf().isUriCacheEnabled();
     InetSocketAddress targetAddr = NetUtils.createSocketAddr(dnAddr,
         -1, null, uriCacheEnabled);
@@ -1230,7 +1230,7 @@ public class DFSInputStream extends FSInputStream
         String msg = "fetchBlockByteRange(). Got a checksum exception for "
             + src + " at " + block.getBlock() + ":" + e.getPos() + " from "
             + datanode.info;
-        DFSClient.LOG.warn(msg);
+        DFSClient.LOG.error("Temp", new RuntimeException());
         // we want to remember what we have tried
         corruptedBlocks.addCorruptedBlock(block.getBlock(), datanode.info);
         addToLocalDeadNodes(datanode.info);
@@ -1254,7 +1254,7 @@ public class DFSInputStream extends FSInputStream
         } else {
           String msg = "Failed to connect to " + datanode.addr + " for file "
               + src + " for block " + block.getBlock() + ":" + e;
-          DFSClient.LOG.warn("Connection failure: " + msg, e);
+          DFSClient.LOG.error("Temp", new RuntimeException());
           addToLocalDeadNodes(datanode.info);
           dfsClient.addNodeToDeadNodeDetector(this, datanode.info);
           throw new IOException(msg);
@@ -1622,7 +1622,7 @@ public class DFSInputStream extends FSInputStream
             // most likely a bug.
             String errMsg = "BlockReader failed to seek to " +
                 targetPos + ". Instead, it seeked to " + pos + ".";
-            DFSClient.LOG.warn(errMsg);
+            DFSClient.LOG.error("Temp", new RuntimeException());
             throw new IOException(errMsg);
           }
         } catch (IOException e) {//make following read to retry

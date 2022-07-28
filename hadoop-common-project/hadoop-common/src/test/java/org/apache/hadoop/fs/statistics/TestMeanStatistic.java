@@ -181,14 +181,14 @@ public class TestMeanStatistic extends AbstractHadoopTestBase {
     JsonSerialization<MeanStatistic> serializer = serializer();
 
     String json = serializer.toJson(tenFromTen);
-    LOG.info("serialized form\n{}", json);
+    LOG.error("Temp", new RuntimeException());
     Assertions.assertThat(json)
         .describedAs("JSON form of %s", tenFromTen)
         .doesNotContain("empty")
         .doesNotContain("mean");
 
     MeanStatistic deser = serializer.fromJson(json);
-    LOG.info("deserialized {}", deser);
+    LOG.error("Temp", new RuntimeException());
     Assertions.assertThat(deser)
         .isEqualTo(tenFromTen);
   }
@@ -204,7 +204,7 @@ public class TestMeanStatistic extends AbstractHadoopTestBase {
         + "}";
     JsonSerialization<MeanStatistic> serializer = serializer();
     MeanStatistic deser = serializer.fromJson(json);
-    LOG.info("deserialized {}", deser);
+    LOG.error("Temp", new RuntimeException());
     Assertions.assertThat(deser)
         .isEqualTo(empty);
   }

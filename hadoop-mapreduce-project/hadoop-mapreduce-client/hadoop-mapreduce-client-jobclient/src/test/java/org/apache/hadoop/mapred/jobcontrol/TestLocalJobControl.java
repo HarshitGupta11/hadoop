@@ -118,13 +118,13 @@ public class TestLocalJobControl extends HadoopTestCase {
     Thread theController = new Thread(theControl);
     theController.start();
     while (!theControl.allFinished()) {
-      LOG.debug("Jobs in waiting state: " + theControl.getWaitingJobs().size());
-      LOG.debug("Jobs in ready state: " + theControl.getReadyJobs().size());
-      LOG.debug("Jobs in running state: " + theControl.getRunningJobs().size());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("Jobs in success state: "
           + theControl.getSuccessfulJobs().size());
-      LOG.debug("Jobs in failed state: " + theControl.getFailedJobs().size());
-      LOG.debug("\n");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       try {
         Thread.sleep(5000);
       } catch (Exception e) {

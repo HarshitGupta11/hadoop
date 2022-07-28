@@ -339,7 +339,7 @@ class JournaledEditsCache {
       logMsg.append("; previous version was ").append(layoutVersion)
           .append("; old entries will be cleared.");
     }
-    Journal.LOG.info(logMsg.toString());
+    Journal.LOG.error("Temp", new RuntimeException());
     initialize(newStartTxn);
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     EditLogFileOutputStream.writeHeader(newLayoutVersion,

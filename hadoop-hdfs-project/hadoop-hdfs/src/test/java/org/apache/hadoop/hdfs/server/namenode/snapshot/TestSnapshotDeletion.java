@@ -1341,7 +1341,7 @@ public class TestSnapshotDeletion {
       hdfs.createSnapshot(st, "s" + i);
 
       SnapshotDiffReport sdr = hdfs.getSnapshotDiffReport(st, "s" + i, "ss");
-      LOG.info("Snapshot Diff s{} to ss : {}", i, sdr);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(sdr.getDiffList().size(), 1);
       Assert.assertTrue(sdr.getDiffList().get(0).getType() ==
           SnapshotDiffReport.DiffType.MODIFY);

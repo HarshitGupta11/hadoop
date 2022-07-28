@@ -108,7 +108,7 @@ public class TestStartup {
     if (hdfsDir.exists() && !FileUtil.fullyDelete(hdfsDir)) {
       throw new IOException("Could not delete hdfs directory '" + hdfsDir + "'");
     }
-    LOG.info("--hdfsdir is " + hdfsDir.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
     config.set(DFSConfigKeys.DFS_NAMENODE_NAME_DIR_KEY,
         fileAsURI(new File(hdfsDir, "name")).toString());
     config.set(DFSConfigKeys.DFS_DATANODE_DATA_DIR_KEY,
@@ -140,7 +140,7 @@ public class TestStartup {
    * @throws IOException
    */
   public void createCheckPoint(int count) throws IOException {
-    LOG.info("--starting mini cluster");
+    LOG.error("Temp", new RuntimeException());
     // manage dirs parameter set to false 
     MiniDFSCluster cluster = null;
     SecondaryNameNode sn = null;
@@ -151,7 +151,7 @@ public class TestStartup {
                                   .manageNameDfsDirs(false).build();
       cluster.waitActive();
 
-      LOG.info("--starting Secondary Node");
+      LOG.error("Temp", new RuntimeException());
 
       // start secondary node
       sn = new SecondaryNameNode(config);
@@ -164,10 +164,10 @@ public class TestStartup {
         Path p = new Path("t" + i);
         DFSTestUtil.createFile(fileSys, p, fileSize, fileSize,
             blockSize, (short) 1, seed);
-        LOG.info("--file " + p.toString() + " created");
-        LOG.info("--doing checkpoint");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         sn.doCheckpoint();  // this shouldn't fail
-        LOG.info("--done checkpoint");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (IOException e) {
       fail(StringUtils.stringifyException(e));
@@ -178,7 +178,7 @@ public class TestStartup {
         sn.shutdown();
       if(cluster!=null) 
         cluster.shutdown();
-      LOG.info("--cluster shutdown");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -227,7 +227,7 @@ public class TestStartup {
     if(dir.exists() && !(FileUtil.fullyDelete(dir)))
       throw new IOException("Cannot remove directory: " + dir);
 
-    LOG.info("--removed dir "+dir + ";len was ="+ this.fsimageLength);
+    LOG.error("Temp", new RuntimeException());
 
     if (!dir.mkdirs())
       throw new IOException("Cannot create directory " + dir);
@@ -242,7 +242,7 @@ public class TestStartup {
     if (!dir.mkdirs())
       throw new IOException("Cannot create directory " + dir);
 
-    LOG.info("--removed dir and recreated "+dir + ";len was ="+ this.editsLength);
+    LOG.error("Temp", new RuntimeException());
 
 
   }
@@ -254,7 +254,7 @@ public class TestStartup {
   private void checkNameNodeFiles() throws IOException{
 
     // start namenode with import option
-    LOG.info("-- about to start DFS cluster");
+    LOG.error("Temp", new RuntimeException());
     MiniDFSCluster cluster = null;
     try {
       cluster = new MiniDFSCluster.Builder(config)
@@ -263,7 +263,7 @@ public class TestStartup {
                                   .manageNameDfsDirs(false)
                                   .startupOption(IMPORT).build();
       cluster.waitActive();
-      LOG.info("--NN started with checkpoint option");
+      LOG.error("Temp", new RuntimeException());
       NameNode nn = cluster.getNameNode();
       assertNotNull(nn);	
       // Verify that image file sizes did not change.
@@ -286,12 +286,12 @@ public class TestStartup {
       if(sd.getStorageDirType().isOfType(NameNodeDirType.IMAGE)) {
         img.getStorage();
         File imf = NNStorage.getStorageFile(sd, NameNodeFile.IMAGE, 0);
-        LOG.info("--image file " + imf.getAbsolutePath() + "; len = " + imf.length() + "; expected = " + expectedImgSize);
+        LOG.error("Temp", new RuntimeException());
         assertEquals(expectedImgSize, imf.length());	
       } else if(sd.getStorageDirType().isOfType(NameNodeDirType.EDITS)) {
         img.getStorage();
         File edf = NNStorage.getStorageFile(sd, NameNodeFile.EDITS, 0);
-        LOG.info("-- edits file " + edf.getAbsolutePath() + "; len = " + edf.length()  + "; expected = " + expectedEditsSize);
+        LOG.error("Temp", new RuntimeException());
         assertEquals(expectedEditsSize, edf.length());	
       } else {
         fail("Image/Edits directories are not different");
@@ -306,7 +306,7 @@ public class TestStartup {
    */
   @Test
   public void testChkpointStartup2() throws IOException{
-    LOG.info("--starting checkpointStartup2 - same directory for checkpoint");
+    LOG.error("Temp", new RuntimeException());
     // different name dirs
     config.set(DFSConfigKeys.DFS_NAMENODE_NAME_DIR_KEY,
         fileAsURI(new File(hdfsDir, "name")).toString());
@@ -333,7 +333,7 @@ public class TestStartup {
   @Test
   public void testChkpointStartup1() throws IOException{
     //setUpConfig();
-    LOG.info("--starting testStartup Recovery");
+    LOG.error("Temp", new RuntimeException());
     // different name dirs
     config.set(DFSConfigKeys.DFS_NAMENODE_NAME_DIR_KEY,
         fileAsURI(new File(hdfsDir, "name")).toString());
@@ -358,7 +358,7 @@ public class TestStartup {
   @Test
   public void testSNNStartup() throws IOException{
     //setUpConfig();
-    LOG.info("--starting SecondNN startup test");
+    LOG.error("Temp", new RuntimeException());
     // different name dirs
     config.set(DFSConfigKeys.DFS_NAMENODE_NAME_DIR_KEY,
         fileAsURI(new File(hdfsDir, "name")).toString());
@@ -370,7 +370,7 @@ public class TestStartup {
     config.set(DFSConfigKeys.DFS_NAMENODE_CHECKPOINT_DIR_KEY,
         fileAsURI(new File(hdfsDir, "chkpt")).toString());
 
-    LOG.info("--starting NN ");
+    LOG.error("Temp", new RuntimeException());
     MiniDFSCluster cluster = null;
     SecondaryNameNode sn = null;
     NameNode nn = null;
@@ -383,13 +383,13 @@ public class TestStartup {
       assertNotNull(nn);
 
       // start secondary node
-      LOG.info("--starting SecondNN");
+      LOG.error("Temp", new RuntimeException());
       sn = new SecondaryNameNode(config);
       assertNotNull(sn);
 
-      LOG.info("--doing checkpoint");
+      LOG.error("Temp", new RuntimeException());
       sn.doCheckpoint();  // this shouldn't fail
-      LOG.info("--done checkpoint");
+      LOG.error("Temp", new RuntimeException());
 
 
 
@@ -401,8 +401,8 @@ public class TestStartup {
       File imf = NNStorage.getStorageFile(sd, NameNodeFile.IMAGE, 0);
       image.getStorage();
       File edf = NNStorage.getStorageFile(sd, NameNodeFile.EDITS, 0);
-      LOG.info("--image file " + imf.getAbsolutePath() + "; len = " + imf.length());
-      LOG.info("--edits file " + edf.getAbsolutePath() + "; len = " + edf.length());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       FSImage chkpImage = sn.getFSImage();
       verifyDifferentDirs(chkpImage, imf.length(), edf.length());
@@ -434,7 +434,7 @@ public class TestStartup {
 
   @Test
   public void testCompression() throws IOException {
-    LOG.info("Test compressing image.");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     FileSystem.setDefaultUri(conf, "hdfs://localhost:0");
     conf.set(DFSConfigKeys.DFS_NAMENODE_HTTP_ADDRESS_KEY, "127.0.0.1:0");
@@ -446,7 +446,7 @@ public class TestStartup {
     DFSTestUtil.formatNameNode(conf);
 
     // create an uncompressed image
-    LOG.info("Create an uncompressed fsimage");
+    LOG.error("Temp", new RuntimeException());
     NameNode namenode = new NameNode(conf);
     namenode.getNamesystem().mkdirs("/test",
         new PermissionStatus("hairong", null, FsPermission.getDefault()), true);
@@ -459,23 +459,23 @@ public class TestStartup {
     namenode.joinHttpServer();
 
     // compress image using default codec
-    LOG.info("Read an uncomressed image and store it compressed using default codec.");
+    LOG.error("Temp", new RuntimeException());
     conf.setBoolean(DFSConfigKeys.DFS_IMAGE_COMPRESS_KEY, true);
     checkNameSpace(conf);
 
     // read image compressed using the default and compress it using Gzip codec
-    LOG.info("Read a compressed image and store it using a different codec.");
+    LOG.error("Temp", new RuntimeException());
     conf.set(DFSConfigKeys.DFS_IMAGE_COMPRESSION_CODEC_KEY,
         "org.apache.hadoop.io.compress.GzipCodec");
     checkNameSpace(conf);
 
     // read an image compressed in Gzip and store it uncompressed
-    LOG.info("Read a compressed image and store it as uncompressed.");
+    LOG.error("Temp", new RuntimeException());
     conf.setBoolean(DFSConfigKeys.DFS_IMAGE_COMPRESS_KEY, false);
     checkNameSpace(conf);
 
     // read an uncomrpessed image and store it uncompressed
-    LOG.info("Read an uncompressed image and store it as uncompressed.");
+    LOG.error("Temp", new RuntimeException());
     checkNameSpace(conf);
   }
 
@@ -492,9 +492,9 @@ public class TestStartup {
   
   @Test
   public void testImageChecksum() throws Exception {
-    LOG.info("Test uncompressed image checksum");
+    LOG.error("Temp", new RuntimeException());
     testImageChecksum(false);
-    LOG.info("Test compressed image checksum");
+    LOG.error("Temp", new RuntimeException());
     testImageChecksum(true);
   }
 
@@ -517,7 +517,7 @@ public class TestStartup {
         FileSystem fs = cluster.getFileSystem();
         fs.mkdirs(new Path("/test"));
         
-        LOG.info("Shutting down cluster #1");
+        LOG.error("Temp", new RuntimeException());
         cluster.shutdown();
         cluster = null;
 

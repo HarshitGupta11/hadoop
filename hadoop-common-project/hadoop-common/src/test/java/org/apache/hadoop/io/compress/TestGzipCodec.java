@@ -105,7 +105,7 @@ public class TestGzipCodec {
   public void testWriteOverride() throws IOException {
     Random r = new Random();
     long seed = r.nextLong();
-    LOG.info("seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
     r.setSeed(seed);
     byte[] buf = new byte[128];
     r.nextBytes(buf);

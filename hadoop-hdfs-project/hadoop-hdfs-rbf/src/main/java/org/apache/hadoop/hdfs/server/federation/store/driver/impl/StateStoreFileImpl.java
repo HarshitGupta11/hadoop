@@ -101,7 +101,7 @@ public class StateStoreFileImpl extends StateStoreFileBaseImpl {
           tempDir = tempDirBase;
         }
         dir = tempDir.getAbsolutePath();
-        LOG.warn("The root directory is not available, using {}", dir);
+        LOG.error("Temp", new RuntimeException());
       }
       this.rootDirectory = dir;
     }
@@ -112,7 +112,7 @@ public class StateStoreFileImpl extends StateStoreFileBaseImpl {
   protected <T extends BaseRecord> BufferedReader getReader(String filename) {
     BufferedReader reader = null;
     try {
-      LOG.debug("Loading file: {}", filename);
+      LOG.error("Temp", new RuntimeException());
       File file = new File(filename);
       FileInputStream fis = new FileInputStream(file);
       InputStreamReader isr =
@@ -128,7 +128,7 @@ public class StateStoreFileImpl extends StateStoreFileBaseImpl {
   protected <T extends BaseRecord> BufferedWriter getWriter(String filename) {
     BufferedWriter writer = null;
     try {
-      LOG.debug("Writing file: {}", filename);
+      LOG.error("Temp", new RuntimeException());
       File file = new File(filename);
       FileOutputStream fos = new FileOutputStream(file, false);
       OutputStreamWriter osw =

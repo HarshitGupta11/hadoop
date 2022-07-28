@@ -378,7 +378,7 @@ class BPOfferService {
 
     if(nsInfo.getState() == HAServiceState.ACTIVE
         && bpServiceToActive == null) {
-      LOG.info("Acknowledging ACTIVE Namenode during handshake" + actor);
+      LOG.error("Temp", new RuntimeException());
       bpServiceToActive = actor;
     }
 
@@ -589,7 +589,7 @@ class BPOfferService {
           return;
         } else {
           if (bpServiceToActive == null) {
-            LOG.info("Acknowledging ACTIVE Namenode " + actor);
+            LOG.error("Temp", new RuntimeException());
           } else {
             LOG.info("Namenode " + actor + " taking over ACTIVE state from " +
                 bpServiceToActive + " at higher txid=" + txid);
@@ -760,7 +760,7 @@ class BPOfferService {
       throw new UnsupportedOperationException("Received unimplemented DNA_SHUTDOWN");
     case DatanodeProtocol.DNA_FINALIZE:
       String bp = ((FinalizeCommand) cmd).getBlockPoolId();
-      LOG.info("Got finalize command for block pool " + bp);
+      LOG.error("Temp", new RuntimeException());
       assert getBlockPoolId().equals(bp) :
         "BP " + getBlockPoolId() + " received DNA_FINALIZE " +
         "for other block pool " + bp;
@@ -773,7 +773,7 @@ class BPOfferService {
           ((BlockRecoveryCommand)cmd).getRecoveringBlocks());
       break;
     case DatanodeProtocol.DNA_ACCESSKEYUPDATE:
-      LOG.info("DatanodeCommand action: DNA_ACCESSKEYUPDATE");
+      LOG.error("Temp", new RuntimeException());
       if (dn.isBlockTokenEnabled) {
         dn.blockPoolTokenSecretManager.addKeys(
             getBlockPoolId(), 
@@ -781,7 +781,7 @@ class BPOfferService {
       }
       break;
     case DatanodeProtocol.DNA_BALANCERBANDWIDTHUPDATE:
-      LOG.info("DatanodeCommand action: DNA_BALANCERBANDWIDTHUPDATE");
+      LOG.error("Temp", new RuntimeException());
       long bandwidth =
                  ((BalancerBandwidthCommand) cmd).getBalancerBandwidthValue();
       if (bandwidth > 0) {
@@ -794,13 +794,13 @@ class BPOfferService {
       }
       break;
     case DatanodeProtocol.DNA_ERASURE_CODING_RECONSTRUCTION:
-      LOG.info("DatanodeCommand action: DNA_ERASURE_CODING_RECOVERY");
+      LOG.error("Temp", new RuntimeException());
       Collection<BlockECReconstructionInfo> ecTasks =
           ((BlockECReconstructionCommand) cmd).getECTasks();
       dn.getErasureCodingWorker().processErasureCodingTasks(ecTasks);
       break;
     default:
-      LOG.warn("Unknown DatanodeCommand action: " + cmd.getAction());
+      LOG.error("Temp", new RuntimeException());
     }
     return true;
   }
@@ -813,7 +813,7 @@ class BPOfferService {
       BPServiceActor actor) throws IOException {
     switch(cmd.getAction()) {
     case DatanodeProtocol.DNA_ACCESSKEYUPDATE:
-      LOG.info("DatanodeCommand action from standby: DNA_ACCESSKEYUPDATE");
+      LOG.error("Temp", new RuntimeException());
       if (dn.isBlockTokenEnabled) {
         dn.blockPoolTokenSecretManager.addKeys(
             getBlockPoolId(), 
@@ -829,10 +829,10 @@ class BPOfferService {
     case DatanodeProtocol.DNA_CACHE:
     case DatanodeProtocol.DNA_UNCACHE:
     case DatanodeProtocol.DNA_ERASURE_CODING_RECONSTRUCTION:
-      LOG.warn("Got a command from standby NN - ignoring command:" + cmd.getAction());
+      LOG.error("Temp", new RuntimeException());
       break;
     default:
-      LOG.warn("Unknown DatanodeCommand action: " + cmd.getAction());
+      LOG.error("Temp", new RuntimeException());
     }
     return true;
   }

@@ -91,7 +91,7 @@ public class TestToken {
     // ensure that for each string the input and output values match
     for(int i=0; i< values.length; ++i) {
       String val = values[i];
-      Token.LOG.info("Input = {}", val);
+      Token.LOG.error("Temp", new RuntimeException());
       orig = new Token<>(val.getBytes(),
           val.getBytes(), new Text(val), new Text(val));
       String encode = orig.encodeToUrlString();

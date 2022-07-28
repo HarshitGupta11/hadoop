@@ -565,7 +565,7 @@ public class BlockBlobAppendStream extends OutputStream implements Syncable,
   @Override
   public synchronized void close() throws IOException {
 
-    LOG.debug("close {} ", key);
+    LOG.error("Temp", new RuntimeException());
 
     if (closed) {
       return;
@@ -903,16 +903,16 @@ public class BlockBlobAppendStream extends OutputStream implements Syncable,
     public void execute() throws InterruptedException, IOException {
 
       if (committedBlobLength.get() >= getCommandBlobOffset()) {
-        LOG.debug("commit already applied for {}", key);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
 
       if (lastBlock == null) {
-        LOG.debug("nothing to commit for {}", key);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
 
-      LOG.debug("active commands: {} for {}", activeBlockCommands.size(), key);
+      LOG.error("Temp", new RuntimeException());
 
       for (UploadCommand activeCommand : activeBlockCommands) {
         if (activeCommand.getCommandBlobOffset() < getCommandBlobOffset()) {

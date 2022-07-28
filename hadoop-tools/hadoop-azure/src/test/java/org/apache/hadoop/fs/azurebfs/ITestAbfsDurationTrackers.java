@@ -78,14 +78,14 @@ public class ITestAbfsDurationTrackers extends AbstractAbfsIntegrationTest {
       // GET the file.
       in = fs.getAbfsStore().openFileForRead(testFilePath, fs.getFsStatistics());
       int res = in.read();
-      LOG.info("Result of Read: {}", res);
+      LOG.error("Temp", new RuntimeException());
 
       // DELETE the file.
       fs.delete(testFilePath, false);
 
       // extract the IOStatistics from the filesystem.
       IOStatistics ioStatistics = extractStatistics(fs);
-      LOG.info(ioStatisticsToPrettyString(ioStatistics));
+      LOG.error("Temp", new RuntimeException());
       assertDurationTracker(ioStatistics);
     } finally {
       IOUtils.cleanupWithLogger(LOG, out, in);

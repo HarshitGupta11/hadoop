@@ -291,8 +291,8 @@ public class TestECAdmin {
 
   private int runCommandWithParams(String... args) throws Exception{
     final int ret = admin.run(args);
-    LOG.info("Command stdout: {}", out.toString());
-    LOG.info("Command stderr: {}", err.toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 }

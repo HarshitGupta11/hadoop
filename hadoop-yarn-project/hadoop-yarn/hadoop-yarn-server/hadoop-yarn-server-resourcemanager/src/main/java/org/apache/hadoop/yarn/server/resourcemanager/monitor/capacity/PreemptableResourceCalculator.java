@@ -213,7 +213,7 @@ public class PreemptableResourceCalculator
         } else {
           qT.setActuallyToBePreempted(Resources.none());
         }
-        LOG.debug("{}", qT);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -288,7 +288,7 @@ public class TestTimelineAuthenticationFilterForV1 {
       httpUserClient.renewDelegationToken(token);
       Assert.fail("Renew of delegation token should not be successful");
     } catch (Exception e) {
-      LOG.info("Exception while renewing delegation token", e);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains(
             "Renewal request for unknown token"));
     }
@@ -331,7 +331,7 @@ public class TestTimelineAuthenticationFilterForV1 {
       httpUserClient.renewDelegationToken(tokenToRenew);
       Assert.fail("Renew of delegation token should not be successful");
     } catch (Exception e) {
-      LOG.info("Exception while renewing delegation token", e);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().contains("Renewal request for unknown token"));
     }
@@ -351,7 +351,7 @@ public class TestTimelineAuthenticationFilterForV1 {
       barUserClient.getDelegationToken(httpUser.getShortUserName());
       Assert.fail("Retrieval of delegation token should not be successful");
     } catch (Exception e) {
-      LOG.info("Exception while retrieving delegation token", e);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getCause() instanceof AuthorizationException ||
           e.getCause() instanceof AuthenticationException);
     }

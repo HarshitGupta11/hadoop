@@ -111,7 +111,7 @@ public class LevelDBCacheTimelineStore extends KeyValueBasedTimelineStore {
     } finally {
       IOUtils.cleanupWithLogger(LOG, localFS);
     }
-    LOG.info("Using leveldb path " + dbPath);
+    LOG.error("Temp", new RuntimeException());
     entityDb = factory.open(new File(dbPath.toString()), options);
     entities = new LevelDBMapAdapter<>(entityDb);
 

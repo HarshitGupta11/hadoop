@@ -69,7 +69,7 @@ public class TestWriteRead {
 
   @Before
   public void initJunitModeTest() throws Exception {
-    LOG.info("initJunitModeTest");
+    LOG.error("Temp", new RuntimeException());
 
     conf = new HdfsConfiguration();
     conf.setLong(DFSConfigKeys.DFS_BLOCK_SIZE_KEY, blockSize); // 100K
@@ -96,7 +96,7 @@ public class TestWriteRead {
   // Equivalence of @Before for cluster mode testing.
   private void initClusterModeTest() throws IOException {
 
-    LOG.info("initClusterModeTest");
+    LOG.error("Temp", new RuntimeException());
 
     conf = new Configuration();
     mfc = FileContext.getFileContext();
@@ -112,7 +112,7 @@ public class TestWriteRead {
     long rdBeginPos = 0;
     // need to run long enough to fail: takes 25 to 35 seec on Mac
     int stat = testWriteAndRead(fname, WR_NTIMES, WR_CHUNK_SIZE, rdBeginPos);
-    LOG.info("Summary status from test1: status= " + stat);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(0, stat);
   }
 
@@ -301,7 +301,7 @@ public class TestWriteRead {
         if (truncateOption) {
           out = useFCOption ? mfc.create(path,EnumSet.of(CreateFlag.OVERWRITE)): 
                 mfs.create(path, truncateOption);
-          LOG.info("File already exists. File open with Truncate mode: "+ path);
+          LOG.error("Temp", new RuntimeException());
         } else {
           out = useFCOption ? mfc.create(path, EnumSet.of(CreateFlag.APPEND))
               : mfs.append(path);
@@ -358,7 +358,7 @@ public class TestWriteRead {
             throw new IOException(readmsg);
           }
         }
-        LOG.info(readmsg);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // test the automatic flush after close
@@ -384,7 +384,7 @@ public class TestWriteRead {
         countOfFailures++;
         readmsg = "fail: reader sees different number of visible byte on close. "
             + readmsg2 + " [fail]";
-        LOG.info(readmsg);
+        LOG.error("Temp", new RuntimeException());
         if (abortTestOnFailure)
           throw new IOException(readmsg);
       }
@@ -442,12 +442,12 @@ public class TestWriteRead {
   }
 
   private void dumpOptions() {
-    LOG.info("  Option setting: filenameOption = " + filenameOption);
-    LOG.info("  Option setting: chunkSizeOption = " + chunkSizeOption);
-    LOG.info("  Option setting: loopOption = " + loopOption);
-    LOG.info("  Option setting: posReadOption = " + positionReadOption);
-    LOG.info("  Option setting: truncateOption = " + truncateOption);
-    LOG.info("  Option setting: verboseOption = " + verboseOption);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void getCmdLineOption(String[] args) {
@@ -508,7 +508,7 @@ public class TestWriteRead {
       }
       System.exit(stat);
     } catch (IOException e) {
-      LOG.info("#### Exception in Main");
+      LOG.error("Temp", new RuntimeException());
       e.printStackTrace();
       System.exit(-2);
     }

@@ -32,7 +32,7 @@ public class TestJUnitSetup {
     try {
       assert false : "Good! Java assert is on.";
     } catch(AssertionError ae) {
-      LOG.info("The AssertionError is expected.", ae);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     Assert.fail("Java assert does not work.");

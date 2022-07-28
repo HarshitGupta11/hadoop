@@ -167,10 +167,10 @@ public final class OperationCostValidator {
     String text =
         "operation returning "
             + (r != null ? r.toString() : "null");
-    LOG.info("{}", text);
-    LOG.info("state {}", this.toString());
-    LOG.info("probes {}", expected);
-    LOG.info("IOStatistics {}", ioStatisticsToPrettyString(ioStatistics));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     for (ExpectedProbe ed : expected) {
       ed.verify(this, text);
     }

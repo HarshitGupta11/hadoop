@@ -100,7 +100,7 @@ public class ITUseMiniCluster {
   }
 
   public void simpleReadAfterWrite(final FileSystem fs) throws IOException {
-    LOG.info("Testing read-after-write with FS implementation: {}", fs);
+    LOG.error("Temp", new RuntimeException());
     final Path path = new Path(TEST_PATH, FILENAME);
     if (!fs.mkdirs(path.getParent())) {
       throw new IOException("Mkdirs failed to create " +

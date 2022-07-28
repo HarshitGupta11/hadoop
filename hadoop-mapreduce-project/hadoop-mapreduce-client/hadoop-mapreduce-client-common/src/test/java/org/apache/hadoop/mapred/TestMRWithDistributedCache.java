@@ -116,7 +116,7 @@ public class TestMRWithDistributedCache {
           "distributed.jar.inside4")));
 
       // Check the class loaders
-      LOG.info("Java Classpath: " + System.getProperty("java.class.path"));
+      LOG.error("Temp", new RuntimeException());
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
       // Both the file and the archive were added to classpath, so both
       // should be reachable via the class loader.

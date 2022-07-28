@@ -138,7 +138,7 @@ public class NativeAzureFileSystem extends FileSystem {
           AZURE_UNBOUNDED_DEPTH);
 
       long end = Time.monotonicNow();
-      LOG.debug("Time taken to list {} blobs for rename operation is: {} ms", fileMetadata.length, (end - start));
+      LOG.error("Temp", new RuntimeException());
 
       this.committed = true;
     }
@@ -249,7 +249,7 @@ public class NativeAzureFileSystem extends FileSystem {
         Throwable t = e.getCause();
         if (t != null && t instanceof StorageException
             && "BlobNotFound".equals(((StorageException) t).getErrorCode())) {
-          LOG.warn("rename pending file " + redoFile + " is already deleted");
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }
@@ -286,7 +286,7 @@ public class NativeAzureFileSystem extends FileSystem {
      */
     public void writeFile(NativeAzureFileSystem fs) throws IOException {
       Path path = getRenamePendingFilePath();
-      LOG.debug("Preparing to write atomic rename state to {}", path.toString());
+      LOG.error("Temp", new RuntimeException());
       OutputStream output = null;
 
       String contents = makeRenamePendingFileContents();
@@ -1384,8 +1384,8 @@ public class NativeAzureFileSystem extends FileSystem {
         .getShortUserName()).makeQualified(getUri(), getWorkingDirectory());
 
     this.appendSupportEnabled = conf.getBoolean(APPEND_SUPPORT_ENABLE_PROPERTY_NAME, false);
-    LOG.debug("NativeAzureFileSystem. Initializing.");
-    LOG.debug("  blockSize  = {}", store.getHadoopBlockSize());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     // Initialize thread counts from user configuration
     deleteThreadCount = conf.getInt(AZURE_DELETE_THREADS, DEFAULT_AZURE_DELETE_THREADS);
@@ -1592,7 +1592,7 @@ public class NativeAzureFileSystem extends FileSystem {
       throw new UnsupportedOperationException("Append Support not enabled");
     }
 
-    LOG.debug("Opening file: {} for append", f);
+    LOG.error("Temp", new RuntimeException());
 
     Path absolutePath = makeAbsolute(f);
 
@@ -1718,7 +1718,7 @@ public class NativeAzureFileSystem extends FileSystem {
         // This'll let the keep-alive thread exit as soon as it wakes up.
         lease.free();
       } catch (Exception e) {
-        LOG.warn("Unable to free lease because: {}", e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
       throw new FileNotFoundException("Cannot create file " +
           f.getName() + " because parent folder does not exist.");
@@ -1795,7 +1795,7 @@ public class NativeAzureFileSystem extends FileSystem {
       SelfRenewingLease parentFolderLease)
           throws FileAlreadyExistsException, IOException {
 
-    LOG.debug("Creating file: {}", f.toString());
+    LOG.error("Temp", new RuntimeException());
 
     if (containsColon(f)) {
       throw new IOException("Cannot create file " + f
@@ -1942,7 +1942,7 @@ public class NativeAzureFileSystem extends FileSystem {
   private boolean deleteWithAuthEnabled(Path f, boolean recursive,
       boolean skipParentFolderLastModifiedTimeUpdate) throws IOException {
 
-    LOG.debug("Deleting file: {}", f);
+    LOG.error("Temp", new RuntimeException());
 
     Path absolutePath = makeAbsolute(f);
     Path parentPath = absolutePath.getParent();
@@ -2069,7 +2069,7 @@ public class NativeAzureFileSystem extends FileSystem {
     } else {
       // The path specifies a folder. Recursively delete all entries under the
       // folder.
-      LOG.debug("Directory Delete encountered: {}", f);
+      LOG.error("Temp", new RuntimeException());
       if (parentPath != null && parentPath.getParent() != null) {
 
         if (parentMetadata.getBlobMaterialization() == BlobMaterialization.Implicit) {
@@ -2173,14 +2173,14 @@ public class NativeAzureFileSystem extends FileSystem {
     }
 
     // File or directory was successfully deleted.
-    LOG.debug("Delete Successful for : {}", f);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
   private boolean deleteWithoutAuth(Path f, boolean recursive,
       boolean skipParentFolderLastModifiedTimeUpdate) throws IOException {
 
-    LOG.debug("Deleting file: {}", f);
+    LOG.error("Temp", new RuntimeException());
 
     Path absolutePath = makeAbsolute(f);
     Path parentPath = absolutePath.getParent();
@@ -2294,7 +2294,7 @@ public class NativeAzureFileSystem extends FileSystem {
     } else {
       // The path specifies a folder. Recursively delete all entries under the
       // folder.
-      LOG.debug("Directory Delete encountered: {}", f);
+      LOG.error("Temp", new RuntimeException());
       if (parentPath.getParent() != null) {
         String parentKey = pathToKey(parentPath);
         FileMetadata parentMetadata = null;
@@ -2359,7 +2359,7 @@ public class NativeAzureFileSystem extends FileSystem {
       }
 
       long end = Time.monotonicNow();
-      LOG.debug("Time taken to list {} blobs for delete operation: {} ms", contents.length, (end - start));
+      LOG.error("Temp", new RuntimeException());
 
       if (contents.length > 0) {
         if (!recursive) {
@@ -2408,7 +2408,7 @@ public class NativeAzureFileSystem extends FileSystem {
     }
 
     // File or directory was successfully deleted.
-    LOG.debug("Delete Successful for : {}", f);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -2479,7 +2479,7 @@ public class NativeAzureFileSystem extends FileSystem {
       try {
         performAuthCheck(currentPath, WasbAuthorizationOperations.WRITE, "delete", pathToDelete);
       } catch (WasbAuthorizationException we) {
-        LOG.debug("Authorization check failed for {}", currentPath);
+        LOG.error("Temp", new RuntimeException());
         // We cannot delete the children of currentFolder since 'write' check on parent failed
         canDeleteChildren = false;
       }
@@ -2638,7 +2638,7 @@ public class NativeAzureFileSystem extends FileSystem {
   @Override
   public FileStatus getFileStatus(Path f) throws FileNotFoundException, IOException {
 
-    LOG.debug("Getting the file status for {}", f.toString());
+    LOG.error("Temp", new RuntimeException());
     return getFileStatusInternal(f);
   }
 
@@ -2713,7 +2713,7 @@ public class NativeAzureFileSystem extends FileSystem {
         // The path is a folder with files in it.
         //
 
-        LOG.debug("Path {} is a folder.", f.toString());
+        LOG.error("Temp", new RuntimeException());
 
         // If a rename operation for the folder was pending, redo it.
         // Then the file does not exist, so signal that.
@@ -2727,7 +2727,7 @@ public class NativeAzureFileSystem extends FileSystem {
       }
 
       // The path is a file.
-      LOG.debug("Found the path: {} as a file.", f.toString());
+      LOG.error("Temp", new RuntimeException());
 
       // Return with reference to a file object.
       return updateFileStatusPath(meta, absolutePath);
@@ -2780,7 +2780,7 @@ public class NativeAzureFileSystem extends FileSystem {
   @Override
   public FileStatus[] listStatus(Path f) throws FileNotFoundException, IOException {
 
-    LOG.debug("Listing status for {}", f.toString());
+    LOG.error("Temp", new RuntimeException());
 
     Path absolutePath = makeAbsolute(f);
 
@@ -2806,12 +2806,12 @@ public class NativeAzureFileSystem extends FileSystem {
 
     if (meta == null) {
       // There is no metadata found for the path.
-      LOG.debug("Did not find any metadata for path: {}", key);
+      LOG.error("Temp", new RuntimeException());
       throw new FileNotFoundException(f + " is not found");
     }
 
     if (!meta.isDirectory()) {
-      LOG.debug("Found path as a file");
+      LOG.error("Temp", new RuntimeException());
       return new FileStatus[] { updateFileStatusPath(meta, absolutePath) };
     }
 
@@ -2973,7 +2973,7 @@ public class NativeAzureFileSystem extends FileSystem {
       FileMetadata currentMetadata = store.retrieveMetadata(currentKey);
       if (currentMetadata != null && currentMetadata.isDirectory()) {
         Path ancestor = currentMetadata.getPath();
-        LOG.debug("Found ancestor {}, for path: {}", ancestor.toString(), f.toString());
+        LOG.error("Temp", new RuntimeException());
         return ancestor;
       }
     }
@@ -2988,7 +2988,7 @@ public class NativeAzureFileSystem extends FileSystem {
 
   public boolean mkdirs(Path f, FsPermission permission, boolean noUmask) throws IOException {
 
-    LOG.debug("Creating directory: {}", f.toString());
+    LOG.error("Temp", new RuntimeException());
 
     if (containsColon(f)) {
       throw new IOException("Cannot create directory " + f
@@ -3044,7 +3044,7 @@ public class NativeAzureFileSystem extends FileSystem {
   @Override
   public FSDataInputStream open(Path f, int bufferSize) throws FileNotFoundException, IOException {
 
-    LOG.debug("Opening file: {}", f.toString());
+    LOG.error("Temp", new RuntimeException());
 
     Path absolutePath = makeAbsolute(f);
 
@@ -3099,7 +3099,7 @@ public class NativeAzureFileSystem extends FileSystem {
 
     FolderRenamePending renamePending = null;
 
-    LOG.debug("Moving {} to {}", src, dst);
+    LOG.error("Temp", new RuntimeException());
 
     if (containsColon(dst)) {
       throw new IOException("Cannot rename to file " + dst
@@ -3192,7 +3192,7 @@ public class NativeAzureFileSystem extends FileSystem {
         if (innerException instanceof StorageException
             && NativeAzureFileSystemHelper.isFileNotFoundException((StorageException) innerException)) {
 
-          LOG.debug("Parent of destination {} doesn't exists. Failing rename", dst);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
 
@@ -3221,7 +3221,7 @@ public class NativeAzureFileSystem extends FileSystem {
       if (innerException instanceof StorageException
           && NativeAzureFileSystemHelper.isFileNotFoundException((StorageException) innerException)) {
 
-        LOG.debug("Source {} doesn't exists. Failing rename", src);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
 
@@ -3230,10 +3230,10 @@ public class NativeAzureFileSystem extends FileSystem {
 
     if (srcMetadata == null) {
       // Source doesn't exist
-      LOG.debug("Source {} doesn't exist, failing the rename.", src);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } else if (!srcMetadata.isDirectory()) {
-      LOG.debug("Source {} found as a file, renaming.", src);
+      LOG.error("Temp", new RuntimeException());
       try {
         // HADOOP-15086 - file rename must ensure that the destination does
         // not exist.  The fix is targeted to this call only to avoid
@@ -3248,12 +3248,12 @@ public class NativeAzureFileSystem extends FileSystem {
         if (innerException instanceof StorageException) {
           if (NativeAzureFileSystemHelper.isFileNotFoundException(
               (StorageException) innerException)) {
-            LOG.debug("BlobNotFoundException encountered. Failing rename", src);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
           if (NativeAzureFileSystemHelper.isBlobAlreadyExistsConflict(
               (StorageException) innerException)) {
-            LOG.debug("Destination BlobAlreadyExists. Failing rename", src);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
         }
@@ -3274,7 +3274,7 @@ public class NativeAzureFileSystem extends FileSystem {
       renamePending = prepareAtomicFolderRename(srcKey, dstKey);
       renamePending.execute();
 
-      LOG.debug("Renamed {} to {} successfully.", src, dst);
+      LOG.error("Temp", new RuntimeException());
       renamePending.cleanup();
       return true;
     }
@@ -3284,7 +3284,7 @@ public class NativeAzureFileSystem extends FileSystem {
     updateParentFolderLastModifiedTime(srcKey);
     updateParentFolderLastModifiedTime(dstKey);
 
-    LOG.debug("Renamed {} to {} successfully.", src, dst);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -3415,7 +3415,7 @@ public class NativeAzureFileSystem extends FileSystem {
     FileMetadata srcMetadata = null;
     srcMetadata = store.retrieveMetadata(srcKey);
     if (srcMetadata == null) {
-      LOG.debug("Source {} doesn't exist. Failing rename.", srcPath);
+      LOG.error("Temp", new RuntimeException());
       throw new FileNotFoundException(
         String.format("%s does not exist.", srcPath));
     }
@@ -3423,7 +3423,7 @@ public class NativeAzureFileSystem extends FileSystem {
     String parentkey = pathToKey(srcParentPath);
     FileMetadata parentMetadata = store.retrieveMetadata(parentkey);
     if (parentMetadata == null) {
-      LOG.debug("Path {} doesn't exist, failing rename.", srcParentPath);
+      LOG.error("Temp", new RuntimeException());
       throw new FileNotFoundException(
         String.format("%s does not exist.", parentkey));
     }
@@ -3760,7 +3760,7 @@ public class NativeAzureFileSystem extends FileSystem {
     void handleFile(FileMetadata file, FileMetadata tempFile)
         throws IOException {
 
-      LOG.debug("Deleting dangling file {}", file.getKey());
+      LOG.error("Temp", new RuntimeException());
       // Not handling delete return type as false return essentially
       // means its a no-op for the caller
       store.delete(file.getKey());
@@ -3783,7 +3783,7 @@ public class NativeAzureFileSystem extends FileSystem {
     void handleFile(FileMetadata file, FileMetadata tempFile)
         throws IOException {
 
-      LOG.debug("Recovering {}", file.getKey());
+      LOG.error("Temp", new RuntimeException());
       // Move to the final destination
       String finalDestinationKey =
           pathToKey(new Path(destination, file.getKey()));
@@ -3857,7 +3857,7 @@ public class NativeAzureFileSystem extends FileSystem {
   public void recoverFilesWithDanglingTempData(Path root, Path destination)
       throws IOException {
 
-    LOG.debug("Recovering files with dangling temp data in {}", root);
+    LOG.error("Temp", new RuntimeException());
     handleFilesWithDanglingTempData(root,
         new DanglingFileRecoverer(destination));
   }
@@ -3874,13 +3874,13 @@ public class NativeAzureFileSystem extends FileSystem {
    */
   public void deleteFilesWithDanglingTempData(Path root) throws IOException {
 
-    LOG.debug("Deleting files with dangling temp data in {}", root);
+    LOG.error("Temp", new RuntimeException());
     handleFilesWithDanglingTempData(root, new DanglingFileDeleter());
   }
 
   @Override
   protected void finalize() throws Throwable {
-    LOG.debug("finalize() called.");
+    LOG.error("Temp", new RuntimeException());
     close();
     super.finalize();
   }
@@ -3926,10 +3926,10 @@ public class NativeAzureFileSystem extends FileSystem {
 
       if (meta != null) {
         owner = meta.getOwner();
-        LOG.debug("Retrieved '{}' as owner for path - {}", owner, absolutePath);
+        LOG.error("Temp", new RuntimeException());
       } else {
         // meta will be null if file/folder doen not exist
-        LOG.debug("Cannot find file/folder - '{}'. Returning owner as empty string", absolutePath);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch(IOException ex) {
 

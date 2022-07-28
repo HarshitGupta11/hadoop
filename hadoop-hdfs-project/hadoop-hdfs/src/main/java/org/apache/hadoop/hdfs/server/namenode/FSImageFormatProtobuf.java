@@ -252,7 +252,7 @@ public final class FSImageFormatProtobuf {
           throw new IOException(ie);
         }
         long end = Time.monotonicNow();
-        LOG.info("Loaded FSImage in {} seconds.", (end - start) / 1000);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         fin.close();
         raFile.close();
@@ -488,7 +488,7 @@ public final class FSImageFormatProtobuf {
           prog.endStep(Phase.LOADING_FSIMAGE, step);
           break;
         default:
-          LOG.warn("Unrecognized section {}", n);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
@@ -698,7 +698,7 @@ public final class FSImageFormatProtobuf {
         return;
       }
 
-      LOG.debug("Saving a subsection for {}", name.toString());
+      LOG.error("Temp", new RuntimeException());
       // The output stream must be flushed before the length is obtained
       // as the flush can move the length forward.
       sectionOutputStream.flush();
@@ -729,7 +729,7 @@ public final class FSImageFormatProtobuf {
       FileOutputStream fout = new FileOutputStream(file);
       fileChannel = fout.getChannel();
       try {
-        LOG.info("Saving image file {} using {}", file, compression);
+        LOG.error("Temp", new RuntimeException());
         long startTime = monotonicNow();
         long numErrors = saveInternal(
             fout, compression, file.getAbsolutePath());

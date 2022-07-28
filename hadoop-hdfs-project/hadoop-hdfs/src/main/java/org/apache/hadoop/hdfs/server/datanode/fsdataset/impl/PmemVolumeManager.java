@@ -203,7 +203,7 @@ public final class PmemVolumeManager {
       }
       return usedBytes;
     } catch (IOException e) {
-      LOG.warn(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       return -1L;
     }
   }

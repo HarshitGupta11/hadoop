@@ -181,7 +181,7 @@ public class StoragePolicySatisfier implements SPSService, Runnable {
     if (forceStop) {
       storageMovementNeeded.clearQueuesWithNotification();
     } else {
-      LOG.info("Stopping StoragePolicySatisfier.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -218,7 +218,7 @@ public class StoragePolicySatisfier implements SPSService, Runnable {
       // Check if dependent service is running
       if (!ctxt.isRunning()) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Upstream service is down, skipping the sps work.");
+          LOG.error("Temp", new RuntimeException());
         }
         continue;
       }
@@ -307,7 +307,7 @@ public class StoragePolicySatisfier implements SPSService, Runnable {
             }
           }
         } else {
-          LOG.info("Namenode is in safemode. It will retry again.");
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(3000);
         }
         int numLiveDn = ctxt.getNumLiveDataNodes();
@@ -330,7 +330,7 @@ public class StoragePolicySatisfier implements SPSService, Runnable {
           if (isRunning) {
             isRunning = false;
             if (t instanceof InterruptedException) {
-              LOG.info("Stopping StoragePolicySatisfier.", t);
+              LOG.error("Temp", new RuntimeException());
             } else {
               LOG.error("StoragePolicySatisfier thread received "
                   + "runtime exception.", t);
@@ -436,7 +436,7 @@ public class StoragePolicySatisfier implements SPSService, Runnable {
       // Check for at least one block storage movement has been chosen
       try {
         ctxt.submitMoveTask(blkMovingInfo);
-        LOG.debug("BlockMovingInfo: {}", blkMovingInfo);
+        LOG.error("Temp", new RuntimeException());
         StorageTypeNodePair nodeStorage = new StorageTypeNodePair(
             blkMovingInfo.getTargetStorageType(), blkMovingInfo.getTarget());
         Set<StorageTypeNodePair> nodesWithStorage = assignedBlocks
@@ -448,7 +448,7 @@ public class StoragePolicySatisfier implements SPSService, Runnable {
         nodesWithStorage.add(nodeStorage);
         blockCount++;
       } catch (IOException e) {
-        LOG.warn("Exception while scheduling movement task", e);
+        LOG.error("Temp", new RuntimeException());
         // failed to move the block.
         status = BlocksMovingAnalysis.Status.BLOCKS_FAILED_TO_MOVE;
       }

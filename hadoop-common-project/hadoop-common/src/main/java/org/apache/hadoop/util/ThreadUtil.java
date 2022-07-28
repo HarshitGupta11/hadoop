@@ -44,7 +44,7 @@ public class ThreadUtil {
       try {
         Thread.sleep(timeToSleep);
       } catch (InterruptedException ie) {
-        LOG.warn("interrupted while sleeping", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -67,7 +67,7 @@ public class ThreadUtil {
           return;
         } catch (InterruptedException e) {
           interrupted = true;
-          LOG.warn("interrupted while sleeping", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } finally {

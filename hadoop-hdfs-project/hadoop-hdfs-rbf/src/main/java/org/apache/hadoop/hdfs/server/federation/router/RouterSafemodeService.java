@@ -106,7 +106,7 @@ public class RouterSafemodeService extends PeriodicService {
    * Enter safe mode.
    */
   private void enter() {
-    LOG.info("Entering safe mode");
+    LOG.error("Temp", new RuntimeException());
     enterSafeModeTime = now();
     safeMode = true;
     router.updateRouterState(RouterServiceState.SAFEMODE);
@@ -118,7 +118,7 @@ public class RouterSafemodeService extends PeriodicService {
   private void leave() {
     // Cache recently updated, leave safemode
     long timeInSafemode = now() - enterSafeModeTime;
-    LOG.info("Leaving safe mode after {} milliseconds", timeInSafemode);
+    LOG.error("Temp", new RuntimeException());
     RouterMetrics routerMetrics = router.getRouterMetrics();
     if (routerMetrics == null) {
       LOG.error("The Router metrics are not enabled");
@@ -142,7 +142,7 @@ public class RouterSafemodeService extends PeriodicService {
         RBFConfigKeys.DFS_ROUTER_SAFEMODE_EXTENSION,
         RBFConfigKeys.DFS_ROUTER_SAFEMODE_EXTENSION_DEFAULT,
         TimeUnit.MILLISECONDS);
-    LOG.info("Leave startup safe mode after {} ms", this.startupInterval);
+    LOG.error("Temp", new RuntimeException());
 
     this.staleInterval = conf.getTimeDuration(
         RBFConfigKeys.DFS_ROUTER_SAFEMODE_EXPIRATION,

@@ -67,7 +67,7 @@ public class LoggingTextOutputFormat<K, V> extends TextOutputFormat<K, V> {
     Path file = getDefaultWorkFile(job, extension);
     FileSystem fs = file.getFileSystem(conf);
     FSDataOutputStream fileOut = fs.create(file, true);
-    LOG.debug("Creating LineRecordWriter with destination {}", file);
+    LOG.error("Temp", new RuntimeException());
     if (isCompressed) {
       return new LoggingLineRecordWriter<>(
           file, new DataOutputStream(codec.createOutputStream(fileOut)),

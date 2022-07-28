@@ -124,7 +124,7 @@ public class TestAsyncIPC {
           try {
             value = returnFutures.get(i).get(timeout, unit);
           } catch (TimeoutException e) {
-            LOG.info("call" + i + " caught ", e);
+            LOG.error("Temp", new RuntimeException());
             continue;
           }
 

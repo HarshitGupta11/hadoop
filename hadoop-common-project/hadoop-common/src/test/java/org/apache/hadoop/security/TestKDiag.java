@@ -188,7 +188,7 @@ public class TestKDiag extends Assert {
         ARG_KEYTAB, keytab.getAbsolutePath(),
         ARG_PRINCIPAL, "foo@EXAMPLE.COM",
         ARG_OUTPUT, f.getAbsolutePath());
-    LOG.info("Output of {}", f);
+    LOG.error("Temp", new RuntimeException());
     dump(f);
   }
 
@@ -236,7 +236,7 @@ public class TestKDiag extends Assert {
   private void dump(File file) throws IOException {
     try (FileInputStream in = new FileInputStream(file)) {
       for (String line : IOUtils.readLines(in)) {
-        LOG.info(line);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

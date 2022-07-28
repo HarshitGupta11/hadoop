@@ -315,7 +315,7 @@ public final class ErasureCodingPolicyManager {
     for (ErasureCodingPolicyInfo info : getPolicies()) {
       final ErasureCodingPolicy p = info.getPolicy();
       if (p.getName().equals(assignedNewName)) {
-        LOG.info("The policy name " + assignedNewName + " already exists");
+        LOG.error("Temp", new RuntimeException());
         return p;
       }
       if (p.getSchema().equals(policy.getSchema()) &&
@@ -343,7 +343,7 @@ public final class ErasureCodingPolicyManager {
         policiesByName.values().toArray(new ErasureCodingPolicyInfo[0]);
     allPersistedPolicies.put(policy.getId(),
         new ErasureCodingPolicyInfo(policy));
-    LOG.info("Added erasure coding policy " + policy);
+    LOG.error("Temp", new RuntimeException());
     return policy;
   }
 
@@ -379,7 +379,7 @@ public final class ErasureCodingPolicyManager {
           enabledPoliciesByName.values().toArray(new ErasureCodingPolicy[0]);
     }
     info.setState(ErasureCodingPolicyState.REMOVED);
-    LOG.info("Remove erasure coding policy " + name);
+    LOG.error("Temp", new RuntimeException());
     allPersistedPolicies.put(ecPolicy.getId(),
         createPolicyInfo(ecPolicy, ErasureCodingPolicyState.REMOVED));
     /*
@@ -415,7 +415,7 @@ public final class ErasureCodingPolicyManager {
       enabledPolicies =
           enabledPoliciesByName.values().toArray(new ErasureCodingPolicy[0]);
       info.setState(ErasureCodingPolicyState.DISABLED);
-      LOG.info("Disabled the erasure coding policy " + name);
+      LOG.error("Temp", new RuntimeException());
       allPersistedPolicies.put(info.getPolicy().getId(),
           createPolicyInfo(info.getPolicy(),
               ErasureCodingPolicyState.DISABLED));
@@ -449,7 +449,7 @@ public final class ErasureCodingPolicyManager {
         enabledPoliciesByName.values().toArray(new ErasureCodingPolicy[0]);
     allPersistedPolicies.put(ecPolicy.getId(),
         createPolicyInfo(info.getPolicy(), ErasureCodingPolicyState.ENABLED));
-    LOG.info("Enabled the erasure coding policy " + name);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 

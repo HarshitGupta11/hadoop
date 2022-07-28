@@ -486,7 +486,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
 
   @Override
   public void storeContainerQueued(ContainerId containerId) throws IOException {
-    LOG.debug("storeContainerQueued: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String key = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_QUEUED_KEY_SUFFIX;
@@ -500,7 +500,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
 
   private void removeContainerQueued(ContainerId containerId)
       throws IOException {
-    LOG.debug("removeContainerQueued: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String key = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_QUEUED_KEY_SUFFIX;
@@ -514,7 +514,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
 
   @Override
   public void storeContainerPaused(ContainerId containerId) throws IOException {
-    LOG.debug("storeContainerPaused: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String key = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_PAUSED_KEY_SUFFIX;
@@ -529,7 +529,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void removeContainerPaused(ContainerId containerId)
       throws IOException {
-    LOG.debug("removeContainerPaused: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String key = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_PAUSED_KEY_SUFFIX;
@@ -560,7 +560,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void storeContainerLaunched(ContainerId containerId)
       throws IOException {
-    LOG.debug("storeContainerLaunched: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     // Removing the container if queued for backward compatibility reasons
     removeContainerQueued(containerId);
@@ -577,7 +577,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void storeContainerUpdateToken(ContainerId containerId,
       ContainerTokenIdentifier containerTokenIdentifier) throws IOException {
-    LOG.debug("storeContainerUpdateToken: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String keyUpdateToken = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_UPDATE_TOKEN_SUFFIX;
@@ -605,7 +605,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void storeContainerKilled(ContainerId containerId)
       throws IOException {
-    LOG.debug("storeContainerKilled: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String key = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_KILLED_KEY_SUFFIX;
@@ -620,7 +620,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void storeContainerCompleted(ContainerId containerId,
       int exitCode) throws IOException {
-    LOG.debug("storeContainerCompleted: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String key = CONTAINERS_KEY_PREFIX + containerId.toString()
         + CONTAINER_EXIT_CODE_KEY_SUFFIX;
@@ -686,7 +686,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void removeContainer(ContainerId containerId)
       throws IOException {
-    LOG.debug("removeContainer: containerId={}", containerId);
+    LOG.error("Temp", new RuntimeException());
 
     String keyPrefix = CONTAINERS_KEY_PREFIX + containerId.toString();
     try {
@@ -767,7 +767,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void storeApplication(ApplicationId appId,
       ContainerManagerApplicationProto p) throws IOException {
-    LOG.debug("storeApplication: appId={}, proto={}", appId, p);
+    LOG.error("Temp", new RuntimeException());
 
     String key = APPLICATIONS_KEY_PREFIX + appId;
     try {
@@ -781,7 +781,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
   @Override
   public void removeApplication(ApplicationId appId)
       throws IOException {
-    LOG.debug("removeApplication: appId={}", appId);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       WriteBatch batch = db.createWriteBatch();
@@ -890,7 +890,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
         return null;
       }
 
-      LOG.debug("Loading completed resource from {}", key);
+      LOG.error("Temp", new RuntimeException());
       nextCompletedResource = LocalizedResourceProto.parseFrom(
           entry.getValue());
     }
@@ -923,7 +923,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
       }
 
       Path localPath = new Path(key.substring(keyPrefix.length()));
-      LOG.debug("Loading in-progress resource at {}", localPath);
+      LOG.error("Temp", new RuntimeException());
       nextStartedResource = new SimpleEntry<LocalResourceProto, Path>(
           LocalResourceProto.parseFrom(entry.getValue()), localPath);
     }
@@ -1011,7 +1011,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
     String localPath = proto.getLocalPath();
     String startedKey = getResourceStartedKey(user, appId, localPath);
     String completedKey = getResourceCompletedKey(user, appId, localPath);
-    LOG.debug("Storing localized resource to {}", completedKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       WriteBatch batch = db.createWriteBatch();
       try {
@@ -1033,7 +1033,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
     String localPathStr = localPath.toString();
     String startedKey = getResourceStartedKey(user, appId, localPathStr);
     String completedKey = getResourceCompletedKey(user, appId, localPathStr);
-    LOG.debug("Removing local resource at {}", localPathStr);
+    LOG.error("Temp", new RuntimeException());
     try {
       WriteBatch batch = db.createWriteBatch();
       try {
@@ -1370,7 +1370,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
         try {
           appId = ApplicationId.fromString(appIdStr);
         } catch (IllegalArgumentException e) {
-          LOG.warn("Skipping unknown log deleter key " + fullKey);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
 
@@ -1467,7 +1467,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
             break;
           }
           batch.delete(key);
-          LOG.debug("cleanup {} from leveldb", keyStr);
+          LOG.error("Temp", new RuntimeException());
         }
         db.write(batch);
       } catch (DBException e) {
@@ -1532,7 +1532,7 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
                 key.substring(AMRMPROXY_KEY_PREFIX.length(), idEndPos));
           } catch (Exception e) {
             // Try to move on for back-forward compatibility
-            LOG.warn("Unknown key " + key + ", remove and move on", e);
+            LOG.error("Temp", new RuntimeException());
             // Do this because iter.remove() is not supported here
             unknownKeys.add(key);
             continue;
@@ -1678,13 +1678,13 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
     Path storeRoot = createStorageDir(conf);
     Options options = new Options();
     options.createIfMissing(false);
-    LOG.info("Using state database at " + storeRoot + " for recovery");
+    LOG.error("Temp", new RuntimeException());
     File dbfile = new File(storeRoot.toString());
     try {
       db = JniDBFactory.factory.open(dbfile, options);
     } catch (NativeDB.DBException e) {
       if (e.isNotFound() || e.getMessage().contains(" does not exist ")) {
-        LOG.info("Creating state database at " + dbfile);
+        LOG.error("Temp", new RuntimeException());
         isNewlyCreated = true;
         options.createIfMissing(true);
         try {
@@ -1731,14 +1731,14 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
     @Override
     public void run() {
       long start = Time.monotonicNow();
-      LOG.info("Starting full compaction cycle");
+      LOG.error("Temp", new RuntimeException());
       try {
         db.compactRange(null, null);
       } catch (DBException e) {
         LOG.error("Error compacting database", e);
       }
       long duration = Time.monotonicNow() - start;
-      LOG.info("Full compaction cycle completed in " + duration + " msec");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1800,12 +1800,12 @@ public class NMLeveldbStateStoreService extends NMStateStoreService {
    */
   protected void checkVersion() throws IOException {
     Version loadedVersion = loadVersion();
-    LOG.info("Loaded NM state version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion.equals(getCurrentVersion())) {
       return;
     }
     if (loadedVersion.isCompatibleTo(getCurrentVersion())) {
-      LOG.info("Storing NM state version info " + getCurrentVersion());
+      LOG.error("Temp", new RuntimeException());
       storeVersion();
     } else {
       throw new IOException(

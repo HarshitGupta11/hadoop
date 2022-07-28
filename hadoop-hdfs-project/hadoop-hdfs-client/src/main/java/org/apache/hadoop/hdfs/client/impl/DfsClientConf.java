@@ -340,7 +340,7 @@ public class DfsClientConf {
                 classLoader.loadClass(className);
         classes.add(cls);
       } catch (Throwable t) {
-        LOG.warn("Unable to load " + className, t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return classes;

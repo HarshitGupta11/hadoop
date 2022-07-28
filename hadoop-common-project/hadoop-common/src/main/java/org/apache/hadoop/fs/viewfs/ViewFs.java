@@ -1258,7 +1258,7 @@ public class ViewFs extends AbstractFileSystem {
           if (LOG.isDebugEnabled()) {
             StringBuilder msg = new StringBuilder("Failed to create {}")
                 .append(" at fallback fs : {}");
-            LOG.debug(msg.toString(), dirToCreate, linkedFallbackFs.getUri());
+            LOG.error("Temp", new RuntimeException());
           }
           throw e;
         }

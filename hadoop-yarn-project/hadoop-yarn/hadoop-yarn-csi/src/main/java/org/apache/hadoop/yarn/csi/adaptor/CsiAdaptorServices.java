@@ -54,7 +54,7 @@ public class CsiAdaptorServices extends AuxiliaryService {
     String[] names = CsiConfigUtils.getCsiDriverNames(conf);
     if (names != null && names.length > 0) {
       for (String driverName : names) {
-        LOG.info("Adding csi-driver-adaptor for csi-driver {}", driverName);
+        LOG.error("Temp", new RuntimeException());
         CsiAdaptorPlugin serviceImpl = CsiAdaptorFactory
             .getAdaptor(driverName, conf);
         serviceImpl.init(driverName, conf);
@@ -74,7 +74,7 @@ public class CsiAdaptorServices extends AuxiliaryService {
         try {
           service.serviceStop();
         } catch (Exception e) {
-          LOG.warn("Unable to stop service " + service.getName(), e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

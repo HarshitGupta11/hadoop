@@ -68,7 +68,7 @@ public class DirectoryStagingCommitter extends StagingCommitter {
     FileSystem fs = getDestFS();
     ConflictResolution conflictResolution = getConflictResolutionMode(
         context, fs.getConf());
-    LOG.info("Conflict Resolution mode is {}", conflictResolution);
+    LOG.error("Temp", new RuntimeException());
     try {
       final FileStatus status = fs.getFileStatus(outputPath);
 
@@ -84,7 +84,7 @@ public class DirectoryStagingCommitter extends StagingCommitter {
             "Setting job as " + getRole());
       case APPEND:
       case REPLACE:
-        LOG.debug("Destination directory exists; conflict policy permits this");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (FileNotFoundException ignored) {
       // there is no destination path, hence, no conflict.

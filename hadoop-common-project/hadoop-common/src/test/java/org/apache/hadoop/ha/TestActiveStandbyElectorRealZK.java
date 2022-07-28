@@ -90,7 +90,7 @@ public class TestActiveStandbyElectorRealZK extends ClientBaseWithFixes {
    */
   @Test(timeout=20000)
   public void testActiveStandbyTransition() throws Exception {
-    LOG.info("starting test with parentDir:" + PARENT_DIR);
+    LOG.error("Temp", new RuntimeException());
 
     assertFalse(electors[0].parentZNodeExists());
     electors[0].ensureParentZNode();
@@ -172,7 +172,7 @@ public class TestActiveStandbyElectorRealZK extends ClientBaseWithFixes {
     Mockito.verify(cb, Mockito.timeout(1000)).becomeActive();
     checkFatalsAndReset();
     
-    LOG.info("========================== Expiring session");
+    LOG.error("Temp", new RuntimeException());
     zks.closeSession(elector.getZKSessionIdForTests());
 
     // Should enter neutral mode when disconnected
@@ -184,7 +184,7 @@ public class TestActiveStandbyElectorRealZK extends ClientBaseWithFixes {
     Mockito.verify(cb, Mockito.timeout(1000)).becomeActive();
     checkFatalsAndReset();
     
-    LOG.info("========================== Quitting election");
+    LOG.error("Temp", new RuntimeException());
     elector.quitElection(false);
     ActiveStandbyElectorTestUtil.waitForActiveLockData(null,
         zks, PARENT_DIR, null);
@@ -215,7 +215,7 @@ public class TestActiveStandbyElectorRealZK extends ClientBaseWithFixes {
     ActiveStandbyElectorTestUtil.waitForElectorState(null, electors[1],
         State.STANDBY);
     
-    LOG.info("========================== Expiring standby's session");
+    LOG.error("Temp", new RuntimeException());
     zks.closeSession(electors[1].getZKSessionIdForTests());
 
     // Should enter neutral mode when disconnected
@@ -226,7 +226,7 @@ public class TestActiveStandbyElectorRealZK extends ClientBaseWithFixes {
         State.STANDBY);
     checkFatalsAndReset();
     
-    LOG.info("========================== Quitting election");
+    LOG.error("Temp", new RuntimeException());
     electors[1].quitElection(false);
 
     // Double check that we don't accidentally re-join the election

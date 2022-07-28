@@ -803,7 +803,7 @@ public class TestFileOutputCommitter {
     } finally {
       executor.shutdown();
       while (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
-        LOG.info("Awaiting thread termination!");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

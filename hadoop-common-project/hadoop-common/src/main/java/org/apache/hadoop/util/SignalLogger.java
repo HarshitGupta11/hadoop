@@ -88,10 +88,10 @@ public enum SignalLogger {
             .append(signalName);
         separator = ", ";
       } catch (Exception e) {
-        LOG.debug(e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     bld.append("]");
-    LOG.info(bld.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 }

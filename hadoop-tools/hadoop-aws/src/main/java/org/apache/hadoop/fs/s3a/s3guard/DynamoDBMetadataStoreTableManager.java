@@ -167,9 +167,9 @@ public class DynamoDBMetadataStoreTableManager {
     table = dynamoDB.getTable(tableName);
     try {
       try {
-        LOG.debug("Binding to table {}", tableName);
+        LOG.error("Temp", new RuntimeException());
         TableDescription description = table.describe();
-        LOG.debug("Table state: {}", description);
+        LOG.error("Temp", new RuntimeException());
         tableArn = description.getTableArn();
         final String status = description.getTableStatus();
         switch (status) {
@@ -186,7 +186,7 @@ public class DynamoDBMetadataStoreTableManager {
               + "deleted in region " + region);
         case "UPDATING":
           // table being updated; it can still be used.
-          LOG.debug("Table is being updated.");
+          LOG.error("Temp", new RuntimeException());
           break;
         case "ACTIVE":
           break;
@@ -247,7 +247,7 @@ public class DynamoDBMetadataStoreTableManager {
           .withTags(newVersionMarkerTag());
       amazonDynamoDB.tagResource(tagResourceRequest);
     } catch (AmazonDynamoDBException e) {
-      LOG.debug("Exception during tagging table: {}", e.getMessage(), e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -322,7 +322,7 @@ public class DynamoDBMetadataStoreTableManager {
       LOG.info("Creating non-existent DynamoDB table {} in region {} {}",
           tableName, region, mode);
       table = dynamoDB.createTable(request);
-      LOG.debug("Awaiting table becoming active");
+      LOG.error("Temp", new RuntimeException());
     } catch (ResourceInUseException e) {
       LOG.warn("ResourceInUseException while creating DynamoDB table {} "
               + "in region {}.  This may indicate that the table was "
@@ -428,7 +428,7 @@ public class DynamoDBMetadataStoreTableManager {
     try {
       versionMarkerFromTag = getVersionMarkerFromTags(table, amazonDynamoDB);
     } catch (AccessDeniedException e) {
-      LOG.debug("Can not read tags of table.");
+      LOG.error("Temp", new RuntimeException());
       canReadDdbTags = false;
     }
 
@@ -671,7 +671,7 @@ public class DynamoDBMetadataStoreTableManager {
    */
   @Retries.OnceRaw
   private PutItemOutcome putItem(Item item) {
-    LOG.debug("Putting item {}", item);
+    LOG.error("Temp", new RuntimeException());
     return table.putItem(item);
   }
 
@@ -711,10 +711,10 @@ public class DynamoDBMetadataStoreTableManager {
   @Retries.RetryTranslated
   public void destroy() throws IOException {
     if (table == null) {
-      LOG.info("In destroy(): no table to delete");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
-    LOG.info("Deleting DynamoDB table {} in region {}", tableName, region);
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkNotNull(dynamoDB, "Not connected to DynamoDB");
     try {
       invoker.retry("delete", null, true,

@@ -574,7 +574,7 @@ public class TestPread {
       @Override
       public Void answer(InvocationOnMock invocation) throws Throwable {
         if (true) {
-          LOG.info("-------------- throw Checksum Exception");
+          LOG.error("Temp", new RuntimeException());
           throw new ChecksumException("ChecksumException test", 100);
         }
         return null;
@@ -744,7 +744,7 @@ public class TestPread {
             List<DatanodeInfo> locations = Arrays.asList(lb.getLocations());
             DFSClient.LOG
                 .info("Source :" + source + ", destination: " + destination);
-            DFSClient.LOG.info("Got updated locations :" + locations);
+            DFSClient.LOG.error("Temp", new RuntimeException());
             return locations.contains(destination)
                 && !locations.contains(source);
           } catch (IOException e) {
@@ -756,7 +756,7 @@ public class TestPread {
       DFSTestUtil.waitForReplication(cluster, lb.getBlock(), 1, 2, 0);
       // STEP 4: Stop first node in new locations
       cluster.stopDataNode(validDownLocation.getName());
-      DFSClient.LOG.info("Starting read");
+      DFSClient.LOG.error("Temp", new RuntimeException());
       byte[] buf = new byte[1024];
       int n = din.read(0, buf, 0, data.length());
       assertEquals(data.length(), n);
@@ -764,7 +764,7 @@ public class TestPread {
       assertTrue("Read should complete with maximum " + maxFailures
               + " failures, but completed with " + din.failures,
           din.failures <= maxFailures);
-      DFSClient.LOG.info("Read completed");
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
   }
 

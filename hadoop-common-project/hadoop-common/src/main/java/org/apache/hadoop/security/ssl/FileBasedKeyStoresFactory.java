@@ -144,7 +144,7 @@ public class FileBasedKeyStoresFactory implements KeyStoresFactory {
     }
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug(mode.toString() + " Loaded TrustStore: " + truststoreLocation);
+      LOG.error("Temp", new RuntimeException());
     }
     trustManagers = new TrustManager[]{trustManager};
   }
@@ -182,7 +182,7 @@ public class FileBasedKeyStoresFactory implements KeyStoresFactory {
     String keystoreKeyPassword = getPassword(
         conf, keyPasswordProperty, keystorePassword);
     if (LOG.isDebugEnabled()) {
-      LOG.debug(mode.toString() + " KeyStore: " + keystoreLocation);
+      LOG.error("Temp", new RuntimeException());
     }
 
     ReloadingX509KeystoreManager keystoreManager =  new ReloadingX509KeystoreManager(

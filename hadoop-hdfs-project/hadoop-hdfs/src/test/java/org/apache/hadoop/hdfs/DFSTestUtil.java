@@ -614,7 +614,7 @@ public class DFSTestUtil {
           }
           return true;
         } catch (IOException e) {
-          LOG.info("getFileStatus on path " + file + " failed!", e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -1772,7 +1772,7 @@ public class DFSTestUtil {
   public static boolean verifyFileReplicasOnStorageType(FileSystem fs,
     DFSClient client, Path path, StorageType storageType) throws IOException {
     if (!fs.exists(path)) {
-      LOG.info("verifyFileReplicasOnStorageType: file " + path + "does not exist");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     long fileLength = client.getFileInfo(path.toString()).getLen();
@@ -1979,7 +1979,7 @@ public class DFSTestUtil {
       }
       return true;
     }
-    LOG.info("failed to change length of block " + blk);
+    LOG.error("Temp", new RuntimeException());
     return false;
   }
 
@@ -2392,7 +2392,7 @@ public class DFSTestUtil {
     for (Iterator<Entry<Path, FSDataOutputStream>> it =
          openFilesMap.entrySet().iterator(); it.hasNext();) {
       Entry<Path, FSDataOutputStream> entry = it.next();
-      LOG.info("Closing file: " + entry.getKey());
+      LOG.error("Temp", new RuntimeException());
       entry.getValue().close();
       closedFiles.add(entry.getKey());
       it.remove();
@@ -2451,8 +2451,8 @@ public class DFSTestUtil {
     // reverse the order of from and to
     SnapshotDiffReport inverseReport = fs
         .getSnapshotDiffReport(dir, to, from);
-    LOG.info(report.toString());
-    LOG.info(inverseReport.toString() + "\n");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals(entries.length, report.getDiffList().size());
     assertEquals(entries.length, inverseReport.getDiffList().size());
@@ -2567,7 +2567,7 @@ public class DFSTestUtil {
                 NameNodeConnector.DEFAULT_MAX_IDLE_ITERATIONS);
         return nncs.get(0);
       } catch (IOException e) {
-        LOG.warn("Failed to connect with namenode", e);
+        LOG.error("Temp", new RuntimeException());
         // Ignore
       }
     }

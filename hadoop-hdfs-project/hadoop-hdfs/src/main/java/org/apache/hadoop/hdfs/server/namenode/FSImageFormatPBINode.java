@@ -247,7 +247,7 @@ public final class FSImageFormatPBINode {
                 ins.close();
               }
             } catch (IOException ioe) {
-              LOG.warn("Failed to close the input stream, ignoring", ioe);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         });
@@ -263,7 +263,7 @@ public final class FSImageFormatPBINode {
             exceptions.size());
         throw exceptions.get(0);
       }
-      LOG.info("Completed loading all INodeDirectory sub-sections");
+      LOG.error("Temp", new RuntimeException());
     }
 
     void loadINodeDirectorySection(InputStream in) throws IOException {
@@ -368,7 +368,7 @@ public final class FSImageFormatPBINode {
       loadINodeSectionHeader(in, prog, currentStep);
       Counter counter = prog.getCounter(Phase.LOADING_FSIMAGE, currentStep);
       int totalLoaded = loadINodesInSection(in, counter);
-      LOG.info("Successfully loaded {} inodes", totalLoaded);
+      LOG.error("Temp", new RuntimeException());
     }
 
     private int loadINodesInSection(InputStream in, Counter counter)
@@ -410,7 +410,7 @@ public final class FSImageFormatPBINode {
       INodeSection s = INodeSection.parseDelimitedFrom(in);
       fsn.dir.resetLastInodeId(s.getLastInodeId());
       long numInodes = s.getNumInodes();
-      LOG.info("Loading " + numInodes + " INodes.");
+      LOG.error("Temp", new RuntimeException());
       prog.setTotal(Phase.LOADING_FSIMAGE, currentStep, numInodes);
       return numInodes;
     }
@@ -447,7 +447,7 @@ public final class FSImageFormatPBINode {
             try {
               ins.close();
             } catch (IOException ioe) {
-              LOG.warn("Failed to close the input stream, ignoring", ioe);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         });
@@ -455,7 +455,7 @@ public final class FSImageFormatPBINode {
       try {
         latch.await();
       } catch (InterruptedException e) {
-        LOG.info("Interrupted waiting for countdown latch");
+        LOG.error("Temp", new RuntimeException());
       }
       if (exceptions.size() != 0) {
         LOG.error("{} exceptions occurred loading INodes", exceptions.size());
@@ -833,7 +833,7 @@ public final class FSImageFormatPBINode {
       for (Long id : filesWithUC) {
         INode inode = fsn.getFSDirectory().getInode(id);
         if (inode == null) {
-          LOG.warn("Fail to find inode " + id + " when saving the leases.");
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         INodeFile file = inode.asFile();

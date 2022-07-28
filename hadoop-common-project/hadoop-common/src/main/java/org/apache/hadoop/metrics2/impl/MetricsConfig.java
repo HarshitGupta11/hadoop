@@ -117,17 +117,17 @@ class MetricsConfig extends SubsetConfiguration {
         fh.setFileName(fname);
         fh.load();
         Configuration cf = pcf.interpolatedConfiguration();
-        LOG.info("Loaded properties from {}", fname);
+        LOG.error("Temp", new RuntimeException());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Properties: {}", toString(cf));
+          LOG.error("Temp", new RuntimeException());
         }
         MetricsConfig mc = new MetricsConfig(cf, prefix);
-        LOG.debug("Metrics Config: {}", mc);
+        LOG.error("Temp", new RuntimeException());
         return mc;
       } catch (ConfigurationException e) {
         // Commons Configuration defines the message text when file not found
         if (e.getMessage().startsWith("Could not locate")) {
-          LOG.debug("Could not locate file {}", fname, e);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         throw new MetricsConfigException(e);
@@ -193,7 +193,7 @@ class MetricsConfig extends SubsetConfiguration {
       return getParent().getProperty(key.startsWith(PREFIX_DEFAULT) ? key
                                      : PREFIX_DEFAULT + key);
     }
-    LOG.debug("Returning '{}' for key: {}", value, key);
+    LOG.error("Temp", new RuntimeException());
     return value;
   }
 
@@ -216,7 +216,7 @@ class MetricsConfig extends SubsetConfiguration {
   String getClassName(String prefix) {
     String classKey = prefix.isEmpty() ? "class" : prefix.concat(".class");
     String clsName = getString(classKey);
-    LOG.debug("Class name for prefix {} is {}", prefix, clsName);
+    LOG.error("Temp", new RuntimeException());
     if (clsName == null || clsName.isEmpty()) {
       return null;
     }
@@ -239,14 +239,14 @@ class MetricsConfig extends SubsetConfiguration {
       try {
         int i = 0;
         for (String jar : jars) {
-          LOG.debug("Parsing URL for {}", jar);
+          LOG.error("Temp", new RuntimeException());
           urls[i++] = new URL(jar);
         }
       } catch (Exception e) {
         throw new MetricsConfigException(e);
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using plugin jars: {}", Iterables.toString(jars));
+        LOG.error("Temp", new RuntimeException());
       }
       pluginLoader = doPrivileged(new PrivilegedAction<ClassLoader>() {
         @Override public ClassLoader run() {

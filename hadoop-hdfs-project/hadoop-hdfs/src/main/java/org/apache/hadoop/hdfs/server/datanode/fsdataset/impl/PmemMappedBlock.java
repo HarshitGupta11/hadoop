@@ -69,7 +69,7 @@ public class PmemMappedBlock implements MappableBlock {
       LOG.info("Successfully uncached one replica:{} from persistent memory"
           + ", [cached path={}, length={}]", key, cacheFilePath, length);
     } catch (IOException e) {
-      LOG.warn("Failed to delete the mapped File: {}!", cacheFilePath, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

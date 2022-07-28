@@ -56,11 +56,11 @@ public  class UserNamePermission
     public void reduce(Text key, Iterator<Text> values,
       Context context) throws IOException,InterruptedException {
 	  			
-      LOG.info("The key "+key);
+      LOG.error("Temp", new RuntimeException());
       if(values.hasNext())
       {
         Text val = values.next();
-        LOG.info("The value  "+val);
+        LOG.error("Temp", new RuntimeException());
 	  				 
         context.write(key,new Text(System.getProperty("user.name")));
 	  }

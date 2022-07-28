@@ -81,7 +81,7 @@ public class ITestAbfsStreamStatistics extends AbstractAbfsIntegrationTest {
       int result = inForOneOperation.read(testReadWriteOps.getBytes(), 0,
           testReadWriteOps.getBytes().length);
 
-      LOG.info("Result of Read operation : {}", result);
+      LOG.error("Temp", new RuntimeException());
       /*
        * Testing if 2 read_ops value is coming after reading full content
        * from a file (3 if anything to read from Buffer too). Reason: read()

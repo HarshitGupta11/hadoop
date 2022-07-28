@@ -73,7 +73,7 @@ public class TestClusterId {
     if (props != null) {
       cid = props.getProperty("clusterID");
     }
-    LOG.info("successfully formated : sd="+sd.getCurrentDir() + ";cid="+cid);
+    LOG.error("Temp", new RuntimeException());
     return cid;
   }
 
@@ -87,7 +87,7 @@ public class TestClusterId {
     if (hdfsDir.exists() && !FileUtil.fullyDelete(hdfsDir)) {
       throw new IOException("Could not delete test directory '" + hdfsDir + "'");
     }
-    LOG.info("hdfsdir is " + hdfsDir.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
 
     // as some tests might change these values we reset them to defaults before
     // every test

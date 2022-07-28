@@ -148,14 +148,14 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
   @Override
   public synchronized MetricsSystem init(String prefix) {
     if (monitoring && !DefaultMetricsSystem.inMiniClusterMode()) {
-      LOG.warn(this.prefix +" metrics system already initialized!");
+      LOG.error("Temp", new RuntimeException());
       return this;
     }
     this.prefix = checkNotNull(prefix, "prefix");
     ++refCount;
     if (monitoring) {
       // in mini cluster mode
-      LOG.info(this.prefix +" metrics system started (again)");
+      LOG.error("Temp", new RuntimeException());
       return this;
     }
     switch (initMode()) {
@@ -164,12 +164,12 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
         catch (MetricsConfigException e) {
           // Configuration errors (e.g., typos) should not be fatal.
           // We can always start the metrics system later via JMX.
-          LOG.warn("Metrics system not started: "+ e.getMessage());
-          LOG.debug("Stacktrace: ", e);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
         }
         break;
       case STANDBY:
-        LOG.info(prefix +" metrics system started in standby mode");
+        LOG.error("Temp", new RuntimeException());
     }
     initSystemMBean();
     return this;
@@ -188,7 +188,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
     configure(prefix);
     startTimer();
     monitoring = true;
-    LOG.info(prefix +" metrics system started");
+    LOG.error("Temp", new RuntimeException());
     for (Callback cb : callbacks) cb.postStart();
     for (Callback cb : namedCallbacks.values()) cb.postStart();
   }
@@ -202,18 +202,18 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
     }
     if (!monitoring) {
       // in mini cluster mode
-      LOG.info(prefix +" metrics system stopped (again)");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     for (Callback cb : callbacks) cb.preStop();
     for (Callback cb : namedCallbacks.values()) cb.preStop();
-    LOG.info("Stopping "+ prefix +" metrics system...");
+    LOG.error("Temp", new RuntimeException());
     stopTimer();
     stopSources();
     stopSinks();
     clearConfigs();
     monitoring = false;
-    LOG.info(prefix +" metrics system stopped.");
+    LOG.error("Temp", new RuntimeException());
     for (Callback cb : callbacks) cb.postStop();
     for (Callback cb : namedCallbacks.values()) cb.postStop();
   }
@@ -228,7 +228,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
     final String finalName = // be friendly to non-metrics tests
         DefaultMetricsSystem.sourceName(name2, !monitoring);
     allSources.put(finalName, s);
-    LOG.debug(finalName +", "+ finalDesc);
+    LOG.error("Temp", new RuntimeException());
     if (monitoring) {
       registerSource(finalName, finalDesc, s);
     }
@@ -266,17 +266,17 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
             : config.subset(SOURCE_KEY));
     sources.put(name, sa);
     sa.start();
-    LOG.debug("Registered source "+ name);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override public synchronized <T extends MetricsSink>
   T register(final String name, final String description, final T sink) {
-    LOG.debug(name +", "+ description);
+    LOG.error("Temp", new RuntimeException());
     if (allSinks.containsKey(name)) {
       if(sinks.get(name) == null) {
         registerSink(name, description, sink);
       } else {
-        LOG.warn("Sink "+ name +" already exists!");
+        LOG.error("Temp", new RuntimeException());
       }
       return sink;
     }
@@ -302,7 +302,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
         : newSink(name, desc, sink, config.subset(SINK_KEY));
     sinks.put(name, sa);
     sa.start();
-    LOG.info("Registered sink "+ name);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -324,7 +324,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
               return method.invoke(callback, args);
             } catch (Exception e) {
               // These are not considered fatal.
-              LOG.warn("Caught exception in callback " + method.getName(), e);
+              LOG.error("Temp", new RuntimeException());
             }
             return null;
           }
@@ -359,7 +359,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
 
   private synchronized void startTimer() {
     if (timer != null) {
-      LOG.warn(prefix +" metrics system timer already started!");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     logicalTime = 0;
@@ -371,7 +371,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
             try {
               onTimerEvent();
             } catch (Exception e) {
-              LOG.warn("Error invoking metrics timer", e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }, millis, millis);
@@ -423,7 +423,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
     bufferBuilder.add(sa.name(), sa.getMetrics(collector, true));
     collector.clear();
     snapshotStat.add(Time.monotonicNow() - startTime);
-    LOG.debug("Snapshotted source "+ sa.name());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -450,7 +450,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
 
   private synchronized void stopTimer() {
     if (timer == null) {
-      LOG.warn(prefix +" metrics system timer already stopped!");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     timer.cancel();
@@ -509,7 +509,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
         sa.start();
         sinks.put(sinkName, sa);
       } catch (Exception e) {
-        LOG.warn("Error creating sink '"+ sinkName +"'", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     long periodSec = config.getInt(PERIOD_KEY, PERIOD_DEFAULT);
@@ -588,16 +588,16 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
 
   @Override
   public synchronized boolean shutdown() {
-    LOG.debug("refCount="+ refCount);
+    LOG.error("Temp", new RuntimeException());
     if (refCount <= 0) {
-      LOG.debug("Redundant shutdown", new Throwable());
+      LOG.error("Temp", new RuntimeException());
       return true; // already shutdown
     }
     if (--refCount > 0) return false;
     if (monitoring) {
       try { stop(); }
       catch (Exception e) {
-        LOG.warn("Error stopping the metrics system", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     allSources.clear();
@@ -608,7 +608,7 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
       MBeans.unregister(mbeanName);
       mbeanName = null;
     }
-    LOG.info(prefix +" metrics system shutdown complete.");
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -628,8 +628,8 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
   }
 
   private InitMode initMode() {
-    LOG.debug("from system property: "+ System.getProperty(MS_INIT_MODE_KEY));
-    LOG.debug("from environment variable: "+ System.getenv(MS_INIT_MODE_KEY));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     String m = System.getProperty(MS_INIT_MODE_KEY);
     String m2 = m == null ? System.getenv(MS_INIT_MODE_KEY) : m;
     return InitMode.valueOf(

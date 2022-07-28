@@ -793,12 +793,12 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
     try {
       namesystem.loadFSImage(startOpt);
     } catch (IOException ioe) {
-      LOG.warn("Encountered exception loading fsimage", ioe);
+      LOG.error("Temp", new RuntimeException());
       fsImage.close();
       throw ioe;
     }
     long timeTakenToLoadFSImage = monotonicNow() - loadStart;
-    LOG.info("Finished loading FSImage in " + timeTakenToLoadFSImage + " msecs");
+    LOG.error("Temp", new RuntimeException());
     NameNodeMetrics nnMetrics = NameNode.getNameNodeMetrics();
     if (nnMetrics != null) {
       nnMetrics.setFsImageLoadTime((int) timeTakenToLoadFSImage);
@@ -826,10 +826,10 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
   FSNamesystem(Configuration conf, FSImage fsImage, boolean ignoreRetryCache)
       throws IOException {
     provider = DFSUtil.createKeyProviderCryptoExtension(conf);
-    LOG.info("KeyProvider: " + provider);
+    LOG.error("Temp", new RuntimeException());
     if (conf.getBoolean(DFS_NAMENODE_AUDIT_LOG_ASYNC_KEY,
                         DFS_NAMENODE_AUDIT_LOG_ASYNC_DEFAULT)) {
-      LOG.info("Enabling async auditlog");
+      LOG.error("Temp", new RuntimeException());
       enableAsyncAuditLog(conf);
     }
     fsLock = new FSNamesystemLock(conf, detailedLockHoldTimeMetrics);
@@ -859,10 +859,10 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           conf.getInt(DFS_NAMENODE_SNAPSHOT_DIFF_LISTING_LIMIT,
               DFS_NAMENODE_SNAPSHOT_DIFF_LISTING_LIMIT_DEFAULT);
 
-      LOG.info("fsOwner                = " + fsOwner);
-      LOG.info("supergroup             = " + supergroup);
-      LOG.info("isPermissionEnabled    = " + isPermissionEnabled);
-      LOG.info("isStoragePolicyEnabled = " + isStoragePolicyEnabled);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       // block allocation has to be persisted in HA using a shared edits directory
       // so that the standby has up-to-date namespace information
@@ -871,11 +871,11 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
       
       // Sanity check the HA-related config.
       if (nameserviceId != null) {
-        LOG.info("Determined nameservice ID: " + nameserviceId);
+        LOG.error("Temp", new RuntimeException());
       }
-      LOG.info("HA Enabled: " + haEnabled);
+      LOG.error("Temp", new RuntimeException());
       if (!haEnabled && HAUtil.usesSharedEditsDir(conf)) {
-        LOG.warn("Configured NNs:\n" + DFSUtil.nnAddressesAsString(conf));
+        LOG.error("Temp", new RuntimeException());
         throw new IOException("Invalid configuration: a shared edits dir " +
             "must not be specified if HA is not enabled.");
       }
@@ -1007,7 +1007,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           null, INodeAttributeProvider.class);
       if (klass != null) {
         inodeAttributeProvider = ReflectionUtils.newInstance(klass, conf);
-        LOG.info("Using INode attribute provider: " + klass.getName());
+        LOG.error("Temp", new RuntimeException());
       }
       this.maxListOpenFilesResponses = conf.getInt(
           DFSConfigKeys.DFS_NAMENODE_LIST_OPENFILES_NUM_RESPONSES,
@@ -1103,7 +1103,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
   static RetryCache initRetryCache(Configuration conf) {
     boolean enable = conf.getBoolean(DFS_NAMENODE_ENABLE_RETRY_CACHE_KEY,
                                      DFS_NAMENODE_ENABLE_RETRY_CACHE_DEFAULT);
-    LOG.info("Retry cache on namenode is " + (enable ? "enabled" : "disabled"));
+    LOG.error("Temp", new RuntimeException());
     if (enable) {
       float heapPercent = conf.getFloat(
           DFS_NAMENODE_RETRY_CACHE_HEAP_PERCENT_KEY,
@@ -1337,7 +1337,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
    */
   void startActiveServices() throws IOException {
     startingActiveService = true;
-    LOG.info("Starting services required for active state");
+    LOG.error("Temp", new RuntimeException());
     writeLock();
     try {
       FSEditLog editLog = getFSImage().getEditLog();
@@ -1360,7 +1360,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
 
         // Only need to re-process the queue, If not in SafeMode.
         if (!isInSafeMode()) {
-          LOG.info("Reprocessing replication and invalidation queues");
+          LOG.error("Temp", new RuntimeException());
           blockManager.initializeReplQueues();
         }
 
@@ -1454,7 +1454,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
    * Stop services required in active state
    */
   void stopActiveServices() {
-    LOG.info("Stopping services started for active state");
+    LOG.error("Temp", new RuntimeException());
     writeLock();
     try {
       if (blockManager != null && blockManager.getSPSManager() != null) {
@@ -1555,7 +1555,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
   /** Stop services required in standby state */
   void stopStandbyServices() throws IOException {
     HAServiceState curState = getState() == OBSERVER? OBSERVER : STANDBY;
-    LOG.info("Stopping services started for {} state", curState);
+    LOG.error("Temp", new RuntimeException());
     if (standbyCheckpointer != null) {
       standbyCheckpointer.stop();
     }
@@ -2190,7 +2190,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           writeUnlock(operationName, getLockReportInfoSupplier(srcArg));
         }
       } catch (Throwable e) {
-        LOG.warn("Failed to update the access time of " + src, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -3663,7 +3663,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
    */
   boolean internalReleaseLease(Lease lease, String src, INodesInPath iip,
       String recoveryLeaseHolder) throws IOException {
-    LOG.info("Recovering " + lease + ", src=" + src);
+    LOG.error("Temp", new RuntimeException());
     assert !isInSafeMode();
     assert hasWriteLock();
 
@@ -3951,7 +3951,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
         if (deleteblock) {
           // This may be a retry attempt so ignore the failure
           // to locate the block.
-          LOG.debug("Block (={}) not found", oldBlock);
+          LOG.error("Temp", new RuntimeException());
           return;
         } else {
           throw new IOException("Block (=" + oldBlock + ") not found");
@@ -4080,7 +4080,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           + ", newlength=" + newlength
           + ", newtargets=" + Arrays.asList(newtargets) + ") successful");
     } else {
-      LOG.info("commitBlockSynchronization(" + oldBlock + ") successful");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -4230,7 +4230,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
                   e.getClass().getCanonicalName(),
                   e.getMessage()));
           lastListing = null;
-          LOG.info("Exception listing src {}", src, e);
+          LOG.error("Temp", new RuntimeException());
         }
 
         listings.put(srcsIndex, listing);
@@ -4467,9 +4467,9 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           if(!nameNodeHasResourcesAvailable()) {
             String lowResourcesMsg = "NameNode low on available disk space. ";
             if (!isInSafeMode()) {
-              LOG.warn(lowResourcesMsg + "Entering safe mode.");
+              LOG.error("Temp", new RuntimeException());
             } else {
-              LOG.warn(lowResourcesMsg + "Already in safe mode.");
+              LOG.error("Temp", new RuntimeException());
             }
             enterSafeMode(true);
           }
@@ -4561,7 +4561,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           Block b = it.next();
           BlockInfo blockInfo = blockManager.getStoredBlock(b);
           if (blockInfo == null || blockInfo.isDeleted()) {
-            LOG.info("Cannot find block info for block " + b);
+            LOG.error("Temp", new RuntimeException());
           } else {
             BlockCollection bc = getBlockCollection(blockInfo);
             if (bc.getStoragePolicyID() == lpPolicy.getId()) {
@@ -4571,7 +4571,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
         }
 
         for (BlockCollection bc : filesToDelete) {
-          LOG.warn("Removing lazyPersist file " + bc.getName() + " with no replicas.");
+          LOG.error("Temp", new RuntimeException());
           BlocksMapUpdateInfo toRemoveBlocks =
               FSDirDeleteOp.deleteInternal(
                   FSNamesystem.this,
@@ -4938,7 +4938,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
       cpUnlock();
     }
     if (saved) {
-      LOG.info("New namespace image has been created");
+      LOG.error("Temp", new RuntimeException());
     }
     logAuditEvent(true, operationName, null);
     return saved;
@@ -5178,7 +5178,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
       checkOperation(OperationCategory.JOURNAL);
       checkNameNodeSafeMode("Log not rolled");
       if (Server.isRpcInvocation()) {
-        LOG.info("Roll Edit Log from " + Server.getRemoteAddress());
+        LOG.error("Temp", new RuntimeException());
       }
       result = getFSImage().rollEditLog(getEffectiveLayoutVersion());
     } finally {
@@ -5196,7 +5196,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
       checkOperation(OperationCategory.CHECKPOINT);
       checkNameNodeSafeMode("Checkpoint not started");
       
-      LOG.info("Start checkpoint for " + backupNode.getAddress());
+      LOG.error("Temp", new RuntimeException());
       NamenodeCommand cmd = getFSImage().startCheckpoint(backupNode,
           activeNamenode, getEffectiveLayoutVersion());
       getEditLog().logSync();
@@ -5224,7 +5224,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
     try {
       checkOperation(OperationCategory.CHECKPOINT);
       checkNameNodeSafeMode("Checkpoint not ended");
-      LOG.info("End checkpoint for " + registration.getAddress());
+      LOG.error("Temp", new RuntimeException());
       getFSImage().endCheckpoint(sig);
     } finally {
       readUnlock("endCheckpoint");
@@ -5699,7 +5699,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
     try {
       return JsonUtil.toJsonString(topMap);
     } catch (IOException e) {
-      LOG.warn("Failed to fetch TopUser metrics", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return null;
   }
@@ -5926,14 +5926,14 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
       final String msg = "Update " + oldBlock + " but the new block " + newBlock
           + " does not have a larger generation stamp than the last block "
           + lastBlock;
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(msg);
     }
     if (newBlock.getNumBytes() < lastBlock.getNumBytes()) {
       final String msg = "Update " + oldBlock + " (size="
           + oldBlock.getNumBytes() + ") to a smaller size block " + newBlock
           + " (size=" + newBlock.getNumBytes() + ")";
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(msg);
     }
 
@@ -6045,7 +6045,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
         cookieTab[0] = String.valueOf(getIntCookie(cookieTab[0]));
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug("there are no corrupt file blocks.");
+        LOG.error("Temp", new RuntimeException());
       }
       return corruptFiles;
     }
@@ -6082,7 +6082,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
         }
       }
       cookieTab[0] = String.valueOf(skip);
-      LOG.debug("list corrupt file blocks returned: {}", count);
+      LOG.error("Temp", new RuntimeException());
       return corruptFiles;
     } finally {
       readUnlock("listCorruptFileBlocks");
@@ -6153,7 +6153,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
           "Delegation Token can be issued only with kerberos or web authentication");
       }
       if (dtSecretManager == null || !dtSecretManager.isRunning()) {
-        LOG.warn("trying to get DT with no secret manager running");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
 
@@ -6825,9 +6825,9 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
         }
       }
     } catch (StandbyException e) {
-      LOG.debug("Get corrupt file blocks returned error: {}", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
-      LOG.warn("Get corrupt file blocks returned error", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return list;
   }
@@ -7400,7 +7400,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
     getFSImage().checkUpgrade();
     // in non-HA setup, we do an extra checkpoint to generate a rollback image
     getFSImage().saveNamespace(this, NameNodeFile.IMAGE_ROLLBACK, null);
-    LOG.info("Successfully saved namespace for preparing rolling upgrade.");
+    LOG.error("Temp", new RuntimeException());
 
     // leave SafeMode automatically
     setSafeMode(SafeModeAction.SAFEMODE_LEAVE);
@@ -7451,7 +7451,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
         upgradeInfo.setCreatedRollbackImages(hasRollbackImage);
       }
     } catch (IOException ioe) {
-      LOG.warn("Encountered exception setting Rollback Image", ioe);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       readUnlock("getRollingUpgradeStatus");
     }
@@ -8784,7 +8784,7 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
 
   private static void enableAsyncAuditLog(Configuration conf) {
     if (!(auditLog instanceof Log4JLogger)) {
-      LOG.warn("Log4j is required to enable async auditlog");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     Logger logger = ((Log4JLogger)auditLog).getLogger();

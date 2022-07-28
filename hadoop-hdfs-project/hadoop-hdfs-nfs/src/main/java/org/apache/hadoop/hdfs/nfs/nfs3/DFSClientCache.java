@@ -194,7 +194,7 @@ class DFSClientCache {
       try {
         closeAll(true);
       } catch (IOException e) {
-        LOG.info("DFSClientCache.closeAll() threw an exception", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -269,7 +269,7 @@ class DFSClientCache {
 
     UserGroupInformation ugi =
             UserGroupInformation.createProxyUser(effectiveUser, realUser);
-    LOG.debug("Created ugi: {} for username: {}", ugi, effectiveUser);
+    LOG.error("Temp", new RuntimeException());
     return ugi;
   }
 
@@ -339,7 +339,7 @@ class DFSClientCache {
     try {
       s = inputstreamCache.get(k);
     } catch (ExecutionException e) {
-      LOG.warn("Failed to create DFSInputStream for user: {}", userName, e);
+      LOG.error("Temp", new RuntimeException());
     }
     return s;
   }

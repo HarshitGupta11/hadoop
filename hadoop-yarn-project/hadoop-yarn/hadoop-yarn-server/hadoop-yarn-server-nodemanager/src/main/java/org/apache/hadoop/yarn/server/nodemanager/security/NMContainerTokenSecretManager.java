@@ -262,6 +262,6 @@ public class NMContainerTokenSecretManager extends
 
   public synchronized void setNodeId(NodeId nodeId) {
     nodeHostAddr = nodeId.toString();
-    LOG.info("Updating node address : " + nodeHostAddr);
+    LOG.error("Temp", new RuntimeException());
   }
 }

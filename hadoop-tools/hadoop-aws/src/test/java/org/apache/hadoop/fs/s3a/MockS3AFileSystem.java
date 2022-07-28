@@ -142,7 +142,7 @@ public class MockS3AFileSystem extends S3AFileSystem {
       ex = new Exception(s);
         /* fall through */
     case LOG_NAME:
-      LOG.info(s, ex);
+      LOG.error("Temp", new RuntimeException());
       break;
     case LOG_NONE:
     default:
@@ -201,7 +201,7 @@ public class MockS3AFileSystem extends S3AFileSystem {
    */
   @Override
   public void setAmazonS3Client(AmazonS3 client) {
-    LOG.debug("Setting S3 client to {}", client);
+    LOG.error("Temp", new RuntimeException());
     super.setAmazonS3Client(client);
   }
 

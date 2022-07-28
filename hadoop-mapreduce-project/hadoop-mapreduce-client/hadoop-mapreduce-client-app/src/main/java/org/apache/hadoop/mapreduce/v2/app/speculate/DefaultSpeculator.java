@@ -250,7 +250,7 @@ public class DefaultSpeculator extends AbstractService implements
 
   // This interface is intended to be used only for test cases.
   public void scanForSpeculations() {
-    LOG.info("We got asked to run a debug speculation scan.");
+    LOG.error("Temp", new RuntimeException());
     // debug
     System.out.println("We got asked to run a debug speculation scan.");
     System.out.println("There are " + scanControl.size()
@@ -296,7 +296,7 @@ public class DefaultSpeculator extends AbstractService implements
 
       case ATTEMPT_START:
       {
-        LOG.info("ATTEMPT_START " + event.getTaskID());
+        LOG.error("Temp", new RuntimeException());
         estimator.enrollAttempt
             (event.getReportedStatus(), event.getTimestamp());
         break;
@@ -304,7 +304,7 @@ public class DefaultSpeculator extends AbstractService implements
       
       case JOB_CREATE:
       {
-        LOG.info("JOB_CREATE " + event.getJobID());
+        LOG.error("Temp", new RuntimeException());
         estimator.contextualize(getConfig(), context);
         break;
       }

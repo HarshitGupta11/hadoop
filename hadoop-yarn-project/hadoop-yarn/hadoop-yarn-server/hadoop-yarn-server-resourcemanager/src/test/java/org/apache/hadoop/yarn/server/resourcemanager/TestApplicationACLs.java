@@ -160,7 +160,7 @@ public class TestApplicationACLs extends ParameterizedSchedulerTestBase {
     int waitCount = 0;
     while (resourceManager.getServiceState() == STATE.INITED
         && waitCount++ < 60) {
-      LOG.info("Waiting for RM to start...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1500);
     }
     if (resourceManager.getServiceState() != STATE.STARTED) {
@@ -404,7 +404,7 @@ public class TestApplicationACLs extends ParameterizedSchedulerTestBase {
       enemyRmClient.forceKillApplication(finishAppRequest);
       Assert.fail("App killing by the enemy should fail!!");
     } catch (YarnException e) {
-      LOG.info("Got exception while killing app as the enemy", e);
+      LOG.error("Temp", new RuntimeException());
       Assert
           .assertTrue(e.getMessage().contains(
               "User enemy cannot perform operation MODIFY_APP on "

@@ -278,7 +278,7 @@ public class TestSecurityUtil {
   // 3) getTokenServiceAddr decodes to the identical socket addr
   private void
   verifyTokenService(InetSocketAddress addr, String host, String ip, int port, boolean useIp) {
-    //LOG.info("address:"+addr+" host:"+host+" ip:"+ip+" port:"+port);
+    //LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration(false);
     conf.setBoolean(
@@ -305,9 +305,9 @@ public class TestSecurityUtil {
   private void
   verifyAddress(InetSocketAddress addr, String host, String ip, int port) {
     verifyValues(addr, host, ip, port);
-    //LOG.info("test that token service uses ip");
+    //LOG.error("Temp", new RuntimeException());
     verifyTokenService(addr, host, ip, port, true);    
-    //LOG.info("test that token service uses host");
+    //LOG.error("Temp", new RuntimeException());
     verifyTokenService(addr, host, ip, port, false);
   }
 
@@ -322,22 +322,22 @@ public class TestSecurityUtil {
     int port = 123;
 
     // test host, port tuple
-    //LOG.info("test tuple ("+host+","+port+")");
+    //LOG.error("Temp", new RuntimeException());
     addr = NetUtils.createSocketAddrForHost(host, port);
     verifyAddress(addr, host, ip, port);
 
     // test authority with no default port
-    //LOG.info("test authority '"+host+":"+port+"'");
+    //LOG.error("Temp", new RuntimeException());
     addr = NetUtils.createSocketAddr(host+":"+port);
     verifyAddress(addr, host, ip, port);
 
     // test authority with a default port, make sure default isn't used
-    //LOG.info("test authority '"+host+":"+port+"' with ignored default port");
+    //LOG.error("Temp", new RuntimeException());
     addr = NetUtils.createSocketAddr(host+":"+port, port+1);
     verifyAddress(addr, host, ip, port);
 
     // test host-only authority, using port as default port
-    //LOG.info("test host:"+host+" port:"+port);
+    //LOG.error("Temp", new RuntimeException());
     addr = NetUtils.createSocketAddr(host, port);
     verifyAddress(addr, host, ip, port);
   }

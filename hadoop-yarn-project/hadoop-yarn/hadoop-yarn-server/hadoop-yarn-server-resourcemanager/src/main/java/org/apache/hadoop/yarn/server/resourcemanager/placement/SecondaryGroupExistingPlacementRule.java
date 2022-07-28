@@ -83,7 +83,7 @@ public class SecondaryGroupExistingPlacementRule extends FSPlacementRule {
           parentRule.getPlacementForApp(asc, user);
       if (parent == null || getQueueManager().
           getQueue(parent.getQueue()) instanceof FSLeafQueue) {
-        LOG.debug("SecondaryGroupExisting rule: parent rule failed");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       parentQueue = parent.getQueue();

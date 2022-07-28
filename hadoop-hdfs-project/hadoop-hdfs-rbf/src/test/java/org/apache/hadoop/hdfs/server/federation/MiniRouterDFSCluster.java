@@ -234,7 +234,7 @@ public class MiniRouterDFSCluster {
     public DFSClient getClient(UserGroupInformation user)
         throws IOException, URISyntaxException, InterruptedException {
 
-      LOG.info("Connecting to router at {}", fileSystemUri);
+      LOG.error("Temp", new RuntimeException());
       return user.doAs(new PrivilegedExceptionAction<DFSClient>() {
         @Override
         public DFSClient run() throws IOException {
@@ -246,7 +246,7 @@ public class MiniRouterDFSCluster {
     public RouterClient getAdminClient() throws IOException {
       if (adminClient == null) {
         InetSocketAddress routerSocket = router.getAdminServerAddress();
-        LOG.info("Connecting to router admin at {}", routerSocket);
+        LOG.error("Temp", new RuntimeException());
         adminClient = new RouterClient(routerSocket, conf);
       }
       return adminClient;
@@ -258,7 +258,7 @@ public class MiniRouterDFSCluster {
 
     public DFSClient getClient() throws IOException, URISyntaxException {
       if (client == null) {
-        LOG.info("Connecting to router at {}", fileSystemUri);
+        LOG.error("Temp", new RuntimeException());
         client = new DFSClient(fileSystemUri, conf);
       }
       return client;
@@ -373,7 +373,7 @@ public class MiniRouterDFSCluster {
     public DFSClient getClient(UserGroupInformation user)
         throws IOException, URISyntaxException, InterruptedException {
 
-      LOG.info("Connecting to namenode at {}", fileSystemUri);
+      LOG.error("Temp", new RuntimeException());
       return user.doAs(new PrivilegedExceptionAction<DFSClient>() {
         @Override
         public DFSClient run() throws IOException {
@@ -384,7 +384,7 @@ public class MiniRouterDFSCluster {
 
     public DFSClient getClient() throws IOException, URISyntaxException {
       if (client == null) {
-        LOG.info("Connecting to namenode at {}", fileSystemUri);
+        LOG.error("Temp", new RuntimeException());
         client = new DFSClient(fileSystemUri, conf);
       }
       return client;
@@ -907,7 +907,7 @@ public class MiniRouterDFSCluster {
   public void waitRouterRegistrationQuorum(RouterContext router,
       FederationNamenodeServiceState state, String nsId, String nnId)
           throws Exception {
-    LOG.info("Waiting for NN {} {} to transition to {}", nsId, nnId, state);
+    LOG.error("Temp", new RuntimeException());
     ActiveNamenodeResolver nnResolver = router.router.getNamenodeResolver();
     waitNamenodeRegistered(nnResolver, nsId, nnId, state);
   }

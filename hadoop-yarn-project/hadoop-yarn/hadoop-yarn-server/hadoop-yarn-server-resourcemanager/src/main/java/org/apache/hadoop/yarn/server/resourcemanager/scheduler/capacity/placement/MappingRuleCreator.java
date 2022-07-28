@@ -202,7 +202,7 @@ public class MappingRuleCreator {
 
     if (fallbackResult == null) {
       action.setFallbackSkip();
-      LOG.debug("Fallback is not defined for rule {}, using SKIP as default", rule);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 

@@ -307,7 +307,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
   @Test
   public void testCapacityScheduler() throws Exception {
 
-    LOG.info("--- START: testCapacityScheduler ---");
+    LOG.error("Temp", new RuntimeException());
 
     NodeStatus mockNodeStatus = createMockNodeStatus();
 
@@ -366,7 +366,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     application_1.schedule();
 
     // Send a heartbeat to kick the tires on the Scheduler
-    LOG.info("Kick!");
+    LOG.error("Temp", new RuntimeException());
 
     // task_0_0 and task_1_0 allocated, used=4G
     nodeUpdate(nm_0);
@@ -384,7 +384,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     checkNodeResourceUsage(4*GB, nm_0);  // task_0_0 (1G) and task_1_0 (3G)
     checkNodeResourceUsage(0*GB, nm_1);  // no tasks, 2G available
 
-    LOG.info("Adding new tasks...");
+    LOG.error("Temp", new RuntimeException());
 
     Task task_1_1 = new Task(application_1, priority_0,
         new String[] {ResourceRequest.ANY});
@@ -399,16 +399,16 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     application_0.schedule();
 
     // Send a heartbeat to kick the tires on the Scheduler
-    LOG.info("Sending hb from " + nm_0.getHostName());
+    LOG.error("Temp", new RuntimeException());
     // nothing new, used=4G
     nodeUpdate(nm_0);
 
-    LOG.info("Sending hb from " + nm_1.getHostName());
+    LOG.error("Temp", new RuntimeException());
     // task_0_1 is prefer as locality, used=2G
     nodeUpdate(nm_1);
 
     // Get allocations from the scheduler
-    LOG.info("Trying to allocate...");
+    LOG.error("Temp", new RuntimeException());
     application_0.schedule();
     checkApplicationResourceUsage(1 * GB, application_0);
 
@@ -421,12 +421,12 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     checkNodeResourceUsage(4*GB, nm_0);
     checkNodeResourceUsage(2*GB, nm_1);
 
-    LOG.info("--- END: testCapacityScheduler ---");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testNotAssignMultiple() throws Exception {
-    LOG.info("--- START: testNotAssignMultiple ---");
+    LOG.error("Temp", new RuntimeException());
     ResourceManager rm = new ResourceManager() {
       @Override
       protected RMNodeLabelsManager createNodeLabelManager() {
@@ -503,7 +503,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     application1.schedule();
 
     // Send a heartbeat to kick the tires on the Scheduler
-    LOG.info("Kick!");
+    LOG.error("Temp", new RuntimeException());
 
     // task00, used=1G
     nodeUpdate(rm, nm0);
@@ -523,12 +523,12 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     application1.schedule();
     checkApplicationResourceUsage(3 * GB, application1);
     checkNodeResourceUsage(4 * GB, nm0);
-    LOG.info("--- END: testNotAssignMultiple ---");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testAssignMultiple() throws Exception {
-    LOG.info("--- START: testAssignMultiple ---");
+    LOG.error("Temp", new RuntimeException());
     ResourceManager rm = new ResourceManager() {
       @Override
       protected RMNodeLabelsManager createNodeLabelManager() {
@@ -607,7 +607,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     application1.schedule();
 
     // Send a heartbeat to kick the tires on the Scheduler
-    LOG.info("Kick!");
+    LOG.error("Temp", new RuntimeException());
 
     // task_0_0, used=1G
     nodeUpdate(rm, nm0);
@@ -627,7 +627,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     application1.schedule();
     checkApplicationResourceUsage(7 * GB, application1);
     checkNodeResourceUsage(10 * GB, nm0);
-    LOG.info("--- END: testAssignMultiple ---");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void nodeUpdate(ResourceManager rm, NodeManager nm) {
@@ -678,7 +678,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     conf.setCapacity(B3, B3_CAPACITY);
     conf.setUserLimitFactor(B3, 100.0f);
 
-    LOG.info("Setup top-level queues a and b");
+    LOG.error("Temp", new RuntimeException());
     return conf;
   }
 
@@ -708,7 +708,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     conf.setCapacity(A2, A2_CAPACITY);
     conf.setUserLimitFactor(A2, 100.0f);
 
-    LOG.info("Setup top-level queues a and b (without children)");
+    LOG.error("Temp", new RuntimeException());
     return conf;
   }
 
@@ -744,7 +744,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     conf.setCapacity(B3, B3_CAPACITY);
     conf.setUserLimitFactor(B3, 100.0f);
 
-    LOG.info("Setup top-level queues a and b (without b3)");
+    LOG.error("Temp", new RuntimeException());
     return conf;
   }
 
@@ -814,7 +814,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     conf.setCapacity(A2, A2_CAPACITY);
     conf.setUserLimitFactor(A2, 100.0f);
 
-    LOG.info("Setup top-level queues a");
+    LOG.error("Temp", new RuntimeException());
     return conf;
   }
 
@@ -832,7 +832,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     conf.setUserLimitFactor(B, 100);
     conf.setMaximumCapacity(A, 100);
     conf.setMaximumCapacity(B, 100);
-    LOG.info("Setup top-level queues a and b");
+    LOG.error("Temp", new RuntimeException());
     return conf;
   }
 
@@ -1371,7 +1371,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     // kick the scheduler, 2 GB given to AM1, resource remaining 0
     nm.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().isEmpty()) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(100);
       alloc1Response = am.schedule();
     }
@@ -1403,7 +1403,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
         c1.getId(), ContainerState.COMPLETE, "", 0, c1.getResource());
     nm.containerStatus(containerStatus);
 
-    LOG.info("Waiting for containers to be finished for app 1...");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(
         () -> attempt1.getJustFinishedContainers().size() == 1, 100, 2000);
     assertEquals(1, am.schedule().getCompletedContainersStatuses().size());
@@ -1429,7 +1429,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     // kick the scheduling and check it took effect
     nm.nodeHeartbeat(true);
     while (allocResponse2.getAllocatedContainers().isEmpty()) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(100);
       allocResponse2 = am.schedule();
     }
@@ -5632,7 +5632,7 @@ public class TestCapacityScheduler extends CapacitySchedulerTestBase {
     newConf.setCapacity(B1, 100);
     newConf.setUserLimitFactor(B1, 2.0f);
 
-    LOG.info("Setup top-level queues a and b");
+    LOG.error("Temp", new RuntimeException());
 
     MockRM rm = new MockRM(newConf);
     rm.start();

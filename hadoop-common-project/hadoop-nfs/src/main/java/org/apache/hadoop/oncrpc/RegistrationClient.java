@@ -98,7 +98,7 @@ public class RegistrationClient extends SimpleTcpClient {
         LOG.warn("Portmap mapping registration failed, accept state:"
             + acceptState);
       }
-      LOG.info("Portmap mapping registration succeeded");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

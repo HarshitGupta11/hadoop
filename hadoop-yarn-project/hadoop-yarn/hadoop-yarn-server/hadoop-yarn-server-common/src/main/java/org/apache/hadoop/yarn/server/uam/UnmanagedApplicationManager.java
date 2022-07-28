@@ -430,7 +430,7 @@ public class UnmanagedApplicationManager {
     context.setKeepContainersAcrossApplicationAttempts(
         this.keepContainersAcrossApplicationAttempts);
 
-    LOG.info("Submitting unmanaged application {}", appId);
+    LOG.error("Temp", new RuntimeException());
     this.rmClient.submitApplication(submitRequest);
   }
 

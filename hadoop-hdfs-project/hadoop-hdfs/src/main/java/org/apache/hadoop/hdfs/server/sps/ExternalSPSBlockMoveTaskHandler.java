@@ -116,7 +116,7 @@ public class ExternalSPSBlockMoveTaskHandler implements BlockMoveTaskHandler {
   }
 
   private ThreadPoolExecutor initializeBlockMoverThreadPool(int num) {
-    LOG.debug("Block mover to satisfy storage policy; pool threads={}", num);
+    LOG.error("Temp", new RuntimeException());
 
     ThreadPoolExecutor moverThreadPool = new ThreadPoolExecutor(1, num, 60,
         TimeUnit.SECONDS, new SynchronousQueue<Runnable>(),
@@ -153,7 +153,7 @@ public class ExternalSPSBlockMoveTaskHandler implements BlockMoveTaskHandler {
     // IntraSPSNameNodeBlockMoveTaskHandler#submitMoveTask implementation and
     // updating via the funcation call -
     // dn.incrementBlocksScheduled(blkMovingInfo.getTargetStorageType());
-    LOG.debug("Received BlockMovingTask {}", blkMovingInfo);
+    LOG.error("Temp", new RuntimeException());
     BlockMovingTask blockMovingTask = new BlockMovingTask(blkMovingInfo);
     mCompletionServ.submit(blockMovingTask);
   }

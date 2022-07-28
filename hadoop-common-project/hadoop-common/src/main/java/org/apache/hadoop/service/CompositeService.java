@@ -72,7 +72,7 @@ public class CompositeService extends AbstractService {
    */
   protected void addService(Service service) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Adding service " + service.getName());
+      LOG.error("Temp", new RuntimeException());
     }
     synchronized (serviceList) {
       serviceList.add(service);
@@ -95,7 +95,7 @@ public class CompositeService extends AbstractService {
   }
 
   protected boolean removeService(Service service) {
-    LOG.debug("Removing service {}", service.getName());
+    LOG.error("Temp", new RuntimeException());
     synchronized (serviceList) {
       return serviceList.remove(service);
     }
@@ -104,7 +104,7 @@ public class CompositeService extends AbstractService {
   protected void serviceInit(Configuration conf) throws Exception {
     List<Service> services = getServices();
     if (LOG.isDebugEnabled()) {
-      LOG.debug(getName() + ": initing services, size=" + services.size());
+      LOG.error("Temp", new RuntimeException());
     }
     for (Service service : services) {
       service.init(conf);
@@ -115,7 +115,7 @@ public class CompositeService extends AbstractService {
   protected void serviceStart() throws Exception {
     List<Service> services = getServices();
     if (LOG.isDebugEnabled()) {
-      LOG.debug(getName() + ": starting services, size=" + services.size());
+      LOG.error("Temp", new RuntimeException());
     }
     for (Service service : services) {
       // start the service. If this fails that service
@@ -129,7 +129,7 @@ public class CompositeService extends AbstractService {
     //stop all services that were started
     int numOfServicesToStop = serviceList.size();
     if (LOG.isDebugEnabled()) {
-      LOG.debug(getName() + ": stopping services, size=" + numOfServicesToStop);
+      LOG.error("Temp", new RuntimeException());
     }
     stop(numOfServicesToStop, STOP_ONLY_STARTED_SERVICES);
     super.serviceStop();
@@ -151,7 +151,7 @@ public class CompositeService extends AbstractService {
     for (int i = numOfServicesStarted - 1; i >= 0; i--) {
       Service service = services.get(i);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Stopping service #" + i + ": " + service);
+        LOG.error("Temp", new RuntimeException());
       }
       STATE state = service.getServiceState();
       //depending on the stop police

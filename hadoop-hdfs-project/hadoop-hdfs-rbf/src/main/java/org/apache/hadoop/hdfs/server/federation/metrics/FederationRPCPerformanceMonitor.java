@@ -88,7 +88,7 @@ public class FederationRPCPerformanceMonitor implements RouterRpcMonitor {
       StandardMBean bean =
           new StandardMBean(this.metrics, FederationRPCMBean.class);
       registeredBean = MBeans.register("Router", "FederationRPC", bean);
-      LOG.info("Registered FederationRPCMBean: {}", registeredBean);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad FederationRPCMBean setup", e);
     }

@@ -78,7 +78,7 @@ public class TestMRAsyncDiskService {
     //    e.g., cwd = /a/b, path = /a/c, return '../c'
 
     if (cwd.equals(pathname)) {
-      LOG.info("relative to working: " + pathname + " -> .");
+      LOG.error("Temp", new RuntimeException());
       return "."; // They match exactly.
     }
 
@@ -114,7 +114,7 @@ public class TestMRAsyncDiskService {
       s = s.substring(0, s.length() - 1);
     }
 
-    LOG.info("relative to working: " + pathname + " -> " + s);
+    LOG.error("Temp", new RuntimeException());
     return s;
   }
 
@@ -145,7 +145,7 @@ public class TestMRAsyncDiskService {
    * by MRAsyncDiskService (MAPREDUCE-1887).
    */
   public void testVolumeNormalization() throws Throwable {
-    LOG.info("TEST_ROOT_DIR is " + TEST_ROOT_DIR);
+    LOG.error("Temp", new RuntimeException());
 
     String relativeTestRoot = relativeToWorking(TEST_ROOT_DIR);
 

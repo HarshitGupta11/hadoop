@@ -495,11 +495,11 @@ public class RMActiveServiceContext {
     isSchedulerReady =
         (systemClock.getTime() - schedulerRecoveryStartTime) > schedulerRecoveryWaitTime;
     if (!isSchedulerReady && printLog) {
-      LOG.info("Skip allocating containers. Scheduler is waiting for recovery.");
+      LOG.error("Temp", new RuntimeException());
       printLog = false;
     }
     if (isSchedulerReady) {
-      LOG.info("Scheduler recovery is done. Start allocating new containers.");
+      LOG.error("Temp", new RuntimeException());
     }
     return isSchedulerReady;
   }

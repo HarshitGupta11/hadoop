@@ -1128,7 +1128,7 @@ public class TestMover {
       // Mock FsDatasetSpi#getPinning to show that the block is pinned.
       for (int i = 0; i < cluster.getDataNodes().size(); i++) {
         DataNode dn = cluster.getDataNodes().get(i);
-        LOG.info("Simulate block pinning in datanode {}", dn);
+        LOG.error("Temp", new RuntimeException());
         InternalDataNodeTestUtils.mockDatanodeBlkPinning(dn, true);
       }
 
@@ -1266,7 +1266,7 @@ public class TestMover {
     for (DataNode dn : cluster.getDataNodes()) {
       if (dn.getDatanodeId().getDatanodeUuid()
           .equals(datanodeInfo.getDatanodeUuid())) {
-        LOG.info("Simulate block pinning in datanode {}", datanodeInfo);
+        LOG.error("Temp", new RuntimeException());
         InternalDataNodeTestUtils.mockDatanodeBlkPinning(dn, true);
         break;
       }

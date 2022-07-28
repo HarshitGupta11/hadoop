@@ -200,7 +200,7 @@ class LoadJob extends GridmixJob {
     
     @Override
     public void run() {
-      LOG.info("Resource usage matcher thread started.");
+      LOG.error("Temp", new RuntimeException());
       try {
         while (progress.getProgress() < 1) {
           // match
@@ -214,7 +214,7 @@ class LoadJob extends GridmixJob {
         
         // match for progress = 1
         match();
-        LOG.info("Resource usage emulation complete! Matcher exiting");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         LOG.info("Exception while running the resource-usage-emulation matcher"
                  + " thread! Exiting.", e);
@@ -245,7 +245,7 @@ class LoadJob extends GridmixJob {
     
     @Override
     public void run() {
-      LOG.info("Status reporter thread started.");
+      LOG.error("Temp", new RuntimeException());
       try {
         while (!isInterrupted() && progress.getProgress() < 1) {
           // report progress
@@ -257,9 +257,9 @@ class LoadJob extends GridmixJob {
           } catch (Exception e) {}
         }
         
-        LOG.info("Status reporter thread exiting");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
-        LOG.info("Exception while running the status reporter thread!", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -393,7 +393,7 @@ class LoadJob extends GridmixJob {
         try {
           matcher.match();
         } catch (Exception e) {
-          LOG.debug("Error in resource usage emulation! Message: ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -401,7 +401,7 @@ class LoadJob extends GridmixJob {
     @Override
     public void cleanup(Context context) 
     throws IOException, InterruptedException {
-      LOG.info("Starting the cleanup phase.");
+      LOG.error("Temp", new RuntimeException());
       for (RecordFactory factory : reduces) {
         key.setSeed(r.nextLong());
         while (factory.next(key, val)) {
@@ -415,7 +415,7 @@ class LoadJob extends GridmixJob {
           try {
             matcher.match();
           } catch (Exception e) {
-            LOG.debug("Error in resource usage emulation! Message: ", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -425,7 +425,7 @@ class LoadJob extends GridmixJob {
       //  check if the final sort&spill->merge phase is gonna happen or not
       if (context.getNumReduceTasks() > 0 
           && context.getCounter(TaskCounter.SPILLED_RECORDS).getValue() == 0) {
-        LOG.info("Boosting the map phase progress.");
+        LOG.error("Temp", new RuntimeException());
         // add the sort phase progress to the map phase and emulate
         matcher.boost(0.33f);
         matcher.match();
@@ -470,7 +470,7 @@ class LoadJob extends GridmixJob {
         }
       }
       if (0 == outRecords && inRecords > 0) {
-        LOG.info("Spec output bytes w/o records. Using input record count");
+        LOG.error("Temp", new RuntimeException());
         outRecords = inRecords;
       }
       
@@ -516,7 +516,7 @@ class LoadJob extends GridmixJob {
           try {
             matcher.match();
           } catch (Exception e) {
-            LOG.debug("Error in resource usage emulation! Message: ", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -533,7 +533,7 @@ class LoadJob extends GridmixJob {
         try {
           matcher.match();
         } catch (Exception e) {
-          LOG.debug("Error in resource usage emulation! Message: ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

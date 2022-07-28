@@ -81,7 +81,7 @@ public class AggregatedLogDeletionService extends AbstractService {
     @Override
     public void run() {
       long cutoffMillis = System.currentTimeMillis() - retentionMillis;
-      LOG.info("aggregated log deletion started.");
+      LOG.error("Temp", new RuntimeException());
       try {
         FileSystem fs = remoteRootLogDir.getFileSystem(conf);
         for(FileStatus userDir : fs.listStatus(remoteRootLogDir)) {
@@ -104,7 +104,7 @@ public class AggregatedLogDeletionService extends AbstractService {
         logException("Error reading root log dir this deletion " +
             "attempt is being aborted", t);
       }
-      LOG.info("aggregated log deletion finished.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     private static void deleteOldLogDirsFrom(Path dir, long cutoffMillis, 
@@ -152,7 +152,7 @@ public class AggregatedLogDeletionService extends AbstractService {
           } else if (shouldDeleteLogDir(appDir, cutoffMillis, fs)) {
             // Application is no longer running
             try {
-              LOG.info("Deleting aggregated logs in " + appDir.getPath());
+              LOG.error("Temp", new RuntimeException());
               fs.delete(appDir.getPath(), true);
             } catch (IOException e) {
               logException("Could not delete " + appDir.getPath(), e);
@@ -208,7 +208,7 @@ public class AggregatedLogDeletionService extends AbstractService {
       String message = t.getMessage();
       //TODO fix this after HADOOP-8661
       message = message.split("\n")[0];
-      LOG.warn(comment + " " + message);
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.error(comment, t);
     }
@@ -251,7 +251,7 @@ public class AggregatedLogDeletionService extends AbstractService {
       stopTimer();
       scheduleLogDeletionTask();
     } else {
-      LOG.warn("Failed to execute refreshLogRetentionSettings : Aggregated Log Deletion Service is not started");
+      LOG.error("Temp", new RuntimeException());
     }
   }
   

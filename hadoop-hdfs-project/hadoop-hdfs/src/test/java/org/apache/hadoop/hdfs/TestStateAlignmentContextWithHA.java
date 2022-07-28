@@ -255,9 +255,9 @@ public class TestStateAlignmentContextWithHA {
   }
 
   private void failOver() throws IOException {
-    LOG.info("Transitioning Active to Standby");
+    LOG.error("Temp", new RuntimeException());
     cluster.transitionToStandby(active);
-    LOG.info("Transitioning Standby to Active");
+    LOG.error("Temp", new RuntimeException());
     cluster.transitionToActive(standby);
     int tempActive = active;
     active = standby;
@@ -324,8 +324,8 @@ public class TestStateAlignmentContextWithHA {
           }
 
           if(i % (NUMFILES/10) == 0) {
-            LOG.info("Worker {} created {} files", nonce, i);
-            LOG.info("LastSeenStateId = {}", postClientStateFO);
+            LOG.error("Temp", new RuntimeException());
+            LOG.error("Temp", new RuntimeException());
           }
         }
         return STATE.SUCCESS;
@@ -333,7 +333,7 @@ public class TestStateAlignmentContextWithHA {
         LOG.error("ERROR: Worker failed with: ", e);
         return STATE.ERROR;
       } finally {
-        LOG.info("Worker {} created {} files", nonce, i);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

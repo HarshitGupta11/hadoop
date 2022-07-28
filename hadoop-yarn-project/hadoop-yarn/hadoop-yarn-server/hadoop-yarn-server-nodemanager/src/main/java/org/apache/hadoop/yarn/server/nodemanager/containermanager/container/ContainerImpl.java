@@ -962,7 +962,7 @@ public class ContainerImpl implements Container {
   }
 
   private void clearIpAndHost() {
-    LOG.info("{} clearing ip and host", containerId);
+    LOG.error("Temp", new RuntimeException());
     this.ips = null;
     this.host = null;
   }
@@ -1258,7 +1258,7 @@ public class ContainerImpl implements Container {
         }
       } catch (URISyntaxException | IOException e) {
         // malformed resource; abort container launch
-        LOG.warn("Failed to parse resource-request", e);
+        LOG.error("Temp", new RuntimeException());
         container.cleanup();
         container.metrics.endInitingContainer();
         return ContainerState.LOCALIZATION_FAILED;
@@ -1495,7 +1495,7 @@ public class ContainerImpl implements Container {
         try {
           String linkFile = new Path(container.workDir, link).toString();
           if (new File(linkFile).exists()) {
-            LOG.info("Symlink file already exists: " + linkFile);
+            LOG.error("Temp", new RuntimeException());
           } else {
             container.context.getContainerExecutor()
                 .symLink(rsrcEvent.getLocation().toString(), linkFile);
@@ -2173,7 +2173,7 @@ public class ContainerImpl implements Container {
     this.writeLock.lock();
     try {
       ContainerId containerID = event.getContainerID();
-      LOG.debug("Processing {} of type {}", containerID, event.getType());
+      LOG.error("Temp", new RuntimeException());
       ContainerState oldState = stateMachine.getCurrentState();
       ContainerState newState = null;
       try {

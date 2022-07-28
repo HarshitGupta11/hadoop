@@ -151,7 +151,7 @@ public class ContainerLogsPage extends NMView {
                 printAggregatedLogFileDirectory(html, containersLogMeta);
               }
             } catch (Exception ex) {
-              LOG.debug("{}", ex);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         } else {

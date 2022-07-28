@@ -96,13 +96,13 @@ public class SliderFileSystem extends CoreFileSystem {
     Path path = getComponentDir(serviceVersion, compName);
     if (fileSystem.exists(path)) {
       fileSystem.delete(path, true);
-      LOG.debug("deleted dir {}", path);
+      LOG.error("Temp", new RuntimeException());
     }
     Path publicResourceDir = getComponentPublicResourceDir(serviceVersion,
         compName);
     if (fileSystem.exists(publicResourceDir)) {
       fileSystem.delete(publicResourceDir, true);
-      LOG.debug("deleted public resource dir {}", publicResourceDir);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -117,14 +117,14 @@ public class SliderFileSystem extends CoreFileSystem {
     Path path = new Path(new Path(getAppDir(), "components"), serviceVersion);
     if (fileSystem.exists(path) && fileSystem.listStatus(path).length == 0) {
       fileSystem.delete(path, true);
-      LOG.info("deleted dir {}", path);
+      LOG.error("Temp", new RuntimeException());
     }
     Path publicResourceDir = new Path(new Path(getBasePath(),
         getAppDir().getName() + "/" + "components"), serviceVersion);
     if (fileSystem.exists(publicResourceDir)
         && fileSystem.listStatus(publicResourceDir).length == 0) {
       fileSystem.delete(publicResourceDir, true);
-      LOG.info("deleted public resource dir {}", publicResourceDir);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -80,14 +80,14 @@ public class AsyncDataService {
    */
   synchronized void shutdown() {
     if (executor == null) {
-      LOG.warn("AsyncDataService has already shut down.");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.info("Shutting down all async data service threads...");
+      LOG.error("Temp", new RuntimeException());
       executor.shutdown();
 
       // clear the executor so that calling execute again will fail.
       executor = null;
-      LOG.info("All async data service threads have been shut down");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

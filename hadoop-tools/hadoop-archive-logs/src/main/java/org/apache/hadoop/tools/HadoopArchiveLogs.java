@@ -122,7 +122,7 @@ public class HadoopArchiveLogs implements Tool {
     try{
       ret = ToolRunner.run(hal, args);
     } catch(Exception e) {
-      LOG.debug("Exception", e);
+      LOG.error("Temp", new RuntimeException());
       System.err.println(e.getClass().getSimpleName());
       final String s = e.getLocalizedMessage();
       if (s != null) {
@@ -148,7 +148,7 @@ public class HadoopArchiveLogs implements Tool {
     List<LogAggregationFileController> fileControllers = factory
         .getConfiguredLogAggregationFileControllerList();
     if (fileControllers == null || fileControllers.isEmpty()) {
-      LOG.info("Can not find any valid fileControllers.");
+      LOG.error("Temp", new RuntimeException());
       if (verbose) {
         LOG.info("The configurated fileControllers:"
             + YarnConfiguration.LOG_AGGREGATION_FILE_FORMATS);
@@ -166,9 +166,9 @@ public class HadoopArchiveLogs implements Tool {
         if (verbose) {
           LOG.info("LogAggregationFileController:" + fileController
               .getClass().getName());
-          LOG.info("Remote Log Dir Root: " + remoteRootLogDir);
-          LOG.info("Log Suffix: " + suffix);
-          LOG.info("Working Dir: " + workingDir);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
         }
         checkFilesAndSeedApps(fs, remoteRootLogDir, suffix, workingDir);
 
@@ -181,7 +181,7 @@ public class HadoopArchiveLogs implements Tool {
       }
       checkMaxEligible();
       if (workingDirs.isEmpty() || eligibleApplications.isEmpty()) {
-        LOG.info("No eligible applications to process");
+        LOG.error("Temp", new RuntimeException());
         return 0;
       }
       for (Path workingDir : workingDirs) {
@@ -196,7 +196,7 @@ public class HadoopArchiveLogs implements Tool {
       for (AppInfo app : eligibleApplications) {
         sb.append("\n\t").append(app.getAppId());
       }
-      LOG.info(sb.toString());
+      LOG.error("Temp", new RuntimeException());
       File localScript = File.createTempFile("hadoop-archive-logs-", ".sh");
       generateScript(localScript);
 
@@ -343,14 +343,14 @@ public class HadoopArchiveLogs implements Tool {
             it.remove();
           } else {
             if (verbose) {
-              LOG.info(app.getAppId() + " has aggregation status " + aggStatus);
+              LOG.error("Temp", new RuntimeException());
             }
             app.setFinishTime(report.getFinishTime());
           }
         } catch (ApplicationNotFoundException e) {
           // Assume the aggregation has finished
           if (verbose) {
-            LOG.info(app.getAppId() + " not in the ResourceManager");
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -461,7 +461,7 @@ public class HadoopArchiveLogs implements Tool {
       });
       for (int i = maxEligible; i < sortedApplications.size(); i++) {
         if (verbose) {
-          LOG.info("Removing " + sortedApplications.get(i));
+          LOG.error("Temp", new RuntimeException());
         }
         eligibleApplications.remove(sortedApplications.get(i));
       }
@@ -496,7 +496,7 @@ public class HadoopArchiveLogs implements Tool {
   @VisibleForTesting
   void generateScript(File localScript) throws IOException {
     if (verbose) {
-      LOG.info("Generating script at: " + localScript.getAbsolutePath());
+      LOG.error("Temp", new RuntimeException());
     }
     String halrJarPath = HadoopArchiveLogsRunner.class.getProtectionDomain()
         .getCodeSource().getLocation().getPath();

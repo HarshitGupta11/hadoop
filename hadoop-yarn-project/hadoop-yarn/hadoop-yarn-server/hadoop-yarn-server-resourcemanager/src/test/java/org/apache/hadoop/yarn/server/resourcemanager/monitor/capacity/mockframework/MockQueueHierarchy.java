@@ -174,7 +174,7 @@ class MockQueueHierarchy {
 
   private void setupQueue(CSQueue queue, String q, String[] queueExprArray,
       int idx) {
-    LOG.debug("*** Setup queue, source=" + q);
+    LOG.error("Temp", new RuntimeException());
     String queuePath = null;
 
     int myLevel = getLevel(q);

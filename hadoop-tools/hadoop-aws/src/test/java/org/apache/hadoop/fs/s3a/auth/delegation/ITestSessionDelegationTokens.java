@@ -276,7 +276,7 @@ public class ITestSessionDelegationTokens extends AbstractDelegationIT {
       final AbstractS3ATokenIdentifier boundId
           = delegationTokens2.getDecodedIdentifier().get();
 
-      LOG.info("Regenerated DT is {}", newDT);
+      LOG.error("Temp", new RuntimeException());
       final MarshalledCredentials creds2 = fromAWSCredentials(
           verifySessionCredentials(
               delegationTokens2.getCredentialProviders().getCredentials()));

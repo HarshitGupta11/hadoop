@@ -104,10 +104,10 @@ public class TestOutOfOrderWrite {
       ByteBuf buf = (ByteBuf) msg;
       XDR rsp = new XDR(buf.array());
       if (rsp.getBytes().length == 0) {
-        LOG.info("rsp length is zero, why?");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
-      LOG.info("rsp length=" + rsp.getBytes().length);
+      LOG.error("Temp", new RuntimeException());
 
       RpcReply reply = RpcReply.read(rsp);
       int xid = reply.getXid();
@@ -120,7 +120,7 @@ public class TestOutOfOrderWrite {
         LOG.error("Create failed, status =" + status);
         return;
       }
-      LOG.info("Create succeeded");
+      LOG.error("Temp", new RuntimeException());
       rsp.readBoolean(); // value follow
       handle = new FileHandle();
       handle.deserialize(rsp);
@@ -167,7 +167,7 @@ public class TestOutOfOrderWrite {
       Thread.sleep(1000);
       System.out.println("handle is still null...");
     }
-    LOG.info("Send write1 request");
+    LOG.error("Temp", new RuntimeException());
 
     XDR writeReq;
 

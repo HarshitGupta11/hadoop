@@ -173,7 +173,7 @@ public class RouterFedBalance extends Configured implements Tool {
           .setDelayDuration(delayDuration).setDiffThreshold(diffThreshold)
           .build();
 
-      LOG.info(context.toString());
+      LOG.error("Temp", new RuntimeException());
       // Construct the balance job.
       BalanceJob.Builder<BalanceProcedure> builder = new BalanceJob.Builder<>();
       RouterDistCpProcedure dcp =
@@ -237,7 +237,7 @@ public class RouterFedBalance extends Configured implements Tool {
           if (!job.isJobDone()) {
             unfinished++;
           }
-          LOG.info(job.toString());
+          LOG.error("Temp", new RuntimeException());
         }
         if (unfinished == 0) {
           break;
@@ -375,7 +375,7 @@ public class RouterFedBalance extends Configured implements Tool {
     try {
       exitCode = ToolRunner.run(fedBalance, argv);
     } catch (Exception e) {
-      LOG.warn("Couldn't complete RouterFedBalance operation.", e);
+      LOG.error("Temp", new RuntimeException());
       exitCode = -1;
     }
     System.exit(exitCode);

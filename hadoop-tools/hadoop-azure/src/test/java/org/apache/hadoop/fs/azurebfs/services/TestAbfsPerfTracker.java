@@ -182,7 +182,7 @@ public final class TestAbfsPerfTracker {
         }
 
         long latencyRecord = Duration.between(startRecord, Instant.now()).toMillis();
-        LOG.debug("Spent {} ms in recording latency.", latencyRecord);
+        LOG.error("Temp", new RuntimeException());
         return latencyRecord;
       });
     }
@@ -218,7 +218,7 @@ public final class TestAbfsPerfTracker {
         }
 
         long latencyRecord = Duration.between(startRecord, Instant.now()).toMillis();
-        LOG.debug("Spent {} ms in recording latency.", latencyRecord);
+        LOG.error("Temp", new RuntimeException());
         return latencyRecord;
       });
     }
@@ -247,7 +247,7 @@ public final class TestAbfsPerfTracker {
         Instant startGet = Instant.now();
         abfsPerfTracker.getClientLatency();
         long latencyGet = Duration.between(startGet, Instant.now()).toMillis();
-        LOG.debug("Spent {} ms in retrieving latency record.", latencyGet);
+        LOG.error("Temp", new RuntimeException());
         return latencyGet;
       });
     }
@@ -281,7 +281,7 @@ public final class TestAbfsPerfTracker {
         }
 
         long latencyRecord = Duration.between(startRecord, Instant.now()).toMillis();
-        LOG.debug("Spent {} ms in recording latency.", latencyRecord);
+        LOG.error("Temp", new RuntimeException());
         return latencyRecord;
       });
     }
@@ -316,7 +316,7 @@ public final class TestAbfsPerfTracker {
         }
 
         long latencyRecord = Duration.between(startRecord, Instant.now()).toMillis();
-        LOG.debug("Spent {} ms in recording latency.", latencyRecord);
+        LOG.error("Temp", new RuntimeException());
         return latencyRecord;
       });
     }
@@ -344,7 +344,7 @@ public final class TestAbfsPerfTracker {
         Instant startRecord = Instant.now();
         abfsPerfTracker.getClientLatency();
         long latencyRecord = Duration.between(startRecord, Instant.now()).toMillis();
-        LOG.debug("Spent {} ms in recording latency.", latencyRecord);
+        LOG.error("Temp", new RuntimeException());
         return latencyRecord;
       });
     }

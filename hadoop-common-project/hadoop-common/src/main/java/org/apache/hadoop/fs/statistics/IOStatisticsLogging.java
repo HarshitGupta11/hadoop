@@ -64,7 +64,7 @@ public final class IOStatisticsLogging {
     try {
       return ioStatisticsToString(retrieveIOStatistics(source));
     } catch (RuntimeException e) {
-      LOG.debug("Ignoring", e);
+      LOG.error("Temp", new RuntimeException());
       return "";
     }
   }
@@ -266,13 +266,13 @@ public final class IOStatisticsLogging {
     if (stats != null) {
       switch (level.toLowerCase(Locale.US)) {
       case IOSTATISTICS_LOGGING_LEVEL_INFO:
-        LOG.info("IOStatistics: {}", ioStatisticsToPrettyString(stats));
+        LOG.error("Temp", new RuntimeException());
         break;
       case IOSTATISTICS_LOGGING_LEVEL_ERROR:
         LOG.error("IOStatistics: {}", ioStatisticsToPrettyString(stats));
         break;
       case IOSTATISTICS_LOGGING_LEVEL_WARN:
-        LOG.warn("IOStatistics: {}", ioStatisticsToPrettyString(stats));
+        LOG.error("Temp", new RuntimeException());
         break;
       default:
         logIOStatisticsAtDebug(log, "IOStatistics: {}", source);

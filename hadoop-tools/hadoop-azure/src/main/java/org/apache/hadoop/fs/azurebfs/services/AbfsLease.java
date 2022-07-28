@@ -111,12 +111,12 @@ public final class AbfsLease {
       throw new LeaseException(exception);
     }
 
-    LOG.debug("Acquired lease {} on {}", leaseID, path);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void acquireLease(RetryPolicy retryPolicy, int numRetries, int retryInterval, long delay)
       throws LeaseException {
-    LOG.debug("Attempting to acquire lease on {}, retry {}", path, numRetries);
+    LOG.error("Temp", new RuntimeException());
     if (future != null && !future.isDone()) {
       throw new LeaseException(ERR_LEASE_FUTURE_EXISTS);
     }
@@ -126,7 +126,7 @@ public final class AbfsLease {
       @Override
       public void onSuccess(@Nullable AbfsRestOperation op) {
         leaseID = op.getResult().getResponseHeader(HttpHeaderConfigurations.X_MS_LEASE_ID);
-        LOG.debug("Acquired lease {} on {}", leaseID, path);
+        LOG.error("Temp", new RuntimeException());
       }
 
       @Override
@@ -134,7 +134,7 @@ public final class AbfsLease {
         try {
           if (RetryPolicy.RetryAction.RetryDecision.RETRY
               == retryPolicy.shouldRetry(null, numRetries, 0, true).action) {
-            LOG.debug("Failed to acquire lease on {}, retrying: {}", path, throwable);
+            LOG.error("Temp", new RuntimeException());
             acquireRetryCount++;
             acquireLease(retryPolicy, numRetries + 1, retryInterval, retryInterval);
           } else {
@@ -157,7 +157,7 @@ public final class AbfsLease {
       return;
     }
     try {
-      LOG.debug("Freeing lease: path {}, lease id {}", path, leaseID);
+      LOG.error("Temp", new RuntimeException());
       if (future != null && !future.isDone()) {
         future.cancel(true);
       }
@@ -169,7 +169,7 @@ public final class AbfsLease {
       // Even if releasing the lease fails (e.g. because the file was deleted),
       // make sure to record that we freed the lease
       leaseFreed = true;
-      LOG.debug("Freed lease {} on {}", leaseID, path);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

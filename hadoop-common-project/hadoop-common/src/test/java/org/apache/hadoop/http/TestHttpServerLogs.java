@@ -45,7 +45,7 @@ public class TestHttpServerLogs extends HttpServerFunctionalTest {
         JerseyResource.class.getPackage().getName(), "/jersey/*");
     server.start();
     baseUrl = getServerURL(server);
-    LOG.info("HTTP server started: "+ baseUrl);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @AfterClass

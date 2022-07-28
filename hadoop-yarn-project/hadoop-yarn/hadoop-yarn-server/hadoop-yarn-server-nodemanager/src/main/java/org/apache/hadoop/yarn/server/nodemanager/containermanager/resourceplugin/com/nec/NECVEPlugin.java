@@ -72,7 +72,7 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
   NECVEPlugin(Function<String, String> envProvider, String[] scriptPaths,
       UdevUtil udev) throws ResourceHandlerException {
     if (Boolean.parseBoolean(envProvider.apply(ENV_USE_UDEV))) {
-      LOG.info("Using libudev to retrieve syspath & device status");
+      LOG.error("Temp", new RuntimeException());
       useUdev = true;
       udev.init();
       discoverer = new VEDeviceDiscoverer(udev);
@@ -89,7 +89,7 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
     if (envScriptName != null) {
       binaryName = envScriptName;
     }
-    LOG.info("Use {} as script name.", binaryName);
+    LOG.error("Temp", new RuntimeException());
 
     // Try to find the script based on an environment variable, if set
     boolean found = false;
@@ -159,8 +159,8 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
     }
 
     if (devices != null) {
-      LOG.info("Found devices:");
-      devices.forEach(dev -> LOG.info("{}", dev));
+      LOG.error("Temp", new RuntimeException());
+      devices.forEach(dev -> LOG.error("Temp", new RuntimeException());
     }
 
     return devices;
@@ -181,7 +181,7 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
   private Set<Device> parseOutput(String output) {
     Set<Device> devices = new HashSet<>();
 
-    LOG.info("Parsing output: {}", output);
+    LOG.error("Temp", new RuntimeException());
     String[] lines = output.split("\n");
     outer:
     for (String line : lines) {
@@ -206,14 +206,14 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
         if (builderInvocation != null) {
           builderInvocation.accept(value);
         } else {
-          LOG.warn("Unknown key {}, ignored", key);
+          LOG.error("Temp", new RuntimeException());
         }
       }// for key value pairs
       Device device = builder.build();
       if (device.isHealthy()) {
         devices.add(device);
       } else {
-        LOG.warn("Skipping device {} because it's not healthy", device);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -247,25 +247,25 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
   }
 
   private String getScriptFromEnvSetting(String envBinaryPath) {
-    LOG.info("Checking script path: {}", envBinaryPath);
+    LOG.error("Temp", new RuntimeException());
     File f = new File(envBinaryPath);
 
     if (!f.exists()) {
-      LOG.warn("Script {} does not exist", envBinaryPath);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 
     if (f.isDirectory()) {
-      LOG.warn("Specified path {} is a directory", envBinaryPath);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 
     if (!FileUtil.canExecute(f)) {
-      LOG.warn("Script {} is not executable", envBinaryPath);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 
-    LOG.info("Found script: {}", envBinaryPath);
+    LOG.error("Temp", new RuntimeException());
 
     return envBinaryPath;
   }
@@ -278,13 +278,13 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
     if (hadoopCommon != null) {
       String targetPath = hadoopCommon +
           "/sbin/DevicePluginScript/" + binaryName;
-      LOG.info("Checking script {}: ", targetPath);
+      LOG.error("Temp", new RuntimeException());
       if (new File(targetPath).exists()) {
-        LOG.info("Found script: {}", targetPath);
+        LOG.error("Temp", new RuntimeException());
         scriptPath = targetPath;
       }
     } else {
-      LOG.info("$HADOOP_COMMON_HOME is not set");
+      LOG.error("Temp", new RuntimeException());
     }
 
     return scriptPath;
@@ -297,7 +297,7 @@ public class NECVEPlugin implements DevicePlugin, DevicePluginScheduler {
     for (String dir : scriptPaths) {
       File f = new File(dir, binaryName);
       if (f.exists()) {
-        LOG.info("Found script: {}", dir);
+        LOG.error("Temp", new RuntimeException());
         scriptPath = f.getAbsolutePath();
         break;
       }

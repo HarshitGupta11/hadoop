@@ -202,7 +202,7 @@ public class LocalDirsHandlerService extends AbstractService
         checkDirs();
       } catch (Throwable t) {
         // Prevent uncaught exceptions from killing this thread
-        LOG.warn("Error while checking local directories: ", t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -518,11 +518,11 @@ public class LocalDirsHandlerService extends AbstractService
   private void logDiskStatus(boolean newDiskFailure, boolean diskTurnedGood) {
     if (newDiskFailure) {
       String report = getDisksHealthReport(false);
-      LOG.info("Disk(s) failed: " + report);
+      LOG.error("Temp", new RuntimeException());
     }
     if (diskTurnedGood) {
       String report = getDisksHealthReport(true);
-      LOG.info("Disk(s) turned good: " + report);
+      LOG.error("Temp", new RuntimeException());
     }
 
   }
@@ -622,7 +622,7 @@ public class LocalDirsHandlerService extends AbstractService
         }
       } catch (IOException ie) {
         // ignore
-        LOG.warn("Failed to find " + pathStr + " at " + dir, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -674,7 +674,7 @@ public class LocalDirsHandlerService extends AbstractService
               + " scheme or without scheme");
         }
       } catch (IllegalArgumentException e) {
-        LOG.warn(e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(paths[i]
             + " is not a valid path. Path should be with " + FILE_SCHEME
             + " scheme or without scheme");

@@ -183,7 +183,7 @@ public final class CallableSupplier<T> implements Supplier<T> {
                new DurationInfo(LOG, false, "Waiting for task completion")) {
         future.join();
       } catch (Exception e) {
-        LOG.debug("Ignoring exception raised in task completion: ");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

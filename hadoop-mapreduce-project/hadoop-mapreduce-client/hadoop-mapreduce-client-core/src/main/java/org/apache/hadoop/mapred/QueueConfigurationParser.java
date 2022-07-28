@@ -186,7 +186,7 @@ class QueueConfigurationParser {
     Queue rootNode = null;
     try {
       if (!QUEUES_TAG.equals(queuesNode.getTagName())) {
-        LOG.info("Bad conf file: top-level element not <queues>");
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("No queues defined ");
       }
       NamedNodeMap nmp = queuesNode.getAttributes();
@@ -204,7 +204,7 @@ class QueueConfigurationParser {
 
       NodeList props = queuesNode.getChildNodes();
       if (props == null || props.getLength() <= 0) {
-        LOG.info(" Bad configuration no queues defined ");
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException(" No queues defined ");
       }
 
@@ -216,7 +216,7 @@ class QueueConfigurationParser {
         }
 
         if (!propNode.getNodeName().equals(QUEUE_TAG)) {
-          LOG.info("At root level only \" queue \" tags are allowed ");
+          LOG.error("Temp", new RuntimeException());
           throw
             new RuntimeException("Malformed xml document no queue defined ");
         }
@@ -232,7 +232,7 @@ class QueueConfigurationParser {
       }
       return rootNode;
     } catch (DOMException e) {
-      LOG.info("Error parsing conf file: " + e);
+      LOG.error("Temp", new RuntimeException());
       throw new RuntimeException(e);
     }
   }

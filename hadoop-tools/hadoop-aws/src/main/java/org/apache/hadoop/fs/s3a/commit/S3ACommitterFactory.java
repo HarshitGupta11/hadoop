@@ -115,7 +115,7 @@ public class S3ACommitterFactory extends AbstractS3ACommitterFactory {
 
     String name = fsConf.getTrimmed(FS_S3A_COMMITTER_NAME, COMMITTER_NAME_FILE);
     name = taskConf.getTrimmed(FS_S3A_COMMITTER_NAME, name);
-    LOG.debug("Committer option is {}", name);
+    LOG.error("Temp", new RuntimeException());
     switch (name) {
     case COMMITTER_NAME_FILE:
       factory = null;

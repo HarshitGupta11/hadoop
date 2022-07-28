@@ -55,7 +55,7 @@ public class TestGSet {
         gset.contains(null);
         Assert.fail();
       } catch(NullPointerException e) {
-        LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+        LightWeightGSet.LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -68,7 +68,7 @@ public class TestGSet {
         gset.get(null);
         Assert.fail();
       } catch(NullPointerException e) {
-        LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+        LightWeightGSet.LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -81,14 +81,14 @@ public class TestGSet {
         gset.put(null);
         Assert.fail();
       } catch(NullPointerException e) {
-        LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+        LightWeightGSet.LOG.error("Temp", new RuntimeException());
       }
       try {
         //test putting an element which is not implementing LinkedElement
         gset.put(1);
         Assert.fail();
       } catch(IllegalArgumentException e) {
-        LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+        LightWeightGSet.LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -119,7 +119,7 @@ public class TestGSet {
             }
             Assert.fail();
           } catch(ConcurrentModificationException e) {
-            LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+            LightWeightGSet.LOG.error("Temp", new RuntimeException());
           }
         }
 
@@ -134,7 +134,7 @@ public class TestGSet {
             }
             Assert.fail();
           } catch(ConcurrentModificationException e) {
-            LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+            LightWeightGSet.LOG.error("Temp", new RuntimeException());
           }
         }
 
@@ -149,7 +149,7 @@ public class TestGSet {
             }
             Assert.fail();
           } catch(ConcurrentModificationException e) {
-            LightWeightGSet.LOG.info("GOOD: getting " + e, e);
+            LightWeightGSet.LOG.error("Temp", new RuntimeException());
           }
         }
       }

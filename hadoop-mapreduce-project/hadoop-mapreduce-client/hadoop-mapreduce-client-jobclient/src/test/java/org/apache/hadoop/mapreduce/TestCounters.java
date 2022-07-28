@@ -100,7 +100,7 @@ public class TestCounters {
   static final long FS_COUNTER_VALUE = 10;
 
   private void testMaxCounters(final Counters counters) {
-    LOG.info("counters max="+ Limits.getCountersMax());
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < Limits.getCountersMax(); ++i) {
       counters.findCounter("test", "test"+ i);
     }
@@ -114,7 +114,7 @@ public class TestCounters {
   }
 
   private void testMaxGroups(final Counters counters) {
-    LOG.info("counter groups max="+ Limits.getGroupsMax());
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < Limits.getGroupsMax(); ++i) {
       // assuming COUNTERS_MAX > GROUPS_MAX
       counters.findCounter("test"+ i, "test");
@@ -145,7 +145,7 @@ public class TestCounters {
       runnable.run();
     } catch (Exception e) {
       assertSame(ecls, e.getClass());
-      LOG.info("got expected: "+ e);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     assertTrue("Should've thrown "+ ecls.getSimpleName(), false);

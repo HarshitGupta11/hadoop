@@ -178,7 +178,7 @@ public abstract class StateStoreFileBaseImpl
     try {
       // Create data directories for files
       if (!exists(dataDirPath)) {
-        LOG.info("{} data directory doesn't exist, creating it", dataDirPath);
+        LOG.error("Temp", new RuntimeException());
         if (!mkdir(dataDirPath)) {
           LOG.error("Cannot create data directory {}", dataDirPath);
           return false;
@@ -204,9 +204,9 @@ public abstract class StateStoreFileBaseImpl
       for (String child : children) {
         String pathRecord = path + "/" + child;
         if (child.endsWith(TMP_MARK)) {
-          LOG.debug("There is a temporary file {} in {}", child, path);
+          LOG.error("Temp", new RuntimeException());
           if (isOldTempRecord(child)) {
-            LOG.warn("Removing {} as it's an old temporary record", child);
+            LOG.error("Temp", new RuntimeException());
             remove(pathRecord);
           }
         } else {
@@ -336,7 +336,7 @@ public abstract class StateStoreFileBaseImpl
           }
           return false;
         } else  {
-          LOG.debug("Not updating {}", record);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         toWrite.put(recordPath, record);

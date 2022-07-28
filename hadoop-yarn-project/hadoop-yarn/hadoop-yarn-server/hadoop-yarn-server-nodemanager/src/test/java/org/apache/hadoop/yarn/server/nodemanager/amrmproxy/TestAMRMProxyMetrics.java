@@ -36,7 +36,7 @@ public class TestAMRMProxyMetrics extends BaseAMRMProxyTest {
   @BeforeClass
   public static void init() {
     metrics = AMRMProxyMetrics.getMetrics();
-    LOG.info("Test: aggregate metrics are initialized correctly");
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(0, metrics.getFailedAppStartRequests());
     Assert.assertEquals(0, metrics.getFailedRegisterAMRequests());
@@ -48,7 +48,7 @@ public class TestAMRMProxyMetrics extends BaseAMRMProxyTest {
     Assert.assertEquals(0, metrics.getNumSucceededFinishAMRequests());
     Assert.assertEquals(0, metrics.getNumSucceededAllocateRequests());
 
-    LOG.info("Test: aggregate metrics are updated correctly");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test

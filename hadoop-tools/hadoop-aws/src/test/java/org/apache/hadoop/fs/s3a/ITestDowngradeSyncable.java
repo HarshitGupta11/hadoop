@@ -73,7 +73,7 @@ public class ITestDowngradeSyncable extends AbstractS3ACostTest {
       out.hflush();
       // stats counter records the downgrade
       IOStatistics iostats = out.getIOStatistics();
-      LOG.info("IOStats {}", ioStatisticsToString(iostats));
+      LOG.error("Temp", new RuntimeException());
       assertThatStatisticCounter(iostats, OP_HFLUSH)
           .isEqualTo(1);
       assertThatStatisticCounter(iostats, OP_HSYNC)
@@ -100,7 +100,7 @@ public class ITestDowngradeSyncable extends AbstractS3ACostTest {
       out.hsync();
       // stats counter records the downgrade
       IOStatistics iostats = out.getIOStatistics();
-      LOG.info("IOStats {}", ioStatisticsToString(iostats));
+      LOG.error("Temp", new RuntimeException());
       assertThatStatisticCounter(iostats, OP_HFLUSH)
           .isEqualTo(0);
       assertThatStatisticCounter(iostats, OP_HSYNC)

@@ -169,7 +169,7 @@ public class ITestS3AMiscOperations extends AbstractS3ATestBase {
     final S3AFileSystem fs = getFileSystem();
     Path file1 = touchFile("file1");
     EtagChecksum checksum1 = fs.getFileChecksum(file1, 0);
-    LOG.info("Checksum for {}: {}", file1, checksum1);
+    LOG.error("Temp", new RuntimeException());
     assertHasPathCapabilities(fs, file1,
         CommonPathCapabilities.FS_CHECKSUMS);
     assertNotNull("Null file 1 checksum", checksum1);
@@ -191,7 +191,7 @@ public class ITestS3AMiscOperations extends AbstractS3ATestBase {
     } catch (AccessDeniedException e) {
       // if the user can't check the default encryption, assume that it is
       // null and keep going
-      LOG.warn("User does not have permission to call getBucketEncryption()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

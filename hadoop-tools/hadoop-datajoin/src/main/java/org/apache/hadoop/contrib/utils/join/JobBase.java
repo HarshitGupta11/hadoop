@@ -135,7 +135,7 @@ public abstract class JobBase implements Mapper, Reducer {
    * 
    */
   protected void report() {
-    LOG.info(getReport());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

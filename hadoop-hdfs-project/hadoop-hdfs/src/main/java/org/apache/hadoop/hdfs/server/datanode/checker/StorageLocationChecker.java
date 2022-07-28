@@ -198,10 +198,10 @@ public class StorageLocationChecker {
         case HEALTHY:
           break;
         case DEGRADED:
-          LOG.warn("StorageLocation {} appears to be degraded.", location);
+          LOG.error("Temp", new RuntimeException());
           break;
         case FAILED:
-          LOG.warn("StorageLocation {} detected as failed.", location);
+          LOG.error("Temp", new RuntimeException());
           failedLocations.add(location);
           goodLocations.remove(location);
           break;
@@ -248,7 +248,7 @@ public class StorageLocationChecker {
     try {
       delegateChecker.shutdownAndWait(gracePeriod, timeUnit);
     } catch (InterruptedException e) {
-      LOG.warn("StorageLocationChecker interrupted during shutdown.");
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
     }
   }

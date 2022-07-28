@@ -126,7 +126,7 @@ public class LoggingAuditor
       UserGroupInformation ugi = UserGroupInformation.getCurrentUser();
       addAttribute(PARAM_PRINCIPAL, ugi.getUserName());
     } catch (IOException ex) {
-      LOG.warn("Auditor unable to determine principal", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -390,9 +390,9 @@ public class LoggingAuditor
         final T request) {
       String error = "Creating a request outside an audit span "
           + analyzer.analyze(request);
-      LOG.info(error);
+      LOG.error("Temp", new RuntimeException());
       if (LOG.isDebugEnabled()) {
-        LOG.debug(error, new AuditFailureException("unaudited"));
+        LOG.error("Temp", new RuntimeException());
       }
       return request;
     }
@@ -420,10 +420,10 @@ public class LoggingAuditor
           + UNAUDITED_OPERATION + " " + error;
       if (isRequestNotAlwaysInSpan(request)) {
         // can get by auditing during a copy, so don't overreact
-        LOG.debug(unaudited);
+        LOG.error("Temp", new RuntimeException());
       } else {
         final RuntimeException ex = new AuditFailureException(unaudited);
-        LOG.debug(unaudited, ex);
+        LOG.error("Temp", new RuntimeException());
         if (rejectOutOfSpan) {
           throw ex;
         }

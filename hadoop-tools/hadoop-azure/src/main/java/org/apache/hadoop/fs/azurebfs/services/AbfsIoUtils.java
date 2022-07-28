@@ -48,7 +48,7 @@ public final class AbfsIoUtils {
   public static void dumpHeadersToDebugLog(final String origin,
       final Map<String, List<String>> headers) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("{}", origin);
+      LOG.error("Temp", new RuntimeException());
       for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
         String key = entry.getKey();
         if (key == null) {

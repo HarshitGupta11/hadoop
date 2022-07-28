@@ -140,7 +140,7 @@ public class ReloadingX509KeystoreManager extends X509ExtendedKeyManager {
       keystore.load(is, this.storePassword.toCharArray());
     }
 
-    LOG.debug(" Loaded KeyStore: " + path.toFile().getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
 
     KeyManagerFactory keyMgrFactory = KeyManagerFactory.getInstance(
         SSLFactory.KEY_MANAGER_SSLCERTIFICATE);

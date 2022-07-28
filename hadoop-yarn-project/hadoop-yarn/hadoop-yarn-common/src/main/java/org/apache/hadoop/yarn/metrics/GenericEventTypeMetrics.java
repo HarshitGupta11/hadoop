@@ -72,7 +72,7 @@ public class GenericEventTypeMetrics<T extends Enum<T>>
     if (!isInitialized) {
       // Register with the MetricsSystems
       if (this.ms != null) {
-        LOG.info("Registering GenericEventTypeMetrics");
+        LOG.error("Temp", new RuntimeException());
         ms.register(info.name(),
             info.description(), this);
         isInitialized = true;

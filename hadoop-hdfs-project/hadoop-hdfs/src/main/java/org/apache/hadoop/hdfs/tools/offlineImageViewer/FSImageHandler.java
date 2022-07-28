@@ -120,7 +120,7 @@ class FSImageHandler extends SimpleChannelInboundHandler<HttpRequest> {
           + " \"op\"");
     }
 
-    LOG.info("op=" + op + " target=" + path);
+    LOG.error("Temp", new RuntimeException());
 
     DefaultFullHttpResponse resp = new DefaultFullHttpResponse(HTTP_1_1,
         HttpResponseStatus.OK, Unpooled.wrappedBuffer(content

@@ -146,14 +146,14 @@ public abstract class TimelineWriter implements Flushable {
   public ClientResponse doPostingObject(Object object, String path) {
     WebResource webResource = client.resource(resURI);
     if (path == null) {
-      LOG.debug("POST to {}", resURI);
+      LOG.error("Temp", new RuntimeException());
       ClientResponse r = webResource.accept(MediaType.APPLICATION_JSON)
           .type(MediaType.APPLICATION_JSON)
           .post(ClientResponse.class, object);
       r.bufferEntity();
       return r;
     } else if (path.equals("domain")) {
-      LOG.debug("PUT to {}/{}", resURI, path);
+      LOG.error("Temp", new RuntimeException());
       ClientResponse r = webResource.path(path).accept(MediaType.APPLICATION_JSON)
           .type(MediaType.APPLICATION_JSON)
           .put(ClientResponse.class, object);

@@ -146,7 +146,7 @@ public class NNThroughputBenchmark implements Tool {
   }
 
   static void setNameNodeLoggingLevel(Level logLevel) {
-    LOG.info("Log level = " + logLevel.toString());
+    LOG.error("Temp", new RuntimeException());
     // change log level to NameNode logs
     DFSTestUtil.setNameNodeLogLevel(logLevel);
     GenericTestUtils.setLogLevel(LoggerFactory.getLogger(
@@ -262,7 +262,7 @@ public class NNThroughputBenchmark implements Tool {
         for(tIdx=0; tIdx < numThreads; tIdx++)
           daemons.add(new StatsDaemon(tIdx, opsPerThread[tIdx], this));
         start = Time.now();
-        LOG.info("Starting " + numOpsRequired + " " + getOpName() + "(s).");
+        LOG.error("Temp", new RuntimeException());
         for(StatsDaemon d : daemons)
           d.start();
       } finally {
@@ -378,11 +378,11 @@ public class NNThroughputBenchmark implements Tool {
     }
 
     void printStats() {
-      LOG.info("--- " + getOpName() + " stats  ---");
-      LOG.info("# operations: " + getNumOpsExecuted());
-      LOG.info("Elapsed Time: " + getElapsedTime());
-      LOG.info(" Ops per sec: " + getOpsPerSecond());
-      LOG.info("Average Time: " + getAverageTime());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -501,8 +501,8 @@ public class NNThroughputBenchmark implements Tool {
 
     @Override
     void printResults() {
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("Remove directory " + BASE_DIR_NAME);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
     }
   }
@@ -567,7 +567,7 @@ public class NNThroughputBenchmark implements Tool {
       clientProto.setSafeMode(HdfsConstants.SafeModeAction.SAFEMODE_LEAVE,
           false);
       // int generatedFileIdx = 0;
-      LOG.info("Generate " + numOpsRequired + " intputs for " + getOpName());
+      LOG.error("Temp", new RuntimeException());
       fileNames = new String[numThreads][];
       for(int idx=0; idx < numThreads; idx++) {
         int threadOps = opsPerThread[idx];
@@ -615,10 +615,10 @@ public class NNThroughputBenchmark implements Tool {
 
     @Override
     void printResults() {
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("nrFiles = " + numOpsRequired);
-      LOG.info("nrThreads = " + numThreads);
-      LOG.info("nrFilesPerDir = " + nameGenerator.getFilesPerDirectory());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
     }
   }
@@ -673,7 +673,7 @@ public class NNThroughputBenchmark implements Tool {
       assert opsPerThread.length == numThreads : "Error opsPerThread.length";
       clientProto.setSafeMode(HdfsConstants.SafeModeAction.SAFEMODE_LEAVE,
           false);
-      LOG.info("Generate " + numOpsRequired + " inputs for " + getOpName());
+      LOG.error("Temp", new RuntimeException());
       dirPaths = new String[numThreads][];
       for(int idx=0; idx < numThreads; idx++) {
         int threadOps = opsPerThread[idx];
@@ -707,10 +707,10 @@ public class NNThroughputBenchmark implements Tool {
 
     @Override
     void printResults() {
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("nrDirs = " + numOpsRequired);
-      LOG.info("nrThreads = " + numThreads);
-      LOG.info("nrDirsPerDir = " + nameGenerator.getFilesPerDirectory());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
     }
   }
@@ -766,7 +766,7 @@ public class NNThroughputBenchmark implements Tool {
 
       if(!useExisting) {  // create files if they were not created before
         opCreate.benchmark();
-        LOG.info("Created " + numOpsRequired + " files.");
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.info("useExisting = true. Assuming " 
             + numOpsRequired + " files have been created before.");
@@ -977,7 +977,7 @@ public class NNThroughputBenchmark implements Tool {
       if(cmds != null) {
         for (DatanodeCommand cmd : cmds ) {
           if(LOG.isDebugEnabled()) {
-            LOG.debug("sendHeartbeat Name-node reply: " + cmd.getAction());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -986,7 +986,7 @@ public class NNThroughputBenchmark implements Tool {
     boolean addBlock(Block blk) {
       if(nrBlocks == blocks.size()) {
         if(LOG.isDebugEnabled()) {
-          LOG.debug("Cannot add block: datanode capacity = " + blocks.size());
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }
@@ -1150,7 +1150,7 @@ public class NNThroughputBenchmark implements Tool {
       }
 
       // create files 
-      LOG.info("Creating " + nrFiles + " files with " + blocksPerFile + " blocks each.");
+      LOG.error("Temp", new RuntimeException());
       FileNameGenerator nameGenerator;
       nameGenerator = new FileNameGenerator(getBaseDir(), 100);
       String clientName = getClientName(007);
@@ -1217,7 +1217,7 @@ public class NNThroughputBenchmark implements Tool {
           try {
             Thread.sleep(100);
           } catch (InterruptedException ie) {
-            LOG.warn("interrupted while retrying addBlock.", ie);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -1254,11 +1254,11 @@ public class NNThroughputBenchmark implements Tool {
         delim = ", ";
       }
       blockDistribution += ")";
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("reports = " + numOpsRequired);
-      LOG.info("datanodes = " + numThreads + " " + blockDistribution);
-      LOG.info("blocksPerReport = " + blocksPerReport);
-      LOG.info("blocksPerFile = " + blocksPerFile);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
     }
   }   // end BlockReportStats
@@ -1372,7 +1372,7 @@ public class NNThroughputBenchmark implements Tool {
         numDecommissionedBlocks += dn.nrBlocks;
         excludeFile.write(dn.getXferAddr().getBytes());
         excludeFile.write('\n');
-        LOG.info("Datanode " + dn + " is decommissioned.");
+        LOG.error("Temp", new RuntimeException());
       }
       excludeFile.close();
       clientProto.refreshNodes();
@@ -1409,16 +1409,16 @@ public class NNThroughputBenchmark implements Tool {
         delim = ", ";
       }
       blockDistribution += ")";
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("numOpsRequired = " + numOpsRequired);
-      LOG.info("datanodes = " + numDatanodes + " " + blockDistribution);
-      LOG.info("decommissioned datanodes = " + nodesToDecommission);
-      LOG.info("datanode replication limit = " + nodeReplicationLimit);
-      LOG.info("total blocks = " + totalBlocks);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
-      LOG.info("decommissioned blocks = " + numDecommissionedBlocks);
-      LOG.info("pending replications = " + numPendingBlocks);
-      LOG.info("replications per sec: " + getBlocksPerSecond());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
 
     private double getBlocksPerSecond() {
@@ -1526,7 +1526,7 @@ public class NNThroughputBenchmark implements Tool {
       }
 
       if (nnUri.getScheme() == null || nnUri.getScheme().equals("file")) {
-        LOG.info("Remote NameNode is not specified. Creating one.");
+        LOG.error("Temp", new RuntimeException());
         FileSystem.setDefaultUri(config, "hdfs://localhost:0");
         config.set(DFSConfigKeys.DFS_NAMENODE_HTTP_ADDRESS_KEY, "0.0.0.0:0");
         nameNode = NameNode.createNameNode(argv, config);
@@ -1551,13 +1551,13 @@ public class NNThroughputBenchmark implements Tool {
       }
       // run each benchmark
       for(OperationStatsBase op : ops) {
-        LOG.info("Starting benchmark: " + op.getOpName());
+        LOG.error("Temp", new RuntimeException());
         op.benchmark();
         op.cleanUp();
       }
       // print statistics
       for(OperationStatsBase op : ops) {
-        LOG.info("");
+        LOG.error("Temp", new RuntimeException());
         op.printResults();
       }
     } catch(Exception e) {

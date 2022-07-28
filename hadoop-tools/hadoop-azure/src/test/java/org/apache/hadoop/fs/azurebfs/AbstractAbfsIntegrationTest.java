@@ -199,11 +199,11 @@ public abstract class AbstractAbfsIntegrationTest extends
               }
             });
         if (FILE_SYSTEM_NOT_FOUND.getStatusCode() != ex.getStatusCode()) {
-          LOG.warn("Deleted test filesystem may still exist: {}", abfs, ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (Exception e) {
-      LOG.warn("During cleanup: {}", e, e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.closeStream(abfs);
       abfs = null;

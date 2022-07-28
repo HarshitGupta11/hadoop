@@ -103,14 +103,14 @@ public abstract class AbstractContractMultipartUploaderTest extends
       try {
         // round off with an abort of all uploads
         Path teardown = getContract().getTestPath();
-        LOG.info("Teardown: aborting outstanding uploads under {}", teardown);
+        LOG.error("Temp", new RuntimeException());
         CompletableFuture<Integer> f
             = uploader.abortUploadsUnderPath(teardown);
         f.get();
         LOG.info("Statistics {}",
             ioStatisticsSourceToString(uploader));
       } catch (Exception e) {
-        LOG.warn("Exeception in teardown", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -469,7 +469,7 @@ public abstract class AbstractContractMultipartUploaderTest extends
       abortUpload(uploadHandle, file);
     } catch (FileNotFoundException ignored) {
     } catch (Exception e) {
-      LOG.info("aborting {}: {}", file, e.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -788,7 +788,7 @@ public abstract class AbstractContractMultipartUploaderTest extends
     } catch (IOException e) {
       if (!concurrent) {
         // this is expected, so end the test
-        LOG.debug("Expected exception raised on concurrent uploads", e);
+        LOG.error("Temp", new RuntimeException());
         return;
       } else {
         throw e;

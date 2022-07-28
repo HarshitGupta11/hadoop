@@ -1073,7 +1073,7 @@ public class TestAlignedPlanner {
     // Initialize random seed
     long seed = rand.nextLong();
     rand.setSeed(seed);
-    LOG.info("Running with seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
 
     // Set cluster parameters
     long timeWindow = 1000000L;

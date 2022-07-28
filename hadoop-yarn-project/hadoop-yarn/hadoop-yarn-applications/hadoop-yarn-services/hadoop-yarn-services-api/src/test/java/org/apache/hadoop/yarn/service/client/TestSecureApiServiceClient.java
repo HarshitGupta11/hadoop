@@ -95,7 +95,7 @@ public class TestSecureApiServiceClient extends KerberosSecurityTestcase {
       Enumeration<String> headers = req.getHeaderNames();
       while(headers.hasMoreElements()) {
         String header = headers.nextElement();
-        LOG.info(header);
+        LOG.error("Temp", new RuntimeException());
       }
       if (req.getHeader("Authorization")!=null) {
         headerFound = true;

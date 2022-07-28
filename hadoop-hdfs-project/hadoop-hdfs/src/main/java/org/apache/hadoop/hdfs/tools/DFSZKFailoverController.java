@@ -224,12 +224,12 @@ public class DFSZKFailoverController extends ZKFailoverController {
     UserGroupInformation zkfcUgi = UserGroupInformation.getLoginUser();
     if (adminAcl.isUserAllowed(ugi) ||
         ugi.getShortUserName().equals(zkfcUgi.getShortUserName())) {
-      LOG.info("Allowed RPC access from " + ugi + " at " + Server.getRemoteAddress());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     String msg = "Disallowed RPC access from " + ugi + " at " +
         Server.getRemoteAddress() + ". Not listed in " + DFSConfigKeys.DFS_ADMIN; 
-    LOG.warn(msg);
+    LOG.error("Temp", new RuntimeException());
     throw new AccessControlException(msg);
   }
 
@@ -261,10 +261,10 @@ public class DFSZKFailoverController extends ZKFailoverController {
           new StringBuilder("-- Local NN thread dump -- \n");
       localNNThreadDumpContent.append(out)
           .append("\n -- Local NN thread dump -- ");
-      LOG.info("{}", localNNThreadDumpContent.toString());
+      LOG.error("Temp", new RuntimeException());
       isThreadDumpCaptured = true;
     } catch (IOException e) {
-      LOG.warn("Can't get local NN thread dump due to " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

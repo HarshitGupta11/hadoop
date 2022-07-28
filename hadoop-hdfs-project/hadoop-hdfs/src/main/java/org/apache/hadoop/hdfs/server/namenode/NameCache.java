@@ -140,7 +140,7 @@ class NameCache<K> {
    * save heap space.
    */
   void initialized() {
-    LOG.info("initialized with " + size() + " entries " + lookups + " lookups");
+    LOG.error("Temp", new RuntimeException());
     this.initialized = true;
     transientMap.clear();
     transientMap = null;

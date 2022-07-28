@@ -244,7 +244,7 @@ public class ITestS3GuardEmptyDirs extends AbstractS3ATestBase {
         getMetric.assertDiffEquals(
             "FileSystem called S3 GET rather than use DynamoDB",
             0);
-        LOG.info("Verified that DDB directory status was accepted");
+        LOG.error("Temp", new RuntimeException());
       }
 
     } finally {

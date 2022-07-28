@@ -181,7 +181,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
         IOException {
       NodeId nodeId = request.getNodeId();
       Resource resource = request.getResource();
-      LOG.info("Registering " + nodeId.toString());
+      LOG.error("Temp", new RuntimeException());
       // NOTE: this really should be checking against the config value
       InetSocketAddress expected = NetUtils.getConnectAddress(
           conf.getSocketAddr(YarnConfiguration.NM_ADDRESS, null, -1));
@@ -217,7 +217,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     public NodeHeartbeatResponse nodeHeartbeat(NodeHeartbeatRequest request)
         throws YarnException, IOException {
       NodeStatus nodeStatus = request.getNodeStatus();
-      LOG.info("Got heartbeat number " + heartBeatID);
+      LOG.error("Temp", new RuntimeException());
       NodeManagerMetrics mockMetrics = mock(NodeManagerMetrics.class);
       Dispatcher mockDispatcher = mock(Dispatcher.class);
       @SuppressWarnings("unchecked")
@@ -625,7 +625,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     @Override
     public NodeHeartbeatResponse nodeHeartbeat(NodeHeartbeatRequest request)
         throws YarnException, IOException {
-      LOG.info("Got heartBeatId: [" + heartBeatID +"]");
+      LOG.error("Temp", new RuntimeException());
       NodeStatus nodeStatus = request.getNodeStatus();
       nodeStatus.setResponseId(heartBeatID.getAndIncrement());
       NodeHeartbeatResponse nhResponse = YarnServerBuilderUtils.
@@ -644,7 +644,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
         }
       }
       if (heartBeatID.get() == 2) {
-        LOG.info("Sending FINISH_APP for application: [" + appId + "]");
+        LOG.error("Temp", new RuntimeException());
         this.context.getApplications().put(appId, mock(Application.class));
         nhResponse.addAllApplicationsToCleanup(Collections.singletonList(appId));
       }
@@ -892,7 +892,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
       } else {
         NodeId nodeId = request.getNodeId();
         Resource resource = request.getResource();
-        LOG.info("Registering " + nodeId.toString());
+        LOG.error("Temp", new RuntimeException());
         // NOTE: this really should be checking against the config value
         InetSocketAddress expected = NetUtils.getConnectAddress(
             conf.getSocketAddr(YarnConfiguration.NM_ADDRESS, null, -1));
@@ -1174,7 +1174,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     });
     starterThread.start();
 
-    LOG.info(" ----- thread already started..{}", nm.getServiceState());
+    LOG.error("Temp", new RuntimeException());
 
     starterThread.join(100000);
 
@@ -1528,7 +1528,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
       rt.context.getApplications().remove(rt.appId);
       Assert.assertEquals(1, rt.keepAliveRequests.size());
       int numKeepAliveRequests = rt.keepAliveRequests.get(rt.appId).size();
-      LOG.info("Number of Keep Alive Requests: [" + numKeepAliveRequests + "]");
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(numKeepAliveRequests == 2 || numKeepAliveRequests == 3);
       GenericTestUtils.waitFor(
           () -> nm.getServiceState() != STATE.STARTED
@@ -1786,11 +1786,11 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     // The resource set for the Node Manager from the Resource Tracker
     final Resource resource = Resource.newInstance(8 * 1024, 1);
 
-    LOG.info("Start the Resource Tracker to mock heartbeats");
+    LOG.error("Temp", new RuntimeException());
     Server resourceTracker = getMockResourceTracker(resource);
     resourceTracker.start();
 
-    LOG.info("Start the Node Manager");
+    LOG.error("Temp", new RuntimeException());
     NodeManager nodeManager = new NodeManager();
     YarnConfiguration nmConf = new YarnConfiguration();
     try {
@@ -1800,7 +1800,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
       nodeManager.init(nmConf);
       nodeManager.start();
 
-      LOG.info("Initially the Node Manager should have the default resources");
+      LOG.error("Temp", new RuntimeException());
       ContainerManager containerManager = nodeManager.getContainerManager();
       ContainersMonitor containerMonitor =
           containerManager.getContainersMonitor();
@@ -1819,14 +1819,14 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
 
       resource.setVirtualCores(5);
       resource.setMemorySize(4 * 1024);
-      LOG.info("Change the resources to {}", resource);
+      LOG.error("Temp", new RuntimeException());
       GenericTestUtils.waitFor(
           () -> containerMonitor.getVCoresAllocatedForContainers() == 5,
           100, 2 * 1000);
       Assert.assertEquals(4 * GB,
           containerMonitor.getPmemAllocatedForContainers());
     } finally {
-      LOG.info("Cleanup");
+      LOG.error("Temp", new RuntimeException());
       nodeManager.stop();
       try {
         nodeManager.close();

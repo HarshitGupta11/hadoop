@@ -44,7 +44,7 @@ public class RejectPlacementRule extends FSPlacementRule {
   @Override
   public void setConfig(Object initArg) {
     // This rule ignores all config, just log and return
-    LOG.debug("RejectPlacementRule instantiated");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

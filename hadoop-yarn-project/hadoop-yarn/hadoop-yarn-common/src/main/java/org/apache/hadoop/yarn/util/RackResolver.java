@@ -155,7 +155,7 @@ public final class RackResolver {
               hostNames.get(i), NetworkTopology.DEFAULT_RACK);
         } else {
           nodes.add(new NodeBase(hostNames.get(i), rNameList.get(i)));
-          LOG.debug("Resolved {} to {}", hostNames.get(i), rNameList.get(i));
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

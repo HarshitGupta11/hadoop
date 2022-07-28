@@ -2155,13 +2155,13 @@ public class JobConf extends Configuration {
                 + " and " + JobConf.MAPREDUCE_JOB_REDUCE_MEMORY_MB_PROPERTY);
     }
     if(get(JobConf.MAPRED_TASK_ULIMIT) != null ) {
-      LOG.warn(JobConf.deprecatedString(JobConf.MAPRED_TASK_ULIMIT));
+      LOG.error("Temp", new RuntimeException());
     }
     if(get(JobConf.MAPRED_MAP_TASK_ULIMIT) != null ) {
-      LOG.warn(JobConf.deprecatedString(JobConf.MAPRED_MAP_TASK_ULIMIT));
+      LOG.error("Temp", new RuntimeException());
     }
     if(get(JobConf.MAPRED_REDUCE_TASK_ULIMIT) != null ) {
-      LOG.warn(JobConf.deprecatedString(JobConf.MAPRED_REDUCE_TASK_ULIMIT));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -2256,7 +2256,7 @@ public class JobConf extends Configuration {
     if (memory <= 0) {
       if (heapSize > 0) {
         memory = (int) Math.ceil(heapSize / heapRatio);
-        LOG.info("Figured value for " + configName + " from javaOpts");
+        LOG.error("Temp", new RuntimeException());
       } else {
         memory = defaultValue;
       }

@@ -126,7 +126,7 @@ public class TestNMContainerWebSocket {
   @Test
   public void testWebServerWithServlet() {
     int port = startNMWebAppServer("0.0.0.0");
-    LOG.info("bind to port: " + port);
+    LOG.error("Temp", new RuntimeException());
     StringBuilder sb = new StringBuilder();
     sb.append("ws://localhost:").append(port).append("/container/abc/");
     String dest = sb.toString();

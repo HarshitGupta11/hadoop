@@ -272,7 +272,7 @@ public class TestDynamicIOStatistics extends AbstractHadoopTestBase {
 
   @Test
   public void testStringLogging() throws Throwable {
-    LOG.info("Output {}", demandStringifyIOStatistics(statistics));
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

@@ -40,7 +40,7 @@ public class MutableMetricsFactory {
   MutableMetric newForField(Field field, Metric annotation,
                             MetricsRegistry registry) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("field "+ field +" with annotation "+ annotation);
+      LOG.error("Temp", new RuntimeException());
     }
     MetricsInfo info = getInfo(annotation, field);
     MutableMetric metric = newForField(field, annotation);
@@ -94,7 +94,7 @@ public class MutableMetricsFactory {
   MutableMetric newForMethod(Object source, Method method, Metric annotation,
                              MetricsRegistry registry) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("method "+ method +" with annotation "+ annotation);
+      LOG.error("Temp", new RuntimeException());
     }
     MetricsInfo info = getInfo(annotation, method);
     MutableMetric metric = newForMethod(source, method, annotation);

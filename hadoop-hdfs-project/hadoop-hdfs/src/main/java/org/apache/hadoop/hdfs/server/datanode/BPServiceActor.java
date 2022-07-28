@@ -242,12 +242,12 @@ class BPServiceActor implements Runnable {
     while (shouldRun()) {
       try {
         nsInfo = bpNamenode.versionRequest();
-        LOG.debug(this + " received versionRequest response: " + nsInfo);
+        LOG.error("Temp", new RuntimeException());
         break;
       } catch(SocketTimeoutException e) {  // namenode is busy
-        LOG.warn("Problem connecting to server: " + nnAddr);
+        LOG.error("Temp", new RuntimeException());
       } catch(IOException e ) {  // namenode is not available
-        LOG.warn("Problem connecting to server: " + nnAddr);
+        LOG.error("Temp", new RuntimeException());
       }
       
       // try again in a second
@@ -270,7 +270,7 @@ class BPServiceActor implements Runnable {
     if (VersionUtil.compareVersions(nnVersion, minimumNameNodeVersion) < 0) {
       IncorrectVersionException ive = new IncorrectVersionException(
           minimumNameNodeVersion, nnVersion, "NameNode", "DataNode");
-      LOG.warn(ive.getMessage());
+      LOG.error("Temp", new RuntimeException());
       throw ive;
     }
     String dnVersion = VersionInfo.getVersion();
@@ -477,7 +477,7 @@ class BPServiceActor implements Runnable {
     final long startTime = monotonicNow();
     if (startTime - lastCacheReport > dnConf.cacheReportInterval) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Sending cacheReport from service actor: " + this);
+        LOG.error("Temp", new RuntimeException());
       }
       lastCacheReport = startTime;
 
@@ -716,7 +716,7 @@ class BPServiceActor implements Runnable {
         boolean forceFullBr =
             scheduler.forceFullBlockReport.getAndSet(false);
         if (forceFullBr) {
-          LOG.info("Forcing a full block report to " + nnAddr);
+          LOG.error("Temp", new RuntimeException());
         }
         if ((fullBlockReportLeaseId != 0) || forceFullBr) {
           cmds = blockReport(fullBlockReportLeaseId);
@@ -742,14 +742,14 @@ class BPServiceActor implements Runnable {
         if (UnregisteredNodeException.class.getName().equals(reClass) ||
             DisallowedDatanodeException.class.getName().equals(reClass) ||
             IncorrectVersionException.class.getName().equals(reClass)) {
-          LOG.warn(this + " is shutting down", re);
+          LOG.error("Temp", new RuntimeException());
           shouldServiceRun = false;
           return;
         }
-        LOG.warn("RemoteException in offerService", re);
+        LOG.error("Temp", new RuntimeException());
         sleepAfterException();
       } catch (IOException e) {
-        LOG.warn("IOException in offerService", e);
+        LOG.error("Temp", new RuntimeException());
         sleepAfterException();
       } finally {
         DataNodeFaultInjector.get().endOfferService();
@@ -785,7 +785,7 @@ class BPServiceActor implements Runnable {
     // off disk - so update the bpRegistration object from that info
     DatanodeRegistration newBpRegistration = bpos.createRegistration();
 
-    LOG.info(this + " beginning handshake with NN");
+    LOG.error("Temp", new RuntimeException());
 
     while (shouldRun()) {
       try {
@@ -798,12 +798,12 @@ class BPServiceActor implements Runnable {
         LOG.info("Problem connecting to server: " + nnAddr + " :"
             + e.getLocalizedMessage());
       } catch(SocketTimeoutException e) {  // namenode is busy
-        LOG.info("Problem connecting to server: " + nnAddr);
+        LOG.error("Temp", new RuntimeException());
       } catch(RemoteException e) {
-        LOG.warn("RemoteException in register", e);
+        LOG.error("Temp", new RuntimeException());
         throw e;
       } catch(IOException e) {
-        LOG.warn("Problem connecting to server: " + nnAddr);
+        LOG.error("Temp", new RuntimeException());
       }
       // Try again in a second
       sleepAndLogInterrupts(1000, "connecting to server");
@@ -813,7 +813,7 @@ class BPServiceActor implements Runnable {
       throw new IOException("DN shut down before block pool registered");
     }
 
-    LOG.info(this + " successfully registered with NN");
+    LOG.error("Temp", new RuntimeException());
     bpos.registrationSucceeded(this, bpRegistration);
 
     // reset lease id whenever registered to NN.
@@ -830,7 +830,7 @@ class BPServiceActor implements Runnable {
     try {
       Thread.sleep(millis);
     } catch (InterruptedException ie) {
-      LOG.info("BPOfferService " + this + " interrupted while " + stateString);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -844,7 +844,7 @@ class BPServiceActor implements Runnable {
    */
   @Override
   public void run() {
-    LOG.info(this + " starting to offer service");
+    LOG.error("Temp", new RuntimeException());
 
     try {
       while (true) {
@@ -884,10 +884,10 @@ class BPServiceActor implements Runnable {
       }
       runningState = RunningState.EXITED;
     } catch (Throwable ex) {
-      LOG.warn("Unexpected exception in block pool " + this, ex);
+      LOG.error("Temp", new RuntimeException());
       runningState = RunningState.FAILED;
     } finally {
-      LOG.warn("Ending block pool service for: " + this);
+      LOG.error("Temp", new RuntimeException());
       cleanUp();
     }
   }
@@ -963,7 +963,7 @@ class BPServiceActor implements Runnable {
       try {
         actionItem.reportTo(bpNamenode, bpRegistration);
       } catch (BPServiceActorActionException baae) {
-        LOG.warn(baae.getMessage() + nnAddr , baae);
+        LOG.error("Temp", new RuntimeException());
         // Adding it back to the queue if not present
         bpThreadEnqueue(actionItem);
       }
@@ -1031,7 +1031,7 @@ class BPServiceActor implements Runnable {
         }
       }
 
-      LOG.info("LifelineSender for " + BPServiceActor.this + " exiting.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void start() {
@@ -1317,7 +1317,7 @@ class BPServiceActor implements Runnable {
         LOG.error("{} encountered fatal exception and exit.", getName(), t);
         runningState = RunningState.FAILED;
       } finally {
-        LOG.warn("Ending command processor service for: " + this);
+        LOG.error("Temp", new RuntimeException());
         shouldServiceRun = false;
       }
     }
@@ -1364,12 +1364,12 @@ class BPServiceActor implements Runnable {
             if (UnregisteredNodeException.class.getName().equals(reClass) ||
                 DisallowedDatanodeException.class.getName().equals(reClass) ||
                 IncorrectVersionException.class.getName().equals(reClass)) {
-              LOG.warn("{} is shutting down", this, re);
+              LOG.error("Temp", new RuntimeException());
               shouldServiceRun = false;
               return false;
             }
           } catch (IOException ioe) {
-            LOG.warn("Error processing datanode Command", ioe);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         long processCommandsMs = monotonicNow() - startProcessCommands;

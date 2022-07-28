@@ -163,8 +163,8 @@ public class S3GuardFsck {
       handler.logError(comparePair);
     }
 
-    LOG.info("Total scan time: {}s", stopwatch.now(TimeUnit.SECONDS));
-    LOG.info("Scanned entries: {}", scannedItems);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     return comparePairs;
   }
@@ -284,7 +284,7 @@ public class S3GuardFsck {
         }
       }
     } else {
-      LOG.debug("Entry is in the root directory, so there's no parent");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // If the msPathMetadata is null, we RETURN because
@@ -457,7 +457,7 @@ public class S3GuardFsck {
 
     List<ComparePair> comparePairs = new ArrayList<>();
     String rootStr = basePath.toString();
-    LOG.info("Root for internal consistency check: {}", rootStr);
+    LOG.error("Temp", new RuntimeException());
     StopWatch stopwatch = new StopWatch();
     stopwatch.start();
 
@@ -527,7 +527,7 @@ public class S3GuardFsck {
       ddbTree.addNode(ddbTreeNode);
     });
 
-    LOG.debug("Root: {}", ddbTree.getRoot());
+    LOG.error("Temp", new RuntimeException());
 
     for (Map.Entry<Path, DDBTreeNode> entry : ddbTree.getContentMap().entrySet()) {
       final DDBTreeNode node = entry.getValue();
@@ -574,8 +574,8 @@ public class S3GuardFsck {
     }
 
     stopwatch.stop();
-    LOG.info("Total scan time: {}s", stopwatch.now(TimeUnit.SECONDS));
-    LOG.info("Scanned entries: {}", ddbTree.contentMap.size());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     return comparePairs;
   }

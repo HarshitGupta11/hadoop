@@ -195,7 +195,7 @@ public abstract class AbstractService implements Service {
           serviceStart();
           if (isInState(STATE.STARTED)) {
             //if the service started (and isn't now in a later state), notify
-            LOG.debug("Service {} is started", getName());
+            LOG.error("Temp", new RuntimeException());
             notifyListeners();
           }
         } catch (Exception e) {
@@ -234,7 +234,7 @@ public abstract class AbstractService implements Service {
         }
       } else {
         //already stopped: note it
-        LOG.debug("Ignoring re-entrant call to stop()");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -255,7 +255,7 @@ public abstract class AbstractService implements Service {
    * @param exception the exception
    */
   protected final void noteFailure(Exception exception) {
-    LOG.debug("noteFailure", exception);
+    LOG.error("Temp", new RuntimeException());
     if (exception == null) {
       //make sure failure logic doesn't itself cause problems
       return;
@@ -311,7 +311,7 @@ public abstract class AbstractService implements Service {
    */
   protected void serviceInit(Configuration conf) throws Exception {
     if (conf != config) {
-      LOG.debug("Config has been overridden during init");
+      LOG.error("Temp", new RuntimeException());
       setConfig(conf);
     }
   }
@@ -411,7 +411,7 @@ public abstract class AbstractService implements Service {
       listeners.notifyListeners(this);
       globalListeners.notifyListeners(this);
     } catch (Throwable e) {
-      LOG.warn("Exception while notifying listeners of {}", this, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -441,7 +441,7 @@ public abstract class AbstractService implements Service {
     assert stateModel != null : "null state in " + name + " " + this.getClass();
     STATE oldState = stateModel.enterState(newState);
     if (oldState != newState) {
-      LOG.debug("Service: {} entered state {}", getName(), getServiceState());
+      LOG.error("Temp", new RuntimeException());
 
       recordLifecycleEvent();
     }

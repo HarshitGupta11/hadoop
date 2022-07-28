@@ -88,7 +88,7 @@ public final class ShutdownHookManager {
           @Override
           public void run() {
             if (MGR.shutdownInProgress.getAndSet(true)) {
-              LOG.info("Shutdown process invoked a second time: ignoring");
+              LOG.error("Temp", new RuntimeException());
               return;
             }
             long started = System.currentTimeMillis();
@@ -105,7 +105,7 @@ public final class ShutdownHookManager {
       );
     } catch (IllegalStateException ex) {
       // JVM is being shut down. Ignore
-      LOG.warn("Failed to add the ShutdownHook", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -151,7 +151,7 @@ public final class ShutdownHookManager {
             + " {} seconds.", shutdownTimeout);
         EXECUTOR.shutdownNow();
       }
-      LOG.debug("ShutdownHookManager completed shutdown.");
+      LOG.error("Temp", new RuntimeException());
     } catch (InterruptedException ex) {
       // interrupted.
       LOG.error("ShutdownHookManager interrupted while waiting for " +

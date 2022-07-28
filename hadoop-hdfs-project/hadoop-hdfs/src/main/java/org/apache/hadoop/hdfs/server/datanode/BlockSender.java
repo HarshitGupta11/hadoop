@@ -286,7 +286,7 @@ class BlockSender implements java.io.Closeable {
             + block + ", replica=" + replica);
       }
       if (DataNode.LOG.isDebugEnabled()) {
-        DataNode.LOG.debug("block=" + block + ", replica=" + replica);
+        DataNode.LOG.error("Temp", new RuntimeException());
       }
 
       // transferToFully() fails on 32 bit platforms for block sizes >= 2GB,
@@ -345,7 +345,7 @@ class BlockSender implements java.io.Closeable {
                   expectedHeaderSize);
             }
           } else {
-            LOG.warn("Could not find metadata file for " + block);
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (FileNotFoundException e) {
           if ((e.getMessage() != null) && !(e.getMessage()
@@ -426,7 +426,7 @@ class BlockSender implements java.io.Closeable {
       seqno = 0;
 
       if (DataNode.LOG.isDebugEnabled()) {
-        DataNode.LOG.debug("replica=" + replica);
+        DataNode.LOG.error("Temp", new RuntimeException());
       }
       blockIn = datanode.data.getBlockInputStream(block, offset); // seek to offset
       ris = new ReplicaInputStreams(
@@ -483,7 +483,7 @@ class BlockSender implements java.io.Closeable {
         ris.dropCacheBehindReads(block.getBlockName(), lastCacheDropOffset,
             offset - lastCacheDropOffset, POSIX_FADV_DONTNEED);
       } catch (Exception e) {
-        LOG.warn("Unable to drop cache on file close", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (curReadahead != null) {

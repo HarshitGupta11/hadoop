@@ -209,7 +209,7 @@ public class SwiftTestUtils extends org.junit.Assert {
     if (errors > 0) {
       String message = String.format(" %d errors in file of length %d",
                                      errors, len);
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       // the range either side of the first error to print
       // this is a purely arbitrary number, to aid user debugging
       final int overlap = 10;
@@ -228,7 +228,7 @@ public class SwiftTestUtils extends org.junit.Assert {
                                expected,
                                toChar(expected));
         }
-        LOG.warn(line);
+        LOG.error("Temp", new RuntimeException());
       }
       fail(message);
     }
@@ -288,7 +288,7 @@ public class SwiftTestUtils extends org.junit.Assert {
 
   public static void noteAction(String action) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("==============  "+ action +" =============");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -300,7 +300,7 @@ public class SwiftTestUtils extends org.junit.Assert {
    * @throws AssumptionViolatedException always
    */
   public static void downgrade(String message, Throwable failure) {
-    LOG.warn("Downgrading test " + message, failure);
+    LOG.error("Temp", new RuntimeException());
     AssumptionViolatedException ave =
       new AssumptionViolatedException(failure, null);
     throw ave;

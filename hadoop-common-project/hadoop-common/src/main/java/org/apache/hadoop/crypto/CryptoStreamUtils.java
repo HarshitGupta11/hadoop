@@ -45,7 +45,7 @@ public class CryptoStreamUtils {
       try {
         CleanerUtil.getCleaner().freeBuffer(buffer);
       } catch (IOException e) {
-        LOG.info("Failed to free the buffer", e);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       LOG.trace(CleanerUtil.UNMAP_NOT_SUPPORTED_REASON);

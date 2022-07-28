@@ -349,7 +349,7 @@ public class ActivitiesManager extends AbstractService {
           try {
             Thread.sleep(activitiesCleanupIntervalMs);
           } catch (InterruptedException e) {
-            LOG.info(getName() + " thread interrupted");
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }
@@ -368,7 +368,7 @@ public class ActivitiesManager extends AbstractService {
       try {
         cleanUpThread.join();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted Exception while stopping", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     super.serviceStop();

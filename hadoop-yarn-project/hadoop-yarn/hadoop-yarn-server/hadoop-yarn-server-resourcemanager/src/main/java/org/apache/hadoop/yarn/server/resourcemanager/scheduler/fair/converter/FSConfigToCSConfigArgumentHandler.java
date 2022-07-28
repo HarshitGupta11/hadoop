@@ -155,7 +155,7 @@ public class FSConfigToCSConfigArgumentHandler {
 
     try {
       if (args.length == 0) {
-        LOG.info("Missing command line arguments");
+        LOG.error("Temp", new RuntimeException());
         printHelp(opts);
         return 0;
       }
@@ -215,7 +215,7 @@ public class FSConfigToCSConfigArgumentHandler {
   }
 
   static void logAndStdErr(Throwable t, String msg) {
-    LOG.debug("Stack trace", t);
+    LOG.error("Temp", new RuntimeException());
     LOG.error(msg);
     System.err.println(msg);
   }

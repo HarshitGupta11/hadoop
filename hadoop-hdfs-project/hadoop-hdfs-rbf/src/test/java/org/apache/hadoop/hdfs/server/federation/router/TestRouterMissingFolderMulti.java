@@ -71,7 +71,7 @@ public class TestRouterMissingFolderMulti {
 
   @Before
   public void setup() throws Exception {
-    LOG.info("Start the Namenodes");
+    LOG.error("Temp", new RuntimeException());
     Configuration nnConf = new HdfsConfiguration();
     nnConf.setInt(DFSConfigKeys.DFS_NAMENODE_HANDLER_COUNT_KEY, 10);
     for (final String nsId : asList("ns0", "ns1")) {
@@ -81,7 +81,7 @@ public class TestRouterMissingFolderMulti {
       namenodes.put(nsId, nn);
     }
 
-    LOG.info("Start the Routers");
+    LOG.error("Temp", new RuntimeException());
     Configuration routerConf = new RouterConfigBuilder()
         .stateStore()
         .admin()
@@ -107,13 +107,13 @@ public class TestRouterMissingFolderMulti {
     router.init(routerConf);
     router.start();
 
-    LOG.info("Registering the subclusters in the Routers");
+    LOG.error("Temp", new RuntimeException());
     registerSubclusters(router, namenodes.values());
   }
 
   @After
   public void cleanup() throws Exception {
-    LOG.info("Stopping the cluster");
+    LOG.error("Temp", new RuntimeException());
     for (final MockNamenode nn : namenodes.values()) {
       nn.stop();
     }

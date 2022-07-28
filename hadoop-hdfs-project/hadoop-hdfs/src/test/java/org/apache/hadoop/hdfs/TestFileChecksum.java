@@ -190,9 +190,9 @@ public class TestFileChecksum {
     FileChecksum stripedFileChecksum3 = getFileChecksum(stripedFile2,
         range2, false);
 
-    LOG.info("stripedFileChecksum1:" + stripedFileChecksum1);
-    LOG.info("stripedFileChecksum2:" + stripedFileChecksum2);
-    LOG.info("stripedFileChecksum3:" + stripedFileChecksum3);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertTrue(stripedFileChecksum1.equals(stripedFileChecksum2));
     if (range1 >=0 && range1 != range2) {
@@ -242,8 +242,8 @@ public class TestFileChecksum {
     FileChecksum stripedFileChecksumRecon = getFileChecksum(stripedFile1,
         fileSize, true);
 
-    LOG.info("stripedFileChecksum1:" + stripedFileChecksum1);
-    LOG.info("stripedFileChecksumRecon:" + stripedFileChecksumRecon);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertTrue("Checksum mismatches!",
         stripedFileChecksum1.equals(stripedFileChecksumRecon));
@@ -259,9 +259,9 @@ public class TestFileChecksum {
     FileChecksum stripedFileChecksum2Recon = getFileChecksum(stripedFile2, -1,
         true);
 
-    LOG.info("stripedFileChecksum1:" + stripedFileChecksum1);
-    LOG.info("stripedFileChecksum2:" + stripedFileChecksum1);
-    LOG.info("stripedFileChecksum2Recon:" + stripedFileChecksum2Recon);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertTrue("Checksum mismatches!",
         stripedFileChecksum1.equals(stripedFileChecksum2));
@@ -281,8 +281,8 @@ public class TestFileChecksum {
     FileChecksum stripedFileChecksumRecon = getFileChecksum(stripedFile,
         requestedLen, true);
 
-    LOG.info("stripedFileChecksum1:" + stripedFileChecksum1);
-    LOG.info("stripedFileChecksumRecon:" + stripedFileChecksumRecon);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertTrue("Checksum mismatches!",
         stripedFileChecksum1.equals(stripedFileChecksumRecon));

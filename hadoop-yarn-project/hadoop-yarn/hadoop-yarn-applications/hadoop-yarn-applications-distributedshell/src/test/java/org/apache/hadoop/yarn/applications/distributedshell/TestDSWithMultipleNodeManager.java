@@ -207,14 +207,14 @@ public class TestDSWithMultipleNodeManager {
               "x"
           );
 
-      LOG.info("Initializing DS Client");
+      LOG.error("Temp", new RuntimeException());
       dsClient =
           new Client(
               new Configuration(distShellTest.getYarnClusterConfiguration()));
       Assert.assertTrue(dsClient.init(args));
-      LOG.info("Running DS Client");
+      LOG.error("Temp", new RuntimeException());
       boolean result = dsClient.run();
-      LOG.info("Client run completed. Result={}", result);
+      LOG.error("Temp", new RuntimeException());
 
       containerMonitorRunner.stopMonitoring();
 
@@ -249,14 +249,14 @@ public class TestDSWithMultipleNodeManager {
       containerMonitorRunner = new NMContainerMonitor();
       containerMonitorRunner.start();
 
-      LOG.info("Initializing DS Client with args {}", Arrays.toString(args));
+      LOG.error("Temp", new RuntimeException());
       dsClient =
           new Client(
               new Configuration(distShellTest.getYarnClusterConfiguration()));
       Assert.assertTrue(dsClient.init(args));
-      LOG.info("Running DS Client");
+      LOG.error("Temp", new RuntimeException());
       boolean result = dsClient.run();
-      LOG.info("Client run completed. Result={}", result);
+      LOG.error("Temp", new RuntimeException());
 
       containerMonitorRunner.stopMonitoring();
 
@@ -390,7 +390,7 @@ public class TestDSWithMultipleNodeManager {
         yarnClient.killApplication(appARef.get().getApplicationId());
       } catch (Exception e) {
         // Ignore Exception while killing a job
-        LOG.warn("Exception killing the job: {}", e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       if (yarnClient != null) {
@@ -478,7 +478,7 @@ public class TestDSWithMultipleNodeManager {
             }
             quitSignal.wait(SAMPLING_INTERVAL_MS);
           } catch (InterruptedException e) {
-            LOG.warn("NMContainerMonitor interrupted");
+            LOG.error("Temp", new RuntimeException());
             isRunning = false;
             break;
           }

@@ -117,7 +117,7 @@ public class TrafficControlBandwidthHandlerImpl
         .append("containerBandwidthMbit soft limit (in mbit/sec) is set to : ")
         .append(containerBandwidthMbit);
 
-    LOG.info(logLine.toString());
+    LOG.error("Temp", new RuntimeException());
     trafficController.bootstrap(device, rootBandwidthMbit, yarnBandwidthMbit);
 
     return null;
@@ -245,7 +245,7 @@ public class TrafficControlBandwidthHandlerImpl
   @Override
   public List<PrivilegedOperation> postComplete(ContainerId containerId)
       throws ResourceHandlerException {
-    LOG.info("postComplete for container: " + containerId.toString());
+    LOG.error("Temp", new RuntimeException());
     cGroupsHandler.deleteCGroup(CGroupsHandler.CGroupController.NET_CLS,
         containerId.toString());
 
@@ -260,7 +260,7 @@ public class TrafficControlBandwidthHandlerImpl
         privilegedOperationExecutor.executePrivilegedOperation(op, false);
         trafficController.releaseClassId(classId);
       } catch (PrivilegedOperationException e) {
-        LOG.warn("Failed to delete tc rule for classId: " + classId);
+        LOG.error("Temp", new RuntimeException());
         throw new ResourceHandlerException(
             "Failed to delete tc rule for classId:" + classId);
       }
@@ -275,7 +275,7 @@ public class TrafficControlBandwidthHandlerImpl
   @Override
   public List<PrivilegedOperation> teardown()
       throws ResourceHandlerException {
-    LOG.debug("teardown(): Nothing to do");
+    LOG.error("Temp", new RuntimeException());
 
     return null;
   }

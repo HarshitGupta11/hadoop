@@ -145,7 +145,7 @@ public class MicroZookeeperService
       instanceDir = new File(instancedirname);
       FileUtil.fullyDelete(instanceDir);
     }
-    LOG.debug("Instance directory is {}", instanceDir);
+    LOG.error("Temp", new RuntimeException());
     mkdirStrict(instanceDir);
     dataDir = new File(instanceDir, "data");
     confDir = new File(instanceDir, "conf");
@@ -231,20 +231,20 @@ public class MicroZookeeperService
     FileTxnSnapLog ftxn = new FileTxnSnapLog(dataDir, dataDir);
     ZooKeeperServer zkServer = new ZooKeeperServer(ftxn, tickTime);
 
-    LOG.info("Starting Local Zookeeper service");
+    LOG.error("Temp", new RuntimeException());
     factory = ServerCnxnFactory.createFactory();
     factory.configure(getAddress(port), -1);
     factory.startup(zkServer);
 
     String connectString = getConnectionString();
-    LOG.info("In memory ZK started at {}\n", connectString);
+    LOG.error("Temp", new RuntimeException());
 
     if (LOG.isDebugEnabled()) {
       StringWriter sw = new StringWriter();
       PrintWriter pw = new PrintWriter(sw);
       zkServer.dumpConf(pw);
       pw.flush();
-      LOG.debug("ZooKeeper config:\n" + sw.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     binding = new BindingInformation();
     binding.ensembleProvider = new FixedEnsembleProvider(connectString);
@@ -290,7 +290,7 @@ public class MicroZookeeperService
         port = s.getLocalPort();
         s.close();
       } catch (IOException e) {
-        LOG.warn("ERROR during selecting random port for ZooKeeper server to bind." , e);
+        LOG.error("Temp", new RuntimeException());
       }
       return port;
   }

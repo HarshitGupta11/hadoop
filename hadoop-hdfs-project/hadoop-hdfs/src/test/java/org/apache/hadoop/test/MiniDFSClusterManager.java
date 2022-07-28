@@ -124,7 +124,7 @@ public class MiniDFSClusterManager {
       try {
         Thread.sleep(SLEEP_INTERVAL_MS);
         if (!dfs.isClusterUp()) {
-          LOG.info("Cluster is no longer up, exiting");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       } catch (InterruptedException e) {
@@ -180,7 +180,7 @@ public class MiniDFSClusterManager {
       CommandLineParser parser = new GnuParser();
       cli = parser.parse(options, args);
     } catch(ParseException e) {
-      LOG.warn("options parsing failed", e);
+      LOG.error("Temp", new RuntimeException());
       new HelpFormatter().printHelp("...", options);
       return false;
     }
@@ -236,7 +236,7 @@ public class MiniDFSClusterManager {
           conf2.set(keyval[0], keyval[1]);
           num_confs_updated++;
         } else {
-          LOG.warn("Ignoring -D option {}", prop);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

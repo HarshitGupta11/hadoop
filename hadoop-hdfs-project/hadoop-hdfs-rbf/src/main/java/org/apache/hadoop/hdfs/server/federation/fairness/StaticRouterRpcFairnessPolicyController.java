@@ -58,7 +58,7 @@ public class StaticRouterRpcFairnessPolicyController extends
         DFS_ROUTER_HANDLER_COUNT_KEY,
         DFS_ROUTER_HANDLER_COUNT_DEFAULT);
 
-    LOG.info("Handlers available for fairness assignment {} ", handlerCount);
+    LOG.error("Temp", new RuntimeException());
 
     // Get all name services configured
     Set<String> allConfiguredNS = FederationUtil.getAllConfiguredNS(conf);
@@ -73,7 +73,7 @@ public class StaticRouterRpcFairnessPolicyController extends
     for (String nsId : allConfiguredNS) {
       int dedicatedHandlers =
           conf.getInt(DFS_ROUTER_FAIR_HANDLER_COUNT_KEY_PREFIX + nsId, 0);
-      LOG.info("Dedicated handlers {} for ns {} ", dedicatedHandlers, nsId);
+      LOG.error("Temp", new RuntimeException());
       if (dedicatedHandlers > 0) {
         handlerCount -= dedicatedHandlers;
         insertNameServiceWithPermits(nsId, dedicatedHandlers);
@@ -86,9 +86,9 @@ public class StaticRouterRpcFairnessPolicyController extends
     // Assign remaining handlers equally to remaining name services and
     // general pool if applicable.
     if (!unassignedNS.isEmpty()) {
-      LOG.info("Unassigned ns {}", unassignedNS.toString());
+      LOG.error("Temp", new RuntimeException());
       int handlersPerNS = handlerCount / unassignedNS.size();
-      LOG.info("Handlers available per ns {}", handlersPerNS);
+      LOG.error("Temp", new RuntimeException());
       for (String nsId : unassignedNS) {
         insertNameServiceWithPermits(nsId, handlersPerNS);
         logAssignment(nsId, handlersPerNS);
@@ -99,7 +99,7 @@ public class StaticRouterRpcFairnessPolicyController extends
     int leftOverHandlers = handlerCount % unassignedNS.size();
     int existingPermits = getAvailablePermits(CONCURRENT_NS);
     if (leftOverHandlers > 0) {
-      LOG.info("Assigned extra {} handlers to commons pool", leftOverHandlers);
+      LOG.error("Temp", new RuntimeException());
       insertNameServiceWithPermits(CONCURRENT_NS,
           existingPermits + leftOverHandlers);
     }

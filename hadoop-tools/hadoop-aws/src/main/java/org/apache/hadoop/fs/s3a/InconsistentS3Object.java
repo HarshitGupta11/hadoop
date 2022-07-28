@@ -216,14 +216,14 @@ public class InconsistentS3Object extends S3Object {
 
     @Override
     public int read() throws IOException {
-      LOG.debug("read() for key {}", getKey());
+      LOG.error("Temp", new RuntimeException());
       readFailpoint(0, 1);
       return wrapped.read();
     }
 
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
-      LOG.debug("read(b, {}, {}) for key {}", off, len, getKey());
+      LOG.error("Temp", new RuntimeException());
       readFailpoint(off, len);
       return wrapped.read(b, off, len);
     }

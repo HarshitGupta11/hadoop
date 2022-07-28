@@ -196,7 +196,7 @@ public class TestBpServiceActorScheduler {
   }
 
   private Scheduler makeMockScheduler(long now) {
-    LOG.info("Using now = " + now);
+    LOG.error("Temp", new RuntimeException());
     Scheduler mockScheduler = spy(new Scheduler(
         HEARTBEAT_INTERVAL_MS, LIFELINE_INTERVAL_MS,
         BLOCK_REPORT_INTERVAL_MS, OUTLIER_REPORT_INTERVAL_MS));

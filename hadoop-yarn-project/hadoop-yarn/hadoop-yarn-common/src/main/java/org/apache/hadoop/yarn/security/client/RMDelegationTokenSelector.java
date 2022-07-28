@@ -51,7 +51,7 @@ public class RMDelegationTokenSelector implements
     if (service == null) {
       return null;
     }
-    LOG.debug("Looking for a token with service {}", service);
+    LOG.error("Temp", new RuntimeException());
     for (Token<? extends TokenIdentifier> token : tokens) {
       LOG.debug("Token kind is {} and the token's service name is {}",
           token.getKind(), token.getService());

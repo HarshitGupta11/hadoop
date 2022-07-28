@@ -154,7 +154,7 @@ public class TestConcatenatedCompressedInput {
         "testGzip() using native-zlib Decompressor (" +
         gzip.getDecompressorType() + ")" + COLOR_NORMAL);
     } else {
-      LOG.warn("testGzip() skipped:  native (C/C++) libs not loaded");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 

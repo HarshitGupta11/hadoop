@@ -171,7 +171,7 @@ public class TestSeveralNameNodes {
 
     private void writeList() throws IOException {
       Path nextPath = getNextFile(currentListIndex++);
-      LOG.info("Writing next file: " + nextPath);
+      LOG.error("Temp", new RuntimeException());
       FSDataOutputStream file = fs.create(nextPath);
       file.write(currentListIndex);
       file.close();

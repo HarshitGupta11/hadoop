@@ -262,7 +262,7 @@ public class TestOfflineImageViewer {
       Token<?>[] delegationTokens = hdfs
           .addDelegationTokens(TEST_RENEWER, null);
       for (Token<?> t : delegationTokens) {
-        LOG.debug("got token " + t);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Create INodeReference
@@ -360,7 +360,7 @@ public class TestOfflineImageViewer {
       if (originalFsimage == null) {
         throw new RuntimeException("Didn't generate or can't find fsimage");
       }
-      LOG.debug("original FS image file is " + originalFsimage);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (cluster != null) {
         cluster.shutdown();

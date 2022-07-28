@@ -87,7 +87,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
           initWsceNative();
           nativeLoaded = true;
         } catch (Throwable t) {
-          LOG.info("Unable to initialize WSCE Native libraries", t);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -344,7 +344,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
       public void setPermission(Path p, FsPermission permission) 
           throws IOException {
         if (LOG.isDebugEnabled()) {
-          LOG.debug(String.format("EFS:setPermission: %s %s", p, permission));
+          LOG.error("Temp", new RuntimeException());
         }
         Native.Elevated.chmod(p, permission.toShort());
       }
@@ -382,7 +382,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
       @Override
       public boolean delete(Path p, boolean recursive) throws IOException {
         if (LOG.isDebugEnabled()) {
-          LOG.debug(String.format("EFS:delete: %s %b", p, recursive));
+          LOG.error("Temp", new RuntimeException());
         }
         
         // The super delete uses the FileUtil.fullyDelete, 
@@ -490,7 +490,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
     public void validateResult() throws IOException {
       assertComplete();
       if (0 != exitCode) {
-        LOG.warn(output.toString());
+        LOG.error("Temp", new RuntimeException());
         throw new IOException("Processs exit code is:" + exitCode);
       }
     }
@@ -591,7 +591,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
   
   @Override
   protected void copyFile(Path src, Path dst, String owner) throws IOException {
-    LOG.debug("copyFile: {} -> {} owner:{}", src, dst, owner);
+    LOG.error("Temp", new RuntimeException());
     Native.Elevated.copy(src,  dst, true);
     Native.Elevated.chown(dst, owner, nodeManagerGroup);
   }
@@ -604,7 +604,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
     // This is similar to how LCE creates dirs
     //
     perms = new FsPermission(DIR_PERM);
-    LOG.debug("createDir: {} perm:{} owner:{}", dirPath, perms, owner);
+    LOG.error("Temp", new RuntimeException());
     
     super.createDir(dirPath, perms, createParent, owner);
     lfs.setOwner(dirPath, owner, nodeManagerGroup);
@@ -613,7 +613,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
   @Override
   protected void setScriptExecutable(Path script, String owner) 
       throws IOException {
-    LOG.debug("setScriptExecutable: {} owner:{}", script, owner);
+    LOG.error("Temp", new RuntimeException());
     super.setScriptExecutable(script, owner);
     Native.Elevated.chown(script, owner, nodeManagerGroup);
   }
@@ -621,7 +621,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
   @Override
   public Path localizeClasspathJar(Path jarPath, Path target, String owner) 
       throws IOException {
-    LOG.debug("localizeClasspathJar: {} {} o:{}", jarPath, target, owner);
+    LOG.error("Temp", new RuntimeException());
     createDir(target,  new FsPermission(DIR_PERM), true, owner);
     String fileName = jarPath.getName();
     Path dst = new Path(target, fileName);
@@ -657,7 +657,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
     copyFile(nmPrivateContainerTokensPath, tokenDst, user);
 
     File cwdApp = new File(appStorageDir.toString());
-    LOG.debug("cwdApp: {}", cwdApp);
+    LOG.error("Temp", new RuntimeException());
 
     List<String> command ;
 

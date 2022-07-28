@@ -109,7 +109,7 @@ public final class S3GuardToolTestHelper {
       final Object... oargs)
       throws Exception {
     final String[] args = varargsToString(oargs);
-    LOG.info("exec {}", (Object) args);
+    LOG.error("Temp", new RuntimeException());
     int r;
     try (PrintStream out = new PrintStream(buf)) {
       r = cmd.run(args, out);

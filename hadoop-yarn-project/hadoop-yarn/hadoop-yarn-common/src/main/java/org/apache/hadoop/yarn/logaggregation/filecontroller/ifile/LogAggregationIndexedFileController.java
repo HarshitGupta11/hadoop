@@ -776,7 +776,7 @@ public class LogAggregationIndexedFileController
           checkSumFiles.put(nodeName, Long.valueOf(index));
         }
       } catch (IOException ex) {
-        LOG.warn(ex.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       } finally {
         IOUtils.cleanupWithLogger(LOG, checksumFileInputStream);
@@ -810,7 +810,7 @@ public class LogAggregationIndexedFileController
         return index;
       }
     } catch (IOException ex) {
-      LOG.warn(ex.getMessage());
+      LOG.error("Temp", new RuntimeException());
       return null;
     } finally {
       IOUtils.cleanupWithLogger(LOG, checksumFileInputStream);
@@ -944,7 +944,7 @@ public class LogAggregationIndexedFileController
       }
       if (uuidReadLen != UUID_LENGTH || !Arrays.equals(this.uuid, uuidRead)) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("the length of loaded UUID:{}", uuidReadLen);
+          LOG.error("Temp", new RuntimeException());
           LOG.debug("the loaded UUID:{}", new String(uuidRead,
               Charset.forName("UTF-8")));
           LOG.debug("the expected UUID:{}", new String(this.uuid,
@@ -1179,7 +1179,7 @@ public class LogAggregationIndexedFileController
         this.out = compressAlgo.createCompressionStream(
             fsBufferedOutput, compressor, 0);
       } catch (IOException e) {
-        LOG.warn(e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         compressAlgo.returnCompressor(compressor);
         throw e;
       }
@@ -1275,12 +1275,12 @@ public class LogAggregationIndexedFileController
         try {
           return run();
         } catch (IOException e) {
-          LOG.info("Exception while executing an FS operation.", e);
+          LOG.error("Temp", new RuntimeException());
           if (++retry > fsNumRetries) {
-            LOG.info("Maxed out FS retries. Giving up!");
+            LOG.error("Temp", new RuntimeException());
             throw e;
           }
-          LOG.info("Retrying operation on FS. Retry no. " + retry);
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(fsRetryInterval);
         }
       }

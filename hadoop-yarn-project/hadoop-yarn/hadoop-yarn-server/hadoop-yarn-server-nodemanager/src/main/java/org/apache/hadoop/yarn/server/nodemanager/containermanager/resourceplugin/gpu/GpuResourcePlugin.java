@@ -142,7 +142,7 @@ public class GpuResourcePlugin implements ResourcePlugin {
           "Linux Container Executor is not configured for the NodeManager. "
               + "To fully enable GPU feature on the node also set "
               + YarnConfiguration.NM_CONTAINER_EXECUTOR + " properly.";
-      LOG.warn(errorMsg);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(errorMsg);
     }
   }

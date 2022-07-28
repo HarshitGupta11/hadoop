@@ -69,7 +69,7 @@ public class CachedHistoryStorage extends AbstractService implements
   @Override
   public void serviceInit(Configuration conf) throws Exception {
     super.serviceInit(conf);
-    LOG.info("CachedHistoryStorage Init");
+    LOG.error("Temp", new RuntimeException());
 
     createLoadedJobCache(conf);
   }
@@ -147,7 +147,7 @@ public class CachedHistoryStorage extends AbstractService implements
       setConfig(createConf());
       createLoadedJobCache(getConfig());
     } else {
-      LOG.warn("Failed to execute refreshLoadedJobCache: CachedHistoryStorage is not started");
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -168,7 +168,7 @@ public class CachedHistoryStorage extends AbstractService implements
   
   private Job loadJob(JobId jobId) throws RuntimeException, IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Looking for Job " + jobId);
+      LOG.error("Temp", new RuntimeException());
     }
     HistoryFileInfo fileInfo;
 
@@ -210,7 +210,7 @@ public class CachedHistoryStorage extends AbstractService implements
 
   @Override
   public Map<JobId, Job> getAllPartialJobs() {
-    LOG.debug("Called getAllPartialJobs()");
+    LOG.error("Temp", new RuntimeException());
     SortedMap<JobId, Job> result = new TreeMap<JobId, Job>();
     try {
       for (HistoryFileInfo mi : hsManager.getAllFileInfo()) {
@@ -221,7 +221,7 @@ public class CachedHistoryStorage extends AbstractService implements
         }
       }
     } catch (IOException e) {
-      LOG.warn("Error trying to scan for all FileInfos", e);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(e);
     }
     return result;

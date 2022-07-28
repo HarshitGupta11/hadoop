@@ -87,7 +87,7 @@ public class TestStandbyIsHot {
       System.err.println("==================================");
 
       // Block locations should show up on standby.
-      LOG.info("Waiting for block locations to appear on standby node");
+      LOG.error("Temp", new RuntimeException());
       waitForBlockLocations(cluster, nn2, TEST_FILE, 3);
 
       // Trigger immediate heartbeats and block reports so
@@ -96,7 +96,7 @@ public class TestStandbyIsHot {
       cluster.triggerBlockReports();
 
       // Change replication
-      LOG.info("Changing replication to 1");
+      LOG.error("Temp", new RuntimeException());
       fs.setReplication(TEST_FILE_PATH, (short)1);
       BlockManagerTestUtil.computeAllPendingWork(
           nn1.getNamesystem().getBlockManager());
@@ -104,17 +104,17 @@ public class TestStandbyIsHot {
 
       nn1.getRpcServer().rollEditLog();
       
-      LOG.info("Waiting for lowered replication to show up on standby");
+      LOG.error("Temp", new RuntimeException());
       waitForBlockLocations(cluster, nn2, TEST_FILE, 1);
       
       // Change back to 3
-      LOG.info("Changing replication to 3");
+      LOG.error("Temp", new RuntimeException());
       fs.setReplication(TEST_FILE_PATH, (short)3);
       BlockManagerTestUtil.computeAllPendingWork(
           nn1.getNamesystem().getBlockManager());
       nn1.getRpcServer().rollEditLog();
       
-      LOG.info("Waiting for higher replication to show up on standby");
+      LOG.error("Temp", new RuntimeException());
       waitForBlockLocations(cluster, nn2, TEST_FILE, 3);
       
     } finally {
@@ -215,14 +215,14 @@ public class TestStandbyIsHot {
           }
           int numReplicas = dnis.length;
           
-          LOG.info("Got " + numReplicas + " locs: " + locs);
+          LOG.error("Temp", new RuntimeException());
           if (numReplicas > expectedReplicas) {
             cluster.triggerDeletionReports();
           }
           cluster.triggerHeartbeats();
           return numReplicas == expectedReplicas;
         } catch (IOException e) {
-          LOG.warn("No block locations yet: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }

@@ -857,14 +857,14 @@ public abstract class AMRMClient<T extends AMRMClient.ContainerRequest> extends
 
     int loggingCounter = logInterval;
     do {
-      LOG.debug("Check the condition for main loop.");
+      LOG.error("Temp", new RuntimeException());
       boolean result = check.get();
       if (result) {
-        LOG.info("Exits the main loop.");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       if (--loggingCounter <= 0) {
-        LOG.info("Waiting in main loop.");
+        LOG.error("Temp", new RuntimeException());
         loggingCounter = logInterval;
       }
 

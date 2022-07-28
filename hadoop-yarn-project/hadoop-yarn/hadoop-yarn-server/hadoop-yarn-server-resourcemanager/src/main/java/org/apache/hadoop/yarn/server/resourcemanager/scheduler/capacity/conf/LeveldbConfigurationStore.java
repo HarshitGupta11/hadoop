@@ -149,7 +149,7 @@ public class LeveldbConfigurationStore extends YarnConfigurationStore {
         return key;
       }
     });
-    LOG.info("Using conf database at {}", storeRoot);
+    LOG.error("Temp", new RuntimeException());
     File dbFile = new File(storeRoot.toString());
     db = dbManager.initDatabase(dbFile, options, this::initDb);
   }

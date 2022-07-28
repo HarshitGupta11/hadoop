@@ -98,7 +98,7 @@ public final class ECTopologyVerifier {
               "the erasure coding policies: %s. " +
               "The number of DataNodes is only %d.",
           minDN, readablePolicies, numOfDataNodes);
-      LOG.debug(resultMessage);
+      LOG.error("Temp", new RuntimeException());
       return new ECTopologyVerifierResult(false, resultMessage);
     }
 
@@ -107,7 +107,7 @@ public final class ECTopologyVerifier {
           "the erasure coding policies: %s. " +
               "The number of racks is only %d.",
           minRack, readablePolicies, numOfRacks);
-      LOG.debug(resultMessage);
+      LOG.error("Temp", new RuntimeException());
       return new ECTopologyVerifierResult(false, resultMessage);
     }
     return new ECTopologyVerifierResult(true,

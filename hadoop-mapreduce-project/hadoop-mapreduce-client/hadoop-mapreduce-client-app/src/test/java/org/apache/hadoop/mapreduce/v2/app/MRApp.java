@@ -238,13 +238,13 @@ public class MRApp extends MRAppMaster {
         System.currentTimeMillis());
     this.testWorkDir = new File("target", testName);
     testAbsPath = new Path(testWorkDir.getAbsolutePath());
-    LOG.info("PathUsed: " + testAbsPath);
+    LOG.error("Temp", new RuntimeException());
     if (cleanOnStart) {
       testAbsPath = new Path(testWorkDir.getAbsolutePath());
       try {
         FileContext.getLocalFSFileContext().delete(testAbsPath, true);
       } catch (Exception e) {
-        LOG.warn("COULD NOT CLEANUP: " + testAbsPath, e);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException("could not cleanup test dir", e);
       }
     }
@@ -310,7 +310,7 @@ public class MRApp extends MRAppMaster {
     // Write job.xml
     String jobFile = MRApps.getJobFile(conf, user,
         TypeConverter.fromYarn(job.getID()));
-    LOG.info("Writing job conf to " + jobFile);
+    LOG.error("Temp", new RuntimeException());
     new File(jobFile).getParentFile().mkdirs();
     conf.writeXml(new FileOutputStream(jobFile));
 
@@ -325,7 +325,7 @@ public class MRApp extends MRAppMaster {
       Thread.sleep(WAIT_FOR_STATE_INTERVAL);
       iState = job.getInternalState();
     }
-    LOG.info("Job {} Internal State is : {}", job.getID(), iState);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Task Internal state is not correct (timedout)",
         finalState, iState);
   }
@@ -338,7 +338,7 @@ public class MRApp extends MRAppMaster {
       Thread.sleep(WAIT_FOR_STATE_INTERVAL);
       iState = task.getInternalState();
     }
-    LOG.info("Task {} Internal State is : {}", task.getID(), iState);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Task Internal state is not correct (timedout)",
         finalState, iState);
   }
@@ -351,7 +351,7 @@ public class MRApp extends MRAppMaster {
       Thread.sleep(WAIT_FOR_STATE_INTERVAL);
       iState = attempt.getInternalState();
     }
-    LOG.info("TaskAttempt {} Internal State is : {}", attempt.getID(), iState);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("TaskAttempt Internal state is not correct (timedout)",
         finalState, iState);
   }
@@ -380,7 +380,7 @@ public class MRApp extends MRAppMaster {
       Thread.sleep(WAIT_FOR_STATE_INTERVAL);
       report = task.getReport();
     }
-    LOG.info("Task {} State is : {}", task.getID(), report.getTaskState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Task state is not correct (timedout)", finalState,
         report.getTaskState());
   }
@@ -393,7 +393,7 @@ public class MRApp extends MRAppMaster {
       report = job.getReport();
       Thread.sleep(WAIT_FOR_STATE_INTERVAL);
     }
-    LOG.info("Job {} State is : {}", job.getID(), report.getJobState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Job state is not correct (timedout)", finalState, 
         job.getState());
   }
@@ -408,7 +408,7 @@ public class MRApp extends MRAppMaster {
           && timeoutSecs++ < WAIT_FOR_STATE_CNT) {
         Thread.sleep(WAIT_FOR_STATE_INTERVAL);
       }
-      LOG.info("MRApp State is : {}", getServiceState());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals("MRApp state is not correct (timedout)", finalState,
           getServiceState());
     }
@@ -417,8 +417,8 @@ public class MRApp extends MRAppMaster {
   public void verifyCompleted() {
     for (Job job : getContext().getAllJobs().values()) {
       JobReport jobReport = job.getReport();
-      LOG.info("Job start time :{}", jobReport.getStartTime());
-      LOG.info("Job finish time :", jobReport.getFinishTime());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue("Job start time is not less than finish time",
           jobReport.getStartTime() <= jobReport.getFinishTime());
       Assert.assertTrue("Job finish time is in future",

@@ -91,8 +91,8 @@ class DataXceiverServer implements Runnable {
       super(bandwidth);
       this.semaphore = new Semaphore(maxThreads, true);
       this.maxThreads = maxThreads;
-      LOG.info("Balancing bandwidth is " + bandwidth + " bytes/s");
-      LOG.info("Number threads for balancing is " + maxThreads);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
 
     /**
@@ -121,7 +121,7 @@ class DataXceiverServer implements Runnable {
         return true;
       }
       if (delta > 0) {
-        LOG.debug("Adding thread capacity: {}", delta);
+        LOG.error("Temp", new RuntimeException());
         this.semaphore.release(delta);
         this.maxThreads = newMaxThreads;
         return true;
@@ -139,7 +139,7 @@ class DataXceiverServer implements Runnable {
         }
         return acquired;
       } catch (InterruptedException e) {
-        LOG.warn("Interrupted before adjusting thread count: {}", delta);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }
@@ -245,11 +245,11 @@ class DataXceiverServer implements Runnable {
         // another thread closed our listener socket - that's expected during shutdown,
         // but not in other circumstances
         if (datanode.shouldRun && !datanode.shutdownForUpgrade) {
-          LOG.warn("{}:DataXceiverServer", datanode.getDisplayName(), ace);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException ie) {
         IOUtils.closeQuietly(peer);
-        LOG.warn("{}:DataXceiverServer", datanode.getDisplayName(), ie);
+        LOG.error("Temp", new RuntimeException());
       } catch (OutOfMemoryError ie) {
         IOUtils.closeQuietly(peer);
         // DataNode can run out of memory if there is too many transfers.
@@ -288,7 +288,7 @@ class DataXceiverServer implements Runnable {
       // Each thread needs some time to process it. If a thread needs
       // to send an OOB message to the client, but blocked on network for
       // long time, we need to force its termination.
-      LOG.info("Shutting down DataXceiverServer before restart");
+      LOG.error("Temp", new RuntimeException());
 
       waitAllPeers(2L, TimeUnit.SECONDS);
     }
@@ -307,7 +307,7 @@ class DataXceiverServer implements Runnable {
         closed = true;
       }
     } catch (IOException ie) {
-      LOG.warn("{}:DataXceiverServer.kill()", datanode.getDisplayName(), ie);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       lock.unlock();
     }
@@ -354,9 +354,9 @@ class DataXceiverServer implements Runnable {
         try {
           peersXceiver.get(p).sendOOB();
         } catch (IOException e) {
-          LOG.warn("Got error when sending OOB message.", e);
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException e) {
-          LOG.warn("Interrupted when sending OOB message.");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } finally {
@@ -393,7 +393,7 @@ class DataXceiverServer implements Runnable {
    * Close all peers and clear the map.
    */
   void closeAllPeers() {
-    LOG.info("Closing all peers.");
+    LOG.error("Temp", new RuntimeException());
     lock.lock();
     try {
       peers.keySet().forEach(p -> IOUtils.closeQuietly(p));
@@ -426,7 +426,7 @@ class DataXceiverServer implements Runnable {
         nanos = noPeers.awaitNanos(nanos);
       }
     } catch (InterruptedException e) {
-      LOG.debug("Interrupted waiting for peers to close");
+      LOG.error("Temp", new RuntimeException());
       return false;
     } finally {
       lock.unlock();

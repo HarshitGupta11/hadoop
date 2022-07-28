@@ -263,7 +263,7 @@ public class DiskBalancerTestUtil {
         }
       }
       if (checkblockPoolCount) {
-        LOG.info("Block Pool Id:  {}, blockCount: {}", blockPoolID, blockCount);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(blockCount > 0);
       }
       count += blockCount;

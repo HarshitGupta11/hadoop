@@ -336,7 +336,7 @@ public class MockNamenode {
     DirectoryListing l = mockNn.getListing(anyString(), any(), anyBoolean());
     when(l).thenAnswer(invocation -> {
       String src = getSrc(invocation);
-      LOG.info("{} getListing({})", nsId, src);
+      LOG.error("Temp", new RuntimeException());
       if (fs.get(src) == null) {
         throw new FileNotFoundException("File does not exist " + src);
       }
@@ -359,19 +359,19 @@ public class MockNamenode {
     });
     when(mockNn.getFileInfo(anyString())).thenAnswer(invocation -> {
       String src = getSrc(invocation);
-      LOG.info("{} getFileInfo({})", nsId, src);
+      LOG.error("Temp", new RuntimeException());
       return getMockHdfsFileStatus(src, fs.get(src));
     });
     HdfsFileStatus c = mockNn.create(anyString(), any(), anyString(), any(),
         anyBoolean(), anyShort(), anyLong(), any(), any(), any());
     when(c).thenAnswer(invocation -> {
       String src = getSrc(invocation);
-      LOG.info("{} create({})", nsId, src);
+      LOG.error("Temp", new RuntimeException());
       boolean createParent = (boolean)invocation.getArgument(4);
       if (createParent) {
         Path path = new Path(src).getParent();
         while (!path.isRoot()) {
-          LOG.info("{} create parent {}", nsId, path);
+          LOG.error("Temp", new RuntimeException());
           fs.put(path.toString(), "DIRECTORY");
           path = path.getParent();
         }
@@ -383,7 +383,7 @@ public class MockNamenode {
         anyString(), anyLong(), anyLong());
     when(b).thenAnswer(invocation -> {
       String src = getSrc(invocation);
-      LOG.info("{} getBlockLocations({})", nsId, src);
+      LOG.error("Temp", new RuntimeException());
       if (!fs.containsKey(src)) {
         LOG.error("{} cannot find {} for getBlockLocations", nsId, src);
         throw new FileNotFoundException("File does not exist " + src);
@@ -412,12 +412,12 @@ public class MockNamenode {
     boolean m = mockNn.mkdirs(anyString(), any(), anyBoolean());
     when(m).thenAnswer(invocation -> {
       String src = getSrc(invocation);
-      LOG.info("{} mkdirs({})", nsId, src);
+      LOG.error("Temp", new RuntimeException());
       boolean createParent = (boolean)invocation.getArgument(2);
       if (createParent) {
         Path path = new Path(src).getParent();
         while (!path.isRoot()) {
-          LOG.info("{} mkdir parent {}", nsId, path);
+          LOG.error("Temp", new RuntimeException());
           fs.put(path.toString(), "DIRECTORY");
           path = path.getParent();
         }
@@ -426,7 +426,7 @@ public class MockNamenode {
       return true;
     });
     when(mockNn.getServerDefaults()).thenAnswer(invocation -> {
-      LOG.info("{} getServerDefaults", nsId);
+      LOG.error("Temp", new RuntimeException());
       FsServerDefaults defaults = mock(FsServerDefaults.class);
       when(defaults.getChecksumType()).thenReturn(
           Type.valueOf(DataChecksum.CHECKSUM_CRC32));
@@ -435,7 +435,7 @@ public class MockNamenode {
     });
     when(mockNn.getContentSummary(anyString())).thenAnswer(invocation -> {
       String src = getSrc(invocation);
-      LOG.info("{} getContentSummary({})", nsId, src);
+      LOG.error("Temp", new RuntimeException());
       if (fs.get(src) == null) {
         throw new FileNotFoundException("File does not exist " + src);
       }
@@ -475,7 +475,7 @@ public class MockNamenode {
   public void addDatanodeMock() throws IOException {
     when(mockNn.getDatanodeReport(any(DatanodeReportType.class))).thenAnswer(
         invocation -> {
-          LOG.info("{} getDatanodeReport()", nsId, invocation.getArgument(0));
+          LOG.error("Temp", new RuntimeException());
           return dns.toArray();
         });
     when(mockNn.getDatanodeStorageReport(any(DatanodeReportType.class)))
@@ -590,10 +590,10 @@ public class MockNamenode {
             nsId, null, rpcAddress, rpcAddress,
             rpcAddress, scheme, httpAddress);
         if (unavailableSubclusters.contains(nsId)) {
-          LOG.info("Register {} as UNAVAILABLE", nsId);
+          LOG.error("Temp", new RuntimeException());
           report.setRegistrationValid(false);
         } else {
-          LOG.info("Register {} as ACTIVE", nsId);
+          LOG.error("Temp", new RuntimeException());
           report.setRegistrationValid(true);
         }
         report.setNamespaceInfo(new NamespaceInfo(0, nsId, nsId, 0));

@@ -321,7 +321,7 @@ public class TestRLESparseResourceAllocation {
     for (Entry<ReservationInterval, Resource> ip : inputs) {
       rleSparseVector.addInterval(ip.getKey(), ip.getValue());
     }
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(rleSparseVector.isEmpty());
     Assert.assertEquals(Resource.newInstance(0, 0),
         rleSparseVector.getCapacityAtTime(99));
@@ -336,7 +336,7 @@ public class TestRLESparseResourceAllocation {
     for (Entry<ReservationInterval, Resource> ip : inputs) {
       rleSparseVector.removeInterval(ip.getKey(), ip.getValue());
     }
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < alloc.length; i++) {
       Assert.assertEquals(Resource.newInstance(0, 0),
           rleSparseVector.getCapacityAtTime(start + i));
@@ -362,14 +362,14 @@ public class TestRLESparseResourceAllocation {
     // same if we use this
     // ReservationRequest rrRemove =
     // ReservationRequest.newInstance(Resource.newInstance(1024, 1), 100, 1,6);
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
 
     rleSparseVector.addInterval(riAdd, rr);
     rleSparseVector.addInterval(riAdd2, rr2);
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
 
     rleSparseVector.removeInterval(riRemove, rr);
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
 
     // Current bug prevents this to pass. The RLESparseResourceAllocation
     // does not handle removal of "partial"
@@ -387,7 +387,7 @@ public class TestRLESparseResourceAllocation {
 
     ReservationInterval riRemove2 = new ReservationInterval(9, 13);
     rleSparseVector.removeInterval(riRemove2, rr);
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(0,
         rleSparseVector.getCapacityAtTime(11).getMemorySize());
@@ -413,7 +413,7 @@ public class TestRLESparseResourceAllocation {
     for (Entry<ReservationInterval, Resource> ip : inputs) {
       rleSparseVector.addInterval(ip.getKey(), ip.getValue());
     }
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(rleSparseVector.isEmpty());
     Assert.assertEquals(Resource.newInstance(0, 0),
         rleSparseVector.getCapacityAtTime(99));
@@ -429,7 +429,7 @@ public class TestRLESparseResourceAllocation {
     for (Entry<ReservationInterval, Resource> ip : inputs) {
       rleSparseVector.removeInterval(ip.getKey(), ip.getValue());
     }
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < alloc.length; i++) {
       Assert.assertEquals(Resource.newInstance(0, 0),
           rleSparseVector.getCapacityAtTime(start + i));
@@ -450,7 +450,7 @@ public class TestRLESparseResourceAllocation {
     for (Entry<ReservationInterval, Resource> ip : inputs) {
       rleSparseVector.addInterval(ip.getKey(), ip.getValue());
     }
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(rleSparseVector.isEmpty());
     Assert.assertEquals(Resource.newInstance(0, 0),
         rleSparseVector.getCapacityAtTime(99));
@@ -466,7 +466,7 @@ public class TestRLESparseResourceAllocation {
     for (Entry<ReservationInterval, Resource> ip : inputs) {
       rleSparseVector.removeInterval(ip.getKey(), ip.getValue());
     }
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < alloc.length; i++) {
       Assert.assertEquals(Resource.newInstance(0, 0),
           rleSparseVector.getCapacityAtTime(start + i));
@@ -481,7 +481,7 @@ public class TestRLESparseResourceAllocation {
         new RLESparseResourceAllocation(resCalc);
     rleSparseVector.addInterval(new ReservationInterval(0, Long.MAX_VALUE),
         Resource.newInstance(0, 0));
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(Resource.newInstance(0, 0),
         rleSparseVector.getCapacityAtTime(new Random().nextLong()));
     Assert.assertTrue(rleSparseVector.isEmpty());
@@ -539,7 +539,7 @@ public class TestRLESparseResourceAllocation {
     int[] alloc = { 2, 5, 7, 10, 3, 4, 6, 8 };
     RLESparseResourceAllocation rleSparseVector = ReservationSystemTestUtil
         .generateRLESparseResourceAllocation(alloc, timeSteps);
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(rleSparseVector.getMaximumPeriodicCapacity(0, 1),
         Resource.newInstance(10, 10));
     Assert.assertEquals(rleSparseVector.getMaximumPeriodicCapacity(0, 2),
@@ -564,7 +564,7 @@ public class TestRLESparseResourceAllocation {
     int[] alloc = { 2, 5, 7, 10, 3, 4, 0, 8 };
     RLESparseResourceAllocation rleSparseVector = ReservationSystemTestUtil
         .generateRLESparseResourceAllocation(alloc, timeSteps);
-    LOG.info(rleSparseVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(rleSparseVector.getMinimumCapacityInInterval(
         new ReservationInterval(1L, 3L)), Resource.newInstance(5, 5));
     Assert.assertEquals(rleSparseVector.getMinimumCapacityInInterval(

@@ -146,7 +146,7 @@ public class NetworkTopology {
                                            + " at an illegal network location");
       }
       if (clusterMap.add(node)) {
-        LOG.info("Adding a new node: "+NodeBase.getPath(node));
+        LOG.error("Temp", new RuntimeException());
         if (rack == null) {
           incrementRacks();
         }
@@ -154,7 +154,7 @@ public class NetworkTopology {
           depthOfAllLeaves = node.getLevel();
         }
       }
-      LOG.debug("NetworkTopology became:\n{}", this);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       netlock.writeLock().unlock();
     }
@@ -216,7 +216,7 @@ public class NetworkTopology {
       throw new IllegalArgumentException(
         "Not allow to remove an inner node: "+NodeBase.getPath(node));
     }
-    LOG.info("Removing a node: "+NodeBase.getPath(node));
+    LOG.error("Temp", new RuntimeException());
     netlock.writeLock().lock();
     try {
       if (clusterMap.remove(node)) {
@@ -225,7 +225,7 @@ public class NetworkTopology {
           numOfRacks--;
         }
       }
-      LOG.debug("NetworkTopology became:\n{}", this);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       netlock.writeLock().unlock();
     }
@@ -318,7 +318,7 @@ public class NetworkTopology {
       return 0;
     }
     if (node1 == null || node2 == null) {
-      LOG.warn("One of the nodes is a null pointer");
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     Node n1=node1, n2=node2;
@@ -345,11 +345,11 @@ public class NetworkTopology {
       netlock.readLock().unlock();
     }
     if (n1==null) {
-      LOG.warn("The cluster does not contain node: "+NodeBase.getPath(node1));
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     if (n2==null) {
-      LOG.warn("The cluster does not contain node: "+NodeBase.getPath(node2));
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     return dis+2;
@@ -369,7 +369,7 @@ public class NetworkTopology {
       return 0;
     }
     if (node1 == null || node2 == null) {
-      LOG.warn("One of the nodes is a null pointer");
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     String[] paths1 = NodeBase.getPathComponents(node1);
@@ -537,7 +537,7 @@ public class NetworkTopology {
       ret = chooseRandom(innerNode, node, excludedNodes, numOfDatanodes,
           availableNodes);
     }
-    LOG.debug("chooseRandom returning {}", ret);
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 
@@ -589,12 +589,12 @@ public class NetworkTopology {
     // higher than the expected 1/7
     // totalInScopeNodes=10 and availableNodes=7 in this example.
     int nthValidToReturn = r.nextInt(availableNodes);
-    LOG.debug("nthValidToReturn is {}", nthValidToReturn);
+    LOG.error("Temp", new RuntimeException());
     Node ret =
         parentNode.getLeaf(r.nextInt(totalInScopeNodes), excludedScopeNode);
     if (!excludedNodes.contains(ret)) {
       // return if we're lucky enough to get a valid node at a random first pick
-      LOG.debug("Chosen node {} from first random", ret);
+      LOG.error("Temp", new RuntimeException());
       return ret;
     } else {
       ret = null;
@@ -609,7 +609,7 @@ public class NetworkTopology {
         --nthValidToReturn;
         lastValidNode = ret;
       } else {
-        LOG.debug("Node {} is excluded, continuing.", ret);
+        LOG.error("Temp", new RuntimeException());
         ret = null;
       }
     }

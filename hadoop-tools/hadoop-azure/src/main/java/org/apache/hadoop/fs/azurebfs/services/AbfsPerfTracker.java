@@ -123,7 +123,7 @@ public final class AbfsPerfTracker {
   protected AbfsPerfTracker(String filesystemName, String accountName, boolean enabled) {
     this.enabled = enabled;
 
-    LOG.debug("AbfsPerfTracker configuration: {}", enabled);
+    LOG.error("Temp", new RuntimeException());
 
     if (enabled) {
       try {
@@ -297,7 +297,7 @@ public final class AbfsPerfTracker {
     if (LOG.isDebugEnabled()) {
       Instant stop = Instant.now();
       long elapsed = Duration.between(trackerStart, stop).toMillis();
-      LOG.debug("Dequeued latency info [{} ms]: {}", elapsed, latencyDetails);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return latencyDetails;
@@ -309,7 +309,7 @@ public final class AbfsPerfTracker {
     if (LOG.isDebugEnabled()) {
       Instant trackerStop = Instant.now();
       long elapsed = Duration.between(trackerStart, trackerStop).toMillis();
-      LOG.debug("Queued latency info [{} ms]: {}", elapsed, latencyDetails);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

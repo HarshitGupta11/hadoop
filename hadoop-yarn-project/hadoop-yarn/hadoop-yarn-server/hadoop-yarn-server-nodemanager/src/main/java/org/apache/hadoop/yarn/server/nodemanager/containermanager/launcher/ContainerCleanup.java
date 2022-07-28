@@ -86,7 +86,7 @@ public class ContainerCleanup implements Runnable {
   public void run() {
     ContainerId containerId = container.getContainerId();
     String containerIdStr = containerId.toString();
-    LOG.info("Cleaning up container " + containerIdStr);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       context.getNMStateStore().storeContainerKilled(containerId);
@@ -104,7 +104,7 @@ public class ContainerCleanup implements Runnable {
           + " No cleanup needed to be done");
       return;
     }
-    LOG.debug("Marking container {} as inactive", containerIdStr);
+    LOG.error("Temp", new RuntimeException());
     // this should ensure that if the container process has not launched
     // by this time, it will never be launched
     exec.deactivateContainer(containerId);
@@ -155,7 +155,7 @@ public class ContainerCleanup implements Runnable {
       String message =
           "Exception when trying to cleanup container " + containerIdStr
               + ": " + StringUtils.stringifyException(e);
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       dispatcher.getEventHandler().handle(
           new ContainerDiagnosticsUpdateEvent(containerId, message));
     } finally {

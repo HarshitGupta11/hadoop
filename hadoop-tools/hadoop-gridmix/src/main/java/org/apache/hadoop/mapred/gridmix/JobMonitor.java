@@ -97,7 +97,7 @@ class JobMonitor implements Gridmix.Component<JobStats> {
    */
   public void submissionFailed(JobStats job) {
     String jobID = job.getJob().getConfiguration().get(Gridmix.ORIGINAL_JOB_ID);
-    LOG.info("Job submission failed notification for job " + jobID);
+    LOG.error("Temp", new RuntimeException());
     synchronized (statistics) {
       this.statistics.add(job);
     }
@@ -107,14 +107,14 @@ class JobMonitor implements Gridmix.Component<JobStats> {
    * Temporary hook for recording job success.
    */
   protected void onSuccess(Job job) {
-    LOG.info(job.getJobName() + " (" + job.getJobID() + ")" + " success");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
    * Temporary hook for recording job failure.
    */
   protected void onFailure(Job job) {
-    LOG.info(job.getJobName() + " (" + job.getJobID() + ")" + " failure");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -242,7 +242,7 @@ class JobMonitor implements Gridmix.Component<JobStats> {
             continue;
           }
         } catch (Throwable e) {
-          LOG.warn("Unexpected exception: ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

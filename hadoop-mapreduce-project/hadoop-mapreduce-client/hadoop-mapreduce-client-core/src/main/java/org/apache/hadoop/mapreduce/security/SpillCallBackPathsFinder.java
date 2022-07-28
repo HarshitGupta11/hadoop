@@ -79,7 +79,7 @@ public class SpillCallBackPathsFinder extends SpillCallBackInjector {
     getFilesMap(conf)
         .computeIfAbsent(path, p -> ConcurrentHashMap.newKeySet())
         .add(outPos);
-    LOG.debug("writeSpillFileCB.. path:{}; pos:{}", path, outPos);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -92,7 +92,7 @@ public class SpillCallBackPathsFinder extends SpillCallBackInjector {
       try {
         long isPos = CryptoStreamUtils.getInputStreamOffset(is);
         if (pathEntries.contains(isPos)) {
-          LOG.debug("getSpillFileCB... Path {}; Pos: {}", path, isPos);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
         invalidAccessMap
@@ -107,7 +107,7 @@ public class SpillCallBackPathsFinder extends SpillCallBackInjector {
       return;
     }
     negativeCache.add(path);
-    LOG.warn("getSpillFileCB.. Could not find spilled file .. Path: {}", path);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -139,7 +139,7 @@ public class SpillCallBackPathsFinder extends SpillCallBackInjector {
       return;
     }
     indexSpillFiles.add(path);
-    LOG.debug("addSpillIndexFileCB... Path: {}", path);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -148,7 +148,7 @@ public class SpillCallBackPathsFinder extends SpillCallBackInjector {
       return;
     }
     if (indexSpillFiles.contains(path)) {
-      LOG.debug("validateSpillIndexFileCB.. Path: {}", path);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     LOG.warn("validateSpillIndexFileCB.. could not retrieve indexFile.. "

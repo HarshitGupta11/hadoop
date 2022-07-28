@@ -96,7 +96,7 @@ public class MockNodeStatusUpdater extends NodeStatusUpdaterImpl {
     public NodeHeartbeatResponse nodeHeartbeat(NodeHeartbeatRequest request)
         throws YarnException, IOException {
       NodeStatus nodeStatus = request.getNodeStatus();
-      LOG.info("Got heartbeat number " + heartBeatID);
+      LOG.error("Temp", new RuntimeException());
       nodeStatus.setResponseId(heartBeatID++);
 
       NodeHeartbeatResponse nhResponse = YarnServerBuilderUtils

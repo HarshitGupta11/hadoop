@@ -200,7 +200,7 @@ public class BlockStorageMovementNeeded {
         // Remove xAttr for file
         ctxt.removeSPSHint(trackId);
       } catch (IOException ie) {
-        LOG.warn("Failed to remove SPS xattr for track id " + trackId, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -230,7 +230,7 @@ public class BlockStorageMovementNeeded {
 
     @Override
     public void run() {
-      LOG.info("Starting SPSPathIdProcessor!.");
+      LOG.error("Temp", new RuntimeException());
       Long startINode = null;
       while (ctxt.isRunning()) {
         try {
@@ -257,7 +257,7 @@ public class BlockStorageMovementNeeded {
         } catch (Throwable t) {
           String reClass = t.getClass().getName();
           if (InterruptedException.class.getName().equals(reClass)) {
-            LOG.info("SPSPathIdProcessor thread is interrupted. Stopping..");
+            LOG.error("Temp", new RuntimeException());
             break;
           }
           LOG.warn("Exception while scanning file inodes to satisfy the policy",
@@ -265,7 +265,7 @@ public class BlockStorageMovementNeeded {
           try {
             Thread.sleep(3000);
           } catch (InterruptedException e) {
-            LOG.info("Interrupted while waiting in SPSPathIdProcessor", t);
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }

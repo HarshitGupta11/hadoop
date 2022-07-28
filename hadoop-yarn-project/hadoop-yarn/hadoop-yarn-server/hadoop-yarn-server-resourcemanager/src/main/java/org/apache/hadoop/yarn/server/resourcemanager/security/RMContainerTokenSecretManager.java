@@ -106,7 +106,7 @@ public class RMContainerTokenSecretManager extends
   public void rollMasterKey() {
     super.writeLock.lock();
     try {
-      LOG.info("Rolling master-key for container-tokens");
+      LOG.error("Temp", new RuntimeException());
       if (this.currentMasterKey == null) { // Setting up for the first time.
         this.currentMasterKey = createNewMasterKey();
       } else {

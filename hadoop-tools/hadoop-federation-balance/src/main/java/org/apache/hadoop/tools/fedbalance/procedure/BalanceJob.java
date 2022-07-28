@@ -136,7 +136,7 @@ public final class BalanceJob<T extends BalanceProcedure> implements Writable {
           if (!scheduler.writeJournal(this)) {
             quit = true; // Write journal failed. Simply quit because this job
                          // has already been added to the recoverQueue.
-            LOG.debug("Write journal failed. Quit and wait for recovery.");
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

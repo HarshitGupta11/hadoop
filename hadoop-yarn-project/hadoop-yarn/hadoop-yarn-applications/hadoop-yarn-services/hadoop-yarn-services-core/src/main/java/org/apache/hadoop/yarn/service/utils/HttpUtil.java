@@ -64,7 +64,7 @@ public class HttpUtil {
   public static String generateToken(String server) throws
       IOException, InterruptedException {
     UserGroupInformation currentUser = UserGroupInformation.getCurrentUser();
-    LOG.debug("The user credential is {}", currentUser);
+    LOG.error("Temp", new RuntimeException());
     String challenge = currentUser
         .doAs(new PrivilegedExceptionAction<String>() {
           @Override
@@ -89,7 +89,7 @@ public class HttpUtil {
                   inToken.length);
               gssContext.dispose();
               // Base64 encoded and stringified token for server
-              LOG.debug("Got valid challenge for host {}", serverName);
+              LOG.error("Temp", new RuntimeException());
               return new String(BASE_64_CODEC.encode(outToken),
                   StandardCharsets.US_ASCII);
             } catch (GSSException e) {
@@ -112,7 +112,7 @@ public class HttpUtil {
       String challenge = generateToken(resource.getHost());
       builder.header(HttpHeaders.AUTHORIZATION, "Negotiate " +
           challenge);
-      LOG.debug("Authorization: Negotiate {}", challenge);
+      LOG.error("Temp", new RuntimeException());
     }
     return builder;
   }

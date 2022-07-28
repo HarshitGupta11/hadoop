@@ -138,7 +138,7 @@ class ImportOperation extends ExecutingStoreOperation<Long> {
     long totalCountOfEntriesWritten = 0;
     final Path basePath = status.getPath();
     final MetadataStore ms = getStore();
-    LOG.info("Importing directory {}", basePath);
+    LOG.error("Temp", new RuntimeException());
     try (BulkOperationState operationState = ms
         .initiateBulkWrite(
             BulkOperationState.OperationType.Import,
@@ -163,7 +163,7 @@ class ImportOperation extends ExecutingStoreOperation<Long> {
         }
 
         int parentsWritten = putParentsIfNotPresent(child, operationState);
-        LOG.debug("Wrote {} parent entries", parentsWritten);
+        LOG.error("Temp", new RuntimeException());
 
         // We don't blindly overwrite any existing file entry in S3Guard with a
         // new one, Because that may lose the version information.
@@ -206,9 +206,9 @@ class ImportOperation extends ExecutingStoreOperation<Long> {
           // log entry spaced to same width
           String t = isDirectory ? "Dir " : "File";
           if (verbose) {
-            LOG.info("{} {}", t, path);
+            LOG.error("Temp", new RuntimeException());
           } else {
-            LOG.debug("{} {}", t, path);
+            LOG.error("Temp", new RuntimeException());
           }
           S3Guard.putWithTtl(
               ms,

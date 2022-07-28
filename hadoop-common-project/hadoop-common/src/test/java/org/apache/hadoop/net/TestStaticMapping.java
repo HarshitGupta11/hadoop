@@ -129,7 +129,7 @@ public class TestStaticMapping extends Assert {
     // get the switch map and examine it
     Map<String, String> switchMap = mapping.getSwitchMap();
     String topology = mapping.dumpTopology();
-    LOG.info(topology);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(topology, 1, switchMap.size());
     assertEquals(topology, "/r1", switchMap.get("n1"));
   }
@@ -159,7 +159,7 @@ public class TestStaticMapping extends Assert {
 
     Map<String, String> switchMap = mapping.getSwitchMap();
     String topology = mapping.dumpTopology();
-    LOG.info(topology);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(topology, 2, switchMap.size());
     assertEquals(topology, "/r1", switchMap.get("n1"));
     assertNull(topology, switchMap.get("unknown"));
@@ -177,7 +177,7 @@ public class TestStaticMapping extends Assert {
     assertSingleSwitch(staticMapping);
     CachedDNSToSwitchMapping cachedMap =
         new CachedDNSToSwitchMapping(staticMapping);
-    LOG.info("Mapping: " + cachedMap + "\n" + cachedMap.dumpTopology());
+    LOG.error("Temp", new RuntimeException());
     assertSingleSwitch(cachedMap);
   }
 
@@ -191,7 +191,7 @@ public class TestStaticMapping extends Assert {
     assertMultiSwitch(staticMapping);
     CachedDNSToSwitchMapping cachedMap =
         new CachedDNSToSwitchMapping(staticMapping);
-    LOG.info("Mapping: " + cachedMap + "\n" + cachedMap.dumpTopology());
+    LOG.error("Temp", new RuntimeException());
     assertMultiSwitch(cachedMap);
   }
 

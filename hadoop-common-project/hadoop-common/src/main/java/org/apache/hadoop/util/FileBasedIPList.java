@@ -104,7 +104,7 @@ public class FileBasedIPList implements IPList {
             return (lines.toArray(new String[lines.size()]));
           }
         } else {
-          LOG.debug("Missing ip list file : "+ fileName);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (IOException ioe) {

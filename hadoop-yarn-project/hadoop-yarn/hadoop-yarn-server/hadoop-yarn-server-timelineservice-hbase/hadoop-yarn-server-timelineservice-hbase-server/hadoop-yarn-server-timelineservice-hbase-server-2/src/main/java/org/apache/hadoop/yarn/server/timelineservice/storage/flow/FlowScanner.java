@@ -107,7 +107,7 @@ class FlowScanner implements RegionScanner, Closeable {
           YarnConfiguration.APP_FINAL_VALUE_RETENTION_THRESHOLD,
           YarnConfiguration.DEFAULT_APP_FINAL_VALUE_RETENTION_THRESHOLD);
     }
-    LOG.debug(" batch size={}", batchSize);
+    LOG.error("Temp", new RuntimeException());
   }
 
 
@@ -237,7 +237,7 @@ class FlowScanner implements RegionScanner, Closeable {
               + " rowKey="
               + FlowRunRowKey.parseRowKey(CellUtil.cloneRow(cells.get(0))));
         } else {
-          LOG.debug("emitted no cells for " + this.action);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -580,7 +580,7 @@ class FlowScanner implements RegionScanner, Closeable {
     if (flowRunScanner != null) {
       flowRunScanner.close();
     } else {
-      LOG.warn("scanner close called but scanner is null");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

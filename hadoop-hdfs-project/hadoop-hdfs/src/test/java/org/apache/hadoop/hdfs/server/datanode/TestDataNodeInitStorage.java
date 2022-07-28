@@ -65,7 +65,7 @@ public class TestDataNodeInitStorage {
     // the DatanodeUuid is initialized.
     public SimulatedFsDatasetVerifier(DataStorage storage, Configuration conf) {
       super(storage, conf);
-      LOG.info("Assigned DatanodeUuid is " + storage.getDatanodeUuid());
+      LOG.error("Temp", new RuntimeException());
       assert(storage.getDatanodeUuid() != null);
       assert(storage.getDatanodeUuid().length() != 0);
     }

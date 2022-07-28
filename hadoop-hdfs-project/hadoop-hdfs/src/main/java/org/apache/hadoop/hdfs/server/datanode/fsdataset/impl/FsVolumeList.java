@@ -106,7 +106,7 @@ class FsVolumeList {
       try {
         return volume.obtainReference();
       } catch (ClosedChannelException e) {
-        FsDatasetImpl.LOG.warn("Chosen a closed volume: " + volume);
+        FsDatasetImpl.LOG.error("Temp", new RuntimeException());
         // blockChooser.chooseVolume returns DiskOutOfSpaceException when the list
         // is empty, indicating that all volumes are closed.
         list.remove(volume);
@@ -319,7 +319,7 @@ class FsVolumeList {
   void waitVolumeRemoved(int sleepMillis, Condition condition) {
     while (!checkVolumesRemoved()) {
       if (FsDatasetImpl.LOG.isDebugEnabled()) {
-        FsDatasetImpl.LOG.debug("Waiting for volume reference to be released.");
+        FsDatasetImpl.LOG.error("Temp", new RuntimeException());
       }
       try {
         condition.await(sleepMillis, TimeUnit.MILLISECONDS);
@@ -329,7 +329,7 @@ class FsVolumeList {
         Thread.currentThread().interrupt();
       }
     }
-    FsDatasetImpl.LOG.info("Volume reference is released.");
+    FsDatasetImpl.LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -386,7 +386,7 @@ class FsVolumeList {
       }
       target.shutdown();
       volumesBeingRemoved.add(target);
-      FsDatasetImpl.LOG.info("Removed volume: " + target);
+      FsDatasetImpl.LOG.error("Temp", new RuntimeException());
     } else {
       if (FsDatasetImpl.LOG.isDebugEnabled()) {
         FsDatasetImpl.LOG.debug("Volume " + target +

@@ -151,7 +151,7 @@ public final class DtFileOperations {
         try {
           id = (AbstractDelegationTokenIdentifier) token.decodeIdentifier();
         } catch (IllegalStateException e) {
-          LOG.debug("Failed to decode token identifier", e);
+          LOG.error("Temp", new RuntimeException());
           id = null;
         }
         out.printf(fmt, token.getKind(), token.getService(),
@@ -187,7 +187,7 @@ public final class DtFileOperations {
       } catch (ServiceConfigurationError e) {
         // failure to load a token implementation
         // log at debug and continue.
-        LOG.debug("Failed to load token fetcher implementation", e);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       if (matchService(fetcher, service, url)) {
@@ -214,7 +214,7 @@ public final class DtFileOperations {
       Token<?> aliasedToken = token.copyToken();
       aliasedToken.setService(alias);
       creds.addToken(alias, aliasedToken);
-      LOG.info("Add token with service " + alias);
+      LOG.error("Temp", new RuntimeException());
     }
     doFormattedWrite(tokenFile, fileFormat, creds, conf);
   }
@@ -281,7 +281,7 @@ public final class DtFileOperations {
       if (matchAlias(token, alias)) {
         if (token.isManaged() && cancel) {
           token.cancel(conf);
-          LOG.info("Canceled " + token.getKind() + ":" + token.getService());
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         newCreds.addToken(token.getService(), token);
@@ -333,7 +333,7 @@ public final class DtFileOperations {
       token.setService(alias);
     }
     creds.addToken(token.getService(), token);
-    LOG.info("Add token with service {}", token.getService());
+    LOG.error("Temp", new RuntimeException());
 
     doFormattedWrite(tokenFile, fileFormat, creds, conf);
   }

@@ -64,7 +64,7 @@ public class StateStoreCacheUpdateService extends PeriodicService {
 
   @Override
   public void periodicInvoke() {
-    LOG.debug("Updating State Store cache");
+    LOG.error("Temp", new RuntimeException());
     stateStore.refreshCaches();
   }
 }

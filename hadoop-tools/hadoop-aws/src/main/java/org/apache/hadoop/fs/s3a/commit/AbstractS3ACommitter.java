@@ -212,7 +212,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
         conf, context.getJobID());
     this.uuid = id.getLeft();
     this.uuidSource = id.getRight();
-    LOG.info("Job UUID {} source {}", getUUID(), getUUIDSource().getText());
+    LOG.error("Temp", new RuntimeException());
     initOutput(outputPath);
     LOG.debug("{} instantiated for job \"{}\" ID {} with destination {}",
         role, jobName(context), jobIdString(context), outputPath);
@@ -286,7 +286,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
    * @param workPath the work path to use.
    */
   protected final void setWorkPath(Path workPath) {
-    LOG.debug("Setting work path to {}", workPath);
+    LOG.error("Temp", new RuntimeException());
     this.workPath = workPath;
   }
 
@@ -447,7 +447,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
    */
   @Override
   public void recoverTask(TaskAttemptContext taskContext) throws IOException {
-    LOG.warn("Cannot recover task {}", taskContext.getTaskAttemptID());
+    LOG.error("Temp", new RuntimeException());
     throw new PathCommitException(outputPath,
         String.format("Unable to recover task %s",
         taskContext.getTaskAttemptID()));
@@ -604,7 +604,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
       final JobContext context,
       final ActiveCommit pending) throws IOException {
     if (pending.isEmpty()) {
-      LOG.warn("{}: No pending uploads to commit", getRole());
+      LOG.error("Temp", new RuntimeException());
     }
     try (DurationInfo ignored = new DurationInfo(LOG,
         "committing the output of %s task(s)", pending.size());
@@ -837,7 +837,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
         return;
       }
       if (!pending.isEmpty()) {
-        LOG.warn("{} pending uploads were found -aborting", pending.size());
+        LOG.error("Temp", new RuntimeException());
         LOG.warn("If other tasks/jobs are writing to {},"
             + "this action may cause them to fail", dest);
         Tasks.foreach(pending)
@@ -846,7 +846,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
             .run(u -> commitContext.abortMultipartCommit(
                 u.getKey(), u.getUploadId()));
       } else {
-        LOG.info("No pending uploads were found");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -900,7 +900,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
       maybeCreateSuccessMarkerFromCommits(context, pending);
       cleanup(context, false);
     } catch (IOException e) {
-      LOG.warn("Commit failure for job {}", id, e);
+      LOG.error("Temp", new RuntimeException());
       jobCompleted(false);
       abortJobInternal(context, true);
       throw e;
@@ -954,7 +954,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
   public void cleanupJob(JobContext context) throws IOException {
     String r = getRole();
     String id = jobIdString(context);
-    LOG.warn("{}: using deprecated cleanupJob call for {}", r, id);
+    LOG.error("Temp", new RuntimeException());
     try (DurationInfo d = new DurationInfo(LOG, "%s: cleanup Job %s", r, id)) {
       cleanup(context, true);
     }
@@ -990,7 +990,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
       String action,
       IOException ex) throws IOException {
     if (suppress) {
-      LOG.debug(action, ex);
+      LOG.error("Temp", new RuntimeException());
     } else {
       throw ex;
     }
@@ -1046,7 +1046,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
     Preconditions.checkArgument(numThreads > 0,
         "Cannot create a thread pool with no threads");
     if (threadPool == null) {
-      LOG.debug("{}: creating thread pool of size {}", getRole(), numThreads);
+      LOG.error("Temp", new RuntimeException());
       threadPool = HadoopExecutors.newFixedThreadPool(numThreads,
           new ThreadFactoryBuilder()
               .setDaemon(true)
@@ -1121,7 +1121,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
       threadPool = null;
     }
     if (pool != null) {
-      LOG.debug("Destroying thread pool");
+      LOG.error("Temp", new RuntimeException());
       HadoopExecutors.shutdown(pool, LOG,
           THREAD_POOL_SHUTDOWN_DELAY_SECONDS, TimeUnit.SECONDS);
     }
@@ -1171,7 +1171,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
       boolean suppressExceptions)
       throws IOException {
     if (pending == null || pending.isEmpty()) {
-      LOG.info("{}: no pending commits to abort", getRole());
+      LOG.error("Temp", new RuntimeException());
     } else {
       try (DurationInfo d = new DurationInfo(LOG,
           "Aborting %s uploads", pending.size());
@@ -1200,7 +1200,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
       final boolean deleteRemoteFiles) throws IOException {
 
     if (pending.isEmpty()) {
-      LOG.info("{}: no pending commits to abort", getRole());
+      LOG.error("Temp", new RuntimeException());
     } else {
       try (DurationInfo d = new DurationInfo(LOG,
           "Aborting %s uploads", pending.size());
@@ -1253,7 +1253,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter
               df.format(u.getInitiated()),
               u.getKey()));
       if (shouldAbortUploadsInCleanup()) {
-        LOG.warn("This committer will abort these uploads in job cleanup");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

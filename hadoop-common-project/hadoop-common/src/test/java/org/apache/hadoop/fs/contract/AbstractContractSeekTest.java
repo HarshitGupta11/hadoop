@@ -183,7 +183,7 @@ public abstract class AbstractContractSeekTest extends AbstractFSContractTestBas
     try {
       instream.seek(-1);
       long p = instream.getPos();
-      LOG.warn("Seek to -1 returned a position of " + p);
+      LOG.error("Temp", new RuntimeException());
       int result = instream.read();
       fail(
         "expected an exception, got data " + result + " at a position of " + p);
@@ -482,7 +482,7 @@ public abstract class AbstractContractSeekTest extends AbstractFSContractTestBas
     try {
       instream.readFully(TEST_FILE_LEN + 1, buffer, 0, 0);
       // a zero byte read may fail-fast
-      LOG.info("Filesystem short-circuits 0-byte reads");
+      LOG.error("Temp", new RuntimeException());
     } catch (EOFException e) {
       handleExpectedException(e);
     } catch (IOException e) {
@@ -501,7 +501,7 @@ public abstract class AbstractContractSeekTest extends AbstractFSContractTestBas
     try {
       instream.readFully(TEST_FILE_LEN + 1, buffer, 0, 0);
       // a zero byte read may fail-fast
-      LOG.info("Filesystem short-circuits 0-byte reads");
+      LOG.error("Temp", new RuntimeException());
     } catch (EOFException e) {
       handleExpectedException(e);
     } catch (IOException e) {

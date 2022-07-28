@@ -131,7 +131,7 @@ public class TestSSLHttpServer extends HttpServerFunctionalTest {
     setupServer(conf, sslConf);
     baseUrl = new URL("https://"
         + NetUtils.getHostPortString(server.getConnectorAddress(0)));
-    LOG.info("HTTP server started: " + baseUrl);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static void setupServer(Configuration conf, Configuration sslConf)
@@ -291,7 +291,7 @@ public class TestSSLHttpServer extends HttpServerFunctionalTest {
       readFromConnection(conn);
       fail("No Ciphers in common, SSLHandshake must fail.");
     } catch (SSLHandshakeException ex) {
-      LOG.info("No Ciphers in common, expected successful test result.", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

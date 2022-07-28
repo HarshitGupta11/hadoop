@@ -188,8 +188,8 @@ public abstract class BaseContainerManagerTest {
     tmpDir.mkdir();
     localLogDir.mkdir();
     remoteLogDir.mkdir();
-    LOG.info("Created localDir in " + localDir.getAbsolutePath());
-    LOG.info("Created tmpDir in " + tmpDir.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     String bindAddress = "0.0.0.0:" + ServerSocketUtil.getPort(49162, 10);
     conf.set(YarnConfiguration.NM_ADDRESS, bindAddress);
@@ -356,7 +356,7 @@ public abstract class BaseContainerManagerTest {
       timeoutSecs += 1;
     } while (!fStates.contains(containerStatus.getState())
         && timeoutSecs < timeOutMax);
-    LOG.info("Container state is " + containerStatus.getState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue("ContainerState is not correct (timedout)",
           fStates.contains(containerStatus.getState()));
   }
@@ -421,7 +421,7 @@ public abstract class BaseContainerManagerTest {
       timeoutSecs += 1;
     } while (!finalStates.contains(currentState)
         && timeoutSecs < timeOutMax);
-    LOG.info("Container state is " + currentState);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue("ContainerState is not correct (timedout)",
         finalStates.contains(currentState));
   }

@@ -50,7 +50,7 @@ public class JniBasedUnixGroupsMapping implements GroupMappingServiceProvider {
         "be loaded");
     }
     anchorNative();
-    LOG.debug("Using JniBasedUnixGroupsMapping for Group resolution");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -95,9 +95,9 @@ public class JniBasedUnixGroupsMapping implements GroupMappingServiceProvider {
       groups = getGroupsForUser(user);
     } catch (Exception e) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Error getting groups for " + user, e);
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info("Error getting groups for " + user + ": " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return groups;

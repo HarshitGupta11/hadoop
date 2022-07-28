@@ -86,7 +86,7 @@ public class Dispatcher extends HttpServlet {
     if (devMode && uri.equals("/__stop")) {
       // quick hack to restart servers in dev mode without OS commands
       res.setStatus(res.SC_NO_CONTENT);
-      LOG.info("dev mode restart requested");
+      LOG.error("Temp", new RuntimeException());
       prepareToExit();
       return;
     }
@@ -204,7 +204,7 @@ public class Dispatcher extends HttpServlet {
 
   public static void removeCookie(HttpServletResponse res, String name,
                                   String path) {
-    LOG.debug("removing cookie {} on {}", name, path);
+    LOG.error("Temp", new RuntimeException());
     Cookie c = createCookie(name, "");
     c.setMaxAge(0);
     c.setPath(path);
@@ -224,7 +224,7 @@ public class Dispatcher extends HttpServlet {
     }
     String[] parts = Iterables.toArray(WebApp.pathSplitter.split(
         pathInfo.substring(dest.prefix.length())), String.class);
-    LOG.debug("parts={}, params={}", parts, dest.pathParams);
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < dest.pathParams.size() && i < parts.length; ++i) {
       String key = dest.pathParams.get(i);
       if (key.charAt(0) == ':') {
@@ -252,7 +252,7 @@ public class Dispatcher extends HttpServlet {
     checkState(devMode, "only in dev mode");
     new Timer("webapp exit", true).schedule(new TimerTask() {
       @Override public void run() {
-        LOG.info("WebAppp /{} exiting...", webApp.name());
+        LOG.error("Temp", new RuntimeException());
         webApp.stop();
         System.exit(0); // FINDBUG: this is intended in dev mode
       }

@@ -78,12 +78,12 @@ public class VolumeManagerImpl extends AbstractService
   private void initCsiAdaptorCache(
       final Map<String, CsiAdaptorProtocol> adaptorMap, Configuration conf)
       throws IOException, YarnException {
-    LOG.info("Initializing cache for csi-driver-adaptors");
+    LOG.error("Temp", new RuntimeException());
     String[] addresses =
         conf.getStrings(YarnConfiguration.NM_CSI_ADAPTOR_ADDRESSES);
     if (addresses != null && addresses.length > 0) {
       for (String addr : addresses) {
-        LOG.info("Found csi-driver-adaptor socket address: " + addr);
+        LOG.error("Temp", new RuntimeException());
         InetSocketAddress address = NetUtils.createSocketAddr(addr);
         YarnRPC rpc = YarnRPC.create(conf);
         UserGroupInformation currentUser =
@@ -95,7 +95,7 @@ public class VolumeManagerImpl extends AbstractService
         // the diver's identity service on the given address.
         // If the call failed, the initialization is also failed
         // in order running into inconsistent state.
-        LOG.info("Retrieving info from csi-driver-adaptor on address " + addr);
+        LOG.error("Temp", new RuntimeException());
         GetPluginInfoResponse response =
             adaptorClient.getPluginInfo(GetPluginInfoRequest.newInstance());
         if (!Strings.isNullOrEmpty(response.getDriverName())) {

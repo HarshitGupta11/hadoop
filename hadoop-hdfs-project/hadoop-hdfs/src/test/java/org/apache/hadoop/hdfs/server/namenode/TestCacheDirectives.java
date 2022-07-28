@@ -923,7 +923,7 @@ public class TestCacheDirectives {
         numCachedReplicas += l.getCachedHosts().length;
       }
     }
-    LOG.info("Found " + numCachedBlocks + " of " + expectedBlocks + " blocks");
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Found " + numCachedReplicas + " of " + expectedReplicas
         + " replicas");
     assertEquals("Unexpected number of cached blocks", expectedBlocks,

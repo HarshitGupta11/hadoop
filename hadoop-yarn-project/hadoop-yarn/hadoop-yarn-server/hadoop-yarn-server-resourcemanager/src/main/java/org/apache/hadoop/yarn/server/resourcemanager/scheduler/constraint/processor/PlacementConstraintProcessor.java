@@ -100,7 +100,7 @@ public class PlacementConstraintProcessor extends AbstractPlacementProcessor {
   @Override
   public void init(ApplicationMasterServiceContext amsContext,
       ApplicationMasterServiceProcessor nextProcessor) {
-    LOG.info("Initializing Constraint Placement Processor:");
+    LOG.error("Temp", new RuntimeException());
     super.init(amsContext, nextProcessor);
 
     // Only the first class is considered - even if a comma separated
@@ -116,12 +116,12 @@ public class PlacementConstraintProcessor extends AbstractPlacementProcessor {
     } else {
       algorithm = new DefaultPlacementAlgorithm();
     }
-    LOG.info("Placement Algorithm [{}]", algorithm.getClass().getName());
+    LOG.error("Temp", new RuntimeException());
 
     String iteratorName = ((RMContextImpl) amsContext).getYarnConfiguration()
         .get(YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_ALGORITHM_ITERATOR,
             BatchedRequests.IteratorType.SERIAL.name());
-    LOG.info("Placement Algorithm Iterator[{}]", iteratorName);
+    LOG.error("Temp", new RuntimeException());
     try {
       iteratorType = BatchedRequests.IteratorType.valueOf(iteratorName);
     } catch (IllegalArgumentException e) {
@@ -135,13 +135,13 @@ public class PlacementConstraintProcessor extends AbstractPlacementProcessor {
     this.placementDispatcher = new PlacementDispatcher();
     this.placementDispatcher.init(
         ((RMContextImpl)amsContext), algorithm, algoPSize);
-    LOG.info("Planning Algorithm pool size [{}]", algoPSize);
+    LOG.error("Temp", new RuntimeException());
 
     int schedPSize = ((RMContextImpl) amsContext).getYarnConfiguration().getInt(
         YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_SCHEDULER_POOL_SIZE,
         YarnConfiguration.DEFAULT_RM_PLACEMENT_CONSTRAINTS_SCHEDULER_POOL_SIZE);
     this.schedulingThreadPool = Executors.newFixedThreadPool(schedPSize);
-    LOG.info("Scheduler pool size [{}]", schedPSize);
+    LOG.error("Temp", new RuntimeException());
 
     // Number of times a request that is not satisfied by the scheduler
     // can be retried.
@@ -149,7 +149,7 @@ public class PlacementConstraintProcessor extends AbstractPlacementProcessor {
         ((RMContextImpl) amsContext).getYarnConfiguration().getInt(
             YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_RETRY_ATTEMPTS,
             YarnConfiguration.DEFAULT_RM_PLACEMENT_CONSTRAINTS_RETRY_ATTEMPTS);
-    LOG.info("Num retry attempts [{}]", this.retryAttempts);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

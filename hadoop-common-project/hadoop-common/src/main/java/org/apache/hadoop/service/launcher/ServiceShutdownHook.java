@@ -70,7 +70,7 @@ public class ServiceShutdownHook implements Runnable {
     try {
       ShutdownHookManager.get().removeShutdownHook(this);
     } catch (IllegalStateException e) {
-      LOG.info("Failed to unregister shutdown hook: {}", e, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -104,7 +104,7 @@ public class ServiceShutdownHook implements Runnable {
         service.stop();
         result = true;
       } catch (Throwable t) {
-        LOG.info("Error stopping {}", service.getName(), t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return result;

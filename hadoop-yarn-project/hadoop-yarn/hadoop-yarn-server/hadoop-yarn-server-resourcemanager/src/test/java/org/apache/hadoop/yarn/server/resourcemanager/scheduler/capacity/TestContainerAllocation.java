@@ -112,7 +112,7 @@ public class TestContainerAllocation {
     int size = rm.getRMContext().getRMNodes().size();
     while ((size = rm.getRMContext().getRMNodes().size()) != 2
         && waitCount-- > 0) {
-      LOG.info("Waiting for node managers to register : " + size);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(100);
     }
     Assert.assertEquals(2, rm.getRMContext().getRMNodes().size());
@@ -125,17 +125,17 @@ public class TestContainerAllocation {
     MockAM am1 = rm.sendAMLaunched(attempt1.getAppAttemptId());
     am1.registerAppAttempt();
 
-    LOG.info("sending container requests ");
+    LOG.error("Temp", new RuntimeException());
     am1.addRequests(new String[] {"*"}, 2 * GB, 1, 1);
     AllocateResponse alloc1Response = am1.schedule(); // send the request
 
     // kick the scheduler
     nm1.nodeHeartbeat(true);
     int waitCounter = 20;
-    LOG.info("heartbeating nm1");
+    LOG.error("Temp", new RuntimeException());
     while (alloc1Response.getAllocatedContainers().size() < 1
         && waitCounter-- > 0) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(500);
       alloc1Response = am1.schedule();
     }
@@ -146,12 +146,12 @@ public class TestContainerAllocation {
     // Internally it should not been reserved.
     Assert.assertTrue(alloc1Response.getAllocatedContainers().size() == 0);
 
-    LOG.info("heartbeating nm2");
+    LOG.error("Temp", new RuntimeException());
     waitCounter = 20;
     nm2.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().size() < 1
         && waitCounter-- > 0) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(500);
       alloc1Response = am1.schedule();
     }

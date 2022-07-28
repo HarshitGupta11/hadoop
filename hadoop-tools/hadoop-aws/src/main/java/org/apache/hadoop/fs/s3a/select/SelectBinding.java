@@ -178,7 +178,7 @@ public class SelectBinding {
     String expression = request.getExpression();
     final String errorText = sqlInErrors ? expression : "Select";
     if (sqlInErrors) {
-      LOG.info("Issuing SQL request {}", expression);
+      LOG.error("Temp", new RuntimeException());
     }
     return new SelectInputStream(readContext,
         objectAttributes,

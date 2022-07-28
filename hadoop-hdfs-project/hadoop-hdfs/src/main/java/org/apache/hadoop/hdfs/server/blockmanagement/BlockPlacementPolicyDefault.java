@@ -486,7 +486,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
           + ", newBlock=" + newBlock + ")";
 
       LOG.trace(message, e);
-      LOG.warn(message + " " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
 
       if (avoidStaleNodes) {
         // Retry chooseTarget again, this time not avoiding stale nodes.
@@ -724,7 +724,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
         }
       }
 
-      LOG.debug("Failed to choose from local rack (location = {}); the second"
+      LOG.error("Temp", new RuntimeException()); the second"
           + " replica is not found, retry choosing randomly", localRack, e);
 
       //the second replica is not found, randomly choose one from the network
@@ -901,7 +901,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
           if (detail.length() > 1) {
             // only log if there's more than "[", which is always appended at
             // the beginning of this method.
-            LOG.debug(detail);
+            LOG.error("Temp", new RuntimeException());
           }
           detail = "";
         }
@@ -909,7 +909,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
       final HashMap<NodeNotChosenReason, Integer> reasonMap =
           CHOOSE_RANDOM_REASONS.get();
       if (!reasonMap.isEmpty()) {
-        LOG.info("Not enough replicas was chosen. Reason: {}", reasonMap);
+        LOG.error("Temp", new RuntimeException());
       }
       throw new NotEnoughReplicasException(detail);
     }

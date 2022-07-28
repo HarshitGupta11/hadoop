@@ -81,7 +81,7 @@ public class TrashProcedure extends BalanceProcedure {
         if (!srcFs.delete(src, true)) {
           throw new IOException("Failed delete " + src);
         }
-        LOG.info("{} is deleted.", src);
+        LOG.error("Temp", new RuntimeException());
         break;
       case SKIP:
         break;

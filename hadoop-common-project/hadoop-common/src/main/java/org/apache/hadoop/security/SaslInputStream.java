@@ -97,7 +97,7 @@ public class SaslInputStream extends InputStream implements ReadableByteChannel 
       inStream.readFully(lengthBuf);
       int length = unsignedBytesToInt(lengthBuf);
       if (LOG.isDebugEnabled())
-        LOG.debug("Actual length is " + length);
+        LOG.error("Temp", new RuntimeException());
       saslToken = new byte[length];
       inStream.readFully(saslToken);
     } catch (EOFException e) {

@@ -88,7 +88,7 @@ public class TestServiceCLI {
   }
 
   private int runCLI(String[] args) throws Exception {
-    LOG.info("running CLI: yarn {}", Arrays.asList(args));
+    LOG.error("Temp", new RuntimeException());
     return ToolRunner.run(cli, ApplicationCLI.preProcessArgs(args));
   }
 

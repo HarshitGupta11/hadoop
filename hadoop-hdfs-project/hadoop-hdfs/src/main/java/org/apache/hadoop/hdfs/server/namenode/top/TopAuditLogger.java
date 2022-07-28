@@ -90,7 +90,7 @@ public class TopAuditLogger implements AuditLogger {
         sb.append(status.getGroup()).append(":");
         sb.append(status.getPermission());
       }
-      LOG.debug("------------------- logged event for top service: " + sb);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

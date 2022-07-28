@@ -79,7 +79,7 @@ public class PlanQueue extends AbstractManagedParentQueue {
         .append(maxAppsPerUserForReservation).append("]\nwith user limit: [")
         .append(userLimit).append("]\nwith user limit factor: [")
         .append(userLimitFactor).append("].");
-    LOG.info(queueInfo.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

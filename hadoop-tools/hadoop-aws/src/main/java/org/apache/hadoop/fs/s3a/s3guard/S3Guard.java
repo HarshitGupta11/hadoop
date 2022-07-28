@@ -200,7 +200,7 @@ public final class S3Guard {
         pmVersionId == null || pmVersionId.equals(s3VersionId);
     if (sizeMatch && etagsMatch && versionsMatchOrMissingInMetastore) {
       // update the store, return the new value
-      LOG.debug("Refreshing the metastore entry/timestamp");
+      LOG.error("Temp", new RuntimeException());
       putAndReturn(metadataStore, s3AFileStatus, timeProvider);
       return true;
     }
@@ -454,7 +454,7 @@ public final class S3Guard {
       // in an authoritative update, we pass in the full list of entries,
       // but do declare which have not changed to avoid needless and potentially
       // destructive overwrites.
-      LOG.debug("Marking the directory {} as authoritative", path);
+      LOG.error("Temp", new RuntimeException());
       ms.getInstrumentation().directoryMarkedAuthoritative();
       dirMeta.setAuthoritative(true); // This is the full directory contents
       // write the updated dir entry and any changed children.
@@ -515,7 +515,7 @@ public final class S3Guard {
       }
       if (shouldUpdate) {
         // we do want to update DDB and the listing with a new entry.
-        LOG.debug("Update ms with newer metadata of: {}", s);
+        LOG.error("Temp", new RuntimeException());
         // ensure it gets into the dirListing
         // add to the list of entries to add later,
         entriesToAdd.add(pathMetadata);
@@ -526,7 +526,7 @@ public final class S3Guard {
 
     if (!entriesToAdd.isEmpty()) {
         // non-auth, just push out the updated entry list
-      LOG.debug("Adding {} entries under directory {}", entriesToAdd.size(), path);
+      LOG.error("Temp", new RuntimeException());
       putWithTtl(ms, entriesToAdd, timeProvider, operationState);
     }
   }
@@ -706,7 +706,7 @@ public final class S3Guard {
     assertQualified(srcRoot, srcPath, dstPath);
 
     if (srcPath.equals(srcRoot)) {
-      LOG.debug("Skip moving ancestors of source root directory {}", srcRoot);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -716,7 +716,7 @@ public final class S3Guard {
         && !parentSrc.isRoot()
         && !parentSrc.equals(srcRoot)
         && !srcPaths.contains(parentSrc)) {
-      LOG.debug("Renaming non-listed parent {} to {}", parentSrc, parentDst);
+      LOG.error("Temp", new RuntimeException());
       S3Guard.addMoveDir(ms, srcPaths, dstMetas, parentSrc, parentDst, owner);
       parentSrc = parentSrc.getParent();
       parentDst = parentDst.getParent();
@@ -934,13 +934,13 @@ public final class S3Guard {
     final PathMetadata pathMetadata = ms.get(path, needEmptyDirectoryFlag);
     // if timeProvider is null let's return with what the ms has
     if (timeProvider == null) {
-      LOG.debug("timeProvider is null, returning pathMetadata as is");
+      LOG.error("Temp", new RuntimeException());
       return pathMetadata;
     }
 
     // authoritative mode is enabled for this directory, return what the ms has
     if (allowAuthoritative) {
-      LOG.debug("allowAuthoritative is true, returning pathMetadata as is");
+      LOG.error("Temp", new RuntimeException());
       return pathMetadata;
     }
 
@@ -992,12 +992,12 @@ public final class S3Guard {
     DirListingMetadata dlm = ms.listChildren(path);
 
     if (timeProvider == null) {
-      LOG.debug("timeProvider is null, returning DirListingMetadata as is");
+      LOG.error("Temp", new RuntimeException());
       return dlm;
     }
 
     if (allowAuthoritative) {
-      LOG.debug("allowAuthoritative is true, returning pathMetadata as is");
+      LOG.error("Temp", new RuntimeException());
       return dlm;
     }
 

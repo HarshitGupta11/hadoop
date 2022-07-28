@@ -107,9 +107,9 @@ public class KMSACLs implements Runnable, KeyACLs {
       if (blacklistStr != null) {
         // Only add if blacklist is present
         tempBlacklist.put(aclType, new AccessControlList(blacklistStr));
-        LOG.info("'{}' Blacklist '{}'", aclType, blacklistStr);
+        LOG.error("Temp", new RuntimeException());
       }
-      LOG.info("'{}' ACL '{}'", aclType, aclStr);
+      LOG.error("Temp", new RuntimeException());
     }
     acls = tempAcls;
     blacklistedAcls = tempBlacklist;
@@ -127,7 +127,7 @@ public class KMSACLs implements Runnable, KeyACLs {
       int keyNameStarts = KMSConfiguration.KEY_ACL_PREFIX.length();
       int keyNameEnds = k.lastIndexOf(".");
       if (keyNameStarts >= keyNameEnds) {
-        LOG.warn("Invalid key name '{}'", k);
+        LOG.error("Temp", new RuntimeException());
       } else {
         String aclStr = keyAcl.getValue();
         String keyName = k.substring(keyNameStarts, keyNameEnds);
@@ -136,7 +136,7 @@ public class KMSACLs implements Runnable, KeyACLs {
         try {
           aclType = KeyOpType.valueOf(keyOp);
         } catch (IllegalArgumentException e) {
-          LOG.warn("Invalid key Operation '{}'", keyOp);
+          LOG.error("Temp", new RuntimeException());
         }
         if (aclType != null) {
           // On the assumption this will be single threaded.. else we need to
@@ -184,10 +184,10 @@ public class KMSACLs implements Runnable, KeyACLs {
     if (aclStr != null) {
       if (keyOp == KeyOpType.ALL) {
         // Ignore All operation for default key and whitelist key acls
-        LOG.warn("Invalid KEY_OP '{}' for {}, ignoring", keyOp, prefix);
+        LOG.error("Temp", new RuntimeException());
       } else {
         if (aclStr.equals("*")) {
-          LOG.info("{} for KEY_OP '{}' is set to '*'", prefix, keyOp);
+          LOG.error("Temp", new RuntimeException());
         }
         results.put(keyOp, new AccessControlList(aclStr));
       }
@@ -223,7 +223,7 @@ public class KMSACLs implements Runnable, KeyACLs {
   }
 
   private Configuration loadACLs() {
-    LOG.debug("Loading ACLs file");
+    LOG.error("Temp", new RuntimeException());
     lastReload = System.currentTimeMillis();
     Configuration conf = KMSConfiguration.getACLsConf();
     // triggering the resource loading.
@@ -250,11 +250,11 @@ public class KMSACLs implements Runnable, KeyACLs {
       access = (blacklist == null) || !blacklist.isUserInList(ugi);
       if (LOG.isDebugEnabled()) {
         if (blacklist == null) {
-          LOG.debug("No blacklist for {}", type.toString());
+          LOG.error("Temp", new RuntimeException());
         } else if (access) {
-          LOG.debug("user is not in {}" , blacklist.getAclString());
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.debug("user is in {}" , blacklist.getAclString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -316,7 +316,7 @@ public class KMSACLs implements Runnable, KeyACLs {
     if (keyAcl == null) {
       // If No key acl defined for this key, check to see if
       // there are key defaults configured for this operation
-      LOG.debug("Key: {} has no ACLs defined, using defaults.", keyName);
+      LOG.error("Temp", new RuntimeException());
       keyAcl = defaultKeyAcls;
     }
     boolean access = checkKeyAccess(keyAcl, ugi, opType);
@@ -333,7 +333,7 @@ public class KMSACLs implements Runnable, KeyACLs {
     if (acl == null) {
       // If no acl is specified for this operation,
       // deny access
-      LOG.debug("No ACL available for key, denying access for {}", opType);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } else {
       if (LOG.isDebugEnabled()) {

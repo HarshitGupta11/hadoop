@@ -60,10 +60,10 @@ public class TestLoadJob extends CommonJobTest {
   @Test (timeout=500000)
   public void testSerialSubmit() throws Exception {
     policy = GridmixJobSubmissionPolicy.SERIAL;
-    LOG.info("Serial started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(JobCreator.LOADJOB.name(), false);
 
-    LOG.info("Serial ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /*
@@ -72,10 +72,10 @@ public class TestLoadJob extends CommonJobTest {
   @Test  (timeout=500000)
   public void testReplaySubmit() throws Exception {
     policy = GridmixJobSubmissionPolicy.REPLAY;
-    LOG.info(" Replay started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(JobCreator.LOADJOB.name(), false);
 
-    LOG.info(" Replay ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
   }
 
 

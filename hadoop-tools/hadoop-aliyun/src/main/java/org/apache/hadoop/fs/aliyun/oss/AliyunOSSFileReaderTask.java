@@ -90,7 +90,7 @@ public class AliyunOSSFileReaderTask implements Runnable {
             }
           } catch (Exception ex) {
             //FAIL
-            LOG.warn("Exception thrown when call shouldRetry, exception " + ex);
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }

@@ -412,7 +412,7 @@ public class Component implements EventHandler<ComponentEvent> {
       }
       if (component.getComponentSpec().getDecommissionedInstances()
           .contains(instanceName)) {
-        LOG.info("Instance {} already decommissioned", instanceName);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       component.getComponentSpec().addDecommissionedInstance(instanceName);

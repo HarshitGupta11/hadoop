@@ -197,7 +197,7 @@ public class TestBatchIbr {
       final MetricsRecordBuilder m = MetricsAsserts.getMetrics(
           dn.getMetrics().name());
       final long ibr = MetricsAsserts.getLongCounter(name, m);
-      LOG.info(dn.getDisplayName() + ": " + name + "=" + ibr);
+      LOG.error("Temp", new RuntimeException());
     }
 
   }

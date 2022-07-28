@@ -163,7 +163,7 @@ final class OBSDataBlocks {
         final DestState next)
         throws IllegalStateException {
       verifyState(current);
-      LOG.debug("{}: entering state {}", this, next);
+      LOG.error("Temp", new RuntimeException());
       state = next;
     }
 
@@ -269,7 +269,7 @@ final class OBSDataBlocks {
      * @throws IOException trouble
      */
     Object startUpload() throws IOException {
-      LOG.debug("Start datablock[{}] upload", index);
+      LOG.error("Temp", new RuntimeException());
       enterState(DestState.Writing, DestState.Upload);
       return null;
     }
@@ -292,7 +292,7 @@ final class OBSDataBlocks {
     @Override
     public void close() throws IOException {
       if (enterClosedState()) {
-        LOG.debug("Closed {}", this);
+        LOG.error("Temp", new RuntimeException());
         innerClose();
       }
     }
@@ -510,13 +510,13 @@ final class OBSDataBlocks {
     }
 
     public static ByteBuffer requestBuffer(final int limit) {
-      LOG.debug("Requesting buffer of size {}", limit);
+      LOG.error("Temp", new RuntimeException());
       BUFFERS_OUTSTANDING.incrementAndGet();
       return BUFFER_POOL.getBuffer(limit);
     }
 
     public static void releaseBuffer(final ByteBuffer buffer) {
-      LOG.debug("Releasing buffer");
+      LOG.error("Temp", new RuntimeException());
       BUFFER_POOL.returnBuffer(buffer);
       BUFFERS_OUTSTANDING.decrementAndGet();
     }
@@ -747,13 +747,13 @@ final class OBSDataBlocks {
 
       @Override
       public synchronized void mark(final int readlimit) {
-        LOG.debug("mark at {}", position());
+        LOG.error("Temp", new RuntimeException());
         byteBuffer.mark();
       }
 
       @Override
       public synchronized void reset() {
-        LOG.debug("reset");
+        LOG.error("Temp", new RuntimeException());
         byteBuffer.reset();
       }
 
@@ -953,7 +953,7 @@ final class OBSDataBlocks {
     @Override
     protected void innerClose() {
       final DestState state = getState();
-      LOG.debug("Closing {}", this);
+      LOG.error("Temp", new RuntimeException());
       switch (state) {
       case Writing:
         if (bufferFile.exists()) {
@@ -1005,7 +1005,7 @@ final class OBSDataBlocks {
      * has not previously been closed.
      */
     void closeBlock() {
-      LOG.debug("block[{}]: closeBlock()", getIndex());
+      LOG.error("Temp", new RuntimeException());
       if (!closed.getAndSet(true)) {
         if (!bufferFile.delete() && bufferFile.exists()) {
           LOG.warn("delete({}) returned false",

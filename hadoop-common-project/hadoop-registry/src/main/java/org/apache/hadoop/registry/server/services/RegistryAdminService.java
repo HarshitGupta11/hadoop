@@ -158,7 +158,7 @@ public class RegistryAdminService extends RegistryOperationsService {
    */
   public <V> Future<V> submit(Callable<V> callable) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Submitting {}", callable);
+      LOG.error("Temp", new RuntimeException());
     }
     return getExecutor().submit(callable);
   }
@@ -346,7 +346,7 @@ public class RegistryAdminService extends RegistryOperationsService {
         throw new ServiceStateException("Cannot determine service realm");
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Started Registry operations in realm {}", realm);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -424,28 +424,28 @@ public class RegistryAdminService extends RegistryOperationsService {
 
     if (toDelete && !entries.isEmpty()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Match on record @ {} with children ", path);
+        LOG.error("Temp", new RuntimeException());
       }
       // there's children
       switch (purgePolicy) {
         case SkipOnChildren:
           // don't do the deletion... continue to next record
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Skipping deletion");
+            LOG.error("Temp", new RuntimeException());
           }
           toDelete = false;
           break;
         case PurgeAll:
           // mark for deletion
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Scheduling for deletion with children");
+            LOG.error("Temp", new RuntimeException());
           }
           toDelete = true;
           entries = new ArrayList<RegistryPathStatus>(0);
           break;
         case FailOnChildren:
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Failing deletion operation");
+            LOG.error("Temp", new RuntimeException());
           }
           throw new PathIsNotEmptyDirectoryException(path);
       }
@@ -510,7 +510,7 @@ public class RegistryAdminService extends RegistryOperationsService {
     @Override
     public Integer call() throws Exception {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Executing {}", this);
+        LOG.error("Temp", new RuntimeException());
       }
       return purge(path,
           selector,

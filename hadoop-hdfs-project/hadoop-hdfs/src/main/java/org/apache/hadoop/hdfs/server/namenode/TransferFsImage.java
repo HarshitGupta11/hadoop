@@ -164,7 +164,7 @@ public class TransferFsImage {
             log + " since it already is stored locally at " + f);
         return;
       } else if (LOG.isDebugEnabled()) {
-        LOG.debug("Dest file: " + f);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -185,7 +185,7 @@ public class TransferFsImage {
       File finalizedFile = NNStorage.getFinalizedEditsFile(sd,
           log.getStartTxId(), log.getEndTxId());
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Renaming " + tmpFile + " to " + finalizedFile);
+        LOG.error("Temp", new RuntimeException());
       }
       boolean success = tmpFile.renameTo(finalizedFile);
       if (!success) {
@@ -389,7 +389,7 @@ public class TransferFsImage {
         if (CheckpointFaultInjector.getInstance()
               .shouldCorruptAByte(localfile)) {
           // Simulate a corrupted byte on the wire
-          LOG.warn("SIMULATING A CORRUPT BYTE IN IMAGE TRANSFER!");
+          LOG.error("Temp", new RuntimeException());
           buf[0]++;
         }
 
@@ -411,9 +411,9 @@ public class TransferFsImage {
           " bytes. Size of last segment intended to send: " + num
           + " bytes.";
       if (ioe != null) {
-        LOG.info(reportStr, ioe);
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info(reportStr);
+        LOG.error("Temp", new RuntimeException());
       }
       if (out != null) {
         out.close();
@@ -432,7 +432,7 @@ public class TransferFsImage {
       String queryString, List<File> localPaths,
       Storage dstStorage, boolean getChecksum) throws IOException {
     URL url = new URL(infoServer, ImageServlet.PATH_SPEC + "?" + queryString);
-    LOG.info("Opening connection to " + url);
+    LOG.error("Temp", new RuntimeException());
     return doGetUrl(url, localPaths, dstStorage, getChecksum);
   }
   

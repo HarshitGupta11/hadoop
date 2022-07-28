@@ -62,7 +62,7 @@ public class ClientCache {
       client.incCount();
     }
     if (Client.LOG.isDebugEnabled()) {
-      Client.LOG.debug("getting client out of cache: " + client);
+      Client.LOG.error("Temp", new RuntimeException());
     }
     return client;
   }
@@ -96,14 +96,14 @@ public class ClientCache {
    */
   public void stopClient(Client client) {
     if (Client.LOG.isDebugEnabled()) {
-      Client.LOG.debug("stopping client from cache: " + client);
+      Client.LOG.error("Temp", new RuntimeException());
     }
     final int count;
     synchronized (this) {
       count = client.decAndGetCount();
       if (count == 0) {
         if (Client.LOG.isDebugEnabled()) {
-          Client.LOG.debug("removing client from cache: " + client);
+          Client.LOG.error("Temp", new RuntimeException());
         }
         clients.remove(client.getSocketFactory());
       }

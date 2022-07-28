@@ -74,13 +74,13 @@ public class HistoryServerLeveldbStateStoreService extends
     Path storeRoot = createStorageDir(getConfig());
     Options options = new Options();
     options.createIfMissing(false);
-    LOG.info("Using state database at " + storeRoot + " for recovery");
+    LOG.error("Temp", new RuntimeException());
     File dbfile = new File(storeRoot.toString());
     try {
       db = JniDBFactory.factory.open(dbfile, options);
     } catch (NativeDB.DBException e) {
       if (e.isNotFound() || e.getMessage().contains(" does not exist ")) {
-        LOG.info("Creating state database at " + dbfile);
+        LOG.error("Temp", new RuntimeException());
         options.createIfMissing(true);
         try {
           db = JniDBFactory.factory.open(dbfile, options);
@@ -108,9 +108,9 @@ public class HistoryServerLeveldbStateStoreService extends
   public HistoryServerState loadState() throws IOException {
     HistoryServerState state = new HistoryServerState();
     int numKeys = loadTokenMasterKeys(state);
-    LOG.info("Recovered " + numKeys + " token master keys");
+    LOG.error("Temp", new RuntimeException());
     int numTokens = loadTokens(state);
-    LOG.info("Recovered " + numTokens + " tokens");
+    LOG.error("Temp", new RuntimeException());
     return state;
   }
 
@@ -128,7 +128,7 @@ public class HistoryServerLeveldbStateStoreService extends
           break;
         }
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Loading master key from " + key);
+          LOG.error("Temp", new RuntimeException());
         }
         try {
           loadTokenMasterKey(state, entry.getValue());
@@ -174,7 +174,7 @@ public class HistoryServerLeveldbStateStoreService extends
           break;
         }
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Loading token from " + key);
+          LOG.error("Temp", new RuntimeException());
         }
         try {
           loadToken(state, entry.getValue());
@@ -211,7 +211,7 @@ public class HistoryServerLeveldbStateStoreService extends
   public void storeToken(MRDelegationTokenIdentifier tokenId, Long renewDate)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
 
     ByteArrayOutputStream memStream = new ByteArrayOutputStream();
@@ -258,7 +258,7 @@ public class HistoryServerLeveldbStateStoreService extends
   public void storeTokenMasterKey(DelegationKey masterKey)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing master key " + masterKey.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
 
     ByteArrayOutputStream memStream = new ByteArrayOutputStream();
@@ -283,7 +283,7 @@ public class HistoryServerLeveldbStateStoreService extends
   public void removeTokenMasterKey(DelegationKey masterKey)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing master key " + masterKey.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
 
     String dbKey = getTokenMasterKeyDatabaseKey(masterKey);
@@ -352,12 +352,12 @@ public class HistoryServerLeveldbStateStoreService extends
    */
   private void checkVersion() throws IOException {
     Version loadedVersion = loadVersion();
-    LOG.info("Loaded state version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion.equals(getCurrentVersion())) {
       return;
     }
     if (loadedVersion.isCompatibleTo(getCurrentVersion())) {
-      LOG.info("Storing state version info " + getCurrentVersion());
+      LOG.error("Temp", new RuntimeException());
       storeVersion();
     } else {
       throw new IOException(

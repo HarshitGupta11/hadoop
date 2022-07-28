@@ -137,21 +137,21 @@ class RemoteRequestsTable<T> implements Iterable<ResourceRequestInfo>{
     if (locationMap == null) {
       locationMap = new HashMap<>();
       this.remoteRequestsTable.put(priority, locationMap);
-      LOG.debug("Added priority={}", priority);
+      LOG.error("Temp", new RuntimeException());
     }
     Map<ExecutionType, TreeMap<Resource, ResourceRequestInfo>>
         execTypeMap = locationMap.get(resourceName);
     if (execTypeMap == null) {
       execTypeMap = new HashMap<>();
       locationMap.put(resourceName, execTypeMap);
-      LOG.debug("Added resourceName={}", resourceName);
+      LOG.error("Temp", new RuntimeException());
     }
     TreeMap<Resource, ResourceRequestInfo> capabilityMap =
         execTypeMap.get(execType);
     if (capabilityMap == null) {
       capabilityMap = new TreeMap<>(new AMRMClientImpl.ResourceReverseComparator());
       execTypeMap.put(execType, capabilityMap);
-      LOG.debug("Added Execution Type={}", execType);
+      LOG.error("Temp", new RuntimeException());
     }
     capabilityMap.put(capability, resReqInfo);
   }
@@ -162,19 +162,19 @@ class RemoteRequestsTable<T> implements Iterable<ResourceRequestInfo>{
     Map<String, Map<ExecutionType, TreeMap<Resource,
         ResourceRequestInfo>>> locationMap = remoteRequestsTable.get(priority);
     if (locationMap == null) {
-      LOG.debug("No such priority={}", priority);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     Map<ExecutionType, TreeMap<Resource, ResourceRequestInfo>>
         execTypeMap = locationMap.get(resourceName);
     if (execTypeMap == null) {
-      LOG.debug("No such resourceName={}", resourceName);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     TreeMap<Resource, ResourceRequestInfo> capabilityMap =
         execTypeMap.get(execType);
     if (capabilityMap == null) {
-      LOG.debug("No such Execution Type={}", execType);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     retVal = capabilityMap.remove(capability);
@@ -274,7 +274,7 @@ class RemoteRequestsTable<T> implements Iterable<ResourceRequestInfo>{
     if (ResourceRequest.ANY.equals(resourceName)) {
       resourceRequestInfo.remoteRequest.setNodeLabelExpression(labelExpression);
     }
-    LOG.debug("Adding request to ask {}", resourceRequestInfo.remoteRequest);
+    LOG.error("Temp", new RuntimeException());
 
     return resourceRequestInfo;
   }

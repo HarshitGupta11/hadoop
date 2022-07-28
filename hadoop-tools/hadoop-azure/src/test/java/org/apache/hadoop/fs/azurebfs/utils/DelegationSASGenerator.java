@@ -186,7 +186,7 @@ public class DelegationSASGenerator extends SASGenerator {
     sb.append("\n"); // - For optional : rsct - ResponseContentType
 
     String stringToSign = sb.toString();
-    LOG.debug("Delegation SAS stringToSign: " + stringToSign.replace("\n", "."));
+    LOG.error("Temp", new RuntimeException());
     return computeHmac256(stringToSign);
   }
 }

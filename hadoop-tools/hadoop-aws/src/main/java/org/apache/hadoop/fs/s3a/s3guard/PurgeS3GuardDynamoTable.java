@@ -157,7 +157,7 @@ public class PurgeS3GuardDynamoTable
         if (tombstone) {
           type = "tombstone " + type;
         }
-        LOG.info("{} {}", type, p);
+        LOG.error("Temp", new RuntimeException());
         list.add(p);
       }
     });
@@ -183,7 +183,7 @@ public class PurgeS3GuardDynamoTable
         duration.close();
         long durationMillis = duration.value();
         long timePerEntry = durationMillis / count;
-        LOG.info("Time per entry: {} ms", timePerEntry);
+        LOG.error("Temp", new RuntimeException());
         filesDeleted = count;
       } else {
         LOG.info("Delete process will only be executed when "

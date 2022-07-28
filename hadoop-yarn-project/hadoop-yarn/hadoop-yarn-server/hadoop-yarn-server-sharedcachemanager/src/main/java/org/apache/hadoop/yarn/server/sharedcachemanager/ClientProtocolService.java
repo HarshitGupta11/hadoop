@@ -136,7 +136,7 @@ public class ClientProtocolService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ie);
     }
 
@@ -169,7 +169,7 @@ public class ClientProtocolService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ie);
     }
 

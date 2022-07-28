@@ -52,7 +52,7 @@ public class TestMetricsConfig {
         .save(filename);
 
     MetricsConfig mc = MetricsConfig.create("p1", filename);
-    LOG.debug("mc:"+ mc);
+    LOG.error("Temp", new RuntimeException());
 
     Configuration expected = new ConfigBuilder()
         .add("*.bar", "p1 default bar")
@@ -80,9 +80,9 @@ public class TestMetricsConfig {
     MetricsConfig t1i1 = map.get("i1");
     MetricsConfig t1i42 = map.get("42");
     MetricsConfig t2i1 = map2.get("i1");
-    LOG.debug("--- t1 instance i1:"+ t1i1);
-    LOG.debug("--- t1 instance 42:"+ t1i42);
-    LOG.debug("--- t2 instance i1:"+ t2i1);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Configuration t1expected1 = new ConfigBuilder()
         .add("name", "p1.t1.i1.name").config;
@@ -95,7 +95,7 @@ public class TestMetricsConfig {
     assertEq(t1expected42, t1i42);
     assertEq(t2expected1, t2i1);
 
-    LOG.debug("asserting foo == default foo");
+    LOG.error("Temp", new RuntimeException());
     // Check default lookups
     assertEquals("value of foo in t1 instance i1", "default foo",
                  t1i1.getString("foo"));

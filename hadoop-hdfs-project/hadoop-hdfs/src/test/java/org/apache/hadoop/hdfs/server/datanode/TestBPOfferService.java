@@ -205,7 +205,7 @@ public class TestBPOfferService {
       if (requestFullBlockReportLease) {
         fullBlockReportLeaseId = nextFullBlockReportLeaseId++;
       }
-      LOG.info("fullBlockReportLeaseId=" + fullBlockReportLeaseId);
+      LOG.error("Temp", new RuntimeException());
       HeartbeatResponse heartbeatResponse = new HeartbeatResponse(
           datanodeCommands[nnIdx], mockHaStatuses[nnIdx], null,
           fullBlockReportLeaseId);
@@ -613,7 +613,7 @@ public class TestBPOfferService {
               Mockito.any());
           return true;
         } catch (Throwable t) {
-          LOG.info("waiting on block report: " + t.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -639,7 +639,7 @@ public class TestBPOfferService {
                   Mockito.any());
           return true;
         } catch (Throwable t) {
-          LOG.info("waiting on block report: " + t.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -659,7 +659,7 @@ public class TestBPOfferService {
               .registerDatanode(Mockito.any());
           return true;
         } catch (Throwable t) {
-          LOG.info("waiting on block registerDatanode: " + t.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -1150,7 +1150,7 @@ public class TestBPOfferService {
                 BlockReportContext context =
                     (BlockReportContext) invocation.getArguments()[3];
                 long leaseId = context.getLeaseId();
-                LOG.info("leaseId = "+leaseId);
+                LOG.error("Temp", new RuntimeException());
 
                 // leaseId == 1 means DN make block report with old leaseId
                 // just reject and wait until DN request for a new leaseId

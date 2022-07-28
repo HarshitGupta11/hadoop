@@ -666,7 +666,7 @@ public class TestRMWebServicesConfigurationMutation extends JerseyTestBase {
             .entity(YarnWebServiceUtils.toJson(updateInfo,
                 SchedConfUpdateInfo.class), MediaType.APPLICATION_JSON)
             .put(ClientResponse.class);
-    LOG.debug("Response headers: " + response.getHeaders());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     CapacitySchedulerConfiguration newCSConf = cs.getConfiguration();
     assertEquals(0.2f, newCSConf

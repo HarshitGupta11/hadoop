@@ -534,7 +534,7 @@ public class TestDFSStripedInputStream {
         spy.read();
         fail("read should have failed");
       } catch (IOException expected) {
-        LOG.info("Exception caught", expected);
+        LOG.error("Temp", new RuntimeException());
         GenericTestUtils.assertExceptionContains(msg, expected);
       }
     }

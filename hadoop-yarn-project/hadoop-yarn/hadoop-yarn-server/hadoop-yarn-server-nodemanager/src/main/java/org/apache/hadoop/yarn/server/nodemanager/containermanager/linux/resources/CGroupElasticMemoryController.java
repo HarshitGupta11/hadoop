@@ -198,7 +198,7 @@ public class CGroupElasticMemoryController extends Thread {
     if (process != null) {
       process.destroyForcibly();
     } else {
-      LOG.warn("Trying to stop listening, when listening is not running");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -225,7 +225,7 @@ public class CGroupElasticMemoryController extends Thread {
         return false;
       }
     } catch (SecurityException se) {
-      LOG.info("Failed to get Operating System name. " + se);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     return true;
@@ -255,7 +255,7 @@ public class CGroupElasticMemoryController extends Thread {
           process = oomListener.start();
         } else {
           resetCGroupParameters();
-          LOG.info("Listener stopped before starting");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }
@@ -297,7 +297,7 @@ public class CGroupElasticMemoryController extends Thread {
       int exitCode = process.waitFor();
       String error = errorListener.get();
       process = null;
-      LOG.info(String.format("OOM listener exited %d %s", exitCode, error));
+      LOG.error("Temp", new RuntimeException());
     } catch (OOMNotResolvedException ex) {
       // We could mark the node unhealthy but it shuts down the node anyways.
       // Let's just bring down the node manager all containers are frozen.
@@ -305,7 +305,7 @@ public class CGroupElasticMemoryController extends Thread {
     } catch (Exception ex) {
       synchronized (this) {
         if (!stopped) {
-          LOG.warn("OOM Listener exiting.", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } finally {
@@ -318,7 +318,7 @@ public class CGroupElasticMemoryController extends Thread {
         try {
           executor.awaitTermination(6, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-          LOG.warn("Exiting without processing all OOM events.");
+          LOG.error("Temp", new RuntimeException());
         }
         executor.shutdown();
       }
@@ -386,9 +386,9 @@ public class CGroupElasticMemoryController extends Thread {
         Thread.sleep(10);
       }
     } catch (InterruptedException ex) {
-      LOG.debug("Watchdog interrupted");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
-      LOG.warn("Exception running logging thread", e);
+      LOG.error("Temp", new RuntimeException());
     }
     LOG.warn(String.format("OOM was not resolved in %d ms",
         clock.getTime() - start));
@@ -410,7 +410,7 @@ public class CGroupElasticMemoryController extends Thread {
         cgroups.updateCGroupParam(CGroupsHandler.CGroupController.MEMORY, "",
             CGROUP_PARAM_MEMORY_SWAP_HARD_LIMIT_BYTES, CGROUP_NO_LIMIT);
       } catch (ResourceHandlerException ex) {
-        LOG.debug("Swap monitoring is turned off in the kernel");
+        LOG.error("Temp", new RuntimeException());
       }
       // Set physical memory limits
       cgroups.updateCGroupParam(CGroupsHandler.CGroupController.MEMORY, "",
@@ -444,7 +444,7 @@ public class CGroupElasticMemoryController extends Thread {
             CGroupsHandler.CGroupController.MEMORY, "",
             CGROUP_PARAM_MEMORY_SWAP_HARD_LIMIT_BYTES, CGROUP_NO_LIMIT);
       } catch (ResourceHandlerException ex) {
-        LOG.debug("Swap monitoring is turned off in the kernel");
+        LOG.error("Temp", new RuntimeException());
       }
       cgroups.updateCGroupParam(
           CGroupsHandler.CGroupController.MEMORY, "",
@@ -454,7 +454,7 @@ public class CGroupElasticMemoryController extends Thread {
           CGroupsHandler.CGroupController.MEMORY, "",
           CGROUP_PARAM_MEMORY_OOM_CONTROL, "0");
     } catch (ResourceHandlerException ex) {
-      LOG.warn("Error in cleanup", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -470,7 +470,7 @@ public class CGroupElasticMemoryController extends Thread {
     final String path = conf.get(
         YarnConfiguration.NM_ELASTIC_MEMORY_CONTROL_OOM_LISTENER_PATH,
         defaultPath);
-    LOG.debug(String.format("oom-listener path: %s %s", path, defaultPath));
+    LOG.error("Temp", new RuntimeException());
     return path;
   }
 }

@@ -129,7 +129,7 @@ public class TestDockerCommandExecutor {
       when(localDirsHandler.getLocalPathForWrite(anyString()))
           .thenReturn(new Path(tmpPath));
     } catch (IOException ioe) {
-      LOG.info("LocalDirsHandler failed" + ioe);
+      LOG.error("Temp", new RuntimeException());
     }
     return mockNMContext;
   }

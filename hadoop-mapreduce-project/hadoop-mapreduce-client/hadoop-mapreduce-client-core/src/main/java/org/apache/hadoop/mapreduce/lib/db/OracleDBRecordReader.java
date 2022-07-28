@@ -127,11 +127,11 @@ public class OracleDBRecordReader<T extends DBWritable> extends DBRecordReader<T
     try {
       method.setAccessible(true);
       method.invoke(conn, clientTimeZone);
-      LOG.info("Time zone has been set to " + clientTimeZone);
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception ex) {
       LOG.warn("Time zone " + clientTimeZone +
                " could not be set on Oracle database.");
-      LOG.warn("Setting default time zone: GMT");
+      LOG.error("Temp", new RuntimeException());
       try {
         // "GMT" timezone is guaranteed to exist.
         method.invoke(conn, "GMT");

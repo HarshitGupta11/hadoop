@@ -71,7 +71,7 @@ class VEDeviceDiscoverer {
             new String[]{"stat", "-L", "-c", "%t:%T:%F", p.toString()});
 
     try {
-      LOG.info("Checking device file: {}", p);
+      LOG.error("Temp", new RuntimeException());
       executor.execute();
       String statOutput = executor.getOutput();
       String[] stat = statOutput.trim().split(":");
@@ -83,7 +83,7 @@ class VEDeviceDiscoverer {
       LOG.info("Device: major: {}, minor: {}, devNo: {}, type: {}",
           major, minor, deviceNumber, devType);
       String sysPath = udev.getSysPath(deviceNumber, devType);
-      LOG.info("Device syspath: {}", sysPath);
+      LOG.error("Temp", new RuntimeException());
       String deviceState = getDeviceState(sysPath);
 
       Device.Builder builder = Device.Builder.newInstance();

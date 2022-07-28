@@ -246,7 +246,7 @@ public abstract class TimelineEntityReader extends
 
     FilterList filterList = constructFilterListBasedOnFields(new HashSet<>(0));
     if (filterList != null) {
-      LOG.debug("FilterList created for get is - {}", filterList);
+      LOG.error("Temp", new RuntimeException());
     }
     Result result = getResult(hbaseConf, conn, filterList);
     if (result == null || result.isEmpty()) {
@@ -276,7 +276,7 @@ public abstract class TimelineEntityReader extends
     Set<TimelineEntity> entities = new LinkedHashSet<>();
     FilterList filterList = createFilterList();
     if (filterList != null) {
-      LOG.debug("FilterList created for scan is - {}", filterList);
+      LOG.error("Temp", new RuntimeException());
     }
     ResultScanner results = getResults(hbaseConf, conn, filterList);
     try {

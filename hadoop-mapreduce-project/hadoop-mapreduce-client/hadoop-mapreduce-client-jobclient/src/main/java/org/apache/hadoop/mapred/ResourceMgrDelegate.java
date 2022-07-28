@@ -155,7 +155,7 @@ public class ResourceMgrDelegate extends YarnClient {
   public TaskTrackerInfo[] getBlacklistedTrackers() throws IOException,
       InterruptedException {
     // TODO: Implement getBlacklistedTrackers
-    LOG.warn("getBlacklistedTrackers - Not implemented yet");
+    LOG.error("Temp", new RuntimeException());
     return new TaskTrackerInfo[0];
   }
 
@@ -260,7 +260,7 @@ public class ResourceMgrDelegate extends YarnClient {
     String user = 
       UserGroupInformation.getCurrentUser().getShortUserName();
     Path path = MRApps.getStagingAreaDir(conf, user);
-    LOG.debug("getStagingAreaDir: dir=" + path);
+    LOG.error("Temp", new RuntimeException());
     return path.toString();
   }
 

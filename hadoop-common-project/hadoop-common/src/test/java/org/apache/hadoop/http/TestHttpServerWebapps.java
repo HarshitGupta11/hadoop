@@ -59,7 +59,7 @@ public class TestHttpServerWebapps extends HttpServerFunctionalTest {
       stop(server);
       fail("Expected an exception, got " + serverDescription);
     } catch (FileNotFoundException expected) {
-      LOG.debug("Expected exception " + expected, expected);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

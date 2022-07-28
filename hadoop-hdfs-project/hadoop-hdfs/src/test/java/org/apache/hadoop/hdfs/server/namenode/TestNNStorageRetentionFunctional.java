@@ -81,7 +81,7 @@ public class TestNNStorageRetentionFunctional {
       NameNode nn = cluster.getNameNode();
 
       doSaveNamespace(nn);
-      LOG.info("After first save, images 0 and 2 should exist in both dirs");
+      LOG.error("Temp", new RuntimeException());
       assertGlobEquals(cd0, "fsimage_\\d*", 
           getImageFileName(0), getImageFileName(2));
       assertGlobEquals(cd1, "fsimage_\\d*",
@@ -107,20 +107,20 @@ public class TestNNStorageRetentionFunctional {
           getFinalizedEditsFileName(3, 4),
           getInProgressEditsFileName(5));
       
-      LOG.info("Failing first storage dir by chmodding it");
+      LOG.error("Temp", new RuntimeException());
       assertEquals(0, FileUtil.chmod(cd0.getAbsolutePath(), "000"));
       doSaveNamespace(nn);      
-      LOG.info("Restoring accessibility of first storage dir");      
+      LOG.error("Temp", new RuntimeException());
       assertEquals(0, FileUtil.chmod(cd0.getAbsolutePath(), "755"));
 
-      LOG.info("nothing should have been purged in first storage dir");
+      LOG.error("Temp", new RuntimeException());
       assertGlobEquals(cd0, "fsimage_\\d*",
           getImageFileName(2), getImageFileName(4));
       assertGlobEquals(cd0, "edits_.*",
           getFinalizedEditsFileName(3, 4),
           getInProgressEditsFileName(5));
 
-      LOG.info("fsimage_2 should be purged in second storage dir");
+      LOG.error("Temp", new RuntimeException());
       assertGlobEquals(cd1, "fsimage_\\d*",
           getImageFileName(4), getImageFileName(6));
       assertGlobEquals(cd1, "edits_.*",
@@ -142,7 +142,7 @@ public class TestNNStorageRetentionFunctional {
     } finally {
       FileUtil.chmod(cd0.getAbsolutePath(), "755");
 
-      LOG.info("Shutting down...");
+      LOG.error("Temp", new RuntimeException());
       if (cluster != null) {
         cluster.shutdown();
       }
@@ -150,7 +150,7 @@ public class TestNNStorageRetentionFunctional {
   }
 
   private static void doSaveNamespace(NameNode nn) throws IOException {
-    LOG.info("Saving namespace...");
+    LOG.error("Temp", new RuntimeException());
     nn.getRpcServer().setSafeMode(SafeModeAction.SAFEMODE_ENTER, false);
     nn.getRpcServer().saveNamespace(0, 0);
     nn.getRpcServer().setSafeMode(SafeModeAction.SAFEMODE_LEAVE, false);

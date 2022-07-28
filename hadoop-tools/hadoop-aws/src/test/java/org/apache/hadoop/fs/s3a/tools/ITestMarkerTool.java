@@ -107,26 +107,26 @@ public class ITestMarkerTool extends AbstractMarkerToolTest {
     // audit will find the expected entries
     int expectedMarkerCount = createdPaths.dirs.size();
     S3AFileSystem fs = getDeletingFS();
-    LOG.info("Auditing a directory with retained markers -expect failure");
+    LOG.error("Temp", new RuntimeException());
     markerTool(EXIT_NOT_ACCEPTABLE, fs,
         createdPaths.base, false, 0, UNLIMITED_LISTING, false);
 
-    LOG.info("Auditing a directory expecting retained markers");
+    LOG.error("Temp", new RuntimeException());
     markerTool(fs, createdPaths.base, false,
         expectedMarkerCount);
 
     // we require that a purge didn't take place, so run the
     // audit again.
-    LOG.info("Auditing a directory expecting retained markers");
+    LOG.error("Temp", new RuntimeException());
     markerTool(fs, createdPaths.base, false,
         expectedMarkerCount);
 
-    LOG.info("Purging a directory of retained markers");
+    LOG.error("Temp", new RuntimeException());
     // purge cleans up
     assertMarkersDeleted(expectedMarkerCount,
         markerTool(fs, createdPaths.base, true, expectedMarkerCount));
     // and a rerun doesn't find markers
-    LOG.info("Auditing a directory with retained markers -expect success");
+    LOG.error("Temp", new RuntimeException());
     assertMarkersDeleted(0,
         markerTool(fs, createdPaths.base, true, 0));
   }
@@ -151,7 +151,7 @@ public class ITestMarkerTool extends AbstractMarkerToolTest {
 
     // there are no markers
     markerTool(fs, dest, false, 0);
-    LOG.info("Auditing destination paths");
+    LOG.error("Temp", new RuntimeException());
     verifyRenamed(dest, createdPaths);
   }
 
@@ -185,7 +185,7 @@ public class ITestMarkerTool extends AbstractMarkerToolTest {
     markerTool(0, mixedFSDir2, source, false, 0, 0, true);
 
     // if we now rename, all will be good
-    LOG.info("Executing rename");
+    LOG.error("Temp", new RuntimeException());
     mixedFSDir2.rename(source, dest);
     assertIsDirectory(dest);
 

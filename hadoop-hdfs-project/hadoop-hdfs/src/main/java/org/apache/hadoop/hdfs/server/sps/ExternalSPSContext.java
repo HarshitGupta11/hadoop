@@ -83,7 +83,7 @@ public class ExternalSPSContext implements Context {
       return nnc != null ? nnc.getDistributedFileSystem().isInSafeMode()
           : false;
     } catch (IOException e) {
-      LOG.warn("Exception while creating Namenode Connector..", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -139,7 +139,7 @@ public class ExternalSPSContext implements Context {
       return nnc.getDistributedFileSystem()
           .getDataNodeStats(DatanodeReportType.LIVE).length;
     } catch (IOException e) {
-      LOG.warn("Exception while getting number of live datanodes.", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -152,7 +152,7 @@ public class ExternalSPSContext implements Context {
       fileInfo = nnc.getDistributedFileSystem().getClient()
           .getLocatedFileInfo(filePath.toString(), false);
     } catch (FileNotFoundException e) {
-      LOG.debug("Path:{} doesn't exists!", path, e);
+      LOG.error("Temp", new RuntimeException());
     }
     return fileInfo;
   }
@@ -168,7 +168,7 @@ public class ExternalSPSContext implements Context {
     try {
       return nnc.getNNProtocolConnection().getNextSPSPath();
     } catch (IOException e) {
-      LOG.warn("Exception while getting next sps path id from Namenode.", e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -205,7 +205,7 @@ public class ExternalSPSContext implements Context {
       for (Block block : moveAttemptFinishedBlks) {
         actualBlockMovements.add(block);
       }
-      LOG.info("Movement attempted blocks", actualBlockMovements);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -142,7 +142,7 @@ class JobSubmitter implements Gridmix.Component<GridmixJob> {
           }
           monitor.submissionFailed(stats);
         } catch (ClassNotFoundException e) {
-          LOG.warn("Failed to submit " + job.getJob().getJobName(), e);
+          LOG.error("Temp", new RuntimeException());
           monitor.submissionFailed(stats);
         }
       } catch (InterruptedException e) {
@@ -153,7 +153,7 @@ class JobSubmitter implements Gridmix.Component<GridmixJob> {
         monitor.submissionFailed(stats);
       } catch(Exception e) {
         //Due to some exception job wasnt submitted.
-        LOG.info(" Job " + job.getJob().getJobID() + " submission failed " , e);
+        LOG.error("Temp", new RuntimeException());
         monitor.submissionFailed(stats);
       } finally {
         sem.release();

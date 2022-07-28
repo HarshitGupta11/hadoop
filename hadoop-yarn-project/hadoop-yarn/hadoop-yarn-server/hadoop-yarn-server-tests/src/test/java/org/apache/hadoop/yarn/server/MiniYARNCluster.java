@@ -182,7 +182,7 @@ public class MiniYARNCluster extends CompositeService {
       FileContext.getLocalFSFileContext().delete(
           new Path(targetWorkDir.getAbsolutePath()), true);
     } catch (Exception e) {
-      LOG.warn("COULD NOT CLEANUP", e);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException("could not cleanup test dir: "+ e, e);
     } 
 
@@ -504,7 +504,7 @@ public class MiniYARNCluster extends CompositeService {
             HAServiceProtocol.RequestSource.REQUEST_BY_USER_FORCED));
       }
       Configuration conf = resourceManagers[index].getConfig();
-      LOG.info("Starting resourcemanager " + index);
+      LOG.error("Temp", new RuntimeException());
       LOG.info("MiniYARN ResourceManager address: " +
           conf.get(YarnConfiguration.RM_ADDRESS));
       LOG.info("MiniYARN ResourceManager web address: " + WebAppUtils
@@ -520,7 +520,7 @@ public class MiniYARNCluster extends CompositeService {
         }
       }
       if (!appMasters.isEmpty()) {
-        LOG.warn("Stopping RM while some app masters are still alive");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
@@ -593,7 +593,7 @@ public class MiniYARNCluster extends CompositeService {
         config.setLong(YarnConfiguration.NM_RESOURCE_MON_INTERVAL_MS, 0);
       }
 
-      LOG.info("Starting NM: " + index);
+      LOG.error("Temp", new RuntimeException());
       nodeManagers[index].init(config);
       super.serviceInit(config);
     }
@@ -611,7 +611,7 @@ public class MiniYARNCluster extends CompositeService {
         dirs[i]= new File(testWorkDir, MiniYARNCluster.this.getName()
             + "-" + dirType + "Dir-nm-" + index + "_" + i);
         dirs[i].mkdirs();
-        LOG.info("Created " + dirType + "Dir in " + dirs[i].getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
         String delimiter = (i > 0) ? "," : "";
         dirsString = dirsString.concat(delimiter + dirs[i].getAbsolutePath());
       }
@@ -787,12 +787,12 @@ public class MiniYARNCluster extends CompositeService {
       }
       else if (nodeManagers.length == rm.getClientRMService()
           .getClusterMetrics(req).getClusterMetrics().getNumNodeManagers()) {
-        LOG.info("All Node Managers connected in MiniYARNCluster");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
       Thread.sleep(10);
     }
-    LOG.info("Node Managers did not connect within 5000ms");
+    LOG.error("Temp", new RuntimeException());
     return false;
   }
 
@@ -907,7 +907,7 @@ public class MiniYARNCluster extends CompositeService {
         this.setAMRMProxyService(amrmProxyService);
         addService(this.getAMRMProxyService());
       } else {
-        LOG.info("CustomAMRMProxyService is disabled");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -939,7 +939,7 @@ public class MiniYARNCluster extends CompositeService {
         this.setAMRMProxyService(amrmProxyService);
         addService(this.getAMRMProxyService());
       } else {
-        LOG.info("CustomAMRMProxyService is disabled");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

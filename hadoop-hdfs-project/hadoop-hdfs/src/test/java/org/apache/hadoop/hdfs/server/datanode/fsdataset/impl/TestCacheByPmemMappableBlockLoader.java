@@ -238,7 +238,7 @@ public class TestCacheByPmemMappableBlockLoader {
               "be cached. Right now " + blocksCached + " blocks are cached.");
           return false;
         }
-        LOG.info(maxCacheBlocksNum + " blocks are now cached.");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }, 1000, 30000);
@@ -316,7 +316,7 @@ public class TestCacheByPmemMappableBlockLoader {
               " blocks are uncached.");
           return false;
         }
-        LOG.info(maxCacheBlocksNum + " blocks have been uncached.");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }, 1000, 30000);

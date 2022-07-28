@@ -109,14 +109,14 @@ public class LeveldbTimelineStateStore extends
     try {
       options.createIfMissing(false);
       db = factory.open(new File(dbPath.toString()), options);
-      LOG.info("Loading the existing database at th path: " + dbPath.toString());
+      LOG.error("Temp", new RuntimeException());
       checkVersion();
     } catch (NativeDB.DBException e) {
       if (e.isNotFound() || e.getMessage().contains(" does not exist ")) {
         try {
           options.createIfMissing(true);
           db = factory.open(new File(dbPath.toString()), options);
-          LOG.info("Creating a new database at th path: " + dbPath.toString());
+          LOG.error("Temp", new RuntimeException());
           storeVersion(CURRENT_VERSION_INFO);
         } catch (DBException ex) {
           throw new IOException(ex);
@@ -136,7 +136,7 @@ public class LeveldbTimelineStateStore extends
 
   @Override
   public TimelineServiceState loadState() throws IOException {
-    LOG.info("Loading timeline service state from leveldb");
+    LOG.error("Temp", new RuntimeException());
     TimelineServiceState state = new TimelineServiceState();
     int numKeys = loadTokenMasterKeys(state);
     int numTokens = loadTokens(state);
@@ -401,12 +401,12 @@ public class LeveldbTimelineStateStore extends
    */
   private void checkVersion() throws IOException {
     Version loadedVersion = loadVersion();
-    LOG.info("Loaded timeline state store version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion.equals(getCurrentVersion())) {
       return;
     }
     if (loadedVersion.isCompatibleTo(getCurrentVersion())) {
-      LOG.info("Storing timeline state store version info " + getCurrentVersion());
+      LOG.error("Temp", new RuntimeException());
       storeVersion(CURRENT_VERSION_INFO);
     } else {
       String incompatibleMessage =

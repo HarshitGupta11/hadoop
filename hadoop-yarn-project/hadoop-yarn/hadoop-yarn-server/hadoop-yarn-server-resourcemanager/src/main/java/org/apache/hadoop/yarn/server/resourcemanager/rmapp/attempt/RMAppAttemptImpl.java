@@ -966,7 +966,7 @@ public class RMAppAttemptImpl implements RMAppAttempt, Recoverable {
     assert attemptState != null;
 
     if (attemptState.getState() == null) {
-      LOG.info(String.format(RECOVERY_MESSAGE, getAppAttemptId(), "NONE"));
+      LOG.error("Temp", new RuntimeException());
     } else if (LOG.isDebugEnabled()) {
       LOG.debug(String.format(RECOVERY_MESSAGE, getAppAttemptId(),
           attemptState.getState()));
@@ -1107,7 +1107,7 @@ public class RMAppAttemptImpl implements RMAppAttempt, Recoverable {
         int numNodes =
             RMServerUtils.getApplicableNodeCountForAM(appAttempt.rmContext,
                 appAttempt.conf, appAttempt.amReqs);
-        LOG.debug("Setting node count for blacklist to {}", numNodes);
+        LOG.error("Temp", new RuntimeException());
         appAttempt.getAMBlacklistManager().refreshNodeHostCount(numNodes);
 
         ResourceBlacklistRequest amBlacklist =
@@ -2014,7 +2014,7 @@ public class RMAppAttemptImpl implements RMAppAttempt, Recoverable {
         appAttempt.addAMNodeToBlackList(nodeId);
       }
     } else {
-      LOG.warn("No ContainerStatus in containerFinishedEvent");
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (!appAttempt.getSubmissionContext()

@@ -112,13 +112,13 @@ public class TestMRJobsWithProfiler {
   public void testDefaultProfiler() throws Exception {
     assumeFalse("The hprof agent has been removed since Java 9. Skipping.",
         Shell.isJavaVersionAtLeast(9));
-    LOG.info("Starting testDefaultProfiler");
+    LOG.error("Temp", new RuntimeException());
     testProfilerInternal(true);
   }
 
   @Test (timeout = 150000)
   public void testDifferentProfilers() throws Exception {
-    LOG.info("Starting testDefaultProfiler");
+    LOG.error("Temp", new RuntimeException());
     testProfilerInternal(false);
   }
 
@@ -175,7 +175,7 @@ public class TestMRJobsWithProfiler {
       }
 
       if (pollElapsed >= 60000) {
-        LOG.warn("application did not reach terminal state within 60 seconds");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }

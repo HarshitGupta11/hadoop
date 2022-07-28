@@ -240,7 +240,7 @@ public class Application {
     LOG.info("Added task " + task.getTaskId() + " to application " + 
         applicationId + " at priority " + schedulerKey.getPriority());
     
-    LOG.debug("addTask: application={} #asks={}", applicationId, ask.size());
+    LOG.error("Temp", new RuntimeException());
     
     // Create resource requests
     for (String host : task.getHosts()) {

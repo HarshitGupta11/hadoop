@@ -47,7 +47,7 @@ public class HelpCommand extends Command {
    */
   @Override
   public void execute(CommandLine cmd) throws Exception {
-    LOG.debug("Processing help Command.");
+    LOG.error("Temp", new RuntimeException());
     if (cmd == null) {
       this.printHelp();
       return;

@@ -177,7 +177,7 @@ public class TestReplaceDatanodeOnFailure {
       }
 
       //Verify the file
-      LOG.info("Verify the file");
+      LOG.error("Temp", new RuntimeException());
       for(int i = 0; i < slowwriters.length; i++) {
         LOG.info(slowwriters[i].filepath + ": length="
             + fs.getFileStatus(slowwriters[i].filepath).getLen());
@@ -218,7 +218,7 @@ public class TestReplaceDatanodeOnFailure {
   }
 
   static void sleepSeconds(final int waittime) throws InterruptedException {
-    LOG.info("Wait " + waittime + " seconds");
+    LOG.error("Temp", new RuntimeException());
     Thread.sleep(waittime * 1000L);
   }
 
@@ -243,18 +243,18 @@ public class TestReplaceDatanodeOnFailure {
       try {
         sleep(sleepms);
         for(; running; i++) {
-          LOG.info(getName() + " writes " + i);
+          LOG.error("Temp", new RuntimeException());
           out.write(i);
           out.hflush();
 
           sleep(sleepms);
         }
       } catch(InterruptedException e) {
-        LOG.info(getName() + " interrupted:" + e);
+        LOG.error("Temp", new RuntimeException());
       } catch(IOException e) {
         throw new RuntimeException(getName(), e);
       } finally {
-        LOG.info(getName() + " terminated: i=" + i);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -264,7 +264,7 @@ public class TestReplaceDatanodeOnFailure {
     }
 
     void joinAndClose() throws InterruptedException {
-      LOG.info(getName() + " join and close");
+      LOG.error("Temp", new RuntimeException());
       join();
       IOUtils.closeStream(out);
     }
@@ -287,7 +287,7 @@ public class TestReplaceDatanodeOnFailure {
       final Path f = new Path(DIR, "testAppend");
       
       {
-        LOG.info("create an empty file " + f);
+        LOG.error("Temp", new RuntimeException());
         fs.create(f, REPLICATION).close();
         final FileStatus status = fs.getFileStatus(f);
         Assert.assertEquals(REPLICATION, status.getReplication());
@@ -297,7 +297,7 @@ public class TestReplaceDatanodeOnFailure {
       
       final byte[] bytes = new byte[1000];
       {
-        LOG.info("append " + bytes.length + " bytes to " + f);
+        LOG.error("Temp", new RuntimeException());
         final FSDataOutputStream out = fs.append(f);
         out.write(bytes);
         out.close();
@@ -308,7 +308,7 @@ public class TestReplaceDatanodeOnFailure {
       }
 
       {
-        LOG.info("append another " + bytes.length + " bytes to " + f);
+        LOG.error("Temp", new RuntimeException());
         try {
           final FSDataOutputStream out = fs.append(f);
           out.write(bytes);
@@ -316,7 +316,7 @@ public class TestReplaceDatanodeOnFailure {
 
           Assert.fail();
         } catch(IOException ioe) {
-          LOG.info("This exception is expected", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } finally {
@@ -340,7 +340,7 @@ public class TestReplaceDatanodeOnFailure {
       
       final byte[] bytes = new byte[1000];
       {
-        LOG.info("write " + bytes.length + " bytes to " + f);
+        LOG.error("Temp", new RuntimeException());
         final FSDataOutputStream out = fs.create(f, REPLICATION);
         out.write(bytes);
         out.close();
@@ -351,7 +351,7 @@ public class TestReplaceDatanodeOnFailure {
       }
 
       {
-        LOG.info("append another " + bytes.length + " bytes to " + f);
+        LOG.error("Temp", new RuntimeException());
         final FSDataOutputStream out = fs.append(f);
         out.write(bytes);
         out.close();

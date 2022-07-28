@@ -91,7 +91,7 @@ public class AMRMTokenIdentifier extends TokenIdentifier {
     try {
       proto = AMRMTokenIdentifierProto.parseFrom(data);
     } catch (InvalidProtocolBufferException e) {
-      LOG.warn("Recovering old formatted token");
+      LOG.error("Temp", new RuntimeException());
       readFieldsInOldFormat(
           new DataInputStream(new ByteArrayInputStream(data)));
     }

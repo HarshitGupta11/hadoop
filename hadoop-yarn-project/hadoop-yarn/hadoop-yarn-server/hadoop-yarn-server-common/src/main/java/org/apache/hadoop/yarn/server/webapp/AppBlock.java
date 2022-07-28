@@ -319,7 +319,7 @@ public class AppBlock extends HtmlBlock {
                   try {
                     report = getContainerReport(request);
                   } catch (ContainerNotFoundException ex) {
-                    LOG.warn(ex.getMessage());
+                    LOG.error("Temp", new RuntimeException());
                   }
               }
               return report;

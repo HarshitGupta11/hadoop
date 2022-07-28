@@ -63,10 +63,10 @@ public class TextSplitter extends BigDecimalSplitter {
   public List<InputSplit> split(Configuration conf, ResultSet results, String colName)
       throws SQLException {
 
-    LOG.warn("Generating splits for a textual index column.");
+    LOG.error("Temp", new RuntimeException());
     LOG.warn("If your database sorts in a case-insensitive order, "
         + "this may result in a partial import or duplicate records.");
-    LOG.warn("You are strongly encouraged to choose an integral split column.");
+    LOG.error("Temp", new RuntimeException());
 
     String minString = results.getString(1);
     String maxString = results.getString(2);

@@ -149,7 +149,7 @@ public class TestNodeHealthCheckerService {
     setHealthStatus(healthStatus, nodeHealthChecker.isHealthy(),
         nodeHealthChecker.getHealthReport(),
         nodeHealthChecker.getLastHealthReportTime());
-    LOG.info("Checking initial healthy condition");
+    LOG.error("Temp", new RuntimeException());
     // Check proper report conditions.
     Assert.assertTrue("Node health status reported unhealthy", healthStatus
         .getIsNodeHealthy());
@@ -161,7 +161,7 @@ public class TestNodeHealthCheckerService {
     setHealthStatus(healthStatus, nodeHealthChecker.isHealthy(),
         nodeHealthChecker.getHealthReport(),
         nodeHealthChecker.getLastHealthReportTime());
-    LOG.info("Checking Healthy--->Unhealthy");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse("Node health status reported healthy", healthStatus
         .getIsNodeHealthy());
     Assert.assertTrue("Node health status reported healthy", healthStatus
@@ -171,7 +171,7 @@ public class TestNodeHealthCheckerService {
     setHealthStatus(healthStatus, nodeHealthChecker.isHealthy(),
         nodeHealthChecker.getHealthReport(),
         nodeHealthChecker.getLastHealthReportTime());
-    LOG.info("Checking UnHealthy--->healthy");
+    LOG.error("Temp", new RuntimeException());
     // Check proper report conditions.
     Assert.assertTrue("Node health status reported unhealthy", healthStatus
         .getIsNodeHealthy());
@@ -185,7 +185,7 @@ public class TestNodeHealthCheckerService {
     setHealthStatus(healthStatus, nodeHealthChecker.isHealthy(),
         nodeHealthChecker.getHealthReport(),
         nodeHealthChecker.getLastHealthReportTime());
-    LOG.info("Checking Healthy--->timeout");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse("Node health status reported healthy even after timeout",
         healthStatus.getIsNodeHealthy());
     Assert.assertTrue("Node script time out message not propagated",

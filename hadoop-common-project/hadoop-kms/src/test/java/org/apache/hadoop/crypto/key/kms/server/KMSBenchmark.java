@@ -77,7 +77,7 @@ public class KMSBenchmark implements Tool {
     try {
       eek = kp.generateEncryptedKey(encryptionKeyName);
     } catch (GeneralSecurityException e) {
-      LOG.warn("failed to generate key", e);
+      LOG.error("Temp", new RuntimeException());
     }
     // create key and/or warm up
     for (int i = 2; i < args.length; i++) {
@@ -101,7 +101,7 @@ public class KMSBenchmark implements Tool {
         kp.warmUpEncryptedKeys(encryptionKeyName);
       }
     } catch (GeneralSecurityException e) {
-      LOG.warn(" failed to create or warmup encryption key", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -208,7 +208,7 @@ public class KMSBenchmark implements Tool {
           daemons.add(new StatsDaemon(tIdx, opsPerThread[tIdx], this));
         }
         start = Time.now();
-        LOG.info("Starting "+numOpsRequired+" "+getOpName()+"(s).");
+        LOG.error("Temp", new RuntimeException());
         for (StatsDaemon d : daemons) {
           d.start();
         }
@@ -252,8 +252,8 @@ public class KMSBenchmark implements Tool {
     }
 
     long getAverageTime() {
-      LOG.info("getAverageTime, cumulativeTime = " + cumulativeTime);
-      LOG.info("getAverageTime, numOpsExecuted = " + numOpsExecuted);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       return numOpsExecuted == 0? 0 : cumulativeTime/numOpsExecuted;
     }
 
@@ -314,11 +314,11 @@ public class KMSBenchmark implements Tool {
     }
 
     void printStats() {
-      LOG.info("--- " + getOpName() + " stats  ---");
-      LOG.info("# operations: " + getNumOpsExecuted());
-      LOG.info("Elapsed Time: " + getElapsedTime());
-      LOG.info(" Ops per sec: " + getOpsPerSecond());
-      LOG.info("Average Time: " + getAverageTime());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -433,7 +433,7 @@ public class KMSBenchmark implements Tool {
       try {
         eek = kp.generateEncryptedKey(encryptionKeyName);
       } catch (GeneralSecurityException e) {
-        LOG.warn("failed to generate encrypted key", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
       long end = Time.now();
@@ -442,9 +442,9 @@ public class KMSBenchmark implements Tool {
 
     @Override
     void printResults() {
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("nOps = " + getNumOpsRequired());
-      LOG.info("nThreads = " + getNumThreads());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
     }
   }
@@ -504,7 +504,7 @@ public class KMSBenchmark implements Tool {
       try {
         kp.decryptEncryptedKey(eek);
       } catch (GeneralSecurityException e) {
-        LOG.warn("failed to generate and/or decrypt key", e);
+        LOG.error("Temp", new RuntimeException());
       }
       long end = Time.now();
       return end - start;
@@ -512,9 +512,9 @@ public class KMSBenchmark implements Tool {
 
     @Override
     void printResults() {
-      LOG.info("--- " + getOpName() + " inputs ---");
-      LOG.info("nrOps = " + getNumOpsRequired());
-      LOG.info("nrThreads = " + getNumThreads());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       printStats();
     }
   }
@@ -550,7 +550,7 @@ public class KMSBenchmark implements Tool {
       bench = new KMSBenchmark(conf, args);
       ToolRunner.run(bench, args);
     } finally {
-      LOG.info("runBenchmark finished.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -585,13 +585,13 @@ public class KMSBenchmark implements Tool {
 
       // run each benchmark
       for (OperationStatsBase op : ops) {
-        LOG.info("Starting benchmark: " + op.getOpName());
+        LOG.error("Temp", new RuntimeException());
         op.benchmark();
         op.cleanUp();
       }
       // print statistics
       for (OperationStatsBase op : ops) {
-        LOG.info("");
+        LOG.error("Temp", new RuntimeException());
         op.printResults();
       }
     } catch(Exception e) {

@@ -123,7 +123,7 @@ public class HttpFSServerWebApp extends ServerWebApp {
   }
 
   private static void setMetrics(Configuration config) {
-    LOG.info("Initializing HttpFSServerMetrics");
+    LOG.error("Temp", new RuntimeException());
     metrics = HttpFSServerMetrics.create(config, "HttpFSServer");
     JvmPauseMonitor pauseMonitor = new JvmPauseMonitor();
     pauseMonitor.init(config);

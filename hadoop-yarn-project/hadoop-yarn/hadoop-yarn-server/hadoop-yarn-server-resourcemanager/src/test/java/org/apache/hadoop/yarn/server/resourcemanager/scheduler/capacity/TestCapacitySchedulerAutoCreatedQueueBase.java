@@ -422,7 +422,7 @@ public class TestCapacitySchedulerAutoCreatedQueueBase {
         (C, NODEL_LABEL_SSD);
 
 
-    LOG.info("Setup " + D + " as an auto leaf creation enabled parent queue");
+    LOG.error("Temp", new RuntimeException());
 
     conf.setUserLimitFactor(D, 1.0f);
     conf.setAutoCreateChildQueueEnabled(D, true);
@@ -454,7 +454,7 @@ public class TestCapacitySchedulerAutoCreatedQueueBase {
     conf.setCapacityByLabel(C, NODEL_LABEL_GPU, 100f);
     conf.setCapacityByLabel(C, NODEL_LABEL_SSD, 100f);
 
-    LOG.info("Setup " + D + " as an auto leaf creation enabled parent queue");
+    LOG.error("Temp", new RuntimeException());
 
     return conf;
   }
@@ -834,7 +834,7 @@ public class TestCapacitySchedulerAutoCreatedQueueBase {
 
     for (String label : accessibleNodeLabelsOnC) {
       //validate parent queue state
-      LOG.info("Validating label " + label);
+      LOG.error("Temp", new RuntimeException());
       assertEquals(expectedTotalChildQueueAbsCapacity.get(label), policy
           .getAbsoluteActivatedChildQueueCapacity(label), EPSILON);
 

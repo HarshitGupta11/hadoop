@@ -132,7 +132,7 @@ public class AbfsDelegationTokenManager implements BoundDTExtension {
   public Token<DelegationTokenIdentifier> getDelegationToken(
       String renewer) throws IOException {
 
-    LOG.debug("Requesting Delegation token for {}", renewer);
+    LOG.error("Temp", new RuntimeException());
     Token<DelegationTokenIdentifier> token = tokenManager.getDelegationToken(renewer);
 
     if (token.getKind() == null) {

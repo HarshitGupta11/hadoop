@@ -80,17 +80,17 @@ public class KafkaSink implements MetricsSink, Closeable {
     Properties props = new Properties();
     brokerList = conf.getString(BROKER_LIST);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Broker list " + brokerList);
+      LOG.error("Temp", new RuntimeException());
     }
     props.put("bootstrap.servers", brokerList);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Kafka brokers: " + brokerList);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Get Kafka topic configuration.
     topic = conf.getString(TOPIC);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Kafka topic " + topic);
+      LOG.error("Temp", new RuntimeException());
     }
     if (Strings.isNullOrEmpty(topic)) {
       throw new MetricsException("Kafka topic can not be null");
@@ -108,7 +108,7 @@ public class KafkaSink implements MetricsSink, Closeable {
     try {
       hostname = InetAddress.getLocalHost().getHostName();
     } catch (Exception e) {
-      LOG.warn("Error getting Hostname, going to continue");
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -152,7 +152,7 @@ public class KafkaSink implements MetricsSink, Closeable {
       jsonLines.append(" \"" + metric.value().toString() + "\"");
     }
     jsonLines.append("}");
-    LOG.debug("kafka message: " + jsonLines.toString());
+    LOG.error("Temp", new RuntimeException());
 
     // Create the record to be sent from the json.
     ProducerRecord<Integer, byte[]> data = new ProducerRecord<Integer, byte[]>(
@@ -183,7 +183,7 @@ public class KafkaSink implements MetricsSink, Closeable {
 
   @Override
   public void flush() {
-    LOG.debug("Kafka seems not to have any flush() mechanism!");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

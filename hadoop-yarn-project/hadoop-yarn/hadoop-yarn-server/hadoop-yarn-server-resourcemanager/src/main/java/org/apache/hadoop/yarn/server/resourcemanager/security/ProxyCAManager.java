@@ -76,7 +76,7 @@ public class ProxyCAManager extends AbstractService implements Recoverable {
 
   public void recover(RMState state)
       throws GeneralSecurityException, IOException {
-    LOG.info("Recovering CA Certificate and Private Key");
+    LOG.error("Temp", new RuntimeException());
     X509Certificate caCert = state.getProxyCAState().getCaCert();
     PrivateKey caPrivateKey = state.getProxyCAState().getCaPrivateKey();
     proxyCA.init(caCert, caPrivateKey);

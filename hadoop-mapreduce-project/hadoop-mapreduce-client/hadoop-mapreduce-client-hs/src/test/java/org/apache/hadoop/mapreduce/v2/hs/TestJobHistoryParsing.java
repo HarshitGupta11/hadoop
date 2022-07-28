@@ -131,21 +131,21 @@ public class TestJobHistoryParsing {
 
   @Test(timeout = 300000)
   public void testHistoryParsing() throws Exception {
-    LOG.info("STARTING testHistoryParsing()");
+    LOG.error("Temp", new RuntimeException());
     try {
       checkHistoryParsing(2, 1, 2);
     } finally {
-      LOG.info("FINISHED testHistoryParsing()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
   @Test(timeout = 50000)
   public void testHistoryParsingWithParseErrors() throws Exception {
-    LOG.info("STARTING testHistoryParsingWithParseErrors()");
+    LOG.error("Temp", new RuntimeException());
     try {
       checkHistoryParsing(3, 0, 2);
     } finally {
-      LOG.info("FINISHED testHistoryParsingWithParseErrors()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -172,7 +172,7 @@ public class TestJobHistoryParsing {
     app.submit(conf);
     Job job = app.getContext().getAllJobs().values().iterator().next();
     JobId jobId = job.getID();
-    LOG.info("JOBID is " + TypeConverter.fromYarn(jobId).toString());
+    LOG.error("Temp", new RuntimeException());
     app.waitForState(job, JobState.SUCCEEDED);
 
     // make sure all events are flushed
@@ -185,7 +185,7 @@ public class TestJobHistoryParsing {
     try {
       fc = FileContext.getFileContext(conf);
     } catch (IOException ioe) {
-      LOG.info("Can not get FileContext", ioe);
+      LOG.error("Temp", new RuntimeException());
       throw (new Exception("Can not get File Context"));
     }
 
@@ -244,11 +244,11 @@ public class TestJobHistoryParsing {
     synchronized (fileInfo) {
       Path historyFilePath = fileInfo.getHistoryFile();
       FSDataInputStream in = null;
-      LOG.info("JobHistoryFile is: " + historyFilePath);
+      LOG.error("Temp", new RuntimeException());
       try {
         in = fc.open(fc.makeQualified(historyFilePath));
       } catch (IOException ioe) {
-        LOG.info("Can not open history file: " + historyFilePath, ioe);
+        LOG.error("Temp", new RuntimeException());
         throw (new Exception("Can not open History File"));
       }
 
@@ -401,7 +401,7 @@ public class TestJobHistoryParsing {
 
   @Test(timeout = 30000)
   public void testHistoryParsingForFailedAttempts() throws Exception {
-    LOG.info("STARTING testHistoryParsingForFailedAttempts");
+    LOG.error("Temp", new RuntimeException());
     try {
       Configuration conf = new Configuration();
       conf.setClass(
@@ -432,7 +432,7 @@ public class TestJobHistoryParsing {
           fc = FileContext.getFileContext(conf);
           in = fc.open(fc.makeQualified(historyFilePath));
         } catch (IOException ioe) {
-          LOG.info("Can not open history file: " + historyFilePath, ioe);
+          LOG.error("Temp", new RuntimeException());
           throw (new Exception("Can not open History File"));
         }
 
@@ -460,7 +460,7 @@ public class TestJobHistoryParsing {
       Assert.assertEquals("No of Failed tasks doesn't match.", 2,
           noOffailedAttempts);
     } finally {
-      LOG.info("FINISHED testHistoryParsingForFailedAttempts");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -468,7 +468,7 @@ public class TestJobHistoryParsing {
   public void testHistoryParsingForKilledAndFailedAttempts() throws Exception {
     MRApp app = null;
     JobHistory jobHistory = null;
-    LOG.info("STARTING testHistoryParsingForKilledAndFailedAttempts");
+    LOG.error("Temp", new RuntimeException());
     try {
       Configuration conf = new Configuration();
       conf.setClass(
@@ -508,7 +508,7 @@ public class TestJobHistoryParsing {
           fc = FileContext.getFileContext(conf);
           in = fc.open(fc.makeQualified(historyFilePath));
         } catch (IOException ioe) {
-          LOG.info("Can not open history file: " + historyFilePath, ioe);
+          LOG.error("Temp", new RuntimeException());
           throw (new Exception("Can not open History File"));
         }
 
@@ -524,7 +524,7 @@ public class TestJobHistoryParsing {
       assertEquals("FailedReduces", 1, jobInfo.getFailedReduces());
       assertEquals("KilledReduces", 1, jobInfo.getKilledReduces());
     } finally {
-      LOG.info("FINISHED testHistoryParsingForKilledAndFailedAttempts");
+      LOG.error("Temp", new RuntimeException());
       if (app != null) {
         app.close();
       }
@@ -536,7 +536,7 @@ public class TestJobHistoryParsing {
 
   @Test(timeout = 60000)
   public void testCountersForFailedTask() throws Exception {
-    LOG.info("STARTING testCountersForFailedTask");
+    LOG.error("Temp", new RuntimeException());
     try {
       Configuration conf = new Configuration();
       conf.setClass(
@@ -568,7 +568,7 @@ public class TestJobHistoryParsing {
           fc = FileContext.getFileContext(conf);
           in = fc.open(fc.makeQualified(historyFilePath));
         } catch (IOException ioe) {
-          LOG.info("Can not open history file: " + historyFilePath, ioe);
+          LOG.error("Temp", new RuntimeException());
           throw (new Exception("Can not open History File"));
         }
 
@@ -593,13 +593,13 @@ public class TestJobHistoryParsing {
         assertTrue(historyError.contains(diagString));
       }
     } finally {
-      LOG.info("FINISHED testCountersForFailedTask");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
   @Test(timeout = 60000)
   public void testDiagnosticsForKilledJob() throws Exception {
-    LOG.info("STARTING testDiagnosticsForKilledJob");
+    LOG.error("Temp", new RuntimeException());
     try {
       final Configuration conf = new Configuration();
       conf.setClass(
@@ -631,7 +631,7 @@ public class TestJobHistoryParsing {
           fc = FileContext.getFileContext(conf);
           in = fc.open(fc.makeQualified(historyFilePath));
         } catch (IOException ioe) {
-          LOG.info("Can not open history file: " + historyFilePath, ioe);
+          LOG.error("Temp", new RuntimeException());
           throw (new Exception("Can not open History File"));
         }
 
@@ -652,13 +652,13 @@ public class TestJobHistoryParsing {
       assertTrue("No killed message in diagnostics",
         historyError.contains(JobImpl.JOB_KILLED_DIAG));
     } finally {
-      LOG.info("FINISHED testDiagnosticsForKilledJob");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
   @Test(timeout = 50000)
   public void testScanningOldDirs() throws Exception {
-    LOG.info("STARTING testScanningOldDirs");
+    LOG.error("Temp", new RuntimeException());
     try {
       Configuration conf = new Configuration();
       conf.setClass(
@@ -670,7 +670,7 @@ public class TestJobHistoryParsing {
       app.submit(conf);
       Job job = app.getContext().getAllJobs().values().iterator().next();
       JobId jobId = job.getID();
-      LOG.info("JOBID is " + TypeConverter.fromYarn(jobId).toString());
+      LOG.error("Temp", new RuntimeException());
       app.waitForState(job, JobState.SUCCEEDED);
 
       // make sure all events are flushed
@@ -698,7 +698,7 @@ public class TestJobHistoryParsing {
       Assert.assertTrue("HistoryFileManager not shutdown properly",
           hfm.moveToDoneExecutor.isTerminated());
     } finally {
-      LOG.info("FINISHED testScanningOldDirs");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -815,7 +815,7 @@ public class TestJobHistoryParsing {
    */
   @Test(timeout = 15000)
   public void testDeleteFileInfo() throws Exception {
-    LOG.info("STARTING testDeleteFileInfo");
+    LOG.error("Temp", new RuntimeException());
     try {
       Configuration conf = new Configuration();
 
@@ -861,7 +861,7 @@ public class TestJobHistoryParsing {
       Assert.assertTrue("file should be deleted ", fileInfo.isDeleted());
 
     } finally {
-      LOG.info("FINISHED testDeleteFileInfo");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -870,7 +870,7 @@ public class TestJobHistoryParsing {
    */
   @Test(timeout = 20000)
   public void testJobHistoryMethods() throws Exception {
-    LOG.info("STARTING testJobHistoryMethods");
+    LOG.error("Temp", new RuntimeException());
     try {
       Configuration configuration = new Configuration();
       configuration
@@ -884,7 +884,7 @@ public class TestJobHistoryParsing {
       app.submit(configuration);
       Job job = app.getContext().getAllJobs().values().iterator().next();
       JobId jobId = job.getID();
-      LOG.info("JOBID is " + TypeConverter.fromYarn(jobId).toString());
+      LOG.error("Temp", new RuntimeException());
       app.waitForState(job, JobState.SUCCEEDED);
       // make sure job history events are handled
       app.waitForState(Service.STATE.STOPPED);
@@ -915,7 +915,7 @@ public class TestJobHistoryParsing {
       Assert.assertNull(jobHistory.getClusterInfo());
 
     } finally {
-      LOG.info("FINISHED testJobHistoryMethods");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

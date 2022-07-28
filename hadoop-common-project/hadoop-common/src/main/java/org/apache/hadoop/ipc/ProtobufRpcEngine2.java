@@ -262,7 +262,7 @@ public class ProtobufRpcEngine2 implements RpcEngine {
 
       if (LOG.isDebugEnabled()) {
         long callTime = Time.now() - startTime;
-        LOG.debug("Call: " + method.getName() + " took " + callTime + "ms");
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (Client.isAsynchronousMode()) {
@@ -585,7 +585,7 @@ public class ProtobufRpcEngine2 implements RpcEngine {
         if (methodDescriptor == null) {
           String msg = "Unknown method " + methodName + " called on "
                                 + connectionProtocolName + " protocol.";
-          LOG.warn(msg);
+          LOG.error("Temp", new RuntimeException());
           throw new RpcNoSuchMethodException(msg);
         }
         Message prototype = service.getRequestPrototype(methodDescriptor);

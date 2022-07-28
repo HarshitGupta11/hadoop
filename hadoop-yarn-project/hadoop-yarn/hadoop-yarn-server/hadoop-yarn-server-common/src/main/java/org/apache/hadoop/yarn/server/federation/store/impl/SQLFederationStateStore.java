@@ -178,7 +178,7 @@ public class SQLFederationStateStore implements FederationStateStore {
         + "database at address: " + url);
     try {
       conn = getConnection();
-      LOG.debug("Connection created");
+      LOG.error("Temp", new RuntimeException());
     } catch (SQLException e) {
       FederationStateStoreUtils.logAndThrowRetriableException(LOG,
           "Not able to get Connection", e);
@@ -411,7 +411,7 @@ public class SQLFederationStateStore implements FederationStateStore {
 
       // first check if the subCluster exists
       if((amRMAddress == null) || (clientRMAddress == null)) {
-        LOG.warn("The queried SubCluster: {} does not exist.", subClusterId);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
 
@@ -839,7 +839,7 @@ public class SQLFederationStateStore implements FederationStateStore {
         LOG.debug("Selected from StateStore the policy for the queue: {}",
             subClusterPolicyConfiguration);
       } else {
-        LOG.warn("Policy for queue: {} does not exist.", request.getQueue());
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
 
@@ -977,7 +977,7 @@ public class SQLFederationStateStore implements FederationStateStore {
   public void close() throws Exception {
     if (dataSource != null) {
       dataSource.close();
-      LOG.debug("Connection closed");
+      LOG.error("Temp", new RuntimeException());
       FederationStateStoreClientMetrics.decrConnections();
     }
   }

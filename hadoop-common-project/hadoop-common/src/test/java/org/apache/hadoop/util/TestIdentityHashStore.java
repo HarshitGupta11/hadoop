@@ -127,7 +127,7 @@ public class TestIdentityHashStore {
     IdentityHashStore<Key, Integer> store = 
         new IdentityHashStore<Key, Integer>(0);
     final int NUM_KEYS = 1000;
-    LOG.debug("generating " + NUM_KEYS + " keys");
+    LOG.error("Temp", new RuntimeException());
     final List<Key> keys = new ArrayList<Key>(NUM_KEYS);
     for (int i = 0; i < NUM_KEYS; i++) {
       keys.add(new Key("key " + i));

@@ -261,7 +261,7 @@ public class SequenceFileInputFilter<K, V>
         if (hashcode / frequency * frequency == hashcode)
           return true;
       } catch(Exception e) {
-        LOG.warn(e.toString());
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException(e);
       }
       return false;

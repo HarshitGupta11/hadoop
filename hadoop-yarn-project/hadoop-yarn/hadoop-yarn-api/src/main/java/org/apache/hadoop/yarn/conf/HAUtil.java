@@ -241,7 +241,7 @@ public class HAUtil {
         try {
           s = NetUtils.createSocketAddr(addr);
         } catch (Exception e) {
-          LOG.warn("Exception in creating socket address " + addr, e);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         if (!s.isUnresolved() && NetUtils.isLocalAddress(s.getAddress())) {

@@ -109,7 +109,7 @@ public class TestResourceManager {
   public void testResourceAllocation()
       throws IOException, YarnException, InterruptedException,
       TimeoutException {
-    LOG.info("--- START: testResourceAllocation ---");
+    LOG.error("Temp", new RuntimeException());
         
     final int memory = 4 * 1024;
     final int vcores = 4;
@@ -171,7 +171,7 @@ public class TestResourceManager {
     
     checkResourceUsage(nm1, nm2);
     
-    LOG.info("Adding new tasks...");
+    LOG.error("Temp", new RuntimeException());
     
     Task t2 = new Task(application, priority1, new String[] {host1, host2});
     application.addTask(t2);
@@ -190,13 +190,13 @@ public class TestResourceManager {
     nodeUpdate(nm1);
     
     // Get allocations from the scheduler
-    LOG.info("Trying to allocate...");
+    LOG.error("Temp", new RuntimeException());
     application.schedule();
 
     checkResourceUsage(nm1, nm2);
     
     // Complete tasks
-    LOG.info("Finishing up tasks...");
+    LOG.error("Temp", new RuntimeException());
     application.finishTask(t1);
     application.finishTask(t2);
     application.finishTask(t3);
@@ -209,7 +209,7 @@ public class TestResourceManager {
     
     checkResourceUsage(nm1, nm2);
     
-    LOG.info("--- END: testResourceAllocation ---");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void nodeUpdate(
@@ -317,7 +317,7 @@ public class TestResourceManager {
         } catch (Exception e) {
           // ignore we just care about getting true for
           // isSecurityEnabled()
-          LOG.info("Got expected exception");
+          LOG.error("Temp", new RuntimeException());
         }
         resourceManager.init(conf);
         resourceManager.startWepApp();

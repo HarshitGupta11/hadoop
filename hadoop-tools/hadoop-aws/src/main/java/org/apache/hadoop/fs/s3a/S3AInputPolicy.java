@@ -68,7 +68,7 @@ public enum S3AInputPolicy {
     case INPUT_FADV_SEQUENTIAL:
       return Sequential;
     default:
-      LOG.warn("Unrecognized " + INPUT_FADVISE + " value: \"{}\"", trimmed);
+      LOG.error("Temp", new RuntimeException());
       return Normal;
     }
   }

@@ -240,7 +240,7 @@ public class ResourceLocalizationService extends CompositeService
         YarnConfiguration.NM_LOCAL_CACHE_MAX_FILES_PER_DIRECTORY
             + " parameter is configured with a value less than 37.");
     } else {
-      LOG.info("per directory file limit = " + perDirFileLimit);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -388,7 +388,7 @@ public class ResourceLocalizationService extends CompositeService
                                       YarnConfiguration.NM_LOCALIZER_ADDRESS,
                                       YarnConfiguration.DEFAULT_NM_LOCALIZER_ADDRESS,
                                       server.getListenerAddress());
-    LOG.info("Localizer started on port " + server.getPort());
+    LOG.error("Temp", new RuntimeException());
     super.serviceStart();
     dirsHandler.registerLocalDirsChangeListener(localDirsChangeListener);
     dirsHandler.registerLogDirsChangeListener(logDirsChangeListener);
@@ -540,9 +540,9 @@ public class ResourceLocalizationService extends CompositeService
     }
     LocalCacheCleaner.LocalCacheCleanerStats stats = cleaner.cleanCache();
     if (LOG.isDebugEnabled()) {
-      LOG.debug(stats.toStringDetailed());
+      LOG.error("Temp", new RuntimeException());
     } else if (LOG.isInfoEnabled()) {
-      LOG.info(stats.toString());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Update metrics
@@ -614,7 +614,7 @@ public class ResourceLocalizationService extends CompositeService
           dir, null);
       delService.delete(deletionTask);
     } catch (UnsupportedFileSystemException ue) {
-      LOG.warn("Local dir " + dir + " is an unsupported filesystem", ue);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ie) {
       // ignore
       return;
@@ -642,7 +642,7 @@ public class ResourceLocalizationService extends CompositeService
         }
       }
     } else {
-      LOG.warn("Removing uninitialized application " + application);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Delete the application directories
@@ -806,7 +806,7 @@ public class ResourceLocalizationService extends CompositeService
                     "localizer " + locId + " resource:" + req.getResource());
                 break;
               }
-              LOG.info("Created localizer for " + locId);
+              LOG.error("Temp", new RuntimeException());
               localizer = new LocalizerRunner(req.getContext(), locId);
               privLocalizers.put(locId, localizer);
               localizer.start();
@@ -879,7 +879,7 @@ public class ResourceLocalizationService extends CompositeService
       // TODO handle failures, cancellation, requests by other containers
       LocalizedResource rsrc = request.getResource();
       LocalResourceRequest key = rsrc.getRequest();
-      LOG.info("Downloading public resource: " + key);
+      LOG.error("Temp", new RuntimeException());
       /*
        * Here multiple containers may request the same resource. So we need
        * to start downloading only when
@@ -1013,7 +1013,7 @@ public class ResourceLocalizationService extends CompositeService
       } catch(Throwable t) {
         LOG.error("Error: Shutting down", t);
       } finally {
-        LOG.info("Public cache exiting");
+        LOG.error("Temp", new RuntimeException());
         threadPool.shutdownNow();
       }
     }
@@ -1187,7 +1187,7 @@ public class ResourceLocalizationService extends CompositeService
             break;
           case FETCH_FAILURE:
             final String diagnostics = stat.getException().toString();
-            LOG.warn("{} failed for {} : {}", req, localizerId, diagnostics);
+            LOG.error("Temp", new RuntimeException());
             fetchFailed = true;
             tracker.handle(new ResourceFailedLocalizationEvent(req,
                 diagnostics));
@@ -1198,7 +1198,7 @@ public class ResourceLocalizationService extends CompositeService
             scheduled.remove(req);
             break;
           default:
-            LOG.info("Unknown status: " + stat.getStatus());
+            LOG.error("Temp", new RuntimeException());
             fetchFailed = true;
             tracker.handle(new ResourceFailedLocalizationEvent(req,
                 stat.getException().getMessage()));
@@ -1282,7 +1282,7 @@ public class ResourceLocalizationService extends CompositeService
         exception = e;
       } finally {
         if (exception != null) {
-          LOG.info("Localizer failed for "+localizerId, exception);
+          LOG.error("Temp", new RuntimeException());
           // On error, report failure to Container and signal ABORT
           // Notify resource of failed localization
           ContainerId cId = context.getContainerId();
@@ -1348,10 +1348,10 @@ public class ResourceLocalizationService extends CompositeService
         LOG.info("Writing credentials to the nmPrivate file "
             + nmPrivateCTokensPath.toString());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Credentials list in {}: " + nmPrivateCTokensPath);
+          LOG.error("Temp", new RuntimeException());
           for (Token<? extends TokenIdentifier> tk : credentials
               .getAllTokens()) {
-            LOG.debug("{} : {}", tk, buildTokenFingerprint(tk));
+            LOG.error("Temp", new RuntimeException());
           }
         }
         if (UserGroupInformation.isSecurityEnabled()) {
@@ -1435,7 +1435,7 @@ public class ResourceLocalizationService extends CompositeService
       }
       catch(IOException ie) {
         String msg = "Could not get file status for local dir " + entry.getKey();
-        LOG.warn(msg, ie);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(msg, ie);
       }
       if(status == null) {
@@ -1444,7 +1444,7 @@ public class ResourceLocalizationService extends CompositeService
           status = lfs.getFileStatus(entry.getKey());
         } catch (IOException e) {
           String msg = "Could not initialize local dir " + entry.getKey();
-          LOG.warn(msg, e);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnRuntimeException(msg, e);
         }
       }
@@ -1455,7 +1455,7 @@ public class ResourceLocalizationService extends CompositeService
         }
         catch(IOException ie) {
           String msg = "Could not set permissions for local dir " + entry.getKey();
-          LOG.warn(msg, ie);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnRuntimeException(msg, ie);
         }
       }
@@ -1476,7 +1476,7 @@ public class ResourceLocalizationService extends CompositeService
       // do nothing
     } catch (IOException e) {
       String msg = "Could not initialize log dir " + logDir;
-      LOG.warn(msg, e);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(msg, e);
     }
   }
@@ -1486,7 +1486,7 @@ public class ResourceLocalizationService extends CompositeService
       try {
         cleanupLogDir(fs, del, logDir);
       } catch (IOException e) {
-        LOG.warn("failed to cleanup app log dir " + logDir, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1525,7 +1525,7 @@ public class ResourceLocalizationService extends CompositeService
         FileStatus fileStatus = fileStatuses.next();
         String appName = fileStatus.getPath().getName();
         if (appName.matches("^application_\\d+_\\d+_DEL_\\d+$")) {
-          LOG.info("delete app log dir," + appName);
+          LOG.error("Temp", new RuntimeException());
           FileDeletionTask deletionTask = new FileDeletionTask(del, null,
               fileStatus.getPath(), null);
           del.delete(deletionTask);
@@ -1553,7 +1553,7 @@ public class ResourceLocalizationService extends CompositeService
       deleteLocalDir(lfs, del, localDir);
     } catch (IOException e) {
       // Do nothing, just give the warning
-      LOG.warn("Failed to delete localDir: " + localDir);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1581,7 +1581,7 @@ public class ResourceLocalizationService extends CompositeService
         try {
           if (status.getPath().getName().matches(".*" +
               ContainerLocalizer.USERCACHE + "_DEL_.*")) {
-            LOG.info("usercache path : " + status.getPath().toString());
+            LOG.error("Temp", new RuntimeException());
             cleanUpFilesPerUserDir(lfs, del, status.getPath());
           } else if (status.getPath().getName()
               .matches(".*" + NM_PRIVATE_DIR + "_DEL_.*")
@@ -1643,14 +1643,14 @@ public class ResourceLocalizationService extends CompositeService
       }
     }
     for (String dir : checkFailedDirs) {
-      LOG.info("Attempting to initialize " + dir);
+      LOG.error("Temp", new RuntimeException());
       initializeLocalDir(lfs, dir);
       try {
         checkLocalDir(dir);
       } catch (YarnRuntimeException e) {
         String msg =
             "Failed to setup local dir " + dir + ", which was marked as good.";
-        LOG.warn(msg, e);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(msg, e);
       }
     }
@@ -1668,7 +1668,7 @@ public class ResourceLocalizationService extends CompositeService
         String msg =
             "Could not carry out resource dir checks for " + localDir
                 + ", which was marked as good";
-        LOG.warn(msg, e);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(msg, e);
       }
 
@@ -1677,7 +1677,7 @@ public class ResourceLocalizationService extends CompositeService
             "Permissions incorrectly set for dir " + entry.getKey()
                 + ", should be " + entry.getValue() + ", actual value = "
                 + status.getPermission();
-        LOG.warn(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(msg);
       }
     }

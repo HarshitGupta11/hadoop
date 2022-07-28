@@ -79,7 +79,7 @@ public class TestShortCircuitShm {
       slots.add(slot);
       numSlots++;
     }
-    LOG.info("allocated " + numSlots + " slots before running out.");
+    LOG.error("Temp", new RuntimeException());
     int slotIdx = 0;
     for (Iterator<Slot> iter = shm.slotIterator();
         iter.hasNext(); ) {

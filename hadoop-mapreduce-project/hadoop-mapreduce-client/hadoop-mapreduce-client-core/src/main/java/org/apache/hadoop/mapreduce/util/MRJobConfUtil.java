@@ -175,7 +175,7 @@ public final class MRJobConfUtil {
     final File hadoopLocalDir = new File(testRootDir, "hadoop-dir");
     // create the directory
     if (!hadoopLocalDir.getAbsoluteFile().mkdirs()) {
-      LOG.info("{} directory already exists", hadoopLocalDir.getPath());
+      LOG.error("Temp", new RuntimeException());
     }
     Path mapredHadoopTempDir = new Path(hadoopLocalDir.getPath());
     Path mapredSystemDir = new Path(mapredHadoopTempDir, "system");

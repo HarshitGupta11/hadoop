@@ -83,7 +83,7 @@ public final class DockerCommandExecutor {
     if (disableFailureLogging) {
       dockerOp.disableFailureLogging();
     }
-    LOG.debug("Running docker command: {}", dockerCommand);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       String result = privilegedOperationExecutor

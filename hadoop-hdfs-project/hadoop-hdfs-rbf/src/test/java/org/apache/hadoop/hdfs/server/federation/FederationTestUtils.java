@@ -340,7 +340,7 @@ public final class FederationTestUtils {
     doAnswer(new Answer<Object>() {
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
-        LOG.info("Simulating slow namenode {}", invocation.getMock());
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(seconds * 1000);
         } catch(InterruptedException e) {

@@ -68,7 +68,7 @@ public class MockJob extends Job {
 
           final Object[] args = invocation.getArguments();
           String name = (String) args[1];
-          LOG.info("Submitted Job {}", name);
+          LOG.error("Temp", new RuntimeException());
           submittedCredentials = (Credentials) args[2];
           final JobStatus status = new JobStatus();
           status.setState(JobStatus.State.RUNNING);

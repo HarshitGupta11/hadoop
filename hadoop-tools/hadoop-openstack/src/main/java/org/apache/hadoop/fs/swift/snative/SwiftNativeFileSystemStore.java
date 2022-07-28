@@ -467,7 +467,7 @@ public class SwiftNativeFileSystemStore {
       return swiftRestClient.delete(swiftObjectPath);
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Not deleting root directory entry");
+        LOG.error("Temp", new RuntimeException());
       }
       return true;
     }
@@ -534,7 +534,7 @@ public class SwiftNativeFileSystemStore {
   public void rename(Path src, Path dst)
     throws FileNotFoundException, SwiftOperationFailedException, IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("mv " + src + " " + dst);
+      LOG.error("Temp", new RuntimeException());
     }
     boolean renamingOnToSelf = src.equals(dst);
 
@@ -552,7 +552,7 @@ public class SwiftNativeFileSystemStore {
       dstMetadata = getObjectMetadata(dst);
     } catch (FileNotFoundException e) {
       //destination does not exist.
-      LOG.debug("Destination does not exist");
+      LOG.error("Temp", new RuntimeException());
       dstMetadata = null;
     }
 
@@ -568,7 +568,7 @@ public class SwiftNativeFileSystemStore {
         fileStatus = getObjectMetadata(dstParent);
       } catch (FileNotFoundException e) {
         //destination parent doesn't exist; bail out
-        LOG.debug("destination parent directory " + dstParent + " doesn't exist");
+        LOG.error("Temp", new RuntimeException());
         throw e;
       }
       if (!fileStatus.isDir()) {
@@ -603,7 +603,7 @@ public class SwiftNativeFileSystemStore {
                     "cannot rename a file over one that already exists");
           } else {
             //is mv self self where self is a file. this becomes a no-op
-            LOG.debug("Renaming file onto self: no-op => success");
+            LOG.error("Temp", new RuntimeException());
             return;
           }
         }
@@ -662,7 +662,7 @@ public class SwiftNativeFileSystemStore {
       }
 
 
-      LOG.info("mv  " + srcObject + " " + targetPath);
+      LOG.error("Temp", new RuntimeException());
 
       logDirectory("Directory to copy ", srcObject, childStats);
 
@@ -693,7 +693,7 @@ public class SwiftNativeFileSystemStore {
           copyThenDeleteObject(toObjectPath(copySourcePath),
                   copyDestination);
         } catch (FileNotFoundException e) {
-          LOG.info("Skipping rename of " + copySourcePath);
+          LOG.error("Temp", new RuntimeException());
         }
         //add a throttle delay
         throttle();
@@ -705,7 +705,7 @@ public class SwiftNativeFileSystemStore {
                   targetObjectPath);
         } catch (FileNotFoundException e) {
           //create the destination directory
-          LOG.warn("Source directory deleted during rename", e);
+          LOG.error("Temp", new RuntimeException());
           innerCreateDirectory(destObject);
         }
       }
@@ -723,9 +723,9 @@ public class SwiftNativeFileSystemStore {
                             Iterable<FileStatus> statuses) {
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug(message + ": listing of " + objectPath);
+      LOG.error("Temp", new RuntimeException());
       for (FileStatus fileStatus : statuses) {
-        LOG.debug(fileStatus.getPath().toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -951,7 +951,7 @@ public class SwiftNativeFileSystemStore {
     // but first check for the recursive flag and reject it *unless it looks
     // like a partitioned file (len > 0 && has children)
     if (!fileStatus.isDirectory()) {
-      LOG.debug("Multiple child entries but entry has data: assume partitioned");
+      LOG.error("Temp", new RuntimeException());
     } else if (!recursive) {
       //if there are children, unless this is a recursive operation, fail immediately
       throw new SwiftOperationFailedException("Directory " + fileStatus

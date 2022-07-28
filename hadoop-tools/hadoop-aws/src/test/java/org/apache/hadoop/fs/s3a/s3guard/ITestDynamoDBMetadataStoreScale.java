@@ -232,9 +232,9 @@ public class ITestDynamoDBMetadataStoreScale
     } catch (AWSServiceThrottledException ex) {
       // if the service was throttled, all is good.
       // log and continue
-      LOG.warn("DDB connection was throttled", ex);
+      LOG.error("Temp", new RuntimeException());
     } finally {
-      LOG.info("Statistics {}", tracker);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -251,9 +251,9 @@ public class ITestDynamoDBMetadataStoreScale
     } catch (AWSServiceThrottledException ex) {
       // if the service was throttled, all is good.
       // log and continue
-      LOG.warn("DDB connection was throttled", ex);
+      LOG.error("Temp", new RuntimeException());
     } finally {
-      LOG.info("Statistics {}", tracker);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -382,7 +382,7 @@ public class ITestDynamoDBMetadataStoreScale
       ddbms.getInvoker().retry("Delete ", path.toString(), true,
           () -> ddbms.delete(path, null));
     } catch (IOException e) {
-      LOG.warn("Failed to delete {}: ", path, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -505,7 +505,7 @@ public class ITestDynamoDBMetadataStoreScale
 
     S3AStorageStatistics statistics = fs.getStorageStatistics();
     for (StorageStatistics.LongStatistic statistic : statistics) {
-      LOG.info("{}", statistic.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     String retryKey = Statistic.S3GUARD_METADATASTORE_RETRY.getSymbol();
     assertTrue("No increment of " + retryKey + " in " + fsSummary,
@@ -529,7 +529,7 @@ public class ITestDynamoDBMetadataStoreScale
     try {
       entries.iterator().forEachRemaining(e -> {
         Path p = e.getFileStatus().getPath();
-        LOG.info("Deleting {}", p);
+        LOG.error("Temp", new RuntimeException());
         list.add(p);
       });
     } catch (UncheckedIOException e) {
@@ -589,8 +589,8 @@ public class ITestDynamoDBMetadataStoreScale
                 outcome.completed++;
               } catch (AWSServiceThrottledException e) {
                 // this is possibly OK
-                LOG.info("Operation [{}] raised a throttled exception " + e, j, e);
-                LOG.debug(e.toString(), e);
+                LOG.error("Temp", new RuntimeException());
+                LOG.error("Temp", new RuntimeException());
                 throttleExceptions.incrementAndGet();
                 // consider it completed
                 outcome.throttleExceptions.add(e);
@@ -612,8 +612,8 @@ public class ITestDynamoDBMetadataStoreScale
         executorService.invokeAll(tasks,
         getTestTimeoutMillis(), TimeUnit.MILLISECONDS);
     long elapsedMs = timer.elapsedTimeMs();
-    LOG.info("Completed {} with {}", operation, tracker);
-    LOG.info("time to execute: {} millis", elapsedMs);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assertions.assertThat(futures)
         .describedAs("Futures of all tasks")
@@ -649,7 +649,7 @@ public class ITestDynamoDBMetadataStoreScale
       ITestDynamoDBMetadataStore.deleteMetadataUnderPath(ms, path, true);
     } catch (IOException ioe) {
       // Ignore.
-      LOG.info("Ignoring error while cleaning up {} in database", path, ioe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

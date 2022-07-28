@@ -80,7 +80,7 @@ public class TestProvidedReplicaImpl {
     File providedFile = new File(BASE_DIR, FILE_NAME);
     replicas = new ArrayList<ProvidedReplica>();
 
-    LOG.info("Creating " + numReplicas + " provided replicas");
+    LOG.error("Temp", new RuntimeException());
     for (int i=0; i<numReplicas; i++) {
       long currentReplicaLength =
           FILE_LEN >= (i+1)*BLK_LEN ? BLK_LEN : FILE_LEN - i*BLK_LEN;
@@ -149,7 +149,7 @@ public class TestProvidedReplicaImpl {
       verifyReplicaContents(providedFile, replica.getDataInputStream(0),
           BLK_LEN*i, replica.getBlockDataLength());
     }
-    LOG.info("All replica contents verified");
+    LOG.error("Temp", new RuntimeException());
 
     providedFile.delete();
     // the block data should no longer be found!

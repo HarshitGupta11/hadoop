@@ -489,7 +489,7 @@ public class TestCopyCommitter {
       } catch(Exception exception) {
         assertPathExists(fs, "Work path", new Path(workPath));
         assertPathExists(fs, "Final path", new Path(finalPath));
-        LOG.info("Atomic-commit Test pass.");
+        LOG.error("Temp", new RuntimeException());
       }
 
     } finally {

@@ -579,7 +579,7 @@ public final class HttpServer2 implements FilterContainer {
       if(null != excludeCiphers && !excludeCiphers.isEmpty()) {
         sslContextFactory.setExcludeCipherSuites(
             StringUtils.getTrimmedStrings(excludeCiphers));
-        LOG.info("Excluded Cipher List:" + excludeCiphers);
+        LOG.error("Temp", new RuntimeException());
       }
 
       setEnabledProtocols(sslContextFactory);
@@ -617,7 +617,7 @@ public final class HttpServer2 implements FilterContainer {
       timer.schedule(new FileMonitoringTimerTask(
             locations,
             path -> {
-              LOG.info("Reloading keystore and truststore certificates.");
+              LOG.error("Temp", new RuntimeException());
               try {
                 sslContextFactory.reload(factory -> { });
               } catch (Exception ex) {
@@ -657,10 +657,10 @@ public final class HttpServer2 implements FilterContainer {
 
         sslContextFactory.setExcludeProtocols(
             resetExcludedProtocols.toArray(new String[0]));
-        LOG.info("Reset exclude protocol list: {}", resetExcludedProtocols);
+        LOG.error("Temp", new RuntimeException());
 
         sslContextFactory.setIncludeProtocols(enabledProtocolsArray);
-        LOG.info("Enabled protocols: {}", enabledProtocols);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1134,7 +1134,7 @@ public final class HttpServer2 implements FilterContainer {
     for (ServletContextHandler ctx : defaultContexts.keySet()) {
       defineFilter(ctx, filterHolder, fmap);
     }
-    LOG.info("Added global filter '" + name + "' (class=" + classname + ")");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -1316,10 +1316,10 @@ public final class HttpServer2 implements FilterContainer {
           metrics = HttpServer2Metrics.create(statsHandler, port);
         }
       } catch (IOException ex) {
-        LOG.info("HttpServer.start() threw a non Bind IOException", ex);
+        LOG.error("Temp", new RuntimeException());
         throw ex;
       } catch (MultiException ex) {
-        LOG.info("HttpServer.start() threw a MultiException", ex);
+        LOG.error("Temp", new RuntimeException());
         throw ex;
       }
       // Make sure there is no handler failures.
@@ -1365,7 +1365,7 @@ public final class HttpServer2 implements FilterContainer {
     // failed to open w/o issuing a close first, even if the port is changed
     listener.close();
     listener.open();
-    LOG.info("Jetty bound to port " + listener.getLocalPort());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -1451,7 +1451,7 @@ public final class HttpServer2 implements FilterContainer {
    * @throws Exception
    */
   void openListeners() throws Exception {
-    LOG.debug("opening listeners: {}", listeners);
+    LOG.error("Temp", new RuntimeException());
     for (ServerConnector listener : listeners) {
       if (listener.getLocalPort() != -1 && listener.getLocalPort() != -2) {
         // This listener is either started externally or has been bound or was

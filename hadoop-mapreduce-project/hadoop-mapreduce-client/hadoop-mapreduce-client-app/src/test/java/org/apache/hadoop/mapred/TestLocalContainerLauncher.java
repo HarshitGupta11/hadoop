@@ -153,7 +153,7 @@ public class TestLocalContainerLauncher {
       @Override
       public Void answer(InvocationOnMock invocation) throws Throwable {
         // sleep for a long time
-        LOG.info("sleeping for 5 minutes...");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(5*60*1000);
         return null;
       }

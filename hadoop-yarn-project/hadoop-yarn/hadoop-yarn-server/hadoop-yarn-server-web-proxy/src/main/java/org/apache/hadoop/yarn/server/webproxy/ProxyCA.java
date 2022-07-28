@@ -180,7 +180,7 @@ public class ProxyCA {
     X509CertificateHolder certHolder = certBuilder.build(contentSigner);
     X509Certificate cert = new JcaX509CertificateConverter().setProvider("BC")
         .getCertificate(certHolder);
-    LOG.info("Created Certificate for {}", subject);
+    LOG.error("Temp", new RuntimeException());
     return cert;
   }
 
@@ -194,7 +194,7 @@ public class ProxyCA {
     String subject = "OU=YARN-" + UUID.randomUUID();
     caCert = createCert(true, subject, subject, from, to,
         caKeyPair.getPublic(), caKeyPair.getPrivate());
-    LOG.debug("CA Certificate: \n{}", caCert);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public byte[] createChildKeyStore(ApplicationId appId, String ksPassword)
@@ -325,7 +325,7 @@ public class ProxyCA {
                     + appId + " but found "
                     + certs[0].getSubjectX500Principal().getName());
           }
-          LOG.debug("Verified certificate signed by RM CA");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };

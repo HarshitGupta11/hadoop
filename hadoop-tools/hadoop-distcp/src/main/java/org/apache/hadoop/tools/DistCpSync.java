@@ -174,7 +174,7 @@ class DistCpSync {
       }
       return true;
     } catch (Exception e) {
-      DistCp.LOG.warn("Failed to use snapshot diff for distcp", e);
+      DistCp.LOG.error("Temp", new RuntimeException());
       return false;
     } finally {
       deleteTargetTmpDir(targetFs, tmpDir);
@@ -246,7 +246,7 @@ class DistCpSync {
       }
       return true;
     } catch (IOException e) {
-      DistCp.LOG.warn("Failed to compute snapshot diff on " + ssDir, e);
+      DistCp.LOG.error("Temp", new RuntimeException());
     }
     this.diffMap = null;
     return false;

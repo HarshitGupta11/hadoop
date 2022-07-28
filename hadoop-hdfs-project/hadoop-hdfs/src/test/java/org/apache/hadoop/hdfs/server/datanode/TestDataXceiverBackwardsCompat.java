@@ -129,9 +129,9 @@ public class TestDataXceiverBackwardsCompat {
         try {
           serverSocket.accept();
           serverSocket.close();
-          LOG.info("Client connection accepted by NullServer");
+          LOG.error("Temp", new RuntimeException());
         } catch (Exception e) {
-          LOG.info("Exception in NullServer: " + e + "; " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

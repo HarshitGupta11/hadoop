@@ -834,7 +834,7 @@ public class TestDataNodeHotSwapVolumes {
       try {
         FsDatasetTestUtil.assertFileLockReleased(dir);
       } catch (IOException e) {
-        LOG.warn("{}", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1076,7 +1076,7 @@ public class TestDataNodeHotSwapVolumes {
     assertEquals(used, failedVolume.getDfsUsed());
 
     DataNodeTestUtils.restoreDataDirFromFailure(dirToFail);
-    LOG.info("reconfiguring DN ");
+    LOG.error("Temp", new RuntimeException());
     assertThat(
         "DN did not update its own config",
         dn.reconfigurePropertyImpl(DFS_DATANODE_DATA_DIR_KEY, oldDataDir),

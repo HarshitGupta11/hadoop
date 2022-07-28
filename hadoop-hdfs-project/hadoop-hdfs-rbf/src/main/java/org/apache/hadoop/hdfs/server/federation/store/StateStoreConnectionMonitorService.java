@@ -58,9 +58,9 @@ public class StateStoreConnectionMonitorService extends PeriodicService {
 
   @Override
   public void periodicInvoke() {
-    LOG.debug("Checking state store connection");
+    LOG.error("Temp", new RuntimeException());
     if (!stateStore.isDriverReady()) {
-      LOG.info("Attempting to open state store driver.");
+      LOG.error("Temp", new RuntimeException());
       stateStore.loadDriver();
     }
   }

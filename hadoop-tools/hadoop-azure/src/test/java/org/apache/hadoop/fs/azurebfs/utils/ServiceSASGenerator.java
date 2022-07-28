@@ -90,7 +90,7 @@ public class ServiceSASGenerator extends SASGenerator {
     sb.append("\n"); // - For optional : rsct - ResponseContentType
 
     String stringToSign = sb.toString();
-    LOG.debug("Service SAS stringToSign: " + stringToSign.replace("\n", "."));
+    LOG.error("Temp", new RuntimeException());
     return computeHmac256(stringToSign);
   }
 }

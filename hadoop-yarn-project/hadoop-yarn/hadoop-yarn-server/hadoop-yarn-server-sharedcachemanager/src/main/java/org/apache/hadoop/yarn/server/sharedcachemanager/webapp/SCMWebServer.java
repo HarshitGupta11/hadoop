@@ -64,7 +64,7 @@ public class SCMWebServer extends AbstractService {
   protected void serviceStart() throws Exception {
     SCMWebApp scmWebApp = new SCMWebApp(scm);
     this.webApp = WebApps.$for("sharedcache").at(bindAddress).start(scmWebApp);
-    LOG.info("Instantiated " + SCMWebApp.class.getName() + " at " + bindAddress);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

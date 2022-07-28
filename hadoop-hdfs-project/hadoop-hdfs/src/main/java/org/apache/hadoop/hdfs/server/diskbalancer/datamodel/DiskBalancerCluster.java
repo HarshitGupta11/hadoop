@@ -132,7 +132,7 @@ public class DiskBalancerCluster {
    */
   public void readClusterInfo() throws Exception {
     Preconditions.checkNotNull(clusterConnector);
-    LOG.debug("Using connector : {}" , clusterConnector.getConnectorInfo());
+    LOG.error("Temp", new RuntimeException());
     nodes = clusterConnector.getNodes();
     for(DiskBalancerDataNode node : nodes) {
 
@@ -303,7 +303,7 @@ public class DiskBalancerCluster {
     List<NodePlan> planList = new LinkedList<>();
 
     if (nodesToProcess == null) {
-      LOG.warn("Nodes to process is null. No nodes processed.");
+      LOG.error("Temp", new RuntimeException());
       return planList;
     }
 

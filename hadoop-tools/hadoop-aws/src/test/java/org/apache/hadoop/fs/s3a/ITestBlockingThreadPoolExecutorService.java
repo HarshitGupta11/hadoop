@@ -142,7 +142,7 @@ public class ITestBlockingThreadPoolExecutorService {
       try {
         Thread.sleep(TASK_SLEEP_MSEC);
       } catch (InterruptedException e) {
-        LOG.info("Thread {} interrupted.", name);
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       }
     }
@@ -169,7 +169,7 @@ public class ITestBlockingThreadPoolExecutorService {
         latch.await();
         Thread.sleep(TASK_SLEEP_MSEC);
       } catch (InterruptedException e) {
-        LOG.info("Thread {} interrupted.", Thread.currentThread().getName());
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       }
     }
@@ -180,7 +180,7 @@ public class ITestBlockingThreadPoolExecutorService {
    */
   private static void ensureCreated() throws Exception {
     if (tpe == null) {
-      LOG.debug("Creating thread pool");
+      LOG.error("Temp", new RuntimeException());
       tpe = BlockingThreadPoolExecutorService.newInstance(
           NUM_ACTIVE_TASKS, NUM_WAITING_TASKS,
           1, TimeUnit.SECONDS, "btpetest");
@@ -204,7 +204,7 @@ public class ITestBlockingThreadPoolExecutorService {
 
     while (!tpe.awaitTermination(SHUTDOWN_WAIT_MSEC,
         TimeUnit.MILLISECONDS)) {
-      LOG.info("Waiting for thread pool shutdown.");
+      LOG.error("Temp", new RuntimeException());
       if (shutdownTries-- <= 0) {
         LOG.error("Failed to terminate thread pool gracefully.");
         break;

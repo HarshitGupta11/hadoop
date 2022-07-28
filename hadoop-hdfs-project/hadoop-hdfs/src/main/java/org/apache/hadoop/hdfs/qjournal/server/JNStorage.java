@@ -159,7 +159,7 @@ class JNStorage extends Storage {
   File getOrCreatePaxosDir() {
     File paxosDir = new File(sd.getCurrentDir(), "paxos");
     if(!paxosDir.exists()) {
-      LOG.info("Creating paxos dir: {}", paxosDir.toPath());
+      LOG.error("Temp", new RuntimeException());
       if(!paxosDir.mkdir()) {
         LOG.error("Could not create paxos dir: {}", paxosDir.toPath());
       }
@@ -202,9 +202,9 @@ class JNStorage extends Storage {
           // /\d+/ in the regex itself.
           long txid = Long.parseLong(matcher.group(1));
           if (txid < minTxIdToKeep) {
-            LOG.info("Purging no-longer needed file {}", txid);
+            LOG.error("Temp", new RuntimeException());
             if (!f.delete()) {
-              LOG.warn("Unable to delete no-longer-needed data {}", f);
+              LOG.error("Temp", new RuntimeException());
             }
             break;
           }
@@ -222,7 +222,7 @@ class JNStorage extends Storage {
     }
     setStorageInfo(nsInfo);
 
-    LOG.info("Formatting journal {} with nsid: {}", sd, getNamespaceID());
+    LOG.error("Temp", new RuntimeException());
     // Unlock the directory before formatting, because we will
     // re-analyze it after format(). The analyzeStorage() call
     // below is reponsible for re-locking it. This is a no-op
@@ -284,7 +284,7 @@ class JNStorage extends Storage {
   }
 
   public void close() throws IOException {
-    LOG.info("Closing journal storage for {}", sd);
+    LOG.error("Temp", new RuntimeException());
     unlockAll();
   }
 

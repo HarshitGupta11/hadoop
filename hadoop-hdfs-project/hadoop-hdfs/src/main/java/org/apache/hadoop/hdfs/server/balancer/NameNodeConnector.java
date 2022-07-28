@@ -273,7 +273,7 @@ public class NameNodeConnector implements Closeable {
             }
           } catch (Exception e) {
             // Ignore the exception while connecting to a namenode.
-            LOG.debug("Error while connecting to namenode", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         if (nnproxy == null) {
@@ -287,7 +287,7 @@ public class NameNodeConnector implements Closeable {
       return nnproxy.getBlocks(datanode, size, minBlockSize, timeInterval);
     } finally {
       if (isRequestStandby) {
-        LOG.info("Request #getBlocks to Standby NameNode success.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -413,7 +413,7 @@ public class NameNodeConnector implements Closeable {
           fs.delete(idPath, true);
         }
       } catch(IOException ioe) {
-        LOG.warn("Failed to delete " + idPath, ioe);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

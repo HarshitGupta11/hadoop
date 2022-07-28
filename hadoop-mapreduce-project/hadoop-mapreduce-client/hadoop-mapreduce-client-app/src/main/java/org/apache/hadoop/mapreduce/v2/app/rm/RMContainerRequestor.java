@@ -178,20 +178,20 @@ public abstract class RMContainerRequestor extends RMCommunicator {
     super.serviceInit(conf);
     nodeBlacklistingEnabled = 
       conf.getBoolean(MRJobConfig.MR_AM_JOB_NODE_BLACKLISTING_ENABLE, true);
-    LOG.info("nodeBlacklistingEnabled:" + nodeBlacklistingEnabled);
+    LOG.error("Temp", new RuntimeException());
     maxTaskFailuresPerNode = 
       conf.getInt(MRJobConfig.MAX_TASK_FAILURES_PER_TRACKER, 3);
     blacklistDisablePercent =
         conf.getInt(
             MRJobConfig.MR_AM_IGNORE_BLACKLISTING_BLACKLISTED_NODE_PERECENT,
             MRJobConfig.DEFAULT_MR_AM_IGNORE_BLACKLISTING_BLACKLISTED_NODE_PERCENT);
-    LOG.info("maxTaskFailuresPerNode is " + maxTaskFailuresPerNode);
+    LOG.error("Temp", new RuntimeException());
     if (blacklistDisablePercent < -1 || blacklistDisablePercent > 100) {
       throw new YarnRuntimeException("Invalid blacklistDisablePercent: "
           + blacklistDisablePercent
           + ". Should be an integer between 0 and 100 or -1 to disabled");
     }
-    LOG.info("blacklistDisablePercent is " + blacklistDisablePercent);
+    LOG.error("Temp", new RuntimeException());
   }
 
   protected AllocateResponse makeRemoteRequest() throws YarnException,
@@ -300,7 +300,7 @@ public abstract class RMContainerRequestor extends RMCommunicator {
             clusterNmCount != lastClusterNmCount)) {
       blacklistedNodeCount = blacklistedNodes.size();
       if (clusterNmCount == 0) {
-        LOG.info("KnownNode Count at 0. Not computing ignoreBlacklisting");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       int val = (int) ((float) blacklistedNodes.size() / clusterNmCount * 100);
@@ -330,14 +330,14 @@ public abstract class RMContainerRequestor extends RMCommunicator {
     }
     if (blacklistedNodes.contains(hostName)) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Host " + hostName + " is already blacklisted.");
+        LOG.error("Temp", new RuntimeException());
       }
       return; //already blacklisted
     }
     Integer failures = nodeFailures.remove(hostName);
     failures = failures == null ? Integer.valueOf(0) : failures;
     failures++;
-    LOG.info(failures + " failures on node " + hostName);
+    LOG.error("Temp", new RuntimeException());
     if (failures >= maxTaskFailuresPerNode) {
       blacklistedNodes.add(hostName);
       if (!ignoreBlacklisting.get()) {
@@ -345,7 +345,7 @@ public abstract class RMContainerRequestor extends RMCommunicator {
       }
       //Even if blacklisting is ignored, continue to remove the host from
       // the request table. The RM may have additional nodes it can allocate on.
-      LOG.info("Blacklisted host " + hostName);
+      LOG.error("Temp", new RuntimeException());
 
       //remove all the requests corresponding to this hostname
       for (Map<String, Map<Resource, ResourceRequest>> remoteRequests 
@@ -448,7 +448,7 @@ public abstract class RMContainerRequestor extends RMCommunicator {
       remoteRequests = new HashMap<String, Map<Resource, ResourceRequest>>();
       this.remoteRequestsTable.put(priority, remoteRequests);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Added priority=" + priority);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     Map<Resource, ResourceRequest> reqMap = remoteRequests.get(resourceName);

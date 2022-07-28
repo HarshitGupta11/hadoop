@@ -108,7 +108,7 @@ public class TestRouterFaultTolerant {
 
   @Before
   public void setup() throws Exception {
-    LOG.info("Start the Namenodes");
+    LOG.error("Temp", new RuntimeException());
     Configuration nnConf = new HdfsConfiguration();
     nnConf.setInt(DFSConfigKeys.DFS_NAMENODE_HANDLER_COUNT_KEY, 10);
     for (final String nsId : asList("ns0", "ns1")) {
@@ -118,7 +118,7 @@ public class TestRouterFaultTolerant {
       namenodes.put(nsId, nn);
     }
 
-    LOG.info("Start the Routers");
+    LOG.error("Temp", new RuntimeException());
     Configuration routerConf = new RouterConfigBuilder()
         .stateStore()
         .admin()
@@ -153,7 +153,7 @@ public class TestRouterFaultTolerant {
       routers.add(router);
     }
 
-    LOG.info("Registering the subclusters in the Routers");
+    LOG.error("Temp", new RuntimeException());
     registerSubclusters(
         routers, namenodes.values(), Collections.singleton("ns1"));
 
@@ -162,7 +162,7 @@ public class TestRouterFaultTolerant {
 
   @After
   public void cleanup() throws Exception {
-    LOG.info("Stopping the cluster");
+    LOG.error("Temp", new RuntimeException());
     for (final MockNamenode nn : namenodes.values()) {
       nn.stop();
     }
@@ -210,7 +210,7 @@ public class TestRouterFaultTolerant {
   @Test
   public void testWriteWithFailedSubcluster() throws Exception {
 
-    LOG.info("Stop ns1 to simulate an unavailable subcluster");
+    LOG.error("Temp", new RuntimeException());
     namenodes.get("ns1").stop();
 
     // Run the actual tests with each approach
@@ -245,7 +245,7 @@ public class TestRouterFaultTolerant {
 
     final String mountPoint = "/" + order + "-failsubcluster";
     final Path mountPath = new Path(mountPoint);
-    LOG.info("Setup {} with order {}", mountPoint, order);
+    LOG.error("Temp", new RuntimeException());
     createMountTableEntry(
         getRandomRouter(), mountPoint, order, namenodes.keySet());
     refreshRoutersCaches(routers);
@@ -257,7 +257,7 @@ public class TestRouterFaultTolerant {
     checkFilesFaultTolerant(
         mountPath, order, router0Fs, router1Fs, ns0Fs, false);
 
-    LOG.info("Make {} fault tolerant and everything succeeds", mountPath);
+    LOG.error("Temp", new RuntimeException());
     IOException ioe = null;
     try {
       updateMountPointFaultTolerant(mountPoint);
@@ -288,7 +288,7 @@ public class TestRouterFaultTolerant {
 
     final FileStatus[] dirs0 = listStatus(router1Fs, mountPoint);
 
-    LOG.info("Create directories in {}", mountPoint);
+    LOG.error("Temp", new RuntimeException());
     final List<Callable<Boolean>> tasks = new ArrayList<>();
     for (int i = 0; i < NUM_FILES; i++) {
       final Path dir = new Path(mountPoint,
@@ -298,7 +298,7 @@ public class TestRouterFaultTolerant {
     }
     TaskResults results = collectResults("Create dir " + mountPoint, tasks);
 
-    LOG.info("Check directories results for {}: {}", mountPoint, results);
+    LOG.error("Temp", new RuntimeException());
     if (faultTolerant || DestinationOrder.FOLDER_ALL.contains(order)) {
       assertEquals(NUM_FILES, results.getSuccess());
       assertEquals(0, results.getFailure());
@@ -306,7 +306,7 @@ public class TestRouterFaultTolerant {
       assertBothResults("check dir " + mountPoint, NUM_FILES, results);
     }
 
-    LOG.info("Check directories listing for {}", mountPoint);
+    LOG.error("Temp", new RuntimeException());
     tasks.add(getListFailTask(router0Fs, mountPoint));
     int filesExpected = dirs0.length + results.getSuccess();
     tasks.add(getListSuccessTask(router1Fs, mountPoint, filesExpected));
@@ -335,7 +335,7 @@ public class TestRouterFaultTolerant {
     final Path dir0 = Path.getPathWithoutSchemeAndAuthority(
         dirs0[0].getPath());
 
-    LOG.info("Create files in {}",  dir0);
+    LOG.error("Temp", new RuntimeException());
     final List<Callable<Boolean>> tasks = new ArrayList<>();
     for (int i = 0; i < NUM_FILES; i++) {
       final String newFile = String.format("%s/file-%03d.txt", dir0, i);
@@ -344,7 +344,7 @@ public class TestRouterFaultTolerant {
     }
     TaskResults results = collectResults("Create file " + dir0, tasks);
 
-    LOG.info("Check files results for {}: {}", dir0, results);
+    LOG.error("Temp", new RuntimeException());
     if (faultTolerant) {
       assertEquals("Not enough success in " + mountPoint,
           NUM_FILES, results.getSuccess());
@@ -357,7 +357,7 @@ public class TestRouterFaultTolerant {
           NUM_FILES, results.getFailure());
     }
 
-    LOG.info("Check files listing for {}", dir0);
+    LOG.error("Temp", new RuntimeException());
     tasks.add(getListFailTask(router0Fs, dir0));
     tasks.add(getListSuccessTask(router1Fs, dir0, results.getSuccess()));
     assertEquals(2, collectResults("List " + dir0, tasks).getSuccess());
@@ -400,7 +400,7 @@ public class TestRouterFaultTolerant {
     try {
       files = fs.listStatus(path);
     } catch (FileNotFoundException fnfe) {
-      LOG.debug("File not found: {}", fnfe.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return files;
   }
@@ -530,10 +530,10 @@ public class TestRouterFaultTolerant {
       try {
         boolean succeeded = task.get();
         if (succeeded) {
-          LOG.info("Got success for {}", tag);
+          LOG.error("Temp", new RuntimeException());
           results.incrSuccess();
         } else {
-          LOG.info("Got failure for {}", tag);
+          LOG.error("Temp", new RuntimeException());
           results.incrFailure();
         }
       } catch (Exception e) {
@@ -626,7 +626,7 @@ public class TestRouterFaultTolerant {
     DestinationOrder order = DestinationOrder.HASH_ALL;
     final String mountPoint = "/" + order + "-testread";
     final Path mountPath = new Path(mountPoint);
-    LOG.info("Setup {} with order {}", mountPoint, order);
+    LOG.error("Temp", new RuntimeException());
     createMountTableEntry(
         routers, mountPoint, order, namenodes.keySet());
 
@@ -660,12 +660,12 @@ public class TestRouterFaultTolerant {
         assertNull("The file cannot be in two subclusters", nsIdWithFile);
         nsIdWithFile = nsId;
       } catch (FileNotFoundException fnfe) {
-        LOG.debug("File not found in {}", nsId);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertNotNull("The file has to be in one subcluster", nsIdWithFile);
 
-    LOG.info("Stop {} to simulate an unavailable subcluster", nsIdWithFile);
+    LOG.error("Temp", new RuntimeException());
     namenodes.get(nsIdWithFile).stop();
 
     // We should not get FileNotFoundException anymore

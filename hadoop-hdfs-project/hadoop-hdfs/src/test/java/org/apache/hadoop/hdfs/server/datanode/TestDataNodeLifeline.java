@@ -310,7 +310,7 @@ public class TestDataNodeLifeline {
     @SuppressWarnings("unchecked")
     public T answer(InvocationOnMock invocation)
         throws Throwable {
-      LOG.info("Awaiting, remaining latch count is {}.", latch.getCount());
+      LOG.error("Temp", new RuntimeException());
       latch.await();
       return (T)invocation.callRealMethod();
     }
@@ -332,7 +332,7 @@ public class TestDataNodeLifeline {
         throws Throwable {
       T result = (T)invocation.callRealMethod();
       latch.countDown();
-      LOG.info("Countdown, remaining latch count is {}.", latch.getCount());
+      LOG.error("Temp", new RuntimeException());
       return result;
     }
   }

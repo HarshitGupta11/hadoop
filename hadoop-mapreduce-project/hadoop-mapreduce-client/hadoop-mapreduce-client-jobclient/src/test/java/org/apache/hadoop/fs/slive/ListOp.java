@@ -77,15 +77,15 @@ class ListOp extends Operation {
           ReportWriter.SUCCESSES, 1L));
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.DIR_ENTRIES, dirEntries));
-      LOG.info("Directory " + dir + " has " + dirEntries + " entries");
+      LOG.error("Temp", new RuntimeException());
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with listing", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with listing", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return out;
   }

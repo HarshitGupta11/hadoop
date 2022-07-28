@@ -175,7 +175,7 @@ public class ApplicationMaster {
     boolean result = false;
     try {
       ApplicationMaster appMaster = new ApplicationMaster();
-      LOG.info("Initializing ApplicationMaster");
+      LOG.error("Temp", new RuntimeException());
       boolean doRun = appMaster.init(args);
       if (!doRun) {
         System.exit(0);
@@ -186,10 +186,10 @@ public class ApplicationMaster {
       System.exit(1);
     }
     if (result) {
-      LOG.info("Application Master completed successfully. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(0);
     } else {
-      LOG.info("Application Master failed. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(2);
     }
   }
@@ -273,7 +273,7 @@ public class ApplicationMaster {
    * @throws InterruptedException when the thread is interrupted
    */
   public boolean run() throws YarnException, IOException, InterruptedException {
-    LOG.info("Starting ApplicationMaster");
+    LOG.error("Temp", new RuntimeException());
 
     Credentials credentials = UserGroupInformation.getCurrentUser()
         .getCredentials();
@@ -308,7 +308,7 @@ public class ApplicationMaster {
       ContainerRequest nnContainerRequest = setupContainerAskForRM(
           amOptions.getNameNodeMemoryMB(), amOptions.getNameNodeVirtualCores(),
           0, amOptions.getNameNodeNodeLabelExpression());
-      LOG.info("Requested NameNode ask: " + nnContainerRequest.toString());
+      LOG.error("Temp", new RuntimeException());
       amRMClient.addContainerRequest(nnContainerRequest);
 
       // Wait for the NN container to make its information available on the
@@ -327,7 +327,7 @@ public class ApplicationMaster {
       }
       namenodeServiceRpcAddress = DynoInfraUtils
           .getNameNodeServiceRpcAddr(namenodeProperties.get()).toString();
-      LOG.info("NameNode information: " + namenodeProperties.get());
+      LOG.error("Temp", new RuntimeException());
       LOG.info("NameNode can be reached at: " + DynoInfraUtils
           .getNameNodeHdfsUri(namenodeProperties.get()).toString());
       DynoInfraUtils.waitForNameNodeStartup(namenodeProperties.get(),
@@ -357,9 +357,9 @@ public class ApplicationMaster {
           amOptions.getDataNodeMemoryMB(), amOptions.getDataNodeVirtualCores(),
           1, amOptions.getDataNodeNodeLabelExpression());
       amRMClient.addContainerRequest(datanodeAsk);
-      LOG.debug("Requested datanode ask: " + datanodeAsk.toString());
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Finished requesting datanode containers");
+    LOG.error("Temp", new RuntimeException());
 
     if (launchNameNode) {
       DynoInfraUtils.waitForNameNodeReadiness(namenodeProperties.get(),
@@ -417,18 +417,18 @@ public class ApplicationMaster {
       try {
         launchThread.join(10000);
       } catch (InterruptedException e) {
-        LOG.info("Exception thrown in thread join: " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         e.printStackTrace();
       }
     }
 
     // When the application completes, it should stop all running containers
-    LOG.info("Application completed. Stopping running containers");
+    LOG.error("Temp", new RuntimeException());
     nmClientAsync.stop();
 
     // When the application completes, it should send a finish application
     // signal to the RM
-    LOG.info("Application completed. Signalling finish to RM");
+    LOG.error("Temp", new RuntimeException());
 
     FinalApplicationStatus appStatus;
     String appMessage = null;
@@ -485,7 +485,7 @@ public class ApplicationMaster {
         assert (containerStatus.getState() == ContainerState.COMPLETE);
 
         if (component.equals("NAMENODE")) {
-          LOG.info("NameNode container completed; marking application as done");
+          LOG.error("Temp", new RuntimeException());
           markCompleted();
         }
 
@@ -537,7 +537,7 @@ public class ApplicationMaster {
           componentType = "DATANODE";
           containerLauncher = new LaunchContainerRunnable(container, false);
         } else {
-          LOG.warn("Received unwanted container allocation: " + container);
+          LOG.error("Temp", new RuntimeException());
           nmClientAsync.stopContainerAsync(container.getId(),
               container.getNodeId());
           continue;
@@ -566,7 +566,7 @@ public class ApplicationMaster {
 
     @Override
     public void onNodesUpdated(List<NodeReport> updatedNodes) {
-      LOG.info("onNodesUpdated: " + Joiner.on(",").join(updatedNodes));
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
@@ -582,7 +582,7 @@ public class ApplicationMaster {
 
     @Override
     public void onContainersUpdated(List<UpdatedContainer> containers) {
-      LOG.info("onContainersUpdated: " + Joiner.on(",").join(containers));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -592,11 +592,11 @@ public class ApplicationMaster {
     @Override
     public void onContainerStopped(ContainerId containerId) {
       if (isNameNode(containerId)) {
-        LOG.info("NameNode container stopped: " + containerId);
+        LOG.error("Temp", new RuntimeException());
         namenodeContainer = null;
         markCompleted();
       } else if (isDataNode(containerId)) {
-        LOG.debug("DataNode container stopped: " + containerId);
+        LOG.error("Temp", new RuntimeException());
         datanodeContainers.remove(containerId);
       } else {
         LOG.error(
@@ -617,10 +617,10 @@ public class ApplicationMaster {
     public void onContainerStarted(ContainerId containerId,
         Map<String, ByteBuffer> allServiceResponse) {
       if (isNameNode(containerId)) {
-        LOG.info("NameNode container started at ID " + containerId);
+        LOG.error("Temp", new RuntimeException());
       } else if (isDataNode(containerId)) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Succeeded to start DataNode Container " + containerId);
+          LOG.error("Temp", new RuntimeException());
         }
         nmClientAsync.getContainerStatusAsync(containerId,
             datanodeContainers.get(containerId).getNodeId());
@@ -671,26 +671,26 @@ public class ApplicationMaster {
     @Deprecated
     public void onContainerResourceIncreased(ContainerId containerId,
         Resource resource) {
-      LOG.info("onContainerResourceIncreased: {}, {}", containerId, resource);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
     public void onContainerResourceUpdated(ContainerId containerId,
         Resource resource) {
-      LOG.info("onContainerResourceUpdated: {}, {}", containerId, resource);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
     @Deprecated
     public void onIncreaseContainerResourceError(ContainerId containerId,
         Throwable t) {
-      LOG.info("onIncreaseContainerResourceError: {}", containerId, t);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
     public void onUpdateContainerResourceError(ContainerId containerId,
         Throwable t) {
-      LOG.info("onUpdateContainerResourceError: {}", containerId, t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -806,7 +806,7 @@ public class ApplicationMaster {
       vargs.add("1>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stdout");
       vargs.add("2>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stderr");
 
-      LOG.info("Completed setting up command for " + component + ": " + vargs);
+      LOG.error("Temp", new RuntimeException());
       return Lists.newArrayList(Joiner.on(" ").join(vargs));
     }
 
@@ -820,7 +820,7 @@ public class ApplicationMaster {
      */
     public void addAsLocalResourceFromEnv(DynoResource resource,
         Map<String, LocalResource> localResources, Map<String, String> env) {
-      LOG.debug("Adding resource to localResources: " + resource);
+      LOG.error("Temp", new RuntimeException());
       String resourcePath = resource.getResourcePath();
       if (resourcePath == null) {
         // Default to using the file name in the path
@@ -837,7 +837,7 @@ public class ApplicationMaster {
       throws IOException {
     Path blockListDirPath = new Path(
         System.getenv().get(DynoConstants.BLOCK_LIST_PATH_ENV));
-    LOG.info("Looking for block listing files in " + blockListDirPath);
+    LOG.error("Temp", new RuntimeException());
     FileSystem blockZipFS = blockListDirPath.getFileSystem(conf);
     List<LocalResource> files = new LinkedList<>();
     for (FileStatus stat : blockZipFS.listStatus(blockListDirPath,

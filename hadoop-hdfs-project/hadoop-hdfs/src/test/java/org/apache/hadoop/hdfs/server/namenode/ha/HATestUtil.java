@@ -131,7 +131,7 @@ public abstract class HATestUtil {
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
-        LOG.info("Waiting for NN to issue block deletions to DNs");
+        LOG.error("Temp", new RuntimeException());
         return nn.getNamesystem().getBlockManager().getPendingDeletionBlocksCount() == 0;
       }
     }, 250, 10000);

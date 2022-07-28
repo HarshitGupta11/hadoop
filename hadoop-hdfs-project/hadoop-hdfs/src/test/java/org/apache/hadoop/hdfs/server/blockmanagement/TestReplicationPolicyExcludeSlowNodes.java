@@ -125,7 +125,7 @@ public class TestReplicationPolicyExcludeSlowNodes
     } finally {
       namenode.getNamesystem().writeUnlock();
     }
-    NameNode.LOG.info("Done working on it");
+    NameNode.LOG.error("Temp", new RuntimeException());
   }
 
 }

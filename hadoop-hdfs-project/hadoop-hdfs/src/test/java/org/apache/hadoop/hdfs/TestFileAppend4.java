@@ -102,7 +102,7 @@ public class TestFileAppend4 {
    * @throws Exception
    */
   private void recoverFile(final FileSystem fs) throws Exception {
-    LOG.info("Recovering File Lease");
+    LOG.error("Temp", new RuntimeException());
 
     // set the soft limit to be 1 second so that the
     // namenode triggers lease recovery upon append request
@@ -117,10 +117,10 @@ public class TestFileAppend4 {
     while (!recovered && tries-- > 0) {
       try {
         out = fs.append(file1);
-        LOG.info("Successfully opened for append");
+        LOG.error("Temp", new RuntimeException());
         recovered = true;
       } catch (IOException e) {
-        LOG.info("Failed open for append, waiting on lease recovery");
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -134,7 +134,7 @@ public class TestFileAppend4 {
     if (!recovered) {
       fail("Recovery should take < 1 min");
     }
-    LOG.info("Past out lease recovery");
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**
@@ -173,27 +173,27 @@ public class TestFileAppend4 {
             }
           }};
       t.start();
-      LOG.info("Waiting for close to get to latch...");
+      LOG.error("Temp", new RuntimeException());
       delayer.waitForCall();
  
       // At this point, the block is finalized on the DNs, but the file
       // has not been completed in the NN.
       // Lose the leases
-      LOG.info("Killing lease checker");
+      LOG.error("Temp", new RuntimeException());
       client.getLeaseRenewer().interruptAndJoin();
  
       FileSystem fs1 = cluster.getFileSystem();
       FileSystem fs2 = AppendTestUtil.createHdfsWithDifferentUsername(
         fs1.getConf());
  
-      LOG.info("Recovering file");
+      LOG.error("Temp", new RuntimeException());
       recoverFile(fs2);
  
-      LOG.info("Telling close to proceed.");
+      LOG.error("Temp", new RuntimeException());
       delayer.proceed();
-      LOG.info("Waiting for close to finish.");
+      LOG.error("Temp", new RuntimeException());
       t.join();
-      LOG.info("Close finished.");
+      LOG.error("Temp", new RuntimeException());
  
       // We expect that close will get a "File is not open" error.
       Throwable thrownByClose = err.get();
@@ -244,33 +244,33 @@ public class TestFileAppend4 {
             }
           }};
       t.start();
-      LOG.info("Waiting for close to get to latch...");
+      LOG.error("Temp", new RuntimeException());
       delayer.waitForCall();
  
       // At this point, the block is finalized on the DNs, but the file
       // has not been completed in the NN.
       // Lose the leases
-      LOG.info("Killing lease checker");
+      LOG.error("Temp", new RuntimeException());
       client.getLeaseRenewer().interruptAndJoin();
  
       FileSystem fs1 = cluster.getFileSystem();
       FileSystem fs2 = AppendTestUtil.createHdfsWithDifferentUsername(
         fs1.getConf());
  
-      LOG.info("Recovering file");
+      LOG.error("Temp", new RuntimeException());
       recoverFile(fs2);
  
-      LOG.info("Opening file for append from new fs");
+      LOG.error("Temp", new RuntimeException());
       FSDataOutputStream appenderStream = fs2.append(file1);
       
-      LOG.info("Writing some data from new appender");
+      LOG.error("Temp", new RuntimeException());
       AppendTestUtil.write(appenderStream, 0, 4096);
       
-      LOG.info("Telling old close to proceed.");
+      LOG.error("Temp", new RuntimeException());
       delayer.proceed();
-      LOG.info("Waiting for close to finish.");
+      LOG.error("Temp", new RuntimeException());
       t.join();
-      LOG.info("Close finished.");
+      LOG.error("Temp", new RuntimeException());
  
       // We expect that close will get a "Lease mismatch"
       // error.
@@ -374,7 +374,7 @@ public class TestFileAppend4 {
         fileSystem.append(f);
         fail("Append should fail because insufficient locations");
       } catch (IOException e){
-        LOG.info("Expected exception: ", e);
+        LOG.error("Temp", new RuntimeException());
       }
       FSDirectory dir = cluster.getNamesystem().getFSDirectory();
       final INodeFile inode = INodeFile.

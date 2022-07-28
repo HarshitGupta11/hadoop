@@ -82,7 +82,7 @@ public class JournalNodeRpcServer implements QJournalProtocol,
     if (bindHost == null) {
       bindHost = addr.getHostName();
     }
-    LOG.info("RPC server is binding to " + bindHost + ":" + addr.getPort());
+    LOG.error("Temp", new RuntimeException());
 
     RPC.setProtocolEngine(confCopy, QJournalProtocolPB.class,
         ProtobufRpcEngine2.class);

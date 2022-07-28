@@ -82,7 +82,7 @@ public class CSMaxRunningAppsEnforcer {
       userNumRunnable = 0;
     }
     if (userNumRunnable >= getUserMaxParallelApps(user)) {
-      LOG.info("Maximum runnable apps exceeded for user {}", user);
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
 

@@ -564,10 +564,10 @@ public class CacheManager {
       directive = new CacheDirective(id, path, replication, expiryTime);
       addInternal(directive, pool);
     } catch (IOException e) {
-      LOG.warn("addDirective of " + info + " failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
-    LOG.info("addDirective of {} successful.", info);
+    LOG.error("Temp", new RuntimeException());
     return directive.toInfo();
   }
 
@@ -666,10 +666,10 @@ public class CacheManager {
       removeInternal(prevEntry);
       addInternal(new CacheDirective(builder.build()), destPool);
     } catch (IOException e) {
-      LOG.warn("modifyDirective of " + idString + " failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
-    LOG.info("modifyDirective of {} successfully applied {}.", idString, info);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void removeInternal(CacheDirective directive)
@@ -701,10 +701,10 @@ public class CacheManager {
       checkWritePermission(pc, directive.getPool());
       removeInternal(directive);
     } catch (IOException e) {
-      LOG.warn("removeDirective of " + id + " failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
-    LOG.info("removeDirective of " + id + " successful.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public BatchedListEntries<CacheDirectiveEntry> 
@@ -799,10 +799,10 @@ public class CacheManager {
       pool = CachePool.createFromInfoAndDefaults(info);
       cachePools.put(pool.getPoolName(), pool);
     } catch (IOException e) {
-      LOG.info("addCachePool of " + info + " failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
-    LOG.info("addCachePool of {} successful.", info);
+    LOG.error("Temp", new RuntimeException());
     return pool.getInfo(true);
   }
 
@@ -869,7 +869,7 @@ public class CacheManager {
         bld.append("no changes.");
       }
     } catch (IOException e) {
-      LOG.info("modifyCachePool of " + info + " failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
     LOG.info("modifyCachePool of {} successful; {}", info.getPoolName(), 
@@ -904,10 +904,10 @@ public class CacheManager {
       }
       setNeedsRescan();
     } catch (IOException e) {
-      LOG.info("removeCachePool of " + poolName + " failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
-    LOG.info("removeCachePool of " + poolName + " successful.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public BatchedListEntries<CachePoolEntry>

@@ -161,7 +161,7 @@ class LocalDistributedCacheManager {
         } catch (URISyntaxException e) {
           throw new IOException(e);
         }
-        LOG.info(String.format("Localized %s as %s", resourcePath, path));
+        LOG.error("Temp", new RuntimeException());
         String cp = resourcePath.toUri().getPath();
         if (classpaths.keySet().contains(cp)) {
           localClasspaths.add(path.toUri().getPath().toString());
@@ -197,7 +197,7 @@ class LocalDistributedCacheManager {
       link = workDir.toString() + Path.SEPARATOR + link;
       File flink = new File(link);
       if (!flink.exists()) {
-        LOG.info(String.format("Creating symlink: %s <- %s", target, link));
+        LOG.error("Temp", new RuntimeException());
         if (0 != FileUtil.symLink(target, link)) {
           LOG.warn(String.format("Failed to create symlink: %s <- %s", target,
               link));
@@ -233,7 +233,7 @@ class LocalDistributedCacheManager {
     final URL[] urls = new URL[localClasspaths.size()];
     for (int i = 0; i < localClasspaths.size(); ++i) {
       urls[i] = new File(localClasspaths.get(i)).toURI().toURL();
-      LOG.info(urls[i].toString());
+      LOG.error("Temp", new RuntimeException());
     }
     return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
       @Override

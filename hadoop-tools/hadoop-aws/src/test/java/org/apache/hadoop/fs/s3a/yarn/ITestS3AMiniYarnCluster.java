@@ -123,7 +123,7 @@ public class ITestS3AMiniYarnCluster extends AbstractS3ATestBase {
         status.getLen() > 0);
     SuccessData successData = SuccessData.load(fs, success);
     String commitDetails = successData.toString();
-    LOG.info("Committer details \n{}", commitDetails);
+    LOG.error("Temp", new RuntimeException());
     String outputAsStr = readStringFromFile(new Path(output, "part-r-00000"));
     Map<String, Integer> resAsMap = getResultAsMap(outputAsStr);
 

@@ -172,7 +172,7 @@ public class ContainerTokenIdentifierForTest extends ContainerTokenIdentifier {
 
   @Override
   public void write(DataOutput out) throws IOException {
-    LOG.debug("Writing ContainerTokenIdentifierForTest to RPC layer: {}", this);
+    LOG.error("Temp", new RuntimeException());
     out.write(proto.toByteArray());
   }
   

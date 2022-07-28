@@ -114,7 +114,7 @@ final public class AliyunOSSUtils {
       credentials = new AliyunCredentialsProvider(newConf);
     } else {
       try {
-        LOG.debug("Credential provider class is:" + className);
+        LOG.error("Temp", new RuntimeException());
         Class<?> credClass = Class.forName(className);
         try {
           credentials =
@@ -202,7 +202,7 @@ final public class AliyunOSSUtils {
     Preconditions.checkArgument(v >= min,
         String.format("Value of %s: %d is below the minimum value %d",
             key, v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -221,7 +221,7 @@ final public class AliyunOSSUtils {
     Preconditions.checkArgument(v >= min,
         String.format("Value of %s: %d is below the minimum value %d",
             key, v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 

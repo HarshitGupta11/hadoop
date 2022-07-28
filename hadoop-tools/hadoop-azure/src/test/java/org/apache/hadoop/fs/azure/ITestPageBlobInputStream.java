@@ -104,7 +104,7 @@ public class ITestPageBlobInputStream extends AbstractWasbTestBase {
     if (fs.exists(TEST_FILE_PATH)) {
       testFileStatus = fs.getFileStatus(TEST_FILE_PATH);
       testFileLength = testFileStatus.getLen();
-      LOG.info("Reusing test file: {}", testFileStatus);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -122,7 +122,7 @@ public class ITestPageBlobInputStream extends AbstractWasbTestBase {
         outputStream.write(buffer);
         bytesWritten += buffer.length;
       }
-      LOG.info("Closing stream {}", outputStream);
+      LOG.error("Temp", new RuntimeException());
       outputStream.close();
     }
     testFileLength = fs.getFileStatus(TEST_FILE_PATH).getLen();

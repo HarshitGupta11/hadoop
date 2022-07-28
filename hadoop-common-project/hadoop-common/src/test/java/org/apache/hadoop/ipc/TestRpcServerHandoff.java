@@ -177,7 +177,7 @@ public class TestRpcServerHandoff {
       }
       sleepTime -= 200L;
     }
-    LOG.info("Done sleeping");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static class ClientCallable implements Callable<Writable> {

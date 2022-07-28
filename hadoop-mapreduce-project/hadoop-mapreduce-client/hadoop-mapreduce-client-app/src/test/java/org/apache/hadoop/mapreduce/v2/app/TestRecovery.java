@@ -190,7 +190,7 @@ public class TestRecovery {
     int timeOut = 0;
     while (mapTask1.getAttempts().size() != 2 && timeOut++ < 10) {
       Thread.sleep(2000);
-      LOG.info("Waiting for next attempt to start");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertEquals(2, mapTask1.getAttempts().size());
     Iterator<TaskAttempt> itr = mapTask1.getAttempts().values().iterator();
@@ -211,7 +211,7 @@ public class TestRecovery {
     timeOut = 0;
     while (mapTask1.getAttempts().size() != 3 && timeOut++ < 10) {
       Thread.sleep(2000);
-      LOG.info("Waiting for next attempt to start");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertEquals(3, mapTask1.getAttempts().size());
     itr = mapTask1.getAttempts().values().iterator();
@@ -232,7 +232,7 @@ public class TestRecovery {
     timeOut = 0;
     while (mapTask1.getAttempts().size() != 4 && timeOut++ < 10) {
       Thread.sleep(2000);
-      LOG.info("Waiting for next attempt to start");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertEquals(4, mapTask1.getAttempts().size());
     itr = mapTask1.getAttempts().values().iterator();
@@ -1369,7 +1369,7 @@ public class TestRecovery {
     int timeOut = 0;
     while (mapTask1.getAttempts().size() != 2 && timeOut++ < 10) {
       Thread.sleep(1000);
-      LOG.info("Waiting for next attempt to start");
+      LOG.error("Temp", new RuntimeException());
     }
     Iterator<TaskAttempt> t1it = mapTask1.getAttempts().values().iterator();
     TaskAttempt task1Attempt1 = t1it.next();
@@ -1380,9 +1380,9 @@ public class TestRecovery {
     waitForContainerAssignment(task1Attempt2);
     ContainerId t1a2contId = task1Attempt2.getAssignedContainerID();
 
-    LOG.info(t1a2contId.toString());
-    LOG.info(task1Attempt1.getID().toString());
-    LOG.info(task1Attempt2.getID().toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     // Launch container for speculative attempt
     app.getContext().getEventHandler().handle(
@@ -1600,7 +1600,7 @@ public class TestRecovery {
 
   @Test
   public void testRecoverySuccessAttempt() {
-    LOG.info("--- START: testRecoverySuccessAttempt ---");
+    LOG.error("Temp", new RuntimeException());
 
     long clusterTimestamp = System.currentTimeMillis();
     EventHandler mockEventHandler = mock(EventHandler.class);
@@ -1657,7 +1657,7 @@ public class TestRecovery {
 
   @Test
   public void testRecoveryAllFailAttempts() {
-    LOG.info("--- START: testRecoveryAllFailAttempts ---");
+    LOG.error("Temp", new RuntimeException());
 
     long clusterTimestamp = System.currentTimeMillis();
     EventHandler mockEventHandler = mock(EventHandler.class);
@@ -1715,7 +1715,7 @@ public class TestRecovery {
 
   @Test
   public void testRecoveryTaskSuccessAllAttemptsFail() {
-    LOG.info("--- START:  testRecoveryTaskSuccessAllAttemptsFail ---");
+    LOG.error("Temp", new RuntimeException());
 
     long clusterTimestamp = System.currentTimeMillis();
     EventHandler mockEventHandler = mock(EventHandler.class);
@@ -1774,7 +1774,7 @@ public class TestRecovery {
 
   @Test
   public void testRecoveryTaskSuccessAllAttemptsSucceed() {
-    LOG.info("--- START:  testRecoveryTaskSuccessAllAttemptsFail ---");
+    LOG.error("Temp", new RuntimeException());
 
     long clusterTimestamp = System.currentTimeMillis();
     EventHandler mockEventHandler = mock(EventHandler.class);
@@ -1831,7 +1831,7 @@ public class TestRecovery {
 
   @Test
   public void testRecoveryAllAttemptsKilled() {
-    LOG.info("--- START:  testRecoveryAllAttemptsKilled ---");
+    LOG.error("Temp", new RuntimeException());
 
     long clusterTimestamp = System.currentTimeMillis();
     EventHandler mockEventHandler = mock(EventHandler.class);
@@ -1911,7 +1911,7 @@ public class TestRecovery {
     while (ie.hasNext()) {
       Object current = ie.next();
       ++eventNum;
-      LOG.info(eventNum + " " + current.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
       if (current instanceof JobHistoryEvent) {
         JobHistoryEvent jhe = (JobHistoryEvent) current;
         LOG.info(expectedJobHistoryEvents.get(0).toString() + " " +

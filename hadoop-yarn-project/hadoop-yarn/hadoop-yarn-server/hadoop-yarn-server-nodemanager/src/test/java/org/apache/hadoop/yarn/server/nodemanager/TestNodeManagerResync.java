@@ -209,14 +209,14 @@ public class TestNodeManagerResync {
 
       DrainDispatcher dispatcher = (DrainDispatcher) nm.getNMDispatcher();
       dispatcher.await();
-      LOG.info("NM dispatcher drained");
+      LOG.error("Temp", new RuntimeException());
 
       // Wait for the resync thread to finish
       try {
         syncBarrier.await();
       } catch (BrokenBarrierException e) {
       }
-      LOG.info("Barrier wait done for the resync thread");
+      LOG.error("Temp", new RuntimeException());
 
       // Resync should only happen once
       Assert.assertEquals(2, nm.getNMRegistrationCount());
@@ -270,7 +270,7 @@ public class TestNodeManagerResync {
       // Simulate a container resource increase in a separate thread
       ((TestNodeManager4) nm).updateContainerResource();
       // Simulate RM restart by sending a RESYNC event
-      LOG.info("Sending out RESYNC event");
+      LOG.error("Temp", new RuntimeException());
       nm.getNMDispatcher().getEventHandler()
           .handle(new NodeManagerEvent(NodeManagerEventType.RESYNC));
       try {
@@ -639,7 +639,7 @@ public class TestNodeManagerResync {
     // Start a container in NM
     public void startContainer()
         throws IOException, InterruptedException, YarnException {
-      LOG.info("Start a container and wait until it is in RUNNING state");
+      LOG.error("Temp", new RuntimeException());
       File scriptFile = Shell.appendScriptExtension(tmpDir, "scriptFile");
       PrintWriter fileWriter = new PrintWriter(scriptFile);
       if (Shell.WINDOWS) {
@@ -690,7 +690,7 @@ public class TestNodeManagerResync {
     // Increase container resource in a thread
     public void updateContainerResource()
         throws InterruptedException {
-      LOG.info("Increase a container resource in a separate thread");
+      LOG.error("Temp", new RuntimeException());
       containerUpdateResourceThread = new ContainerUpdateResourceThread();
       containerUpdateResourceThread.start();
     }

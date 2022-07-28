@@ -450,24 +450,24 @@ public class TestFederationInterceptor extends BaseAMRMProxyTest {
     synchronized (syncObj) {
       // Make sure first thread will block within RM, before the second thread
       // starts
-      LOG.info("Starting first register thread");
+      LOG.error("Temp", new RuntimeException());
       compSvc.submit(new ConcurrentRegisterAMCallable());
 
       try {
-        LOG.info("Test main starts waiting for the first thread to block");
+        LOG.error("Temp", new RuntimeException());
         syncObj.wait();
-        LOG.info("Test main wait finished");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
-        LOG.info("Test main wait interrupted", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
     // The second thread will get already registered exception from RM.
-    LOG.info("Starting second register thread");
+    LOG.error("Temp", new RuntimeException());
     compSvc.submit(new ConcurrentRegisterAMCallable());
 
     // Notify the first register thread to return
-    LOG.info("Let first blocked register thread move on");
+    LOG.error("Temp", new RuntimeException());
     synchronized (syncObj) {
       syncObj.notifyAll();
     }
@@ -496,7 +496,7 @@ public class TestFederationInterceptor extends BaseAMRMProxyTest {
             RegisterApplicationMasterRequest.newInstance(null, 1001, null));
         lastResponseId = 0;
       } catch (Exception e) {
-        LOG.info("Register thread exception", e);
+        LOG.error("Temp", new RuntimeException());
         response = null;
       }
       return response;
@@ -834,7 +834,7 @@ public class TestFederationInterceptor extends BaseAMRMProxyTest {
         List<Container> containers =
             getContainersAndAssert(numberOfContainers, numberOfContainers * 2);
         for (Container c : containers) {
-          LOG.info("Allocated container " + c.getId());
+          LOG.error("Temp", new RuntimeException());
         }
         Assert.assertEquals(1, interceptor.getUnmanagedAMPoolSize());
 

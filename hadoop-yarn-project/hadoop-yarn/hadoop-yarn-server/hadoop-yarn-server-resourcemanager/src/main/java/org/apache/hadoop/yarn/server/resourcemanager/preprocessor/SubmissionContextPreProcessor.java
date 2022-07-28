@@ -130,7 +130,7 @@ public class SubmissionContextPreProcessor {
             cMap = hostCommands.get(entry.getKey());
           }
         } catch (PatternSyntaxException exception) {
-          LOG.warn("Invalid regex pattern: " + entry.getKey());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

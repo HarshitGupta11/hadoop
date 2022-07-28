@@ -66,7 +66,7 @@ public class SignerManager implements Closeable {
     String[] customSigners = ownerConf.getTrimmedStrings(CUSTOM_SIGNERS);
     if (customSigners == null || customSigners.length == 0) {
       // No custom signers specified, nothing to do.
-      LOG.debug("No custom signers specified");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -137,7 +137,7 @@ public class SignerManager implements Closeable {
   }
 
   @Override public void close() throws IOException {
-    LOG.debug("Unregistering fs from {} initializers", initializers.size());
+    LOG.error("Temp", new RuntimeException());
     for (AwsSignerInitializer initializer : initializers) {
       initializer
           .unregisterStore(bucketName, ownerConf, delegationTokenProvider,

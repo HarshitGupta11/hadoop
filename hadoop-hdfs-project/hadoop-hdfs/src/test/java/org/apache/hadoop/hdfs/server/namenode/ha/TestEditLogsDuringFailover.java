@@ -212,7 +212,7 @@ public class TestEditLogsDuringFailover {
       File editDir = new File(editDirRoot, "current");
       GenericTestUtils.assertExists(editDir);
       if (files.length == 0) {
-        LOG.info("Checking no edit files exist in " + editDir);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.info("Checking for following edit files in " + editDir
             + ": " + Joiner.on(",").join(files));

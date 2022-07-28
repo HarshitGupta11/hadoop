@@ -85,7 +85,7 @@ public abstract class TimelineStorageMonitor  {
     @Override
     public void run() {
       try {
-        LOG.debug("Running Timeline Storage monitor");
+        LOG.error("Temp", new RuntimeException());
         healthCheck();
         if (storageDown.getAndSet(false)) {
           LOG.debug("{} health check succeeded, " +

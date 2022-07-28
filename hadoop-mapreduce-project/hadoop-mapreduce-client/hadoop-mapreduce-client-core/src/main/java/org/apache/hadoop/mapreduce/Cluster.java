@@ -146,7 +146,7 @@ public class Cluster {
         final String errMsg = "Failed to use " + provider.getClass().getName()
             + " due to error: ";
         initEx.addSuppressed(new IOException(errMsg, e));
-        LOG.info(errMsg, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

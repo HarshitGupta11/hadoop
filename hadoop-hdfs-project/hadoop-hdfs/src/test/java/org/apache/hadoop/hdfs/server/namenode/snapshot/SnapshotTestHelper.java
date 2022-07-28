@@ -130,7 +130,7 @@ public class SnapshotTestHelper {
    */
   public static Path createSnapshot(DistributedFileSystem hdfs,
       Path snapshotRoot, String snapshotName) throws Exception {
-    LOG.info("createSnapshot " + snapshotName + " for " + snapshotRoot);
+    LOG.error("Temp", new RuntimeException());
     assertTrue(hdfs.exists(snapshotRoot));
     hdfs.allowSnapshot(snapshotRoot);
     hdfs.createSnapshot(snapshotRoot, snapshotName);
@@ -193,7 +193,7 @@ public class SnapshotTestHelper {
     try {
       compareDumpedTreeInFile(file1, file2, compareQuota, false);
     } catch(Throwable t) {
-      LOG.info("FAILED compareDumpedTreeInFile(" + file1 + ", " + file2 + ")", t);
+      LOG.error("Temp", new RuntimeException());
       compareDumpedTreeInFile(file1, file2, compareQuota, true);
     }
   }

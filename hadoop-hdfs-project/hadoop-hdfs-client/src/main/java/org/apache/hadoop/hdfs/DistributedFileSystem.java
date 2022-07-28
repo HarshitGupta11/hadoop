@@ -2141,7 +2141,7 @@ public class DistributedFileSystem extends FileSystem
       //   ii) if the element's path isn't p, the trash root is not empty.
       FileStatus[] fileStatuses = listStatus(trashRoot);
       if (fileStatuses.length == 0) {
-        DFSClient.LOG.debug("Removing empty trash root {}", trashRoot);
+        DFSClient.LOG.error("Temp", new RuntimeException());
         delete(trashRoot, false);
       } else {
         if (fileStatuses.length == 1
@@ -2149,7 +2149,7 @@ public class DistributedFileSystem extends FileSystem
             && fileStatuses[0].getPath().toUri().getPath().equals(
                 trashRoot.toString())) {
           // Ignore the trash path because it is not a directory.
-          DFSClient.LOG.warn("{} is not a directory. Ignored.", trashRoot);
+          DFSClient.LOG.error("Temp", new RuntimeException());
         } else {
           throw new IOException("Found non-empty trash root at " +
               trashRoot + ". Rename or delete it, then try again.");
@@ -2395,7 +2395,7 @@ public class DistributedFileSystem extends FileSystem
       } catch (RpcNoSuchMethodException e) {
         // In case the server doesn't support getSnapshotDiffReportListing,
         // fallback to getSnapshotDiffReport.
-        LOG.warn("Falling back to getSnapshotDiffReport {}", e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         return dfs.getSnapshotDiffReport(snapshotDir, fromSnapshot, toSnapshot);
       }
       startPath = report.getLastPath();
@@ -3564,7 +3564,7 @@ public class DistributedFileSystem extends FileSystem
         }
       }
     } catch (IOException e){
-      DFSClient.LOG.warn("Cannot get all encrypted trash roots", e);
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -3596,7 +3596,7 @@ public class DistributedFileSystem extends FileSystem
         }
       }
     } catch (IOException e) {
-      DFSClient.LOG.warn("Cannot get snapshot trash roots", e);
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
 
     return ret;

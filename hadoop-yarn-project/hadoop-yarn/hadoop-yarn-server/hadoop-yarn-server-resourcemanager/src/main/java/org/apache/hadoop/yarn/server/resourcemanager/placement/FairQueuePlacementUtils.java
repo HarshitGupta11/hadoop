@@ -75,7 +75,7 @@ public final class FairQueuePlacementUtils {
         queueName = ROOT_QUEUE + DOT + queueName;
       }
     } else {
-      LOG.warn("AssureRoot: queueName is empty or null.");
+      LOG.error("Temp", new RuntimeException());
     }
     return queueName;
   }

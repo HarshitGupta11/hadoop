@@ -85,7 +85,7 @@ public class ZKDelegationTokenSecretManagerImpl extends
     } catch (IOException e) {
       LOG.error("Error starting threads for zkDelegationTokens", e);
     }
-    LOG.info("Zookeeper delegation token secret manager instantiated");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -93,7 +93,7 @@ public class ZKDelegationTokenSecretManagerImpl extends
     super.startThreads();
     // start token cache related work when watcher is disabled
     if (!isTokenWatcherEnabled()) {
-      LOG.info("Watcher for tokens is disabled in this secret manager");
+      LOG.error("Temp", new RuntimeException());
       try {
         // By default set this variable
         checkAgainstZkBeforeDeletion.set(true);
@@ -107,17 +107,17 @@ public class ZKDelegationTokenSecretManagerImpl extends
         try {
           zookeeper = zkClient.getZookeeperClient().getZooKeeper();
         } catch (Exception e) {
-          LOG.info("Cannot get zookeeper client ", e);
+          LOG.error("Temp", new RuntimeException());
         } finally {
           if (zookeeper == null) {
             throw new IOException("Zookeeper client is null");
           }
         }
 
-        LOG.info("Start loading token cache");
+        LOG.error("Temp", new RuntimeException());
         long start = Time.now();
         rebuildTokenCache(true);
-        LOG.info("Loaded token cache in {} milliseconds", Time.now() - start);
+        LOG.error("Temp", new RuntimeException());
 
         int syncInterval = conf.getInt(ZK_DTSM_ROUTER_TOKEN_SYNC_INTERVAL,
             ZK_DTSM_ROUTER_TOKEN_SYNC_INTERVAL_DEFAULT);
@@ -174,7 +174,7 @@ public class ZKDelegationTokenSecretManagerImpl extends
         data = zkClient.getData().forPath(
             ZK_DTSM_TOKENS_ROOT + "/" + tokenPath);
       } catch (KeeperException.NoNodeException e) {
-        LOG.debug("No node in path [" + tokenPath + "]");
+        LOG.error("Temp", new RuntimeException());
         continue;
       } catch (Exception ex) {
         throw new IOException(ex);

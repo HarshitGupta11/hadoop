@@ -478,7 +478,7 @@ public class TestPlacementProcessor {
       nm2.nodeHeartbeat(true);
       nm3.nodeHeartbeat(true);
       nm4.nodeHeartbeat(true);
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       allocResponse = am1.schedule();
       allocatedContainers.addAll(allocResponse.getAllocatedContainers());
@@ -557,7 +557,7 @@ public class TestPlacementProcessor {
       nm2.nodeHeartbeat(true);
       nm3.nodeHeartbeat(true);
       nm4.nodeHeartbeat(true);
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       allocResponse = am1.schedule();
       allocatedContainers.addAll(allocResponse.getAllocatedContainers());
@@ -656,7 +656,7 @@ public class TestPlacementProcessor {
       nm3.nodeHeartbeat(true);
       nm4.nodeHeartbeat(true);
       nm5.nodeHeartbeat(true);
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       allocResponse = am1.schedule();
       allocatedContainers.addAll(allocResponse.getAllocatedContainers());
@@ -732,7 +732,7 @@ public class TestPlacementProcessor {
       nm2.nodeHeartbeat(true);
       nm3.nodeHeartbeat(true);
       nm4.nodeHeartbeat(true);
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       allocResponse = am1.schedule();
       allocatedContainers.addAll(allocResponse.getAllocatedContainers());
@@ -895,7 +895,7 @@ public class TestPlacementProcessor {
       if (nmTags != null) {
         nmTags.forEach((tag, count) ->
             sb.append(tag + "(" + count + "),"));
-        LOG.info("nm_" + nm.getNodeId() + ": " + sb.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

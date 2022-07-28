@@ -529,7 +529,7 @@ public class MergeManagerImpl<K, V> implements MergeManager<K, V> {
     public void merge(List<CompressAwarePath> inputs) throws IOException {
       // sanity check
       if (inputs == null || inputs.isEmpty()) {
-        LOG.info("No ondisk files to merge...");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       
@@ -788,7 +788,7 @@ public class MergeManagerImpl<K, V> implements MergeManager<K, V> {
       onDiskBytes += fileLength;
       rawBytes += (file.getRawDataLength() > 0) ? file.getRawDataLength() : fileLength;
 
-      LOG.debug("Disk file: " + file + " Length is " + fileLength);
+      LOG.error("Temp", new RuntimeException());
       diskSegments.add(new Segment<K, V>(job, fs, file, codec, keepInputs,
                                          (file.toString().endsWith(
                                              Task.MERGED_OUTPUT_PREFIX) ?

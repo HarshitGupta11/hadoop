@@ -340,7 +340,7 @@ public class ITestS3AFileOperationCost extends AbstractS3ACostTest {
           with(OBJECT_PUT_BYTES, len));
       verifyFileContents(s3a, remotePath, data);
       // print final stats
-      LOG.info("Filesystem {}", s3a);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       tmpFile.delete();
     }

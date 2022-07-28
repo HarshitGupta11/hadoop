@@ -47,7 +47,7 @@ public class CosNCopyFileTask implements Runnable {
   @Override
   public void run() {
     boolean fail = false;
-    LOG.info(Thread.currentThread().getName() + "copying...");
+    LOG.error("Temp", new RuntimeException());
     try {
       this.store.copy(srcKey, dstKey);
     } catch (IOException e) {

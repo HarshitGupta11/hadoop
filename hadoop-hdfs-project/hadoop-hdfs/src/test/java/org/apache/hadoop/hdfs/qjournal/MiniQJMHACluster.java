@@ -110,7 +110,7 @@ public class MiniQJMHACluster {
     while (true) {
       try {
         basePort = 10000 + RANDOM.nextInt(1000) * 4;
-        LOG.info("Set MiniQJMHACluster basePort to " + basePort);
+        LOG.error("Temp", new RuntimeException());
         // start 3 journal nodes
         journalCluster = new MiniJournalCluster.Builder(conf)
             .baseDir(builder.baseDir).format(true).build();

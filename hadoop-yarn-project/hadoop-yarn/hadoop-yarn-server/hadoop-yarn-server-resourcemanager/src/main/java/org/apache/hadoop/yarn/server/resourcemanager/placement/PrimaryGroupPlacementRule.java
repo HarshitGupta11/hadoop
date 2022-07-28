@@ -85,7 +85,7 @@ public class PrimaryGroupPlacementRule extends FSPlacementRule {
           parentRule.getPlacementForApp(asc, user);
       if (parent == null || getQueueManager().
           getQueue(parent.getQueue()) instanceof FSLeafQueue) {
-        LOG.debug("PrimaryGroup rule: parent rule failed");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       LOG.debug("PrimaryGroup rule: parent rule result: {}",

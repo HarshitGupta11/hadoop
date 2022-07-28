@@ -291,7 +291,7 @@ public class ITestS3AContractSeek extends AbstractContractSeekTest {
       // expect to read at least one byte.
       int l = in.read(temp);
       assertTrue("Reading in temp data", l > 0);
-      LOG.info("Read of byte array at offset {} returned {} bytes", offset, l);
+      LOG.error("Temp", new RuntimeException());
       assertDatasetEquals(offset, "read at end of boundary", temp, l);
     }
   }
@@ -310,7 +310,7 @@ public class ITestS3AContractSeek extends AbstractContractSeekTest {
       in.seek(offset);
       // expect to read at least one byte.
       int l = in.read(temp);
-      LOG.info("Read of byte array at offset {} returned {} bytes", offset, l);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Reading in temp data", l > 0);
       assertDatasetEquals(offset, "read at end of boundary", temp, l);
     }
@@ -331,7 +331,7 @@ public class ITestS3AContractSeek extends AbstractContractSeekTest {
       // expect to read a byte successfully.
       temp[0] = in.readByte();
       assertDatasetEquals(READAHEAD, "read at end of boundary", temp, 1);
-      LOG.info("Read of byte at offset {} returned expected value", offset);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

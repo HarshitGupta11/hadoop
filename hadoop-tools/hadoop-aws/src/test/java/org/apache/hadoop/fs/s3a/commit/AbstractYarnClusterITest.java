@@ -304,7 +304,7 @@ public abstract class AbstractYarnClusterITest extends AbstractCommitITest {
     jobConf.setBoolean(KEY_SCALE_TESTS_ENABLED, isScaleTest());
     // and fix the commit dir to the local FS across all workers.
     String staging = stagingFilesDir.getRoot().getAbsolutePath();
-    LOG.info("Staging temp dir is {}", staging);
+    LOG.error("Temp", new RuntimeException());
     jobConf.set(FS_S3A_COMMITTER_STAGING_TMP_PATH, staging);
     return jobConf;
   }

@@ -175,17 +175,17 @@ public class TestViewFileSystemLinkFallback extends ViewFileSystemBaseTest {
     assertEquals(ViewFileSystem.class, vfs.getClass());
     FileStatus baseFileStat = vfs.getFileStatus(new Path(viewFsUri.toString()
         + testBaseFile.toUri().toString()));
-    LOG.info("BaseFileStat: " + baseFileStat);
+    LOG.error("Temp", new RuntimeException());
     FileStatus baseFileRelStat = vfs.getFileStatus(new Path(viewFsUri.toString()
         + testBaseFileRelative.toUri().toString()));
-    LOG.info("BaseFileRelStat: " + baseFileRelStat);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Unexpected file length for " + testBaseFile,
         1, baseFileStat.getLen());
     Assert.assertEquals("Unexpected file length for " + testBaseFileRelative,
         baseFileStat.getLen(), baseFileRelStat.getLen());
     FileStatus level2FileStat = vfs.getFileStatus(new Path(viewFsUri.toString()
         + testLevel2File.toUri().toString()));
-    LOG.info("Level2FileStat: " + level2FileStat);
+    LOG.error("Temp", new RuntimeException());
     vfs.close();
   }
 
@@ -227,12 +227,12 @@ public class TestViewFileSystemLinkFallback extends ViewFileSystemBaseTest {
     assertEquals(ViewFileSystem.class, vfs.getClass());
     FileStatus baseFileStat = vfs.getFileStatus(
         new Path(viewFsUri.toString() + testBaseFile.toUri().toString()));
-    LOG.info("BaseFileStat: " + baseFileStat);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Unexpected file length for " + testBaseFile,
         0, baseFileStat.getLen());
     FileStatus level2FileStat = vfs.getFileStatus(new Path(viewFsUri.toString()
         + testLevel2File.toUri().toString()));
-    LOG.info("Level2FileStat: " + level2FileStat);
+    LOG.error("Temp", new RuntimeException());
 
     dataOutputStream = vfs.append(testLevel2File);
     dataOutputStream.write("Writing via viewfs fallback path".getBytes());

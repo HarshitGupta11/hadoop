@@ -380,7 +380,7 @@ public class ResourceTrackerService extends AbstractService implements
 
     RMAppAttempt rmAppAttempt = rmApp.getRMAppAttempt(appAttemptId);
     if (rmAppAttempt == null) {
-      LOG.info("Ignoring not found attempt " + appAttemptId);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -428,7 +428,7 @@ public class ResourceTrackerService extends AbstractService implements
                 + ", is less than the minimum version "
                 + minimumNodeManagerVersion + " sending SHUTDOWN signal to "
                 + "NodeManager.";
-        LOG.info(message);
+        LOG.error("Temp", new RuntimeException());
         response.setDiagnosticsMessage(message);
         response.setNodeAction(NodeAction.SHUTDOWN);
         return response;
@@ -445,7 +445,7 @@ public class ResourceTrackerService extends AbstractService implements
         final String message =
             "hostname cannot be resolved (ip=" + inetAddress.getHostAddress()
                 + ", hostname=" + host + ")";
-        LOG.warn("Unresolved nodemanager registration: " + message);
+        LOG.error("Temp", new RuntimeException());
         response.setDiagnosticsMessage(message);
         response.setNodeAction(NodeAction.SHUTDOWN);
         return response;
@@ -458,7 +458,7 @@ public class ResourceTrackerService extends AbstractService implements
       String message =
           "Disallowed NodeManager from  " + host
               + ", Sending SHUTDOWN signal to the NodeManager.";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       response.setDiagnosticsMessage(message);
       response.setNodeAction(NodeAction.SHUTDOWN);
       return response;
@@ -485,7 +485,7 @@ public class ResourceTrackerService extends AbstractService implements
           + " signal to the NodeManager. Node capabilities are " + capability
           + "; minimums are " + minAllocMb + "mb and " + minAllocVcores
           + " vcores";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       response.setDiagnosticsMessage(message);
       response.setNodeAction(NodeAction.SHUTDOWN);
       return response;
@@ -517,7 +517,7 @@ public class ResourceTrackerService extends AbstractService implements
       this.rmContext.getDispatcher().getEventHandler().handle(
           startEvent);
     } else {
-      LOG.info("Reconnect from the node at: " + host);
+      LOG.error("Temp", new RuntimeException());
       this.nmLivelinessMonitor.unregister(nodeId);
 
       if (CollectionUtils.isEmpty(request.getRunningApplications())
@@ -532,7 +532,7 @@ public class ResourceTrackerService extends AbstractService implements
           ClusterMetrics.getMetrics().decrNumUnhealthyNMs();
           break;
         default:
-          LOG.debug("Unexpected Rmnode state");
+          LOG.error("Temp", new RuntimeException());
         }
         this.rmContext.getDispatcher().getEventHandler()
             .handle(new NodeRemovedSchedulerEvent(rmNode));
@@ -614,7 +614,7 @@ public class ResourceTrackerService extends AbstractService implements
           .append(request.getNodeAttributes() + " } ");
     }
 
-    LOG.info(message.toString());
+    LOG.error("Temp", new RuntimeException());
     response.setNodeAction(NodeAction.NORMAL);
     response.setRMIdentifier(ResourceManager.getClusterTimeStamp());
     response.setRMVersion(YarnVersionInfo.getVersion());
@@ -644,7 +644,7 @@ public class ResourceTrackerService extends AbstractService implements
       String message =
           "Disallowed NodeManager nodeId: " + nodeId + " hostname: "
               + nodeId.getHost();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       return YarnServerBuilderUtils.newNodeHeartbeatResponse(
           NodeAction.SHUTDOWN, message);
     }
@@ -654,7 +654,7 @@ public class ResourceTrackerService extends AbstractService implements
     if (rmNode == null) {
       /* node does not exist */
       String message = "Node not found resyncing " + remoteNodeStatus.getNodeId();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       return YarnServerBuilderUtils.newNodeHeartbeatResponse(NodeAction.RESYNC,
           message);
     }
@@ -677,7 +677,7 @@ public class ResourceTrackerService extends AbstractService implements
           "Too far behind rm response id:"
               + lastNodeHeartbeatResponse.getResponseId() + " nm response id:"
               + remoteNodeStatus.getResponseId();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       // TODO: Just sending reboot is not enough. Think more.
       this.rmContext.getDispatcher().getEventHandler().handle(
           new RMNodeEvent(nodeId, RMNodeEventType.REBOOTING));
@@ -691,7 +691,7 @@ public class ResourceTrackerService extends AbstractService implements
             rmNode.getNodeID())) {
       String message = "DECOMMISSIONING " + nodeId +
           " is ready to be decommissioned";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       this.rmContext.getDispatcher().getEventHandler().handle(
           new RMNodeEvent(nodeId, RMNodeEventType.DECOMMISSION));
       this.nmLivelinessMonitor.unregister(nodeId);

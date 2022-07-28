@@ -80,7 +80,7 @@ class MockSchedulerNodes {
 
       nodeIdToSchedulerNodes.put(nodeId, sn);
 
-      LOG.debug("add scheduler node, id=" + nodeId + ", partition=" + partition);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

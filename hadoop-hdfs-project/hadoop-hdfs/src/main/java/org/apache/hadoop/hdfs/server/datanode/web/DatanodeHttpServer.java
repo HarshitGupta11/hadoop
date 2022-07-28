@@ -277,7 +277,7 @@ public class DatanodeHttpServer implements Closeable {
 
     ChannelHandler[] handlers = new ChannelHandler[classes.length];
     for (int i = 0; i < classes.length; i++) {
-      LOG.debug("Loading filter handler {}", classes[i].getName());
+      LOG.error("Temp", new RuntimeException());
       try {
         Method initializeState = classes[i].getDeclaredMethod("initializeState",
             Configuration.class);
@@ -319,7 +319,7 @@ public class DatanodeHttpServer implements Closeable {
         }
       }
       httpAddress = (InetSocketAddress) f.channel().localAddress();
-      LOG.info("Listening HTTP traffic on " + httpAddress);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (httpsServer != null) {
@@ -340,7 +340,7 @@ public class DatanodeHttpServer implements Closeable {
         }
       }
       httpsAddress = (InetSocketAddress) f.channel().localAddress();
-      LOG.info("Listening HTTPS traffic on " + httpsAddress);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

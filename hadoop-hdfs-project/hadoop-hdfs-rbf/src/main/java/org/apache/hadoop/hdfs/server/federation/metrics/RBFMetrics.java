@@ -134,7 +134,7 @@ public class RBFMetrics implements RouterMBean, FederationMBean {
     try {
       StandardMBean bean = new StandardMBean(this, RouterMBean.class);
       this.routerBeanName = MBeans.register("Router", "Router", bean);
-      LOG.info("Registered Router MBean: {}", this.routerBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad Router MBean setup", e);
     }
@@ -143,7 +143,7 @@ public class RBFMetrics implements RouterMBean, FederationMBean {
       StandardMBean bean = new StandardMBean(this, FederationMBean.class);
       this.federationBeanName = MBeans.register("Router", "FederationState",
           bean);
-      LOG.info("Registered FederationState MBean: {}", this.federationBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad FederationState MBean setup", e);
     }

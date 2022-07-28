@@ -100,15 +100,15 @@ public class RouterHeartbeatService extends PeriodicService {
             RouterHeartbeatRequest.newInstance(record);
         RouterHeartbeatResponse response = routerStore.routerHeartbeat(request);
         if (!response.getStatus()) {
-          LOG.warn("Cannot heartbeat router {}", routerId);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.debug("Router heartbeat for router {}", routerId);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException e) {
         LOG.error("Cannot heartbeat router {}", routerId, e);
       }
     } else {
-      LOG.warn("Cannot heartbeat router {}: State Store unavailable", routerId);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

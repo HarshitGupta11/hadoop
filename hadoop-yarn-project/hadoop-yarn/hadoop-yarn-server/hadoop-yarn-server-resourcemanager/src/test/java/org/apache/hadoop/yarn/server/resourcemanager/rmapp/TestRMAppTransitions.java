@@ -196,7 +196,7 @@ public class TestRMAppTransitions {
     List<RMAppManagerEvent> events = Lists.newArrayList();
     @Override
     public void handle(RMAppManagerEvent event) {
-      LOG.info("Handling app manager event: " + event);
+      LOG.error("Temp", new RuntimeException());
       events.add(event);
     }
   }
@@ -679,7 +679,7 @@ public class TestRMAppTransitions {
     subContext.setUnmanagedAM(true);
 
     // test success path
-    LOG.info("--- START: testUnmanagedAppSuccessPath ---");
+    LOG.error("Temp", new RuntimeException());
     final String diagMsg = "some diagnostics";
     RMApp application = testCreateAppFinished(subContext, diagMsg);
     Assert.assertTrue("Finished app missing diagnostics",
@@ -690,7 +690,7 @@ public class TestRMAppTransitions {
     reset(publisher);
 
     // test app fails after 1 app attempt failure
-    LOG.info("--- START: testUnmanagedAppFailPath ---");
+    LOG.error("Temp", new RuntimeException());
     application = testCreateAppRunning(subContext);
     RMAppEvent event = new RMAppFailedAttemptEvent(
         application.getApplicationId(), RMAppEventType.ATTEMPT_FAILED, "", false);
@@ -707,7 +707,7 @@ public class TestRMAppTransitions {
   
   @Test
   public void testAppSuccessPath() throws Exception {
-    LOG.info("--- START: testAppSuccessPath ---");
+    LOG.error("Temp", new RuntimeException());
     final String diagMsg = "some diagnostics";
     RMApp application = testCreateAppFinished(null, diagMsg);
     Assert.assertTrue("Finished application missing diagnostics",
@@ -717,7 +717,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppRecoverPath() throws IOException {
-    LOG.info("--- START: testAppRecoverPath ---");
+    LOG.error("Temp", new RuntimeException());
     ApplicationSubmissionContext sub =
         Records.newRecord(ApplicationSubmissionContext.class);
     sub.setAMContainerSpec(prepareContainerLaunchContext());
@@ -726,7 +726,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppNewKill() throws IOException {
-    LOG.info("--- START: testAppNewKill ---");
+    LOG.error("Temp", new RuntimeException());
 
     UserGroupInformation fooUser = UserGroupInformation.createUserForTesting(
         "fooTestAppNewKill", new String[] {"foo_group"});
@@ -748,7 +748,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppNewReject() throws IOException {
-    LOG.info("--- START: testAppNewReject ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = createNewTestApp(null);
     // NEW => FAILED event RMAppEventType.APP_REJECTED
@@ -766,7 +766,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppNewRejectAddToStore() throws IOException {
-    LOG.info("--- START: testAppNewRejectAddToStore ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = createNewTestApp(null);
     // NEW => FAILED event RMAppEventType.APP_REJECTED
@@ -785,7 +785,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppNewSavingKill() throws IOException {
-    LOG.info("--- START: testAppNewSavingKill ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppNewSaving(null);
     // NEW_SAVING => KILLED event RMAppEventType.KILL
@@ -807,7 +807,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppNewSavingReject() throws IOException {
-    LOG.info("--- START: testAppNewSavingReject ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppNewSaving(null);
     // NEW_SAVING => FAILED event RMAppEventType.APP_REJECTED
@@ -825,7 +825,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppNewSavingSaveReject() throws IOException {
-    LOG.info("--- START: testAppNewSavingSaveReject ---");
+    LOG.error("Temp", new RuntimeException());
     RMApp application = testCreateAppNewSaving(null);
     // NEW_SAVING => FAILED event RMAppEventType.APP_SAVE_FAILED
     String rejectedText = "Test Application Rejected";
@@ -842,7 +842,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppSubmittedRejected() throws IOException {
-    LOG.info("--- START: testAppSubmittedRejected ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppSubmittedNoRecovery(null);
     // SUBMITTED => FAILED event RMAppEventType.APP_REJECTED
@@ -860,7 +860,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppSubmittedKill() throws IOException, InterruptedException {
-    LOG.info("--- START: testAppSubmittedKill---");
+    LOG.error("Temp", new RuntimeException());
     RMApp application = testCreateAppSubmittedNoRecovery(null);
 
     UserGroupInformation fooUser = UserGroupInformation.createUserForTesting(
@@ -883,7 +883,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppAcceptedFailed() throws IOException {
-    LOG.info("--- START: testAppAcceptedFailed ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppAccepted(null);
     // ACCEPTED => ACCEPTED event RMAppEventType.RMAppEventType.ATTEMPT_FAILED
@@ -918,7 +918,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppAcceptedKill() throws IOException, InterruptedException {
-    LOG.info("--- START: testAppAcceptedKill ---");
+    LOG.error("Temp", new RuntimeException());
     RMApp application = testCreateAppAccepted(null);
     // ACCEPTED => KILLED event RMAppEventType.KILL
     UserGroupInformation fooUser = UserGroupInformation.createUserForTesting(
@@ -947,7 +947,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppAcceptedAccepted() throws IOException {
-    LOG.info("--- START: testAppAcceptedAccepted ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppAccepted(null);
     // ACCEPTED => ACCEPTED event RMAppEventType.ATTEMPT_LAUNCHED
@@ -963,7 +963,7 @@ public class TestRMAppTransitions {
   @Test
   public void testAppAcceptedAttemptKilled() throws IOException,
       InterruptedException {
-    LOG.info("--- START: testAppAcceptedAttemptKilled ---");
+    LOG.error("Temp", new RuntimeException());
     RMApp application = testCreateAppAccepted(null);
 
     // ACCEPTED => FINAL_SAVING event RMAppEventType.ATTEMPT_KILLED
@@ -985,7 +985,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppRunningKill() throws IOException {
-    LOG.info("--- START: testAppRunningKill ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppRunning(null);
     // RUNNING => KILLED event RMAppEventType.KILL
@@ -1010,7 +1010,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppRunningFailed() throws IOException {
-    LOG.info("--- START: testAppRunningFailed ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppRunning(null);
     RMAppAttempt appAttempt = application.getCurrentAppAttempt();
@@ -1068,7 +1068,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppAtFinishingIgnoreKill() throws Exception {
-    LOG.info("--- START: testAppAtFinishingIgnoreKill ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppFinishing(null);
     // FINISHING => FINISHED event RMAppEventType.KILL
@@ -1086,7 +1086,7 @@ public class TestRMAppTransitions {
   // event
   @Test
   public void testAppFinalSavingToFinished() throws IOException {
-    LOG.info("--- START: testAppFinalSavingToFinished ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppFinalSaving(null);
     final String diagMsg = "some diagnostics";
@@ -1110,7 +1110,7 @@ public class TestRMAppTransitions {
 
   @Test
   public void testAppFinishedFinished() throws Exception {
-    LOG.info("--- START: testAppFinishedFinished ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppFinished(null, "");
     // FINISHED => FINISHED event RMAppEventType.KILL
@@ -1132,7 +1132,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppFailedFailed() throws IOException {
-    LOG.info("--- START: testAppFailedFailed ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppNewSaving(null);
 
@@ -1162,7 +1162,7 @@ public class TestRMAppTransitions {
 
   @Test (timeout = 30000)
   public void testAppKilledKilled() throws IOException {
-    LOG.info("--- START: testAppKilledKilled ---");
+    LOG.error("Temp", new RuntimeException());
 
     RMApp application = testCreateAppRunning(null);
 
@@ -1217,7 +1217,7 @@ public class TestRMAppTransitions {
   
   @Test (timeout = 30000)
   public void testAppStartAfterKilled() {
-    LOG.info("--- START: testAppStartAfterKilled ---");
+    LOG.error("Temp", new RuntimeException());
 
     ApplicationId applicationId = MockApps.newAppID(appId++);
     RMApp application = new RMAppImpl(applicationId, rmContext, conf, null,

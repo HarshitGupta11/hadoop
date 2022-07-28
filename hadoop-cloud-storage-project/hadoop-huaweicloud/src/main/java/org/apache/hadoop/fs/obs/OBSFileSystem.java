@@ -351,7 +351,7 @@ public final class OBSFileSystem extends FileSystem {
           String errorMsg = String.format(
               "The bucket [%s] is not posix. not supported for "
                   + "trash.", bucket);
-          LOG.warn(errorMsg);
+          LOG.error("Temp", new RuntimeException());
           enableTrash = false;
           trashDir = null;
         } else {
@@ -653,7 +653,7 @@ public final class OBSFileSystem extends FileSystem {
   @Override
   public FSDataInputStream open(final Path f, final int bufferSize)
       throws IOException {
-    LOG.debug("Opening '{}' for reading.", f);
+    LOG.error("Temp", new RuntimeException());
     final FileStatus fileStatus = getFileStatus(f);
     if (fileStatus.isDirectory()) {
       throw new FileNotFoundException(
@@ -708,10 +708,10 @@ public final class OBSFileSystem extends FileSystem {
         // path references a file and overwrite is disabled
         throw new FileAlreadyExistsException(f + " already exists");
       }
-      LOG.debug("create: Overwriting file {}", f);
+      LOG.error("Temp", new RuntimeException());
     } catch (FileNotFoundException e) {
       // this means the file is not found
-      LOG.debug("create: Creating new file {}", f);
+      LOG.error("Temp", new RuntimeException());
     }
     return new FSDataOutputStream(
         new OBSBlockOutputStream(
@@ -882,7 +882,7 @@ public final class OBSFileSystem extends FileSystem {
           "non-posix bucket. Append is not supported "
               + "by OBSFileSystem");
     }
-    LOG.debug("append: Append file {}.", f);
+    LOG.error("Temp", new RuntimeException());
     String key = OBSCommonUtils.pathToKey(this, f);
 
     // get the status or throw an FNFE
@@ -934,7 +934,7 @@ public final class OBSFileSystem extends FileSystem {
   public boolean rename(final Path src, final Path dst) throws IOException {
     long startTime = System.currentTimeMillis();
     long threadId = Thread.currentThread().getId();
-    LOG.debug("Rename path {} to {} start", src, dst);
+    LOG.error("Temp", new RuntimeException());
     try {
       if (enablePosix) {
         return OBSPosixBucketUtils.renameBasedOnPosix(this, src, dst);
@@ -1048,7 +1048,7 @@ public final class OBSFileSystem extends FileSystem {
 
       return OBSObjectBucketUtils.objectDelete(this, status, recursive);
     } catch (FileNotFoundException e) {
-      LOG.warn("Couldn't delete {} - does not exist", f);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } catch (ObsException e) {
       throw OBSCommonUtils.translateException("delete", f, e);
@@ -1312,7 +1312,7 @@ public final class OBSFileSystem extends FileSystem {
    */
   @Override
   public void close() throws IOException {
-    LOG.debug("This Filesystem closed by user, clear resource.");
+    LOG.error("Temp", new RuntimeException());
     if (closed.getAndSet(true)) {
       // already closed
       return;
@@ -1455,13 +1455,13 @@ public final class OBSFileSystem extends FileSystem {
       final boolean recursive)
       throws FileNotFoundException, IOException {
     Path path = OBSCommonUtils.qualify(this, f);
-    LOG.debug("listFiles({}, {})", path, recursive);
+    LOG.error("Temp", new RuntimeException());
     try {
       // lookup dir triggers existence check
       final FileStatus fileStatus = getFileStatus(path);
       if (fileStatus.isFile()) {
         // simple case: File
-        LOG.debug("Path is a file");
+        LOG.error("Temp", new RuntimeException());
         return new OBSListing
             .SingleStatusRemoteIterator(
             OBSCommonUtils.toLocatedFileStatus(this, fileStatus));
@@ -1524,13 +1524,13 @@ public final class OBSFileSystem extends FileSystem {
       final PathFilter filter)
       throws FileNotFoundException, IOException {
     Path path = OBSCommonUtils.qualify(this, f);
-    LOG.debug("listLocatedStatus({}, {}", path, filter);
+    LOG.error("Temp", new RuntimeException());
     try {
       // lookup dir triggers existence check
       final FileStatus fileStatus = getFileStatus(path);
       if (fileStatus.isFile()) {
         // simple case: File
-        LOG.debug("Path is a file");
+        LOG.error("Temp", new RuntimeException());
         return new OBSListing.SingleStatusRemoteIterator(
             filter.accept(path) ? OBSCommonUtils.toLocatedFileStatus(
                 this, fileStatus) : null);

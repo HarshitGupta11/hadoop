@@ -89,7 +89,7 @@ public class TestThrottledInputStream {
         copyByteByByte(in, out);
       }
 
-      LOG.info("{}", in);
+      LOG.error("Temp", new RuntimeException());
       bandwidth = in.getBytesPerSec();
       Assert.assertEquals(in.getTotalBytesRead(), tmpFile.length());
       Assert.assertTrue(in.getBytesPerSec() > maxBandwidth / (factor * 1.2));

@@ -160,7 +160,7 @@ public class TestApplicationMasterServiceWithFS {
     // kick the scheduler
     nm1.nodeHeartbeat(true);
     GenericTestUtils.waitFor(() -> {
-      LOG.info("Waiting for containers to be created for app 1");
+      LOG.error("Temp", new RuntimeException());
       try {
         allocateResponse = am1.schedule();
       } catch (Exception e) {

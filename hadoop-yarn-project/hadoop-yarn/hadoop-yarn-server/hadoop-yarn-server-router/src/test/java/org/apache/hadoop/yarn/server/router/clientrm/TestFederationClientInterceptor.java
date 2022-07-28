@@ -145,7 +145,7 @@ public class TestFederationClientInterceptor extends BaseRouterClientRMTest {
   @Test
   public void testGetNewApplication()
       throws YarnException, IOException, InterruptedException {
-    LOG.info("Test FederationClientInterceptor: Get New Application");
+    LOG.error("Temp", new RuntimeException());
 
     GetNewApplicationRequest request = GetNewApplicationRequest.newInstance();
     GetNewApplicationResponse response = interceptor.getNewApplication(request);
@@ -163,7 +163,7 @@ public class TestFederationClientInterceptor extends BaseRouterClientRMTest {
   @Test
   public void testSubmitApplication()
       throws YarnException, IOException, InterruptedException {
-    LOG.info("Test FederationClientInterceptor: Submit Application");
+    LOG.error("Temp", new RuntimeException());
 
     ApplicationId appId = ApplicationId.newInstance(System.currentTimeMillis(),
         1);
@@ -268,7 +268,7 @@ public class TestFederationClientInterceptor extends BaseRouterClientRMTest {
   @Test
   public void testForceKillApplication()
       throws YarnException, IOException, InterruptedException {
-    LOG.info("Test FederationClientInterceptor: Force Kill Application");
+    LOG.error("Temp", new RuntimeException());
 
     ApplicationId appId =
         ApplicationId.newInstance(System.currentTimeMillis(), 1);
@@ -343,7 +343,7 @@ public class TestFederationClientInterceptor extends BaseRouterClientRMTest {
   @Test
   public void testGetApplicationReport()
       throws YarnException, IOException, InterruptedException {
-    LOG.info("Test FederationClientInterceptor: Get Application Report");
+    LOG.error("Temp", new RuntimeException());
 
     ApplicationId appId =
         ApplicationId.newInstance(System.currentTimeMillis(), 1);
@@ -512,7 +512,7 @@ public class TestFederationClientInterceptor extends BaseRouterClientRMTest {
 
   @Test
   public void testGetClusterMetricsRequest() throws YarnException, IOException {
-    LOG.info("Test FederationClientInterceptor : Get Cluster Metrics request");
+    LOG.error("Temp", new RuntimeException());
     // null request
     GetClusterMetricsResponse response = interceptor.getClusterMetrics(null);
     Assert.assertEquals(subClusters.size(),

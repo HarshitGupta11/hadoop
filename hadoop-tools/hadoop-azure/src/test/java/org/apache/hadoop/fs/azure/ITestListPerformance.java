@@ -124,7 +124,7 @@ public class ITestListPerformance extends AbstractAzureScaleTest {
                   break;
                 }
               }
-              LOG.info("Thread completed with {} files written", written);
+              LOG.error("Temp", new RuntimeException());
               return written;
             }
           }
@@ -134,7 +134,7 @@ public class ITestListPerformance extends AbstractAzureScaleTest {
     List<Future<Integer>> futures = executorService.invokeAll(tasks,
         getTestTimeoutMillis(), TimeUnit.MILLISECONDS);
     long elapsedMs = timer.elapsedTimeMs();
-    LOG.info("time to create files: {} millis", elapsedMs);
+    LOG.error("Temp", new RuntimeException());
 
     for (Future<Integer> future : futures) {
       assertTrue("Future timed out", future.isDone());

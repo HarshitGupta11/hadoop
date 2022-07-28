@@ -72,7 +72,7 @@ public class AbfsTokenRenewer extends TokenRenewer {
   @Override
   public long renew(final Token<?> token, Configuration conf)
           throws IOException, InterruptedException {
-    LOG.debug("Renewing the delegation token");
+    LOG.error("Temp", new RuntimeException());
     return getInstance(conf).renewDelegationToken(token);
   }
 
@@ -87,7 +87,7 @@ public class AbfsTokenRenewer extends TokenRenewer {
   @Override
   public void cancel(final Token<?> token, Configuration conf)
           throws IOException, InterruptedException {
-    LOG.debug("Cancelling the delegation token");
+    LOG.error("Temp", new RuntimeException());
     getInstance(conf).cancelDelegationToken(token);
   }
 

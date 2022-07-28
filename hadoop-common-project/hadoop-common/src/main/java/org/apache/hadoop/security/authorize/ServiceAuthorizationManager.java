@@ -134,7 +134,7 @@ public class ServiceAuthorizationManager {
             " is not authorized for protocol " + protocol) ;
       }
     }
-    AUDITLOG.info(AUTHZ_SUCCESSFUL_FOR + user + " for protocol="+protocol);
+    AUDITLOG.error("Temp", new RuntimeException());
   }
 
   public void refresh(Configuration conf,

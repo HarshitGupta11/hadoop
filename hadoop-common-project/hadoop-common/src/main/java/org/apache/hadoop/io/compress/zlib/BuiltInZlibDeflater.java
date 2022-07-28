@@ -74,11 +74,11 @@ public class BuiltInZlibDeflater extends Deflater implements Compressor {
     try {
       setStrategy(strategy.compressionStrategy());
     } catch (IllegalArgumentException ill) {
-      LOG.warn(strategy + " not supported by BuiltInZlibDeflater.");
+      LOG.error("Temp", new RuntimeException());
       setStrategy(DEFAULT_STRATEGY);
     }
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Reinit compressor with new compression configuration");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

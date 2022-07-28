@@ -297,7 +297,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
     }
     
     if (wantToBeInElection) {
-      LOG.info("Already in election. Not re-connecting.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -305,7 +305,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
     System.arraycopy(data, 0, appData, 0, data.length);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Attempting active election for " + this);
+      LOG.error("Temp", new RuntimeException());
     }
     joinElectionInternal();
   }
@@ -345,7 +345,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
     for (int i = 1; i < pathParts.length; i++) {
       sb.append("/").append(pathParts[i]);
       String prefixPath = sb.toString();
-      LOG.debug("Ensuring existence of " + prefixPath);
+      LOG.error("Temp", new RuntimeException());
       try {
         createWithRetries(prefixPath, new byte[]{}, zkAcl, CreateMode.PERSISTENT);
       } catch (KeeperException e) {
@@ -363,7 +363,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       }
     }
     
-    LOG.info("Successfully created " + znodeWorkingDir + " in ZK.");
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**
@@ -378,7 +378,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
         "clearParentZNode() may not be called while in the election");
 
     try {
-      LOG.info("Recursively deleting " + znodeWorkingDir + " from ZK...");
+      LOG.error("Temp", new RuntimeException());
 
       zkDoWithRetries(new ZKAction<Void>() {
         @Override
@@ -391,7 +391,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       throw new IOException("Couldn't clear parent znode " + znodeWorkingDir,
           e);
     }
-    LOG.info("Successfully deleted " + znodeWorkingDir + " from ZK.");
+    LOG.error("Temp", new RuntimeException());
   }
 
 
@@ -409,7 +409,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
    * if a failover occurs due to dropping out of the election.
    */
   public synchronized void quitElection(boolean needFence) {
-    LOG.info("Yielding from election");
+    LOG.error("Temp", new RuntimeException());
     if (!needFence && state == State.ACTIVE) {
       // If active is gracefully going back to standby mode, remove
       // our permanent znode so no one fences us.
@@ -497,11 +497,11 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
 
     String errorMessage = "Received create error from Zookeeper. code:"
         + code.toString() + " for path " + path;
-    LOG.debug(errorMessage);
+    LOG.error("Temp", new RuntimeException());
 
     if (shouldRetry(code)) {
       if (createRetryCount < maxRetryNum) {
-        LOG.debug("Retrying createNode createRetryCount: " + createRetryCount);
+        LOG.error("Temp", new RuntimeException());
         ++createRetryCount;
         createLockNodeAsync();
         return;
@@ -510,7 +510,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
           + ". Not retrying further znode create connection errors.";
     } else if (isSessionExpired(code)) {
       // This isn't fatal - the client Watcher will re-join the election
-      LOG.warn("Lock acquisition failed because session was lost");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -560,7 +560,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
 
     String errorMessage = "Received stat error from Zookeeper. code:"
         + code.toString();
-    LOG.debug(errorMessage);
+    LOG.error("Temp", new RuntimeException());
 
     if (shouldRetry(code)) {
       if (statRetryCount < maxRetryNum) {
@@ -572,7 +572,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
           + ". Not retrying further znode monitoring connection errors.";
     } else if (isSessionExpired(code)) {
       // This isn't fatal - the client Watcher will re-join the election
-      LOG.warn("Lock monitoring failed because session was lost");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -613,7 +613,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       // the connection state has changed
       switch (event.getState()) {
       case SyncConnected:
-        LOG.info("Session connected.");
+        LOG.error("Temp", new RuntimeException());
         // if the listener was asked to move to safe state then it needs to
         // be undone
         ConnectionState prevConnectionState = zkConnectionState;
@@ -624,7 +624,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
         }
         break;
       case Disconnected:
-        LOG.info("Session disconnected. Entering neutral mode...");
+        LOG.error("Temp", new RuntimeException());
 
         // ask the app to move to safe state because zookeeper connection
         // is not active and we dont know our state
@@ -634,12 +634,12 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       case Expired:
         // the connection got terminated because of session timeout
         // call listener to reconnect
-        LOG.info("Session expired. Entering neutral mode and rejoining...");
+        LOG.error("Temp", new RuntimeException());
         enterNeutralMode();
         reJoinElection(0);
         break;
       case SaslAuthenticated:
-        LOG.info("Successfully authenticated to ZooKeeper using SASL.");
+        LOG.error("Temp", new RuntimeException());
         break;
       default:
         fatalError("Unexpected Zookeeper watch event state: "
@@ -667,7 +667,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
         break;
       default:
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Unexpected node event: " + eventType + " for path: " + path);
+          LOG.error("Temp", new RuntimeException());
         }
         monitorActiveStatus();
       }
@@ -729,7 +729,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
   private void monitorActiveStatus() {
     assert wantToBeInElection;
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Monitoring active leader for " + this);
+      LOG.error("Temp", new RuntimeException());
     }
     statRetryCount = 0;
     monitorLockNodeAsync();
@@ -751,7 +751,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
   }
 
   private void reJoinElection(int sleepTime) {
-    LOG.info("Trying to re-establish ZK session");
+    LOG.error("Temp", new RuntimeException());
     
     // Some of the test cases rely on expiring the ZK sessions and
     // ensuring that the other node takes over. But, there's a race
@@ -827,16 +827,16 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
     boolean success = false;
     while(!success && connectionRetryCount < maxRetryNum) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Establishing zookeeper connection for " + this);
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         createConnection();
         success = true;
       } catch(IOException e) {
-        LOG.warn(e.toString());
+        LOG.error("Temp", new RuntimeException());
         sleepFor(5000);
       } catch(KeeperException e) {
-        LOG.warn(e.toString());
+        LOG.error("Temp", new RuntimeException());
         sleepFor(5000);
       }
       ++connectionRetryCount;
@@ -857,7 +857,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
     }
     zkClient = connectToZooKeeper();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Created new connection for " + this);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -867,7 +867,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       return;
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Terminating ZK connection for " + this);
+      LOG.error("Temp", new RuntimeException());
     }
     ZooKeeper tempZk = zkClient;
     zkClient = null;
@@ -875,7 +875,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
     try {
       tempZk.close();
     } catch(InterruptedException e) {
-      LOG.warn(e.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     zkConnectionState = ConnectionState.TERMINATED;
     wantToBeInElection = false;
@@ -896,13 +896,13 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       Stat oldBreadcrumbStat = fenceOldActive();
       writeBreadCrumbNode(oldBreadcrumbStat);
 
-      LOG.debug("Becoming active for {}", this);
+      LOG.error("Temp", new RuntimeException());
 
       appClient.becomeActive();
       state = State.ACTIVE;
       return true;
     } catch (Exception e) {
-      LOG.warn("Exception handling the winning of election", e);
+      LOG.error("Temp", new RuntimeException());
       // Caller will handle quitting and rejoining the election.
       return false;
     }
@@ -937,7 +937,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
    */
   private void tryDeleteOwnBreadCrumbNode() {
     assert state == State.ACTIVE;
-    LOG.info("Deleting bread-crumb of active node...");
+    LOG.error("Temp", new RuntimeException());
     
     // Sanity check the data. This shouldn't be strictly necessary,
     // but better to play it safe.
@@ -969,7 +969,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
   private Stat fenceOldActive() throws InterruptedException, KeeperException {
     final Stat stat = new Stat();
     byte[] data;
-    LOG.info("Checking for any old active which needs to be fenced...");
+    LOG.error("Temp", new RuntimeException());
     try {
       data = zkDoWithRetries(new ZKAction<byte[]>() {
         @Override
@@ -979,7 +979,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       });
     } catch (KeeperException ke) {
       if (isNodeDoesNotExist(ke.code())) {
-        LOG.info("No old node to fence");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       
@@ -990,9 +990,9 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       throw ke;
     }
 
-    LOG.info("Old node exists: {}", StringUtils.byteToHexString(data));
+    LOG.error("Temp", new RuntimeException());
     if (Arrays.equals(data, appData)) {
-      LOG.info("But old node has our own data, so don't need to fence it.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       appClient.fenceOldActive(data);
     }
@@ -1001,7 +1001,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
 
   private void becomeStandby() {
     if (state != State.STANDBY) {
-      LOG.debug("Becoming standby for {}", this);
+      LOG.error("Temp", new RuntimeException());
       state = State.STANDBY;
       appClient.becomeStandby();
     }
@@ -1009,7 +1009,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
 
   private void enterNeutralMode() {
     if (state != State.NEUTRAL) {
-      LOG.debug("Entering neutral mode for {}", this);
+      LOG.error("Temp", new RuntimeException());
       state = State.NEUTRAL;
       appClient.enterNeutralMode();
     }
@@ -1022,7 +1022,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
 
   private void monitorLockNodeAsync() {
     if (monitorLockNodePending && monitorLockNodeClient == zkClient) {
-      LOG.info("Ignore duplicate monitor lock-node request.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     monitorLockNodePending = true;
@@ -1188,7 +1188,7 @@ public class ActiveStandbyElector implements StatCallback, StringCallback {
       hasReceivedEvent.countDown();
       try {
         if (!hasSetZooKeeper.await(zkSessionTimeout, TimeUnit.MILLISECONDS)) {
-          LOG.debug("Event received with stale zk");
+          LOG.error("Temp", new RuntimeException());
         }
         ActiveStandbyElector.this.processWatchEvent(
             zk, event);

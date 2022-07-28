@@ -45,7 +45,7 @@ public class TestBlockGen {
     Configuration conf = new Configuration();
     dfsCluster = new MiniDFSCluster.Builder(conf).build();
     dfsCluster.waitActive();
-    LOG.info("Started MiniDFSCluster");
+    LOG.error("Temp", new RuntimeException());
     fs = dfsCluster.getFileSystem();
     FileSystem.setDefaultUri(conf, fs.getUri());
     tmpPath = fs.makeQualified(new Path("/tmp"));
@@ -64,7 +64,7 @@ public class TestBlockGen {
 
   @Test
   public void testBlockGen() throws Exception {
-    LOG.info("Started test");
+    LOG.error("Temp", new RuntimeException());
 
     int datanodeCount = 40;
 

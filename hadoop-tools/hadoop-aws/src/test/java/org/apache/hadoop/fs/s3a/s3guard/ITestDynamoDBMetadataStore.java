@@ -174,7 +174,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
       try {
         ddbmsStatic.getTable().waitForDelete();
       } catch (IllegalArgumentException | InterruptedException ex) {
-        LOG.warn("When awaiting a table to be cleaned up", e);
+        LOG.error("Temp", new RuntimeException());
       }
       super.setUp();
     }
@@ -226,7 +226,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     for (Map.Entry<String, String> tagEntry : tagMap.entrySet()) {
       conf.set(S3GUARD_DDB_TABLE_TAG + tagEntry.getKey(), tagEntry.getValue());
     }
-    LOG.debug("Creating static ddbms which will be shared between tests.");
+    LOG.error("Temp", new RuntimeException());
     enableOnDemand(conf);
 
     ddbmsStatic = new DynamoDBMetadataStore();
@@ -235,7 +235,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
 
   @AfterClass
   public static void afterClassTeardown() {
-    LOG.debug("Destroying static DynamoDBMetadataStore.");
+    LOG.error("Temp", new RuntimeException());
     destroy(ddbmsStatic);
     ddbmsStatic = null;
   }
@@ -251,7 +251,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
         ddbms.destroy();
         IOUtils.closeStream(ddbms);
       } catch (IOException e) {
-        LOG.debug("On ddbms shutdown", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -271,7 +271,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
    */
   @Override
   public void tearDown() throws Exception {
-    LOG.info("Removing data from ddbms table in teardown.");
+    LOG.error("Temp", new RuntimeException());
     Thread.currentThread().setName("Teardown");
     // The following is a way to be sure the table will be cleared and there
     // will be no leftovers after the test.
@@ -319,18 +319,18 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
           forgotten++;
           ms.forgetMetadata(desc.next().getPath());
         }
-        LOG.info("Forgot {} entries", forgotten);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (FileNotFoundException fnfe) {
       // there is no table.
       return;
     } catch (IOException ioe) {
-      LOG.warn("Failed to forget entries under {}", path, ioe);
+      LOG.error("Temp", new RuntimeException());
       if (!suppressErrors) {
         throw ioe;
       }
     }
-    LOG.info("Throttle statistics: {}", throttleTracker);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override protected String getPathStringForPrune(String path)
@@ -576,7 +576,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     final Path root = fileSystem.makeQualified(path);
     final Path oldDir = new Path(root, "oldDir");
     final Path newDir = new Path(root, "newDir");
-    LOG.info("doTestBatchWrite: oldDir={}, newDir={}", oldDir, newDir);
+    LOG.error("Temp", new RuntimeException());
     Thread.currentThread()
         .setName(String.format("Bulk put=%d; delete=%d", numPut, numDelete));
 
@@ -630,7 +630,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
         "Move")) {
       ms.move(pathsToDelete, newMetas, state);
     }
-    LOG.info("Throttle status {}", throttleTracker);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("Number of children in source directory",
         0, ms.listChildren(oldDir).withoutTombstones().numEntries());
     if (newMetas != null) {
@@ -728,7 +728,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     intercept(IOException.class, E_NO_VERSION_MARKER_AND_NOT_EMPTY,
         () -> localTableHandler.initTable());
 
-    LOG.info("3/6: table has only version marker item then it will be tagged");
+    LOG.error("Temp", new RuntimeException());
     table.putItem(originalVersionMarker);
     localTableHandler.initTable();
     final int versionFromTag2 = extractVersionFromMarker(
@@ -747,7 +747,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     assertEquals("Table should have the right version marker item " +
         "if there was a version tag.", VERSION, versionFromItem2);
 
-    LOG.info("5/6: add a different marker tag to the table: init should fail");
+    LOG.error("Temp", new RuntimeException());
     deleteVersionMarkerItem(table);
     removeVersionMarkerTag(table, addb);
     Item v200 = createVersionMarker(VERSION_MARKER_ITEM_NAME, VERSION * 2, 0);
@@ -755,7 +755,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     intercept(IOException.class, E_INCOMPATIBLE_ITEM_VERSION,
         () -> localTableHandler.initTable());
 
-    LOG.info("6/6: add a different marker item to the table: init should fail");
+    LOG.error("Temp", new RuntimeException());
     deleteVersionMarkerItem(table);
     removeVersionMarkerTag(table, addb);
     int wrongVersion = VERSION + 3;
@@ -1207,7 +1207,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     Path basePath = strToPath(base);
     DirListingMetadata listing = ms.listChildren(basePath);
     String childText = listing.prettyPrint();
-    LOG.info("Listing {}", childText);
+    LOG.error("Temp", new RuntimeException());
     Collection<PathMetadata> childList = listing.getListing();
     Assertions.assertThat(childList)
         .as("listing of %s with %s", basePath, childText)
@@ -1220,7 +1220,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
         .isTrue();
     getNonNull(subFile);
 
-    LOG.info("Pruning");
+    LOG.error("Temp", new RuntimeException());
     // now prune
     ms.prune(PruneMode.ALL_BY_MODTIME,
         now + MINUTE, subdir);
@@ -1381,7 +1381,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
 
     // prune all entries older than t1 must delete child1 but
     // not the directory, even though it is of the same age
-    LOG.info("Starting prune of all entries older than {}", t1);
+    LOG.error("Temp", new RuntimeException());
     ms.prune(PruneMode.ALL_BY_MODTIME, t1);
     // child1 is gone
     assertNotFound(child1);
@@ -1468,7 +1468,7 @@ public class ITestDynamoDBMetadataStore extends MetadataStoreTestBase {
     try (BufferedReader in = new BufferedReader(new InputStreamReader(
         new FileInputStream(storeFile), Charset.forName("UTF-8")))) {
       for (String line : org.apache.commons.io.IOUtils.readLines(in)) {
-        LOG.info(line);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

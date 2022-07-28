@@ -129,11 +129,11 @@ public class InMemorySCMStore extends SCMStore {
     super.serviceStart();
 
     // Get initial list of running applications
-    LOG.info("Getting the active app list to initialize the in-memory scm store");
+    LOG.error("Temp", new RuntimeException());
     synchronized (initialAppsLock) {
       initialApps = appChecker.getActiveApplications();
     }
-    LOG.info(initialApps.size() + " apps recorded as active at this time");
+    LOG.error("Temp", new RuntimeException());
 
     Runnable task = new AppCheckTask(appChecker);
     scheduler.scheduleAtFixedRate(task, initialDelayMin, checkPeriodMin,
@@ -147,18 +147,18 @@ public class InMemorySCMStore extends SCMStore {
     LOG.info("Stopping the " + InMemorySCMStore.class.getSimpleName()
         + " service.");
     if (scheduler != null) {
-      LOG.info("Shutting down the background thread.");
+      LOG.error("Temp", new RuntimeException());
       scheduler.shutdownNow();
       try {
         if (!scheduler.awaitTermination(10, TimeUnit.SECONDS)) {
-          LOG.warn("Gave up waiting for the app check task to shutdown.");
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (InterruptedException e) {
         LOG.warn(
             "The InMemorySCMStore was interrupted while shutting down the "
                 + "app check task.", e);
       }
-      LOG.info("The background thread stopped.");
+      LOG.error("Temp", new RuntimeException());
     }
     super.serviceStop();
   }
@@ -180,7 +180,7 @@ public class InMemorySCMStore extends SCMStore {
       // clear out the initial resource to reduce the footprint
       it.remove();
     }
-    LOG.info("Bootstrapping complete");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @VisibleForTesting
@@ -207,7 +207,7 @@ public class InMemorySCMStore extends SCMStore {
     // (e.g. 9/c/d/<checksum>/file)
     String pattern = SharedCacheUtil.getCacheEntryGlobPattern(nestedLevel+1);
 
-    LOG.info("Querying for all individual cached resource files");
+    LOG.error("Temp", new RuntimeException());
     FileStatus[] entries = fs.globStatus(new Path(root, pattern));
     int numEntries = entries == null ? 0 : entries.length;
     LOG.info("Found " + numEntries + " files: processing for one resource per "
@@ -488,7 +488,7 @@ public class InMemorySCMStore extends SCMStore {
     @Override
     public void run() {
       try {
-        LOG.info("Checking the initial app list for finished applications.");
+        LOG.error("Temp", new RuntimeException());
         synchronized (initialAppsLock) {
           if (initialApps.isEmpty()) {
             // we're fine, no-op; there are no active apps that were running at

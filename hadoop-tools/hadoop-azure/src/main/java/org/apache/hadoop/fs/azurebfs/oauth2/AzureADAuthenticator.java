@@ -105,7 +105,7 @@ public final class AzureADAuthenticator {
     qp.add("grant_type", "client_credentials");
     qp.add("client_id", clientId);
     qp.add("client_secret", clientSecret);
-    LOG.debug("AADToken: starting to fetch token using client creds for client ID " + clientId);
+    LOG.error("Temp", new RuntimeException());
 
     return getTokenCall(authEndpoint, qp.serialize(), null, null);
   }
@@ -135,7 +135,7 @@ public final class AzureADAuthenticator {
 
     if (tenantGuid != null && tenantGuid.length() > 0) {
       authority = authority + tenantGuid;
-      LOG.debug("MSI authority : {}", authority);
+      LOG.error("Temp", new RuntimeException());
       qp.add("authority", authority);
     }
 
@@ -150,7 +150,7 @@ public final class AzureADAuthenticator {
     Hashtable<String, String> headers = new Hashtable<>();
     headers.put("Metadata", "true");
 
-    LOG.debug("AADToken: starting to fetch token using MSI");
+    LOG.error("Temp", new RuntimeException());
     return getTokenCall(authEndpoint, qp.serialize(), headers, "GET", true);
   }
 
@@ -174,7 +174,7 @@ public final class AzureADAuthenticator {
     if (clientId != null) {
       qp.add("client_id", clientId);
     }
-    LOG.debug("AADToken: starting to fetch token using refresh token for client ID " + clientId);
+    LOG.error("Temp", new RuntimeException());
     return getTokenCall(authEndpoint, qp.serialize(), null, null);
   }
 
@@ -320,7 +320,7 @@ public final class AzureADAuthenticator {
           && tokenFetchRetryPolicy.shouldRetry(retryCount, httperror);
       retryCount++;
       if (shouldRetry) {
-        LOG.debug("Retrying getTokenSingleCall. RetryCount = {}", retryCount);
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(tokenFetchRetryPolicy.getRetryInterval(retryCount));
         } catch (InterruptedException e) {
@@ -377,7 +377,7 @@ public final class AzureADAuthenticator {
       }
 
       int httpResponseCode = conn.getResponseCode();
-      LOG.debug("Response {}", httpResponseCode);
+      LOG.error("Temp", new RuntimeException());
       AbfsIoUtils.dumpHeadersToDebugLog("Response Headers",
           conn.getHeaderFields());
 
@@ -412,7 +412,7 @@ public final class AzureADAuthenticator {
                         + (responseBody.isEmpty()
                           ? ""
                           : ("\nFirst 1K of Body: " + responseBody));
-        LOG.debug(logMessage);
+        LOG.error("Temp", new RuntimeException());
         if (httpResponseCode == HttpURLConnection.HTTP_OK) {
           // 200 is returned by some of the sign-on pages, but can also
           // come from proxies, utterly wrong URLs, etc.
@@ -477,7 +477,7 @@ public final class AzureADAuthenticator {
       }
       jp.close();
       if (expiresOnInSecs > 0) {
-        LOG.debug("Expiry based on expires_on: {}", expiresOnInSecs);
+        LOG.error("Temp", new RuntimeException());
         token.setExpiry(new Date(expiresOnInSecs * 1000));
       } else {
         if (isMsi) {
@@ -487,7 +487,7 @@ public final class AzureADAuthenticator {
           throw new UnsupportedOperationException("MSI Responded with invalid expires_on");
         }
 
-        LOG.debug("Expiry based on expires_in: {}", expiryPeriodInSecs);
+        LOG.error("Temp", new RuntimeException());
         long expiry = System.currentTimeMillis();
         expiry = expiry + expiryPeriodInSecs * 1000L; // convert expiryPeriod to milliseconds and add
         token.setExpiry(new Date(expiry));
@@ -496,7 +496,7 @@ public final class AzureADAuthenticator {
       LOG.debug("AADToken: fetched token with expiry {}, expiresOn passed: {}",
           token.getExpiry().toString(), expiresOnInSecs);
     } catch (Exception ex) {
-      LOG.debug("AADToken: got exception when parsing json token " + ex.toString());
+      LOG.error("Temp", new RuntimeException());
       throw ex;
     } finally {
       httpResponseStream.close();

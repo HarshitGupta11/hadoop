@@ -133,7 +133,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     checkCompInstancesInOrder(client, exampleApp);
 
     // stop the service
-    LOG.info("Stop the service");
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(exampleApp.getName(), true);
     ApplicationReport report = client.getYarnClient()
         .getApplicationReport(ApplicationId.fromString(exampleApp.getId()));
@@ -146,7 +146,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Assert.assertFalse("Registry ZK service path still exists after stop",
         getCuratorService().zkPathExists(serviceZKPath));
 
-    LOG.info("Destroy the service");
+    LOG.error("Temp", new RuntimeException());
     // destroy the service and check the app dir is deleted from fs.
     Assert.assertEquals(0, client.actionDestroy(exampleApp.getName()));
     // check the service dir on hdfs (in this case, local fs) are deleted.
@@ -340,7 +340,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Multimap<String, String> containersBeforeFailure =
         waitForAllCompToBeReady(client, exampleApp);
 
-    LOG.info("Restart the resource manager");
+    LOG.error("Temp", new RuntimeException());
     getYarnCluster().restartResourceManager(
         getYarnCluster().getActiveRMIndex());
     GenericTestUtils.waitFor(() ->
@@ -353,7 +353,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     ApplicationAttemptId applicationAttemptId = client.getYarnClient()
         .getApplicationReport(exampleAppId).getCurrentApplicationAttemptId();
 
-    LOG.info("Fail the application attempt {}", applicationAttemptId);
+    LOG.error("Temp", new RuntimeException());
     client.getYarnClient().failApplicationAttempt(applicationAttemptId);
     //wait until attempt 2 is running
     GenericTestUtils.waitFor(() -> {
@@ -376,7 +376,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
               containersAfterFailure.get(compName).size());
     });
 
-    LOG.info("Stop/destroy service {}", exampleApp);
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(exampleApp.getName(), true);
     client.actionDestroy(exampleApp.getName());
   }
@@ -421,7 +421,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Assert.assertEquals("comp does not have new env", "val1",
         active.getComponent(component.getName()).getConfiguration()
             .getEnv("key1"));
-    LOG.info("Stop/destroy service {}", service);
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(service.getName(), true);
     client.actionDestroy(service.getName());
   }
@@ -460,7 +460,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Assert.assertEquals("compb does not have new env", "val2",
         active.getComponent(component2.getName()).getConfiguration()
             .getEnv("key2"));
-    LOG.info("Stop/destroy service {}", service);
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(service.getName(), true);
     client.actionDestroy(service.getName());
   }
@@ -503,7 +503,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Assert.assertEquals("comp does not have new env", "val0",
         active.getComponent(component.getName()).getConfiguration()
             .getEnv("key1"));
-    LOG.info("Stop/destroy service {}", service);
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(service.getName(), true);
     client.actionDestroy(service.getName());
   }
@@ -641,7 +641,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     client.flexByRestService(exampleApp.getName(), compCounts);
     waitForServiceToBeStable(client, exampleApp);
 
-    LOG.info("Stop/destroy service {}", exampleApp);
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(exampleApp.getName(), true);
     client.actionDestroy(exampleApp.getName());
   }
@@ -818,7 +818,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
       Assert.fail("Should not have thrown exception");
     }
 
-    LOG.info("Destroy service {}", exampleApp);
+    LOG.error("Temp", new RuntimeException());
     client.actionDestroy(exampleApp.getName());
   }
 
@@ -837,7 +837,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     // sort based on launchTime
     containerList
         .sort((o1, o2) -> o1.getLaunchTime().compareTo(o2.getLaunchTime()));
-    LOG.info("containerList: " + containerList);
+    LOG.error("Temp", new RuntimeException());
     // check the containers are in the dependency order.
     int index = 0;
     for (String comp : compOrder) {
@@ -933,7 +933,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     try {
       client.actionStop(exampleApp.getName(), true);
     } catch (ApplicationNotFoundException e) {
-      LOG.info("ignore ApplicationNotFoundException during stopping");
+      LOG.error("Temp", new RuntimeException());
     }
     client.actionStart(exampleApp.getName());
     waitForServiceToBeStable(client, exampleApp);

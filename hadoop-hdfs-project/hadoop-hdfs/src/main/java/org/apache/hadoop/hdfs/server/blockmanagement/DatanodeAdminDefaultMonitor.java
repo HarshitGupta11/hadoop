@@ -113,7 +113,7 @@ public class DatanodeAdminDefaultMonitor extends DatanodeAdminMonitorBase
       numBlocksPerCheck =
           DFSConfigKeys.DFS_NAMENODE_DECOMMISSION_BLOCKS_PER_INTERVAL_DEFAULT;
     }
-    LOG.info("Initialized the Default Decommission and Maintenance monitor");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private boolean exceededNumBlocksPerCheck() {
@@ -139,7 +139,7 @@ public class DatanodeAdminDefaultMonitor extends DatanodeAdminMonitorBase
 
   @Override
   public void run() {
-    LOG.debug("DatanodeAdminMonitor is running.");
+    LOG.error("Temp", new RuntimeException());
     if (!namesystem.isRunning()) {
       LOG.info("Namesystem is not running, skipping " +
           "decommissioning/maintenance checks.");
@@ -218,7 +218,7 @@ public class DatanodeAdminDefaultMonitor extends DatanodeAdminMonitorBase
           // This is a known datanode, check if its # of insufficiently
           // replicated blocks has dropped to zero and if it can move
           // to the next state.
-          LOG.debug("Processing {} node {}", dn.getAdminState(), dn);
+          LOG.error("Temp", new RuntimeException());
           pruneReliableBlocks(dn, blocks);
         }
         if (blocks.size() == 0) {
@@ -352,7 +352,7 @@ public class DatanodeAdminDefaultMonitor extends DatanodeAdminMonitorBase
         // configured per-iteration-limit.
         namesystem.writeUnlock();
         try {
-          LOG.debug("Yielded lock during decommission/maintenance check");
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(0, 500);
         } catch (InterruptedException ignored) {
           return;

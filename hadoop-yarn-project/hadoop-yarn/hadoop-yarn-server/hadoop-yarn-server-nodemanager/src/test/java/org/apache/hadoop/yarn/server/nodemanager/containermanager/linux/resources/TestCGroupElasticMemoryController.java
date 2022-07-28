@@ -296,7 +296,7 @@ public class TestCGroupElasticMemoryController {
         LOG.info(String.format("Calling process destroy in %d ms",
             System.currentTimeMillis() - start));
         controller.stopListening();
-        LOG.info("Called process destroy.");
+        LOG.error("Temp", new RuntimeException());
       });
       controller.run();
     } finally {

@@ -138,7 +138,7 @@ public class ShellBasedUnixGroupsNetgroupMapping
         Shell.getUsersForNetgroupCommand(netgroup.substring(1)));
     } catch (ExitCodeException e) {
       // if we didn't get the group - just return empty list;
-      LOG.warn("error getting users for netgroup " + netgroup, e);
+      LOG.error("Temp", new RuntimeException());
     }
     return result;
   }

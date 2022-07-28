@@ -137,7 +137,7 @@ public class TestAMLaunchFailure {
 //      public void handle(ASMEvent<AMLauncherEventType> appEvent) {
 //        switch(appEvent.getType()) {
 //        case LAUNCH:
-//          LOG.info("LAUNCH called ");
+//          LOG.error("Temp", new RuntimeException());
 //          app = appEvent.getApplication();
 //          synchronized (notify) {
 //            notify.addAndGet(1);

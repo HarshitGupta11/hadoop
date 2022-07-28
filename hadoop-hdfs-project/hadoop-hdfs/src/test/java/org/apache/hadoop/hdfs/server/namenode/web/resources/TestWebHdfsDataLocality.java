@@ -76,7 +76,7 @@ public class TestWebHdfsDataLocality {
     final Configuration conf = WebHdfsTestUtil.createConf();
     final String[] racks = {RACK0, RACK0, RACK1, RACK1, RACK2, RACK2};
     final int nDataNodes = racks.length;
-    LOG.info("nDataNodes=" + nDataNodes + ", racks=" + Arrays.asList(racks));
+    LOG.error("Temp", new RuntimeException());
 
     final MiniDFSCluster cluster = new MiniDFSCluster.Builder(conf)
         .numDataNodes(nDataNodes)
@@ -89,7 +89,7 @@ public class TestWebHdfsDataLocality {
       final NameNode namenode = cluster.getNameNode();
       final DatanodeManager dm = namenode.getNamesystem().getBlockManager(
           ).getDatanodeManager();
-      LOG.info("dm=" + dm);
+      LOG.error("Temp", new RuntimeException());
   
       final long blocksize = DFSConfigKeys.DFS_BLOCK_SIZE_DEFAULT;
       final String f = "/foo";
@@ -173,7 +173,7 @@ public class TestWebHdfsDataLocality {
       final NameNode namenode = cluster.getNameNode();
       final DatanodeManager dm = namenode.getNamesystem().getBlockManager(
           ).getDatanodeManager();
-      LOG.info("dm=" + dm);
+      LOG.error("Temp", new RuntimeException());
   
       final long blocksize = DFSConfigKeys.DFS_BLOCK_SIZE_DEFAULT;
       final String f = "/foo";

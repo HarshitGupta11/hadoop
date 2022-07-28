@@ -203,7 +203,7 @@ public class NMLogAggregationStatusTracker extends CompositeService {
     this.writeLocker.lock();
     try {
       long currentTimeStamp = System.currentTimeMillis();
-      LOG.info("Rolling over the cached log aggregation status.");
+      LOG.error("Temp", new RuntimeException());
       Iterator<Entry<ApplicationId, AppLogAggregationStatusForRMRecovery>> it
           = recoveryStatuses.entrySet().iterator();
       while (it.hasNext()) {

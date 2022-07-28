@@ -434,7 +434,7 @@ public class ZKRMStateStore extends RMStateStore {
     }
 
     builder.append(getStat.toString());
-    LOG.debug("{}", builder);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void setRootNodeAcls() throws Exception {
@@ -546,7 +546,7 @@ public class ZKRMStateStore extends RMStateStore {
     List<String> planNodes = getChildren(reservationRoot);
 
     for (String planName : planNodes) {
-      LOG.debug("Loading plan from znode: {}", planName);
+      LOG.error("Temp", new RuntimeException());
 
       String planNodePath = getNodePath(reservationRoot, planName);
       List<String> reservationNodes = getChildren(planNodePath);
@@ -555,7 +555,7 @@ public class ZKRMStateStore extends RMStateStore {
         String reservationNodePath =
             getNodePath(planNodePath, reservationNodeName);
 
-        LOG.debug("Loading reservation from znode: {}", reservationNodePath);
+        LOG.error("Temp", new RuntimeException());
 
         byte[] reservationData = getData(reservationNodePath);
         ReservationAllocationStateProto allocationState =
@@ -578,7 +578,7 @@ public class ZKRMStateStore extends RMStateStore {
     byte[] data = getData(amrmTokenSecretManagerRoot);
 
     if (data == null) {
-      LOG.warn("There is no data saved");
+      LOG.error("Temp", new RuntimeException());
     } else {
       AMRMTokenSecretManagerStatePBImpl stateData =
           new AMRMTokenSecretManagerStatePBImpl(
@@ -604,7 +604,7 @@ public class ZKRMStateStore extends RMStateStore {
       byte[] childData = getData(childNodePath);
 
       if (childData == null) {
-        LOG.warn("Content of " + childNodePath + " is broken.");
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
 
@@ -679,7 +679,7 @@ public class ZKRMStateStore extends RMStateStore {
       throws Exception {
     byte[] data = getData(path);
     if (data == null) {
-      LOG.warn("Content of " + path + " is broken.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       ByteArrayInputStream is = new ByteArrayInputStream(data);
       try (DataInputStream fsIn = new DataInputStream(is)) {
@@ -699,7 +699,7 @@ public class ZKRMStateStore extends RMStateStore {
   private void loadRMAppStateFromAppNode(RMState rmState, String appNodePath,
       String appIdStr) throws Exception {
     byte[] appData = getData(appNodePath);
-    LOG.debug("Loading application from znode: {}", appNodePath);
+    LOG.error("Temp", new RuntimeException());
     ApplicationId appId = ApplicationId.fromString(appIdStr);
     ApplicationStateDataPBImpl appState = new ApplicationStateDataPBImpl(
         ApplicationStateDataProto.parseFrom(appData));
@@ -767,7 +767,7 @@ public class ZKRMStateStore extends RMStateStore {
         appState.attempts.put(attemptState.getAttemptId(), attemptState);
       }
     }
-    LOG.debug("Done loading applications from ZK state store");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -825,7 +825,7 @@ public class ZKRMStateStore extends RMStateStore {
         PROXY_CA_PRIVATE_KEY_NODE);
 
     if (!exists(caCertPath) || !exists(caPrivateKeyPath)) {
-      LOG.warn("Couldn't find Proxy CA data");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -833,7 +833,7 @@ public class ZKRMStateStore extends RMStateStore {
     byte[] caPrivateKeyData = getData(caPrivateKeyPath);
 
     if (caCertData == null || caPrivateKeyData == null) {
-      LOG.warn("Couldn't recover Proxy CA data");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -847,7 +847,7 @@ public class ZKRMStateStore extends RMStateStore {
     long start = clock.getTime();
     String nodeCreatePath = getLeafAppIdNodePath(appId.toString(), true);
 
-    LOG.debug("Storing info for app: {} at: {}", appId, nodeCreatePath);
+    LOG.error("Temp", new RuntimeException());
 
     byte[] appStateData = appStateDataPB.getProto().toByteArray();
     if (appStateData.length <= zknodeLimit) {
@@ -936,7 +936,7 @@ public class ZKRMStateStore extends RMStateStore {
     String path = getNodePath(appDirPath, appAttemptId.toString());
     byte[] attemptStateData = (attemptStateDataPB == null) ? null :
         attemptStateDataPB.getProto().toByteArray();
-    LOG.debug("{} info for attempt: {} at: {}", operation, appAttemptId, path);
+    LOG.error("Temp", new RuntimeException());
 
     switch (operation) {
     case UPDATE:
@@ -1142,7 +1142,7 @@ public class ZKRMStateStore extends RMStateStore {
       DelegationKey delegationKey) throws Exception {
     String nodeCreatePath = getNodePath(dtMasterKeysRootPath,
         DELEGATION_KEY_PREFIX + delegationKey.getKeyId());
-    LOG.debug("Storing RMDelegationKey_{}", delegationKey.getKeyId());
+    LOG.error("Temp", new RuntimeException());
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     try(DataOutputStream fsOut = new DataOutputStream(os)) {
       delegationKey.write(fsOut);
@@ -1158,7 +1158,7 @@ public class ZKRMStateStore extends RMStateStore {
         getNodePath(dtMasterKeysRootPath, DELEGATION_KEY_PREFIX
             + delegationKey.getKeyId());
 
-    LOG.debug("Removing RMDelegationKey_{}", delegationKey.getKeyId());
+    LOG.error("Temp", new RuntimeException());
 
     zkManager.safeDelete(nodeRemovePath, zkAcl, fencingNodePath);
   }
@@ -1230,7 +1230,7 @@ public class ZKRMStateStore extends RMStateStore {
     byte[] reservationData = reservationAllocation.toByteArray();
 
     if (!exists(planCreatePath)) {
-      LOG.debug("Creating plan node: {} at: {}", planName, planCreatePath);
+      LOG.error("Temp", new RuntimeException());
 
       trx.create(planCreatePath, null, zkAcl, CreateMode.PERSISTENT);
     }
@@ -1459,7 +1459,7 @@ public class ZKRMStateStore extends RMStateStore {
           Thread.sleep(zkSessionTimeout);
         }
       } catch (InterruptedException ie) {
-        LOG.info(getName() + " thread interrupted! Exiting!");
+        LOG.error("Temp", new RuntimeException());
         interrupt();
       } catch (Exception e) {
         notifyStoreOperationFailed(new StoreFencedException());

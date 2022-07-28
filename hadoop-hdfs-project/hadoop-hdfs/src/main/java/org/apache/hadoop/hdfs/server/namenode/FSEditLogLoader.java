@@ -327,7 +327,7 @@ public class FSEditLogLoader {
             break;
           }
         } catch (RollingUpgradeOp.RollbackException e) {
-          LOG.info("Stopped at OP_START_ROLLING_UPGRADE for rollback.");
+          LOG.error("Temp", new RuntimeException());
           break;
         } catch (MetaRecoveryContext.RequestStopException e) {
           MetaRecoveryContext.LOG.warn("Stopped reading edit log at " +
@@ -1227,7 +1227,7 @@ public class FSEditLogLoader {
     StringBuilder sb = new StringBuilder();
     sb.append("Summary of operations loaded from edit log:\n  ");
     Joiner.on("\n  ").withKeyValueSeparator("=").appendTo(sb, opCounts);
-    FSImage.LOG.debug(sb.toString());
+    FSImage.LOG.error("Temp", new RuntimeException());
   }
 
   private void incrOpCount(FSEditLogOpCodes opCode,
@@ -1291,7 +1291,7 @@ public class FSEditLogLoader {
             + " while determining its valid length. Position was "
             + lastPos, t);
         in.resync();
-        FSImage.LOG.warn("After resync, position is " + in.getPosition());
+        FSImage.LOG.error("Temp", new RuntimeException());
         if (in.getPosition() <= lastPos) {
           FSImage.LOG.warn("After resync, the position, {} is not greater " +
               "than the previous position {}. Skipping remainder of this log.",

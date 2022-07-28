@@ -123,7 +123,7 @@ public final class DockerClient {
         return dockerCommandFile.toString();
       }
     } catch (IOException e) {
-      LOG.warn("Unable to write docker command to " + cmdDir);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(e);
     }
   }

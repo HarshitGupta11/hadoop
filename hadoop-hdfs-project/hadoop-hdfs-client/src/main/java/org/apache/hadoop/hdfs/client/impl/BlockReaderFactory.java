@@ -373,7 +373,7 @@ public class BlockReaderFactory implements ShortCircuitReplicaCreator {
         }
       }
     } catch (IOException e) {
-      LOG.debug("Block read failed. Getting remote block reader using TCP", e);
+      LOG.error("Temp", new RuntimeException());
     }
     Preconditions.checkState(!DFSInputStream.tcpReadsDisabledForTesting,
         "TCP reads were disabled for testing, but we failed to " +
@@ -552,7 +552,7 @@ public class BlockReaderFactory implements ShortCircuitReplicaCreator {
         if (curPeer.fromCache) {
           // Handle an I/O error we got when using a cached socket.
           // These are considered less serious, because the socket may be stale.
-          LOG.debug("{}: closing stale domain peer {}", this, peer, e);
+          LOG.error("Temp", new RuntimeException());
           IOUtilsClient.cleanupWithLogger(LOG, peer);
         } else {
           // Handle an I/O error we got when using a newly created socket.
@@ -621,7 +621,7 @@ public class BlockReaderFactory implements ShortCircuitReplicaCreator {
         // This indicates an error reading from disk, or a format error.  Since
         // it's not a socket communication problem, we return null rather than
         // throwing an exception.
-        LOG.warn(this + ": error creating ShortCircuitReplica.", e);
+        LOG.error("Temp", new RuntimeException());
         return null;
       } finally {
         if (replica == null) {
@@ -644,7 +644,7 @@ public class BlockReaderFactory implements ShortCircuitReplicaCreator {
       String msg = "access control error while " +
           "attempting to set up short-circuit access to " +
           fileName + resp.getMessage();
-      LOG.debug("{}:{}", this, msg);
+      LOG.error("Temp", new RuntimeException());
       return new ShortCircuitReplicaInfo(new InvalidToken(msg));
     default:
       final long expiration =
@@ -707,7 +707,7 @@ public class BlockReaderFactory implements ShortCircuitReplicaCreator {
         if (curPeer.fromCache) {
           // Handle an I/O error we got when using a cached peer.  These are
           // considered less serious because the underlying socket may be stale.
-          LOG.debug("Closed potentially stale domain peer {}", peer, ioe);
+          LOG.error("Temp", new RuntimeException());
         } else {
           // Handle an I/O error we got when using a newly created domain peer.
           // We temporarily disable the domain socket path for a few minutes in
@@ -763,10 +763,10 @@ public class BlockReaderFactory implements ShortCircuitReplicaCreator {
           // Handle an I/O error we got when using a cached peer.  These are
           // considered less serious, because the underlying socket may be
           // stale.
-          LOG.debug("Closed potentially stale remote peer {}", peer, ioe);
+          LOG.error("Temp", new RuntimeException());
         } else {
           // Handle an I/O error we got when using a newly created peer.
-          LOG.warn("I/O error constructing remote block reader.", ioe);
+          LOG.error("Temp", new RuntimeException());
           throw ioe;
         }
       } finally {

@@ -158,8 +158,8 @@ public class ITestS3ATemporaryCredentials extends AbstractS3ATestBase {
       fail("Expected an access exception, but file access to "
           + fs.getUri() + " was allowed: " + fs);
     } catch (AWSS3IOException | AWSBadRequestException ex) {
-      LOG.info("Expected Exception: {}", ex.toString());
-      LOG.debug("Expected Exception: {}", ex, ex);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -332,7 +332,7 @@ public class ITestS3ATemporaryCredentials extends AbstractS3ATestBase {
         " ",
         EU_IRELAND,
         "");
-    LOG.info("Outcome: ", ex);
+    LOG.error("Temp", new RuntimeException());
     if (!(ex.getCause() instanceof URISyntaxException)) {
       throw ex;
     }

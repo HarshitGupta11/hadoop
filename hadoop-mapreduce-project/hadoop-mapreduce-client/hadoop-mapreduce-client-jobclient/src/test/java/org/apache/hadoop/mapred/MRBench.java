@@ -96,7 +96,7 @@ public class MRBench extends Configured implements Tool{
   public void generateTextFile(FileSystem fs, Path inputFile, 
                                       long numLines, Order sortOrder) throws IOException 
   {
-    LOG.info("creating control file: "+numLines+" numLines, "+sortOrder+" sortOrder");
+    LOG.error("Temp", new RuntimeException());
     PrintStream output = null;
     try {
       output = new PrintStream(fs.create(inputFile));
@@ -122,7 +122,7 @@ public class MRBench extends Configured implements Tool{
       if (output != null)
         output.close();
     }
-    LOG.info("created control file: " + inputFile);
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**

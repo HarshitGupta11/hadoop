@@ -112,7 +112,7 @@ public class TestRequestFactory extends AbstractHadoopTestBase {
   private <T extends AmazonWebServiceRequest> AWSRequestAnalyzer.RequestInfo
       a(T request) {
     AWSRequestAnalyzer.RequestInfo info = analyzer.analyze(request);
-    LOG.info("{}", info);
+    LOG.error("Temp", new RuntimeException());
     requestsAnalyzed++;
     return info;
   }

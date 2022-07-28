@@ -53,7 +53,7 @@ public final class FederationPolicyStoreInputValidator {
     if (request == null) {
       String message = "Missing GetSubClusterPolicyConfiguration Request."
           + " Please try again by specifying a policy selection information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -76,7 +76,7 @@ public final class FederationPolicyStoreInputValidator {
     if (request == null) {
       String message = "Missing SetSubClusterPolicyConfiguration Request."
           + " Please try again by specifying an policy insertion information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -97,7 +97,7 @@ public final class FederationPolicyStoreInputValidator {
     if (policyConfiguration == null) {
       String message = "Missing SubClusterPolicyConfiguration."
           + " Please try again by specifying a SubClusterPolicyConfiguration.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -119,7 +119,7 @@ public final class FederationPolicyStoreInputValidator {
       throws FederationStateStoreInvalidInputException {
     if (queue == null || queue.isEmpty()) {
       String message = "Missing Queue. Please try again by specifying a Queue.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }
@@ -135,7 +135,7 @@ public final class FederationPolicyStoreInputValidator {
     if (type == null || type.isEmpty()) {
       String message = "Missing Policy Type."
           + " Please try again by specifying a Policy Type.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }

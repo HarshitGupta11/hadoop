@@ -186,7 +186,7 @@ public class TestReencryptionHandler {
         try {
           Thread.sleep(3000);
         } catch (InterruptedException ie) {
-          LOG.info("removeTaskThread interrupted.");
+          LOG.error("Temp", new RuntimeException());
           Thread.currentThread().interrupt();
         }
         zst.getTasks().clear();
@@ -198,7 +198,7 @@ public class TestReencryptionHandler {
     removeTaskThread.start();
     rh.getTraverser().throttle();
     sw.stop();
-    LOG.info("Throttle completed, consumed {}", sw.now(TimeUnit.MILLISECONDS));
+    LOG.error("Temp", new RuntimeException());
     assertTrue("should have throttled for at least 3 second",
         sw.now(TimeUnit.MILLISECONDS) >= 3000);
   }

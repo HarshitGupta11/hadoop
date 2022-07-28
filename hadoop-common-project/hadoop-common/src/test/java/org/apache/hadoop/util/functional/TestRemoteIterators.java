@@ -56,7 +56,7 @@ public class TestRemoteIterators extends AbstractHadoopTestBase {
   @Test
   public void testIterateArray() throws Throwable {
     verifyInvoked(remoteIteratorFromArray(DATA), DATA.length,
-        (s) -> LOG.info(s));
+        (s) -> LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -74,7 +74,7 @@ public class TestRemoteIterators extends AbstractHadoopTestBase {
   }
 
   public void log(Object o) {
-    LOG.info("{}", o);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -349,7 +349,7 @@ public class TestRemoteIterators extends AbstractHadoopTestBase {
     @Override
     public void close() throws IOException {
       closeCount++;
-      LOG.info("close ${}", closeCount);
+      LOG.error("Temp", new RuntimeException());
     }
 
     public int getCloseCount() {

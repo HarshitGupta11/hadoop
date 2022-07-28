@@ -146,7 +146,7 @@ public class DateSplitter extends IntegerSplitter {
       }
     } catch (NullPointerException npe) {
       // null column. return minimum long value.
-      LOG.warn("Encountered a NULL date in the split column. Splits may be poorly balanced.");
+      LOG.error("Temp", new RuntimeException());
       return Long.MIN_VALUE;
     }
   }

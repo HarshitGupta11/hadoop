@@ -128,7 +128,7 @@ public class TimelineClientImpl extends TimelineClient {
           conf.get(YarnConfiguration.TIMELINE_SERVICE_WEBAPP_ADDRESS,
               YarnConfiguration.DEFAULT_TIMELINE_SERVICE_WEBAPP_ADDRESS);
     }
-    LOG.info("Timeline service address: " + getTimelineServiceAddress());
+    LOG.error("Temp", new RuntimeException());
     super.serviceInit(conf);
   }
 
@@ -363,7 +363,7 @@ public class TimelineClientImpl extends TimelineClient {
             entities.getEntities().toArray(
                 new TimelineEntity[entities.getEntities().size()]));
         if (response.getErrors().size() == 0) {
-          LOG.info("Timeline entities are successfully put");
+          LOG.error("Temp", new RuntimeException());
         } else {
           for (TimelinePutResponse.TimelinePutError error : response.getErrors()) {
             LOG.error("TimelineEntity [" + error.getEntityType() + ":" +
@@ -382,7 +382,7 @@ public class TimelineClientImpl extends TimelineClient {
           }
         }
         if (!hasError) {
-          LOG.info("Timeline domains are successfully put");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch(RuntimeException e) {

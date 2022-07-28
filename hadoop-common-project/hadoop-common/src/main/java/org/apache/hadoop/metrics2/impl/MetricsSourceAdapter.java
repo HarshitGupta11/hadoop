@@ -111,7 +111,7 @@ class MetricsSourceAdapter implements DynamicMBean {
         throw new AttributeNotFoundException(attribute +" not found");
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug(attribute +": "+ a);
+        LOG.error("Temp", new RuntimeException());
       }
       return a.getValue();
     }
@@ -132,7 +132,7 @@ class MetricsSourceAdapter implements DynamicMBean {
       for (String key : attributes) {
         Attribute attr = attrCache.get(key);
         if (LOG.isDebugEnabled()) {
-          LOG.debug(key +": "+ attr);
+          LOG.error("Temp", new RuntimeException());
         }
         ret.add(attr);
       }
@@ -215,12 +215,12 @@ class MetricsSourceAdapter implements DynamicMBean {
 
   synchronized void startMBeans() {
     if (mbeanName != null) {
-      LOG.warn("MBean "+ name +" already initialized!");
-      LOG.debug("Stacktrace: ", new Throwable());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     mbeanName = MBeans.register(prefix, name, this);
-    LOG.debug("MBean for source "+ name +" registered.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   synchronized void stopMBeans() {
@@ -242,14 +242,14 @@ class MetricsSourceAdapter implements DynamicMBean {
 
   private void updateInfoCache(Iterable<MetricsRecordImpl> lastRecs) {
     Preconditions.checkNotNull(lastRecs, "LastRecs should not be null");
-    LOG.debug("Updating info cache...");
+    LOG.error("Temp", new RuntimeException());
     infoCache = infoBuilder.reset(lastRecs).get();
-    LOG.debug("Done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private int updateAttrCache(Iterable<MetricsRecordImpl> lastRecs) {
     Preconditions.checkNotNull(lastRecs, "LastRecs should not be null");
-    LOG.debug("Updating attr cache...");
+    LOG.error("Temp", new RuntimeException());
     int recNo = 0;
     int numMetrics = 0;
     for (MetricsRecordImpl record : lastRecs) {
@@ -263,7 +263,7 @@ class MetricsSourceAdapter implements DynamicMBean {
       }
       ++recNo;
     }
-    LOG.debug("Done. # tags & metrics="+ numMetrics);
+    LOG.error("Temp", new RuntimeException());
     return numMetrics;
   }
 

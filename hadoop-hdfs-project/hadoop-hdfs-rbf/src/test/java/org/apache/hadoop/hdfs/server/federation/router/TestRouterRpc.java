@@ -886,7 +886,7 @@ public class TestRouterRpc {
 
     final String mountPoint = "/mntsnapshot";
     final String snapshotFolder = mountPoint + "/folder";
-    LOG.info("Setup a mount point for snapshots: {}", mountPoint);
+    LOG.error("Temp", new RuntimeException());
     Router r = router.getRouter();
     MockResolver resolver = (MockResolver) r.getSubclusterResolver();
     String ns0 = cluster.getNameservices().get(0);
@@ -900,7 +900,7 @@ public class TestRouterRpc {
         routerProtocol.mkdirs(folderPath, permission, false);
       }
 
-      LOG.info("Create the snapshot: {}", snapshotFolder);
+      LOG.error("Temp", new RuntimeException());
       routerProtocol.allowSnapshot(snapshotFolder);
       String snapshotName =
           routerProtocol.createSnapshot(snapshotFolder, "snap");
@@ -908,7 +908,7 @@ public class TestRouterRpc {
       assertTrue(
           verifyFileExists(routerFS, snapshotFolder + "/.snapshot/snap"));
 
-      LOG.info("Rename the snapshot and check it changed");
+      LOG.error("Temp", new RuntimeException());
       routerProtocol.renameSnapshot(snapshotFolder, "snap", "newsnap");
       assertFalse(
           verifyFileExists(routerFS, snapshotFolder + "/.snapshot/snap"));
@@ -918,7 +918,7 @@ public class TestRouterRpc {
           "Cannot delete snapshot snap from path " + snapshotFolder + ":",
           () -> routerFS.deleteSnapshot(new Path(snapshotFolder), "snap"));
 
-      LOG.info("Delete the snapshot and check it is not there");
+      LOG.error("Temp", new RuntimeException());
       routerProtocol.deleteSnapshot(snapshotFolder, "newsnap");
       assertFalse(
           verifyFileExists(routerFS, snapshotFolder + "/.snapshot/newsnap"));
@@ -1537,21 +1537,21 @@ public class TestRouterRpc {
   @Test
   public void testErasureCoding() throws Exception {
 
-    LOG.info("List the available erasurce coding policies");
+    LOG.error("Temp", new RuntimeException());
     ErasureCodingPolicyInfo[] policies = checkErasureCodingPolicies();
     for (ErasureCodingPolicyInfo policy : policies) {
-      LOG.info("  {}", policy);
+      LOG.error("Temp", new RuntimeException());
     }
 
-    LOG.info("List the erasure coding codecs");
+    LOG.error("Temp", new RuntimeException());
     Map<String, String> codecsRouter = routerProtocol.getErasureCodingCodecs();
     Map<String, String> codecsNamenode = nnProtocol.getErasureCodingCodecs();
     assertTrue(Maps.difference(codecsRouter, codecsNamenode).areEqual());
     for (Entry<String, String> entry : codecsRouter.entrySet()) {
-      LOG.info("  {}: {}", entry.getKey(), entry.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
 
-    LOG.info("Create a testing directory via the router at the root level");
+    LOG.error("Temp", new RuntimeException());
     String dirPath = "/testec";
     String filePath1 = dirPath + "/testfile1";
     FsPermission permission = new FsPermission("755");
@@ -1560,21 +1560,21 @@ public class TestRouterRpc {
     assertTrue(verifyFileExists(routerFS, filePath1));
     DFSClient file1Protocol = getFileDFSClient(filePath1);
 
-    LOG.info("The policy for the new file should not be set");
+    LOG.error("Temp", new RuntimeException());
     assertNull(routerProtocol.getErasureCodingPolicy(filePath1));
     assertNull(file1Protocol.getErasureCodingPolicy(filePath1));
 
     String policyName = "RS-6-3-1024k";
-    LOG.info("Set policy \"{}\" for \"{}\"", policyName, dirPath);
+    LOG.error("Temp", new RuntimeException());
     routerProtocol.setErasureCodingPolicy(dirPath, policyName);
 
     String filePath2 = dirPath + "/testfile2";
-    LOG.info("Create {} in the path with the new EC policy", filePath2);
+    LOG.error("Temp", new RuntimeException());
     createFile(routerFS, filePath2, 32);
     assertTrue(verifyFileExists(routerFS, filePath2));
     DFSClient file2Protocol = getFileDFSClient(filePath2);
 
-    LOG.info("Check that the policy is set for {}", filePath2);
+    LOG.error("Temp", new RuntimeException());
     ErasureCodingPolicy policyRouter1 =
         routerProtocol.getErasureCodingPolicy(filePath2);
     ErasureCodingPolicy policyNamenode1 =
@@ -1583,7 +1583,7 @@ public class TestRouterRpc {
     assertEquals(policyName, policyRouter1.getName());
     assertEquals(policyName, policyNamenode1.getName());
 
-    LOG.info("Create a new erasure coding policy");
+    LOG.error("Temp", new RuntimeException());
     String newPolicyName = "RS-6-3-128k";
     ECSchema ecSchema = new ECSchema(ErasureCodeConstants.RS_CODEC_NAME, 6, 3);
     ErasureCodingPolicy ecPolicy = new ErasureCodingPolicy(
@@ -1600,11 +1600,11 @@ public class TestRouterRpc {
     assertTrue(responses[0].isSucceed());
     routerProtocol.disableErasureCodingPolicy(newPolicyName);
 
-    LOG.info("The new policy should be there and disabled");
+    LOG.error("Temp", new RuntimeException());
     policies = checkErasureCodingPolicies();
     boolean found = false;
     for (ErasureCodingPolicyInfo policy : policies) {
-      LOG.info("  {}" + policy);
+      LOG.error("Temp", new RuntimeException());
       if (policy.getPolicy().getName().equals(newPolicyName)) {
         found = true;
         assertEquals(ErasureCodingPolicyState.DISABLED, policy.getState());
@@ -1613,11 +1613,11 @@ public class TestRouterRpc {
     }
     assertTrue(found);
 
-    LOG.info("Set the test folder to use the new policy");
+    LOG.error("Temp", new RuntimeException());
     routerProtocol.enableErasureCodingPolicy(newPolicyName);
     routerProtocol.setErasureCodingPolicy(dirPath, newPolicyName);
 
-    LOG.info("Create a file in the path with the new EC policy");
+    LOG.error("Temp", new RuntimeException());
     String filePath3 = dirPath + "/testfile3";
     createFile(routerFS, filePath3, 32);
     assertTrue(verifyFileExists(routerFS, filePath3));
@@ -1630,7 +1630,7 @@ public class TestRouterRpc {
         file3Protocol.getErasureCodingPolicy(filePath3);
     assertEquals(newPolicyName, policyNamenodeFile3.getName());
 
-    LOG.info("Remove the policy and check the one for the test folder");
+    LOG.error("Temp", new RuntimeException());
     routerProtocol.removeErasureCodingPolicy(newPolicyName);
     ErasureCodingPolicy policyRouter3 =
         routerProtocol.getErasureCodingPolicy(filePath3);
@@ -1639,7 +1639,7 @@ public class TestRouterRpc {
         file3Protocol.getErasureCodingPolicy(filePath3);
     assertEquals(newPolicyName, policyNamenode3.getName());
 
-    LOG.info("Check the stats");
+    LOG.error("Temp", new RuntimeException());
     ECBlockGroupStats statsRouter = routerProtocol.getECBlockGroupStats();
     ECBlockGroupStats statsNamenode = getNamenodeECBlockGroupStats();
     assertEquals(statsNamenode, statsRouter);
@@ -1919,7 +1919,7 @@ public class TestRouterRpc {
    */
   private DFSClient getFileDFSClient(final String path) {
     for (String nsId : cluster.getNameservices()) {
-      LOG.info("Checking {} for {}", nsId, path);
+      LOG.error("Temp", new RuntimeException());
       NamenodeContext nn = cluster.getNamenode(nsId, null);
       try {
         DFSClient nnClientProtocol = nn.getClient();

@@ -215,7 +215,7 @@ public class WasbRemoteCallHelper {
             + "while building the HttpGetRequest to remote service",
             uriSyntaxEx);
       } catch (IOException e) {
-        LOG.debug(e.getMessage(), e);
+        LOG.error("Temp", new RuntimeException());
         try {
           shouldRetry(e, retry, (httpRequest != null)
                                 ? httpRequest.getURI().toString()
@@ -282,11 +282,11 @@ public class WasbRemoteCallHelper {
         return;
       }
     } catch (InterruptedIOException e) {
-      LOG.warn(e.getMessage(), e);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
       return;
     } catch (Exception e) {
-      LOG.warn("Original exception is ", ioe);
+      LOG.error("Temp", new RuntimeException());
       throw new WasbRemoteCallException(e.getMessage(), e);
     }
     LOG.debug("Not retrying anymore, already retried the urls {} time(s)",

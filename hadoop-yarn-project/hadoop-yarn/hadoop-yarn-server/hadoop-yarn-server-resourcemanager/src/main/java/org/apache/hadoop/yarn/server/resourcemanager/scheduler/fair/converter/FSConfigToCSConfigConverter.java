@@ -181,7 +181,7 @@ public class FSConfigToCSConfigConverter {
 
   private void loadConversionRules(String rulesFile) throws IOException {
     if (rulesFile != null) {
-      LOG.info("Reading conversion rules file from: " + rulesFile);
+      LOG.error("Temp", new RuntimeException());
       ruleHandler.loadRulesFromFile(rulesFile);
     } else {
       LOG.info("Conversion rules file is not defined, " +
@@ -205,7 +205,7 @@ public class FSConfigToCSConfigConverter {
     // Don't override allocation file in conf yet, as it would ruin the second
     // condition here
     if (fairSchedulerXmlConfig != null) {
-      LOG.info("Using explicitly defined " + FAIR_SCHEDULER_XML);
+      LOG.error("Temp", new RuntimeException());
     } else if (conf.get(FairSchedulerConfiguration.ALLOCATION_FILE) != null) {
       LOG.info("Using " + FAIR_SCHEDULER_XML + " defined in " +
           YARN_SITE_XML + " by key: " +
@@ -316,7 +316,7 @@ public class FSConfigToCSConfigConverter {
 
   private void performRuleConversion(FairScheduler fs)
       throws IOException {
-    LOG.info("Converting placement rules");
+    LOG.error("Temp", new RuntimeException());
 
     PlacementManager placementManager =
         fs.getRMContext().getQueuePlacementManager();
@@ -352,7 +352,7 @@ public class FSConfigToCSConfigConverter {
         capacitySchedulerConfig.set(MAPPING_RULE_JSON, json);
       }
     } else {
-      LOG.info("No rules to convert");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

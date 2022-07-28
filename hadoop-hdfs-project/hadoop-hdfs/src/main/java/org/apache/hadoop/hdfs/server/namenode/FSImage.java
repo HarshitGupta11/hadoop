@@ -183,7 +183,7 @@ public class FSImage implements Closeable {
         "FSImage.format should be called with an uninitialized namesystem, has " +
         fileCount + " files");
     NamespaceInfo ns = NNStorage.newNamespaceInfo();
-    LOG.info("Allocated new BlockPoolId: " + ns.getBlockPoolID());
+    LOG.error("Temp", new RuntimeException());
     ns.clusterID = clusterId;
     
     storage.format(ns);
@@ -299,8 +299,8 @@ public class FSImage implements Closeable {
         // the storage state uptodate along with a new VERSION file.
         // If HA is enabled, NNs start up as standby so saveNamespace is not
         // triggered.
-        LOG.info("Storage directory " + sd.getRoot() + " is not formatted.");
-        LOG.info("Formatting ...");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         sd.clearDirectory(); // create empty current dir
         // For non-HA, no further action is needed here, as saveNamespace will
         // take care of the rest.
@@ -349,7 +349,7 @@ public class FSImage implements Closeable {
     for (StorageDirectory sd : newDirs) {
       try {
         storage.writeProperties(sd);
-        LOG.info("Wrote VERSION in the new storage, " + sd.getCurrentDir());
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException e) {
         // Failed to create a VERSION file. Report the error.
         storage.reportErrorOnFile(sd.getVersionFile());
@@ -530,7 +530,7 @@ public class FSImage implements Closeable {
             HdfsServerConstants.NAMENODE_LAYOUT_VERSION)) {
           continue;
         }
-        LOG.info("Can perform rollback for " + sd);
+        LOG.error("Temp", new RuntimeException());
         canRollback = true;
       }
       
@@ -540,7 +540,7 @@ public class FSImage implements Closeable {
         boolean canRollBackSharedEditLog = editLog.canRollBackSharedLog(
             prevState.getStorage(), HdfsServerConstants.NAMENODE_LAYOUT_VERSION);
         if (canRollBackSharedEditLog) {
-          LOG.info("Can perform rollback for shared edit log.");
+          LOG.error("Temp", new RuntimeException());
           canRollback = true;
         }
       }
@@ -649,7 +649,7 @@ public class FSImage implements Closeable {
    */
   void reloadFromImageFile(File file, FSNamesystem target) throws IOException {
     target.clear();
-    LOG.debug("Reloading namespace from " + file);
+    LOG.error("Temp", new RuntimeException());
     loadFSImage(file, target, null, false);
   }
 
@@ -728,10 +728,10 @@ public class FSImage implements Closeable {
     }
  
     for (EditLogInputStream l : editStreams) {
-      LOG.debug("Planning to load edit log stream: " + l);
+      LOG.error("Temp", new RuntimeException());
     }
     if (!editStreams.iterator().hasNext()) {
-      LOG.info("No edit log streams selected.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     FSImageFile imageFile = null;
@@ -797,7 +797,7 @@ public class FSImage implements Closeable {
 
   void loadFSImageFile(FSNamesystem target, MetaRecoveryContext recovery,
       FSImageFile imageFile, StartupOption startupOption) throws IOException {
-    LOG.info("Planning to load image: " + imageFile);
+    LOG.error("Temp", new RuntimeException());
     StorageDirectory sdForProperties = imageFile.sd;
     storage.readProperties(sdForProperties, startupOption);
 
@@ -892,7 +892,7 @@ public class FSImage implements Closeable {
       FSNamesystem target, long maxTxnsToRead,
       StartupOption startOpt, MetaRecoveryContext recovery)
       throws IOException {
-    LOG.debug("About to load edits:\n  " + Joiner.on("\n  ").join(editStreams));
+    LOG.error("Temp", new RuntimeException());
     
     long prevLastAppliedTxId = lastAppliedTxId;
     long remainingReadTxns = maxTxnsToRead;
@@ -975,7 +975,7 @@ public class FSImage implements Closeable {
     }
 
     long txId = loader.getLoadedImageTxId();
-    LOG.info("Loaded image for txid " + txId + " from " + curFile);
+    LOG.error("Temp", new RuntimeException());
     lastAppliedTxId = txId;
     storage.setMostRecentCheckpointInfo(txId, curFile.lastModified());
   }
@@ -1145,7 +1145,7 @@ public class FSImage implements Closeable {
   public synchronized void saveNamespace(FSNamesystem source, NameNodeFile nnf,
       Canceler canceler) throws IOException {
     assert editLog != null : "editLog must be initialized";
-    LOG.info("Save namespace ...");
+    LOG.error("Temp", new RuntimeException());
     storage.attemptRestoreRemovedStorage();
 
     boolean editLogWasOpen = editLog.isSegmentOpen();
@@ -1275,7 +1275,7 @@ public class FSImage implements Closeable {
     try {
       archivalManager.purgeOldStorage(nnf);
     } catch (Exception e) {
-      LOG.warn("Unable to purge old storage " + nnf.getName(), e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1290,7 +1290,7 @@ public class FSImage implements Closeable {
       try {
         renameImageFileInDir(sd, fromNnf, toNnf, txid, renameMD5);
       } catch (IOException ioe) {
-        LOG.warn("Unable to rename checkpoint in " + sd, ioe);
+        LOG.error("Temp", new RuntimeException());
         if (al == null) {
           al = Lists.newArrayList();
         }
@@ -1314,7 +1314,7 @@ public class FSImage implements Closeable {
       try {
         renameImageFileInDir(image.sd, fromNnf, toNnf, image.txId, true);
       } catch (IOException ioe) {
-        LOG.warn("Unable to rename checkpoint in " + image.sd, ioe);
+        LOG.error("Temp", new RuntimeException());
         if (al == null) {
           al = Lists.newArrayList();
         }
@@ -1336,7 +1336,7 @@ public class FSImage implements Closeable {
     for (StorageDirectory sd : storage.dirIterable(NameNodeDirType.IMAGE)) {
       File ckpt = NNStorage.getStorageFile(sd, NameNodeFile.IMAGE_NEW, txid);
       if (ckpt.exists() && !ckpt.delete()) {
-        LOG.warn("Unable to delete cancelled checkpoint in " + sd);
+        LOG.error("Temp", new RuntimeException());
         al.add(sd);            
       }
     }
@@ -1394,7 +1394,7 @@ public class FSImage implements Closeable {
                                   NamenodeRegistration nnReg,
                                   int layoutVersion) // active name-node
   throws IOException {
-    LOG.info("Start checkpoint at txid " + getEditLog().getLastWrittenTxId());
+    LOG.error("Temp", new RuntimeException());
     String msg = null;
     // Verify that checkpoint is allowed
     if(bnReg.getNamespaceID() != storage.getNamespaceID())
@@ -1434,7 +1434,7 @@ public class FSImage implements Closeable {
    * @throws IOException if the checkpoint fields are inconsistent
    */
   void endCheckpoint(CheckpointSignature sig) throws IOException {
-    LOG.info("End checkpoint at txid " + getEditLog().getLastWrittenTxId());
+    LOG.error("Temp", new RuntimeException());
     sig.validateStorageInfo(this);
   }
 

@@ -68,7 +68,7 @@ public abstract class StateStoreDriver implements StateStoreRecordOperations {
     this.metrics = stateStoreMetrics;
 
     if (this.identifier == null) {
-      LOG.warn("The identifier for the State Store connection is not set");
+      LOG.error("Temp", new RuntimeException());
     }
 
     boolean success = initDriver();

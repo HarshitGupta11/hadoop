@@ -190,7 +190,7 @@ public class RuncContainerRuntime extends OCIContainerRuntime {
     this.privilegedOperationExecutor = privilegedOperationExecutor;
 
     if (cGroupsHandler == null) {
-      LOG.info("cGroupsHandler is null - cgroups not in use.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       this.cGroupsHandler = cGroupsHandler;
     }
@@ -270,13 +270,13 @@ public class RuncContainerRuntime extends OCIContainerRuntime {
                     .executePrivilegedOperation(null,
                     launchOp, null, null, false, false);
                 if(stdout != null) {
-                  LOG.info("Reap layer mounts thread: " + stdout);
+                  LOG.error("Temp", new RuntimeException());
                 }
               } catch (PrivilegedOperationException e) {
-                LOG.warn("Failed to reap old runc layer mounts", e);
+                LOG.error("Temp", new RuntimeException());
               }
             } catch (Exception e) {
-              LOG.warn("Reap layer mount thread caught an exception: ", e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }, 0, reapRuncLayerMountsInterval, TimeUnit.SECONDS);
@@ -431,12 +431,12 @@ public class RuncContainerRuntime extends OCIContainerRuntime {
       privilegedOperationExecutor.executePrivilegedOperation(null,
           launchOp, null, null, false, false);
     } catch (PrivilegedOperationException e) {
-      LOG.info("Launch container failed: ", e);
+      LOG.error("Temp", new RuntimeException());
       try {
         LOG.debug("config.json used: " +
             mapper.writeValueAsString(runcContainerExecutorConfig));
       } catch (IOException ioe) {
-        LOG.info("Json Generation Exception", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
 
       throw new ContainerExecutionException("Launch container failed", e
@@ -457,12 +457,12 @@ public class RuncContainerRuntime extends OCIContainerRuntime {
       LOG.debug("no resource restrictions specified. not using runc's "
           + "cgroup options");
     } else {
-      LOG.debug("using runc's cgroups options");
+      LOG.error("Temp", new RuntimeException());
 
       String cGroupPath = "/" + cGroupsHandler.getRelativePathForCGroup(
           containerIdStr);
 
-      LOG.debug("using cgroup parent: " + cGroupPath);
+      LOG.error("Temp", new RuntimeException());
 
       return cGroupPath;
     }
@@ -623,7 +623,7 @@ public class RuncContainerRuntime extends OCIContainerRuntime {
     String pluginName =
         conf.get(NM_RUNC_MANIFEST_TO_RESOURCES_PLUGIN,
         DEFAULT_NM_RUNC_MANIFEST_TO_RESOURCES_PLUGIN);
-    LOG.info("pluginName = " + pluginName);
+    LOG.error("Temp", new RuntimeException());
     RuncManifestToResourcesPlugin runcManifestToResourcesPlugin;
     try {
       Class<?> clazz = Class.forName(pluginName);
@@ -755,7 +755,7 @@ public class RuncContainerRuntime extends OCIContainerRuntime {
 
       return commandFile.getAbsolutePath();
     } catch (IOException e) {
-      LOG.warn("Unable to write runc config.json to temporary file!");
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(e);
     }
   }

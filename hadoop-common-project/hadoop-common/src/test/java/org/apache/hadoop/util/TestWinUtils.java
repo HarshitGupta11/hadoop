@@ -255,7 +255,7 @@ public class TestWinUtils {
       readFile(a);
       assertFalse("readFile should have failed!", true);
     } catch (IOException ex) {
-      LOG.info("Expected: Failed read from a file with permissions 377");
+      LOG.error("Temp", new RuntimeException());
     }
     // restore permissions
     chmod("700", a);
@@ -269,7 +269,7 @@ public class TestWinUtils {
       writeFile(a, "test");
       fail("writeFile should have failed!");
     } catch (IOException ex) {
-      LOG.info("Expected: Failed write to a file with permissions 577");
+      LOG.error("Temp", new RuntimeException());
     }
     // restore permissions
     chmod("700", a);
@@ -288,7 +288,7 @@ public class TestWinUtils {
       Shell.execCommand(aExe.getCanonicalPath(), "ls");
       fail("executing " + aExe + " should have failed!");
     } catch (IOException ex) {
-      LOG.info("Expected: Failed to execute a file with permissions 677");
+      LOG.error("Temp", new RuntimeException());
     }
     assertTrue(aExe.delete());
   }

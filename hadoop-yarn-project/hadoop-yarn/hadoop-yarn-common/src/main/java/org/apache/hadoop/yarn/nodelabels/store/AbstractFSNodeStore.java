@@ -69,7 +69,7 @@ public abstract class AbstractFSNodeStore<M> {
     fs.mkdirs(fsWorkingPath);
     this.replication = conf.getInt(YarnConfiguration.FS_STORE_FILE_REPLICATION,
         YarnConfiguration.DEFAULT_FS_STORE_FILE_REPLICATION);
-    LOG.info("Created store directory :" + fsWorkingPath);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -184,8 +184,8 @@ public abstract class AbstractFSNodeStore<M> {
     editlogOs = fs.create(editLogPath, true);
     editlogOs.close();
     checkAvailability(editLogPath);
-    LOG.info("Finished write mirror at:" + mirrorPath.toString());
-    LOG.info("Finished create editlog file at:" + editLogPath.toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

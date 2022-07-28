@@ -119,7 +119,7 @@ public abstract class RolloverSignerSecretProvider
    */
   protected synchronized void rollSecret() {
     if (!isDestroyed) {
-      LOG.debug("rolling secret");
+      LOG.error("Temp", new RuntimeException());
       byte[] newSecret = generateNewSecret();
       secrets = new byte[][]{newSecret, secrets[0]};
     }

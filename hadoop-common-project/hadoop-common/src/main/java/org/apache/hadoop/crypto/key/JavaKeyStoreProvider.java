@@ -193,7 +193,7 @@ public class JavaKeyStoreProvider extends KeyProvider {
       perm = loadFromPath(path, password);
       // Remove _OLD if exists
       fs.delete(backupPath, true);
-      LOG.debug("KeyStore loaded successfully !!");
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ioe) {
       // If file is corrupted for some reason other than
       // wrong password try the _OLD file if exits
@@ -243,7 +243,7 @@ public class JavaKeyStoreProvider extends KeyProvider {
     // required to create an empty keystore. *sigh*
     if (perm == null) {
       keyStore.load(null, password);
-      LOG.debug("KeyStore initialized anew successfully !!");
+      LOG.error("Temp", new RuntimeException());
       perm = new FsPermission("600");
     }
     return perm;
@@ -591,9 +591,9 @@ public class JavaKeyStoreProvider extends KeyProvider {
     // 2) load keyStore from previous path
     try {
       loadFromPath(path, password);
-      LOG.debug("KeyStore resetting to previously flushed state !!");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
-      LOG.debug("Could not reset Keystore to previous state", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

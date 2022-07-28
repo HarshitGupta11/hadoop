@@ -62,7 +62,7 @@ public final class AuditIntegration {
         requireNonNull(iostatistics));
     auditManager.init(conf);
     auditManager.start();
-    LOG.debug("Started Audit Manager {}", auditManager);
+    LOG.error("Temp", new RuntimeException());
     return auditManager;
   }
 
@@ -95,7 +95,7 @@ public final class AuditIntegration {
         LoggingAuditor.class,
         OperationAuditor.class);
     try {
-      LOG.debug("Auditor class is {}", auditClassname);
+      LOG.error("Temp", new RuntimeException());
       final Constructor<? extends OperationAuditor> constructor
           = auditClassname.getConstructor();
       final OperationAuditor instance = constructor.newInstance();

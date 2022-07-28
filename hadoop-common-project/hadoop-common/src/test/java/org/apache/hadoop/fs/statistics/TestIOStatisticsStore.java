@@ -73,7 +73,7 @@ public class TestIOStatisticsStore extends AbstractHadoopTestBase {
 
   @After
   public void teardown() {
-    LOG.info("stats {}", stats);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -148,9 +148,9 @@ public class TestIOStatisticsStore extends AbstractHadoopTestBase {
     stats.addMeanStatisticSample(MEAN, 9);
 
     String json = serializer.toJson(snapshotIOStatistics(stats));
-    LOG.info("serialized form\n{}", json);
+    LOG.error("Temp", new RuntimeException());
     IOStatisticsSnapshot deser = serializer.fromJson(json);
-    LOG.info("deserialized {}", deser);
+    LOG.error("Temp", new RuntimeException());
     verifyStatisticCounterValue(deser, COUNT, 1L);
     verifyStatisticGaugeValue(deser, GAUGE, -1);
     verifyStatisticMaximumValue(deser, MAX, 200);

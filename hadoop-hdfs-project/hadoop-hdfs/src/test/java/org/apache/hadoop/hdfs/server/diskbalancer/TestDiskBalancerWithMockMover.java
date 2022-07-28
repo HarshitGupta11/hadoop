@@ -462,7 +462,7 @@ public class TestDiskBalancerWithMockMover {
 
     public int getRunCount() {
       synchronized (this) {
-        LOG.info("Run count : " + runCount);
+        LOG.error("Temp", new RuntimeException());
         return runCount;
       }
     }

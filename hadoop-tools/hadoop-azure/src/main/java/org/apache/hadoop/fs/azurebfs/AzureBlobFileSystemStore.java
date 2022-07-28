@@ -318,7 +318,7 @@ public class AzureBlobFileSystemStore implements Closeable, ListingSupport {
           + " getAcl server call", e);
     }
 
-    LOG.debug("Get root ACL status");
+    LOG.error("Temp", new RuntimeException());
     try (AbfsPerfInfo perfInfo = startTracking("getIsNamespaceEnabled",
         "getAclStatus")) {
       AbfsRestOperation op = client.getAclStatus(AbfsHttpConstants.ROOT_PATH);
@@ -756,7 +756,7 @@ public class AzureBlobFileSystemStore implements Closeable, ListingSupport {
    * @throws AzureBlobFileSystemException on any exception while breaking the lease
    */
   public void breakLease(final Path path) throws AzureBlobFileSystemException {
-    LOG.debug("lease path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     client.breakLease(getRelativePath(path));
   }
@@ -1589,7 +1589,7 @@ public class AzureBlobFileSystemStore implements Closeable, ListingSupport {
           }
         }
       } catch (URISyntaxException e) {
-        LOG.info("URI syntax error creating URI for {}", dir);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

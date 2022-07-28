@@ -174,7 +174,7 @@ public class TimelineV2ClientImpl extends TimelineV2Client {
   @Override
   public void setTimelineCollectorInfo(CollectorInfo collectorInfo) {
     if (collectorInfo == null) {
-      LOG.warn("Not setting collector info as it is null.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     // First update the token so that it is available when collector address is
@@ -189,7 +189,7 @@ public class TimelineV2ClientImpl extends TimelineV2Client {
         !collectorInfo.getCollectorAddr().isEmpty() &&
         !collectorInfo.getCollectorAddr().equals(timelineServiceAddress)) {
       this.timelineServiceAddress = collectorInfo.getCollectorAddr();
-      LOG.info("Updated timeline service address to " + timelineServiceAddress);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -237,7 +237,7 @@ public class TimelineV2ClientImpl extends TimelineV2Client {
         SecurityUtil.getTokenServiceAddr(timelineToken);
     SecurityUtil.setTokenService(timelineToken, serviceAddr);
     authUgi.addToken(timelineToken);
-    LOG.info("Updated timeline delegation token " + timelineToken);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Private
@@ -329,7 +329,7 @@ public class TimelineV2ClientImpl extends TimelineV2Client {
       try {
         resp.close();
       } catch(ClientHandlerException che) {
-        LOG.warn("Error closing the HTTP response's inputstream. ", che);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       String msg = "";
@@ -455,7 +455,7 @@ public class TimelineV2ClientImpl extends TimelineV2Client {
               try {
                 entitiesHolder = timelineEntityQueue.take();
               } catch (InterruptedException ie) {
-                LOG.info("Timeline dispatcher thread was interrupted ");
+                LOG.error("Temp", new RuntimeException());
                 Thread.currentThread().interrupt();
                 return;
               }
@@ -591,7 +591,7 @@ public class TimelineV2ClientImpl extends TimelineV2Client {
     }
 
     public void stop() {
-      LOG.info("Stopping TimelineClient.");
+      LOG.error("Temp", new RuntimeException());
       executor.shutdownNow();
       try {
         executor.awaitTermination(drainTimeoutPeriod, TimeUnit.MILLISECONDS);

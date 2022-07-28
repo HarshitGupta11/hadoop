@@ -99,7 +99,7 @@ public class TestHttpReferrerAuditHeader extends AbstractAuditingTest {
         .describedAs("Custom headers")
         .containsKey(HEADER_REFERRER);
     String header = headers.get(HEADER_REFERRER);
-    LOG.info("Header is {}", header);
+    LOG.error("Temp", new RuntimeException());
     Map<String, String> params
         = HttpReferrerAuditHeader.extractQueryParameters(header);
     assertMapContains(params, PARAM_PRINCIPAL,
@@ -230,8 +230,8 @@ public class TestHttpReferrerAuditHeader extends AbstractAuditingTest {
   @Test
   public void testMatchAWSLogEntry() throws Throwable {
 
-    LOG.info("Matcher pattern is\n'{}'", LOG_ENTRY_PATTERN);
-    LOG.info("Log entry is\n'{}'", SAMPLE_LOG_ENTRY);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     final Matcher matcher = LOG_ENTRY_PATTERN.matcher(SAMPLE_LOG_ENTRY);
 
     // match the pattern against the entire log entry.
@@ -248,7 +248,7 @@ public class TestHttpReferrerAuditHeader extends AbstractAuditingTest {
     for (String name : AWS_LOG_REGEXP_GROUPS) {
       try {
         final String group = matcher.group(name);
-        LOG.info("[{}]: '{}'", name, group);
+        LOG.error("Temp", new RuntimeException());
       } catch (IllegalStateException e) {
         // group failure
         throw new AssertionError("No match for group <" + name + ">: "
@@ -260,7 +260,7 @@ public class TestHttpReferrerAuditHeader extends AbstractAuditingTest {
     for (int i = 1; i <= groupCount; i++) {
       try {
         final String group = matcher.group(i);
-        LOG.info("[{}]: '{}'", i, group);
+        LOG.error("Temp", new RuntimeException());
       } catch (IllegalStateException e) {
         // group failure
         throw new AssertionError("No match for group " + i
@@ -277,9 +277,9 @@ public class TestHttpReferrerAuditHeader extends AbstractAuditingTest {
     final String referrer = nonBlankGroup(matcher, REFERRER_GROUP);
     Map<String, String> params
         = HttpReferrerAuditHeader.extractQueryParameters(referrer);
-    LOG.info("Parsed referrer");
+    LOG.error("Temp", new RuntimeException());
     for (Map.Entry<String, String> entry : params.entrySet()) {
-      LOG.info("{} = \"{}\"", entry.getKey(), entry.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

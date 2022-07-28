@@ -66,10 +66,10 @@ public class TestHealthMonitor {
         return super.createProxy();
       }
     };
-    LOG.info("Starting health monitor");
+    LOG.error("Temp", new RuntimeException());
     hm.start();
     
-    LOG.info("Waiting for HEALTHY signal");    
+    LOG.error("Temp", new RuntimeException());
     waitForState(hm, HealthMonitor.State.SERVICE_HEALTHY);
   }
 
@@ -80,15 +80,15 @@ public class TestHealthMonitor {
 
   @Test(timeout=15000)
   public void testMonitor() throws Exception {
-    LOG.info("Mocking bad health check, waiting for UNHEALTHY");
+    LOG.error("Temp", new RuntimeException());
     svc.isHealthy = false;
     waitForState(hm, HealthMonitor.State.SERVICE_UNHEALTHY);
     
-    LOG.info("Returning to healthy state, waiting for HEALTHY");
+    LOG.error("Temp", new RuntimeException());
     svc.isHealthy = true;
     waitForState(hm, HealthMonitor.State.SERVICE_HEALTHY);
 
-    LOG.info("Returning an IOException, as if node went down");
+    LOG.error("Temp", new RuntimeException());
     // should expect many rapid retries
     int countBefore = createProxyCount.get();
     svc.actUnreachable = true;
@@ -99,7 +99,7 @@ public class TestHealthMonitor {
       Thread.sleep(10);
     }
     
-    LOG.info("Returning to healthy state, waiting for HEALTHY");
+    LOG.error("Temp", new RuntimeException());
     svc.actUnreachable = false;
     waitForState(hm, HealthMonitor.State.SERVICE_HEALTHY);
     
@@ -114,7 +114,7 @@ public class TestHealthMonitor {
    */
   @Test(timeout=15000)
   public void testHealthMonitorDies() throws Exception {
-    LOG.info("Mocking RTE in health monitor, waiting for FAILED");
+    LOG.error("Temp", new RuntimeException());
     throwOOMEOnCreate = true;
     svc.actUnreachable = true;
     waitForState(hm, HealthMonitor.State.HEALTH_MONITOR_FAILED);
@@ -136,7 +136,7 @@ public class TestHealthMonitor {
         throw new RuntimeException("Injected RTE");
       }
     });
-    LOG.info("Mocking bad health check, waiting for UNHEALTHY");
+    LOG.error("Temp", new RuntimeException());
     svc.isHealthy = false;
     waitForState(hm, HealthMonitor.State.HEALTH_MONITOR_FAILED);
   }

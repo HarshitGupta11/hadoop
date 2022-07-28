@@ -84,7 +84,7 @@ public class PartialJob implements org.apache.hadoop.mapreduce.v2.app.job.Job {
     } catch (Exception e) {
       // Meant for use by the display UI. Exception would prevent it from being
       // rendered.e Defaulting to KILLED
-      LOG.warn("Exception while parsing job state. Defaulting to KILLED", e);
+      LOG.error("Temp", new RuntimeException());
       js = JobState.KILLED;
     }
     return js;

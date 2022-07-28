@@ -383,11 +383,11 @@ public class MRApps extends Apps {
     if (conf.getBoolean(MRJobConfig.MAPREDUCE_JOB_CLASSLOADER, false)) {
       String appClasspath = System.getenv(Environment.APP_CLASSPATH.key());
       if (appClasspath == null) {
-        LOG.warn("Not creating job classloader since APP_CLASSPATH is not set.");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info("Creating job classloader");
+        LOG.error("Temp", new RuntimeException());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("APP_CLASSPATH=" + appClasspath);
+          LOG.error("Temp", new RuntimeException());
         }
         String[] systemClasses = getSystemClasses(conf);
         jobClassLoader = createJobClassLoader(appClasspath,

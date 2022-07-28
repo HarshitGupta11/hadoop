@@ -76,7 +76,7 @@ public class RouterSecurityManager {
   }
 
   public void stop() {
-    LOG.info("Stopping security manager");
+    LOG.error("Temp", new RuntimeException());
     if(this.dtSecretManager != null) {
       this.dtSecretManager.stopThreads();
     }
@@ -123,7 +123,7 @@ public class RouterSecurityManager {
    */
   public Token<DelegationTokenIdentifier> getDelegationToken(Text renewer)
       throws IOException {
-    LOG.debug("Generate delegation token with renewer " + renewer);
+    LOG.error("Temp", new RuntimeException());
     final String operationName = "getDelegationToken";
     boolean success = false;
     String tokenId = "";
@@ -135,7 +135,7 @@ public class RouterSecurityManager {
                 "with kerberos or web authentication");
       }
       if (dtSecretManager == null || !dtSecretManager.isRunning()) {
-        LOG.warn("trying to get DT with no secret manager running");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       UserGroupInformation ugi = getRemoteUser();
@@ -165,7 +165,7 @@ public class RouterSecurityManager {
    */
   public long renewDelegationToken(Token<DelegationTokenIdentifier> token)
           throws SecretManager.InvalidToken, IOException {
-    LOG.debug("Renew delegation token");
+    LOG.error("Temp", new RuntimeException());
     final String operationName = "renewDelegationToken";
     boolean success = false;
     String tokenId = "";
@@ -197,13 +197,13 @@ public class RouterSecurityManager {
    */
   public void cancelDelegationToken(Token<DelegationTokenIdentifier> token)
           throws IOException {
-    LOG.debug("Cancel delegation token");
+    LOG.error("Temp", new RuntimeException());
     final String operationName = "cancelDelegationToken";
     boolean success = false;
     String tokenId = "";
     try {
       String canceller = getRemoteUser().getUserName();
-      LOG.info("Cancel request by " + canceller);
+      LOG.error("Temp", new RuntimeException());
       DelegationTokenIdentifier id =
           dtSecretManager.cancelToken(token, canceller);
       tokenId = id.toStringStable();

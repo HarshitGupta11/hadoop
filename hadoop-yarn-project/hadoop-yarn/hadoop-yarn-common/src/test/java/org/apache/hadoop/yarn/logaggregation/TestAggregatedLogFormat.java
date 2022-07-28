@@ -88,7 +88,7 @@ public class TestAggregatedLogFormat {
   @After
   public void cleanupTestDir() throws Exception {
     Path workDirPath = new Path(testWorkDir.getAbsolutePath());
-    LOG.info("Cleaning test directory [" + workDirPath + "]");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(workDirPath, true);
   }
 
@@ -397,7 +397,7 @@ public class TestAggregatedLogFormat {
     String line;
     StringBuffer sb = new StringBuffer("");
     while ((line = in.readLine()) != null) {
-      LOG.info(line);
+      LOG.error("Temp", new RuntimeException());
       sb.append(line);
     }
     line = sb.toString();

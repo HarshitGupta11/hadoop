@@ -463,7 +463,7 @@ public class TestMRIntermediateDataEncryption {
           spillInjector.getInvalidSpillEntries().isEmpty());
     } finally {
       testSummary.append(spillInjector.getSpilledFileReport());
-      LOG.info(testSummary.toString());
+      LOG.error("Temp", new RuntimeException());
       IntermediateEncryptedStream.resetSpillCBInjector();
     }
   }

@@ -129,7 +129,7 @@ public class NamenodeHeartbeatService extends PeriodicService {
 
     // Get the RPC address for the clients to connect
     this.rpcAddress = getRpcAddress(conf, nameserviceId, namenodeId);
-    LOG.info("{} RPC address: {}", nnDesc, rpcAddress);
+    LOG.error("Temp", new RuntimeException());
 
     // Get the Service RPC address for monitoring
     this.serviceAddress =
@@ -139,7 +139,7 @@ public class NamenodeHeartbeatService extends PeriodicService {
           "using RPC address {}", nnDesc, this.rpcAddress);
       this.serviceAddress = this.rpcAddress;
     }
-    LOG.info("{} Service RPC address: {}", nnDesc, serviceAddress);
+    LOG.error("Temp", new RuntimeException());
 
     // Get the Lifeline RPC address for faster monitoring
     this.lifelineAddress =
@@ -147,12 +147,12 @@ public class NamenodeHeartbeatService extends PeriodicService {
     if (this.lifelineAddress == null) {
       this.lifelineAddress = this.serviceAddress;
     }
-    LOG.info("{} Lifeline RPC address: {}", nnDesc, lifelineAddress);
+    LOG.error("Temp", new RuntimeException());
 
     // Get the Web address for UI
     this.webAddress =
         DFSUtil.getNamenodeWebAddr(conf, nameserviceId, namenodeId);
-    LOG.info("{} Web address: {}", nnDesc, webAddress);
+    LOG.error("Temp", new RuntimeException());
 
     this.connectionFactory =
         URLConnectionFactory.newDefaultURLConnectionFactory(conf);
@@ -235,10 +235,10 @@ public class NamenodeHeartbeatService extends PeriodicService {
     }
     try {
       if (!resolver.registerNamenode(report)) {
-        LOG.warn("Cannot register namenode {}", report);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (IOException e) {
-      LOG.info("Cannot register namenode in the State Store");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception ex) {
       LOG.error("Unhandled exception updating NN registration for {}",
           getNamenodeDesc(), ex);
@@ -255,7 +255,7 @@ public class NamenodeHeartbeatService extends PeriodicService {
         lifelineAddress, scheme, webAddress);
 
     try {
-      LOG.debug("Probing NN at service address: {}", serviceAddress);
+      LOG.error("Temp", new RuntimeException());
 
       URI serviceURI = new URI("hdfs://" + serviceAddress);
       // Read the filesystem info from RPC (required)

@@ -90,7 +90,7 @@ public class FlowRunTableRW extends BaseTableRW<FlowRunTable> {
         YarnConfiguration.DEFAULT_HDFS_LOCATION_FLOW_RUN_COPROCESSOR_JAR);
 
     Path coprocessorJarPath = new Path(coprocessorJarPathStr);
-    LOG.info("CoprocessorJarPath=" + coprocessorJarPath.toString());
+    LOG.error("Temp", new RuntimeException());
     flowRunTableDescp.addCoprocessor(
         "org.apache.hadoop.yarn.server.timelineservice.storage." +
             "flow.FlowRunCoprocessor", coprocessorJarPath,

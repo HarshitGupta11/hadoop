@@ -75,7 +75,7 @@ public class JHSDelegationTokenSecretManager
   @Override
   protected void storeNewMasterKey(DelegationKey key) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing master key " + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       store.storeTokenMasterKey(key);
@@ -87,7 +87,7 @@ public class JHSDelegationTokenSecretManager
   @Override
   protected void removeStoredMasterKey(DelegationKey key) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing master key " + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       store.removeTokenMasterKey(key);
@@ -100,7 +100,7 @@ public class JHSDelegationTokenSecretManager
   protected void storeNewToken(MRDelegationTokenIdentifier tokenId,
       long renewDate) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       store.storeToken(tokenId, renewDate);
@@ -113,7 +113,7 @@ public class JHSDelegationTokenSecretManager
   protected void removeStoredToken(MRDelegationTokenIdentifier tokenId)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       store.removeToken(tokenId);
@@ -126,7 +126,7 @@ public class JHSDelegationTokenSecretManager
   protected void updateStoredToken(MRDelegationTokenIdentifier tokenId,
       long renewDate) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Updating token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       store.updateToken(tokenId, renewDate);
@@ -136,7 +136,7 @@ public class JHSDelegationTokenSecretManager
   }
 
   public void recover(HistoryServerState state) throws IOException {
-    LOG.info("Recovering " + getClass().getSimpleName());
+    LOG.error("Temp", new RuntimeException());
     for (DelegationKey key : state.tokenMasterKeyState) {
       addKey(key);
     }

@@ -83,7 +83,7 @@ public class NativePmemMappedBlock implements MappableBlock {
         LOG.info("Successfully uncached one replica:{} from persistent memory"
             + ", [cached path={}, length={}]", key, cacheFilePath, length);
       } catch (IOException e) {
-        LOG.warn("IOException occurred for block {}!", key, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

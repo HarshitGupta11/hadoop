@@ -320,7 +320,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
     this.privilegedOperationExecutor = privilegedOperationExecutor;
 
     if (cGroupsHandler == null) {
-      LOG.info("cGroupsHandler is null - cgroups not in use.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       this.cGroupsHandler = cGroupsHandler;
     }
@@ -360,7 +360,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
           + " is not in the set of allowed networks: " + allowedNetworks;
 
       if (LOG.isWarnEnabled()) {
-        LOG.warn(message + ". Please check configuration");
+        LOG.error("Temp", new RuntimeException());
       }
 
       throw new ContainerExecutionException(message);
@@ -509,7 +509,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
 
     if (network.equalsIgnoreCase("host")) {
       if (name != null && !name.isEmpty()) {
-        LOG.info("setting hostname in container to: " + name);
+        LOG.error("Temp", new RuntimeException());
         runCommand.setHostname(name);
       }
     } else {
@@ -523,7 +523,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
         }
         validateHostname(name);
       }
-      LOG.info("setting hostname in container to: " + name);
+      LOG.error("Temp", new RuntimeException());
       runCommand.setHostname(name);
     }
   }
@@ -550,12 +550,12 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
       LOG.debug("no resource restrictions specified. not using docker's "
           + "cgroup options");
     } else {
-      LOG.debug("using docker's cgroups options");
+      LOG.error("Temp", new RuntimeException());
 
       String cGroupPath = "/"
           + cGroupsHandler.getRelativePathForCGroup(containerIdStr);
 
-      LOG.debug("using cgroup parent: {}", cGroupPath);
+      LOG.error("Temp", new RuntimeException());
 
       runCommand.setCGroupParent(cGroupPath);
     }
@@ -1039,7 +1039,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
           "Execute container interactive shell failed", e.getExitCode(),
           e.getOutput(), e.getErrorOutput());
     } catch (InterruptedException ie) {
-      LOG.warn("InterruptedException executing command: ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(ie.getMessage());
     }
     return output;
@@ -1055,7 +1055,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
         new DockerInspectCommand(containerIdStr).getIpAndHost();
     try {
       String output = executeDockerInspect(containerId, inspectCommand);
-      LOG.info("Docker inspect output for " + containerId + ": " + output);
+      LOG.error("Temp", new RuntimeException());
       // strip off quotes if any
       output = output.replaceAll("['\"]", "");
       int index = output.lastIndexOf(',');
@@ -1167,7 +1167,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
     if (tcCommandFile != null) {
       launchOp.appendArgs(tcCommandFile);
     }
-    LOG.debug("Launching container with cmd: {}", command);
+    LOG.error("Temp", new RuntimeException());
 
     return launchOp;
   }
@@ -1257,7 +1257,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
         }
       }
     } catch (ContainerExecutionException | PrivilegedOperationException e) {
-      LOG.debug("{} inspect failed, skipping stop", containerId, e);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -1268,7 +1268,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
           containerId.toString(), env, privilegedOperationExecutor, false,
           nmContext);
     } else {
-      LOG.debug("{} status is {}, skipping stop", containerId, containerStatus);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1283,7 +1283,7 @@ public class DockerLinuxContainerRuntime extends OCIContainerRuntime {
 
     String output = privilegedOperationExecutor.executePrivilegedOperation(null,
         privOp, null, null, true, false);
-    LOG.info("{} : docker inspect output {} ", containerId, output);
+    LOG.error("Temp", new RuntimeException());
     return output;
   }
 

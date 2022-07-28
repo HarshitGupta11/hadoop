@@ -124,11 +124,11 @@ public class LocalFileSystem extends ChecksumFileSystem {
       }
       String suffix = "." + rand.nextInt();
       File badFile = new File(badDir, f.getName()+suffix);
-      LOG.warn("Moving bad file " + f + " to " + badFile);
+      LOG.error("Temp", new RuntimeException());
       in.close();                               // close it first
       boolean b = f.renameTo(badFile);                      // rename it
       if (!b) {
-        LOG.warn("Ignoring failure of renameTo");
+        LOG.error("Temp", new RuntimeException());
       }
       // move checksum file too
       File checkFile = ((RawLocalFileSystem)fs).pathToFile(getChecksumFile(p));
@@ -136,10 +136,10 @@ public class LocalFileSystem extends ChecksumFileSystem {
       sums.close();
       b = checkFile.renameTo(new File(badDir, checkFile.getName()+suffix));
       if (!b) {
-          LOG.warn("Ignoring failure of renameTo");
+          LOG.error("Temp", new RuntimeException());
         }
     } catch (IOException e) {
-      LOG.warn("Error moving bad file " + p, e);
+      LOG.error("Temp", new RuntimeException());
     }
     return false;
   }

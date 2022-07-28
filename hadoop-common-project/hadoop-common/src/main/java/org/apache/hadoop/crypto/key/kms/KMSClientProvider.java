@@ -187,7 +187,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
 
     @Override
     public long renew(Token<?> token, Configuration conf) throws IOException {
-      LOG.debug("Renewing delegation token {}", token);
+      LOG.error("Temp", new RuntimeException());
       KeyProvider keyProvider = createKeyProvider(token, conf);
       try {
         if (!(keyProvider instanceof
@@ -208,7 +208,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
 
     @Override
     public void cancel(Token<?> token, Configuration conf) throws IOException {
-      LOG.debug("Canceling delegation token {}", token);
+      LOG.error("Temp", new RuntimeException());
       KeyProvider keyProvider = createKeyProvider(token, conf);
       try {
         if (!(keyProvider instanceof
@@ -232,7 +232,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
       String service = token.getService().toString();
       URI uri;
       if (service != null && service.startsWith(SCHEME_NAME + ":/")) {
-        LOG.debug("Creating key provider with token service value {}", service);
+        LOG.error("Temp", new RuntimeException());
         uri = URI.create(service);
       } else { // conf fallback
         uri = KMSUtil.getKeyProviderUri(conf);
@@ -514,10 +514,10 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
       });
     } catch (ConnectException ex) {
       String msg = "Failed to connect to: " + url.toString();
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(msg, ex);
     } catch (SocketTimeoutException ex) {
-      LOG.warn("Failed to connect to {}:{}", url.getHost(), url.getPort());
+      LOG.error("Temp", new RuntimeException());
       throw ex;
     } catch (IOException ex) {
       throw ex;
@@ -1004,12 +1004,12 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
   protected static Token<?> selectDelegationToken(Credentials creds,
                                                   Text service) {
     Token<?> token = creds.getToken(service);
-    LOG.debug("selected by alias={} token={}", service, token);
+    LOG.error("Temp", new RuntimeException());
     if (token != null && TOKEN_KIND.equals(token.getKind())) {
       return token;
     }
     token = TokenSelector.INSTANCE.selectToken(service, creds.getAllTokens());
-    LOG.debug("selected by service={} token={}", service, token);
+    LOG.error("Temp", new RuntimeException());
     return token;
   }
 
@@ -1031,14 +1031,14 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
         public Token<?> run() throws Exception {
           // Not using the cached token here.. Creating a new token here
           // everytime.
-          LOG.debug("Getting new token from {}, renewer:{}", url, renewer);
+          LOG.error("Temp", new RuntimeException());
           return authUrl.getDelegationToken(url,
               new DelegationTokenAuthenticatedURL.Token(), renewer, doAsUser);
         }
       });
       if (token != null) {
         token.setService(dtService);
-        LOG.info("New token created: ({})", token);
+        LOG.error("Temp", new RuntimeException());
       } else {
         throw new IOException("Got NULL as delegation token");
       }

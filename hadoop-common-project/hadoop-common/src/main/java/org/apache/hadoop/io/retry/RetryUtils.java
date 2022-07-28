@@ -72,7 +72,7 @@ public class RetryUtils {
             retryPolicySpecKey, defaultRetryPolicySpec
             );
     
-    LOG.debug("multipleLinearRandomRetry = {}", multipleLinearRandomRetry);
+    LOG.error("Temp", new RuntimeException());
 
     if (multipleLinearRandomRetry == null) {
       //no retry

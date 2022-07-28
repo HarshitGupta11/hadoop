@@ -79,7 +79,7 @@ public class SynthTraceJobProducer implements JobStoryProducer {
   public SynthTraceJobProducer(Configuration conf, Path path)
       throws IOException {
 
-    LOG.info("SynthTraceJobProducer");
+    LOG.error("Temp", new RuntimeException());
 
     this.conf = conf;
     this.rand = new JDKRandomGenerator();
@@ -181,7 +181,7 @@ public class SynthTraceJobProducer implements JobStoryProducer {
   // syn json formats
   private static void validateJobDef(JobDefinition jobDef){
     if(jobDef.tasks == null) {
-      LOG.info("Detected old JobDefinition format. Converting.");
+      LOG.error("Temp", new RuntimeException());
       try {
         jobDef.tasks = new ArrayList<>();
         jobDef.type = "mapreduce";
@@ -216,7 +216,7 @@ public class SynthTraceJobProducer implements JobStoryProducer {
 
         jobDef.tasks.add(reduce);
       } catch (JsonMappingException e) {
-        LOG.warn("Error converting old JobDefinition format", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

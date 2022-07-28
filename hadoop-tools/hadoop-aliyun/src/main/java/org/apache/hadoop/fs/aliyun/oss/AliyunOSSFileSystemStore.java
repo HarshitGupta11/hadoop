@@ -119,10 +119,10 @@ public class AliyunOSSFileSystemStore {
         clientConf.setProxyPort(proxyPort);
       } else {
         if (secureConnections) {
-          LOG.warn("Proxy host set without port. Using HTTPS default 443");
+          LOG.error("Temp", new RuntimeException());
           clientConf.setProxyPort(443);
         } else {
-          LOG.warn("Proxy host set without port. Using HTTP default 80");
+          LOG.error("Temp", new RuntimeException());
           clientConf.setProxyPort(80);
         }
       }
@@ -190,7 +190,7 @@ public class AliyunOSSFileSystemStore {
    */
   public void deleteObjects(List<String> keysToDelete) throws IOException {
     if (CollectionUtils.isEmpty(keysToDelete)) {
-      LOG.warn("Keys to delete is empty.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -324,7 +324,7 @@ public class AliyunOSSFileSystemStore {
     CopyObjectResult copyResult =
         ossClient.copyObject(bucketName, srcKey, bucketName, dstKey);
     statistics.incrementWriteOps(1);
-    LOG.debug(copyResult.getETag());
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -381,7 +381,7 @@ public class AliyunOSSFileSystemStore {
               uploadId, partETags);
       CompleteMultipartUploadResult completeMultipartUploadResult =
           ossClient.completeMultipartUpload(completeMultipartUploadRequest);
-      LOG.debug(completeMultipartUploadResult.getETag());
+      LOG.error("Temp", new RuntimeException());
       return true;
     } catch (OSSException | ClientException e) {
       AbortMultipartUploadRequest abortMultipartUploadRequest =
@@ -408,7 +408,7 @@ public class AliyunOSSFileSystemStore {
     }
     try {
       PutObjectResult result = ossClient.putObject(bucketName, key, fis, meta);
-      LOG.debug(result.getETag());
+      LOG.error("Temp", new RuntimeException());
       statistics.incrementWriteOps(1);
     } finally {
       fis.close();

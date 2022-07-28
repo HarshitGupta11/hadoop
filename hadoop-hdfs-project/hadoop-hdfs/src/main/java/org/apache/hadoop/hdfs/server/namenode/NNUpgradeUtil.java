@@ -88,18 +88,18 @@ public abstract class NNUpgradeUtil {
   static void doFinalize(StorageDirectory sd) throws IOException {
     File prevDir = sd.getPreviousDir();
     if (!prevDir.exists()) { // already discarded
-      LOG.info("Directory " + prevDir + " does not exist.");
-      LOG.info("Finalize upgrade for " + sd.getRoot()+ " is not required.");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
-    LOG.info("Finalizing upgrade of storage directory " + sd.getRoot());
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(sd.getCurrentDir().exists(),
         "Current directory must exist.");
     final File tmpDir = sd.getFinalizedTmp();
     // rename previous to tmp and remove
     NNStorage.rename(prevDir, tmpDir);
     NNStorage.deleteDir(tmpDir);
-    LOG.info("Finalize upgrade for " + sd.getRoot()+ " is complete.");
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**
@@ -115,7 +115,7 @@ public abstract class NNUpgradeUtil {
    */
   static void doPreUpgrade(Configuration conf, StorageDirectory sd)
       throws IOException {
-    LOG.info("Starting upgrade of storage directory " + sd.getRoot());
+    LOG.error("Temp", new RuntimeException());
 
     // rename current to tmp
     renameCurToTmp(sd);
@@ -182,7 +182,7 @@ public abstract class NNUpgradeUtil {
    */
   public static void doUpgrade(StorageDirectory sd, Storage storage)
       throws IOException {
-    LOG.info("Performing upgrade of storage directory " + sd.getRoot());
+    LOG.error("Temp", new RuntimeException());
     try {
       // Write the version file, since saveFsImage only makes the
       // fsimage_<txid>, and the directory is otherwise empty.
@@ -232,7 +232,7 @@ public abstract class NNUpgradeUtil {
 
     // delete tmp dir
     NNStorage.deleteDir(tmpDir);
-    LOG.info("Rollback of " + sd.getRoot() + " is complete.");
+    LOG.error("Temp", new RuntimeException());
   }
   
 }

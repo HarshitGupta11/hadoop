@@ -145,7 +145,7 @@ class JobHistoryFileReplayHelper {
       if (mod != i) {
         continue;
       }
-      LOG.info("this mapper will process file " + fileName);
+      LOG.error("Temp", new RuntimeException());
       // it's mine
       JobFiles jobFiles = jobs.get(jobId);
       if (jobFiles == null) {
@@ -179,7 +179,7 @@ class JobHistoryFileReplayHelper {
       }
       break;
     case UNKNOWN:
-      LOG.warn("unknown type: " + path);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

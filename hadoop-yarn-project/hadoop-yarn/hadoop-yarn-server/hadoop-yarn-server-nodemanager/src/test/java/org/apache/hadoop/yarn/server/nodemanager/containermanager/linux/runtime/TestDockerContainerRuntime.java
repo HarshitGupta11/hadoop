@@ -240,20 +240,20 @@ public class TestDockerContainerRuntime {
       // get rid of newline at the end
       uid = shexec1.getOutput().replaceAll("\n$", "");
     } catch (Exception e) {
-      LOG.info("Could not run id -u command: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       shexec2.execute();
       // get rid of newline at the end
       gid = shexec2.getOutput().replaceAll("\n$", "");
     } catch (Exception e) {
-      LOG.info("Could not run id -g command: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       shexec3.execute();
       groups = shexec3.getOutput().replace("\n", " ").split(" ");
     } catch (Exception e) {
-      LOG.info("Could not run id -G command: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
     uidGidPair = uid + ":" + gid;
     // Prevent gid threshold failures for these tests
@@ -363,7 +363,7 @@ public class TestDockerContainerRuntime {
       when(localDirsHandler.getLocalPathForWrite(anyString()))
           .thenReturn(new Path(tmpPath));
     } catch (IOException ioe) {
-      LOG.info("LocalDirsHandler failed" + ioe);
+      LOG.error("Temp", new RuntimeException());
     }
     return mockNMContext;
   }
@@ -760,7 +760,7 @@ public class TestDockerContainerRuntime {
       Assert.fail("Invalid default network configuration should did not "
           + "trigger initialization failure.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     //valid default network configuration - sdn1 is included in allowed
@@ -794,7 +794,7 @@ public class TestDockerContainerRuntime {
       Assert.fail("Network was expected to be disallowed: " +
           disallowedNetwork);
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     String allowedNetwork = "bridge";
@@ -1017,7 +1017,7 @@ public class TestDockerContainerRuntime {
       Assert.fail("Disallowed network : " + customNetwork3
           + "did not trigger launch failure.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1056,7 +1056,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a pid host disabled container failure.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1147,7 +1147,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a privileged launch container failure.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1172,7 +1172,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a privileged launch container failure.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1197,7 +1197,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a privileged launch container failure.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1314,7 +1314,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a launch container failure due to invalid mount.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1481,7 +1481,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a launch container failure due to invalid mount.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1499,7 +1499,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a launch container failure due to invalid mode.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1517,7 +1517,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a launch container failure due to NUL in mount.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1593,7 +1593,7 @@ public class TestDockerContainerRuntime {
       Assert.fail(
           "Expected a launch container failure due to non-absolute path.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1612,7 +1612,7 @@ public class TestDockerContainerRuntime {
       Assert.fail(
           "Expected a launch container failure due to non-absolute path.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1631,7 +1631,7 @@ public class TestDockerContainerRuntime {
       Assert.fail(
           "Expected a launch container failure due to invalid character.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1650,7 +1650,7 @@ public class TestDockerContainerRuntime {
       Assert.fail(
           "Expected a launch container failure due to NUL in tmpfs mount.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1712,7 +1712,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a launch container failure due to invalid mount.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1774,7 +1774,7 @@ public class TestDockerContainerRuntime {
       runtime.launchContainer(builder.build());
       Assert.fail("Expected a launch container failure due to invalid mount.");
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -2547,7 +2547,7 @@ public class TestDockerContainerRuntime {
       Assert.fail("Runtime was expected to be disallowed: " +
           disallowedRuntime);
     } catch (ContainerExecutionException e) {
-      LOG.info("Caught expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     String allowedRuntime = "runc";

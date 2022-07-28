@@ -218,7 +218,7 @@ public class DancingLinks<ColumnName> {
    * @param col the column to hide
    */
   private void coverColumn(ColumnHeader<ColumnName> col) {
-    LOG.debug("cover " + col.head.name);
+    LOG.error("Temp", new RuntimeException());
     // remove the column
     col.right.left = col.left;
     col.left.right = col.right;
@@ -240,7 +240,7 @@ public class DancingLinks<ColumnName> {
    * @param col the column to unhide
    */
   private void uncoverColumn(ColumnHeader<ColumnName> col) {
-    LOG.debug("uncover " + col.head.name);
+    LOG.error("Temp", new RuntimeException());
     Node<ColumnName> row = col.up;
     while (row != col) {
       Node<ColumnName> node = row.left;

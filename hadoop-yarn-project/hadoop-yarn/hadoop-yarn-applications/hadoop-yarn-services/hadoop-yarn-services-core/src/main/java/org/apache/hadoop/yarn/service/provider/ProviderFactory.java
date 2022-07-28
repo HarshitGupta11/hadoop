@@ -56,10 +56,10 @@ public abstract class ProviderFactory {
   public static synchronized ProviderFactory createServiceProviderFactory(
       Artifact artifact) {
     if (artifact == null || artifact.getType() == null) {
-      LOG.debug("Loading service provider type default");
+      LOG.error("Temp", new RuntimeException());
       return DefaultProviderFactory.getInstance();
     }
-    LOG.debug("Loading service provider type {}", artifact.getType());
+    LOG.error("Temp", new RuntimeException());
     switch (artifact.getType()) {
       // TODO add handling for custom types?
       // TODO handle service

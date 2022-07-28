@@ -196,7 +196,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
               "org.apache.zookeeper.server.auth.SASLAuthenticationProvider");
           aclProvider = new SASLOwnerACLProvider(principal);
         } else { // "none"
-          LOG.info("Connecting to ZooKeeper without authentication");
+          LOG.error("Temp", new RuntimeException());
           aclProvider = new DefaultACLProvider(); // open to everyone
         }
         int sessionT =
@@ -392,7 +392,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
       throw new IOException("Could not start PathChildrenCache for keys", e);
     }
     if (isTokenWatcherEnabled) {
-      LOG.info("TokenCache is enabled");
+      LOG.error("Temp", new RuntimeException());
       try {
         tokenCache = new PathChildrenCache(zkClient, ZK_DTSM_TOKENS_ROOT, true);
         if (tokenCache != null) {
@@ -434,7 +434,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
    */
   private void loadFromZKCache(final boolean isTokenCache) {
     final String cacheName = isTokenCache ? "token" : "key";
-    LOG.info("Starting to load {} cache.", cacheName);
+    LOG.error("Temp", new RuntimeException());
     final List<ChildData> children;
     if (isTokenCache) {
       children = tokenCache.getCurrentData();
@@ -453,7 +453,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
       } catch (Exception e) {
         LOG.info("Ignoring node {} because it failed to load.",
             child.getPath());
-        LOG.debug("Failure exception:", e);
+        LOG.error("Temp", new RuntimeException());
         ++count;
       }
     }
@@ -461,9 +461,9 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
       syncTokenOwnerStats();
     }
     if (count > 0) {
-      LOG.warn("Ignored {} nodes while loading {} cache.", count, cacheName);
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Loaded {} cache.", cacheName);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void processKeyAddOrUpdate(byte[] data) throws IOException {
@@ -570,7 +570,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
     try {
       zkClient.create().withMode(CreateMode.PERSISTENT).forPath(nodePath);
     } catch (KeeperException.NodeExistsException ne) {
-      LOG.debug(nodePath + " znode already exists !!");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       throw new IOException(nodePath + " znode could not be created !!", e);
     }
@@ -638,7 +638,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
       incrSharedCount(keyIdSeqCounter, 1);
     } catch (InterruptedException e) {
       // The ExpirationThread is just finishing.. so dont do anything..
-      LOG.debug("Thread interrupted while performing keyId increment", e);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
     } catch (Exception e) {
       throw new RuntimeException("Could not increment shared keyId counter !!", e);
@@ -784,7 +784,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     DataOutputStream fsOut = new DataOutputStream(os);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing ZKDTSMDelegationKey_" + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
     key.write(fsOut);
     try {
@@ -804,7 +804,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
         }
       }
     } catch (KeeperException.NodeExistsException ne) {
-      LOG.debug(nodeCreatePath + " znode already exists !!");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception ex) {
       throw new IOException(ex);
     } finally {
@@ -818,7 +818,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
         getNodePath(ZK_DTSM_MASTER_KEY_ROOT,
             DELEGATION_KEY_PREFIX + key.getKeyId());
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing ZKDTSMDelegationKey_" + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       if (zkClient.checkExists().forPath(nodeRemovePath) != null) {
@@ -830,14 +830,14 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
             // check and the actual delete.. which might lead to an
             // exception that can bring down the daemon running this
             // SecretManager
-            LOG.debug("Node already deleted by peer " + nodeRemovePath);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       } else {
-        LOG.debug("Attempted to delete a non-existing znode " + nodeRemovePath);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception e) {
-      LOG.debug(nodeRemovePath + " znode could not be removed!!");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -862,7 +862,7 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
         addOrUpdateToken(ident, tokenInfo, true);
       } else {
         addOrUpdateToken(ident, tokenInfo, false);
-        LOG.debug("Attempted to update a non-existing znode " + nodeRemovePath);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception e) {
       throw new RuntimeException("Could not update Stored Token ZKDTSMDelegationToken_"
@@ -905,11 +905,11 @@ public abstract class ZKDelegationTokenSecretManager<TokenIdent extends Abstract
             // check and the actual delete.. which might lead to an
             // exception that can bring down the daemon running this
             // SecretManager
-            LOG.debug("Node already deleted by peer " + nodeRemovePath);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       } else {
-        LOG.debug("Attempted to remove a non-existing znode " + nodeRemovePath);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception e) {
       throw new RuntimeException(

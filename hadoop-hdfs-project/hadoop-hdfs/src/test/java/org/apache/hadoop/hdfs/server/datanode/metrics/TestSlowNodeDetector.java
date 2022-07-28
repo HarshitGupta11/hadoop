@@ -247,7 +247,7 @@ public class TestSlowNodeDetector {
     for (Map.Entry<Map<String, Double>, Set<String>> entry :
         outlierTestMatrix.entrySet()) {
 
-      LOG.info("Verifying set {}", entry.getKey());
+      LOG.error("Temp", new RuntimeException());
       final Set<String> outliers =
           slowNodeDetector.getOutliers(entry.getKey()).keySet();
       assertTrue(

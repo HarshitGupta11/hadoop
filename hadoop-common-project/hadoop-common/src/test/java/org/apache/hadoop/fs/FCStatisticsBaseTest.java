@@ -155,7 +155,7 @@ public abstract class FCStatisticsBaseTest {
             }
             LOG.warn("not all references have been cleaned up; still " +
                 allDataSize.get() + " references left");
-            LOG.warn("triggering another GC");
+            LOG.error("Temp", new RuntimeException());
             System.gc();
             return false;
           }

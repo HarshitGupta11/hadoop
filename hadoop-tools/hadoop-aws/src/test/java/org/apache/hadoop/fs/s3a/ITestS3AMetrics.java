@@ -58,7 +58,7 @@ public class ITestS3AMetrics extends AbstractS3ATestBase {
     InputStream inputStream = fs.open(file);
     try {
       while (inputStream.read(data) != -1) {
-        LOG.debug("Read batch of data from input stream...");
+        LOG.error("Temp", new RuntimeException());
       }
       LOG.info("Final stream statistics: {}",
           ioStatisticsSourceToString(inputStream));

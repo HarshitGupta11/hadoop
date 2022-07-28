@@ -271,7 +271,7 @@ public class ITestAbfsDelegationTokens extends AbstractAbfsIntegrationTest {
 
     StubAbfsTokenIdentifier abfsId = (StubAbfsTokenIdentifier)
         token.decodeIdentifier();
-    LOG.info("Created token {}", abfsId);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("token URI in " + abfsId,
         tokenService, abfsId.getUri().toString());
     return abfsId;
@@ -314,7 +314,7 @@ public class ITestAbfsDelegationTokens extends AbstractAbfsIntegrationTest {
     int r = doAs(aliceUser,
         () -> ToolRunner.run(conf, dt, args));
     String s = dtUtilContent.toString();
-    LOG.info("\n{}", s);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("Exit code from command dtutil "
         + StringUtils.join(" ", args) + " with output " + s,
         expected, r);

@@ -218,7 +218,7 @@ public class TestIncrementalBrVariations {
           block.getBlock(), block.getStorageIDs()[0]);
     }
 
-    LOG.info("Triggering report after deleting blocks");
+    LOG.error("Temp", new RuntimeException());
     long ops = getLongCounter("BlockReceivedAndDeletedOps", getMetrics(NN_METRICS));
 
     // Trigger a report to the NameNode and give it a few seconds.

@@ -209,7 +209,7 @@ public class ChangeTracker {
     // can be verified on the response, except that a revision ID is present
     // if required.
     String newRevisionId = policy.getRevisionId(copyResult);
-    LOG.debug("Copy result {}: {}", policy.getSource(), newRevisionId);
+    LOG.error("Temp", new RuntimeException());
     if (newRevisionId == null && policy.isRequireVersion()) {
       throw new NoVersionAttributeException(uri, String.format(
           "Change detection policy requires %s",

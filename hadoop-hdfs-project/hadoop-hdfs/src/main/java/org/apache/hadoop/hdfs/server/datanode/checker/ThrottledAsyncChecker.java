@@ -134,7 +134,7 @@ public class ThrottledAsyncChecker<K, V> implements AsyncChecker<K, V> {
       }
     }
 
-    LOG.info("Scheduling a check for {}", target);
+    LOG.error("Temp", new RuntimeException());
     final ListenableFuture<V> lfWithoutTimeout = executorService.submit(
         new Callable<V>() {
           @Override

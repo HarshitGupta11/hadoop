@@ -123,23 +123,23 @@ public class TestDFSInotifyEventInputStreamKerberized {
         try (DistributedFileSystem clientFs =
             (DistributedFileSystem) FileSystem.get(clientConf)) {
           clientFs.mkdirs(new Path("/test"));
-          LOG.info("mkdir /test success");
+          LOG.error("Temp", new RuntimeException());
           final DFSInotifyEventInputStream eis =
               clientFs.getInotifyEventStream();
           // verify we can poll
           EventBatch batch;
           while ((batch = eis.poll()) != null) {
-            LOG.info("txid: " + batch.getTxid());
+            LOG.error("Temp", new RuntimeException());
           }
           assertNull("poll should not return anything", eis.poll());
 
           Thread.sleep(6000);
-          LOG.info("Slept 6 seconds to make sure the TGT has expired.");
+          LOG.error("Temp", new RuntimeException());
 
           UserGroupInformation.getCurrentUser()
               .checkTGTAndReloginFromKeytab();
           clientFs.mkdirs(new Path("/test1"));
-          LOG.info("mkdir /test1 success");
+          LOG.error("Temp", new RuntimeException());
 
           // verify we can poll after a tgt expiration interval
           batch = eis.poll();

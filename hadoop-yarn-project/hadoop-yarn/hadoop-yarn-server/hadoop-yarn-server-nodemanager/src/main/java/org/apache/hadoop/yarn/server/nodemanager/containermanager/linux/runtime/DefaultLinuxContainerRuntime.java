@@ -231,7 +231,7 @@ public class DefaultLinuxContainerRuntime implements LinuxContainerRuntime {
           "Execute container interactive shell failed", e.getExitCode(),
           e.getOutput(), e.getErrorOutput());
     } catch (InterruptedException ie) {
-      LOG.warn("InterruptedException executing command: ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(ie.getMessage());
     }
     return output;
@@ -302,7 +302,7 @@ public class DefaultLinuxContainerRuntime implements LinuxContainerRuntime {
         return commandFile.toString();
       }
     } catch (IOException e) {
-      LOG.warn("Unable to write command to " + cmdDir);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(e);
     }
   }

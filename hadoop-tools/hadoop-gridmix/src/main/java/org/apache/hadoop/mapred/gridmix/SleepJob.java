@@ -201,7 +201,7 @@ public class SleepJob extends GridmixJob {
     protected void cleanup(Context context)
     throws IOException, InterruptedException {
       final String msg = "Slept for " + duration;
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       context.setStatus(msg);
     }
   }
@@ -264,7 +264,7 @@ public class SleepJob extends GridmixJob {
         @Override
         public void close() throws IOException {
           final String msg = "Slept for " + duration;
-          LOG.info(msg);
+          LOG.error("Temp", new RuntimeException());
         }
 
         public void initialize(InputSplit split, TaskAttemptContext ctxt) {
@@ -365,7 +365,7 @@ public class SleepJob extends GridmixJob {
       }
     }
     if(ret.getRunState() != TaskStatus.State.SUCCEEDED) {
-      LOG.warn("No sucessful attempts tasktype " + type +" task "+ task);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return ret;

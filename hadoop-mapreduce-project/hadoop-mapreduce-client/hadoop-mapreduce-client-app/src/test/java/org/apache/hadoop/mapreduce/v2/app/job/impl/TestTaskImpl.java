@@ -400,7 +400,7 @@ public class TestTaskImpl {
   
   @Test
   public void testInit() {
-    LOG.info("--- START: testInit ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);        
     assertTaskNewState();
     assert(taskAttempts.size() == 0);
@@ -411,7 +411,7 @@ public class TestTaskImpl {
    * {@link TaskState#NEW}->{@link TaskState#SCHEDULED}
    */
   public void testScheduleTask() {
-    LOG.info("--- START: testScheduleTask ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);        
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -422,7 +422,7 @@ public class TestTaskImpl {
    * {@link TaskState#SCHEDULED}->{@link TaskState#KILL_WAIT}
    */
   public void testKillScheduledTask() {
-    LOG.info("--- START: testKillScheduledTask ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);        
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -435,7 +435,7 @@ public class TestTaskImpl {
    * {@link TaskState#SCHEDULED}->{@link TaskState#SCHEDULED}
    */
   public void testKillScheduledTaskAttempt() {
-    LOG.info("--- START: testKillScheduledTaskAttempt ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -450,7 +450,7 @@ public class TestTaskImpl {
    * {@link TaskState#SCHEDULED}->{@link TaskState#RUNNING}
    */
   public void testLaunchTaskAttempt() {
-    LOG.info("--- START: testLaunchTaskAttempt ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);        
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -463,7 +463,7 @@ public class TestTaskImpl {
    * {@link TaskState#RUNNING}->{@link TaskState#RUNNING} 
    */
   public void testKillRunningTaskAttempt() {
-    LOG.info("--- START: testKillRunningTaskAttempt ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -475,7 +475,7 @@ public class TestTaskImpl {
 
   @Test
   public void testKillSuccessfulTask() {
-    LOG.info("--- START: testKillSuccesfulTask ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -494,7 +494,7 @@ public class TestTaskImpl {
    * {@link TaskState#SUCCEEDED}->{@link TaskState#SCHEDULED}
    */
   public void testKillAttemptForSuccessfulTask() {
-    LOG.info("--- START: testKillAttemptForSuccessfulTask ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);
     TaskId taskId = getNewTaskID();
     scheduleTaskAttempt(taskId);
@@ -512,7 +512,7 @@ public class TestTaskImpl {
 
   @Test 
   public void testTaskProgress() {
-    LOG.info("--- START: testTaskProgress ---");
+    LOG.error("Temp", new RuntimeException());
     mockTask = createMockTask(TaskType.MAP);        
         
     // launch task

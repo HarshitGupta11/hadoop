@@ -241,7 +241,7 @@ public class TestPmemCacheRecovery {
               "be cached. Right now " + blocksCached + " blocks are cached.");
           return false;
         }
-        LOG.info(cacheBlocksNum + " blocks are now cached.");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }, 1000, 30000);
@@ -329,7 +329,7 @@ public class TestPmemCacheRecovery {
               " blocks are uncached.");
           return false;
         }
-        LOG.info(cacheBlocksNum + " blocks have been uncached.");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }, 1000, 30000);

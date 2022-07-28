@@ -202,7 +202,7 @@ public class SlowPeerTracker {
       return WRITER.writeValueAsString(validReports);
     } catch (JsonProcessingException e) {
       // Failed to serialize. Don't log the exception call stack.
-      LOG.debug("Failed to serialize statistics" + e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -246,7 +246,7 @@ public class SlowPeerTracker {
       slowNodes.add(jsonReport.getSlowNode());
     }
     if (!slowNodes.isEmpty()) {
-      LOG.warn("Slow nodes list: " + slowNodes);
+      LOG.error("Temp", new RuntimeException());
     }
     return slowNodes;
   }

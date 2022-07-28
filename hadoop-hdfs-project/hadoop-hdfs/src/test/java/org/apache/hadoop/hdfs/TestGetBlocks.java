@@ -285,9 +285,9 @@ public class TestGetBlocks {
       locs = namenode.getBlocks(dataNodes[0], fileLen, 0, 0).getBlocks();
       assertEquals(blkLocsSize, locs.length);
       assertFalse(fs.isInSafeMode());
-      LOG.info("Entering safe mode");
+      LOG.error("Temp", new RuntimeException());
       fs.setSafeMode(SafeModeAction.SAFEMODE_ENTER);
-      LOG.info("Entered safe mode");
+      LOG.error("Temp", new RuntimeException());
       assertTrue(fs.isInSafeMode());
       getBlocksWithException(namenode, info, replicationFactor, 0,
           RemoteException.class,

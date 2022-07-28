@@ -187,7 +187,7 @@ public class ContainerManagementProtocolProxy {
       ContainerManagementProtocolProxyData proxy) {
     proxy.activeCallers--;
     if (proxy.scheduledForClose && proxy.activeCallers < 0) {
-      LOG.debug("Closing proxy : {}", proxy.containerManagerBindAddr);
+      LOG.error("Temp", new RuntimeException());
       cmProxy.remove(proxy.containerManagerBindAddr);
       try {
         rpc.stopProxy(proxy.getContainerManagementProtocol(), conf);
@@ -257,7 +257,7 @@ public class ContainerManagementProtocolProxy {
       
       final InetSocketAddress cmAddr =
           NetUtils.createSocketAddr(containerManagerBindAddr);
-      LOG.debug("Opening proxy : {}", containerManagerBindAddr);
+      LOG.error("Temp", new RuntimeException());
       // the user in createRemoteUser in this context has to be ContainerID
       UserGroupInformation user =
           UserGroupInformation.createRemoteUser(containerId

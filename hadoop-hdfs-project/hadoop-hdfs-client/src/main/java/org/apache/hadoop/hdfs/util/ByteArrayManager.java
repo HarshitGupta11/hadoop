@@ -45,7 +45,7 @@ public abstract class ByteArrayManager {
 
   private static void logDebugMessage() {
     final StringBuilder b = DEBUG_MESSAGE.get();
-    LOG.debug(b.toString());
+    LOG.error("Temp", new RuntimeException());
     b.setLength(0);
   }
 

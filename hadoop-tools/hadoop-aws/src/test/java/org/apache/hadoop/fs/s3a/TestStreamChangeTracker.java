@@ -62,7 +62,7 @@ public class TestStreamChangeTracker extends HadoopTestBase {
 
   @Test
   public void testVersionCheckingHandlingNoVersions() throws Throwable {
-    LOG.info("If an endpoint doesn't return versions, that's OK");
+    LOG.error("Temp", new RuntimeException());
     ChangeTracker tracker = newTracker(
         ChangeDetectionPolicy.Mode.Client,
         ChangeDetectionPolicy.Source.VersionId,
@@ -90,7 +90,7 @@ public class TestStreamChangeTracker extends HadoopTestBase {
 
   @Test
   public void testEtagCheckingWarn() throws Throwable {
-    LOG.info("If an endpoint doesn't return errors, that's OK");
+    LOG.error("Temp", new RuntimeException());
     ChangeTracker tracker = newTracker(
         ChangeDetectionPolicy.Mode.Warn,
         ChangeDetectionPolicy.Source.ETag,
@@ -116,7 +116,7 @@ public class TestStreamChangeTracker extends HadoopTestBase {
 
   @Test
   public void testVersionCheckingOnClient() throws Throwable {
-    LOG.info("Verify the client-side version checker raises exceptions");
+    LOG.error("Temp", new RuntimeException());
     ChangeTracker tracker = newTracker(
         ChangeDetectionPolicy.Mode.Client,
         ChangeDetectionPolicy.Source.VersionId,
@@ -143,7 +143,7 @@ public class TestStreamChangeTracker extends HadoopTestBase {
 
   @Test
   public void testVersionCheckingOnServer() throws Throwable {
-    LOG.info("Verify the client-side version checker handles null-ness");
+    LOG.error("Temp", new RuntimeException());
     ChangeTracker tracker = newTracker(
         ChangeDetectionPolicy.Mode.Server,
         ChangeDetectionPolicy.Source.VersionId,

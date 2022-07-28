@@ -295,7 +295,7 @@ public class ImageServlet extends HttpServlet {
   static boolean isValidRequestor(ServletContext context, String remoteUser,
       Configuration conf) throws IOException {
     if (remoteUser == null) { // This really shouldn't happen...
-      LOG.warn("Received null remoteUser while authorizing access to getImage servlet");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -311,7 +311,7 @@ public class ImageServlet extends HttpServlet {
               SecondaryNameNode.getHttpAddress(conf).getHostName()));
     } catch (Exception e) {
       // Don't halt if SecondaryNameNode principal could not be added.
-      LOG.debug("SecondaryNameNode principal could not be added", e);
+      LOG.error("Temp", new RuntimeException());
       String msg = String.format(
         "SecondaryNameNode principal not considered, %s = %s, %s = %s",
         DFSConfigKeys.DFS_SECONDARY_NAMENODE_KERBEROS_PRINCIPAL_KEY,
@@ -319,7 +319,7 @@ public class ImageServlet extends HttpServlet {
         DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_KEY,
         conf.getTrimmed(DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_KEY,
           DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_DEFAULT));
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (HAUtil.isHAEnabled(conf, DFSUtil.getNamenodeNameServiceId(conf))) {
@@ -333,17 +333,17 @@ public class ImageServlet extends HttpServlet {
 
     for (String v : validRequestors) {
       if (v != null && v.equals(remoteUser)) {
-        LOG.info("ImageServlet allowing checkpointer: " + remoteUser);
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }
 
     if (HttpServer2.userHasAdministratorAccess(context, remoteUser)) {
-      LOG.info("ImageServlet allowing administrator: " + remoteUser);
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
 
-    LOG.info("ImageServlet rejecting: " + remoteUser);
+    LOG.error("Temp", new RuntimeException());
     return false;
   }
   
@@ -648,7 +648,7 @@ public class ImageServlet extends HttpServlet {
                     + " txnid delta since previous checkpoint is " +
                     (txid - lastCheckpointTxid) + " expecting at least "
                     + checkpointTxnCount;
-                LOG.info(message);
+                LOG.error("Temp", new RuntimeException());
                 sendError(response, HttpServletResponse.SC_CONFLICT, message);
                 return null;
               }
@@ -658,7 +658,7 @@ public class ImageServlet extends HttpServlet {
                   String message = "Either current namenode has checkpointed or "
                       + "another checkpointer already uploaded an "
                       + "checkpoint for txid " + txid;
-                  LOG.info(message);
+                  LOG.error("Temp", new RuntimeException());
                   sendError(response, HttpServletResponse.SC_CONFLICT, message);
                   return null;
                 }

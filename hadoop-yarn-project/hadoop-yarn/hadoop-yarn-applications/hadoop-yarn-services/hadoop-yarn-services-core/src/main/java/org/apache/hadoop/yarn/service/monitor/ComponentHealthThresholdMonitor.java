@@ -57,7 +57,7 @@ public class ComponentHealthThresholdMonitor implements Runnable {
 
   @Override
   public void run() {
-    LOG.debug("ComponentHealthThresholdMonitor run method");
+    LOG.error("Temp", new RuntimeException());
     // Perform container health checks against desired threshold
     long desiredContainerCount = component.getNumDesiredInstances();
     // If desired container count for this component is 0 then nothing to do
@@ -113,7 +113,7 @@ public class ComponentHealthThresholdMonitor implements Runnable {
             healthThresholdPercent, elapsedTimeSecs, healthThresholdWindowSecs);
         // Append to global diagnostics that will be reported to RM.
         component.getScheduler().getDiagnostics().append(exitDiag);
-        LOG.warn(exitDiag);
+        LOG.error("Temp", new RuntimeException());
         // Sleep for 5 seconds in hope that the state can be recorded in ATS.
         // In case there's a client polling the component state, it can be
         // notified.

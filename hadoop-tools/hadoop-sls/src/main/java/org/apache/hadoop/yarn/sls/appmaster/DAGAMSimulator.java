@@ -108,7 +108,7 @@ public class DAGAMSimulator extends AMSimulator {
     pendingContainers.addAll(containerList);
     totalContainers = allContainers.size();
 
-    LOG.info("Added new job with {} containers", allContainers.size());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -152,7 +152,7 @@ public class DAGAMSimulator extends AMSimulator {
             } else if (amContainer.getId().equals(containerId)) {
               // am container released event
               isFinished = true;
-              LOG.info("Application {} goes to finish.", appId);
+              LOG.error("Temp", new RuntimeException());
             }
             if (finishedContainers >= totalContainers) {
               lastStep();

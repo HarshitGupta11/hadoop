@@ -189,7 +189,7 @@ public final class FederationStateStoreUtils {
    */
   public static void setProperty(HikariDataSource dataSource, String property,
       String value) {
-    LOG.debug("Setting property {} with value {}", property, value);
+    LOG.error("Temp", new RuntimeException());
     if (property != null && !property.isEmpty() && value != null) {
       dataSource.addDataSourceProperty(property, value);
     }
@@ -205,9 +205,9 @@ public final class FederationStateStoreUtils {
       String userNameDB) {
     if (userNameDB != null) {
       dataSource.setUsername(userNameDB);
-      LOG.debug("Setting non NULL Username for Store connection");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.debug("NULL Username specified for Store connection, so ignoring");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -220,9 +220,9 @@ public final class FederationStateStoreUtils {
   public static void setPassword(HikariDataSource dataSource, String password) {
     if (password != null) {
       dataSource.setPassword(password);
-      LOG.debug("Setting non NULL Credentials for Store connection");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.debug("NULL Credentials specified for Store connection, so ignoring");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -183,7 +183,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
     CommitOperations actions = newCommitOperations();
     // abort,; rethrow on failure
     fullThrottle();
-    LOG.info("Abort call");
+    LOG.error("Temp", new RuntimeException());
     actions.abortAllSinglePendingCommits(pendingDataPath.getParent(), true)
         .maybeRethrow();
     resetFailures();
@@ -459,7 +459,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
     // this will force an existence check
     Path path = getFileSystem().keyToQualifiedPath(commit.getDestinationKey());
     FileStatus status = getFileSystem().getFileStatus(path);
-    LOG.debug("Destination entry: {}", status);
+    LOG.error("Temp", new RuntimeException());
     if (!status.isFile()) {
       throw new PathCommitException(path, "Not a file: " + status);
     }
@@ -482,7 +482,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
         pendingDataPath);
     assertTrue("No data in " + fileStatus, fileStatus.getLen() > 0);
     String data = read(fs, pendingDataPath);
-    LOG.info("Contents of {}: \n{}", pendingDataPath, data);
+    LOG.error("Temp", new RuntimeException());
     // really read it in and parse
     SinglePendingCommit persisted = SinglePendingCommit.serializer()
         .load(fs, pendingDataPath);
@@ -564,7 +564,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
     resetFailures();
     assertPathDoesNotExist("pending commit", dest);
     fullThrottle();
-    LOG.debug("Postcommit validation");
+    LOG.error("Temp", new RuntimeException());
     commitOrFail(dest, pendingCommit, actions);
     resetFailures();
     String s = readUTF8(fs, dest, -1);
@@ -621,9 +621,9 @@ public class ITestCommitOperations extends AbstractCommitITest {
     Path path = path("testFailuresInAbort");
     getFileSystem().mkdirs(path);
     setThrottling(HIGH_THROTTLE);
-    LOG.info("Aborting");
+    LOG.error("Temp", new RuntimeException());
     actions.abortPendingUploadsUnderPath(path);
-    LOG.info("Abort completed");
+    LOG.error("Temp", new RuntimeException());
     resetFailures();
   }
 
@@ -690,30 +690,30 @@ public class ITestCommitOperations extends AbstractCommitITest {
     resetFailures();
     assertPathDoesNotExist("destination dir", destDir);
     assertPathDoesNotExist("subdirectory", subdir);
-    LOG.info("Initiating commit operations");
+    LOG.error("Temp", new RuntimeException());
     try (CommitOperations.CommitContext commitContext
              = actions.initiateCommitOperation(destDir)) {
       // how many records have been written
       MetricDiff writes = new MetricDiff(fs,
           Statistic.S3GUARD_METADATASTORE_RECORD_WRITES);
-      LOG.info("Commit #1");
+      LOG.error("Temp", new RuntimeException());
       commitContext.commitOrFail(commits.get(0));
       final String firstCommitContextString = commitContext.toString();
-      LOG.info("First Commit state {}", firstCommitContextString);
+      LOG.error("Temp", new RuntimeException());
       long writesOnFirstCommit = writes.diff();
       assertPathExists("destFile1", destFile1);
       assertPathExists("destination dir", destDir);
 
-      LOG.info("Commit #2");
+      LOG.error("Temp", new RuntimeException());
       writes.reset();
       commitContext.commitOrFail(commits.get(1));
       assertPathExists("subdirectory", subdir);
       assertPathExists("destFile2", destFile2);
       final String secondCommitContextString = commitContext.toString();
-      LOG.info("Second Commit state {}", secondCommitContextString);
+      LOG.error("Temp", new RuntimeException());
 
       if (writesOnFirstCommit != 0) {
-        LOG.info("DynamoDB Metastore is in use: checking write count");
+        LOG.error("Temp", new RuntimeException());
         // S3Guard is in use against DDB, so the metrics can be checked
         // to see how many records were updated.
         // there should only be two new entries: one for the file and
@@ -727,7 +727,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
             2);
       }
 
-      LOG.info("Commit #3");
+      LOG.error("Temp", new RuntimeException());
       writes.reset();
       commitContext.commitOrFail(commits.get(2));
       assertPathExists("destFile3", destFile3);

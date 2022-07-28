@@ -86,7 +86,7 @@ public class PlacementSpec {
    */
   public static Map<String, PlacementSpec> parse(String specs)
       throws IllegalArgumentException {
-    LOG.info("Parsing Placement Specs: [{}]", specs);
+    LOG.error("Temp", new RuntimeException());
 
     Map<String, PlacementSpec> pSpecs = new HashMap<>();
     Map<SourceTags, PlacementConstraint> parsed;
@@ -100,7 +100,7 @@ public class PlacementSpec {
           LOG.info("Parsed constraint: {}", entry.getValue()
               .getConstraintExpr().getClass().getSimpleName());
         } else {
-          LOG.info("Parsed constraint Empty");
+          LOG.error("Temp", new RuntimeException());
         }
         pSpecs.put(entry.getKey().getTag(), new PlacementSpec(
             entry.getKey().getTag(),

@@ -378,7 +378,7 @@ public class TestFsShellReturnCode {
     try {
       int run = shell.run(args);
       results = bytes.toString();
-      LOG.info("result=" + results);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Return code should be 0", run == 0);
     } finally {
       IOUtils.closeStream(out);

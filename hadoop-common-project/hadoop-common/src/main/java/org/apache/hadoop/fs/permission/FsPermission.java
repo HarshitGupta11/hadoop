@@ -319,7 +319,7 @@ public class FsPermission implements Writable, Serializable,
             : "octal or symbolic";
         String error = "Unable to parse configuration " + UMASK_LABEL
             + " with value " + confUmask + " as " + type + " umask.";
-        LOG.warn(error);
+        LOG.error("Temp", new RuntimeException());
 
         throw new IllegalArgumentException(error);
       }

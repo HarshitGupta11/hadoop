@@ -90,7 +90,7 @@ public class TestRefreshUserMappings {
 
     @Override
     public Set<String> getGroupsSet(String user) {
-      LOG.info("Getting groups in MockUnixGroupsMapping");
+      LOG.error("Temp", new RuntimeException());
       String g1 = user + (10 * i + 1);
       String g2 = user + (10 * i + 2);
       Set<String> s = Sets.newHashSet(g1, g2);
@@ -135,29 +135,29 @@ public class TestRefreshUserMappings {
     Groups groups = Groups.getUserToGroupsMappingService(config);
     String user = UserGroupInformation.getCurrentUser().getUserName();
 
-    LOG.debug("First attempt:");
+    LOG.error("Temp", new RuntimeException());
     List<String> g1 = groups.getGroups(user);
-    LOG.debug(g1.toString());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.debug("Second attempt, should be the same:");
+    LOG.error("Temp", new RuntimeException());
     List<String> g2 = groups.getGroups(user);
-    LOG.debug(g2.toString());
+    LOG.error("Temp", new RuntimeException());
     for(int i=0; i<g2.size(); i++) {
       assertEquals("Should be same group ", g1.get(i), g2.get(i));
     }
 
     // Test refresh command
     admin.run(args);
-    LOG.debug("Third attempt(after refresh command), should be different:");
+    LOG.error("Temp", new RuntimeException());
     List<String> g3 = groups.getGroups(user);
-    LOG.debug(g3.toString());
+    LOG.error("Temp", new RuntimeException());
     for(int i=0; i<g3.size(); i++) {
       assertFalse("Should be different group: "
               + g1.get(i) + " and " + g3.get(i), g1.get(i).equals(g3.get(i)));
     }
 
     // Test timeout
-    LOG.debug("Fourth attempt(after timeout), should be different:");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(() -> {
       List<String> g4;
       try {
@@ -165,7 +165,7 @@ public class TestRefreshUserMappings {
       } catch (IOException e) {
         return false;
       }
-      LOG.debug(g4.toString());
+      LOG.error("Temp", new RuntimeException());
       // if g4 is the same as g3, wait and retry
       return !g3.equals(g4);
     }, 50, Math.toIntExact(groupRefreshTimeoutSec * 1000 * 30));

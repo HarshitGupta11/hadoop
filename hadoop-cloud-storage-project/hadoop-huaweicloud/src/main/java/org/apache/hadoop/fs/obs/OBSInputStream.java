@@ -325,7 +325,7 @@ class OBSInputStream extends FSInputStream
           && diff <= forwardSeekLimit;
       if (skipForward) {
         // the forward seek range is within the limits
-        LOG.debug("Forward seek on {}, of {} bytes", uri, diff);
+        LOG.error("Temp", new RuntimeException());
         long skippedOnce = wrappedStream.skip(diff);
         while (diff > 0 && skippedOnce > 0) {
           streamCurrentPos += skippedOnce;
@@ -402,7 +402,7 @@ class OBSInputStream extends FSInputStream
           }
         }
 
-        LOG.warn("IOException occurred in lazySeek, retry: {}", i, e);
+        LOG.error("Temp", new RuntimeException());
         if (i == SEEK_RETRY_TIME - 1) {
           throw e;
         }
@@ -550,7 +550,7 @@ class OBSInputStream extends FSInputStream
       throws IOException {
     long startTime = System.currentTimeMillis();
     long threadId = Thread.currentThread().getId();
-    LOG.debug("read byteBuffer: {}", byteBuffer.toString());
+    LOG.error("Temp", new RuntimeException());
     checkNotClosed();
 
     int len = byteBuffer.remaining();
@@ -792,7 +792,7 @@ class OBSInputStream extends FSInputStream
         wrappedStream.close();
       } catch (IOException e) {
         // exception escalates to an abort
-        LOG.debug("When closing {} stream for {}", uri, reason, e);
+        LOG.error("Temp", new RuntimeException());
         throw e;
       }
 

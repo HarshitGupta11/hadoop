@@ -101,16 +101,16 @@ final class QueuePlacementPolicy {
                                     FairScheduler fs)
       throws AllocationConfigurationException {
     if (newRules.isEmpty()) {
-      LOG.debug("Empty rule set defined, ignoring update");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
-    LOG.debug("Placement rule order check");
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < newTerminalState.size()-1; i++) {
       if (newTerminalState.get(i)) {
         String errorMsg = "Rules after rule "
             + (i+1) + " in queue placement policy can never be reached";
         if (fs.isNoTerminalRuleCheck()) {
-          LOG.warn(errorMsg);
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw new AllocationConfigurationException(errorMsg);
         }
@@ -121,7 +121,7 @@ final class QueuePlacementPolicy {
           "Could get past last queue placement rule without assigning");
     }
     // Set the scheduler in the rule to get queues etc
-    LOG.debug("Initialising new rule set");
+    LOG.error("Temp", new RuntimeException());
     try {
       for (PlacementRule rule: newRules){
         rule.initialize(fs);
@@ -135,7 +135,7 @@ final class QueuePlacementPolicy {
     // Update the placement manager with the new rule list.
     // We only get here when all rules are OK.
     fs.getRMContext().getQueuePlacementManager().updateRules(newRules);
-    LOG.debug("PlacementManager active with new rule set");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -147,7 +147,7 @@ final class QueuePlacementPolicy {
    */
   static void fromXml(Element confElement, FairScheduler fs)
       throws AllocationConfigurationException {
-    LOG.debug("Reloading placement policy from allocation config");
+    LOG.error("Temp", new RuntimeException());
     if (confElement == null || !confElement.hasChildNodes()) {
       throw new AllocationConfigurationException(
           "Empty configuration for QueuePlacementPolicy is not allowed");
@@ -160,7 +160,7 @@ final class QueuePlacementPolicy {
       if (node instanceof Element &&
           node.getNodeName().equalsIgnoreCase("rule")) {
         String name = ((Element) node).getAttribute("name");
-        LOG.debug("Creating new rule: {}", name);
+        LOG.error("Temp", new RuntimeException());
         PlacementRule rule = createRule((Element)node);
 
         // The only child node that we currently know is a parent rule
@@ -240,7 +240,7 @@ final class QueuePlacementPolicy {
   private static PlacementRule getParentRule(Element parent,
                                              FairScheduler fs)
       throws AllocationConfigurationException {
-    LOG.debug("Creating new parent rule: {}", parent.getAttribute("name"));
+    LOG.error("Temp", new RuntimeException());
     PlacementRule parentRule = createRule(parent);
     // Init the rule, we do not want to add it to the list of the
     // placement manager
@@ -308,7 +308,7 @@ final class QueuePlacementPolicy {
    * @param fs the reference to the scheduler needed in the rule on init.
    */
   static void fromConfiguration(FairScheduler fs) {
-    LOG.debug("Creating base placement policy from config");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = fs.getConfig();
 
     boolean create = conf.getBoolean(

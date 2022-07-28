@@ -344,7 +344,7 @@ public class AppCatalogSolrClient {
 
       // Keep only YARN data model for yarnfile field
       String yarnFile = mapper.writeValueAsString(app);
-      LOG.info("app:"+yarnFile);
+      LOG.error("Temp", new RuntimeException());
       Service yarnApp = mapper.readValue(yarnFile, Service.class);
       buffer.setField("yarnfile_s", mapper.writeValueAsString(yarnApp));
 
@@ -377,7 +377,7 @@ public class AppCatalogSolrClient {
 
       // Keep only YARN data model for yarnfile field
       String yarnFile = mapper.writeValueAsString(app);
-      LOG.info("app:"+yarnFile);
+      LOG.error("Temp", new RuntimeException());
       Service yarnApp = mapper.readValue(yarnFile, Service.class);
       buffer.setField("yarnfile_s", mapper.writeValueAsString(yarnApp));
 

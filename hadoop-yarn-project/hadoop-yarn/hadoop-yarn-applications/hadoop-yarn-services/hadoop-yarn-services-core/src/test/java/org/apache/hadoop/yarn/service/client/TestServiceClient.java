@@ -220,7 +220,7 @@ public class TestServiceClient {
     private MockServiceClient()  {
       amProxy = mock(ClientAMProtocol.class);
       appId = ApplicationId.newInstance(System.currentTimeMillis(), 1);
-      LOG.debug("mocking service client for {}", appId);
+      LOG.error("Temp", new RuntimeException());
       attemptId = ApplicationAttemptId.newInstance(appId, 1);
     }
 

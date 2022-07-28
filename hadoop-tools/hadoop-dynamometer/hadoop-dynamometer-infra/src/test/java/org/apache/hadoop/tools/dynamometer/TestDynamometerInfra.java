@@ -358,7 +358,7 @@ public class TestDynamometerInfra {
     assertEquals(1, amContainers.size());
     assertEquals(1, amContainers.keySet().iterator().next().getContainerId());
 
-    LOG.info("Waiting for workload job to start and complete");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(() -> {
       try {
         return client.getWorkloadJob() != null
@@ -367,7 +367,7 @@ public class TestDynamometerInfra {
         return false;
       }
     }, 3000, 60000);
-    LOG.info("Workload job completed");
+    LOG.error("Temp", new RuntimeException());
 
     if (!client.getWorkloadJob().isSuccessful()) {
       fail("Workload job failed");
@@ -381,7 +381,7 @@ public class TestDynamometerInfra {
             .findCounter(AuditReplayMapper.REPLAYCOUNTERS.TOTALINVALIDCOMMANDS)
             .getValue());
 
-    LOG.info("Waiting for infra application to exit");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(() -> {
       try {
         ApplicationReport report = yarnClient
@@ -393,7 +393,7 @@ public class TestDynamometerInfra {
       }
     }, 3000, 300000);
 
-    LOG.info("Waiting for metrics file to be ready");
+    LOG.error("Temp", new RuntimeException());
     // Try to read the metrics file
     Path hdfsStoragePath = new Path(fs.getHomeDirectory(),
         DynoConstants.DYNAMOMETER_STORAGE_DIR + "/" + infraAppId);
@@ -437,7 +437,7 @@ public class TestDynamometerInfra {
 
   private void awaitApplicationStartup()
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for application ID to become available");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(() -> {
       try {
         List<ApplicationReport> apps = yarnClient.getApplications();

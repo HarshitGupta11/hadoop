@@ -73,7 +73,7 @@ public class TestCombineTextInputFormat {
 
     Random random = new Random();
     long seed = random.nextLong();
-    LOG.info("seed = "+seed);
+    LOG.error("Temp", new RuntimeException());
     random.setSeed(seed);
 
     localFs.delete(workDir, true);
@@ -90,9 +90,9 @@ public class TestCombineTextInputFormat {
     Text value = new Text();
     for (int i = 0; i < 3; i++) {
       int numSplits = random.nextInt(length/20)+1;
-      LOG.info("splitting: requesting = " + numSplits);
+      LOG.error("Temp", new RuntimeException());
       InputSplit[] splits = format.getSplits(job, numSplits);
-      LOG.info("splitting: got =        " + splits.length);
+      LOG.error("Temp", new RuntimeException());
 
       // we should have a single split as the length is comfortably smaller than
       // the block size
@@ -103,14 +103,14 @@ public class TestCombineTextInputFormat {
 
       // check the split
       BitSet bits = new BitSet(length);
-      LOG.debug("split= " + split);
+      LOG.error("Temp", new RuntimeException());
       RecordReader<LongWritable, Text> reader =
         format.getRecordReader(split, job, voidReporter);
       try {
         int count = 0;
         while (reader.next(key, value)) {
           int v = Integer.parseInt(value.toString());
-          LOG.debug("read " + v);
+          LOG.error("Temp", new RuntimeException());
           if (bits.get(v)) {
             LOG.warn("conflict with " + v +
                      " at position "+reader.getPos());
@@ -119,7 +119,7 @@ public class TestCombineTextInputFormat {
           bits.set(v);
           count++;
         }
-        LOG.info("splits="+split+" count=" + count);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         reader.close();
       }

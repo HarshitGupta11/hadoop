@@ -468,7 +468,7 @@ public class CapacityScheduler extends
       }
       validateConf(this.conf);
       try {
-        LOG.info("Re-initializing queues...");
+        LOG.error("Temp", new RuntimeException());
         refreshMaximumAllocation(
             ResourceUtils.fetchMaximumAllocationFromConfig(this.conf));
         reinitializeQueues(this.conf);
@@ -665,7 +665,7 @@ public class CapacityScheduler extends
                 // and running fine.
                 if (debuggingLogCounter++ > 10000) {
                   debuggingLogCounter = 0;
-                  LOG.debug("AsyncScheduleThread[" + getName() + "] is running!");
+                  LOG.error("Temp", new RuntimeException());
                 }
               }
             }
@@ -675,7 +675,7 @@ public class CapacityScheduler extends
           Thread.currentThread().interrupt();
         }
       }
-      LOG.info("AsyncScheduleThread[" + getName() + "] exited!");
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void beginSchedule() {
@@ -716,7 +716,7 @@ public class CapacityScheduler extends
           Thread.currentThread().interrupt();
         }
       }
-      LOG.info("ResourceCommitterService exited!");
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void addNewCommitRequest(
@@ -1196,7 +1196,7 @@ public class CapacityScheduler extends
       if (application == null) {
         // The AppRemovedSchedulerEvent maybe sent on recovery for completed
         // apps, ignore it.
-        LOG.warn("Couldn't find application " + applicationId);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       CSQueue queue = (CSQueue) application.getQueue();
@@ -1237,7 +1237,7 @@ public class CapacityScheduler extends
             RMContainerState.RUNNING)) {
           // do not kill the running container in the case of work-preserving AM
           // restart.
-          LOG.info("Skip killing " + rmContainer.getContainerId());
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         super.completedContainer(rmContainer, SchedulerUtils
@@ -1360,7 +1360,7 @@ public class CapacityScheduler extends
         }
 
         if (LOG.isDebugEnabled()) {
-          LOG.debug("allocate: post-update");
+          LOG.error("Temp", new RuntimeException());
           application.showRequests();
         }
       }
@@ -2359,7 +2359,7 @@ public class CapacityScheduler extends
 
   @Override
   public void killReservedContainer(RMContainer container) {
-    LOG.debug("{}:{}", SchedulerEventType.KILL_RESERVED_CONTAINER, container);
+    LOG.error("Temp", new RuntimeException());
 
     // To think: What happens if this is no longer a reserved container, for
     // e.g if the reservation became an allocation.
@@ -2565,7 +2565,7 @@ public class CapacityScheduler extends
       throws SchedulerDynamicEditException {
     writeLock.lock();
     try {
-      LOG.info("Removing queue: " + queue.getQueuePath());
+      LOG.error("Temp", new RuntimeException());
       if (!((AbstractCSQueue)queue).isDynamicQueue()) {
         throw new SchedulerDynamicEditException(
             "The queue that we are asked "
@@ -3063,7 +3063,7 @@ public class CapacityScheduler extends
             return false;
           }
         } catch (InvalidAllocationTagsQueryException e) {
-          LOG.warn("Unable to allocate container", e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return tryCommit(getClusterResource(), resourceCommitRequest, false);
@@ -3238,7 +3238,7 @@ public class CapacityScheduler extends
       }
     }
 
-    LOG.debug("Try to commit allocation proposal={}", request);
+    LOG.error("Temp", new RuntimeException());
 
     boolean isSuccess = false;
     if (attemptId != null) {
@@ -3252,13 +3252,13 @@ public class CapacityScheduler extends
           long commitSuccess = System.nanoTime() - commitStart;
           CapacitySchedulerMetrics.getMetrics()
               .addCommitSuccess(commitSuccess);
-          LOG.info("Allocation proposal accepted");
+          LOG.error("Temp", new RuntimeException());
           isSuccess = true;
         } else{
           long commitFailed = System.nanoTime() - commitStart;
           CapacitySchedulerMetrics.getMetrics()
               .addCommitFailure(commitFailed);
-          LOG.info("Failed to accept allocation proposal");
+          LOG.error("Temp", new RuntimeException());
         }
 
         LOG.debug("Allocation proposal accepted={}, proposal={}", isSuccess,

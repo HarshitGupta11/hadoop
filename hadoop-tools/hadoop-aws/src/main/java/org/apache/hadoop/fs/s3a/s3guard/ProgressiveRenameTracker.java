@@ -115,7 +115,7 @@ public class ProgressiveRenameTracker extends RenameTracker {
 
     // build the list of entries to add in a synchronized block.
     final List<PathMetadata> entriesToAdd = new ArrayList<>(1);
-    LOG.debug("Updating store with copied file {}", sourcePath);
+    LOG.error("Temp", new RuntimeException());
     MetadataStore store = getMetadataStore();
     synchronized (this) {
       checkArgument(!pathsToDelete.contains(sourcePath),
@@ -136,7 +136,7 @@ public class ProgressiveRenameTracker extends RenameTracker {
           getOwner(),
           destAttributes.getETag(),
           destAttributes.getVersionId());
-      LOG.debug("New metastore entry : {}", entriesToAdd.get(0));
+      LOG.error("Temp", new RuntimeException());
       if (addAncestors) {
         // add all new ancestors to the lists
         addMoveAncestors(

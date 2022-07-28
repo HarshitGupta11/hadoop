@@ -164,7 +164,7 @@ public class TimelineWebServices {
           getUser(req));
     } catch (YarnException e) {
       // The user doesn't have the access to override the existing domain.
-      LOG.info(e.getMessage(), e);
+      LOG.error("Temp", new RuntimeException());
       throw new ForbiddenException(e);
     } catch (IllegalArgumentException e) {
       throw new BadRequestException(e);

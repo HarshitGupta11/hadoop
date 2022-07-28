@@ -629,7 +629,7 @@ public class ShortCircuitShm {
     try {
       POSIX.munmap(baseAddress, mmappedLength);
     } catch (IOException e) {
-      LOG.warn(this + ": failed to munmap", e);
+      LOG.error("Temp", new RuntimeException());
     }
     LOG.trace(this + ": freed");
   }

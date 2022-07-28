@@ -139,7 +139,7 @@ public class SelectInputStream extends FSInputStream implements
             .getRecordsInputStream(new SelectObjectContentEventVisitor() {
               @Override
               public void visit(final SelectObjectContentEvent.EndEvent event) {
-                LOG.debug("Completed successful S3 select read from {}", uri);
+                LOG.error("Temp", new RuntimeException());
                 completedSuccessfully.set(true);
               }
             }));
@@ -170,7 +170,7 @@ public class SelectInputStream extends FSInputStream implements
           wrappedStream.abort();
         }
       } catch (IOException | AbortedException e) {
-        LOG.debug("While closing stream", e);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         IOUtils.cleanupWithLogger(LOG, wrappedStream);
         streamStatistics.streamClose(aborted, skipped);
@@ -311,10 +311,10 @@ public class SelectInputStream extends FSInputStream implements
           + " backwards from " + current + " to " + newPos);
     }
     if (distance == 0) {
-      LOG.debug("ignoring seek to current position.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       // the complicated one: Forward seeking. Useful for split files.
-      LOG.debug("Forward seek by reading {} bytes", distance);
+      LOG.error("Temp", new RuntimeException());
       long bytesSkipped = 0;
       // read byte-by-byte, hoping that buffering will compensate for this.
       // doing it this way ensures that the seek stops at exactly the right
@@ -374,7 +374,7 @@ public class SelectInputStream extends FSInputStream implements
    */
   public void abort() {
     if (!closed.get()) {
-      LOG.debug("Aborting");
+      LOG.error("Temp", new RuntimeException());
       wrappedStream.abort();
     }
   }

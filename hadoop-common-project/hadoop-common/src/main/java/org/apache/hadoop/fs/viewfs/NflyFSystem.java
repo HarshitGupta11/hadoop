@@ -318,7 +318,7 @@ final class NflyFSystem extends FileSystem {
         throw ioe;
       } else {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Exceptions occurred: " + ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -438,7 +438,7 @@ final class NflyFSystem extends FileSystem {
         try {
           nodes[i].fs.setTimes(nflyPath, commitTime, commitTime);
         } catch (Throwable t) {
-          LOG.info("Failed to set timestamp: " + nodes[i] + " " + nflyPath);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -705,7 +705,7 @@ final class NflyFSystem extends FileSystem {
         try {
           return rNode.getFs().open(f, bufferSize);
         } catch (IOException e) {
-          LOG.info(f + ": Failed to open at " + rNode.getFs().getUri());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

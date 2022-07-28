@@ -115,7 +115,7 @@ final class OBSLoginHelper {
   public static Login extractLoginDetailsWithWarnings(final URI name) {
     Login login = extractLoginDetails(name);
     if (login.hasLogin()) {
-      LOG.warn(LOGIN_WARNING);
+      LOG.error("Temp", new RuntimeException());
     }
     return login;
   }
@@ -143,7 +143,7 @@ final class OBSLoginHelper {
         String user = login.substring(0, loginSplit);
         String encodedPassword = login.substring(loginSplit + 1);
         if (encodedPassword.contains(PLUS_UNENCODED)) {
-          LOG.warn(PLUS_WARNING);
+          LOG.error("Temp", new RuntimeException());
           encodedPassword = encodedPassword.replaceAll(
               "\\" + PLUS_UNENCODED, PLUS_ENCODED);
         }

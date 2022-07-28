@@ -124,12 +124,12 @@ public class GpuDiscoverer extends Configured {
     } catch (IOException e) {
       numOfErrorExecutionSinceLastSucceed++;
       String msg = getErrorMessageOfScriptExecution(e.getMessage());
-      LOG.debug(msg);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(msg, e);
     } catch (YarnException e) {
       numOfErrorExecutionSinceLastSucceed++;
       String msg = getFailedToParseErrorMessage(e.getMessage());
-      LOG.debug(msg, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
 
@@ -180,7 +180,7 @@ public class GpuDiscoverer extends Configured {
     List<GpuDevice> gpuDevices = new ArrayList<>();
     if (lastDiscoveredGpuInformation.getGpus() != null) {
       int numberOfGpus = lastDiscoveredGpuInformation.getGpus().size();
-      LOG.debug("Found {} GPU devices", numberOfGpus);
+      LOG.error("Temp", new RuntimeException());
       for (int i = 0; i < numberOfGpus; i++) {
         List<PerGpuDeviceInformation> gpuInfos =
             lastDiscoveredGpuInformation.getGpus();
@@ -211,7 +211,7 @@ public class GpuDiscoverer extends Configured {
         if (splitByColon.length != 2) {
           throwIfNecessary(GpuDeviceSpecificationException
               .createWithWrongValueSpecified(device, devices), getConf());
-          LOG.warn("Wrong GPU specification string {}, ignored", device);
+          LOG.error("Temp", new RuntimeException());
         }
 
         GpuDevice gpuDevice;
@@ -220,7 +220,7 @@ public class GpuDiscoverer extends Configured {
         } catch (NumberFormatException e) {
           throwIfNecessary(GpuDeviceSpecificationException
               .createWithWrongValueSpecified(device, devices, e), getConf());
-          LOG.warn("Cannot parse GPU device numbers: {}", device);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
 
@@ -229,11 +229,11 @@ public class GpuDiscoverer extends Configured {
         } else {
           throwIfNecessary(GpuDeviceSpecificationException
               .createWithDuplicateValueSpecified(device, devices), getConf());
-          LOG.warn("CPU device is duplicated: {}", device);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
-    LOG.info("Allowed GPU devices:" + gpuDevices);
+    LOG.error("Temp", new RuntimeException());
 
     return gpuDevices;
   }
@@ -254,14 +254,14 @@ public class GpuDiscoverer extends Configured {
 
       // Try to discover GPU information once and print
       try {
-        LOG.info("Trying to discover GPU information ...");
+        LOG.error("Temp", new RuntimeException());
         GpuDeviceInformation info = getGpuDeviceInformation();
-        LOG.info("Discovered GPU information: " + info.toString());
+        LOG.error("Temp", new RuntimeException());
       } catch (YarnException e) {
         String msg =
                 "Failed to discover GPU information from system, exception message:"
                         + e.getMessage() + " continue...";
-        LOG.warn(msg);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -291,7 +291,7 @@ public class GpuDiscoverer extends Configured {
              DEFAULT_BINARY_NAME,
              fileName);
         throwIfNecessary(new YarnException(msg), config);
-        LOG.warn(msg);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

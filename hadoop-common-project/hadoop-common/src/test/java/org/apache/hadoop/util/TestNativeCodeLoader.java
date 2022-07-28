@@ -39,7 +39,7 @@ public class TestNativeCodeLoader {
   @Test
   public void testNativeCodeLoaded() {
     if (requireTestJni() == false) {
-      LOG.info("TestNativeCodeLoader: libhadoop.so testing is not required.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (!NativeCodeLoader.isNativeCodeLoaded()) {
@@ -53,6 +53,6 @@ public class TestNativeCodeLoader {
     if (NativeCodeLoader.buildSupportsOpenssl()) {
       assertFalse(OpensslCipher.getLibraryName().isEmpty());
     }
-    LOG.info("TestNativeCodeLoader: libhadoop.so is loaded.");
+    LOG.error("Temp", new RuntimeException());
   }
 }

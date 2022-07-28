@@ -85,7 +85,7 @@ public final class DefaultRequestInterceptor extends
         message += ", user: " + user;
       }
 
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(message, e);
     } catch (Exception e) {
       throw new YarnRuntimeException(e);
@@ -122,14 +122,14 @@ public final class DefaultRequestInterceptor extends
   public RegisterApplicationMasterResponse registerApplicationMaster(
       final RegisterApplicationMasterRequest request)
       throws YarnException, IOException {
-    LOG.info("Forwarding registration request to the real YARN RM");
+    LOG.error("Temp", new RuntimeException());
     return rmClient.registerApplicationMaster(request);
   }
 
   @Override
   public AllocateResponse allocate(final AllocateRequest request)
       throws YarnException, IOException {
-    LOG.debug("Forwarding allocate request to the real YARN RM");
+    LOG.error("Temp", new RuntimeException());
     AllocateResponse allocateResponse = rmClient.allocate(request);
     if (allocateResponse.getAMRMToken() != null) {
       YarnServerSecurityUtils.updateAMRMToken(allocateResponse.getAMRMToken(),

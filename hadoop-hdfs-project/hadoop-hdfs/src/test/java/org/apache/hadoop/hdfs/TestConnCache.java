@@ -101,7 +101,7 @@ public class TestConnCache {
         new InetSocketAddress("localhost",
             util.getCluster().getNameNodePort()), util.getConf());
     DFSInputStream in = client.open(testFile.toString());
-    LOG.info("opened " + testFile.toString());
+    LOG.error("Temp", new RuntimeException());
     byte[] dataBuf = new byte[BLOCK_SIZE];
 
     // Initial read

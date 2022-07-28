@@ -186,7 +186,7 @@ class S3ABlockOutputStream extends OutputStream implements
     LOG.debug("Initialized S3ABlockOutputStream for {}" +
         " output to {}", key, activeBlock);
     if (putTracker.initialize()) {
-      LOG.debug("Put tracker requests multipart upload");
+      LOG.error("Temp", new RuntimeException());
       initMultipartUpload();
     }
   }
@@ -230,7 +230,7 @@ class S3ABlockOutputStream extends OutputStream implements
    */
   private void clearActiveBlock() {
     if (activeBlock != null) {
-      LOG.debug("Clearing active block");
+      LOG.error("Temp", new RuntimeException());
     }
     synchronized (this) {
       activeBlock = null;
@@ -258,7 +258,7 @@ class S3ABlockOutputStream extends OutputStream implements
     try {
       checkOpen();
     } catch (IOException e) {
-      LOG.warn("Stream closed: " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     S3ADataBlocks.DataBlock dataBlock = getActiveBlock();
@@ -306,7 +306,7 @@ class S3ABlockOutputStream extends OutputStream implements
       // not everything was written —the block has run out
       // of capacity
       // Trigger an upload then process the remainder.
-      LOG.debug("writing more data than block has capacity -triggering upload");
+      LOG.error("Temp", new RuntimeException());
       uploadCurrentBlock();
       // tail recursion is mildly expensive, but given buffer sizes must be MB.
       // it's unlikely to recurse very deeply.
@@ -326,7 +326,7 @@ class S3ABlockOutputStream extends OutputStream implements
    */
   private synchronized void uploadCurrentBlock() throws IOException {
     Preconditions.checkState(hasActiveBlock(), "No active block");
-    LOG.debug("Writing block # {}", blockCount);
+    LOG.error("Temp", new RuntimeException());
     initMultipartUpload();
     try {
       multiPartUpload.uploadBlockAsync(getActiveBlock());
@@ -346,7 +346,7 @@ class S3ABlockOutputStream extends OutputStream implements
    */
   private void initMultipartUpload() throws IOException {
     if (multiPartUpload == null) {
-      LOG.debug("Initiating Multipart upload");
+      LOG.error("Temp", new RuntimeException());
       multiPartUpload = new MultiPartUpload(key);
     }
   }
@@ -364,7 +364,7 @@ class S3ABlockOutputStream extends OutputStream implements
   public void close() throws IOException {
     if (closed.getAndSet(true)) {
       // already closed
-      LOG.debug("Ignoring close() as stream is already closed");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     S3ADataBlocks.DataBlock block = getActiveBlock();
@@ -404,14 +404,14 @@ class S3ABlockOutputStream extends OutputStream implements
             iostatistics)) {
           multiPartUpload.complete(partETags);
         } else {
-          LOG.info("File {} will be visible when the job is committed", key);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       if (!putTracker.outputImmediatelyVisible()) {
         // track the number of bytes uploaded as commit operations.
         statistics.commitUploaded(bytes);
       }
-      LOG.debug("Upload complete to {} by {}", key, writeOperationHelper);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ioe) {
       // the operation failed.
       // if this happened during a multipart upload, abort the
@@ -434,7 +434,7 @@ class S3ABlockOutputStream extends OutputStream implements
    */
   private synchronized void cleanupOnClose() {
     cleanupWithLogger(LOG, getActiveBlock(), blockFactory);
-    LOG.debug("Statistics: {}", statistics);
+    LOG.error("Temp", new RuntimeException());
     cleanupWithLogger(LOG, statistics);
     clearActiveBlock();
   }
@@ -462,7 +462,7 @@ class S3ABlockOutputStream extends OutputStream implements
   public AbortableResult abort() {
     if (closed.getAndSet(true)) {
       // already closed
-      LOG.debug("Ignoring abort() as stream is already closed");
+      LOG.error("Temp", new RuntimeException());
       return new AbortableResultImpl(true, null);
     }
     try (DurationTracker d =
@@ -530,7 +530,7 @@ class S3ABlockOutputStream extends OutputStream implements
    * on this thread.
    */
   private int putObject() throws IOException {
-    LOG.debug("Executing regular upload for {}", writeOperationHelper);
+    LOG.error("Temp", new RuntimeException());
 
     final S3ADataBlocks.DataBlock block = getActiveBlock();
     int size = block.dataSize();
@@ -560,7 +560,7 @@ class S3ABlockOutputStream extends OutputStream implements
       putObjectResult.get();
       return size;
     } catch (InterruptedException ie) {
-      LOG.warn("Interrupted object upload", ie);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
       return 0;
     } catch (ExecutionException ee) {
@@ -667,7 +667,7 @@ class S3ABlockOutputStream extends OutputStream implements
         + " stream writing to {}. This is unsupported",
         key);
     // and log at debug
-    LOG.debug("Downgrading Syncable call", ex);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -762,7 +762,7 @@ class S3ABlockOutputStream extends OutputStream implements
      */
     private void uploadBlockAsync(final S3ADataBlocks.DataBlock block)
         throws IOException {
-      LOG.debug("Queueing upload of {} for upload {}", block, uploadId);
+      LOG.error("Temp", new RuntimeException());
       Preconditions.checkNotNull(uploadId, "Null uploadId");
       maybeRethrowUploadFailure();
       partsSubmitted++;
@@ -808,7 +808,7 @@ class S3ABlockOutputStream extends OutputStream implements
                   .getPartETag();
               LOG.debug("Completed upload of {} to part {}",
                   block, partETag.getETag());
-              LOG.debug("Stream statistics of {}", statistics);
+              LOG.error("Temp", new RuntimeException());
               partsUploaded++;
               return partETag;
             } catch (IOException e) {
@@ -829,17 +829,17 @@ class S3ABlockOutputStream extends OutputStream implements
      * @throws IOException IO Problems
      */
     private List<PartETag> waitForAllPartUploads() throws IOException {
-      LOG.debug("Waiting for {} uploads to complete", partETagsFutures.size());
+      LOG.error("Temp", new RuntimeException());
       try {
         return Futures.allAsList(partETagsFutures).get();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted partUpload", ie);
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
         return null;
       } catch (ExecutionException ee) {
         //there is no way of recovering so abort
         //cancel all partUploads
-        LOG.debug("While waiting for upload completion", ee);
+        LOG.error("Temp", new RuntimeException());
         //abort multipartupload
         this.abort();
         throw extractException("Multi-part upload with id '" + uploadId
@@ -851,7 +851,7 @@ class S3ABlockOutputStream extends OutputStream implements
      * Cancel all active uploads.
      */
     private void cancelAllActiveFutures() {
-      LOG.debug("Cancelling futures");
+      LOG.error("Temp", new RuntimeException());
       for (ListenableFuture<PartETag> future : partETagsFutures) {
         future.cancel(true);
       }
@@ -888,7 +888,7 @@ class S3ABlockOutputStream extends OutputStream implements
      * @return any caught exception.
      */
     private IOException abort() {
-      LOG.debug("Aborting upload");
+      LOG.error("Temp", new RuntimeException());
       try {
         trackDurationOfInvocation(statistics,
             OBJECT_MULTIPART_UPLOAD_ABORTED.getSymbol(), () -> {
@@ -966,7 +966,7 @@ class S3ABlockOutputStream extends OutputStream implements
         statistics.blockUploadFailed(
             Duration.between(transferStartTime, now()),
             size);
-        LOG.warn("Transfer failure of block {}", block);
+        LOG.error("Temp", new RuntimeException());
         break;
 
       default:

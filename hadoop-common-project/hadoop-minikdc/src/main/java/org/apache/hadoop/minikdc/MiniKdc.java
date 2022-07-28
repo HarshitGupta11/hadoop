@@ -222,12 +222,12 @@ public class MiniKdc {
             && !this.workDir.mkdirs()) {
       throw new RuntimeException("Cannot create directory " + this.workDir);
     }
-    LOG.info("Configuration:");
-    LOG.info("---------------------------------------------------------------");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     for (Map.Entry<?, ?> entry : conf.entrySet()) {
-      LOG.info("  {}: {}", entry.getKey(), entry.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("---------------------------------------------------------------");
+    LOG.error("Temp", new RuntimeException());
     this.conf = conf;
     port = Integer.parseInt(conf.getProperty(KDC_PORT));
     String orgName= conf.getProperty(ORG_NAME);
@@ -282,7 +282,7 @@ public class MiniKdc {
     simpleKdc.init();
     resetDefaultRealm();
     simpleKdc.start();
-    LOG.info("MiniKdc started.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void resetDefaultRealm() throws IOException {
@@ -356,13 +356,13 @@ public class MiniKdc {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    LOG.info("MiniKdc stopped.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void delete(File f) {
     if (f.isFile()) {
       if (! f.delete()) {
-        LOG.warn("WARNING: cannot delete file " + f.getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       File[] fileList = f.listFiles();
@@ -372,7 +372,7 @@ public class MiniKdc {
         }
       }
       if (! f.delete()) {
-        LOG.warn("WARNING: cannot delete directory " + f.getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

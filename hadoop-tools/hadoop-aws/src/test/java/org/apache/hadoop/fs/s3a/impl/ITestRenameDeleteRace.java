@@ -142,7 +142,7 @@ public class ITestRenameDeleteRace extends AbstractS3ATestBase {
     blockingFS.blockFakeDirCreation();
     try {
       final CompletableFuture<Path> future = submit(EXECUTOR, () -> {
-        LOG.info("deleting {}", destSubdir1);
+        LOG.error("Temp", new RuntimeException());
         blockingFS.delete(destSubdir1, true);
         return destSubdir1;
       });
@@ -156,7 +156,7 @@ public class ITestRenameDeleteRace extends AbstractS3ATestBase {
             destDir);
 
         // attempt the rename in the normal FS.
-        LOG.info("renaming {} to {}", srcSubdir2, destSubdir2);
+        LOG.error("Temp", new RuntimeException());
         Assertions.assertThat(fs.rename(srcSubdir2, destSubdir2))
             .describedAs("rename(%s, %s)", srcSubdir2, destSubdir2)
             .isTrue();
@@ -168,7 +168,7 @@ public class ITestRenameDeleteRace extends AbstractS3ATestBase {
       }
 
       // now let the delete complete
-      LOG.info("Waiting for delete {} to finish", destSubdir1);
+      LOG.error("Temp", new RuntimeException());
       waitForCompletion(future);
 
       // everything still exists
@@ -209,14 +209,14 @@ public class ITestRenameDeleteRace extends AbstractS3ATestBase {
     @Override
     protected void maybeCreateFakeParentDirectory(final Path path)
         throws IOException, AmazonClientException {
-      LOG.info("waking anything blocked on the signal semaphore");
+      LOG.error("Temp", new RuntimeException());
       // notify anything waiting
       signalCreatingFakeParentDirectory.release();
       // acquire the semaphore and then create any fake directory
-      LOG.info("blocking for creation");
+      LOG.error("Temp", new RuntimeException());
       blockBeforeCreatingMarker.acquireUninterruptibly();
       try {
-        LOG.info("probing for/creating markers");
+        LOG.error("Temp", new RuntimeException());
         super.maybeCreateFakeParentDirectory(path);
       } finally {
         // and release the marker for completeness.
@@ -235,12 +235,12 @@ public class ITestRenameDeleteRace extends AbstractS3ATestBase {
      * wait for the blocking FS to return from the DELETE call.
      */
     public void awaitFakeDirCreation() throws InterruptedException {
-      LOG.info("Blocking until maybeCreateFakeParentDirectory() is reached");
+      LOG.error("Temp", new RuntimeException());
       signalCreatingFakeParentDirectory.acquire();
     }
 
     public void allowFakeDirCreationToProceed() {
-      LOG.info("Allowing the fake directory LIST/PUT to proceed.");
+      LOG.error("Temp", new RuntimeException());
       blockBeforeCreatingMarker.release();
     }
   }

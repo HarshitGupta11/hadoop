@@ -60,7 +60,7 @@ public final class MultipartTestUtils {
       try (AuditSpan span =
                fs.createSpan("multipart", ik.key, null)) {
 
-        LOG.debug("aborting upload id {}", ik.getUploadId());
+        LOG.error("Temp", new RuntimeException());
         fs.abortMultipartUpload(ik.getKey(), ik.getUploadId());
       } catch (Exception e) {
         LOG.error(String.format("Failure aborting upload %s, continuing.",
@@ -82,7 +82,7 @@ public final class MultipartTestUtils {
       UploadPartRequest req = writeHelper.newUploadPartRequest(key, uploadId,
           partNo, len, in, null, 0L);
       PartETag partEtag = writeHelper.uploadPart(req).getPartETag();
-      LOG.debug("uploaded part etag {}, upid {}", partEtag.getETag(), uploadId);
+      LOG.error("Temp", new RuntimeException());
       return new IdKey(key, uploadId);
     }
   }
@@ -104,7 +104,7 @@ public final class MultipartTestUtils {
             upload.getUploadId(), true, LOG_EVENT);
       }
     } catch (IOException ioe) {
-      LOG.info("Ignoring exception: ", ioe);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.closeStream(span);
     }

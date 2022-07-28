@@ -99,7 +99,7 @@ public class SwiftFileSystemBaseTest extends Assert implements
     if (lastFs  != null) {
       List<DurationStats> statistics = lastFs.getOperationStatistics();
       for (DurationStats stat : statistics) {
-        LOG.info(stat.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -261,9 +261,9 @@ public class SwiftFileSystemBaseTest extends Assert implements
       fail("Expected failure renaming " + src + " to " + dst
               + "- but got success");
     } catch (SwiftOperationFailedException e) {
-      LOG.debug("Rename failed (expected):" + e);
+      LOG.error("Temp", new RuntimeException());
     } catch (FileNotFoundException e) {
-      LOG.debug("Rename failed (expected):" + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

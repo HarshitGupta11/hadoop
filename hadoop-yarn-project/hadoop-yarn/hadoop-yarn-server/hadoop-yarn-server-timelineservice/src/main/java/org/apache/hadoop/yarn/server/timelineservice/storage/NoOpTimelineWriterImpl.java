@@ -75,6 +75,6 @@ public class NoOpTimelineWriterImpl extends AbstractService implements
 
   @Override
   public void flush() throws IOException {
-    LOG.debug("NoOpTimelineWriter is configured. Ignoring flush call");
+    LOG.error("Temp", new RuntimeException());
   }
 }

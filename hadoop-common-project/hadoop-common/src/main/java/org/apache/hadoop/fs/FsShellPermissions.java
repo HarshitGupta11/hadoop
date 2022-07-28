@@ -102,7 +102,7 @@ public class FsShellPermissions extends FsCommand {
         try {
           item.fs.setPermission(item.path, new FsPermission(newperms));
         } catch (IOException e) {
-          LOG.debug("Error changing permissions of " + item, e);
+          LOG.error("Temp", new RuntimeException());
           throw new IOException(
               "changing permissions of '" + item + "': " + e.getMessage());
         }
@@ -182,7 +182,7 @@ public class FsShellPermissions extends FsCommand {
         try {
           item.fs.setOwner(item.path, newOwner, newGroup);
         } catch (IOException e) {
-          LOG.debug("Error changing ownership of " + item, e);
+          LOG.error("Temp", new RuntimeException());
           throw new IOException(
               "changing ownership of '" + item + "': " + e.getMessage());
         }

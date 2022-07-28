@@ -57,7 +57,7 @@ public class CancelCommand extends Command {
    */
   @Override
   public void execute(CommandLine cmd) throws Exception {
-    LOG.info("Executing \"Cancel plan\" command.");
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(cmd.hasOption(DiskBalancerCLI.CANCEL));
     verifyCommandOptions(DiskBalancerCLI.CANCEL, cmd);
 

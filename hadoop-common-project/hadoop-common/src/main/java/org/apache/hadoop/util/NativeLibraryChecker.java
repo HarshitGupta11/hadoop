@@ -126,7 +126,7 @@ public class NativeLibraryChecker {
         winutilsPath = Shell.getWinUtilsFile().getCanonicalPath();
         winutilsExists = true;
       } catch (IOException e) {
-        LOG.debug("No Winutils: ", e);
+        LOG.error("Temp", new RuntimeException());
         winutilsPath = e.getMessage();
         winutilsExists = false;
       }

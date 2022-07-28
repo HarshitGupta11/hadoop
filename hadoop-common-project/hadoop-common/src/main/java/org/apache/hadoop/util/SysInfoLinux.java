@@ -286,7 +286,7 @@ public class SysInfoLinux extends SysInfo {
         str = in.readLine();
       }
     } catch (IOException io) {
-      LOG.warn("Error reading the stream " + io);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       // Close the streams
       try {
@@ -294,10 +294,10 @@ public class SysInfoLinux extends SysInfo {
         try {
           in.close();
         } catch (IOException i) {
-          LOG.warn("Error closing the stream " + in);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException i) {
-        LOG.warn("Error closing the stream " + fReader);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -323,7 +323,7 @@ public class SysInfoLinux extends SysInfo {
       in = new BufferedReader(fReader);
     } catch (IOException f) {
       // shouldn't happen....
-      LOG.warn("Couldn't read " + procfsCpuFile + "; can't determine cpu info");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     Matcher mat;
@@ -353,7 +353,7 @@ public class SysInfoLinux extends SysInfo {
         str = in.readLine();
       }
     } catch (IOException io) {
-      LOG.warn("Error reading the stream " + io);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       // Close the streams
       try {
@@ -361,10 +361,10 @@ public class SysInfoLinux extends SysInfo {
         try {
           in.close();
         } catch (IOException i) {
-          LOG.warn("Error closing the stream " + in);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException i) {
-        LOG.warn("Error closing the stream " + fReader);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     readCpuInfoFile = true;
@@ -404,7 +404,7 @@ public class SysInfoLinux extends SysInfo {
         str = in.readLine();
       }
     } catch (IOException io) {
-      LOG.warn("Error reading the stream " + io);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       // Close the streams
       try {
@@ -412,10 +412,10 @@ public class SysInfoLinux extends SysInfo {
         try {
           in.close();
         } catch (IOException i) {
-          LOG.warn("Error closing the stream " + in);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException i) {
-        LOG.warn("Error closing the stream " + fReader);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -460,7 +460,7 @@ public class SysInfoLinux extends SysInfo {
         str = in.readLine();
       }
     } catch (IOException io) {
-      LOG.warn("Error reading the stream " + io);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       // Close the streams
       try {
@@ -468,10 +468,10 @@ public class SysInfoLinux extends SysInfo {
         try {
           in.close();
         } catch (IOException i) {
-          LOG.warn("Error closing the stream " + in);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException i) {
-        LOG.warn("Error closing the stream " + fReader);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -531,13 +531,13 @@ public class SysInfoLinux extends SysInfo {
         str = in.readLine();
       }
     } catch (IOException e) {
-      LOG.warn("Error reading the stream " + procfsDisksFile, e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       // Close the streams
       try {
         in.close();
       } catch (IOException e) {
-        LOG.warn("Error closing the stream " + procfsDisksFile, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -578,14 +578,14 @@ public class SysInfoLinux extends SysInfo {
       }
       return defSector;
     } catch (IOException|NumberFormatException e) {
-      LOG.warn("Error reading the stream " + procfsDiskSectorFile, e);
+      LOG.error("Temp", new RuntimeException());
       return defSector;
     } finally {
       // Close the streams
       try {
         in.close();
       } catch (IOException e) {
-        LOG.warn("Error closing the stream " + procfsDiskSectorFile, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -145,7 +145,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
     Configuration conf = createValidRoleConf();
     try (AssumedRoleCredentialProvider provider
              = new AssumedRoleCredentialProvider(uri, conf)) {
-      LOG.info("Provider is {}", provider);
+      LOG.error("Temp", new RuntimeException());
       AWSCredentials credentials = provider.getCredentials();
       assertNotNull("Null credentials from " + provider, credentials);
     }
@@ -158,7 +158,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
     Configuration conf = createValidRoleConf();
     try (AssumedRoleCredentialProvider provider
              = new AssumedRoleCredentialProvider(null, conf)) {
-      LOG.info("Provider is {}", provider);
+      LOG.error("Temp", new RuntimeException());
       AWSCredentials credentials = provider.getCredentials();
       assertNotNull("Null credentials from " + provider, credentials);
     }
@@ -302,7 +302,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
     conf.setInt(ASSUMED_ROLE_SESSION_DURATION, 3 * 60 * 60);
     try {
       new Path(getFileSystem().getUri()).getFileSystem(conf).close();
-      LOG.info("Successfully created token of a duration >3h");
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ioe) {
       assertExceptionContains(VALIDATION_ERROR, ioe);
     }
@@ -477,7 +477,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
       counter++;
       iterator.next();
     }
-    LOG.info("Found {} outstanding MPUs", counter);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -638,7 +638,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
       }
 
       // fail of all list and abort of .pending files.
-      LOG.info("abortAllSinglePendingCommits({})", readOnlyDir);
+      LOG.error("Temp", new RuntimeException());
       assertCommitAccessDenied(readOnlyDir,
           operations.abortAllSinglePendingCommits(readOnlyDir, true));
 
@@ -656,7 +656,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
       forbidden("",
           () -> operations.abortPendingUploadsUnderPath(readOnlyDir));
     } finally {
-      LOG.info("Cleanup");
+      LOG.error("Temp", new RuntimeException());
       fullOperations.abortPendingUploadsUnderPath(readOnlyDir);
       LOG.info("Committer statistics {}",
           ioStatisticsSourceToString(committerStatistics));

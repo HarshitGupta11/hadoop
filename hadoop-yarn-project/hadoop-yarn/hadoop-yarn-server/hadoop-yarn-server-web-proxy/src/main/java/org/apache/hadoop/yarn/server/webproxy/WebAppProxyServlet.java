@@ -259,7 +259,7 @@ public class WebAppProxyServlet extends HttpServlet {
     // since that is what the AM filter checks against. IP aliasing or
     // similar could cause issues otherwise.
     InetAddress localAddress = InetAddress.getByName(proxyHost);
-    LOG.debug("local InetAddress for proxy host: {}", localAddress);
+    LOG.error("Temp", new RuntimeException());
     httpClientBuilder.setDefaultRequestConfig(
         connectionTimeoutEnabled ?
             RequestConfig.custom()
@@ -301,7 +301,7 @@ public class WebAppProxyServlet extends HttpServlet {
       String name = names.nextElement();
       if (PASS_THROUGH_HEADERS.contains(name)) {
         String value = req.getHeader(name);
-        LOG.debug("REQ HEADER: {} : {}", name, value);
+        LOG.error("Temp", new RuntimeException());
         base.setHeader(name, value);
       }
     }
@@ -411,7 +411,7 @@ public class WebAppProxyServlet extends HttpServlet {
       }
 
       if ((parts == null) || (parts.length < 2)) {
-        LOG.warn("{} gave an invalid proxy path {}", remoteUser,  pathInfo);
+        LOG.error("Temp", new RuntimeException());
         notFound(resp, "Your path appears to be formatted incorrectly.");
         return;
       }

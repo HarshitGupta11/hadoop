@@ -103,7 +103,7 @@ public class PassthroughCodec
 
   @Override
   public String getDefaultExtension() {
-    LOG.info("Registering fake codec for extension {}", extension);
+    LOG.error("Temp", new RuntimeException());
     return extension;
   }
 

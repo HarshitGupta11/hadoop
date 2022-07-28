@@ -51,13 +51,13 @@ public class NativeRuntime {
   static {
     try {
       System.loadLibrary("nativetask");
-      LOG.info("Nativetask JNI library loaded.");
+      LOG.error("Temp", new RuntimeException());
       nativeLibraryLoaded = true;
     } catch (final Throwable t) {
       // Ignore failures
       LOG.error("Failed to load nativetask JNI library with error: " + t);
-      LOG.info("java.library.path=" + System.getProperty("java.library.path"));
-      LOG.info("LD_LIBRARY_PATH=" + System.getenv("LD_LIBRARY_PATH"));
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -85,7 +85,7 @@ public class NativeRuntime {
     assertNativeLibraryLoaded();
     final long ret = JNICreateNativeObject(clazz.getBytes(Charsets.UTF_8));
     if (ret == 0) {
-      LOG.warn("Can't create NativeObject for class " + clazz + ", probably not exist.");
+      LOG.error("Temp", new RuntimeException());
     }
     return ret;
   }
@@ -98,7 +98,7 @@ public class NativeRuntime {
     final long ret = JNIRegisterModule(libraryName.getBytes(Charsets.UTF_8),
                                        clazz.getBytes(Charsets.UTF_8));
     if (ret != 0) {
-      LOG.warn("Can't create NativeObject for class " + clazz + ", probably not exist.");
+      LOG.error("Temp", new RuntimeException());
     }
     return ret;
   }

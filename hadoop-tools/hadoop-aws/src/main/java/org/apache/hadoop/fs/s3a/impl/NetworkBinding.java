@@ -142,7 +142,7 @@ public final class NetworkBinding {
           URI uri = new URI(endPoint);
           hostName = uri.getHost();
         } catch (URISyntaxException e) {
-          LOG.debug("Got URISyntaxException, ignoring");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       LOG.debug("Bucket endpoint : {}, Hostname : {}, DNSAddress : {}",

@@ -87,7 +87,7 @@ public class HistoryServerFileSystemStateStoreService
           JHAdminConfig.MR_HS_FS_STATE_STORE_URI);
     }
 
-    LOG.info("Using " + storeUri + " for history server state storage");
+    LOG.error("Temp", new RuntimeException());
     rootStatePath = new Path(storeUri, ROOT_STATE_DIR_NAME);
   }
 
@@ -116,7 +116,7 @@ public class HistoryServerFileSystemStateStoreService
 
   @Override
   public HistoryServerState loadState() throws IOException {
-    LOG.info("Loading history server state from " + rootStatePath);
+    LOG.error("Temp", new RuntimeException());
     HistoryServerState state = new HistoryServerState();
     loadTokenState(state);
     return state;
@@ -126,7 +126,7 @@ public class HistoryServerFileSystemStateStoreService
   public void storeToken(MRDelegationTokenIdentifier tokenId,
       Long renewDate) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
 
     Path tokenPath = getTokenPath(tokenId);
@@ -141,7 +141,7 @@ public class HistoryServerFileSystemStateStoreService
   public void updateToken(MRDelegationTokenIdentifier tokenId,
       Long renewDate) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Updating token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Files cannot be atomically replaced, therefore we write a temporary
@@ -168,7 +168,7 @@ public class HistoryServerFileSystemStateStoreService
   public void removeToken(MRDelegationTokenIdentifier tokenId)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing token " + tokenId.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
     }
     deleteFile(getTokenPath(tokenId));
   }
@@ -176,7 +176,7 @@ public class HistoryServerFileSystemStateStoreService
   @Override
   public void storeTokenMasterKey(DelegationKey key) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing master key " + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
 
     Path keyPath = new Path(tokenKeysStatePath,
@@ -202,7 +202,7 @@ public class HistoryServerFileSystemStateStoreService
   public void removeTokenMasterKey(DelegationKey key)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing master key " + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
 
     Path keyPath = new Path(tokenKeysStatePath,

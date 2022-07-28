@@ -61,7 +61,7 @@ public class ITestS3ABlocksize extends AbstractS3ATestBase {
     boolean found = false;
     FileStatus[] listing = fs.listStatus(dir);
     for (FileStatus stat : listing) {
-      LOG.info("entry: {}", stat);
+      LOG.error("Temp", new RuntimeException());
       if (file.equals(stat.getPath())) {
         found = true;
         assertEquals("Double default block size in ls(): " + stat,

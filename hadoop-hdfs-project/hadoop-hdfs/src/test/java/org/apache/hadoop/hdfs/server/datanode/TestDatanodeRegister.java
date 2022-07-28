@@ -111,7 +111,7 @@ public class TestDatanodeRegister {
     } catch (IncorrectVersionException ive) {
       GenericTestUtils.assertExceptionContains(
           "The reported NameNode version is too low", ive);
-      LOG.info("Got expected exception", ive);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   

@@ -315,9 +315,9 @@ public class TestBalancerLongRunningTasks {
 
     // start up an empty node with the same capacity
     cluster.startDataNodes(conf, capacities.length, true, null, null, capacities);
-    LOG.info("capacities    = " + Arrays.toString(capacities));
-    LOG.info("totalUsedSpace= " + totalUsed);
-    LOG.info("lengths       = " + Arrays.toString(lengths) + ", #=" + lengths.length);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     TestBalancer.waitForHeartBeat(totalUsed,
         2 * capacities[0] * capacities.length, client, cluster);
 
@@ -720,7 +720,7 @@ public class TestBalancerLongRunningTasks {
             DFSUtil.getInternalNsRpcUris(conf), Balancer.class.getSimpleName(),
             Balancer.BALANCER_ID_PATH, conf, 1);
         for (NameNodeConnector nnc : connectors) {
-          LOG.info("NNC to work on: " + nnc);
+          LOG.error("Temp", new RuntimeException());
           Balancer b = new Balancer(nnc, bParams, conf);
           Balancer.Result r = b.runOneIteration();
           // Since no block can be moved in 500 milli-seconds (i.e.,

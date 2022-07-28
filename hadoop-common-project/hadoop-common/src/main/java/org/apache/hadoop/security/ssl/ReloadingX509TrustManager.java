@@ -131,7 +131,7 @@ public final class ReloadingX509TrustManager implements X509TrustManager {
     InputStream in = Files.newInputStream(path);
     try {
       ks.load(in, (password == null) ? null : password.toCharArray());
-      LOG.debug("Loaded truststore '" + path + "'");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       in.close();
     }

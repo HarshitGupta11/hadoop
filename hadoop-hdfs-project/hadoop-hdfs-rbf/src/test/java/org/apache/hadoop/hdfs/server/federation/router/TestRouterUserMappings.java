@@ -96,7 +96,7 @@ public class TestRouterUserMappings {
 
     @Override
     public List<String> getGroups(String user) throws IOException {
-      LOG.info("Getting groups in MockUnixGroupsMapping");
+      LOG.error("Temp", new RuntimeException());
       String g1 = user + (10 * i + 1);
       String g2 = user + (10 * i + 2);
       List<String> l = new ArrayList<String>(2);
@@ -108,7 +108,7 @@ public class TestRouterUserMappings {
 
     @Override
     public void cacheGroupsRefresh() throws IOException {
-      LOG.info("Refreshing groups in MockUnixGroupsMapping");
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
@@ -117,7 +117,7 @@ public class TestRouterUserMappings {
 
     @Override
     public Set<String> getGroupsSet(String user) throws IOException {
-      LOG.info("Getting groups in MockUnixGroupsMapping");
+      LOG.error("Temp", new RuntimeException());
       String g1 = user + (10 * i + 1);
       String g2 = user + (10 * i + 2);
       Set<String> s = Sets.newHashSet(g1, g2);
@@ -247,7 +247,7 @@ public class TestRouterUserMappings {
         () -> ProxyUsers.authorize(ugi1, LOOPBACK_ADDRESS));
     try {
       ProxyUsers.authorize(ugi2, LOOPBACK_ADDRESS);
-      LOG.info("auth for {} succeeded", ugi2.getUserName());
+      LOG.error("Temp", new RuntimeException());
       // expected
     } catch (AuthorizationException e) {
       fail("first auth for " + ugi2.getShortUserName() +
@@ -270,7 +270,7 @@ public class TestRouterUserMappings {
         () -> ProxyUsers.authorize(ugi2, LOOPBACK_ADDRESS));
     try {
       ProxyUsers.authorize(ugi1, LOOPBACK_ADDRESS);
-      LOG.info("auth for {} succeeded", ugi1.getUserName());
+      LOG.error("Temp", new RuntimeException());
       // expected
     } catch (AuthorizationException e) {
       fail("second auth for " + ugi1.getShortUserName() +
@@ -323,13 +323,13 @@ public class TestRouterUserMappings {
     Groups groups = Groups.getUserToGroupsMappingService(conf);
     String user = "test_user123";
 
-    LOG.info("First attempt:");
+    LOG.error("Temp", new RuntimeException());
     List<String> g1 = groups.getGroups(user);
-    LOG.info("Group 1 :{}", g1);
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("Second attempt, should be the same:");
+    LOG.error("Temp", new RuntimeException());
     List<String> g2 = groups.getGroups(user);
-    LOG.info("Group 2 :{}", g2);
+    LOG.error("Temp", new RuntimeException());
     for(int i = 0; i < g2.size(); i++) {
       assertEquals("Should be same group ", g1.get(i), g2.get(i));
     }
@@ -341,25 +341,25 @@ public class TestRouterUserMappings {
     String[] args =  new String[]{"-refreshUserToGroupsMappings"};
     admin.run(args);
 
-    LOG.info("Third attempt(after refresh command), should be different:");
+    LOG.error("Temp", new RuntimeException());
     List<String> g3 = groups.getGroups(user);
-    LOG.info("Group 3:{}", g3);
+    LOG.error("Temp", new RuntimeException());
     for(int i = 0; i < g3.size(); i++) {
       assertNotEquals("Should be different group: "
           + g1.get(i) + " and " + g3.get(i), g1.get(i), g3.get(i));
     }
 
     // Test timeout
-    LOG.info("Fourth attempt(after timeout), should be different:");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(() -> {
       List<String> g4;
       try {
         g4 = groups.getGroups(user);
       } catch (IOException e) {
-        LOG.debug("Failed to get groups for user:{}", user);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
-      LOG.info("Group 4 : {}", g4);
+      LOG.error("Temp", new RuntimeException());
       // if g4 is the same as g3, wait and retry
       return !g3.equals(g4);
     }, 50, Math.toIntExact(TimeUnit.SECONDS.toMillis(

@@ -63,7 +63,7 @@ public class TestProtoBufRpcServerHandoff {
 
     InetSocketAddress address = server.getListenerAddress();
     long serverStartTime = System.currentTimeMillis();
-    LOG.info("Server started at: " + address + " at time: " + serverStartTime);
+    LOG.error("Temp", new RuntimeException());
 
     final TestProtoBufRpcServerHandoffProtocol client = RPC.getProxy(
         TestProtoBufRpcServerHandoffProtocol.class, 1, address, conf);
@@ -83,8 +83,8 @@ public class TestProtoBufRpcServerHandoff {
     ClientInvocationCallable callable1 = future1.get();
     ClientInvocationCallable callable2 = future2.get();
 
-    LOG.info(callable1.toString());
-    LOG.info(callable2.toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     // Ensure the 5 second sleep responses are within a reasonable time of each
     // other.

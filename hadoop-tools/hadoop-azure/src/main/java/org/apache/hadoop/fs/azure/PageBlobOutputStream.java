@@ -225,20 +225,20 @@ final class PageBlobOutputStream extends OutputStream implements Syncable, Strea
       return;
     }
 
-    LOG.debug("Closing page blob output stream.");
+    LOG.error("Temp", new RuntimeException());
     flush();
     checkStreamState();
     ioThreadPool.shutdown();
     try {
-      LOG.debug(ioThreadPool.toString());
+      LOG.error("Temp", new RuntimeException());
       if (!ioThreadPool.awaitTermination(10, TimeUnit.MINUTES)) {
-        LOG.debug("Timed out after 10 minutes waiting for IO requests to finish");
+        LOG.error("Temp", new RuntimeException());
         NativeAzureFileSystemHelper.logAllLiveStackTraces();
-        LOG.debug(ioThreadPool.toString());
+        LOG.error("Temp", new RuntimeException());
         throw new IOException("Timed out waiting for IO requests to finish");
       }
     } catch (InterruptedException e) {
-      LOG.debug("Caught InterruptedException");
+      LOG.error("Temp", new RuntimeException());
 
       // Restore the interrupted status
       Thread.currentThread().interrupt();
@@ -267,9 +267,9 @@ final class PageBlobOutputStream extends OutputStream implements Syncable, Strea
     @Override
     public void run() {
       try {
-        LOG.debug("before runInternal()");
+        LOG.error("Temp", new RuntimeException());
         runInternal();
-        LOG.debug("after runInternal()");
+        LOG.error("Temp", new RuntimeException());
       } finally {
         doneSignal.countDown();
       }
@@ -366,7 +366,7 @@ final class PageBlobOutputStream extends OutputStream implements Syncable, Strea
     private void writePayloadToServer(byte[] rawPayload) {
       final ByteArrayInputStream wrapperStream =
                   new ByteArrayInputStream(rawPayload);
-      LOG.debug("writing payload of " + rawPayload.length + " bytes to Azure page blob");
+      LOG.error("Temp", new RuntimeException());
       try {
         long start = System.currentTimeMillis();
         blob.uploadPages(wrapperStream, currentBlobOffset, rawPayload.length,
@@ -374,14 +374,14 @@ final class PageBlobOutputStream extends OutputStream implements Syncable, Strea
         long end = System.currentTimeMillis();
         LOG.trace("Azure uploadPages time for " + rawPayload.length + " bytes = " + (end - start));
       } catch (IOException ex) {
-        LOG.debug(ExceptionUtils.getStackTrace(ex));
+        LOG.error("Temp", new RuntimeException());
         lastError = ex;
       } catch (StorageException ex) {
-        LOG.debug(ExceptionUtils.getStackTrace(ex));
+        LOG.error("Temp", new RuntimeException());
         lastError = new IOException(ex);
       }
       if (lastError != null) {
-        LOG.debug("Caught error in PageBlobOutputStream#writePayloadToServer()");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -440,7 +440,7 @@ final class PageBlobOutputStream extends OutputStream implements Syncable, Strea
           resizeDone = true;
           currentBlobSize = newSize;
         } catch (StorageException e) {
-          LOG.warn("Failed to extend size of " + cloudPageBlob.getUri());
+          LOG.error("Temp", new RuntimeException());
           try {
 
             // sleep 2, 8, 18 seconds for up to 3 retries
@@ -567,10 +567,10 @@ final class PageBlobOutputStream extends OutputStream implements Syncable, Strea
    */
   @Override
   public synchronized void hsync() throws IOException {
-    LOG.debug("Entering PageBlobOutputStream#hsync().");
+    LOG.error("Temp", new RuntimeException());
     long start = System.currentTimeMillis();
   	flush();
-    LOG.debug(ioThreadPool.toString());
+    LOG.error("Temp", new RuntimeException());
     try {
       if (lastQueuedTask != null) {
         lastQueuedTask.waitTillDone();

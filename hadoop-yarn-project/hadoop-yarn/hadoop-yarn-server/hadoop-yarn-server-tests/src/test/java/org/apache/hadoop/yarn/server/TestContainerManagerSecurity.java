@@ -156,7 +156,7 @@ public class TestContainerManagerSecurity extends KerberosSecurityTestcase {
   }
   
   public TestContainerManagerSecurity(String name, Configuration conf) {
-    LOG.info("RUNNING TEST " + name);
+    LOG.error("Temp", new RuntimeException());
     conf.setLong(YarnConfiguration.RM_AM_EXPIRY_INTERVAL_MS, 100000L);
     this.conf = conf;
   }
@@ -434,7 +434,7 @@ public class TestContainerManagerSecurity extends KerberosSecurityTestcase {
     // explicitly acked by RM. Now, manually remove it for testing.
     yarnCluster.getNodeManager(0).getNodeStatusUpdater()
       .addCompletedContainer(containerId);
-    LOG.info("Removing container from NMContext, containerID = " + containerId);
+    LOG.error("Temp", new RuntimeException());
     nmContext.getContainers().remove(containerId);
   }
 
@@ -633,7 +633,7 @@ public class TestContainerManagerSecurity extends KerberosSecurityTestcase {
   private void testContainerToken(Configuration conf) throws IOException,
       InterruptedException, YarnException {
 
-    LOG.info("Running test for malice user");
+    LOG.error("Temp", new RuntimeException());
     /*
      * We need to check for containerToken (authorization).
      * Here we will be assuming that we have valid NMToken  
@@ -735,7 +735,7 @@ public class TestContainerManagerSecurity extends KerberosSecurityTestcase {
   private void testContainerTokenWithEpoch(Configuration conf)
       throws IOException, InterruptedException, YarnException {
 
-    LOG.info("Running test for serializing/deserializing containerIds");
+    LOG.error("Temp", new RuntimeException());
 
     NMTokenSecretManagerInRM nmTokenSecretManagerInRM =
         yarnCluster.getResourceManager().getRMContext()

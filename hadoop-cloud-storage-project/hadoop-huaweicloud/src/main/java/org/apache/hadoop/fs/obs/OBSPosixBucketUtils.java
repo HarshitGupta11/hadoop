@@ -151,7 +151,7 @@ final class OBSPosixBucketUtils {
     } catch (FileNotFoundException e) {
       // if destination does not exist, do not change the
       // destination key, and just do rename.
-      LOG.debug("rename: dest [{}] does not exist", dstPath);
+      LOG.error("Temp", new RuntimeException());
     } catch (FileConflictException e) {
       Path parent = dstPath.getParent();
       if (!OBSCommonUtils.pathToKey(owner, parent).isEmpty()) {
@@ -246,7 +246,7 @@ final class OBSPosixBucketUtils {
   static void fsRenameToNewFolder(final OBSFileSystem owner, final String src,
       final String dst)
       throws IOException, ObsException {
-    LOG.debug("RenameFolder path {} to {}", src, dst);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       RenameRequest renameObjectRequest = new RenameRequest();
@@ -264,7 +264,7 @@ final class OBSPosixBucketUtils {
   static void innerFsRenameFile(final OBSFileSystem owner,
       final String srcKey,
       final String dstKey) throws IOException {
-    LOG.debug("RenameFile path {} to {}", srcKey, dstKey);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       final RenameRequest renameObjectRequest = new RenameRequest();
@@ -336,7 +336,7 @@ final class OBSPosixBucketUtils {
     String key = OBSCommonUtils.pathToKey(owner, f);
 
     if (!status.isDirectory()) {
-      LOG.debug("delete: Path is a file");
+      LOG.error("Temp", new RuntimeException());
       trashObjectIfNeed(owner, key);
     } else {
       LOG.debug("delete: Path is a directory: {} - recursive {}", f,
@@ -383,7 +383,7 @@ final class OBSPosixBucketUtils {
         sb.append(df.format(new Date()));
       }
       fsRenameToNewObject(owner, key, sb.toString());
-      LOG.debug("Moved: '" + key + "' to trash at: " + sb.toString());
+      LOG.error("Temp", new RuntimeException());
     } else {
       OBSCommonUtils.deleteObject(owner, key);
     }
@@ -406,7 +406,7 @@ final class OBSPosixBucketUtils {
       String dstKey = OBSCommonUtils.maybeDeleteBeginningSlash(
           sb.toString());
       fsRenameToNewFolder(owner, srcKey, dstKey);
-      LOG.debug("Moved: '" + key + "' to trash at: " + sb.toString());
+      LOG.error("Temp", new RuntimeException());
     } else {
       if (owner.isEnableMultiObjectDeleteRecursion()) {
         long delNum = fsRecursivelyDeleteDir(owner, key, true);
@@ -651,10 +651,10 @@ final class OBSPosixBucketUtils {
       final Path f) throws IOException {
     final Path path = OBSCommonUtils.qualify(owner, f);
     String key = OBSCommonUtils.pathToKey(owner, path);
-    LOG.debug("Getting path status for {}  ({})", path, key);
+    LOG.error("Temp", new RuntimeException());
 
     if (key.isEmpty()) {
-      LOG.debug("Found root directory");
+      LOG.error("Temp", new RuntimeException());
       return new OBSFileStatus(path, owner.getUsername());
     }
 
@@ -665,7 +665,7 @@ final class OBSPosixBucketUtils {
           .getAttribute(getAttrRequest);
       owner.getSchemeStatistics().incrementReadOps(1);
       if (fsIsFolder(meta)) {
-        LOG.debug("Found file (with /): fake directory");
+        LOG.error("Temp", new RuntimeException());
         return new OBSFileStatus(path,
             OBSCommonUtils.dateToLong(meta.getLastModified()),
             owner.getUsername());
@@ -682,7 +682,7 @@ final class OBSPosixBucketUtils {
       }
     } catch (ObsException e) {
       if (e.getResponseCode() == OBSCommonUtils.NOT_FOUND_CODE) {
-        LOG.debug("Not Found: {}", path);
+        LOG.error("Temp", new RuntimeException());
         throw new FileNotFoundException(
             "No such file or directory: " + path);
       }
@@ -700,7 +700,7 @@ final class OBSPosixBucketUtils {
     String newKey = key;
     newKey = OBSCommonUtils.maybeAddTrailingSlash(newKey);
     long[] summary = {0, 0, 1};
-    LOG.debug("Summary key {}", newKey);
+    LOG.error("Temp", new RuntimeException());
     ListObjectsRequest request = new ListObjectsRequest();
     request.setBucketName(owner.getBucket());
     request.setPrefix(newKey);

@@ -162,7 +162,7 @@ public class AWSCredentialProviderList implements AWSCredentialsProvider,
   @Override
   public AWSCredentials getCredentials() {
     if (isClosed()) {
-      LOG.warn(CREDENTIALS_REQUESTED_WHEN_CLOSED);
+      LOG.error("Temp", new RuntimeException());
       throw new NoAuthWithAWSException(name +
           CREDENTIALS_REQUESTED_WHEN_CLOSED);
     }
@@ -181,7 +181,7 @@ public class AWSCredentialProviderList implements AWSCredentialsProvider,
             credentials.getAWSSecretKey() != null)
             || (credentials instanceof AnonymousAWSCredentials)) {
           lastProvider = provider;
-          LOG.debug("Using credentials from {}", provider);
+          LOG.error("Temp", new RuntimeException());
           return credentials;
         }
       } catch (NoAwsCredentialsException e) {
@@ -308,11 +308,11 @@ public class AWSCredentialProviderList implements AWSCredentialsProvider,
       if (remainder != 0) {
         // still actively used, or somehow things are
         // now negative
-        LOG.debug("Not closing {}", this);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       // at this point, the closing is going to happen
-      LOG.debug("Closing {}", this);
+      LOG.error("Temp", new RuntimeException());
       closed.set(true);
     }
 

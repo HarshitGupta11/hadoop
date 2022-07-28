@@ -50,7 +50,7 @@ public class SimpleKeyProvider implements KeyProvider {
     } catch (IllegalAccessException | InvalidConfigurationValueException e) {
       throw new KeyProviderException("Failure to initialize configuration", e);
     } catch(IOException ioe) {
-      LOG.warn("Unable to get key from credential providers. {}", ioe);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return key;

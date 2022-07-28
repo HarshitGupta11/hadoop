@@ -61,8 +61,8 @@ public final class AssertExtensions {
       try {
         return eval.call();
       } catch (Exception e) {
-        LOG.warn("Failed to evaluate description: " + e);
-        LOG.debug("Evaluation failure", e);
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         // return null so that the description evaluation chain
         // will skip this one
         return null;

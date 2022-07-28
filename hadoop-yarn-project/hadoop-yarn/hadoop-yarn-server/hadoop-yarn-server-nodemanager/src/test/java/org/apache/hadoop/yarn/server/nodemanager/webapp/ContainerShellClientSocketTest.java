@@ -39,12 +39,12 @@ public class ContainerShellClientSocketTest extends WebSocketAdapter {
 
   @Override
   public void onWebSocketText(String message) {
-    LOG.info("Message received from server:" + message);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
   public void onWebSocketConnect(Session session) {
-    LOG.info("Connected to server");
+    LOG.error("Temp", new RuntimeException());
     this.session = session;
     latch.countDown();
   }

@@ -119,7 +119,7 @@ public class ITestAbfsInputStreamStatistics
        * position of cursor) to the end of file.
        */
       int result = in.read(defBuffer, 0, ONE_MB);
-      LOG.info("Result of read : {}", result);
+      LOG.error("Temp", new RuntimeException());
 
       /*
        * Seeking to start of file and then back to end would result in a
@@ -133,7 +133,7 @@ public class ITestAbfsInputStreamStatistics
       AbfsInputStreamStatisticsImpl stats =
           (AbfsInputStreamStatisticsImpl) in.getStreamStatistics();
 
-      LOG.info("STATISTICS: {}", stats.toString());
+      LOG.error("Temp", new RuntimeException());
 
       /*
        * seekOps - Since we are doing backward and forward seek OPERATIONS
@@ -173,7 +173,7 @@ public class ITestAbfsInputStreamStatistics
 
       in.close();
       // Verifying whether stats are readable after stream is closed.
-      LOG.info("STATISTICS after closing: {}", stats.toString());
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.cleanupWithLogger(LOG, out, in);
     }
@@ -214,7 +214,7 @@ public class ITestAbfsInputStreamStatistics
       AbfsInputStreamStatisticsImpl stats =
           (AbfsInputStreamStatisticsImpl) in.getStreamStatistics();
 
-      LOG.info("STATISTICS: {}", stats.toString());
+      LOG.error("Temp", new RuntimeException());
 
       /*
        * bytesRead - Since each time a single byte is read, total
@@ -236,7 +236,7 @@ public class ITestAbfsInputStreamStatistics
 
       in.close();
       // Verifying if stats are still readable after stream is closed.
-      LOG.info("STATISTICS after closing: {}", stats.toString());
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.cleanupWithLogger(LOG, out, in);
     }
@@ -288,7 +288,7 @@ public class ITestAbfsInputStreamStatistics
       in.seek(ONE_KB);
 
       // Verifying toString() with no StreamStatistics.
-      LOG.info("AbfsInputStream: {}", in.toString());
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.cleanupWithLogger(LOG, out, in);
     }

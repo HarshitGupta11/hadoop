@@ -129,7 +129,7 @@ public class RemoteSASKeyGeneratorImpl extends SASKeyGeneratorImpl {
 
   public void initialize(Configuration conf) throws IOException {
 
-    LOG.debug("Initializing RemoteSASKeyGeneratorImpl instance");
+    LOG.error("Temp", new RuntimeException());
 
     this.retryPolicy = RetryUtils.getMultipleLinearRandomRetry(conf,
         SAS_KEY_GENERATOR_HTTP_CLIENT_RETRY_POLICY_ENABLED_KEY, true,
@@ -163,7 +163,7 @@ public class RemoteSASKeyGeneratorImpl extends SASKeyGeneratorImpl {
         : cacheEntryDurationInMinutes;
     this.cache = new CachingAuthorizer<>(cacheEntryDurationInMinutes, "SASKEY");
     this.cache.init(conf);
-    LOG.debug("Initialization of RemoteSASKeyGenerator instance successful");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -177,7 +177,7 @@ public class RemoteSASKeyGeneratorImpl extends SASKeyGeneratorImpl {
         return cacheResult;
       }
 
-      LOG.debug("Generating Container SAS Key: Storage Account {}, Container {}", storageAccount, container);
+      LOG.error("Temp", new RuntimeException());
       URIBuilder uriBuilder = new URIBuilder();
       uriBuilder.setPath("/" + CONTAINER_SAS_OP);
       uriBuilder.addParameter(STORAGE_ACCOUNT_QUERY_PARAM_NAME, storageAccount);

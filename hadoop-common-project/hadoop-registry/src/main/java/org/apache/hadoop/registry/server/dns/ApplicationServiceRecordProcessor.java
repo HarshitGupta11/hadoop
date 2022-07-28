@@ -61,7 +61,7 @@ public class ApplicationServiceRecordProcessor extends
   @Override public void initTypeToInfoMapping(ServiceRecord serviceRecord)
       throws Exception {
     if (serviceRecord.external.isEmpty()) {
-      LOG.info(serviceRecord.description + ": No external endpoints defined.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     for (int type : getRecordTypes()) {

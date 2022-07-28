@@ -56,7 +56,7 @@ public class RetryTestTokenProvider implements CustomTokenProviderAdaptee {
       reTryCount++;
     }
 
-    LOG.debug("RetryTestTokenProvider: Throw an exception in fetching tokens");
+    LOG.error("Temp", new RuntimeException());
     throw new IOException("test exception");
   }
 

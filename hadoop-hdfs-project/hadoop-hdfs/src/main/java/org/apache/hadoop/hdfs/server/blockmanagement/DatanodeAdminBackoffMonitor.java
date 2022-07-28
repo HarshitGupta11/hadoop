@@ -139,7 +139,7 @@ public class DatanodeAdminBackoffMonitor extends DatanodeAdminMonitorBase
           DFSConfigKeys.
               DFS_NAMENODE_DECOMMISSION_BACKOFF_MONITOR_PENDING_BLOCKS_PER_LOCK_DEFAULT;
     }
-    LOG.info("Initialized the Backoff Decommission and Maintenance Monitor");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -166,7 +166,7 @@ public class DatanodeAdminBackoffMonitor extends DatanodeAdminMonitorBase
 
   @Override
   public void run() {
-    LOG.debug("DatanodeAdminMonitorV2 is running.");
+    LOG.error("Temp", new RuntimeException());
     if (!namesystem.isRunning()) {
       LOG.info("Namesystem is not running, skipping " +
           "decommissioning/maintenance checks.");
@@ -406,7 +406,7 @@ public class DatanodeAdminBackoffMonitor extends DatanodeAdminMonitorBase
       // If the node is already in maintenance, we don't need to perform
       // any further checks on it.
       if (dn.isInMaintenance()) {
-        LOG.debug("Node {} is currently in maintenance", dn);
+        LOG.error("Temp", new RuntimeException());
         continue;
       } else if (!dn.isInService()) {
         // A node could be inService if decom or maint has been cancelled, but
@@ -417,7 +417,7 @@ public class DatanodeAdminBackoffMonitor extends DatanodeAdminMonitorBase
           scanDatanodeStorage(dn, false);
           outstandingBlocks = getPendingCountForNode(dn);
         }
-        LOG.info("Node {} has {} blocks yet to process", dn, outstandingBlocks);
+        LOG.error("Temp", new RuntimeException());
         if (outstandingBlocks == 0) {
           removeList.add(dn);
         }
@@ -465,7 +465,7 @@ public class DatanodeAdminBackoffMonitor extends DatanodeAdminMonitorBase
 
     if (pendingCount == 0 && yetToBeProcessed == 0) {
       // There are no blocks to process so just return
-      LOG.debug("There are no pending or blocks yet to be processed");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -531,7 +531,7 @@ public class DatanodeAdminBackoffMonitor extends DatanodeAdminMonitorBase
     } finally {
       namesystem.writeUnlock();
     }
-    LOG.debug("{} blocks are now pending replication", pendingCount);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

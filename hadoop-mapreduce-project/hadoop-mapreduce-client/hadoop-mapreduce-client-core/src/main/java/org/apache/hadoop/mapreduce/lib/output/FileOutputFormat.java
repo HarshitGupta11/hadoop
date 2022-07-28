@@ -240,7 +240,7 @@ public abstract class FileOutputFormat<K, V> extends OutputFormat<K, V> {
     PathOutputCommitter committer = (PathOutputCommitter)
       context.getOutputCommitter();
     Path workPath = committer.getWorkPath();
-    LOG.debug("Work path is {}", workPath);
+    LOG.error("Temp", new RuntimeException());
     return workPath;
   }
 

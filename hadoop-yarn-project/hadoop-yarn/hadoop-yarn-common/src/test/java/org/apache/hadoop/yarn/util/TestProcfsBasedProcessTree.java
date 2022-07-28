@@ -90,9 +90,9 @@ public class TestProcfsBasedProcessTree {
             + " expected as we are killing the subprocesses of the"
             + " task intentionally. " + ee);
       } catch (IOException ioe) {
-        LOG.info("Error executing shell command " + ioe);
+        LOG.error("Temp", new RuntimeException());
       } finally {
-        LOG.info("Exit code: " + shexec.getExitCode());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -123,7 +123,7 @@ public class TestProcfsBasedProcessTree {
     try {
       Assert.assertTrue(ProcfsBasedProcessTree.isAvailable());
     } catch (Exception e) {
-      LOG.info(StringUtils.stringifyException(e));
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue("ProcfsBaseProcessTree should be available on Linux",
         false);
       return;
@@ -161,10 +161,10 @@ public class TestProcfsBasedProcessTree {
     Thread t = new RogueTaskThread();
     t.start();
     String pid = getRogueTaskPID();
-    LOG.info("Root process pid: " + pid);
+    LOG.error("Temp", new RuntimeException());
     ProcfsBasedProcessTree p = createProcessTree(pid);
     p.updateProcessTree(); // initialize
-    LOG.info("ProcessTree: " + p);
+    LOG.error("Temp", new RuntimeException());
 
     File leaf = new File(lowestDescendant);
     // wait till lowest descendant process of Rougue Task starts execution
@@ -177,11 +177,11 @@ public class TestProcfsBasedProcessTree {
     }
 
     p.updateProcessTree(); // reconstruct
-    LOG.info("ProcessTree: " + p);
+    LOG.error("Temp", new RuntimeException());
 
     // Verify the orphaned pid is In process tree
     String lostpid = getPidFromPidFile(lostDescendant);
-    LOG.info("Orphaned pid: " + lostpid);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue("Child process owned by init escaped process tree.",
        p.contains(lostpid));
 
@@ -207,7 +207,7 @@ public class TestProcfsBasedProcessTree {
       fail("ProcessTree shouldn't be alive");
     }
 
-    LOG.info("Process-tree dump follows: \n" + processTreeDump);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue("Process-tree dump doesn't start with a proper header",
       processTreeDump.startsWith("\t|- PID PPID PGRPID SESSID CMD_NAME "
           + "USER_MODE_TIME(MILLIS) SYSTEM_TIME(MILLIS) VMEM_USAGE(BYTES) "
@@ -225,9 +225,9 @@ public class TestProcfsBasedProcessTree {
     // Not able to join thread sometimes when forking with large N.
     try {
       t.join(2000);
-      LOG.info("RogueTaskThread successfully joined.");
+      LOG.error("Temp", new RuntimeException());
     } catch (InterruptedException ie) {
-      LOG.info("Interrupted while joining RogueTaskThread.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // ProcessTree is gone now. Any further calls should be sane.
@@ -271,7 +271,7 @@ public class TestProcfsBasedProcessTree {
       fReader = new FileReader(pidFileName);
       pidFile = new BufferedReader(fReader);
     } catch (FileNotFoundException f) {
-      LOG.debug("PidFile doesn't exist : {}", pidFileName);
+      LOG.error("Temp", new RuntimeException());
       return pid;
     }
 
@@ -289,10 +289,10 @@ public class TestProcfsBasedProcessTree {
             pidFile.close();
           }
         } catch (IOException i) {
-          LOG.warn("Error closing the stream " + pidFile);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException i) {
-        LOG.warn("Error closing the stream " + fReader);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return pid;
@@ -789,7 +789,7 @@ public class TestProcfsBasedProcessTree {
       // Get the process-tree dump
       String processTreeDump = processTree.getProcessTreeDump();
 
-      LOG.info("Process-tree dump follows: \n" + processTreeDump);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue("Process-tree dump doesn't start with a proper header",
         processTreeDump.startsWith("\t|- PID PPID PGRPID SESSID CMD_NAME "
             + "USER_MODE_TIME(MILLIS) SYSTEM_TIME(MILLIS) VMEM_USAGE(BYTES) "
@@ -826,10 +826,10 @@ public class TestProcfsBasedProcessTree {
       shexec = new ShellCommandExecutor(args);
       shexec.execute();
     } catch (IOException ioe) {
-      LOG.warn("setsid is not available on this machine. So not using it.");
+      LOG.error("Temp", new RuntimeException());
       setsidSupported = false;
     } finally { // handle the exit code
-      LOG.info("setsid exited with exit code " + shexec.getExitCode());
+      LOG.error("Temp", new RuntimeException());
     }
     return setsidSupported;
   }
@@ -909,7 +909,7 @@ public class TestProcfsBasedProcessTree {
     for (String pid : pids) {
       File pidDir = new File(procfsRootDir, pid);
       FileUtils.forceMkdir(pidDir);
-      LOG.info("created pid dir: " + pidDir);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -225,7 +225,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
    * @param key key of the object.
    */
   private void queueToDelete(Path path, String key) {
-    LOG.debug("Queueing to delete {}", path);
+    LOG.error("Temp", new RuntimeException());
     if (path != null) {
       pathsToDelete.add(path);
     }
@@ -322,7 +322,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
         // unrecoverable errors.
         // Downgrading to warn because an exception is already
         // about to be thrown.
-        LOG.warn("While completing all active copies", e);
+        LOG.error("Temp", new RuntimeException());
       }
       // notify the rename tracker of the failure
       throw renameTracker.renameFailed(ex);
@@ -387,7 +387,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
   protected void recursiveDirectoryRename() throws IOException {
     final StoreContext storeContext = getStoreContext();
 
-    LOG.debug("rename: renaming directory {} to {}", sourcePath, destPath);
+    LOG.error("Temp", new RuntimeException());
 
     // This is a directory-to-directory copy
     String dstKey = maybeAddTrailingSlash(destKey);
@@ -428,7 +428,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
     while (iterator.hasNext()) {
       // get the next entry in the listing.
       S3ALocatedFileStatus child = iterator.next();
-      LOG.debug("To rename {}", child);
+      LOG.error("Temp", new RuntimeException());
       // convert it to an S3 key.
       String k = storeContext.pathToKey(child.getPath());
       // possibly adding a "/" if it represents directory and it does
@@ -502,7 +502,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
       if (activeCopies.size() == RENAME_PARALLEL_LIMIT) {
         // the limit of active copies has been reached;
         // wait for completion or errors to surface.
-        LOG.debug("Waiting for active copies to complete");
+        LOG.error("Temp", new RuntimeException());
         completeActiveCopies("batch threshold reached");
       }
     }
@@ -542,7 +542,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
       final String dstKey,
       final DirMarkerTracker dirMarkerTracker) throws IOException {
     // directory marker work.
-    LOG.debug("Copying markers from {}", dirMarkerTracker);
+    LOG.error("Temp", new RuntimeException());
     final StoreContext storeContext = getStoreContext();
     Map<Path, DirMarkerTracker.Marker> leafMarkers =
         dirMarkerTracker.getLeafMarkers();
@@ -558,7 +558,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
       String newDestKey =
           dstKey + key.substring(srcKey.length());
       Path childDestPath = storeContext.keyToPath(newDestKey);
-      LOG.debug("copying dir marker from {} to {}", key, newDestKey);
+      LOG.error("Temp", new RuntimeException());
 
       activeCopies.add(
           initiateCopy(
@@ -680,7 +680,7 @@ public class RenameOperation extends ExecutingStoreOperation<Long> {
       // list what is being deleted for the interest of anyone
       // who is trying to debug why objects are no longer there.
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Initiating delete operation for {} objects", keys.size());
+        LOG.error("Temp", new RuntimeException());
         for (DeleteObjectsRequest.KeyVersion key : keys) {
           LOG.debug(" {} {}", key.getKey(),
               key.getVersion() != null ? key.getVersion() : "");

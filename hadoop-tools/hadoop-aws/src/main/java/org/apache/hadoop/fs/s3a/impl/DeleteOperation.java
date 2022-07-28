@@ -246,7 +246,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
 
     StoreContext context = getStoreContext();
     Path path = status.getPath();
-    LOG.debug("Delete path {} - recursive {}", path, recursive);
+    LOG.error("Temp", new RuntimeException());
     LOG.debug("Type = {}",
         status.isFile() ? "File"
             : (status.isEmptyDirectory() == Tristate.TRUE
@@ -255,7 +255,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
 
     String key = context.pathToKey(path);
     if (status.isDirectory()) {
-      LOG.debug("delete: Path is a directory: {}", path);
+      LOG.error("Temp", new RuntimeException());
       checkArgument(
           status.isEmptyDirectory() != Tristate.UNKNOWN,
           "File status must have directory emptiness computed");
@@ -275,7 +275,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
         throw new PathIsNotEmptyDirectoryException(path.toString());
       }
       if (status.isEmptyDirectory() == Tristate.TRUE) {
-        LOG.debug("deleting empty directory {}", path);
+        LOG.error("Temp", new RuntimeException());
         deleteObjectAtPath(path, key, false);
       } else {
         deleteDirectoryTree(path, key);
@@ -283,10 +283,10 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
 
     } else {
       // simple file.
-      LOG.debug("deleting simple file {}", path);
+      LOG.error("Temp", new RuntimeException());
       deleteObjectAtPath(path, key, true);
     }
-    LOG.debug("Deleted {} objects", filesDeleted);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -328,7 +328,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
       deleteFuture = null;
 
       // list files including any under tombstones through S3Guard
-      LOG.debug("Getting objects for directory prefix {} to delete", dirKey);
+      LOG.error("Temp", new RuntimeException());
       final RemoteIterator<S3ALocatedFileStatus> locatedFiles =
           callbacks.listFilesAndDirectoryMarkers(path, status,
               false, true);
@@ -341,7 +341,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
         S3AFileStatus child = locatedFiles.next().toS3AFileStatus();
         queueForDeletion(child);
       }
-      LOG.debug("Deleting final batch of listed files");
+      LOG.error("Temp", new RuntimeException());
       submitNextBatch();
       maybeAwaitCompletion(deleteFuture);
 
@@ -367,7 +367,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
           // get the next entry in the listing.
           extraFilesDeleted++;
           S3AFileStatus next = objects.next();
-          LOG.debug("Found Unlisted entry {}", next);
+          LOG.error("Temp", new RuntimeException());
           queueForDeletion(deletionKey(next), null,
               next.isDirectory());
         }
@@ -429,7 +429,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
   private void queueForDeletion(final String key,
       @Nullable final Path deletePath,
       boolean isDirMarker) throws IOException {
-    LOG.debug("Adding object to delete: \"{}\"", key);
+    LOG.error("Temp", new RuntimeException());
     keys.add(new DeleteEntry(key, isDirMarker));
     if (deletePath != null) {
       if (!isDirMarker) {
@@ -482,7 +482,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
       final String key,
       final boolean isFile)
       throws IOException {
-    LOG.debug("delete: {} {}", (isFile ? "file" : "dir marker"), key);
+    LOG.error("Temp", new RuntimeException());
     filesDeleted++;
     callbacks.deleteObjectAtPath(path, key, isFile, operationState);
   }
@@ -546,7 +546,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
             .filter(e -> !e.isDirMarker)
             .map(e -> e.keyVersion)
             .collect(Collectors.toList());
-        LOG.debug("Deleting of {} file objects", files.size());
+        LOG.error("Temp", new RuntimeException());
         result = Invoker.once("Remove S3 Files",
             status.getPath().toString(),
             () -> callbacks.removeKeys(
@@ -563,7 +563,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
             .filter(e -> e.isDirMarker)
             .map(e -> e.keyVersion)
             .collect(Collectors.toList());
-        LOG.debug("Deleting of {} directory markers", dirs.size());
+        LOG.error("Temp", new RuntimeException());
         // This is invoked with deleteFakeDir = true, so
         // S3Guard is not updated.
         result = Invoker.once("Remove S3 Dir Markers",
@@ -597,7 +597,7 @@ public class DeleteOperation extends ExecutingStoreOperation<Boolean> {
             keyList.removeIf(kv -> kv.getKey().equals(del.getKey()));
           }
           for (DeleteEntry kv : keyList) {
-            LOG.debug("{}", kv.getKey());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

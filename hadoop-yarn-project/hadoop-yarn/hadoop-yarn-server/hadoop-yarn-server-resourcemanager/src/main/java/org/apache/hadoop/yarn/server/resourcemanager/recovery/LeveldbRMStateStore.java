@@ -162,7 +162,7 @@ public class LeveldbRMStateStore extends RMStateStore {
     Path storeRoot = createStorageDir();
     Options options = new Options();
     options.createIfMissing(false);
-    LOG.info("Using state database at " + storeRoot + " for recovery");
+    LOG.error("Temp", new RuntimeException());
     File dbfile = new File(storeRoot.toString());
     db = dbManager.initDatabase(dbfile, options, (database) ->
         storeVersion(CURRENT_VERSION_INFO));
@@ -251,7 +251,7 @@ public class LeveldbRMStateStore extends RMStateStore {
             key.substring(RM_RESERVATION_KEY_PREFIX.length());
         String[] parts = planReservationString.split(SEPARATOR);
         if (parts.length != 2) {
-          LOG.warn("Incorrect reservation state key " + key);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         String planName = parts[0];
@@ -271,14 +271,14 @@ public class LeveldbRMStateStore extends RMStateStore {
     } catch (DBException e) {
       throw new IOException(e);
     }
-    LOG.info("Recovered " + numReservations + " reservations");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void loadRMDTSecretManagerState(RMState state) throws IOException {
     int numKeys = loadRMDTSecretManagerKeys(state);
-    LOG.info("Recovered " + numKeys + " RM delegation token master keys");
+    LOG.error("Temp", new RuntimeException());
     int numTokens = loadRMDTSecretManagerTokens(state);
-    LOG.info("Recovered " + numTokens + " RM delegation tokens");
+    LOG.error("Temp", new RuntimeException());
     loadRMDTSecretManagerTokenSequenceNumber(state);
   }
 
@@ -386,7 +386,7 @@ public class LeveldbRMStateStore extends RMStateStore {
 
         String appIdStr = key.substring(RM_APP_ROOT.length() + 1);
         if (appIdStr.contains(SEPARATOR)) {
-          LOG.warn("Skipping extraneous data " + key);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
 
@@ -420,12 +420,12 @@ public class LeveldbRMStateStore extends RMStateStore {
             createAttemptState(attemptId, entry.getValue());
         appState.attempts.put(attemptState.getAttemptId(), attemptState);
       } else {
-        LOG.warn("Ignoring unknown application key: " + key);
+        LOG.error("Temp", new RuntimeException());
       }
       iter.next();
     }
     int numAttempts = appState.attempts.size();
-    LOG.debug("Loaded application {} with {} attempts", appId, numAttempts);
+    LOG.error("Temp", new RuntimeException());
     return numAttempts;
   }
 
@@ -526,7 +526,7 @@ public class LeveldbRMStateStore extends RMStateStore {
     }
 
     if (caCertData == null || caPrivateKeyData == null) {
-      LOG.warn("Couldn't find Proxy CA data");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -538,7 +538,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   protected void storeApplicationStateInternal(ApplicationId appId,
       ApplicationStateData appStateData) throws IOException {
     String key = getApplicationNodeKey(appId);
-    LOG.debug("Storing state for app {} at {}", appId, key);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.put(bytes(key), appStateData.getProto().toByteArray());
     } catch (DBException e) {
@@ -557,7 +557,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       ApplicationAttemptId attemptId,
       ApplicationAttemptStateData attemptStateData) throws IOException {
     String key = getApplicationAttemptNodeKey(attemptId);
-    LOG.debug("Storing state for attempt {} at {}", attemptId, key);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.put(bytes(key), attemptStateData.getProto().toByteArray());
     } catch (DBException e) {
@@ -577,7 +577,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       ApplicationAttemptId attemptId)
       throws IOException {
     String attemptKey = getApplicationAttemptNodeKey(attemptId);
-    LOG.debug("Removing state for attempt {} at {}", attemptId, attemptKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.delete(bytes(attemptKey));
     } catch (DBException e) {
@@ -649,7 +649,7 @@ public class LeveldbRMStateStore extends RMStateStore {
     String tokenKey = getRMDTTokenNodeKey(tokenId);
     RMDelegationTokenIdentifierData tokenData =
         new RMDelegationTokenIdentifierData(tokenId, renewDate);
-    LOG.debug("Storing token to {}", tokenKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       try (WriteBatch batch = db.createWriteBatch()) {
         batch.put(bytes(tokenKey), tokenData.toByteArray());
@@ -687,7 +687,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   protected void removeRMDelegationTokenState(
       RMDelegationTokenIdentifier tokenId) throws IOException {
     String tokenKey = getRMDTTokenNodeKey(tokenId);
-    LOG.debug("Removing token at {}", tokenKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.delete(bytes(tokenKey));
     } catch (DBException e) {
@@ -699,7 +699,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   protected void storeRMDTMasterKeyState(DelegationKey masterKey)
       throws IOException {
     String dbKey = getRMDTMasterKeyNodeKey(masterKey);
-    LOG.debug("Storing token master key to {}", dbKey);
+    LOG.error("Temp", new RuntimeException());
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     try (DataOutputStream out = new DataOutputStream(os)) {
       masterKey.write(out);
@@ -715,7 +715,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   protected void removeRMDTMasterKeyState(DelegationKey masterKey)
       throws IOException {
     String dbKey = getRMDTMasterKeyNodeKey(masterKey);
-    LOG.debug("Removing token master key at {}", dbKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.delete(bytes(dbKey));
     } catch (DBException e) {
@@ -755,7 +755,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   @Override
   public void deleteStore() throws IOException {
     Path root = getStorageDir();
-    LOG.info("Deleting state database at " + root);
+    LOG.error("Temp", new RuntimeException());
     db.close();
     db = null;
     FileSystem fs = FileSystem.getLocal(getConfig());
@@ -766,7 +766,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   public synchronized void removeApplication(ApplicationId removeAppId)
       throws IOException {
     String appKey = getApplicationNodeKey(removeAppId);
-    LOG.info("Removing state for app " + removeAppId);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.delete(bytes(appKey));
     } catch (DBException e) {
@@ -781,7 +781,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       iter.seekToFirst();
       while (iter.hasNext()) {
         Entry<byte[], byte[]> entry = iter.next();
-        LOG.info("entry: " + asString(entry.getKey()));
+        LOG.error("Temp", new RuntimeException());
         ++numEntries;
       }
     } catch (DBException e) {

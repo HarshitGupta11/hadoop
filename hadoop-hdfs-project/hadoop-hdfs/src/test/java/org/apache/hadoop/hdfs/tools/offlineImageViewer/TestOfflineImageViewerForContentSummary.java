@@ -110,7 +110,7 @@ public class TestOfflineImageViewerForContentSummary {
       if (originalFsimage == null) {
         throw new RuntimeException("Didn't generate or can't find fsimage");
       }
-      LOG.debug("original FS image file is " + originalFsimage);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (cluster != null)
         cluster.shutdown();

@@ -82,7 +82,7 @@ public class TestViewFileSystemOverloadSchemeLocalFileSystem {
   @Test
   public void testLocalTargetLinkWriteSimple()
       throws IOException, URISyntaxException {
-    LOG.info("Starting testLocalTargetLinkWriteSimple");
+    LOG.error("Temp", new RuntimeException());
     final String testString = "Hello Local!...";
     final Path lfsRoot = new Path("/lfsRoot");
     addMountLinks(null, new String[] {lfsRoot.toString() },
@@ -104,7 +104,7 @@ public class TestViewFileSystemOverloadSchemeLocalFileSystem {
    */
   @Test
   public void testLocalFsCreateAndDelete() throws Exception {
-    LOG.info("Starting testLocalFsCreateAndDelete");
+    LOG.error("Temp", new RuntimeException());
     addMountLinks("mt", new String[] {"/lfsroot" },
         new String[] {targetTestRoot + "/wd2" }, conf);
     final URI mountURI = URI.create("file://mt/");
@@ -123,7 +123,7 @@ public class TestViewFileSystemOverloadSchemeLocalFileSystem {
    */
   @Test
   public void testLocalFsLinkSlashMerge() throws Exception {
-    LOG.info("Starting testLocalFsLinkSlashMerge");
+    LOG.error("Temp", new RuntimeException());
     addMountLinks("mt",
         new String[] {Constants.CONFIG_VIEWFS_LINK_MERGE_SLASH },
         new String[] {targetTestRoot + "/wd2" }, conf);
@@ -141,7 +141,7 @@ public class TestViewFileSystemOverloadSchemeLocalFileSystem {
    */
   @Test(expected = IOException.class)
   public void testLocalFsLinkSlashMergeWithOtherMountLinks() throws Exception {
-    LOG.info("Starting testLocalFsLinkSlashMergeWithOtherMountLinks");
+    LOG.error("Temp", new RuntimeException());
     addMountLinks("mt",
         new String[] {"/lfsroot", Constants.CONFIG_VIEWFS_LINK_MERGE_SLASH },
         new String[] {targetTestRoot + "/wd2", targetTestRoot + "/wd2" }, conf);

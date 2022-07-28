@@ -38,13 +38,13 @@ public final class ConnectorFactory {
    */
   public static ClusterConnector getCluster(URI clusterURI, Configuration
       conf) throws IOException, URISyntaxException {
-    LOG.debug("Cluster URI : {}" , clusterURI);
-    LOG.debug("scheme : {}" , clusterURI.getScheme());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     if (clusterURI.getScheme().startsWith("file")) {
-      LOG.debug("Creating a JsonNodeConnector");
+      LOG.error("Temp", new RuntimeException());
       return new JsonNodeConnector(clusterURI.toURL());
     } else {
-      LOG.debug("Creating NameNode connector");
+      LOG.error("Temp", new RuntimeException());
       return new DBNameNodeConnector(clusterURI, conf);
     }
   }

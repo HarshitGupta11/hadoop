@@ -94,6 +94,6 @@ public class GenerateDNBlockInfosReducer
       }
     }
 
-    LOG.info("Number of blocks processed:" + blockIndex);
+    LOG.error("Temp", new RuntimeException());
   }
 }

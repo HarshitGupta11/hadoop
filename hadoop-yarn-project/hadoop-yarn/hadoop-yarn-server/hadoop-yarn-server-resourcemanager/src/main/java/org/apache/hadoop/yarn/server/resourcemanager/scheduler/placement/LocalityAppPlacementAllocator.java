@@ -398,7 +398,7 @@ public class LocalityAppPlacementAllocator <N extends SchedulerNode>
   public void showRequests() {
     for (ResourceRequest request : resourceRequestMap.values()) {
       if (request.getNumContainers() > 0) {
-        LOG.debug("\tRequest=" + request);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

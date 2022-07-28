@@ -759,7 +759,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
   }
 
   public void handle(RMNodeEvent event) {
-    LOG.debug("Processing {} of type {}", event.getNodeId(), event.getType());
+    LOG.error("Temp", new RuntimeException());
     writeLock.lock();
     try {
       NodeState oldState = getState();
@@ -806,7 +806,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
       metrics.decrDecommissioningNMs();
       break;
     default:
-      LOG.debug("Unexpected previous node state");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -825,7 +825,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
       metrics.decrDecommissioningNMs();
       break;
     default :
-      LOG.warn("Unexpected initial state");
+      LOG.error("Temp", new RuntimeException());
     }
 
     switch (finalState) {
@@ -836,7 +836,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
       metrics.incrNumActiveNodes();
       break;
     default :
-      LOG.warn("Unexpected final state");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -862,7 +862,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
     case NEW:
       break;
     default:
-      LOG.warn("Unexpected initial state");
+      LOG.error("Temp", new RuntimeException());
     }
 
     switch (finalState) {
@@ -882,7 +882,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
       metrics.incrNumShutdownNMs();
       break;
     default:
-      LOG.warn("Unexpected final state");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1276,11 +1276,11 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
                    " DecommissioningTimeout to be " + timeout);
           rmNode.decommissioningTimeout = timeout;
         } else {
-          LOG.info(rmNode.getNodeID() + " is already DECOMMISSIONING");
+          LOG.error("Temp", new RuntimeException());
         }
         return;
       }
-      LOG.info("Put Node " + rmNode.nodeId + " in DECOMMISSIONING.");
+      LOG.error("Temp", new RuntimeException());
       // Update NM metrics during graceful decommissioning.
       rmNode.updateMetricsForGracefulDecommission(initState, finalState);
       rmNode.decommissioningTimeout = timeout;
@@ -1636,7 +1636,7 @@ public class RMNodeImpl implements RMNode, EventHandler<RMNodeEvent> {
       if (!nodeContainers.contains(containerId)) {
         String diag = "Container " + containerId
             + " was running but not reported from " + nodeId;
-        LOG.warn(diag);
+        LOG.error("Temp", new RuntimeException());
         lostContainers.add(SchedulerUtils.createAbnormalContainerStatus(
             containerId, diag));
         iter.remove();

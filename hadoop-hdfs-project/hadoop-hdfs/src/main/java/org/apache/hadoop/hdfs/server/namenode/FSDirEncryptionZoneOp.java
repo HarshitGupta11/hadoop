@@ -572,7 +572,7 @@ final class FSDirEncryptionZoneOp {
       try {
         Thread.sleep(initialDelay);
       } catch (InterruptedException ie) {
-        NameNode.LOG.info("EDEKCacheLoader interrupted before warming up.");
+        NameNode.LOG.error("Temp", new RuntimeException());
         return;
       }
 
@@ -591,10 +591,10 @@ final class FSDirEncryptionZoneOp {
         } catch (IOException ioe) {
           lastSeenIOE = ioe;
           if (sinceLastLog >= logCoolDown) {
-            NameNode.LOG.info("Failed to warm up EDEKs.", ioe);
+            NameNode.LOG.error("Temp", new RuntimeException());
             sinceLastLog = 0;
           } else {
-            NameNode.LOG.debug("Failed to warm up EDEKs.", ioe);
+            NameNode.LOG.error("Temp", new RuntimeException());
           }
         } catch (Exception e) {
           NameNode.LOG.error("Cannot warm up EDEKs.", e);
@@ -603,7 +603,7 @@ final class FSDirEncryptionZoneOp {
         try {
           Thread.sleep(retryInterval);
         } catch (InterruptedException ie) {
-          NameNode.LOG.info("EDEKCacheLoader interrupted during retry.");
+          NameNode.LOG.error("Temp", new RuntimeException());
           break;
         }
         sinceLastLog += retryInterval;
@@ -611,9 +611,9 @@ final class FSDirEncryptionZoneOp {
       long warmUpEDEKTime = monotonicNow() - warmUpEDEKStartTime;
       NameNode.getNameNodeMetrics().addWarmUpEDEKTime(warmUpEDEKTime);
       if (!success) {
-        NameNode.LOG.warn("Unable to warm up EDEKs.");
+        NameNode.LOG.error("Temp", new RuntimeException());
         if (lastSeenIOE != null) {
-          NameNode.LOG.warn("Last seen exception:", lastSeenIOE);
+          NameNode.LOG.error("Temp", new RuntimeException());
         }
       }
     }

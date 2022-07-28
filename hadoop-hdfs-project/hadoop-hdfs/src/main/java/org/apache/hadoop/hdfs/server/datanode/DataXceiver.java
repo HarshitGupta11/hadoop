@@ -189,7 +189,7 @@ class DataXceiver extends Receiver implements Runnable {
     // This doesn't need to be in a critical section. Althogh the client
     // can resue the connection to issue a different request, trying sending
     // an OOB through the recently closed block receiver is harmless.
-    LOG.info("Sending OOB to peer: {}", peer);
+    LOG.error("Temp", new RuntimeException());
     br.sendOOB();
   }
 
@@ -201,7 +201,7 @@ class DataXceiver extends Receiver implements Runnable {
       }
       xceiver.interrupt();
     }
-    LOG.info("Stopped the writer: {}", peer);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -305,7 +305,7 @@ class DataXceiver extends Receiver implements Runnable {
         if (LOG.isTraceEnabled()) {
           LOG.trace(s, t);
         } else {
-          LOG.info("{}; {}", s, t.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       } else if (op == Op.READ_BLOCK && t instanceof SocketTimeoutException) {
         String s1 =
@@ -314,7 +314,7 @@ class DataXceiver extends Receiver implements Runnable {
         if (LOG.isTraceEnabled()) {
           LOG.trace(s1, t);
         } else {
-          LOG.info("{}; {}", s1, t.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       } else if (t instanceof InvalidToken ||
           t.getCause() instanceof InvalidToken) {
@@ -552,7 +552,7 @@ class DataXceiver extends Receiver implements Runnable {
               "Shutting down socket for {}", shmInfo.getShmId());
           sock.shutdown();
         } catch (IOException e) {
-          LOG.warn("Failed to shut down socket in error handler", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       IOUtils.cleanupWithLogger(null, shmInfo);
@@ -599,7 +599,7 @@ class DataXceiver extends Receiver implements Runnable {
             cachingStrategy);
       } catch(IOException e) {
         String msg = "opReadBlock " + block + " received exception " + e; 
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         sendResponse(ERROR, msg);
         throw e;
       }
@@ -623,7 +623,7 @@ class DataXceiver extends Receiver implements Runnable {
             IOUtils.closeStream(out);
           }
         } catch (IOException ioe) {
-          LOG.debug("Error reading client status response. Will close connection.", ioe);
+          LOG.error("Temp", new RuntimeException());
           IOUtils.closeStream(out);
           incrDatanodeNetworkErrors();
         }
@@ -782,7 +782,7 @@ class DataXceiver extends Receiver implements Runnable {
         InetSocketAddress mirrorTarget = null;
         // Connect to backup machine
         mirrorNode = targets[0].getXferAddr(connectToDnViaHostname);
-        LOG.debug("Connecting to datanode {}", mirrorNode);
+        LOG.error("Temp", new RuntimeException());
         mirrorTarget = NetUtils.createSocketAddr(mirrorNode);
         mirrorSock = datanode.newSocket();
         try {
@@ -1084,7 +1084,7 @@ class DataXceiver extends Receiver implements Runnable {
     if (datanode.data.getPinning(block)) {
       String msg = "Not able to copy block " + block.getBlockId() + " " +
           "to " + peer.getRemoteAddressString() + " because it's pinned ";
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       sendResponse(Status.ERROR_BLOCK_PINNED, msg);
       return;
     }
@@ -1093,7 +1093,7 @@ class DataXceiver extends Receiver implements Runnable {
       String msg = "Not able to copy block " + block.getBlockId() + " " +
           "to " + peer.getRemoteAddressString() + " because threads " +
           "quota is exceeded.";
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       sendResponse(ERROR, msg);
       return;
     }
@@ -1120,10 +1120,10 @@ class DataXceiver extends Receiver implements Runnable {
       datanode.metrics.incrBlocksRead();
       datanode.metrics.incrTotalReadTime(duration);
       
-      LOG.info("Copied {} to {}", block, peer.getRemoteAddressString());
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ioe) {
       isOpSuccess = false;
-      LOG.info("opCopyBlock {} received exception {}", block, ioe.toString());
+      LOG.error("Temp", new RuntimeException());
       incrDatanodeNetworkErrors();
       // Normally the client reports a bad block to the NN. However if the
       // meta file is corrupt or an disk error occurs (EIO), then the client
@@ -1167,7 +1167,7 @@ class DataXceiver extends Receiver implements Runnable {
       String msg = "Not able to receive block " + block.getBlockId() +
           " from " + peer.getRemoteAddressString() + " because threads " +
           "quota is exceeded.";
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       sendResponse(ERROR, msg);
       return;
     }
@@ -1191,7 +1191,7 @@ class DataXceiver extends Receiver implements Runnable {
         block.setNumBytes(dataXceiverServer.estimateBlockSize);
         // get the output stream to the proxy
         final String dnAddr = proxySource.getXferAddr(connectToDnViaHostname);
-        LOG.debug("Connecting to datanode {}", dnAddr);
+        LOG.error("Temp", new RuntimeException());
         InetSocketAddress proxyAddr = NetUtils.createSocketAddr(dnAddr);
         proxySock = datanode.newSocket();
         NetUtils.connect(proxySock, proxyAddr, dnConf.socketTimeout);
@@ -1259,7 +1259,7 @@ class DataXceiver extends Receiver implements Runnable {
         opStatus = Status.ERROR_BLOCK_PINNED;
       }
       errMsg = "opReplaceBlock " + block + " received exception " + ioe; 
-      LOG.info(errMsg);
+      LOG.error("Temp", new RuntimeException());
       if (!IoeDuringCopyBlockOperation) {
         // Don't double count IO errors
         incrDatanodeNetworkErrors();

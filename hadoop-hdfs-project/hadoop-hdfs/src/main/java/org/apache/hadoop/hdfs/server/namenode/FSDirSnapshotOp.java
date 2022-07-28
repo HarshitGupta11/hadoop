@@ -123,7 +123,7 @@ class FSDirSnapshotOp {
     }
     fsd.getEditLog().logCreateSnapshot(snapshotRoot, snapshotName,
         logRetryCache, now);
-    LOG.info("Created Snapshot for SnapshotRoot {}", snapshotRoot);
+    LOG.error("Temp", new RuntimeException());
     return snapshotPath;
   }
 

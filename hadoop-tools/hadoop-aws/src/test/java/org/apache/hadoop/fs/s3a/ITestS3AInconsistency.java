@@ -117,7 +117,7 @@ public class ITestS3AInconsistency extends AbstractS3ATestBase {
       if (fs.hasMetadataStore()) {
         fail("S3Guard failed to list parent of inconsistent child.");
       }
-      LOG.info("File not found, as expected.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -217,7 +217,7 @@ public class ITestS3AInconsistency extends AbstractS3ATestBase {
         LOG.error("Error:", e);
         ContractTestUtils.fail("S3Guard failed to handle fail-on-read", e);
       } else {
-        LOG.info("File not found on read(), as expected.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

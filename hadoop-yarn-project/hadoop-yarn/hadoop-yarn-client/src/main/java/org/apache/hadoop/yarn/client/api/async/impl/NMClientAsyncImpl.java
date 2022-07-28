@@ -135,7 +135,7 @@ public class NMClientAsyncImpl extends NMClientAsync {
     this.maxThreadPoolSize = conf.getInt(
         YarnConfiguration.NM_CLIENT_ASYNC_THREAD_POOL_MAX_SIZE,
         YarnConfiguration.DEFAULT_NM_CLIENT_ASYNC_THREAD_POOL_MAX_SIZE);
-    LOG.info("Upper bound of the thread pool size is " + maxThreadPoolSize);
+    LOG.error("Temp", new RuntimeException());
 
     client.init(conf);
     super.serviceInit(conf);
@@ -952,7 +952,7 @@ public class NMClientAsyncImpl extends NMClientAsync {
     @Override
     public void run() {
       ContainerId containerId = event.getContainerId();
-      LOG.info("Processing Event " + event + " for Container " + containerId);
+      LOG.error("Temp", new RuntimeException());
       if (event.getType() == ContainerEventType.QUERY_CONTAINER) {
         try {
           ContainerStatus containerStatus = client.getContainerStatus(
@@ -976,7 +976,7 @@ public class NMClientAsyncImpl extends NMClientAsync {
       } else {
         StatefulContainer container = containers.get(containerId);
         if (container == null) {
-          LOG.info("Container " + containerId + " is already stopped or failed");
+          LOG.error("Temp", new RuntimeException());
         } else {
           container.handle(event);
           if (isCompletelyDone(container)) {

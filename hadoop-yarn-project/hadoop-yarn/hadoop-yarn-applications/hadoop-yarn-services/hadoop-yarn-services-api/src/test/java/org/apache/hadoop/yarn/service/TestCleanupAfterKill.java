@@ -88,7 +88,7 @@ public class TestCleanupAfterKill extends ServiceTestUtils {
     Assert.assertFalse("Registry ZK service path still exists after killed",
         getCuratorService().zkPathExists(serviceZKPath));
 
-    LOG.info("Destroy the service");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(0, client.actionDestroy(exampleApp.getName()));
   }
 }

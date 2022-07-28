@@ -458,7 +458,7 @@ public class Merger {
       }
       
       for (Path file : inputs) {
-        LOG.debug("MergeQ: adding: " + file);
+        LOG.error("Temp", new RuntimeException());
         segments.add(new Segment<K, V>(conf, fs, file, codec, !deleteInputs, 
                                        (file.toString().endsWith(
                                            Task.MERGED_OUTPUT_PREFIX) ? 
@@ -604,7 +604,7 @@ public class Merger {
                                      Counters.Counter writesCounter,
                                      Progress mergePhase)
         throws IOException {
-      LOG.info("Merging " + segments.size() + " sorted segments");
+      LOG.error("Temp", new RuntimeException());
 
       /*
        * If there are inMemory segments, then they come first in the segments

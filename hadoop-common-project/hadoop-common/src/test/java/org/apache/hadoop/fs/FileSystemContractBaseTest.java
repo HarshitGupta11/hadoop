@@ -86,7 +86,7 @@ public abstract class FileSystemContractBaseTest {
 
   private void cleanupDir(Path p) {
     try {
-      LOG.info("Deleting " + p);
+      LOG.error("Temp", new RuntimeException());
       fs.delete(p, true);
     } catch (IOException e) {
       LOG.error("Error deleting test dir: " + p, e);
@@ -109,7 +109,7 @@ public abstract class FileSystemContractBaseTest {
    */
   protected final Path path(String pathString) {
     Path p = new Path(pathString).makeQualified(fs.getUri(), getTestBaseDir());
-    LOG.info("Resolving {} -> {}", pathString, p);
+    LOG.error("Temp", new RuntimeException());
     return p;
   }
 
@@ -627,7 +627,7 @@ public abstract class FileSystemContractBaseTest {
   @Test
   public void testFilesystemIsCaseSensitive() throws Exception {
     if (!filesystemIsCaseSensitive()) {
-      LOG.info("Skipping test");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     String mixedCaseFilename = "testFilesystemIsCaseSensitive";
@@ -718,7 +718,7 @@ public abstract class FileSystemContractBaseTest {
   @Test
   public void testRenameChildDirForbidden() throws Exception {
     assumeTrue(renameSupported());
-    LOG.info("testRenameChildDirForbidden");
+    LOG.error("Temp", new RuntimeException());
     Path parentdir = path("testRenameChildDirForbidden");
     fs.mkdirs(parentdir);
     Path childFile = new Path(parentdir, "childfile");
@@ -952,7 +952,7 @@ public abstract class FileSystemContractBaseTest {
     if (errors > 0) {
       String message = String.format(" %d errors in file of length %d",
                                      errors, len);
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       // the range either side of the first error to print
       // this is a purely arbitrary number, to aid user debugging
       final int overlap = 10;
@@ -971,7 +971,7 @@ public abstract class FileSystemContractBaseTest {
                                expected,
                                toChar(expected));
         }
-        LOG.warn(line);
+        LOG.error("Temp", new RuntimeException());
       }
       fail(message);
     }

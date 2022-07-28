@@ -156,8 +156,8 @@ public class CSMappingPlacementRule extends PlacementRule {
         overrideWithQueueMappings, mappingRules.size(), mappingRules);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Initialized with the following mapping rules:");
-      mappingRules.forEach(rule -> LOG.debug(rule.toString()));
+      LOG.error("Temp", new RuntimeException());
+      mappingRules.forEach(rule -> LOG.error("Temp", new RuntimeException());
     }
 
     return mappingRules.size() > 0;
@@ -189,7 +189,7 @@ public class CSMappingPlacementRule extends PlacementRule {
     }
     Set<String> groupsSet = groups.getGroupsSet(user);
     if (groupsSet.isEmpty()) {
-      LOG.warn("There are no groups for user {}", user);
+      LOG.error("Temp", new RuntimeException());
       vctx.putExtraDataset("groups", groupsSet);
       return;
     }
@@ -208,7 +208,7 @@ public class CSMappingPlacementRule extends PlacementRule {
       //we simply register it as a regular variable with "" as a value
       vctx.put("%secondary_group", "");
       if (LOG.isDebugEnabled()) {
-        LOG.debug("User {} does not have any potential Secondary group", user);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       vctx.putConditional(
@@ -248,7 +248,7 @@ public class CSMappingPlacementRule extends PlacementRule {
     try {
       setupGroupsForVariableContext(vctx, user);
     } catch (IOException e) {
-      LOG.warn("Unable to setup groups: {}", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
 
     vctx.setImmutables(immutableVariables);
@@ -361,7 +361,7 @@ public class CSMappingPlacementRule extends PlacementRule {
     MappingRuleResult result = rule.evaluate(variables);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Evaluated rule '{}' with result: '{}'", rule, result);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (result.getResult() == MappingRuleResultType.PLACE) {

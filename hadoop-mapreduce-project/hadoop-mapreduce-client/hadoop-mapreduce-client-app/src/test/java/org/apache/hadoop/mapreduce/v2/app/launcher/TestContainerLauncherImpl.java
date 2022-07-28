@@ -170,7 +170,7 @@ public class TestContainerLauncherImpl {
   
   @Test(timeout = 5000)
   public void testHandle() throws Exception {
-    LOG.info("STARTING testHandle");
+    LOG.error("Temp", new RuntimeException());
     AppContext mockContext = mock(AppContext.class);
     @SuppressWarnings("unchecked")
     EventHandler<Event> mockEventHandler = mock(EventHandler.class);
@@ -192,7 +192,7 @@ public class TestContainerLauncherImpl {
       startResp.setAllServicesMetaData(serviceResponse);
       
 
-      LOG.info("inserting launch event");
+      LOG.error("Temp", new RuntimeException());
       ContainerRemoteLaunchEvent mockLaunchEvent = 
         mock(ContainerRemoteLaunchEvent.class);
       when(mockLaunchEvent.getType())
@@ -210,7 +210,7 @@ public class TestContainerLauncherImpl {
       
       verify(mockCM).startContainers(any(StartContainersRequest.class));
       
-      LOG.info("inserting cleanup event");
+      LOG.error("Temp", new RuntimeException());
       ContainerLauncherEvent mockCleanupEvent = 
         mock(ContainerLauncherEvent.class);
       when(mockCleanupEvent.getType())
@@ -231,7 +231,7 @@ public class TestContainerLauncherImpl {
   
   @Test(timeout = 5000)
   public void testOutOfOrder() throws Exception {
-    LOG.info("STARTING testOutOfOrder");
+    LOG.error("Temp", new RuntimeException());
     AppContext mockContext = mock(AppContext.class);
     @SuppressWarnings("unchecked")
     EventHandler<Event> mockEventHandler = mock(EventHandler.class);
@@ -253,7 +253,7 @@ public class TestContainerLauncherImpl {
         recordFactory.newRecordInstance(StartContainersResponse.class);
       startResp.setAllServicesMetaData(serviceResponse);
 
-      LOG.info("inserting cleanup event");
+      LOG.error("Temp", new RuntimeException());
       ContainerLauncherEvent mockCleanupEvent = 
         mock(ContainerLauncherEvent.class);
       when(mockCleanupEvent.getType())
@@ -268,7 +268,7 @@ public class TestContainerLauncherImpl {
       
       verify(mockCM, never()).stopContainers(any(StopContainersRequest.class));
 
-      LOG.info("inserting launch event");
+      LOG.error("Temp", new RuntimeException());
       ContainerRemoteLaunchEvent mockLaunchEvent = 
         mock(ContainerRemoteLaunchEvent.class);
       when(mockLaunchEvent.getType())
@@ -292,7 +292,7 @@ public class TestContainerLauncherImpl {
 
   @Test(timeout = 5000)
   public void testMyShutdown() throws Exception {
-    LOG.info("in test Shutdown");
+    LOG.error("Temp", new RuntimeException());
 
     AppContext mockContext = mock(AppContext.class);
     @SuppressWarnings("unchecked")
@@ -315,7 +315,7 @@ public class TestContainerLauncherImpl {
         recordFactory.newRecordInstance(StartContainersResponse.class);
       startResp.setAllServicesMetaData(serviceResponse);
 
-      LOG.info("inserting launch event");
+      LOG.error("Temp", new RuntimeException());
       ContainerRemoteLaunchEvent mockLaunchEvent =
         mock(ContainerRemoteLaunchEvent.class);
       when(mockLaunchEvent.getType())
@@ -344,7 +344,7 @@ public class TestContainerLauncherImpl {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Test(timeout = 5000)
   public void testContainerCleaned() throws Exception {
-    LOG.info("STARTING testContainerCleaned");
+    LOG.error("Temp", new RuntimeException());
     
     CyclicBarrier startLaunchBarrier = new CyclicBarrier(2);
     CyclicBarrier completeLaunchBarrier = new CyclicBarrier(2);
@@ -371,7 +371,7 @@ public class TestContainerLauncherImpl {
       startResp.setAllServicesMetaData(serviceResponse);
       
      
-      LOG.info("inserting launch event");
+      LOG.error("Temp", new RuntimeException());
       ContainerRemoteLaunchEvent mockLaunchEvent = 
         mock(ContainerRemoteLaunchEvent.class);
       when(mockLaunchEvent.getType())
@@ -387,7 +387,7 @@ public class TestContainerLauncherImpl {
       startLaunchBarrier.await();
       
            
-      LOG.info("inserting cleanup event");
+      LOG.error("Temp", new RuntimeException());
       ContainerLauncherEvent mockCleanupEvent = 
         mock(ContainerLauncherEvent.class);
       when(mockCleanupEvent.getType())
@@ -407,7 +407,7 @@ public class TestContainerLauncherImpl {
       boolean containerCleaned = false;
       
       for (int i =0; i < arg.getAllValues().size(); i++) {
-        LOG.info(arg.getAllValues().get(i).toString());
+        LOG.error("Temp", new RuntimeException());
         Event currentEvent = arg.getAllValues().get(i);
         if (currentEvent.getType() == TaskAttemptEventType.TA_CONTAINER_CLEANED) {
           containerCleaned = true;

@@ -186,7 +186,7 @@ public class NameNodeResourceChecker {
   @VisibleForTesting
   Collection<String> getVolumesLowOnSpace() throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Going to check the following volumes disk space: " + volumes);
+      LOG.error("Temp", new RuntimeException());
     }
     Collection<String> lowVolumes = new ArrayList<String>();
     for (CheckedVolume volume : volumes.values()) {

@@ -62,7 +62,7 @@ public class TestMultiFileInputFormat {
     Path multiFileDir = new Path(dir, "test.multifile");
     fs.delete(multiFileDir, true);
     fs.mkdirs(multiFileDir);
-    LOG.info("Creating " + numFiles + " file(s) in " + multiFileDir);
+    LOG.error("Temp", new RuntimeException());
     for(int i=0; i<numFiles ;i++) {
       Path path = new Path(multiFileDir, "file_" + i);
        FSDataOutputStream out = fs.create(path);
@@ -74,7 +74,7 @@ public class TestMultiFileInputFormat {
        }
        out.close();
        if(LOG.isDebugEnabled()) {
-         LOG.debug("Created file " + path + " with length " + numBytes);
+         LOG.error("Temp", new RuntimeException());
        }
        lengths.put(path.getName(), new Long(numBytes));
     }
@@ -84,12 +84,12 @@ public class TestMultiFileInputFormat {
 
   @Test
   public void testFormat() throws IOException {
-    LOG.info("Test started");
-    LOG.info("Max split count           = " + MAX_SPLIT_COUNT);
-    LOG.info("Split count increment     = " + SPLIT_COUNT_INCR);
-    LOG.info("Max bytes per file        = " + MAX_BYTES);
-    LOG.info("Max number of files       = " + MAX_NUM_FILES);
-    LOG.info("Number of files increment = " + NUM_FILES_INCR);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     
     MultiFileInputFormat<Text,Text> format = new DummyMultiFileInputFormat();
     FileSystem fs = FileSystem.getLocal(job);
@@ -100,7 +100,7 @@ public class TestMultiFileInputFormat {
       Path dir = initFiles(fs, numFiles, -1);
       BitSet bits = new BitSet(numFiles);
       for(int i=1;i< MAX_SPLIT_COUNT ;i+= rand.nextInt(SPLIT_COUNT_INCR) + 1) {
-        LOG.info("Running for Num Files=" + numFiles + ", split count=" + i);
+        LOG.error("Temp", new RuntimeException());
         
         MultiFileSplit[] splits = (MultiFileSplit[])format.getSplits(job, i);
         bits.clear();
@@ -123,7 +123,7 @@ public class TestMultiFileInputFormat {
       assertEquals(bits.cardinality(), numFiles);
       fs.delete(dir, true);
     }
-    LOG.info("Test Finished");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test

@@ -128,8 +128,8 @@ public class BackupImage extends FSImage {
                 "checkpoint directory does not exist or is not accessible.");
         case NOT_FORMATTED:
           // for backup node all directories may be unformatted initially
-          LOG.info("Storage directory " + sd.getRoot() + " is not formatted.");
-          LOG.info("Formatting ...");
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           sd.clearDirectory(); // create empty current
           break;
         case NORMAL:
@@ -278,7 +278,7 @@ public class BackupImage extends FSImage {
     // now, need to load the in-progress file
     synchronized (this) {
       if (lastAppliedTxId != editLog.getCurSegmentTxId() - 1) {
-        LOG.debug("Logs rolled while catching up to current segment");
+        LOG.error("Temp", new RuntimeException());
         return false; // drop lock and try again to load local logs
       }
       
@@ -327,7 +327,7 @@ public class BackupImage extends FSImage {
    */
   private synchronized void setState(BNState newState) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("State transition " + bnState + " -> " + newState);
+      LOG.error("Temp", new RuntimeException());
     }
     bnState = newState;
   }
@@ -346,7 +346,7 @@ public class BackupImage extends FSImage {
     
     if (stopApplyingEditsOnNextRoll) {
       if (bnState == BNState.IN_SYNC) {
-        LOG.info("Stopped applying edits to prepare for checkpoint.");
+        LOG.error("Temp", new RuntimeException());
         setState(BNState.JOURNAL_ONLY);
       }
       stopApplyingEditsOnNextRoll = false;
@@ -379,11 +379,11 @@ public class BackupImage extends FSImage {
       try {
         wait();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted waiting for namespace to freeze", ie);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(ie);
       }
     }
-    LOG.info("BackupNode namespace frozen.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

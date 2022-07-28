@@ -78,7 +78,7 @@ public class TestCombineTextInputFormat {
 
     Random random = new Random();
     long seed = random.nextLong();
-    LOG.info("seed = " + seed);
+    LOG.error("Temp", new RuntimeException());
     random.setSeed(seed);
 
     localFs.delete(workDir, true);
@@ -94,9 +94,9 @@ public class TestCombineTextInputFormat {
     CombineTextInputFormat format = new CombineTextInputFormat();
     for (int i = 0; i < 3; i++) {
       int numSplits = random.nextInt(length/20) + 1;
-      LOG.info("splitting: requesting = " + numSplits);
+      LOG.error("Temp", new RuntimeException());
       List<InputSplit> splits = format.getSplits(job);
-      LOG.info("splitting: got =        " + splits.size());
+      LOG.error("Temp", new RuntimeException());
 
       // we should have a single split as the length is comfortably smaller than
       // the block size
@@ -107,7 +107,7 @@ public class TestCombineTextInputFormat {
 
       // check the split
       BitSet bits = new BitSet(length);
-      LOG.debug("split= " + split);
+      LOG.error("Temp", new RuntimeException());
       TaskAttemptContext context = MapReduceTestUtil.
         createDummyMapTaskAttemptContext(job.getConfiguration());
       RecordReader<LongWritable, Text> reader =
@@ -127,12 +127,12 @@ public class TestCombineTextInputFormat {
           assertNotNull("Key should not be null.", key);
           Text value = reader.getCurrentValue();
           final int v = Integer.parseInt(value.toString());
-          LOG.debug("read " + v);
+          LOG.error("Temp", new RuntimeException());
           assertFalse("Key in multiple partitions.", bits.get(v));
           bits.set(v);
           count++;
         }
-        LOG.debug("split=" + split + " count=" + count);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         reader.close();
       }

@@ -443,7 +443,7 @@ public class HeaderProcessing extends AbstractStoreOperation {
           return Optional.of(l);
         }
       } catch (NumberFormatException ex) {
-        LOG.warn("Not a number: {}", xAttr, ex);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     // missing/empty header or parse failure.

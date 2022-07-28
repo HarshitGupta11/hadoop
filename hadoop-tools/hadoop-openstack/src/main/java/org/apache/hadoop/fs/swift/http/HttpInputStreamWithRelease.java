@@ -100,7 +100,7 @@ public class HttpInputStreamWithRelease extends InputStream {
     if (!released) {
       reasonClosed = reason;
       try {
-        LOG.debug("Releasing connection to {}:  {}", uri, reason, ex);
+        LOG.error("Temp", new RuntimeException());
         if (req != null) {
           if (!dataConsumed) {
             req.abort();
@@ -135,7 +135,7 @@ public class HttpInputStreamWithRelease extends InputStream {
     try {
       release(operation, ex);
     } catch (IOException ioe) {
-      LOG.debug("Exception during release: {}", operation, ioe);
+      LOG.error("Temp", new RuntimeException());
       //make this the exception if there was none before
       if (ex == null) {
         ex = ioe;
@@ -171,7 +171,7 @@ public class HttpInputStreamWithRelease extends InputStream {
     try {
       read = inStream.read();
     } catch (EOFException e) {
-      LOG.debug("EOF exception", e);
+      LOG.error("Temp", new RuntimeException());
       read = -1;
     } catch (IOException e) {
       throw releaseAndRethrow("read()", e);
@@ -196,7 +196,7 @@ public class HttpInputStreamWithRelease extends InputStream {
     try {
       read = inStream.read(b, off, len);
     } catch (EOFException e) {
-      LOG.debug("EOF exception", e);
+      LOG.error("Temp", new RuntimeException());
       read = -1;
     } catch (IOException e) {
       throw releaseAndRethrow("read(b, off, " + len + ")", e);
@@ -221,7 +221,7 @@ public class HttpInputStreamWithRelease extends InputStream {
       }
     } catch (Exception e) {
       //swallow anything that failed here
-      LOG.warn("Exception while releasing {} in finalizer", uri, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

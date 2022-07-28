@@ -79,7 +79,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(reservationID);
-    LOG.info("Submit reservation response: " + reservationID);
+    LOG.error("Temp", new RuntimeException());
 
     // Do the failover
     explicitFailover();
@@ -115,7 +115,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(reservationID);
-    LOG.info("Submit reservation response: " + reservationID);
+    LOG.error("Temp", new RuntimeException());
     ReservationDefinition reservationDefinition =
         request.getReservationDefinition();
 
@@ -193,7 +193,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
             .getMemorySize() > 0) {
           break;
         }
-        LOG.info("Waiting for node capacity to be added to plan");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(1000);
       } while (attempts-- > 0);
       if (attempts <= 0) {
@@ -246,7 +246,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(reservationID);
-    LOG.info("Submit reservation response: " + reservationID);
+    LOG.error("Temp", new RuntimeException());
     ReservationDefinition reservationDefinition =
         request.getReservationDefinition();
 
@@ -300,7 +300,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(reservationID);
-    LOG.info("Submit reservation response: " + reservationID);
+    LOG.error("Temp", new RuntimeException());
     ReservationDefinition reservationDefinition =
         request.getReservationDefinition();
 
@@ -332,7 +332,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(reservationID);
-    LOG.info("Submit reservation response: " + reservationID);
+    LOG.error("Temp", new RuntimeException());
     ReservationDefinition reservationDefinition =
         request.getReservationDefinition();
 
@@ -384,7 +384,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(reservationID);
-    LOG.info("Submit reservation response: " + reservationID);
+    LOG.error("Temp", new RuntimeException());
     ReservationDefinition reservationDefinition =
         request.getReservationDefinition();
 
@@ -455,7 +455,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(resID1);
-    LOG.info("Submit reservation response: " + resID1);
+    LOG.error("Temp", new RuntimeException());
 
     ReservationId resID2 = getNewReservation(clientService)
         .getReservationId();
@@ -467,7 +467,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(resID2);
-    LOG.info("Submit reservation response: " + resID2);
+    LOG.error("Temp", new RuntimeException());
 
     ReservationId resID3 = getNewReservation(clientService)
         .getReservationId();
@@ -479,7 +479,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
     }
     Assert.assertNotNull(response);
     Assert.assertNotNull(resID3);
-    LOG.info("Submit reservation response: " + resID3);
+    LOG.error("Temp", new RuntimeException());
 
     // allow the reservations to become active
     waitForReservationActivation(rm1, resID1,
@@ -532,7 +532,7 @@ public class TestReservationSystemWithRMHA extends RMHATestBase {
             .getCapacity() > 0f) {
           break;
         }
-        LOG.info("Waiting for reservation to be active");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(100);
       } while (attempts-- > 0);
       if (attempts <= 0) {

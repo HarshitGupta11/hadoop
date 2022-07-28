@@ -77,7 +77,7 @@ public class StateStoreZooKeeperImpl extends StateStoreSerializableImpl {
 
   @Override
   public boolean initDriver() {
-    LOG.info("Initializing ZooKeeper connection");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = getConf();
     baseZNode = conf.get(
@@ -236,7 +236,7 @@ public class StateStoreZooKeeperImpl extends StateStoreSerializableImpl {
     // Remove the records
     int removed = 0;
     for (T existingRecord : recordsToRemove) {
-      LOG.info("Removing \"{}\"", existingRecord);
+      LOG.error("Temp", new RuntimeException());
       try {
         String primaryKey = getPrimaryKey(existingRecord);
         String path = getNodePath(znode, primaryKey);
@@ -263,12 +263,12 @@ public class StateStoreZooKeeperImpl extends StateStoreSerializableImpl {
     long start = monotonicNow();
     boolean status = true;
     String znode = getZNodeForClass(clazz);
-    LOG.info("Deleting all children under {}", znode);
+    LOG.error("Temp", new RuntimeException());
     try {
       List<String> children = zkManager.getChildren(znode);
       for (String child : children) {
         String path = getNodePath(znode, child);
-        LOG.info("Deleting {}", path);
+        LOG.error("Temp", new RuntimeException());
         zkManager.delete(path);
       }
     } catch (Exception e) {
@@ -289,7 +289,7 @@ public class StateStoreZooKeeperImpl extends StateStoreSerializableImpl {
     try {
       boolean created = zkManager.create(znode);
       if (!update && !created && error) {
-        LOG.info("Cannot write record \"{}\", it already exists", znode);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
 

@@ -83,7 +83,7 @@ public final class BufferPool {
         }
       }
     } else {
-      LOG.debug("buffer dir: {} already exists.", dirPath);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return dir;
@@ -230,7 +230,7 @@ public final class BufferPool {
       ByteBuffer byteBuffer = byteBufferWrapper.getByteBuffer();
       if (null != byteBuffer) {
         byteBuffer.clear();
-        LOG.debug("Return the buffer to the buffer pool.");
+        LOG.error("Temp", new RuntimeException());
         if (!this.bufferPool.offer(byteBuffer)) {
           LOG.error("Return the buffer to buffer pool failed.");
         }

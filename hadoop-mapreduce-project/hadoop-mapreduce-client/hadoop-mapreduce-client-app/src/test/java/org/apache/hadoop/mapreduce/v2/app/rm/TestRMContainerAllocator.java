@@ -183,7 +183,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testSimple() throws Exception {
 
-    LOG.info("Running testSimple");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
@@ -271,7 +271,7 @@ public class TestRMContainerAllocator {
     // that container and not a rack-local container that happened to be seen
     // earlier in the allocated containers list from the RM.
     // Regression test for MAPREDUCE-4893
-    LOG.info("Running testMapNodeLocality");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
@@ -352,7 +352,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testResource() throws Exception {
 
-    LOG.info("Running testResource");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
@@ -417,7 +417,7 @@ public class TestRMContainerAllocator {
 
   @Test(timeout = 30000)
   public void testReducerRampdownDiagnostics() throws Exception {
-    LOG.info("Running tesReducerRampdownDiagnostics");
+    LOG.error("Temp", new RuntimeException());
 
     final Configuration conf = new Configuration();
     conf.setFloat(MRJobConfig.COMPLETED_MAPS_FOR_REDUCE_SLOWSTART, 0.0f);
@@ -472,7 +472,7 @@ public class TestRMContainerAllocator {
 
   @Test(timeout = 30000)
   public void testPreemptReducers() throws Exception {
-    LOG.info("Running testPreemptReducers");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
@@ -519,7 +519,7 @@ public class TestRMContainerAllocator {
 
   @Test(timeout = 30000)
   public void testNonAggressivelyPreemptReducers() throws Exception {
-    LOG.info("Running testNonAggressivelyPreemptReducers");
+    LOG.error("Temp", new RuntimeException());
 
     final int preemptThreshold = 2; //sec
     Configuration conf = new Configuration();
@@ -581,7 +581,7 @@ public class TestRMContainerAllocator {
 
   @Test(timeout = 30000)
   public void testUnconditionalPreemptReducers() throws Exception {
-    LOG.info("Running testForcePreemptReducers");
+    LOG.error("Temp", new RuntimeException());
 
     int forcePreemptThresholdSecs = 2;
     Configuration conf = new Configuration();
@@ -694,7 +694,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testMapReduceAllocationWithNodeLabelExpression() throws Exception {
 
-    LOG.info("Running testMapReduceAllocationWithNodeLabelExpression");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     /*
      * final int MAP_LIMIT = 3; final int REDUCE_LIMIT = 1;
@@ -782,7 +782,7 @@ public class TestRMContainerAllocator {
 
   @Test
   public void testUpdateCollectorInfo() throws Exception {
-    LOG.info("Running testUpdateCollectorInfo");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     conf.setBoolean(YarnConfiguration.TIMELINE_SERVICE_ENABLED, true);
     conf.setFloat(YarnConfiguration.TIMELINE_SERVICE_VERSION, 2.0f);
@@ -873,7 +873,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testMapReduceScheduling() throws Exception {
 
-    LOG.info("Running testMapReduceScheduling");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
@@ -1003,7 +1003,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testReportedAppProgress() throws Exception {
 
-    LOG.info("Running testReportedAppProgress");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     final MyResourceManager rm = new MyResourceManager(conf);
@@ -1155,7 +1155,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testReportedAppProgressWithOnlyMaps() throws Exception {
 
-    LOG.info("Running testReportedAppProgressWithOnlyMaps");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     final MyResourceManager rm = new MyResourceManager(conf);
@@ -1340,7 +1340,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testBlackListedNodes() throws Exception {
 
-    LOG.info("Running testBlackListedNodes");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     conf.setBoolean(MRJobConfig.MR_AM_JOB_NODE_BLACKLISTING_ENABLE, true);
@@ -1449,7 +1449,7 @@ public class TestRMContainerAllocator {
 
   @Test
   public void testIgnoreBlacklisting() throws Exception {
-    LOG.info("Running testIgnoreBlacklisting");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     conf.setBoolean(MRJobConfig.MR_AM_JOB_NODE_BLACKLISTING_ENABLE, true);
@@ -1638,7 +1638,7 @@ public class TestRMContainerAllocator {
 
   @Test
   public void testBlackListedNodesWithSchedulingToThatNode() throws Exception {
-    LOG.info("Running testBlackListedNodesWithSchedulingToThatNode");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     conf.setBoolean(MRJobConfig.MR_AM_JOB_NODE_BLACKLISTING_ENABLE, true);
@@ -1675,7 +1675,7 @@ public class TestRMContainerAllocator {
     MockNM nodeManager3 = rm.registerNode("h3:1234", 10240);
     rm.drainEvents();
 
-    LOG.info("Requesting 1 Containers _1 on H1");
+    LOG.error("Temp", new RuntimeException());
     // create the container request
     ContainerRequestEvent event1 =
             ContainerRequestCreator.createRequest(jobId, 1,
@@ -1683,25 +1683,25 @@ public class TestRMContainerAllocator {
                     new String[] {"h1"});
     allocator.sendRequest(event1);
 
-    LOG.info("RM Heartbeat (to send the container requests)");
+    LOG.error("Temp", new RuntimeException());
     // this tells the scheduler about the requests
     // as nodes are not added, no allocations
     List<TaskAttemptContainerAssignedEvent> assigned = allocator.schedule();
     rm.drainEvents();
     Assert.assertEquals("No of assignments must be 0", 0, assigned.size());
 
-    LOG.info("h1 Heartbeat (To actually schedule the containers)");
+    LOG.error("Temp", new RuntimeException());
     // update resources in scheduler
     nodeManager1.nodeHeartbeat(true); // Node heartbeat
     rm.drainEvents();
 
-    LOG.info("RM Heartbeat (To process the scheduled containers)");
+    LOG.error("Temp", new RuntimeException());
     assigned = allocator.schedule();
     rm.drainEvents();
     assertBlacklistAdditionsAndRemovals(0, 0, rm);
     Assert.assertEquals("No of assignments must be 1", 1, assigned.size());
 
-    LOG.info("Failing container _1 on H1 (should blacklist the node)");
+    LOG.error("Temp", new RuntimeException());
     // Send events to blacklist nodes h1 and h2
     ContainerFailedEvent f1 = createFailEvent(jobId, 1, "h1", false);
     allocator.sendFailure(f1);
@@ -1729,12 +1729,12 @@ public class TestRMContainerAllocator {
     //Allocator is aware of prio:5 container, and prio:20 (h1+h3) container.
     //RM is only aware of the prio:5 container
 
-    LOG.info("h1 Heartbeat (To actually schedule the containers)");
+    LOG.error("Temp", new RuntimeException());
     // update resources in scheduler
     nodeManager1.nodeHeartbeat(true); // Node heartbeat
     rm.drainEvents();
 
-    LOG.info("RM Heartbeat (To process the scheduled containers)");
+    LOG.error("Temp", new RuntimeException());
     assigned = allocator.schedule();
     rm.drainEvents();
     assertBlacklistAdditionsAndRemovals(0, 0, rm);
@@ -1743,18 +1743,18 @@ public class TestRMContainerAllocator {
     //RMContainerAllocator gets assigned a p:5 on a blacklisted node.
 
     //Send a release for the p:5 container + another request.
-    LOG.info("RM Heartbeat (To process the re-scheduled containers)");
+    LOG.error("Temp", new RuntimeException());
     assigned = allocator.schedule();
     rm.drainEvents();
     assertBlacklistAdditionsAndRemovals(0, 0, rm);
     Assert.assertEquals("No of assignments must be 0", 0, assigned.size());
 
     //Hearbeat from H3 to schedule on this host.
-    LOG.info("h3 Heartbeat (To re-schedule the containers)");
+    LOG.error("Temp", new RuntimeException());
     nodeManager3.nodeHeartbeat(true); // Node heartbeat
     rm.drainEvents();
 
-    LOG.info("RM Heartbeat (To process the re-scheduled containers for H3)");
+    LOG.error("Temp", new RuntimeException());
     assigned = allocator.schedule();
     assertBlacklistAdditionsAndRemovals(0, 0, rm);
     rm.drainEvents();
@@ -1799,7 +1799,7 @@ public class TestRMContainerAllocator {
         init(conf);
         reinitialize(conf, rmContext);
       } catch (IOException ie) {
-        LOG.info("add application failed with ", ie);
+        LOG.error("Temp", new RuntimeException());
         assert (false);
       }
     }
@@ -1854,7 +1854,7 @@ public class TestRMContainerAllocator {
         init(conf);
         reinitialize(conf, rmContext);
       } catch (IOException ie) {
-        LOG.info("add application failed with ", ie);
+        LOG.error("Temp", new RuntimeException());
         assert (false);
       }
     }
@@ -2316,7 +2316,7 @@ public class TestRMContainerAllocator {
 
   @Test
   public void testCompletedTasksRecalculateSchedule() throws Exception {
-    LOG.info("Running testCompletedTasksRecalculateSchedule");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     final MyResourceManager rm = new MyResourceManager(conf);
@@ -2361,7 +2361,7 @@ public class TestRMContainerAllocator {
 
   @Test
   public void testHeartbeatHandler() throws Exception {
-    LOG.info("Running testHeartbeatHandler");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     conf.setInt(MRJobConfig.MR_AM_TO_RM_HEARTBEAT_INTERVAL_MS, 1);
@@ -2855,7 +2855,7 @@ public class TestRMContainerAllocator {
 
   @Test(timeout=60000)
   public void testAMRMTokenUpdate() throws Exception {
-    LOG.info("Running testAMRMTokenUpdate");
+    LOG.error("Temp", new RuntimeException());
 
     final String rmAddr = "somermaddress:1234";
     final Configuration conf = new YarnConfiguration();
@@ -3008,7 +3008,7 @@ public class TestRMContainerAllocator {
     final int REDUCE_COUNT = 2;
     final int MAP_LIMIT = 3;
     final int REDUCE_LIMIT = 1;
-    LOG.info("Running testConcurrentTaskLimits");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     conf.setInt(MRJobConfig.JOB_RUNNING_MAP_LIMIT, MAP_LIMIT);
     conf.setInt(MRJobConfig.JOB_RUNNING_REDUCE_LIMIT, REDUCE_LIMIT);
@@ -3170,7 +3170,7 @@ public class TestRMContainerAllocator {
 
   @Test
   public void testUpdateAskOnRampDownAllReduces() throws Exception {
-    LOG.info("Running testUpdateAskOnRampDownAllReduces");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
     rm.start();
@@ -3341,7 +3341,7 @@ public class TestRMContainerAllocator {
   @Test
   public void testAvoidAskMoreReducersWhenReducerPreemptionIsRequired()
       throws Exception {
-    LOG.info("Running testAvoidAskMoreReducersWhenReducerPreemptionIsRequired");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     MyResourceManager rm = new MyResourceManager(conf);
     rm.start();
@@ -3474,7 +3474,7 @@ public class TestRMContainerAllocator {
    */
   @Test
   public void testExcludeSchedReducesFromHeadroom() throws Exception {
-    LOG.info("Running testExcludeSchedReducesFromHeadroom");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration();
     conf.setInt(MRJobConfig.MR_JOB_REDUCER_UNCONDITIONAL_PREEMPT_DELAY_SEC, -1);
     MyResourceManager rm = new MyResourceManager(conf);

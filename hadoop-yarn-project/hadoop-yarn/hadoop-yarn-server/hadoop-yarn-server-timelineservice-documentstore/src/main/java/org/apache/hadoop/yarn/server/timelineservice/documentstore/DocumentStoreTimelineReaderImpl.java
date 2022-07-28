@@ -58,14 +58,14 @@ public class DocumentStoreTimelineReaderImpl
   @Override
   public void serviceInit(Configuration conf) throws Exception {
     DocumentStoreVendor storeType = DocumentStoreUtils.getStoreVendor(conf);
-    LOG.info("Initializing Document Store Reader for : " + storeType);
+    LOG.error("Temp", new RuntimeException());
     collectionReader = new TimelineCollectionReader(conf);
   }
 
   @Override
   public void serviceStop() throws Exception {
     super.serviceStop();
-    LOG.info("Stopping Document Timeline Store reader...");
+    LOG.error("Temp", new RuntimeException());
     collectionReader.close();
   }
 

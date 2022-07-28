@@ -108,13 +108,13 @@ public class CleanerService extends CompositeService {
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Shutting down the background thread.");
+    LOG.error("Temp", new RuntimeException());
     scheduledExecutor.shutdownNow();
     try {
       if (scheduledExecutor.awaitTermination(10, TimeUnit.SECONDS)) {
-        LOG.info("The background thread stopped.");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.warn("Gave up waiting for the cleaner task to shutdown.");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (InterruptedException e) {
       LOG.warn("The cleaner service was interrupted while shutting down the task.",
@@ -168,7 +168,7 @@ public class CleanerService extends CompositeService {
     } catch (IOException e) {
       throw new YarnException(e);
     }
-    LOG.info("Created the global cleaner pid file at " + pidPath.toString());
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -183,7 +183,7 @@ public class CleanerService extends CompositeService {
 
 
       fs.delete(pidPath, false);
-      LOG.info("Removed the global cleaner pid file at " + pidPath.toString());
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       LOG.error(
           "Unable to remove the global cleaner pid file! The file may need "

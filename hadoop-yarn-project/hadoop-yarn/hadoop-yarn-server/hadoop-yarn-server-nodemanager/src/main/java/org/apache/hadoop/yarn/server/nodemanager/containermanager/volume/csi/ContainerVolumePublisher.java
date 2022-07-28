@@ -83,10 +83,10 @@ public class ContainerVolumePublisher {
    */
   public Map<String, String> publishVolumes() throws YarnException,
       IOException {
-    LOG.info("publishing volumes");
+    LOG.error("Temp", new RuntimeException());
     Map<String, String> volumeMounts = new HashMap<>();
     List<VolumeMetaData> volumes = getVolumes();
-    LOG.info("Found {} volumes to be published on this node", volumes.size());
+    LOG.error("Temp", new RuntimeException());
     for (VolumeMetaData volume : volumes) {
       Map<String, String> bindings = publishVolume(volume);
       if (bindings != null && !bindings.isEmpty()) {
@@ -97,9 +97,9 @@ public class ContainerVolumePublisher {
   }
 
   public void unpublishVolumes() throws YarnException, IOException {
-    LOG.info("Un-publishing Volumes");
+    LOG.error("Temp", new RuntimeException());
     List<VolumeMetaData> volumes = getVolumes();
-    LOG.info("Volumes to un-publish {}", volumes.size());
+    LOG.error("Temp", new RuntimeException());
     for (VolumeMetaData volume : volumes) {
       this.unpublishVolume(volume);
     }

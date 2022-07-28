@@ -162,7 +162,7 @@ public final class ActiveAuditManagerS3A
         S3AAuditConstants.AUDIT_SERVICE_CLASSNAME,
         options);
     addService(auditor);
-    LOG.debug("Audit manager initialized with audit service {}", auditor);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -175,7 +175,7 @@ public final class ActiveAuditManagerS3A
     super.serviceStart();
     setUnbondedSpan(new WrappingAuditSpan(
         auditor.getUnbondedSpan(), false));
-    LOG.debug("Started audit service {}", auditor);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -437,7 +437,7 @@ public final class ActiveAuditManagerS3A
       } else {
         // warn/log and continue without switching.
         WARN_OF_SPAN_TYPE.warn(NOT_A_WRAPPED_SPAN + ": {}", span);
-        LOG.debug(NOT_A_WRAPPED_SPAN + ": {}", span);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return span;

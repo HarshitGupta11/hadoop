@@ -116,7 +116,7 @@ public class GetContentSummaryOperation extends
     final ContentSummary summary = getDirSummary(path);
     // Log the IOStatistics at debug so the cost of the operation
     // can be made visible.
-    LOG.debug("IOStatistics of getContentSummary({}):\n{}", path, iostatistics);
+    LOG.error("Temp", new RuntimeException());
     return summary;
   }
 

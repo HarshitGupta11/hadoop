@@ -376,7 +376,7 @@ public final class PlacementConstraintsUtil {
   private static NodeAttribute getNodeConstraintFromRequest(String attrKey,
       String attrString) {
     NodeAttribute nodeAttribute = null;
-    LOG.debug("Incoming node attribute: {}={}", attrKey, attrString);
+    LOG.error("Temp", new RuntimeException());
 
     // Input node attribute could be like 1.8
     String[] name = attrKey.split("/");

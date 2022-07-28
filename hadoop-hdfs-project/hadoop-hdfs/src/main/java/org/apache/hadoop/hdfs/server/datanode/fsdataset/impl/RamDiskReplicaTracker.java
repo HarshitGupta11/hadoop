@@ -141,14 +141,14 @@ public abstract class RamDiskReplicaTracker {
     void deleteSavedFiles() {
       if (savedBlockFile != null) {
         if (!savedBlockFile.delete()) {
-          LOG.warn("Failed to delete block file " + savedBlockFile);
+          LOG.error("Temp", new RuntimeException());
         }
         savedBlockFile = null;
       }
 
       if (savedMetaFile != null) {
         if (!savedMetaFile.delete()) {
-          LOG.warn("Failed to delete meta file " + savedMetaFile);
+          LOG.error("Temp", new RuntimeException());
         }
         savedMetaFile = null;
       }

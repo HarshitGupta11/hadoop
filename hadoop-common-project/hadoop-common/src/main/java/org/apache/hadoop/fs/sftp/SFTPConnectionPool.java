@@ -88,7 +88,7 @@ class SFTPConnectionPool {
     if (this.con2infoMap == null){
       return; // already shutdown in case it is called
     }
-    LOG.info("Inside shutdown, con2infoMap size=" + con2infoMap.size());
+    LOG.error("Temp", new RuntimeException());
 
     this.maxConnection = 0;
     Set<ChannelSftp> cons = con2infoMap.keySet();

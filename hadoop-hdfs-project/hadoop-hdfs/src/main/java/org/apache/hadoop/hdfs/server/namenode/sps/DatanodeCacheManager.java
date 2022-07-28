@@ -107,7 +107,7 @@ public class DatanodeCacheManager {
             remainingSizeList);
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug("LIVE datanodes: {}", datanodeMap);
+        LOG.error("Temp", new RuntimeException());
       }
       // get network topology
       cluster = spsContext.getNetworkTopology(datanodeMap);

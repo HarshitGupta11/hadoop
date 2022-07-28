@@ -85,7 +85,7 @@ public final class LogWebServiceUtils {
           getStreamingOutput(factory, appId, appOwner, nodeId, containerIdStr,
               fileName, bytes, printEmptyLocalContainerLog);
     } catch (Exception ex) {
-      LOG.debug("Exception", ex);
+      LOG.error("Temp", new RuntimeException());
       return createBadResponse(Response.Status.INTERNAL_SERVER_ERROR,
           ex.getMessage());
     }

@@ -95,7 +95,7 @@ public class SyncableDataOutputStream extends DataOutputStream
         if (ioeFromFlush == e) {
           // Do nothing..
           // The close() call gave back the same IOE which flush() gave. Just swallow it
-          LOG.debug("flush() and close() throwing back same Exception. Just swallowing the latter", e);
+          LOG.error("Temp", new RuntimeException());
         } else {
           // Let Java handle 2 different Exceptions been thrown from try and finally.
           throw e;

@@ -183,7 +183,7 @@ public class TestPrivilegedOperationExecutor {
       PrivilegedOperationExecutor.squashCGroupOperations(ops);
       Assert.fail("Expected squash operation to fail with an exception!");
     } catch (PrivilegedOperationException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     //Ensure that invalid strings are rejected
@@ -195,7 +195,7 @@ public class TestPrivilegedOperationExecutor {
       PrivilegedOperationExecutor.squashCGroupOperations(ops);
       Assert.fail("Expected squash operation to fail with an exception!");
     } catch (PrivilegedOperationException e) {
-      LOG.info("Caught expected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -226,7 +226,7 @@ public class TestPrivilegedOperationExecutor {
       //Squashed list of tasks files
       Assert.assertEquals(expected, op.getArguments().get(0));
     } catch (PrivilegedOperationException e) {
-      LOG.info("Caught unexpected exception : " + e);
+      LOG.error("Temp", new RuntimeException());
       Assert.fail("Caught unexpected exception: " + e);
     }
   }

@@ -110,7 +110,7 @@ public class DFSStripedInputStream extends DFSInputStream {
         dataBlkNum, parityBlkNum);
     decoder = CodecUtil.createRawDecoder(dfsClient.getConfiguration(),
         ecPolicy.getCodecName(), coderOptions);
-    DFSClient.LOG.debug("Creating an striped input stream for file {}", src);
+    DFSClient.LOG.error("Temp", new RuntimeException());
   }
 
   private boolean useDirectBuffer() {

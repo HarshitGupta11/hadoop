@@ -45,7 +45,7 @@ public final class NamedCommitterFactory extends
   public PathOutputCommitter createOutputCommitter(Path outputPath,
       TaskAttemptContext context) throws IOException {
     Class<? extends PathOutputCommitter> clazz = loadCommitterClass(context);
-    LOG.debug("Using PathOutputCommitter implementation {}", clazz);
+    LOG.error("Temp", new RuntimeException());
     try {
       Constructor<? extends PathOutputCommitter> ctor
           = clazz.getConstructor(Path.class, TaskAttemptContext.class);

@@ -381,7 +381,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
       final Class<? extends DynamoDBClientFactory> cls =
           conf.getClass(S3GUARD_DDB_CLIENT_FACTORY_IMPL,
           S3GUARD_DDB_CLIENT_FACTORY_IMPL_DEFAULT, DynamoDBClientFactory.class);
-      LOG.debug("Creating DynamoDB client {} with S3 region {}", cls, s3Region);
+      LOG.error("Temp", new RuntimeException());
       amazonDynamoDB = ReflectionUtils.newInstance(cls, conf)
           .createDynamoDBClient(s3Region, bucket, credentials);
     }
@@ -424,7 +424,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
         LOG.error(message);
         throw (IOException)new AccessDeniedException(message).initCause(e);
       }
-      LOG.debug("Inferring DynamoDB region from S3 bucket: {}", region);
+      LOG.error("Temp", new RuntimeException());
     }
     credentials = owner.shareCredentials("s3guard");
     dynamoDB = createDynamoDB(conf, region, bucket, credentials);
@@ -566,7 +566,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
   @Override
   @Retries.RetryTranslated
   public void forgetMetadata(Path path) throws IOException {
-    LOG.debug("Forget metadata for {}", path);
+    LOG.error("Temp", new RuntimeException());
     innerDelete(path, false, null);
   }
 
@@ -590,7 +590,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
 
     // deleting nonexistent item consumes 1 write capacity; skip it
     if (path.isRoot()) {
-      LOG.debug("Skip deleting root directory as it does not exist in table");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     // the policy on whether repeating delete operations is based
@@ -638,11 +638,11 @@ public class DynamoDBMetadataStore implements MetadataStore,
 
     final PathMetadata meta = get(path);
     if (meta == null) {
-      LOG.debug("Subtree path {} does not exist; this will be a no-op", path);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (meta.isDeleted()) {
-      LOG.debug("Subtree path {} is deleted; this will be a no-op", path);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     deleteEntries(RemoteIterators.mappingRemoteIterator(
@@ -727,7 +727,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     LOG.debug("Get from table {} in region {}: {} ; wantEmptyDirectory={}",
         tableName, region, path, wantEmptyDirectoryFlag);
     DDBPathMetadata result = innerGet(path, wantEmptyDirectoryFlag);
-    LOG.debug("result of get {} is: {}", path, result);
+    LOG.error("Temp", new RuntimeException());
     return result;
   }
 
@@ -774,9 +774,9 @@ public class DynamoDBMetadataStore implements MetadataStore,
               // if non empty, log the result to aid with some debugging
               if (it.hasNext()) {
                 if (LOG.isDebugEnabled()) {
-                  LOG.debug("Dir {} is non-empty", status.getPath());
+                  LOG.error("Temp", new RuntimeException());
                   while(it.hasNext()) {
-                    LOG.debug("{}", itemToPathMetadata(it.next(), username));
+                    LOG.error("Temp", new RuntimeException());
                   }
                 }
                 return true;
@@ -816,7 +816,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
   @Retries.RetryTranslated
   public DirListingMetadata listChildren(final Path path) throws IOException {
     checkPath(path);
-    LOG.debug("Listing table {} in region {}: {}", tableName, region, path);
+    LOG.error("Temp", new RuntimeException());
 
     final QuerySpec spec = new QuerySpec()
         .withHashKey(pathToParentKeyAttribute(path))
@@ -898,7 +898,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
       final AncestorState ancestorState) throws IOException {
     // Key on path to allow fast lookup
     Map<Path, Pair<EntryOrigin, DDBPathMetadata>> ancestry = new HashMap<>();
-    LOG.debug("Completing ancestry for {} paths", pathsToCreate.size());
+    LOG.error("Temp", new RuntimeException());
     // we sort the inputs to guarantee that the topmost entries come first.
     // that way if the put request contains both parents and children
     // then the existing parents will not be re-created -they will just
@@ -909,7 +909,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     for (DDBPathMetadata entry : sortedPaths) {
       Preconditions.checkArgument(entry != null);
       Path path = entry.getFileStatus().getPath();
-      LOG.debug("Adding entry {}", path);
+      LOG.error("Temp", new RuntimeException());
       if (path.isRoot()) {
         // this is a root entry: do not add it.
         break;
@@ -931,7 +931,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
             || (!oldWasDir && newIsDir)) {
           LOG.warn("Overwriting a S3Guard file created in the operation: {}",
               oldEntry);
-          LOG.warn("With new entry: {}", entry);
+          LOG.error("Temp", new RuntimeException());
           // restore the old state
           ancestorState.put(path, oldEntry);
           // then raise an exception
@@ -967,7 +967,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
             // register it in ancestor state and in the map of entries to create
             // as a retrieved entry
             md = itemToPathMetadata(item, username);
-            LOG.debug("Found existing entry for parent: {}", md);
+            LOG.error("Temp", new RuntimeException());
             newEntry = Pair.of(EntryOrigin.Retrieved, md);
             // and we break, assuming that if there is an entry, its parents
             // are valid too.
@@ -1052,10 +1052,10 @@ public class DynamoDBMetadataStore implements MetadataStore,
       PathMetadata directory = get(parent);
       if (directory == null || directory.isDeleted()) {
         if (entryFound) {
-          LOG.warn("Inconsistent S3Guard table: adding directory {}", parent);
+          LOG.error("Temp", new RuntimeException());
         }
         S3AFileStatus status = makeDirStatus(username, parent);
-        LOG.debug("Adding new ancestor entry {}", status);
+        LOG.error("Temp", new RuntimeException());
         DDBPathMetadata meta = new DDBPathMetadata(status, Tristate.FALSE,
             false, ttlTimeProvider.getNow());
         newDirs.add(meta);
@@ -1184,7 +1184,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     final int totalToDelete = (keysToDelete == null ? 0 : keysToDelete.length);
     final int totalToPut = (itemsToPut == null ? 0 : itemsToPut.length);
     if (totalToPut == 0 && totalToDelete == 0) {
-      LOG.debug("Ignoring empty batch write request");
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     int count = 0;
@@ -1198,7 +1198,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
             totalToDelete - count);
         PrimaryKey[] toDelete = Arrays.copyOfRange(keysToDelete,
             count, count + numToDelete);
-        LOG.debug("Deleting {} entries: {}", toDelete.length, toDelete);
+        LOG.error("Temp", new RuntimeException());
         writeItems.withPrimaryKeysToDelete(toDelete);
         count += numToDelete;
       }
@@ -1285,7 +1285,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
                 retryCount),
             cause);
       } else {
-        LOG.debug("Sleeping {} msec before next retry", action.delayMillis);
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(action.delayMillis);
       }
     } catch (InterruptedException e) {
@@ -1314,7 +1314,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     // all its ancestors will also exist in the table.
     // For performance purpose, we generate the full paths to put and use batch
     // write item request to save the items.
-    LOG.debug("Saving to table {} in region {}: {}", tableName, region, meta);
+    LOG.error("Temp", new RuntimeException());
 
     Collection<PathMetadata> wrapper = new ArrayList<>(1);
     wrapper.add(meta);
@@ -1349,7 +1349,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
       @Nullable final BulkOperationState operationState) throws IOException {
     if (metas.isEmpty()) {
       // Happens when someone calls put() with an empty list.
-      LOG.debug("Ignoring empty list of entries to put");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     // always create or retrieve an ancestor state instance, so it can
@@ -1516,7 +1516,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     instrumentation.storeClosed();
     try {
       if (dynamoDB != null) {
-        LOG.debug("Shutting down {}", this);
+        LOG.error("Temp", new RuntimeException());
         dynamoDB.shutdown();
         dynamoDB = null;
       }
@@ -1660,7 +1660,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
             .itemToPathMetadata(item, username);
         Path path = md.getFileStatus().getPath();
         boolean tombstone = md.isDeleted();
-        LOG.debug("Prune entry {}", path);
+        LOG.error("Temp", new RuntimeException());
         deletionBatch.add(path);
 
         // add parent path of item so it can be marked as non-auth.
@@ -1734,31 +1734,31 @@ public class DynamoDBMetadataStore implements MetadataStore,
     Set<DDBPathMetadata> metas = pathSet.stream().map(path -> {
       try {
         if (path.isRoot()) {
-          LOG.debug("ignoring root path");
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         if (state != null && state.get(path) != null) {
           // there's already an entry for this path
-          LOG.debug("Ignoring update of entry already in the state map");
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         DDBPathMetadata ddbPathMetadata = get(path);
         if (ddbPathMetadata == null) {
           // there is no entry.
-          LOG.debug("No parent {}; skipping", path);
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         if (ddbPathMetadata.isDeleted()) {
           // the parent itself is deleted
-          LOG.debug("Parent has been deleted {}; skipping", path);
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         if (!ddbPathMetadata.getFileStatus().isDirectory()) {
           // the parent itself is deleted
-          LOG.debug("Parent is not a directory {}; skipping", path);
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
-        LOG.debug("Setting isAuthoritativeDir==false on {}", ddbPathMetadata);
+        LOG.error("Temp", new RuntimeException());
         ddbPathMetadata.setAuthoritativeDir(false);
         ddbPathMetadata.setLastUpdated(ttlTimeProvider.getNow());
         return ddbPathMetadata;
@@ -1772,7 +1772,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     }).filter(Objects::nonNull).collect(Collectors.toSet());
 
     try {
-      LOG.debug("innerPut on metas: {}", metas);
+      LOG.error("Temp", new RuntimeException());
       if (!metas.isEmpty()) {
         innerPut(metas, state);
       }
@@ -1833,7 +1833,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
    */
   @Retries.OnceRaw
   private PutItemOutcome putItem(Item item) {
-    LOG.debug("Putting item {}", item);
+    LOG.error("Temp", new RuntimeException());
     return table.putItem(item);
   }
 
@@ -2043,7 +2043,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
       if (attempts == 1 && eventCount < THROTTLE_EVENT_LOG_LIMIT) {
         LOG.warn("DynamoDB IO limits reached in {};"
                 + " consider increasing capacity: {}", text, ex.toString());
-        LOG.debug("Throttled", ex);
+        LOG.error("Temp", new RuntimeException());
       } else {
         // user has been warned already, log at debug only.
         LOG.debug("DynamoDB IO limits reached in {};"
@@ -2051,8 +2051,8 @@ public class DynamoDBMetadataStore implements MetadataStore,
       }
     } else if (attempts == 1) {
       // not throttled. Log on the first attempt only
-      LOG.info("Retrying {}: {}", text, ex.toString());
-      LOG.debug("Retrying {}", text, ex);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // note a retry
@@ -2202,7 +2202,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
           // the updated entry is under the destination.
           md.setAuthoritativeDir(true);
           md.setLastUpdated(ttlTimeProvider.getNow());
-          LOG.debug("{}: added {}", opId, key);
+          LOG.error("Temp", new RuntimeException());
           dirsToUpdate.add(md);
         }
       }
@@ -2469,7 +2469,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
     @Override
     public void close() throws IOException {
       if (LOG.isDebugEnabled() && store != null) {
-        LOG.debug("Auditing {}", stateAsString(this));
+        LOG.error("Temp", new RuntimeException());
         for (Map.Entry<Path, DDBPathMetadata> entry : ancestry
             .entrySet()) {
           Path path = entry.getKey();
@@ -2483,7 +2483,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
           try {
             actual = store.get(path);
           } catch (IOException e) {
-            LOG.debug("Retrieving {}", path, e);
+            LOG.error("Temp", new RuntimeException());
             // this is for debug; don't be ambitious
             return;
           }
@@ -2491,7 +2491,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
             String message = "Metastore entry for path "
                 + path + " deleted during bulk "
                 + getOperation() + " operation";
-            LOG.debug(message);
+            LOG.error("Temp", new RuntimeException());
           } else {
             if (actual.getFileStatus().isDirectory() !=
                 expected.getFileStatus().isDirectory()) {
@@ -2501,7 +2501,7 @@ public class DynamoDBMetadataStore implements MetadataStore,
                   + getOperation() + " operation"
                   + " from " + expected
                   + " to " + actual;
-              LOG.debug(message);
+              LOG.error("Temp", new RuntimeException());
             }
           }
 

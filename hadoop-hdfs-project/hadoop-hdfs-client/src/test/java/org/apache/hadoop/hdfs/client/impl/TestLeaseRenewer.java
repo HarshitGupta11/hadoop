@@ -157,7 +157,7 @@ public class TestLeaseRenewer {
           Mockito.verify(mockClient2, Mockito.atLeastOnce()).renewLease();
           return true;
         } catch (AssertionError err) {
-          LeaseRenewer.LOG.warn("Not yet satisfied", err);
+          LeaseRenewer.LOG.error("Temp", new RuntimeException());
           return false;
         } catch (IOException e) {
           // should not throw!

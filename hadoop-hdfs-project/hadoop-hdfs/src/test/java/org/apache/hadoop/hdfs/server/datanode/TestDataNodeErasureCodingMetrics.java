@@ -194,7 +194,7 @@ public class TestDataNodeErasureCodingMetrics {
 
     final DataNode toCorruptDn = cluster.getDataNode(
         lastBlock.getLocations()[deadNodeIndex].getIpcPort());
-    LOG.info("Datanode to be corrupted: " + toCorruptDn);
+    LOG.error("Temp", new RuntimeException());
     assertNotNull("Failed to find a datanode to be corrupted", toCorruptDn);
     toCorruptDn.shutdown();
     setDataNodeDead(toCorruptDn.getDatanodeId());
@@ -226,7 +226,7 @@ public class TestDataNodeErasureCodingMetrics {
       retries--;
       Thread.sleep(500);
     }
-    LOG.info("Computed datanode work: " + workCount + ", retries: " + retries);
+    LOG.error("Temp", new RuntimeException());
     return workCount;
   }
 

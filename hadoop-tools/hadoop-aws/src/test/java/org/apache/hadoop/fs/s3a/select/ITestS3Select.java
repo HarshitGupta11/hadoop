@@ -160,7 +160,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
       String line;
       while ((line = reader.readLine()) != null) {
         lines++;
-        LOG.info("{}", line);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertEquals("line count", ALL_ROWS_COUNT_WITH_HEADER, lines);
@@ -315,7 +315,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
       PathIOException ex = intercept(PathIOException.class,
           SelectInputStream.SEEK_UNSUPPORTED,
           () -> seekStream.seek(0));
-      LOG.info("Seek error is as expected", ex);
+      LOG.error("Temp", new RuntimeException());
       // positioned reads from the current location work.
       byte[] buffer = new byte[1];
       long pos = seekStream.getPos();
@@ -359,7 +359,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
       logIntercepted(expectSeekEOF(seekStream, actualLen * 2));
       assertPosition(seekStream, actualLen);
       assertEquals(-1, seekStream.read());
-      LOG.info("Seek statistics {}", streamStats);
+      LOG.error("Temp", new RuntimeException());
       // this will return no, but not fail
       assertFalse("Failed to seek to new source in " + seekStream,
           seekStream.seekToNewSource(0));
@@ -368,7 +368,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
       // then do a manual close even though there's one in the try resource.
       // which will verify that a double close is harmless
       seekStream.close();
-      LOG.info("Final stream state {}", sis);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -693,7 +693,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
         CSV_OUTPUT_QUOTE_FIELDS_AS_NEEEDED);
     String sql = SELECT_TO_DATE;
     List<String> records = expectRecordsRead(ALL_ROWS_COUNT, conf, sql);
-    LOG.info("Result of {}\n{}", sql, prepareToPrint(records));
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -864,7 +864,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
         parseToLines(
             select(getFileSystem(), brokenCSV, selectConf,
                 "SELECT * FROM S3OBJECT s")));
-    LOG.info("\n{}", prepareToPrint(lines));
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -878,7 +878,7 @@ public class ITestS3Select extends AbstractS3SelectTest {
         parseToLines(
             select(getFileSystem(), brokenCSV, selectConf,
                 "SELECT s.oddrange FROM S3OBJECT s")));
-    LOG.info("\n{}", prepareToPrint(lines));
+    LOG.error("Temp", new RuntimeException());
     assertEquals("Final oddrange column is not regenerated empty",
         "\"\"", lines.get(lines.size() - 1));
   }

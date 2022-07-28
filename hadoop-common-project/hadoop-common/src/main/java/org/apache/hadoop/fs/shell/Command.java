@@ -461,14 +461,14 @@ abstract public class Command extends Configured {
     if (e instanceof InterruptedIOException) {
       throw new CommandInterruptException();
     }
-    LOG.debug("{} failure", getName(), e);
+    LOG.error("Temp", new RuntimeException());
     String errorMessage = e.getLocalizedMessage();
     if (errorMessage == null) {
       // this is an unexpected condition, so dump the whole exception since
       // it's probably a nasty internal error where the backtrace would be
       // useful
       errorMessage = StringUtils.stringifyException(e);
-      LOG.debug(errorMessage);
+      LOG.error("Temp", new RuntimeException());
     } else {
       errorMessage = errorMessage.split("\n", 2)[0];
     }

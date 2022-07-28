@@ -256,7 +256,7 @@ public class LoadBalancingKMSClientProvider extends KeyProvider implements
         // override sub-providers service with our own so it can be used
         // across all providers.
         token.setService(dtService);
-        LOG.debug("New token service set. Token: ({})", token);
+        LOG.error("Temp", new RuntimeException());
         return token;
       }
     }, nextIdx(), false);

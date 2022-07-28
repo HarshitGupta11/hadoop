@@ -129,19 +129,19 @@ abstract public class ReadStripedFileWithDecodingHelper {
 
   public static void verifyRead(DistributedFileSystem dfs, Path testPath,
       int length, byte[] expected) throws IOException {
-    LOG.info("verifyRead on path {}", testPath);
+    LOG.error("Temp", new RuntimeException());
     byte[] buffer = new byte[length + 100];
-    LOG.info("verifyRead verifyLength on path {}", testPath);
+    LOG.error("Temp", new RuntimeException());
     StripedFileTestUtil.verifyLength(dfs, testPath, length);
-    LOG.info("verifyRead verifyPread on path {}", testPath);
+    LOG.error("Temp", new RuntimeException());
     StripedFileTestUtil.verifyPread(dfs, testPath, length, expected, buffer);
-    LOG.info("verifyRead verifyStatefulRead on path {}", testPath);
+    LOG.error("Temp", new RuntimeException());
     StripedFileTestUtil.verifyStatefulRead(dfs, testPath, length, expected,
         buffer);
-    LOG.info("verifyRead verifyStatefulRead2 on path {}", testPath);
+    LOG.error("Temp", new RuntimeException());
     StripedFileTestUtil.verifyStatefulRead(dfs, testPath, length, expected,
         ByteBuffer.allocate(length + 100));
-    LOG.info("verifyRead verifySeek on path {}", testPath);
+    LOG.error("Temp", new RuntimeException());
     StripedFileTestUtil.verifySeek(dfs, testPath, length, EC_POLICY,
         BLOCK_GROUP_SIZE);
   }
@@ -223,7 +223,7 @@ abstract public class ReadStripedFileWithDecodingHelper {
       DistributedFileSystem dfs, Path srcPath,
       int dataBlkDelNum, int parityBlkDelNum, boolean deleteBlockFile)
       throws IOException {
-    LOG.info("corruptBlocks on path {}", srcPath);
+    LOG.error("Temp", new RuntimeException());
     int recoverBlkNum = dataBlkDelNum + parityBlkDelNum;
 
     LocatedBlocks locatedBlocks = getLocatedBlocks(dfs, srcPath);
@@ -250,11 +250,11 @@ abstract public class ReadStripedFileWithDecodingHelper {
               CELL_SIZE, NUM_DATA_UNITS, delBlkIndices[i]);
       if (deleteBlockFile) {
         // delete the block file
-        LOG.info("Deleting block file {}", delBlocks[i]);
+        LOG.error("Temp", new RuntimeException());
         cluster.corruptBlockOnDataNodesByDeletingBlockFile(delBlocks[i]);
       } else {
         // corrupt the block file
-        LOG.info("Corrupting block file {}", delBlocks[i]);
+        LOG.error("Temp", new RuntimeException());
         cluster.corruptBlockOnDataNodes(delBlocks[i]);
       }
     }

@@ -76,7 +76,7 @@ public final class NameNodeUtils {
       return null;
     }
 
-    LOG.info("{} is {}", FS_DEFAULT_NAME_KEY, nnAddr);
+    LOG.error("Temp", new RuntimeException());
     final URI nnUri = URI.create(nnAddr);
 
     String defaultNnHost = nnUri.getHost();

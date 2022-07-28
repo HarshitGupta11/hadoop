@@ -161,7 +161,7 @@ public class NodeHealthScriptRunner extends TimedHealthReporterService {
           status = HealthCheckerExitStatus.TIMED_OUT;
         }
       } catch (Exception e) {
-        LOG.warn("Caught exception : " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         if (!commandExecutor.isTimedOut()) {
           status = HealthCheckerExitStatus.FAILED_WITH_EXCEPTION;
         } else {
@@ -215,7 +215,7 @@ public class NodeHealthScriptRunner extends TimedHealthReporterService {
         setUnhealthyWithReport(commandExecutor.getOutput());
         break;
       default:
-        LOG.warn("Unknown HealthCheckerExitStatus - ignored.");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }

@@ -125,7 +125,7 @@ public class MockServiceAM extends ServiceMaster {
   @Override
   protected Path getAppDir() {
     Path path = new Path(new Path("target", "apps"), service.getName());
-    LOG.info("Service path: {}", path);
+    LOG.error("Temp", new RuntimeException());
     return path;
   }
 
@@ -175,7 +175,7 @@ public class MockServiceAM extends ServiceMaster {
             // add new containers if any
             synchronized (feedContainers) {
               if (feedContainers.isEmpty()) {
-                LOG.info("Allocating........ no containers");
+                LOG.error("Temp", new RuntimeException());
               } else {
                 // The AMRMClient will return containers for compoenent that are
                 // at FLEXING state
@@ -186,7 +186,7 @@ public class MockServiceAM extends ServiceMaster {
                   org.apache.hadoop.yarn.service.component.Component component =
                       componentsById.get(c.getAllocationRequestId());
                   if (component.getState() == ComponentState.FLEXING) {
-                    LOG.info("Allocated container {} ", c.getId());
+                    LOG.error("Temp", new RuntimeException());
                     allocatedContainers.add(c);
                     itor.remove();
                   }

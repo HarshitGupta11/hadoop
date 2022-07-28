@@ -98,11 +98,11 @@ public class TestRMEmbeddedElector extends ClientBaseWithFixes {
   public void testDeadlockShutdownBecomeActive() throws InterruptedException {
     MockRM rm = new MockRMWithElector(conf, 1000);
     rm.start();
-    LOG.info("Waiting for callback");
+    LOG.error("Temp", new RuntimeException());
     while (!callbackCalled.get());
-    LOG.info("Stopping RM");
+    LOG.error("Temp", new RuntimeException());
     rm.stop();
-    LOG.info("Stopped RM");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -346,9 +346,9 @@ public class TestRMEmbeddedElector extends ClientBaseWithFixes {
             ServiceFailedException {
           try {
             callbackCalled.set(true);
-            TestRMEmbeddedElector.LOG.info("Callback called. Sleeping now");
+            TestRMEmbeddedElector.LOG.error("Temp", new RuntimeException());
             Thread.sleep(delayMs);
-            TestRMEmbeddedElector.LOG.info("Sleep done");
+            TestRMEmbeddedElector.LOG.error("Temp", new RuntimeException());
           } catch (InterruptedException e) {
             e.printStackTrace();
           }

@@ -195,7 +195,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
       LOG.debug("read requested b.length = {} offset = {} len = {}", b.length,
           off, len);
     } else {
-      LOG.debug("read requested b = null offset = {} len = {}", off, len);
+      LOG.error("Temp", new RuntimeException());
     }
 
     int currentOff = off;
@@ -256,7 +256,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
       bCursor = 0;
       limit = 0;
       if (buffer == null) {
-        LOG.debug("created new buffer size {}", bufferSize);
+        LOG.error("Temp", new RuntimeException());
         buffer = new byte[bufferSize];
       }
 
@@ -338,7 +338,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
         }
       }
     } catch (IOException e) {
-      LOG.debug("Optimized read failed. Defaulting to readOneBlock {}", e);
+      LOG.error("Temp", new RuntimeException());
       restorePointerState();
       return readOneBlock(b, off, len);
     } finally {
@@ -427,7 +427,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
       // First read to queue needs to be of readBufferSize and later
       // of readAhead Block size
       long nextSize = min((long) bufferSize, contentLength - nextOffset);
-      LOG.debug("read ahead enabled issuing readheads num = {}", numReadAheads);
+      LOG.error("Temp", new RuntimeException());
       while (numReadAheads > 0 && nextOffset < contentLength) {
         LOG.debug("issuing read ahead requestedOffset = {} requested size {}",
             nextOffset, nextSize);
@@ -443,7 +443,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
       bytesFromReadAhead += receivedBytes;
       if (receivedBytes > 0) {
         incrementReadOps();
-        LOG.debug("Received data from read ahead, not doing remote read");
+        LOG.error("Temp", new RuntimeException());
         if (streamStatistics != null) {
           streamStatistics.readAheadBytesRead(receivedBytes);
         }
@@ -454,7 +454,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
       receivedBytes = readRemote(position, b, offset, length);
       return receivedBytes;
     } else {
-      LOG.debug("read ahead disabled, reading remote");
+      LOG.error("Temp", new RuntimeException());
       return readRemote(position, b, offset, length);
     }
   }
@@ -508,7 +508,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
     if (bytesRead > Integer.MAX_VALUE) {
       throw new IOException("Unexpected Content-Length");
     }
-    LOG.debug("HTTP request read bytes = {}", bytesRead);
+    LOG.error("Temp", new RuntimeException());
     bytesFromRemoteRead += bytesRead;
     return (int) bytesRead;
   }
@@ -530,7 +530,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
    */
   @Override
   public synchronized void seek(long n) throws IOException {
-    LOG.debug("requested seek to position {}", n);
+    LOG.error("Temp", new RuntimeException());
     if (closed) {
       throw new IOException(FSExceptionMessages.STREAM_IS_CLOSED);
     }
@@ -555,7 +555,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
 
     // next read will read from here
     fCursor = n;
-    LOG.debug("set fCursor to {}", fCursor);
+    LOG.error("Temp", new RuntimeException());
 
     //invalidate buffer
     limit = 0;
@@ -647,7 +647,7 @@ public class AbfsInputStream extends FSInputStream implements CanUnbuffer,
   public synchronized void close() throws IOException {
     closed = true;
     buffer = null; // de-reference the buffer so it can be GC'ed sooner
-    LOG.debug("Closing {}", this);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

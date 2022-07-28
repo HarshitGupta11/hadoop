@@ -84,7 +84,7 @@ public class SerialJobFactory extends JobFactory<JobStats> {
         if (Thread.currentThread().isInterrupted()) {
           return;
         }
-        LOG.info("START SERIAL @ " + System.currentTimeMillis());
+        LOG.error("Temp", new RuntimeException());
         GridmixJob prevJob;
         while (!Thread.currentThread().isInterrupted()) {
           final JobStory job;
@@ -105,7 +105,7 @@ public class SerialJobFactory extends JobFactory<JobStats> {
 
             lock.lock();
             try {
-              LOG.info(" Submitted the job " + prevJob);
+              LOG.error("Temp", new RuntimeException());
               submitter.add(prevJob);
             } finally {
               lock.unlock();
@@ -130,7 +130,7 @@ public class SerialJobFactory extends JobFactory<JobStats> {
                   return;
                 }
                 if (LOG.isDebugEnabled()) {
-                  LOG.debug(" job " + job.getName() + " completed ");
+                  LOG.error("Temp", new RuntimeException());
                 }
                 break;
               }
@@ -172,7 +172,7 @@ public class SerialJobFactory extends JobFactory<JobStats> {
    */
   @Override
   public void start() {
-    LOG.info(" Starting Serial submission ");
+    LOG.error("Temp", new RuntimeException());
     this.rThread.start();
   }
   // it is need for test 

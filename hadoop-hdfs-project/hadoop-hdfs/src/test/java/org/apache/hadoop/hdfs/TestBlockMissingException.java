@@ -47,7 +47,7 @@ public class TestBlockMissingException {
    */
   @Test
   public void testBlockMissingException() throws Exception {
-    LOG.info("Test testBlockMissingException started.");
+    LOG.error("Temp", new RuntimeException());
     long blockSize = 1024L;
     int numBlocks = 4;
     conf = new HdfsConfiguration();
@@ -65,7 +65,7 @@ public class TestBlockMissingException {
       locations = fileSys.dfs.getNamenode().getBlockLocations(file1.toString(),
           0, numBlocks * blockSize);
       // remove block of file
-      LOG.info("Remove first block of file");
+      LOG.error("Temp", new RuntimeException());
       dfs.corruptBlockOnDataNodesByDeletingBlockFile(
           locations.get(0).getBlock());
 
@@ -75,7 +75,7 @@ public class TestBlockMissingException {
       if (fileSys != null) fileSys.close();
       if (dfs != null) dfs.shutdown();
     }
-    LOG.info("Test testBlockMissingException completed.");
+    LOG.error("Temp", new RuntimeException());
   }
   
   //

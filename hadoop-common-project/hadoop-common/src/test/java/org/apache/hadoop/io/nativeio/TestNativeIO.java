@@ -92,7 +92,7 @@ public class TestNativeIO {
       new File(TEST_DIR, "testfstat"));
     NativeIO.POSIX.Stat stat = NativeIO.POSIX.getFstat(fos.getFD());
     fos.close();
-    LOG.info("Stat: " + String.valueOf(stat));
+    LOG.error("Temp", new RuntimeException());
 
     String owner = stat.getOwner();
     String expectedOwner = System.getProperty("user.name");
@@ -168,7 +168,7 @@ public class TestNativeIO {
     try {
       NativeIO.POSIX.Stat stat = NativeIO.POSIX.getFstat(fos.getFD());
     } catch (NativeIOException nioe) {
-      LOG.info("Got expected exception", nioe);
+      LOG.error("Temp", new RuntimeException());
       assertEquals(Errno.EBADF, nioe.getErrno());
     }
   }
@@ -183,7 +183,7 @@ public class TestNativeIO {
 
     try {
       doStatTest(testFilePath);
-      LOG.info("testStat() is successful.");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       ContractTestUtils.cleanup("cleanup test file: " + path.toString(),
           fileSystem, path);
@@ -250,7 +250,7 @@ public class TestNativeIO {
             executorService.submit(() -> doStatTest(testFilePath));
         assertTrue(result.get());
       }
-      LOG.info("testMultiThreadedStat() is successful.");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       executorService.shutdown();
       ContractTestUtils.cleanup("cleanup test file: " + path.toString(),
@@ -281,7 +281,7 @@ public class TestNativeIO {
   public void testSetFilePointer() throws Exception {
     assumeWindows();
 
-    LOG.info("Set a file pointer on Windows");
+    LOG.error("Temp", new RuntimeException());
     try {
       File testfile = new File(TEST_DIR, "testSetFilePointer");
       assertTrue("Create test subject",
@@ -326,7 +326,7 @@ public class TestNativeIO {
   public void testCreateFile() throws Exception {
     assumeWindows();
 
-    LOG.info("Open a file on Windows with SHARE_DELETE shared mode");
+    LOG.error("Temp", new RuntimeException());
     try {
       File testfile = new File(TEST_DIR, "testCreateFile");
       assertTrue("Create test subject",
@@ -441,13 +441,13 @@ public class TestNativeIO {
   public void testOpenMissingWithoutCreate() throws Exception {
     assumeNotWindows();
 
-    LOG.info("Open a missing file without O_CREAT and it should fail");
+    LOG.error("Temp", new RuntimeException());
     try {
       FileDescriptor fd = NativeIO.POSIX.open(
         new File(TEST_DIR, "doesntexist").getAbsolutePath(), O_WRONLY, 0700);
       fail("Able to open a new file without O_CREAT");
     } catch (NativeIOException nioe) {
-      LOG.info("Got expected exception", nioe);
+      LOG.error("Temp", new RuntimeException());
       assertEquals(Errno.ENOENT, nioe.getErrno());
     }
   }
@@ -456,7 +456,7 @@ public class TestNativeIO {
   public void testOpenWithCreate() throws Exception {
     assumeNotWindows();
 
-    LOG.info("Test creating a file with O_CREAT");
+    LOG.error("Temp", new RuntimeException());
     FileDescriptor fd = NativeIO.POSIX.open(
       new File(TEST_DIR, "testWorkingOpen").getAbsolutePath(),
       O_WRONLY | O_CREAT, 0700);
@@ -468,14 +468,14 @@ public class TestNativeIO {
 
     assertFalse(fd.valid());
 
-    LOG.info("Test exclusive create");
+    LOG.error("Temp", new RuntimeException());
     try {
       fd = NativeIO.POSIX.open(
         new File(TEST_DIR, "testWorkingOpen").getAbsolutePath(),
         O_WRONLY | O_CREAT | O_EXCL, 0700);
       fail("Was able to create existing file with O_EXCL");
     } catch (NativeIOException nioe) {
-      LOG.info("Got expected exception for failed exclusive create", nioe);
+      LOG.error("Temp", new RuntimeException());
       assertEquals(Errno.EEXIST, nioe.getErrno());
     }
   }
@@ -803,7 +803,7 @@ public class TestNativeIO {
       NativeIO.POSIX.Pmem.mapBlock(filePath, length, false);
       fail("Illegal length parameter should be detected");
     } catch (Exception e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Incorrect file length
@@ -813,7 +813,7 @@ public class TestNativeIO {
       NativeIO.POSIX.Pmem.mapBlock(filePath, length, false);
       fail("Illegal length parameter should be detected");
     }catch (Exception e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -833,17 +833,17 @@ public class TestNativeIO {
     // limit 16GB
     length = 128 * 1024 * 1024L;
     long fileNumber = volumnSize / length;
-    LOG.info("File number = " + fileNumber);
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < fileNumber; i++) {
       String path = filePath + i;
-      LOG.info("File path = " + path);
+      LOG.error("Temp", new RuntimeException());
       NativeIO.POSIX.Pmem.mapBlock(path, length, false);
     }
     try {
       NativeIO.POSIX.Pmem.mapBlock(filePath, length, false);
       fail("Request map extra file when persistent memory is all occupied");
     } catch (Exception e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -862,11 +862,11 @@ public class TestNativeIO {
     // One file length exceeds persistent memory volume 16GB.
     length = volumeSize + 1024L;
     try {
-      LOG.info("File length = " + length);
+      LOG.error("Temp", new RuntimeException());
       NativeIO.POSIX.Pmem.mapBlock(filePath, length, false);
       fail("File length exceeds persistent memory total volume size");
     }catch (Exception e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       deletePmemMappedFile(filePath);
     }
   }

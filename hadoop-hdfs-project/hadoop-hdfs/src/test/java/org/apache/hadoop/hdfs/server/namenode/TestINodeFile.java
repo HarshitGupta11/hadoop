@@ -150,7 +150,7 @@ public class TestINodeFile {
       fail("INodeFile construction should fail when both replication and " +
           "ECPolicy requested!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -160,7 +160,7 @@ public class TestINodeFile {
       fail("INodeFile construction should fail when replication param not " +
           "provided for contiguous layout!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -171,7 +171,7 @@ public class TestINodeFile {
       fail("INodeFile construction should fail when replication param is " +
           "beyond the range supported!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     final Short replication = new Short((short) 3);
@@ -182,7 +182,7 @@ public class TestINodeFile {
       fail("INodeFile construction should fail when replication param is " +
           "provided for striped layout!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     inodeFile = new INodeFile(HdfsConstants.GRANDFATHER_INODE_ID,
@@ -631,7 +631,7 @@ public class TestINodeFile {
         .append(Path.SEPARATOR).append(inodeId).append(Path.SEPARATOR)
         .append(remainingPath);
     Path p = new Path(b.toString());
-    LOG.info("Inode path is " + p);
+    LOG.error("Temp", new RuntimeException());
     return p;
   }
   
@@ -890,7 +890,7 @@ public class TestINodeFile {
       cluster.restartNameNode();
       fail("Cluster should not have successfully started");
     } catch (Exception expected) {
-      LOG.info("Expected exception thrown " + expected);
+      LOG.error("Temp", new RuntimeException());
     }
     assertFalse(cluster.isClusterUp());
   }

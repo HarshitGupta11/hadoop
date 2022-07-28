@@ -93,7 +93,7 @@ public class TestIOStatisticsSnapshot extends AbstractHadoopTestBase {
   public void testStringification2() throws Throwable {
 
     String ss = snapshot.toString();
-    LOG.info("original {}", ss);
+    LOG.error("Temp", new RuntimeException());
     Assertions.assertThat(ss)
         .describedAs("snapshot toString()")
         .contains("c1=0")
@@ -113,7 +113,7 @@ public class TestIOStatisticsSnapshot extends AbstractHadoopTestBase {
         = IOStatisticsSnapshot.serializer();
 
     String json = serializer.toJson(snapshot);
-    LOG.info("serialized form\n{}", json);
+    LOG.error("Temp", new RuntimeException());
     IOStatisticsSnapshot deser = serializer.fromJson(json);
     verifyDeserializedInstance(deser);
   }
@@ -125,7 +125,7 @@ public class TestIOStatisticsSnapshot extends AbstractHadoopTestBase {
    */
   public void verifyDeserializedInstance(
       final IOStatistics deser) {
-    LOG.info("deserialized {}", deser);
+    LOG.error("Temp", new RuntimeException());
     verifyStatisticCounterValue(deser, "c1", 0L);
     verifyStatisticGaugeValue(deser, "g1", 1L);
     verifyStatisticMinimumValue(deser, "m1", -1L);

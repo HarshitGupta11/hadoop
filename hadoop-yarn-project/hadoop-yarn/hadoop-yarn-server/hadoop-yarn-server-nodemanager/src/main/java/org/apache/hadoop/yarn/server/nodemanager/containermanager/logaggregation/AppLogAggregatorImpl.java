@@ -202,7 +202,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
       LOG.info("Rolling mode is turned on with include pattern {}",
           this.logAggregationContext.getRolledLogsIncludePattern());
     } else {
-      LOG.debug("Rolling mode is turned off");
+      LOG.error("Temp", new RuntimeException());
     }
     logControllerContext = new LogAggregationFileControllerContext(
             this.remoteNodeLogFileForApp,
@@ -303,13 +303,13 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
     }
 
     if (pendingContainerInThisCycle.isEmpty()) {
-      LOG.debug("No pending container in this cycle");
+      LOG.error("Temp", new RuntimeException());
       sendLogAggregationReport(true, "", appFinished);
       return;
     }
 
     logAggregationTimes++;
-    LOG.debug("Cycle #{} of log aggregator", logAggregationTimes);
+    LOG.error("Temp", new RuntimeException());
     String diagnosticMessage = "";
     boolean logAggregationSucceedInThisCycle = true;
     DeletionTask deletionTask = null;
@@ -399,7 +399,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
             "following diagnostic message:\"{}\"", diagnosticMessage);
       }
       if (!logAggregationSucceedInThisCycle) {
-        LOG.warn("Log aggregation did not succeed in this cycle");
+        LOG.error("Temp", new RuntimeException());
       }
       sendLogAggregationReport(logAggregationSucceedInThisCycle,
           diagnosticMessage, appFinished);
@@ -475,7 +475,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
       doAppLogAggregationPostCleanUp();
     } finally {
       if (!this.appAggregationFinished.get() && !this.aborted.get()) {
-        LOG.warn("Log aggregation did not complete for application " + appId);
+        LOG.error("Temp", new RuntimeException());
         this.dispatcher.getEventHandler().handle(
             new ApplicationEvent(this.appId,
                 ApplicationEventType.APPLICATION_LOG_HANDLING_FAILED));
@@ -499,7 +499,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
             wait(THREAD_SLEEP_TIME);
           }
         } catch (InterruptedException e) {
-          LOG.warn("PendingContainers queue is interrupted");
+          LOG.error("Temp", new RuntimeException());
           this.appFinishing.set(true);
         } catch (LogAggregationDFSException e) {
           this.appFinishing.set(true);
@@ -541,13 +541,13 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
             ue);
         continue;
       } catch (IOException fe) {
-        LOG.warn("An exception occurred while getting file information", fe);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
 
     if (localAppLogDirs.size() > 0) {
-      LOG.debug("Cleaning up {} files", localAppLogDirs.size());
+      LOG.error("Temp", new RuntimeException());
       List<Path> localAppLogDirsList = new ArrayList<>();
       localAppLogDirsList.addAll(localAppLogDirs);
       DeletionTask deletionTask = new FileDeletionTask(delService,
@@ -576,14 +576,14 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
 
   @Override
   public synchronized void finishLogAggregation() {
-    LOG.info("Application just finished : " + this.applicationId);
+    LOG.error("Temp", new RuntimeException());
     this.appFinishing.set(true);
     this.notifyAll();
   }
 
   @Override
   public synchronized void abortLogAggregation() {
-    LOG.info("Aborting log aggregation for " + this.applicationId);
+    LOG.error("Temp", new RuntimeException());
     this.aborted.set(true);
     this.notifyAll();
   }
@@ -618,7 +618,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
         // Do Nothing
       }
     }
-    LOG.info("Do OutOfBand log aggregation");
+    LOG.error("Temp", new RuntimeException());
     this.notifyAll();
   }
 

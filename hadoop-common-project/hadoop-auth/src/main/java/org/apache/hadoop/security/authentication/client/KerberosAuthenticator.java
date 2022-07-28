@@ -191,7 +191,7 @@ public class KerberosAuthenticator implements Authenticator {
 
         boolean needFallback = false;
         if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-          LOG.debug("JDK performed authentication on our behalf.");
+          LOG.error("Temp", new RuntimeException());
           // If the JDK already did the SPNEGO back-and-forth for
           // us, just pull out the token.
           AuthenticatedURL.extractToken(conn, token);
@@ -201,10 +201,10 @@ public class KerberosAuthenticator implements Authenticator {
           needFallback = true;
         }
         if (!needFallback && isNegotiate(conn)) {
-          LOG.debug("Performing our own SPNEGO sequence.");
+          LOG.error("Temp", new RuntimeException());
           doSpnegoSequence(token);
         } else {
-          LOG.debug("Using fallback authenticator sequence.");
+          LOG.error("Temp", new RuntimeException());
           Authenticator auth = getFallBackAuthenticator();
           // Make sure that the fall back authenticator have the same
           // ConnectionConfigurator, since the method might be overridden.
@@ -302,7 +302,7 @@ public class KerberosAuthenticator implements Authenticator {
       if (subject == null
           || (!KerberosUtil.hasKerberosKeyTab(subject)
               && !KerberosUtil.hasKerberosTicket(subject))) {
-        LOG.debug("No subject in context, logging in");
+        LOG.error("Temp", new RuntimeException());
         subject = new Subject();
         LoginContext login = new LoginContext("", subject,
             null, new KerberosConfiguration());
@@ -310,7 +310,7 @@ public class KerberosAuthenticator implements Authenticator {
       }
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using subject: " + subject);
+        LOG.error("Temp", new RuntimeException());
       }
       Subject.doAs(subject, new PrivilegedExceptionAction<Void>() {
 

@@ -185,7 +185,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
             .TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_SUMMARY_ENTITY_TYPES
             + " = " + summaryEntityTypes);
       }
-      LOG.debug(debugMSG.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -233,7 +233,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
     if (!entitiesToEntityCache.isEmpty()) {
       Path entityLogPath =
           new Path(attemptDir, ENTITY_LOG_PREFIX + groupId.toString());
-      LOG.debug("Writing entity log for {} to {}", groupId, entityLogPath);
+      LOG.error("Temp", new RuntimeException());
       this.logFDsCache.writeEntityLogs(fs, entityLogPath, objMapper,
           appAttemptId, groupId, entitiesToEntityCache, isAppendSupported);
     }
@@ -259,7 +259,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
   @Override
   public synchronized void close() throws Exception {
     if (logFDsCache != null) {
-      LOG.debug("Closing cache");
+      LOG.error("Temp", new RuntimeException());
       logFDsCache.flush();
     }
     IOUtils.cleanupWithLogger(LOG, logFDsCache, fs);
@@ -268,7 +268,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
   @Override
   public void flush() throws IOException {
     if (logFDsCache != null) {
-      LOG.debug("Flushing cache");
+      LOG.error("Temp", new RuntimeException());
       logFDsCache.flush();
     }
   }
@@ -287,7 +287,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
     Path domainLogPath =
         new Path(attemptDirCache.getAppAttemptDir(appAttemptId),
             DOMAIN_LOG_PREFIX + appAttemptId.toString());
-    LOG.debug("Writing domains for {} to {}", appAttemptId, domainLogPath);
+    LOG.error("Temp", new RuntimeException());
     this.logFDsCache.writeDomainLog(
         fs, domainLogPath, objMapper, domain, isAppendSupported);
   }
@@ -316,7 +316,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
       if (writerClosed()) {
         prepareForWrite();
       }
-      LOG.debug("Writing entity list of size {}", entities.size());
+      LOG.error("Temp", new RuntimeException());
       for (TimelineEntity entity : entities) {
         getObjectMapper().writeValue(getJsonGenerator(), entity);
       }
@@ -548,7 +548,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
         try {
           flush();
         } catch (Exception e) {
-          LOG.debug("{}", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -624,7 +624,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
         try {
           cleanInActiveFDs();
         } catch (Exception e) {
-          LOG.warn(e.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -985,7 +985,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
       Path attemptDir = new Path(appDir, appAttemptId.toString());
       if (FileSystem.mkdirs(fs, attemptDir,
           new FsPermission(APP_LOG_DIR_PERMISSIONS))) {
-        LOG.debug("New attempt directory created - {}", attemptDir);
+        LOG.error("Temp", new RuntimeException());
       }
       return attemptDir;
     }
@@ -995,7 +995,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
       Path appDir = new Path(appRootDir, appId.toString());
       if (FileSystem.mkdirs(fs, appDir,
           new FsPermission(APP_LOG_DIR_PERMISSIONS))) {
-        LOG.debug("New app directory created - {}", appDir);
+        LOG.error("Temp", new RuntimeException());
       }
       return appDir;
     }
@@ -1007,7 +1007,7 @@ public class FileSystemTimelineWriter extends TimelineWriter{
       Path userDir = new Path(activePath, user);
       if (FileSystem.mkdirs(fs, userDir,
           new FsPermission(APP_LOG_DIR_PERMISSIONS))) {
-        LOG.debug("New user directory created - {}", userDir);
+        LOG.error("Temp", new RuntimeException());
       }
       return userDir;
     }

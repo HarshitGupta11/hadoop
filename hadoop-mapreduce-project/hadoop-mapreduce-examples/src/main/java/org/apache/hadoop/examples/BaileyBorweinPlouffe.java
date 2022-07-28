@@ -94,7 +94,7 @@ public class BaileyBorweinPlouffe extends Configured implements Tool {
     /** Compute the (offset+1)th to (offset+length)th digits. */
     protected void map(LongWritable offset, IntWritable length,
         final Context context) throws IOException, InterruptedException {
-      LOG.info("offset=" + offset + ", length=" + length);
+      LOG.error("Temp", new RuntimeException());
 
       // compute digits
       final byte[] bytes = new byte[length.get() >> 1];
@@ -127,7 +127,7 @@ public class BaileyBorweinPlouffe extends Configured implements Tool {
           hex.add(bytes.getBytes()[i]);
       }
 
-      LOG.info("hex.size() = " + hex.size());
+      LOG.error("Temp", new RuntimeException());
     }
 
     /** Write output to files. */
@@ -154,7 +154,7 @@ public class BaileyBorweinPlouffe extends Configured implements Tool {
       // the hex value can be converted to decimal value.
       if (conf.getInt(DIGIT_START_PROPERTY, 1) == 1) {
         final Path outfile = new Path(dir, "pi.txt");
-        LOG.info("Writing text output to " + outfile);
+        LOG.error("Temp", new RuntimeException());
         final OutputStream outputstream = fs.create(outfile);
         try {
           final PrintWriter out = new PrintWriter(

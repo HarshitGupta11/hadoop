@@ -186,8 +186,8 @@ public class TestSnappyCompressorDecompressor {
     int maxSize = 32 + BYTE_SIZE + BYTE_SIZE / 6;
     byte[] compressed = new byte[maxSize];
     int cSize = compressor.compress(compressed, 0, compressed.length);
-    LOG.info("input size: {}", BYTE_SIZE);
-    LOG.info("compressed size: {}", cSize);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(
         "SnappyCompressDecompress getBytesWritten after compress error !!!",
         compressor.getBytesWritten() > 0);

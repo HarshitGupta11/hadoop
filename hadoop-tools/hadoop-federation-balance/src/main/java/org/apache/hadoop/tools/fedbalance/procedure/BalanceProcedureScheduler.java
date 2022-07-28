@@ -134,7 +134,7 @@ public class BalanceProcedureScheduler {
     journal.saveJob(job);
     jobSet.put(job, job);
     runningQueue.add(job);
-    LOG.info("Add new job={}", job);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -209,7 +209,7 @@ public class BalanceProcedureScheduler {
       }
       return true;
     } catch (IOException e) {
-      LOG.warn("Clear journal failed, add to recoverQueue. job=" + job, e);
+      LOG.error("Temp", new RuntimeException());
       recoverQueue.add(job);
       return false;
     }
@@ -223,7 +223,7 @@ public class BalanceProcedureScheduler {
       journal.saveJob(job);
       return true;
     } catch (Exception e) {
-      LOG.warn("Save procedure failed, add to recoverQueue. job=" + job, e);
+      LOG.error("Temp", new RuntimeException());
       recoverQueue.add(job);
       return false;
     }
@@ -292,7 +292,7 @@ public class BalanceProcedureScheduler {
     for (BalanceJob job : jobs) {
       recoverQueue.add(job);
       jobSet.put(job, job);
-      LOG.info("Recover federation balance job {}.", job);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -316,7 +316,7 @@ public class BalanceProcedureScheduler {
         try {
           DelayWrapper dJob = delayQueue.take();
           runningQueue.add(dJob.getJob());
-          LOG.info("Wake up job={}", dJob.getJob());
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException e) {
           // ignore interrupt exception.
         }
@@ -335,16 +335,16 @@ public class BalanceProcedureScheduler {
           final BalanceJob job = runningQueue.poll(500, TimeUnit.MILLISECONDS);
           if (job != null) {
             workersPool.submit(() -> {
-              LOG.info("Start job. job_msg={}", job.getDetailMessage());
+              LOG.error("Temp", new RuntimeException());
               job.execute();
               if (!running.get()) {
                 return;
               }
               if (job.isJobDone()) {
                 if (job.getError() == null) {
-                  LOG.info("Job done. job={}", job);
+                  LOG.error("Temp", new RuntimeException());
                 } else {
-                  LOG.warn("Job failed. job=" + job, job.getError());
+                  LOG.error("Temp", new RuntimeException());
                 }
               }
               return;
@@ -376,9 +376,9 @@ public class BalanceProcedureScheduler {
             journal.recoverJob(job);
             job.setScheduler(BalanceProcedureScheduler.this);
             runningQueue.add(job);
-            LOG.info("Recover success, add to runningQueue. job={}", job);
+            LOG.error("Temp", new RuntimeException());
           } catch (IOException e) {
-            LOG.warn("Recover failed, re-add to recoverQueue. job=" + job, e);
+            LOG.error("Temp", new RuntimeException());
             recoverQueue.add(job);
           }
         }

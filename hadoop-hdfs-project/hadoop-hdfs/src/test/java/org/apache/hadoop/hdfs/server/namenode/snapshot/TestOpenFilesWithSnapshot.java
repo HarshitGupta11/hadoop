@@ -737,7 +737,7 @@ public class TestOpenFilesWithSnapshot {
             }
           }
         } catch (Exception e) {
-          LOG.warn("Writer error: " + e);
+          LOG.error("Temp", new RuntimeException());
           writerError.set(true);
         }
       }
@@ -748,17 +748,17 @@ public class TestOpenFilesWithSnapshot {
     final Path snap1Dir = SnapshotTestHelper.createSnapshot(
         fs, snapRootDir, snap1Name);
     final Path flumeS1Path = new Path(snap1Dir, flumeFileName);
-    LOG.info("Snap1 file status: " + fs.getFileStatus(flumeS1Path));
-    LOG.info("Current file status: " + fs.getFileStatus(flumeFile));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     deleteLatch.await();
-    LOG.info("Snap1 file status: " + fs.getFileStatus(flumeS1Path));
-    LOG.info("Current file status: " + fs.getFileStatus(flumeFile));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     // Verify deletion of snapshot which had the under construction file
     // captured is not truncating the under construction file and the thread
     // writing to the same file not crashing on newer block allocations.
-    LOG.info("Deleting " + snap1Name);
+    LOG.error("Temp", new RuntimeException());
     fs.deleteSnapshot(snapRootDir, snap1Name);
 
     // Verify creation and deletion of snapshot newer than the oldest

@@ -73,7 +73,7 @@ public class DeviceResourceDockerRuntimePluginImpl
   public void updateDockerRunCommand(DockerRunCommand dockerRunCommand,
       Container container) throws ContainerExecutionException {
     String containerId = container.getContainerId().toString();
-    LOG.debug("Try to update docker run command for: {}", containerId);
+    LOG.error("Temp", new RuntimeException());
     if(!requestedDevice(resourceName, container)) {
       return;
     }

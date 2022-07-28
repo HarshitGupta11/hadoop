@@ -206,7 +206,7 @@ public class ITestLocatedFileStatusFetcher extends AbstractS3ATestBase {
   private void assertListCount(final LocatedFileStatusFetcher fetcher,
       final int expectedListCount) {
     IOStatistics iostats = extractStatistics(fetcher);
-    LOG.info("Statistics of fetcher: {}", iostats);
+    LOG.error("Temp", new RuntimeException());
     assertThatStatisticCounter(iostats,
         OBJECT_LIST_REQUEST)
         .describedAs("stats of %s", iostats)
@@ -261,7 +261,7 @@ public class ITestLocatedFileStatusFetcher extends AbstractS3ATestBase {
             true);
     Iterable<FileStatus> stats = fetcher.getFileStatuses();
     IOStatistics iostats = extractStatistics(fetcher);
-    LOG.info("Statistics of fetcher: {}", iostats);
+    LOG.error("Temp", new RuntimeException());
     Assertions.assertThat(stats)
         .describedAs("result of located scan")
         .isNotNull()

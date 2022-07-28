@@ -175,7 +175,7 @@ public class TextFileRegionAliasMap
       file = new Path(tmpfile);
       delim = conf.get(DFSConfigKeys.DFS_PROVIDED_ALIASMAP_TEXT_DELIMITER,
           DFSConfigKeys.DFS_PROVIDED_ALIASMAP_TEXT_DELIMITER_DEFAULT);
-      LOG.info("TextFileRegionAliasMap: read path {}", tmpfile);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override

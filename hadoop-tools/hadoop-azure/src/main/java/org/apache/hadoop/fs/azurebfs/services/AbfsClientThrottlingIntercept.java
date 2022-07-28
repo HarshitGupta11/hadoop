@@ -60,7 +60,7 @@ public final class AbfsClientThrottlingIntercept {
     if (singleton == null) {
       singleton = new AbfsClientThrottlingIntercept();
       isAutoThrottlingEnabled = true;
-      LOG.debug("Client-side throttling is enabled for the ABFS file system.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

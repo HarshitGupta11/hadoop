@@ -135,7 +135,7 @@ public class LogServlet extends Configured {
       response.header("X-Content-Type-Options", "nosniff");
       return response.build();
     } catch (Exception ex) {
-      LOG.debug("Exception during request", ex);
+      LOG.error("Temp", new RuntimeException());
       throw new WebApplicationException(ex);
     }
   }
@@ -320,7 +320,7 @@ public class LogServlet extends Configured {
     try {
       appInfo = appInfoProvider.getApp(req, builder.getAppId(), clusterId);
     } catch (Exception ex) {
-      LOG.warn("Could not obtain appInfo object from provider.", ex);
+      LOG.error("Temp", new RuntimeException());
       // directly find logs from HDFS.
       return getContainerLogMeta(builder.build(), false);
     }
@@ -339,7 +339,7 @@ public class LogServlet extends Configured {
         try {
           nodeHttpAddress = getNMWebAddressFromRM(nmId);
         } catch (Exception ex) {
-          LOG.info("Exception during getting NM web address.", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       if (nodeHttpAddress == null || nodeHttpAddress.isEmpty()) {
@@ -349,7 +349,7 @@ public class LogServlet extends Configured {
                 req, request.getAppId(), request.getAppAttemptId(),
                 request.getContainerId().toString(), clusterId);
           } catch (Exception ex) {
-            LOG.warn("Could not obtain node HTTP address from provider.", ex);
+            LOG.error("Temp", new RuntimeException());
             // return log meta for the aggregated logs if exists.
             // It will also return empty log meta for the local logs.
             return getContainerLogMeta(request, true);
@@ -459,7 +459,7 @@ public class LogServlet extends Configured {
     try {
       appInfo = appInfoProvider.getApp(req, appId.toString(), clusterId);
     } catch (Exception ex) {
-      LOG.warn("Could not obtain appInfo object from provider.", ex);
+      LOG.error("Temp", new RuntimeException());
       return LogWebServiceUtils
           .sendStreamOutputResponse(factory, appId, null, null, containerIdStr,
               filename, format, length, false);
@@ -489,7 +489,7 @@ public class LogServlet extends Configured {
               containerId.getApplicationAttemptId().toString(),
               containerId.toString(), clusterId);
         } catch (Exception ex) {
-          LOG.warn("Could not obtain node HTTP address from provider.", ex);
+          LOG.error("Temp", new RuntimeException());
           // output the aggregated logs
           return LogWebServiceUtils
               .sendStreamOutputResponse(factory, appId, appOwner, null,

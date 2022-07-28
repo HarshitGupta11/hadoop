@@ -171,7 +171,7 @@ public abstract class BlockReportTestBase {
             gsNew = rand.nextInt();
           } while (gsNew == gsOld);
           block.setGenerationStamp(gsNew);
-          LOG.info("Corrupted the GS for block ID " + block);
+          LOG.error("Temp", new RuntimeException());
           corruptedGs = true;
         } else if (corruptOneBlockLen && !corruptedLen) {
           long lenOld = block.getNumBytes();
@@ -180,7 +180,7 @@ public abstract class BlockReportTestBase {
             lenNew = rand.nextInt((int)lenOld - 1);
           } while (lenNew == lenOld);
           block.setNumBytes(lenNew);
-          LOG.info("Corrupted the length for block ID " + block);
+          LOG.error("Temp", new RuntimeException());
           corruptedLen = true;
         }
         builder.add(new BlockReportReplica(block));
@@ -217,7 +217,7 @@ public abstract class BlockReportTestBase {
     ArrayList<Block> blocks = prepareForRide(filePath, METHOD_NAME, FILE_SIZE);
 
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Number of blocks allocated " + blocks.size());
+      LOG.error("Temp", new RuntimeException());
     }
     long[] oldLengths = new long[blocks.size()];
     int tempLen;
@@ -229,7 +229,7 @@ public abstract class BlockReportTestBase {
       }
       oldLengths[i] = b.getNumBytes();
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Setting new length");
+        LOG.error("Temp", new RuntimeException());
       }
       tempLen = rand.nextInt(BLOCK_SIZE);
       b.set(b.getBlockId(), tempLen, b.getGenerationStamp());
@@ -272,7 +272,7 @@ public abstract class BlockReportTestBase {
   @Test(timeout=300000)
   public void blockReport_02() throws IOException {
     final String METHOD_NAME = GenericTestUtils.getMethodName();
-    LOG.info("Running test " + METHOD_NAME);
+    LOG.error("Temp", new RuntimeException());
 
     Path filePath = new Path("/" + METHOD_NAME + ".dat");
     DFSTestUtil.createFile(fs, filePath,
@@ -300,21 +300,21 @@ public abstract class BlockReportTestBase {
     }
 
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Number of blocks allocated " + lBlocks.size());
+      LOG.error("Temp", new RuntimeException());
     }
 
     final DataNode dn0 = cluster.getDataNodes().get(DN_N0);
     for (ExtendedBlock b : blocks2Remove) {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Removing the block " + b.getBlockName());
+        LOG.error("Temp", new RuntimeException());
       }
       for (File f : findAllFiles(dataDir,
         new MyFileFilter(b.getBlockName(), true))) {
         DataNodeTestUtils.getFSDataset(dn0).unfinalizeBlock(b);
         if (!f.delete()) {
-          LOG.warn("Couldn't delete " + b.getBlockName());
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.debug("Deleted file " + f.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -664,7 +664,7 @@ public abstract class BlockReportTestBase {
     int numConcurrentBlockReports = 3;
     DataNode dn = cluster.getDataNodes().get(DN_N0);
     final String poolId = cluster.getNamesystem().getBlockPoolId();
-    LOG.info("Block pool id: " + poolId);
+    LOG.error("Temp", new RuntimeException());
     final DatanodeRegistration dnR = dn.getDNRegistrationForBP(poolId);
     final StorageBlockReport[] reports =
         getBlockReports(dn, poolId, true, true);
@@ -704,13 +704,13 @@ public abstract class BlockReportTestBase {
     final int TIMEOUT = 40000;
 
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Wait for datanode " + DN_N1 + " to appear");
+      LOG.error("Temp", new RuntimeException());
     }
     while (cluster.getDataNodes().size() <= DN_N1) {
       waitTil(20);
     }
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Total number of DNs " + cluster.getDataNodes().size());
+      LOG.error("Temp", new RuntimeException());
     }
     cluster.waitActive();
 
@@ -726,7 +726,7 @@ public abstract class BlockReportTestBase {
       long waiting_period = Time.monotonicNow() - start;
       if (count++ % 100 == 0)
         if(LOG.isDebugEnabled()) {
-          LOG.debug("Has been waiting for " + waiting_period + " ms.");
+          LOG.error("Temp", new RuntimeException());
         }
       if (waiting_period > TIMEOUT)
         assertTrue("Was waiting too long to get ReplicaInfo from a datanode",
@@ -735,7 +735,7 @@ public abstract class BlockReportTestBase {
 
     HdfsServerConstants.ReplicaState state = r.getState();
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Replica state before the loop " + state.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
     start = Time.monotonicNow();
     while (state != HdfsServerConstants.ReplicaState.TEMPORARY) {
@@ -750,7 +750,7 @@ public abstract class BlockReportTestBase {
           tooLongWait);
     }
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Replica state after the loop " + state.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -765,7 +765,7 @@ public abstract class BlockReportTestBase {
       blocks = prepareForRide(filePath, METHOD_NAME, fileSize);
     } catch (IOException e) {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Caught exception ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return blocks;
@@ -774,7 +774,7 @@ public abstract class BlockReportTestBase {
   private void startDNandWait(Path filePath, boolean waitReplicas)
       throws IOException, InterruptedException, TimeoutException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Before next DN start: " + cluster.getDataNodes().size());
+      LOG.error("Temp", new RuntimeException());
     }
     cluster.startDataNodes(conf, 1, true, null, null);
     cluster.waitClusterUp();
@@ -795,7 +795,7 @@ public abstract class BlockReportTestBase {
   private ArrayList<Block> prepareForRide(final Path filePath,
                                           final String METHOD_NAME,
                                           long fileSize) throws IOException {
-    LOG.info("Running test " + METHOD_NAME);
+    LOG.error("Temp", new RuntimeException());
 
     DFSTestUtil.createFile(fs, filePath, fileSize,
       REPL_FACTOR, rand.nextLong());
@@ -808,16 +808,16 @@ public abstract class BlockReportTestBase {
   private void printStats() {
     BlockManagerTestUtil.updateState(cluster.getNamesystem().getBlockManager());
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Missing " + cluster.getNamesystem().getMissingBlocksCount());
-      LOG.debug("Corrupted " + cluster.getNamesystem().getCorruptReplicaBlocks());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("Under-replicated " + cluster.getNamesystem().
           getUnderReplicatedBlocks());
       LOG.debug("Pending delete " + cluster.getNamesystem().
           getPendingDeletionBlocks());
       LOG.debug("Pending replications " + cluster.getNamesystem().
           getPendingReplicationBlocks());
-      LOG.debug("Excess " + cluster.getNamesystem().getExcessBlocks());
-      LOG.debug("Total " + cluster.getNamesystem().getBlocksTotal());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -827,7 +827,7 @@ public abstract class BlockReportTestBase {
     for (int i = 0; i < locatedBlks.size(); i++) {
       if (positionsToRemove != null && positionsToRemove.contains(i)) {
         if(LOG.isDebugEnabled()) {
-          LOG.debug(i + " block to be omitted");
+          LOG.error("Temp", new RuntimeException());
         }
         continue;
       }

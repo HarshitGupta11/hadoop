@@ -620,7 +620,7 @@ public class ITestS3GuardFsck extends AbstractS3ATestBase {
       S3GuardFsck.Violation violation) {
 
     if (comparePairs.size() == 0) {
-      LOG.info("Compare pairs is empty, so there's no violation. (As expected.)");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 

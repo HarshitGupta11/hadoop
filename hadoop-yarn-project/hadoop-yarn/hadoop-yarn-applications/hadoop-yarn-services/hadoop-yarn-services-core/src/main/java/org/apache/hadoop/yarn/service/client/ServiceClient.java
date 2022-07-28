@@ -203,7 +203,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
           fileName);
     }
     Path filePath = new Path(file.getAbsolutePath());
-    LOG.info("Loading service definition from local FS: " + filePath);
+    LOG.error("Temp", new RuntimeException());
     Service service = jsonSerDeser
         .load(FileSystem.getLocal(getConfig()), filePath);
     if (!StringUtils.isEmpty(serviceName)) {
@@ -533,7 +533,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     List<String> containerIdsToUpgrade = new ArrayList<>();
     compInstances.forEach(compInst ->
         containerIdsToUpgrade.add(compInst.getId()));
-    LOG.info("instances to upgrade {}", containerIdsToUpgrade);
+    LOG.error("Temp", new RuntimeException());
     CompInstancesUpgradeRequestProto.Builder upgradeRequestBuilder =
         CompInstancesUpgradeRequestProto.newBuilder();
     upgradeRequestBuilder.addAllContainerIds(containerIdsToUpgrade);
@@ -722,7 +722,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     ServiceApiUtil.validateNameFormat(serviceName, getConfig());
     ApplicationId currentAppId = getAppId(serviceName);
     if (currentAppId == null) {
-      LOG.info("Application ID doesn't exist for service {}", serviceName);
+      LOG.error("Temp", new RuntimeException());
       cleanUpRegistry(serviceName);
       return EXIT_COMMAND_ARGUMENT_ERROR;
     }
@@ -737,14 +737,14 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       String msg = serviceName + " is at " + report.getYarnApplicationState()
           + ", forcefully killed by user!";
       yarnClient.killApplication(currentAppId, msg);
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       cleanUpRegistry(serviceName);
       return EXIT_SUCCESS;
     }
     if (StringUtils.isEmpty(report.getHost())) {
       throw new YarnException(serviceName + " AM hostname is empty");
     }
-    LOG.info("Stopping service {}, with appId = {}", serviceName, currentAppId);
+    LOG.error("Temp", new RuntimeException());
     try {
       ClientAMProtocol proxy =
           createAMProxy(serviceName, report);
@@ -753,11 +753,11 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
         // try to stop the app gracefully.
         StopRequestProto request = StopRequestProto.newBuilder().build();
         proxy.stop(request);
-        LOG.info("Service " + serviceName + " is being gracefully stopped...");
+        LOG.error("Temp", new RuntimeException());
       } else {
         yarnClient.killApplication(currentAppId,
             serviceName + " is forcefully killed by user!");
-        LOG.info("Forcefully kill the service: " + serviceName);
+        LOG.error("Temp", new RuntimeException());
         cleanUpRegistry(serviceName);
         return EXIT_SUCCESS;
       }
@@ -773,7 +773,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
         Thread.sleep(2000);
         report = yarnClient.getApplicationReport(currentAppId);
         if (terminatedStates.contains(report.getYarnApplicationState())) {
-          LOG.info("Service " + serviceName + " is stopped.");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
         // Forcefully kill after 10 seconds.
@@ -785,7 +785,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
           break;
         }
         if (++pollCount % 10 == 0) {
-          LOG.info("Waiting for service " + serviceName + " to be stopped.");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (IOException | YarnException | InterruptedException e) {
@@ -815,7 +815,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       } else {
         String message =
             "Failed to delete service + " + serviceName + " at:  " + appDir;
-        LOG.info(message);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnException(message);
       }
     } else {
@@ -833,7 +833,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       } else {
         String message = "Failed to delete public resource dir for service "
             + serviceName + " at:  " + publicResourceDir;
-        LOG.info(message);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnException(message);
       }
     }
@@ -851,7 +851,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       }
     }
     if (ret == EXIT_SUCCESS) {
-      LOG.info("Successfully destroyed service {}", serviceName);
+      LOG.error("Temp", new RuntimeException());
       return ret;
     } else if (ret == EXIT_NOT_FOUND) {
       LOG.error("Error on destroy '" + serviceName + "': not found.");
@@ -890,7 +890,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
         // not counted as a failure if the registry entries don't exist
       }
     } catch (IOException e) {
-      LOG.warn("Error deleting registry entry {}", registryPath, e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     return true;
@@ -922,7 +922,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     String zkPath = ServiceRegistryUtils.mkServiceHomePath(user, serviceName);
     if (curatorFramework.checkExists().forPath(zkPath) != null) {
       curatorFramework.delete().deletingChildrenIfNeeded().forPath(zkPath);
-      LOG.info("Deleted zookeeper path: " + zkPath);
+      LOG.error("Temp", new RuntimeException());
       return true;
     } else {
       LOG.info(
@@ -1176,7 +1176,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       }
       localResources.put("sysfs", localResource);
       if (!tmpDir.delete()) {
-        LOG.warn("Failed to delete temp file: " + tmpDir.getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       throw new IOException("Fail to localize sysfs resource.");
@@ -1211,14 +1211,14 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
   }
 
   private void printLocalResources(Map<String, LocalResource> map) {
-    LOG.debug("Added LocalResource for localization: ");
+    LOG.error("Temp", new RuntimeException());
     StringBuilder builder = new StringBuilder();
     for (Map.Entry<String, LocalResource> entry : map.entrySet()) {
       builder.append(entry.getKey()).append(" -> ")
           .append(entry.getValue().getResource().getFile())
           .append(System.lineSeparator());
     }
-    LOG.debug("{}", builder);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private String buildCommandLine(Service app, Configuration conf,
@@ -1262,7 +1262,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     // write out the path output
     CLI.addOutAndErrFiles(STDOUT_AM, STDERR_AM);
     String cmdStr = CLI.build();
-    LOG.debug("AM launch command: {}", cmdStr);
+    LOG.error("Temp", new RuntimeException());
     return cmdStr;
   }
 
@@ -1285,12 +1285,12 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     }
     if (!UserGroupInformation.isSecurityEnabled()) {
       String userName = UserGroupInformation.getCurrentUser().getUserName();
-      LOG.debug("Run as user {}", userName);
+      LOG.error("Temp", new RuntimeException());
       // HADOOP_USER_NAME env is used by UserGroupInformation when log in
       // This env makes AM run as this user
       env.put("HADOOP_USER_NAME", userName);
     }
-    LOG.debug("AM env: \n{}", stringifyMap(env));
+    LOG.error("Temp", new RuntimeException());
     return env;
   }
 
@@ -1303,7 +1303,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
             libPath, "lib", false);
     Path dependencyLibTarGzip = fs.getDependencyTarGzip();
     if (actionDependency(null, false) == EXIT_SUCCESS) {
-      LOG.info("Loading lib tar from " + dependencyLibTarGzip);
+      LOG.error("Temp", new RuntimeException());
       fs.submitTarGzipAndUpdate(localResources);
     } else {
       if (dependencyLibTarGzip != null) {
@@ -1348,7 +1348,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
         localResources.put(localFilePath.getName(), localResource);
         hasAMLog4j = true;
       } else {
-        LOG.warn("AM log4j property file doesn't exist: " + localFile);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return hasAMLog4j;
@@ -1383,10 +1383,10 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       service.setId(appId.toString());
       // write app definition on to hdfs
       Path appJson = ServiceApiUtil.writeAppDefinition(fs, appDir, service);
-      LOG.info("Persisted service " + service.getName() + " at " + appJson);
+      LOG.error("Temp", new RuntimeException());
       return appId;
     } else {
-      LOG.info("Finalize service {} upgrade", serviceName);
+      LOG.error("Temp", new RuntimeException());
       ApplicationId appId = getAppId(serviceName);
       ApplicationReport appReport = yarnClient.getApplicationReport(appId);
       if (StringUtils.isEmpty(appReport.getHost())) {
@@ -1448,7 +1448,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       if (LOG.isDebugEnabled()) {
         if (tokens != null && tokens.length != 0) {
           for (Token<?> token : tokens) {
-            LOG.debug("Got DT: {}", token);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -1475,11 +1475,11 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     }
     String principalName = service.getKerberosPrincipal().getPrincipalName();
     if (StringUtils.isEmpty(principalName)) {
-      LOG.warn("No Kerberos principal name specified for " + service.getName());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (StringUtils.isEmpty(service.getKerberosPrincipal().getKeytab())) {
-      LOG.warn("No Kerberos keytab specified for " + service.getName());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -1491,7 +1491,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     }
 
     if ("file".equals(keytabURI.getScheme())) {
-      LOG.info("Using a keytab from localhost: " + keytabURI);
+      LOG.error("Temp", new RuntimeException());
     } else {
       Path keytabPath = new Path(keytabURI);
       if (!fileSystem.getFileSystem().exists(keytabPath)) {
@@ -1593,7 +1593,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     appSpec.setState(ServiceState.STOPPED);
     ApplicationId currentAppId = getAppId(serviceName);
     if (currentAppId == null) {
-      LOG.info("Service {} does not have an application ID", serviceName);
+      LOG.error("Temp", new RuntimeException());
       return appSpec;
     }
     appSpec.setId(currentAppId.toString());
@@ -1601,11 +1601,11 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
     try {
       appReport = yarnClient.getApplicationReport(currentAppId);
     } catch (ApplicationNotFoundException e) {
-      LOG.info("application ID {} doesn't exist", currentAppId);
+      LOG.error("Temp", new RuntimeException());
       return appSpec;
     }
     if (appReport == null) {
-      LOG.warn("application ID {} is reported as null", currentAppId);
+      LOG.error("Temp", new RuntimeException());
       return appSpec;
     }
     appSpec.setState(convertState(appReport.getYarnApplicationState()));
@@ -1621,7 +1621,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       return appSpec;
     }
     if (StringUtils.isEmpty(appReport.getHost())) {
-      LOG.warn(serviceName + " AM hostname is empty");
+      LOG.error("Temp", new RuntimeException());
       return appSpec;
     }
     ClientAMProtocol amProxy =
@@ -1646,7 +1646,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
 
   public int actionDependency(String destinationFolder, boolean overwrite) {
     String currentUser = RegistryUtils.currentUser();
-    LOG.info("Running command as user {}", currentUser);
+    LOG.error("Temp", new RuntimeException());
 
     Path dependencyLibTarGzip;
     if (destinationFolder == null) {
@@ -1692,7 +1692,7 @@ public class ServiceClient extends AppAdminClient implements SliderExitCodes,
       } finally {
         if (tempLibTarGzipFile != null) {
           if (!tempLibTarGzipFile.delete()) {
-            LOG.warn("Failed to delete tmp file {}", tempLibTarGzipFile);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

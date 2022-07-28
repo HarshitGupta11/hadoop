@@ -168,7 +168,7 @@ public class SelfRenewingLease {
      */
     @Override
     public void run() {
-      LOG.debug("Starting lease keep-alive thread.");
+      LOG.error("Temp", new RuntimeException());
       AccessCondition accessCondition =
           AccessCondition.generateEmptyCondition();
       accessCondition.setLeaseID(leaseID);

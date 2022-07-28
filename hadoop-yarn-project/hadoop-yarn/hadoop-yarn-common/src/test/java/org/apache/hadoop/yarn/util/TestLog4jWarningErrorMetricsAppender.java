@@ -65,13 +65,13 @@ public class TestLog4jWarningErrorMetricsAppender {
         LOG.error(message);
         break;
       case Level.WARN_INT:
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         break;
       case Level.INFO_INT:
-        LOG.info(message);
+        LOG.error("Temp", new RuntimeException());
         break;
       case Level.DEBUG_INT:
-        LOG.debug(message);
+        LOG.error("Temp", new RuntimeException());
         break;
       case Level.TRACE_INT:
         LOG.trace(message);

@@ -117,11 +117,11 @@ public class TestSwiftFileSystemPartitionedUploads extends
 
       Header[] headers = fs.getStore().getObjectHeaders(path, true);
       for (Header header : headers) {
-        LOG.info(header.toString());
+        LOG.error("Temp", new RuntimeException());
       }
 
       byte[] dest = readDataset(fs, path, len);
-      LOG.info("Read dataset from " + path + ": data length =" + len);
+      LOG.error("Temp", new RuntimeException());
       //compare data
       SwiftTestUtils.compareByteArrays(src, dest, len);
       FileStatus status;
@@ -193,11 +193,11 @@ public class TestSwiftFileSystemPartitionedUploads extends
 
       Header[] headers = fs.getStore().getObjectHeaders(path, true);
       for (Header header : headers) {
-        LOG.info(header.toString());
+        LOG.error("Temp", new RuntimeException());
       }
 
       byte[] dest = readDataset(fs, path, len);
-      LOG.info("Read dataset from " + path + ": data length =" + len);
+      LOG.error("Temp", new RuntimeException());
       //compare data
       SwiftTestUtils.compareByteArrays(src, dest, len);
       FileStatus status = fs.getFileStatus(path);

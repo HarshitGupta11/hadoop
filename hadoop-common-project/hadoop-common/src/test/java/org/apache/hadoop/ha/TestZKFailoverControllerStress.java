@@ -75,7 +75,7 @@ public class TestZKFailoverControllerStress extends ClientBaseWithFixes {
       int to = (i + 1) % 2;
 
       // Expire one service, it should fail over to the other
-      LOG.info("Failing over via expiration from " + from + " to " + to);
+      LOG.error("Temp", new RuntimeException());
       cluster.expireAndVerifyFailover(from, to);
 
       i++;
@@ -150,7 +150,7 @@ public class TestZKFailoverControllerStress extends ClientBaseWithFixes {
     @Override
     public Object answer(InvocationOnMock invocation) throws Throwable {
       if (r.nextBoolean()) {
-        LOG.info("Throwing an exception for svc " + svcIdx);
+        LOG.error("Temp", new RuntimeException());
         throw new HealthCheckFailedException("random failure");
       }
       return invocation.callRealMethod();

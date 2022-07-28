@@ -104,7 +104,7 @@ public class InMemoryAliasMapProtocolClientSideTranslatorPB
           aliasMaps.add(NameNodeProxies
               .createProxy(newConf, namenodeURI, InMemoryAliasMapProtocol.class)
               .getProxy());
-          LOG.info("Connected to InMemoryAliasMap at {}", namenodeURI);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException | URISyntaxException e) {
         LOG.warn("Exception in connecting to InMemoryAliasMap for nameservice "
@@ -119,7 +119,7 @@ public class InMemoryAliasMapProtocolClientSideTranslatorPB
       try {
         aliasMaps.add(NameNodeProxies
             .createProxy(conf, uri, InMemoryAliasMapProtocol.class).getProxy());
-        LOG.info("Connected to InMemoryAliasMap at {}", uri);
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException e) {
         LOG.warn("Exception in connecting to InMemoryAliasMap at {}: {}", uri,
             e);

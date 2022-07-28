@@ -281,7 +281,7 @@ public class TestContainerExecutor {
                 Integer.toString(writtenExitCode),
                 Charset.defaultCharset(), false);
           } catch (IOException ioe) {
-            LOG.warn("Could not write pid file");
+            LOG.error("Temp", new RuntimeException());
           }
         }
       };

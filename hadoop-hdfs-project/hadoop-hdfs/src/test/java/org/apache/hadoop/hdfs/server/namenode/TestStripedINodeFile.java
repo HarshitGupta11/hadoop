@@ -130,7 +130,7 @@ public class TestStripedINodeFile {
       fail("INodeFile construction should fail when both replication and " +
           "ECPolicy requested!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -140,7 +140,7 @@ public class TestStripedINodeFile {
       fail("INodeFile construction should fail when EC Policy param not " +
           "provided for striped layout!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -151,7 +151,7 @@ public class TestStripedINodeFile {
       fail("INodeFile construction should fail when EC Policy is " +
           "not in the supported list!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     final Byte ecPolicyID = StripedFileTestUtil.getDefaultECPolicy().getId();
@@ -162,7 +162,7 @@ public class TestStripedINodeFile {
       fail("INodeFile construction should fail when replication param is " +
           "provided for striped layout!");
     } catch (IllegalArgumentException iae) {
-      LOG.info("Expected exception: ", iae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     inodeFile = new INodeFile(HdfsConstants.GRANDFATHER_INODE_ID,

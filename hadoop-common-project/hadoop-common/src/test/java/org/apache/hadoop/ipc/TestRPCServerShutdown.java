@@ -96,7 +96,7 @@ public class TestRPCServerShutdown extends TestRpcBase {
             ServiceException se = (ServiceException) e.getCause();
             assertTrue("Unexpected exception: " + se,
                 se.getCause() instanceof IOException);
-            LOG.info("Expected exception", e.getCause());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       } finally {

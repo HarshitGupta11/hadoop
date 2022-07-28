@@ -60,7 +60,7 @@ public class TestFileInputFormat {
   
   public TestFileInputFormat(int numThreads) {
     this.numThreads = numThreads;
-    LOG.info("Running with numThreads: " + numThreads);
+    LOG.error("Temp", new RuntimeException());
   }
   
   @Parameters
@@ -71,7 +71,7 @@ public class TestFileInputFormat {
   
   @Before
   public void setup() throws IOException {
-    LOG.info("Using Test Dir: " + TEST_ROOT_DIR);
+    LOG.error("Temp", new RuntimeException());
     localFs = FileSystem.getLocal(new Configuration());
     localFs.delete(TEST_ROOT_DIR, true);
     localFs.mkdirs(TEST_ROOT_DIR);

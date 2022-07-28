@@ -240,7 +240,7 @@ public abstract class OCIContainerRuntime implements LinuxContainerRuntime {
     if (!hostPidNamespaceEnabled) {
       String message = "Host pid namespace being requested but this is not "
           + "enabled on this cluster";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(message);
     }
 
@@ -300,7 +300,7 @@ public abstract class OCIContainerRuntime implements LinuxContainerRuntime {
     if (!privilegedContainersEnabledOnCluster) {
       String message = "Privileged container being requested but privileged "
           + "containers are not enabled on this cluster";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(message);
     }
 
@@ -312,7 +312,7 @@ public abstract class OCIContainerRuntime implements LinuxContainerRuntime {
     if (!getPrivilegedContainersAcl().isUserAllowed(submitterUgi)) {
       String message = "Cannot launch privileged container. Submitting user ("
           + submittingUser + ") fails ACL check.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(message);
     }
 

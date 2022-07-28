@@ -63,7 +63,7 @@ public class BlockStorageMovementTracker implements Runnable {
             .take();
         if (future != null) {
           BlockMovementAttemptFinished result = future.get();
-          LOG.debug("Completed block movement. {}", result);
+          LOG.error("Temp", new RuntimeException());
           if (running && blksMovementsStatusHandler != null) {
             // handle completed block movement.
             blksMovementsStatusHandler.handle(result);

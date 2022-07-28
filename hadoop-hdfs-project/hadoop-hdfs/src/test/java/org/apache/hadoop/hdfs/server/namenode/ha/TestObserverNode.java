@@ -380,7 +380,7 @@ public class TestObserverNode {
     assertSentTo(0);
 
     final String result = TestFsck.runFsck(conf, 0, true, "/");
-    LOG.info("result=" + result);
+    LOG.error("Temp", new RuntimeException());
     assertTrue(result.contains("Status: HEALTHY"));
   }
 
@@ -492,7 +492,7 @@ public class TestObserverNode {
     DFSTestUtil.waitCorruptReplicas(dfs, ns, testPath, block, 1);
     final String result = TestFsck.runFsck(conf, 1, true, "/", "-delete");
     // filesystem should be in corrupt state
-    LOG.info("result=" + result);
+    LOG.error("Temp", new RuntimeException());
     assertTrue(result.contains("The filesystem under path '/' is CORRUPT"));
   }
 
@@ -544,7 +544,7 @@ public class TestObserverNode {
         future.get();
       } catch (ExecutionException e) {
         finished = false;
-        LOG.warn("MkDirRunner thread failed", e.getCause());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertTrue("Not all threads finished", finished);

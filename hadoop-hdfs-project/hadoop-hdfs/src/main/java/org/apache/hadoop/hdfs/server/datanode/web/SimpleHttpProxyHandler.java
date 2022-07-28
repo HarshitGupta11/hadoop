@@ -81,7 +81,7 @@ class SimpleHttpProxyHandler extends SimpleChannelInboundHandler<HttpRequest> {
           if (future.isSuccess()) {
             ctx.channel().read();
           } else {
-            LOG.debug("Proxy failed. Cause: ", future.cause());
+            LOG.error("Temp", new RuntimeException());
             future.channel().close();
           }
         }
@@ -90,7 +90,7 @@ class SimpleHttpProxyHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-      LOG.debug("Proxy for " + uri + " failed. cause: ", cause);
+      LOG.error("Temp", new RuntimeException());
       closeOnFlush(ctx.channel());
     }
   }
@@ -126,7 +126,7 @@ class SimpleHttpProxyHandler extends SimpleChannelInboundHandler<HttpRequest> {
           DefaultHttpResponse resp = new DefaultHttpResponse(HTTP_1_1,
             INTERNAL_SERVER_ERROR);
           resp.headers().set(CONNECTION, Values.CLOSE);
-          LOG.info("Proxy " + uri + " failed. Cause: ", future.cause());
+          LOG.error("Temp", new RuntimeException());
           ctx.writeAndFlush(resp).addListener(ChannelFutureListener.CLOSE);
           client.close();
         }
@@ -145,7 +145,7 @@ class SimpleHttpProxyHandler extends SimpleChannelInboundHandler<HttpRequest> {
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Proxy for " + uri + " failed. cause: ", cause);
+      LOG.error("Temp", new RuntimeException());
     }
     if (proxiedChannel != null) {
       proxiedChannel.close();

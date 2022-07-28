@@ -76,9 +76,9 @@ public class TestCombineFileInputFormat {
       }
     };
     final int SIZE_SPLITS = 1;
-    LOG.info("Trying to getSplits with splits = " + SIZE_SPLITS);
+    LOG.error("Temp", new RuntimeException());
     InputSplit[] splits = format.getSplits(job, SIZE_SPLITS);
-    LOG.info("Got getSplits = " + splits.length);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("splits == " + SIZE_SPLITS, SIZE_SPLITS, splits.length);
   }
 }

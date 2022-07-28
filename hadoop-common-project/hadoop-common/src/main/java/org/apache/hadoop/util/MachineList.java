@@ -113,14 +113,14 @@ public class MachineList {
               subnet.setInclusiveHostCount(true);
               cidrs.add(subnet.getInfo());
             } catch (IllegalArgumentException e) {
-              LOG.warn("Invalid CIDR syntax : " + hostEntry);
+              LOG.error("Temp", new RuntimeException());
               throw e;
             }
           } else {
             try {
               addrs.add(addressFactory.getByName(hostEntry));
             } catch (UnknownHostException e) {
-              LOG.warn(e.toString());
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }

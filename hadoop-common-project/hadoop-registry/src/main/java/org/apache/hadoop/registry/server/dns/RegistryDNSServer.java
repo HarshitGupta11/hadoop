@@ -161,7 +161,7 @@ public class RegistryDNSServer extends CompositeService {
       // create listener for record deletions
 
     } catch (Exception e) {
-      LOG.warn("Unable to monitor the registry.  DNS support disabled.", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -179,7 +179,7 @@ public class RegistryDNSServer extends CompositeService {
     @Override
     public void exec(String path, ServiceRecord record) throws IOException {
       if (record != null) {
-        LOG.info("Registering DNS records for {}", path);
+        LOG.error("Temp", new RuntimeException());
         registryDNS.register(path, record);
       }
     }
@@ -192,7 +192,7 @@ public class RegistryDNSServer extends CompositeService {
     @Override
     public void exec(String path, ServiceRecord record) throws IOException {
       if (record != null) {
-        LOG.info("Deleting DNS records for {}", path);
+        LOG.error("Temp", new RuntimeException());
         registryDNS.delete(path, record);
       }
     }

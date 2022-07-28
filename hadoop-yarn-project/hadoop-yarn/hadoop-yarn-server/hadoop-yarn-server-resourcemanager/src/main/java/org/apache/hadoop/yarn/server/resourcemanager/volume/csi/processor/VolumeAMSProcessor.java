@@ -68,7 +68,7 @@ public class VolumeAMSProcessor implements ApplicationMasterServiceProcessor {
   @Override
   public void init(ApplicationMasterServiceContext amsContext,
       ApplicationMasterServiceProcessor nextProcessor) {
-    LOG.info("Initializing CSI volume processor");
+    LOG.error("Temp", new RuntimeException());
     this.nextAMSProcessor = nextProcessor;
     this.volumeManager = ((RMContext) amsContext).getVolumeManager();
   }
@@ -98,7 +98,7 @@ public class VolumeAMSProcessor implements ApplicationMasterServiceProcessor {
               + " result details: " + volumeResult.getBriefMessage());
         }
       } catch (TimeoutException | InterruptedException | ExecutionException e) {
-        LOG.warn("Volume provisioning task failed", e);
+        LOG.error("Temp", new RuntimeException());
         throw new VolumeException("Volume provisioning task failed", e);
       }
     }

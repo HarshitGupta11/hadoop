@@ -53,7 +53,7 @@ public final class YarnConfigurationStoreFactory {
         Class<? extends YarnConfigurationStore> storeClass =
             conf.getClass(YarnConfiguration.SCHEDULER_CONFIGURATION_STORE_CLASS,
             InMemoryConfigurationStore.class, YarnConfigurationStore.class);
-        LOG.info("Using YarnConfigurationStore implementation - " + storeClass);
+        LOG.error("Temp", new RuntimeException());
         return ReflectionUtils.newInstance(storeClass, conf);
     }
   }

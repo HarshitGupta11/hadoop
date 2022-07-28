@@ -202,7 +202,7 @@ class OBSFsDFSListing extends ObjectListing {
           continue;
         }
 
-        LOG.debug("common prefix: " + commonPrefix);
+        LOG.error("Temp", new RuntimeException());
         if (newResultNum < maxKeyNum) {
           addCommonPrefixIntoObjectList(
               oneLevelListRequests.get(i).getBucketName(),

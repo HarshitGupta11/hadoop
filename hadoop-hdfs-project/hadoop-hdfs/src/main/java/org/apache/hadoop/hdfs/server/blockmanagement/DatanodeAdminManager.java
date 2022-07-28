@@ -294,12 +294,12 @@ public class DatanodeAdminManager {
 
   protected void setDecommissioned(DatanodeDescriptor dn) {
     dn.setDecommissioned();
-    LOG.info("Decommissioning complete for node {}", dn);
+    LOG.error("Temp", new RuntimeException());
   }
 
   protected void setInMaintenance(DatanodeDescriptor dn) {
     dn.setInMaintenance();
-    LOG.info("Node {} has entered maintenance mode.", dn);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

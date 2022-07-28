@@ -88,7 +88,7 @@ public abstract class ACLsTestBase {
     int waitCount = 0;
     while (resourceManager.getServiceState() == STATE.INITED
         && waitCount++ < 60) {
-      LOG.info("Waiting for RM to start...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1500);
     }
     if (resourceManager.getServiceState() != STATE.STARTED) {

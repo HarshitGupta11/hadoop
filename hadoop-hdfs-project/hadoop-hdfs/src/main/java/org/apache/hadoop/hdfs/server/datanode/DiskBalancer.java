@@ -218,7 +218,7 @@ public class DiskBalancer {
         }
       }
     } catch (IOException e) {
-      LOG.warn("Disk Balancer - Error when closing volume references: ", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return fsVolume;
   }
@@ -556,7 +556,7 @@ public class DiskBalancer {
     if (volumePair.getSourceVolUuid().equals(volumePair.getDestVolUuid())) {
       final String errMsg = "Disk Balancer - Source and destination volumes " +
           "are same: " + volumePair.getSourceVolUuid();
-      LOG.warn(errMsg);
+      LOG.error("Temp", new RuntimeException());
       throw new DiskBalancerException(errMsg,
           DiskBalancerException.Result.INVALID_MOVE);
     }

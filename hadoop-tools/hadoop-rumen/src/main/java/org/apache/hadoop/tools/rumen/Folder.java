@@ -191,7 +191,7 @@ public class Folder extends Configured implements Tool {
       if (debug) {
         randomSeed = random.nextLong();
 
-        LOG.warn("This run effectively has a -seed of " + randomSeed);
+        LOG.error("Temp", new RuntimeException());
 
         random = new Random(randomSeed);
 
@@ -266,7 +266,7 @@ public class Folder extends Configured implements Tool {
                     " set to " + startsAfter + "ms.");
           return EMPTY_JOB_TRACE;
         }
-        LOG.info("The first job has a submit time of " + job.getSubmitTime());
+        LOG.error("Temp", new RuntimeException());
       }
 
       firstJobSubmitTime = job.getSubmitTime();
@@ -280,7 +280,7 @@ public class Folder extends Configured implements Tool {
       Outputter<LoggedJob> tempGen = null;
 
       if (debug) {
-        LOG.debug("The first job has a submit time of " + firstJobSubmitTime);
+        LOG.error("Temp", new RuntimeException());
       }
 
       final Configuration conf = getConf();
@@ -308,7 +308,7 @@ public class Folder extends Configured implements Tool {
                         + ".json.gz");
 
                 if (debug) {
-                  LOG.debug("The next segment name is " + nextSegment);
+                  LOG.error("Temp", new RuntimeException());
                 }
 
                 FileSystem fs = nextSegment.getFileSystem(conf);
@@ -397,7 +397,7 @@ public class Folder extends Configured implements Tool {
       if (debug) {
         LOG.warn("run: timeDilation = " + timeDilation + ", concentration = "
             + concentration + ", foldingRatio = " + foldingRatio);
-        LOG.warn("The transcription probability is " + tProbability);
+        LOG.error("Temp", new RuntimeException());
       }
 
       transcriptionRateInteger = (int) Math.floor(tProbability);
@@ -453,7 +453,7 @@ public class Folder extends Configured implements Tool {
           next.second().close();
 
           if (debug) {
-            LOG.debug("That input engine is depleted.");
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           adjustJobTimes(replacement);

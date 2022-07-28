@@ -250,7 +250,7 @@ public class TestApplicationCleanup {
     if (contsToClean.isEmpty()) {
       LOG.error("Failed to get any containers to cleanup");
     } else {
-      LOG.info("Got cleanup for " + contsToClean.get(0));
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertEquals(1, cleanedConts);
   }

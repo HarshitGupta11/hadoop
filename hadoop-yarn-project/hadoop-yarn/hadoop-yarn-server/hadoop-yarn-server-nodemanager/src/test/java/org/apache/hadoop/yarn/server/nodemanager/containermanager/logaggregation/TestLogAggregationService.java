@@ -1038,7 +1038,7 @@ public class TestLogAggregationService extends BaseContainerManagerTest {
       valueStream = reader.next(key);
 
       while (valueStream != null) {
-        LOG.info("Found container " + key.toString());
+        LOG.error("Temp", new RuntimeException());
         Map<String, String> perContainerMap = new HashMap<String, String>();
         logMap.put(key.toString(), perContainerMap);
 
@@ -1067,9 +1067,9 @@ public class TestLogAggregationService extends BaseContainerManagerTest {
               Arrays.copyOfRange(writtenLines, 3, writtenLines.length), "\n");
             perContainerMap.put(fileType, logContents);
 
-            LOG.info("LogType:" + fileType);
-            LOG.info("LogLength:" + fileLength);
-            LOG.info("Log Contents:\n" + perContainerMap.get(fileType));
+            LOG.error("Temp", new RuntimeException());
+            LOG.error("Temp", new RuntimeException());
+            LOG.error("Temp", new RuntimeException());
           } catch (EOFException eof) {
             break;
           }
@@ -1093,7 +1093,7 @@ public class TestLogAggregationService extends BaseContainerManagerTest {
           String expectedValue =
               containerStr + " Hello " + fileType + "!\nEnd of LogType:"
                   + fileType;
-          LOG.info("Expected log-content : " + new String(expectedValue));
+          LOG.error("Temp", new RuntimeException());
           String foundValue = thisContainerMap.remove(fileType);
           Assert.assertNotNull(cId + " " + fileType
               + " not present in aggregated log-file!", foundValue);
@@ -2636,7 +2636,7 @@ public class TestLogAggregationService extends BaseContainerManagerTest {
           FileContext.getFileContext(qualifiedLogDir.toUri(), this.conf)
             .listStatus(appLogDir);
     } catch (FileNotFoundException fnf) {
-      LOG.info("Context file not vailable: " + fnf);
+      LOG.error("Temp", new RuntimeException());
       return -1;
     }
     int count = 0;
@@ -2646,17 +2646,17 @@ public class TestLogAggregationService extends BaseContainerManagerTest {
       if (filename.contains(LogAggregationUtils.TMP_FILE_SUFFIX)
           || (lastLogFile != null && filename.contains(lastLogFile)
               && sizeLimited)) {
-        LOG.info("fileName :" + filename);
-        LOG.info("lastLogFile :" + lastLogFile);
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         return -1;
       }
       if (filename.contains(LogAggregationUtils
         .getNodeString(logAggregationService.getNodeId()))) {
-        LOG.info("Node list filename :" + filename);
+        LOG.error("Temp", new RuntimeException());
         count++;
       }
     }
-    LOG.info("File Count :" + count);
+    LOG.error("Temp", new RuntimeException());
     return count;
   }
 

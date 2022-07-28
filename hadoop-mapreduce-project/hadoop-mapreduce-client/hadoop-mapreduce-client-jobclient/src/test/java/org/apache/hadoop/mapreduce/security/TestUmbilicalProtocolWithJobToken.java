@@ -102,7 +102,7 @@ public class TestUmbilicalProtocolWithJobToken {
     Token<JobTokenIdentifier> token = new Token<JobTokenIdentifier>(tokenId, sm);
     sm.addTokenForJob(jobId, token);
     SecurityUtil.setTokenService(token, addr);
-    LOG.info("Service address for token is " + token.getService());
+    LOG.error("Temp", new RuntimeException());
     current.addToken(token);
     current.doAs(new PrivilegedExceptionAction<Object>() {
       @Override

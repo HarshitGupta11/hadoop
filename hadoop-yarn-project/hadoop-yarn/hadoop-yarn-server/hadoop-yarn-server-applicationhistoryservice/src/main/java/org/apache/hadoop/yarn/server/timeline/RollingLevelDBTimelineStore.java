@@ -326,7 +326,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
     options.writeBufferSize(conf.getInt(
         TIMELINE_SERVICE_LEVELDB_WRITE_BUFFER_SIZE,
         DEFAULT_TIMELINE_SERVICE_LEVELDB_WRITE_BUFFER_SIZE));
-    LOG.info("Using leveldb path " + dbPath);
+    LOG.error("Temp", new RuntimeException());
     domaindb = factory.open(new File(domainDBPath.toString()), options);
     entitydb = new RollingLevelDB(ENTITY);
     entitydb.init(conf);
@@ -360,7 +360,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
   protected void serviceStop() throws Exception {
     if (deletionThread != null) {
       deletionThread.interrupt();
-      LOG.info("Waiting for deletion thread to complete its current action");
+      LOG.error("Temp", new RuntimeException());
       try {
         deletionThread.join();
       } catch (InterruptedException e) {
@@ -401,7 +401,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
         } catch (IOException e) {
           LOG.error(e.toString());
         } catch (InterruptedException e) {
-          LOG.info("Deletion thread received interrupt, exiting");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
@@ -413,7 +413,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
       EnumSet<Field> fields) throws IOException {
     Long revStartTime = getStartTimeLong(entityId, entityType);
     if (revStartTime == null) {
-      LOG.debug("Could not find start time for {} {} ", entityType, entityId);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     byte[] prefix = KeyBuilder.newInstance().add(entityType)
@@ -422,7 +422,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
 
     DB db = entitydb.getDBForStartTime(revStartTime);
     if (db == null) {
-      LOG.debug("Could not find db for {} {} ", entityType, entityId);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     try (DBIterator iterator = db.iterator()) {
@@ -1162,7 +1162,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
 
   @Override
   public TimelinePutResponse put(TimelineEntities entities) {
-    LOG.debug("Starting put");
+    LOG.error("Temp", new RuntimeException());
     TimelinePutResponse response = new TimelinePutResponse();
     TreeMap<Long, RollingWriteBatch> entityUpdates =
         new TreeMap<Long, RollingWriteBatch>();
@@ -1375,7 +1375,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
           // Fall back to 2.24 parser
           o = fstConf224.asObject(value);
         } catch (Exception e) {
-          LOG.warn("Error while decoding " + tstype, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       if (o == null) {
@@ -1411,7 +1411,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
         value = fstConf224.asObject(bytes);
         entity.addPrimaryFilter(name, value);
       } catch (Exception e) {
-        LOG.warn("Error while decoding " + name, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1487,7 +1487,7 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
 
   @VisibleForTesting
   long evictOldStartTimes(long minStartTime) throws IOException {
-    LOG.info("Searching for start times to evict earlier than " + minStartTime);
+    LOG.error("Temp", new RuntimeException());
 
     long batchSize = 0;
     long totalCount = 0;
@@ -1602,12 +1602,12 @@ public class RollingLevelDBTimelineStore extends AbstractService implements
    */
   private void checkVersion() throws IOException {
     Version loadedVersion = loadVersion();
-    LOG.info("Loaded timeline store version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion.equals(getCurrentVersion())) {
       return;
     }
     if (loadedVersion.isCompatibleTo(getCurrentVersion())) {
-      LOG.info("Storing timeline store version info " + getCurrentVersion());
+      LOG.error("Temp", new RuntimeException());
       dbStoreVersion(CURRENT_VERSION_INFO);
     } else {
       String incompatibleMessage = "Incompatible version for timeline store: "

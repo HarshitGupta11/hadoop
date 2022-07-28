@@ -106,15 +106,15 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "--keep_containers_across_application_attempts"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(TestDSFailedAppMaster.class.getName(),
         new Configuration(getYarnClusterConfiguration()));
 
     getDSClient().init(args);
 
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = getDSClient().run();
-    LOG.info("Client run completed. Result={}", result);
+    LOG.error("Temp", new RuntimeException());
     // application should succeed
     Assert.assertTrue(result);
   }
@@ -140,7 +140,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "2500"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     Configuration config = getYarnClusterConfiguration();
     config.setInt(YarnConfiguration.RM_AM_MAX_ATTEMPTS, 2);
     setAndGetDSClient(TestDSSleepingAppMaster.class.getName(),
@@ -148,10 +148,10 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
 
     getDSClient().init(args);
 
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = getDSClient().run();
 
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     // application should succeed
     Assert.assertTrue(result);
   }
@@ -177,7 +177,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "15000"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     Configuration config = getYarnClusterConfiguration();
     config.setInt(YarnConfiguration.RM_AM_MAX_ATTEMPTS, 2);
     setAndGetDSClient(TestDSSleepingAppMaster.class.getName(),
@@ -185,10 +185,10 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
 
     getDSClient().init(args);
 
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = getDSClient().run();
 
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     // application should be failed
     Assert.assertFalse(result);
   }
@@ -237,14 +237,14 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
     Assert.assertTrue(LOG_AM.isInfoEnabled());
     Assert.assertFalse(LOG_AM.isDebugEnabled());
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
     boolean initSuccess = getDSClient().init(args);
     Assert.assertTrue(initSuccess);
 
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = getDSClient().run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(verifyContainerLog(3, null, true, "DEBUG") > 10);
     //After DS is finished, the log level should be DEBUG
     Assert.assertTrue(LOG_Client.isInfoEnabled());
@@ -292,14 +292,14 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "1"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
     boolean initSuccess = getDSClient().init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
 
     boolean result = getDSClient().run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     List<String> expectedContent = new ArrayList<>();
     expectedContent.add("HADOOP YARN MAPREDUCE HDFS");
     verifyContainerLog(4, expectedContent, false, "");
@@ -321,7 +321,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
     // set the output to DEBUG level
     fileWriter.write("echo testDSShellWithShellScript");
     fileWriter.close();
-    LOG.info(customShellScript.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
     String[] args = createArgumentsWithAppName(
         "--num_containers",
         "1",
@@ -337,10 +337,10 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "1"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
     Assert.assertTrue(getDSClient().init(args));
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     assertTrue(getDSClient().run());
     List<String> expectedContent = new ArrayList<>();
     expectedContent.add("testDSShellWithShellScript");
@@ -351,12 +351,12 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
   public void testDSShellWithInvalidArgs() throws Exception {
     setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
     int appNameCounter = 0;
-    LOG.info("Initializing DS Client with no args");
+    LOG.error("Temp", new RuntimeException());
     LambdaTestUtils.intercept(IllegalArgumentException.class,
         "No args",
         () -> getDSClient().init(new String[]{}));
 
-    LOG.info("Initializing DS Client with no jar file");
+    LOG.error("Temp", new RuntimeException());
     String[] noJarArgs = createArgsWithPostFix(appNameCounter++,
         "--num_containers",
         "2",
@@ -372,7 +372,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "No jar",
         () -> getDSClient().init(argsNoJar));
 
-    LOG.info("Initializing DS Client with no shell command");
+    LOG.error("Temp", new RuntimeException());
     String[] noShellCmdArgs = createArgsWithPostFix(appNameCounter++,
         "--num_containers",
         "2",
@@ -385,7 +385,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "No shell command",
         () -> getDSClient().init(noShellCmdArgs));
 
-    LOG.info("Initializing DS Client with invalid no. of containers");
+    LOG.error("Temp", new RuntimeException());
 
     String[] numContainersArgs = createArgsWithPostFix(appNameCounter++,
         "--num_containers",
@@ -401,7 +401,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "Invalid no. of containers",
         () -> getDSClient().init(numContainersArgs));
 
-    LOG.info("Initializing DS Client with invalid no. of vcores");
+    LOG.error("Temp", new RuntimeException());
 
     String[] vCoresArgs = createArgsWithPostFix(appNameCounter++,
         "--num_containers",
@@ -426,7 +426,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
           getDSClient().run();
         });
 
-    LOG.info("Initializing DS Client with --shell_command and --shell_script");
+    LOG.error("Temp", new RuntimeException());
 
     String[] scriptAndCmdArgs = createArgsWithPostFix(appNameCounter++,
         "--num_containers",
@@ -470,7 +470,7 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
             + "to be executed by application master",
         () -> getDSClient().init(noShellCmdNoScriptArgs));
 
-    LOG.info("Initializing DS Client with invalid container_type argument");
+    LOG.error("Temp", new RuntimeException());
     String[] invalidTypeArgs = createArgsWithPostFix(appNameCounter++,
         "--num_containers",
         "2",
@@ -558,11 +558,11 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "128"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(ContainerLaunchFailAppMaster.class.getName(),
         new Configuration(getYarnClusterConfiguration()));
     Assert.assertTrue(getDSClient().init(args));
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(getDSClient().run());
   }
 
@@ -584,10 +584,10 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
         "--debug"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
     Assert.assertTrue(getDSClient().init(args));
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(getDSClient().run());
   }
 
@@ -676,10 +676,10 @@ public class TestDSTimelineV10 extends DistributedShellBaseTest {
     };
 
     for (int i = 0; i < args.length; ++i) {
-      LOG.info("Initializing DS Client[{}]", i);
+      LOG.error("Temp", new RuntimeException());
       setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
       Assert.assertTrue(getDSClient().init(args[i]));
-      LOG.info("Running DS Client[{}]", i);
+      LOG.error("Temp", new RuntimeException());
       LambdaTestUtils.intercept(Exception.class,
           () -> getDSClient().run());
     }

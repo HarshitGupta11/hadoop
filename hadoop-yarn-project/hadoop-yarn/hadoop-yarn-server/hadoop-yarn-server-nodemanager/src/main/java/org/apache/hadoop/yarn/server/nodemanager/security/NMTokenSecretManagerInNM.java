@@ -185,7 +185,7 @@ public class NMTokenSecretManagerInNM extends BaseNMTokenSecretManager {
     
     if (masterKeyToUse != null) {
       byte[] password = retrivePasswordInternal(identifier, masterKeyToUse);
-      LOG.debug("NMToken password retrieved successfully!!");
+      LOG.error("Temp", new RuntimeException());
       return password;
     }
 
@@ -248,7 +248,7 @@ public class NMTokenSecretManagerInNM extends BaseNMTokenSecretManager {
   }
   
   public synchronized void setNodeId(NodeId nodeId) {
-    LOG.debug("updating nodeId : {}", nodeId);
+    LOG.error("Temp", new RuntimeException());
     this.nodeId = nodeId;
   }
   

@@ -152,7 +152,7 @@ public class TestFindClass extends Assert {
     //here the content should be done
     out.flush();
     String body = baos.toString("UTF8");
-    LOG.info(LOG4J_PROPERTIES + " =\n" + body);
+    LOG.error("Temp", new RuntimeException());
     assertTrue(body.contains("Apache"));
   }
   

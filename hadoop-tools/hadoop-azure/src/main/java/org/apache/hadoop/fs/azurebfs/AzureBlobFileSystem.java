@@ -123,7 +123,7 @@ public class AzureBlobFileSystem extends FileSystem
     super.initialize(uri, configuration);
     setConf(configuration);
 
-    LOG.debug("Initializing AzureBlobFileSystem for {}", uri);
+    LOG.error("Temp", new RuntimeException());
 
     this.uri = URI.create(uri.getScheme() + "://" + uri.getAuthority());
     abfsCounters = new AbfsCountersImpl(uri);
@@ -149,16 +149,16 @@ public class AzureBlobFileSystem extends FileSystem
       this.delegationTokenEnabled = abfsConfiguration.isDelegationTokenManagerEnabled();
 
       if (this.delegationTokenEnabled) {
-        LOG.debug("Initializing DelegationTokenManager for {}", uri);
+        LOG.error("Temp", new RuntimeException());
         this.delegationTokenManager = abfsConfiguration.getDelegationTokenManager();
         delegationTokenManager.bind(getUri(), configuration);
-        LOG.debug("Created DelegationTokenManager {}", delegationTokenManager);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
     AbfsClientThrottlingIntercept.initializeSingleton(abfsConfiguration.isAutoThrottlingEnabled());
 
-    LOG.debug("Initializing AzureBlobFileSystem for {} complete", uri);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -183,7 +183,7 @@ public class AzureBlobFileSystem extends FileSystem
 
   @Override
   public FSDataInputStream open(final Path path, final int bufferSize) throws IOException {
-    LOG.debug("AzureBlobFileSystem.open path: {} bufferSize: {}", path, bufferSize);
+    LOG.error("Temp", new RuntimeException());
     // bufferSize is unused.
     return open(path, Optional.empty());
   }
@@ -206,7 +206,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   protected CompletableFuture<FSDataInputStream> openFileWithOptions(
       final Path path, final OpenFileParameters parameters) throws IOException {
-    LOG.debug("AzureBlobFileSystem.openFileWithOptions path: {}", path);
+    LOG.error("Temp", new RuntimeException());
     AbstractFSBuilderImpl.rejectUnknownMandatoryKeys(
         parameters.getMandatoryKeys(),
         Collections.emptySet(),
@@ -304,7 +304,7 @@ public class AzureBlobFileSystem extends FileSystem
   }
 
   public boolean rename(final Path src, final Path dst) throws IOException {
-    LOG.debug("AzureBlobFileSystem.rename src: {} dst: {}", src, dst);
+    LOG.error("Temp", new RuntimeException());
     statIncrement(CALL_RENAME);
 
     trailingPeriodCheck(dst);
@@ -355,7 +355,7 @@ public class AzureBlobFileSystem extends FileSystem
       abfsStore.rename(qualifiedSrcPath, qualifiedDstPath);
       return true;
     } catch(AzureBlobFileSystemException ex) {
-      LOG.debug("Rename operation failed. ", ex);
+      LOG.error("Temp", new RuntimeException());
       checkException(
               src,
               ex,
@@ -489,7 +489,7 @@ public class AzureBlobFileSystem extends FileSystem
     }
     // does all the delete-on-exit calls, and may be slow.
     super.close();
-    LOG.debug("AzureBlobFileSystem.close");
+    LOG.error("Temp", new RuntimeException());
     if (getConf() != null) {
       String iostatisticsLoggingLevel =
           getConf().getTrimmed(IOSTATISTICS_LOGGING_LEVEL,
@@ -499,13 +499,13 @@ public class AzureBlobFileSystem extends FileSystem
     IOUtils.cleanupWithLogger(LOG, abfsStore, delegationTokenManager);
     this.isClosed = true;
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Closing Abfs: {}", toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
   @Override
   public FileStatus getFileStatus(final Path f) throws IOException {
-    LOG.debug("AzureBlobFileSystem.getFileStatus path: {}", f);
+    LOG.error("Temp", new RuntimeException());
     statIncrement(CALL_GET_FILE_STATUS);
     Path qualifiedPath = makeQualified(f);
 
@@ -525,7 +525,7 @@ public class AzureBlobFileSystem extends FileSystem
    * @throws IOException on any exception while breaking the lease
    */
   public void breakLease(final Path f) throws IOException {
-    LOG.debug("AzureBlobFileSystem.breakLease path: {}", f);
+    LOG.error("Temp", new RuntimeException());
 
     Path qualifiedPath = makeQualified(f);
 
@@ -629,7 +629,7 @@ public class AzureBlobFileSystem extends FileSystem
 
   @Override
   protected void finalize() throws Throwable {
-    LOG.debug("finalize() called.");
+    LOG.error("Temp", new RuntimeException());
     close();
     super.finalize();
   }
@@ -651,7 +651,7 @@ public class AzureBlobFileSystem extends FileSystem
   }
 
   private boolean deleteRoot() throws IOException {
-    LOG.debug("Deleting root content");
+    LOG.error("Temp", new RuntimeException());
 
     final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
@@ -737,7 +737,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public void setXAttr(final Path path, final String name, final byte[] value, final EnumSet<XAttrSetFlag> flag)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.setXAttr path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (name == null || name.isEmpty() || value == null) {
       throw new IllegalArgumentException("A valid name and value must be specified.");
@@ -772,7 +772,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public byte[] getXAttr(final Path path, final String name)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.getXAttr path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (name == null || name.isEmpty()) {
       throw new IllegalArgumentException("A valid name must be specified.");
@@ -808,7 +808,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public void setPermission(final Path path, final FsPermission permission)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.setPermission path: {}", path);
+    LOG.error("Temp", new RuntimeException());
     if (!getIsNamespaceEnabled()) {
       super.setPermission(path, permission);
       return;
@@ -841,7 +841,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public void modifyAclEntries(final Path path, final List<AclEntry> aclSpec)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.modifyAclEntries path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!getIsNamespaceEnabled()) {
       throw new UnsupportedOperationException(
@@ -874,7 +874,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public void removeAclEntries(final Path path, final List<AclEntry> aclSpec)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.removeAclEntries path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!getIsNamespaceEnabled()) {
       throw new UnsupportedOperationException(
@@ -903,7 +903,7 @@ public class AzureBlobFileSystem extends FileSystem
    */
   @Override
   public void removeDefaultAcl(final Path path) throws IOException {
-    LOG.debug("AzureBlobFileSystem.removeDefaultAcl path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!getIsNamespaceEnabled()) {
       throw new UnsupportedOperationException(
@@ -930,7 +930,7 @@ public class AzureBlobFileSystem extends FileSystem
    */
   @Override
   public void removeAcl(final Path path) throws IOException {
-    LOG.debug("AzureBlobFileSystem.removeAcl path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!getIsNamespaceEnabled()) {
       throw new UnsupportedOperationException(
@@ -960,7 +960,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public void setAcl(final Path path, final List<AclEntry> aclSpec)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.setAcl path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!getIsNamespaceEnabled()) {
       throw new UnsupportedOperationException(
@@ -990,7 +990,7 @@ public class AzureBlobFileSystem extends FileSystem
    */
   @Override
   public AclStatus getAclStatus(final Path path) throws IOException {
-    LOG.debug("AzureBlobFileSystem.getAclStatus path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!getIsNamespaceEnabled()) {
       throw new UnsupportedOperationException(
@@ -1022,7 +1022,7 @@ public class AzureBlobFileSystem extends FileSystem
    */
   @Override
   public void access(final Path path, final FsAction mode) throws IOException {
-    LOG.debug("AzureBlobFileSystem.access path : {}, mode : {}", path, mode);
+    LOG.error("Temp", new RuntimeException());
     Path qualifiedPath = makeQualified(path);
     try {
       this.abfsStore.access(qualifiedPath, mode);
@@ -1047,7 +1047,7 @@ public class AzureBlobFileSystem extends FileSystem
   @Override
   public RemoteIterator<FileStatus> listStatusIterator(Path path)
       throws IOException {
-    LOG.debug("AzureBlobFileSystem.listStatusIterator path : {}", path);
+    LOG.error("Temp", new RuntimeException());
     if (abfsStore.getAbfsConfiguration().enableAbfsListIterator()) {
       AbfsListStatusRemoteIterator abfsLsItr =
           new AbfsListStatusRemoteIterator(getFileStatus(path), abfsStore);
@@ -1061,7 +1061,7 @@ public class AzureBlobFileSystem extends FileSystem
     try {
       return getFileStatus(f);
     } catch (IOException ex) {
-      LOG.debug("File not found {}", f);
+      LOG.error("Temp", new RuntimeException());
       statIncrement(ERROR_IGNORED);
       return null;
     }

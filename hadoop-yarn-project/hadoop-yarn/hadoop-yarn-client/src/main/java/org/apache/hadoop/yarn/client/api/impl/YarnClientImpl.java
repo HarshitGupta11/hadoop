@@ -329,7 +329,7 @@ public class YarnClientImpl extends YarnClient {
         addLogAggregationDelegationToken(appContext.getAMContainerSpec());
       }
     } catch (Exception e) {
-      LOG.warn("Failed to obtain delegation token for Log Aggregation Path", e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     //TODO: YARN-1763:Handle RM failovers during the submitApplication call.
@@ -353,7 +353,7 @@ public class YarnClientImpl extends YarnClient {
             throw new YarnException("Failed to submit " + applicationId + 
                 " to YARN : " + appReport.getDiagnostics());
           }
-          LOG.info("Submitted application " + applicationId);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
 
@@ -408,7 +408,7 @@ public class YarnClientImpl extends YarnClient {
       throw new IOException(
           "Can't get Master Kerberos principal for use as renewer");
     }
-    LOG.debug("Delegation Token Renewer: " + masterPrincipal);
+    LOG.error("Temp", new RuntimeException());
 
     LogAggregationFileControllerFactory factory =
         new LogAggregationFileControllerFactory(conf);
@@ -527,7 +527,7 @@ public class YarnClientImpl extends YarnClient {
   @Override
   public void failApplicationAttempt(ApplicationAttemptId attemptId)
       throws YarnException, IOException {
-    LOG.info("Failing application attempt " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     FailApplicationAttemptRequest request =
         Records.newRecord(FailApplicationAttemptRequest.class);
     request.setApplicationAttemptId(attemptId);
@@ -560,7 +560,7 @@ public class YarnClientImpl extends YarnClient {
         KillApplicationResponse response =
             rmClient.forceKillApplication(request);
         if (response.getIsKillCompleted()) {
-          LOG.info("Killed application " + applicationId);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
 
@@ -987,7 +987,7 @@ public class YarnClientImpl extends YarnClient {
       try {
         containersListFromAHS = ahsV2Client.getContainers(applicationAttemptId);
       } catch (Exception e) {
-        LOG.warn("Got an error while fetching container report from ATSv2", e);
+        LOG.error("Temp", new RuntimeException());
         if (historyServiceEnabled) {
           containersListFromAHS = historyClient.getContainers(
               applicationAttemptId);
@@ -1080,7 +1080,7 @@ public class YarnClientImpl extends YarnClient {
   public void signalToContainer(ContainerId containerId,
       SignalContainerCommand command)
           throws YarnException, IOException {
-    LOG.info("Signalling container " + containerId + " with command " + command);
+    LOG.error("Temp", new RuntimeException());
     SignalContainerRequest request =
         SignalContainerRequest.newInstance(containerId, command);
     rmClient.signalToContainer(request);
@@ -1186,7 +1186,7 @@ public class YarnClientImpl extends YarnClient {
         client.stop();
       }
     } catch (WebSocketException e) {
-      LOG.debug("Websocket exception: " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     } catch (Throwable t) {
       LOG.error("Fail to shell to container: " + t.getMessage());
     }

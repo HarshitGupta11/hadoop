@@ -166,7 +166,7 @@ public class AuthoritativeAuditOperation extends AbstractStoreOperation {
       // we have the root entry or an authoritative a directory
       queue.add(baseData);
     } else {
-      LOG.info("Path represents file");
+      LOG.error("Temp", new RuntimeException());
       return Pair.of(0, 0);
     }
 
@@ -174,20 +174,20 @@ public class AuthoritativeAuditOperation extends AbstractStoreOperation {
       dirs++;
       final DDBPathMetadata dir = queue.poll();
       final Path p = dir.getFileStatus().getPath();
-      LOG.debug("Directory {}", dir.prettyPrint());
+      LOG.error("Temp", new RuntimeException());
       // log a message about the dir state, with root treated specially
       if (!p.isRoot()) {
         if (!dir.isAuthoritativeDir()) {
-          LOG.warn("Directory {} is not authoritative", p);
+          LOG.error("Temp", new RuntimeException());
           nonauth++;
           verifyAuthDir(dir, requireAuth);
         } else {
-          LOG.info("Directory {}", p);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         // this is done to avoid the confusing message about root not being
         // authoritative
-        LOG.info("Root directory {}", p);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // list its children
@@ -207,16 +207,16 @@ public class AuthoritativeAuditOperation extends AbstractStoreOperation {
             }
           }
           if (verbose && files > 0 || subdirs > 0) {
-            LOG.info("  files {}; directories {}", files, subdirs);
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
-          LOG.info("Directory {} has been deleted", dir);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
     // end of scan
     if (dirs == 1 && isRoot) {
-      LOG.info("The store has no directories to scan");
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.info("Scanned {} directories - {} were not marked as authoritative",
           dirs, nonauth);

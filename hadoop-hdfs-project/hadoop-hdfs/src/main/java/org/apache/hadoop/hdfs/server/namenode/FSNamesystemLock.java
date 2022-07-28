@@ -139,7 +139,7 @@ class FSNamesystemLock {
       MutableRatesWithAggregation detailedHoldTimeMetrics, Timer timer) {
     boolean fair = conf.getBoolean(DFS_NAMENODE_FSLOCK_FAIR_KEY,
         DFS_NAMENODE_FSLOCK_FAIR_DEFAULT);
-    FSNamesystem.LOG.info("fsLock is fair: " + fair);
+    FSNamesystem.LOG.error("Temp", new RuntimeException());
     this.coarseLock = new ReentrantReadWriteLock(fair);
     this.timer = timer;
 

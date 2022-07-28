@@ -144,7 +144,7 @@ public class TestMRJobsWithHistoryService {
       }
 
       if (pollElapsed >= 60000) {
-        LOG.warn("application did not reach terminal state within 60 seconds");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
@@ -153,8 +153,8 @@ public class TestMRJobsWithHistoryService {
     Counters counterHS = job.getCounters();
     //TODO the Assert below worked. need to check
     //Should we compare each field or convert to V2 counter and compare
-    LOG.info("CounterHS " + counterHS);
-    LOG.info("CounterMR " + counterMR);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(counterHS, counterMR);
     
     HSClientProtocol historyClient = instantiateHistoryProxy();

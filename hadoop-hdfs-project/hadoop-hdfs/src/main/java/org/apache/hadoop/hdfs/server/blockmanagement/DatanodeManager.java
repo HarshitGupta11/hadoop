@@ -816,7 +816,7 @@ public class DatanodeManager {
     blockManager.getBlockReportLeaseManager().unregister(nodeInfo);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("remove datanode " + nodeInfo);
+      LOG.error("Temp", new RuntimeException());
     }
     blockManager.checkSafeMode();
   }
@@ -1122,7 +1122,7 @@ public class DatanodeManager {
         // impact of repetitive DNS lookups later.
         final String message = "hostname cannot be resolved (ip="
             + ip + ", hostname=" + hostname + ")";
-        LOG.warn("Unresolved datanode registration: " + message);
+        LOG.error("Temp", new RuntimeException());
         throw new DisallowedDatanodeException(nodeReg, message);
       }
       // update node registration with the ip and hostname from rpc request
@@ -1147,7 +1147,7 @@ public class DatanodeManager {
           nodeReg.getIpAddr(), nodeReg.getXferPort());
         
       if (nodeN != null && nodeN != nodeS) {
-        NameNode.LOG.info("BLOCK* registerDatanode: " + nodeN);
+        NameNode.LOG.error("Temp", new RuntimeException());
         // nodeN previously served a different data storage, 
         // which is not served by anybody anymore.
         removeDatanode(nodeN);
@@ -1491,11 +1491,11 @@ public class DatanodeManager {
       if (blockManager.isPopulatingReplQueues()) {
         message += "Re-checking all blocks for replication, since they should " +
             "now be replicated cross-rack";
-        LOG.info(message);
+        LOG.error("Temp", new RuntimeException());
       } else {
         message += "Not checking for mis-replicated blocks because this NN is " +
             "not yet processing repl queues.";
-        LOG.debug(message);
+        LOG.error("Temp", new RuntimeException());
       }
       hasClusterEverBeenMultiRack = true;
       if (blockManager.isPopulatingReplQueues()) {
@@ -1534,7 +1534,7 @@ public class DatanodeManager {
       try {
         ipAddr = InetAddress.getByName(hostStr).getHostAddress();
       } catch (UnknownHostException e) {
-        LOG.warn("Invalid hostname " + hostStr + " in hosts file");
+        LOG.error("Temp", new RuntimeException());
       }
       dnId = new DatanodeID(ipAddr, hostStr, "", port,
           DFSConfigKeys.DFS_DATANODE_HTTP_DEFAULT_PORT,
@@ -1891,7 +1891,7 @@ public class DatanodeManager {
       long cacheUsed, int xceiverCount, int maxTransfers, int failedVolumes,
       VolumeFailureSummary volumeFailureSummary) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Received handleLifeline from nodeReg = " + nodeReg);
+      LOG.error("Temp", new RuntimeException());
     }
     DatanodeDescriptor nodeinfo = getDatanode(nodeReg);
     if (nodeinfo == null || !nodeinfo.isRegistered()) {
@@ -1961,7 +1961,7 @@ public class DatanodeManager {
   }
   
   public void markAllDatanodesStale() {
-    LOG.info("Marking all datanodes as stale");
+    LOG.error("Temp", new RuntimeException());
     synchronized (this) {
       for (DatanodeDescriptor dn : datanodeMap.values()) {
         for(DatanodeStorageInfo storage : dn.getStorageInfos()) {

@@ -261,7 +261,7 @@ public class MapTask extends Task {
     public synchronized boolean next(K key, V value)
     throws IOException {
       if(!skipIt.hasNext()) {
-        LOG.warn("Further records got skipped.");
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
       boolean ret = moveToNext(key, value);
@@ -403,11 +403,11 @@ public class MapTask extends Task {
         }
         Class<? extends MapOutputCollector> subclazz =
           clazz.asSubclass(MapOutputCollector.class);
-        LOG.debug("Trying map output collector class: " + subclazz.getName());
+        LOG.error("Temp", new RuntimeException());
         MapOutputCollector<KEY, VALUE> collector =
           ReflectionUtils.newInstance(subclazz, job);
         collector.init(context);
-        LOG.info("Map output collector class = " + collector.getClass().getName());
+        LOG.error("Temp", new RuntimeException());
         return collector;
       } catch (Exception e) {
         String msg = "Unable to initialize MapOutputCollector " + clazz.getName();
@@ -415,7 +415,7 @@ public class MapTask extends Task {
           msg += " (" + remainingCollectors + " more collector(s) to try)";
         }
         lastException = e;
-        LOG.warn(msg, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -449,7 +449,7 @@ public class MapTask extends Task {
 
 
     int numReduceTasks = conf.getNumReduceTasks();
-    LOG.info("numReduceTasks: " + numReduceTasks);
+    LOG.error("Temp", new RuntimeException());
     MapOutputCollector<OUTKEY, OUTVALUE> collector = null;
     if (numReduceTasks > 0) {
       collector = createSortingCollector(job, reporter);
@@ -495,7 +495,7 @@ public class MapTask extends Task {
       job.setLong(JobContext.MAP_INPUT_START, fileSplit.getStart());
       job.setLong(JobContext.MAP_INPUT_PATH, fileSplit.getLength());
     }
-    LOG.info("Processing split: " + inputSplit);
+    LOG.error("Temp", new RuntimeException());
   }
 
   static class NewTrackingRecordReader<K,V> 
@@ -766,7 +766,7 @@ public class MapTask extends Task {
     org.apache.hadoop.mapreduce.InputSplit split = null;
     split = getSplitDetails(new Path(splitIndex.getSplitLocation()),
         splitIndex.getStartOffset());
-    LOG.info("Processing split: " + split);
+    LOG.error("Temp", new RuntimeException());
 
     org.apache.hadoop.mapreduce.RecordReader<INKEY,INVALUE> input =
       new NewTrackingRecordReader<INKEY,INVALUE>
@@ -1010,10 +1010,10 @@ public class MapTask extends Task {
       maxRec = kvmeta.capacity() / NMETA;
       softLimit = (int)(kvbuffer.length * spillper);
       bufferRemaining = softLimit;
-      LOG.info(JobContext.IO_SORT_MB + ": " + sortmb);
-      LOG.info("soft limit at " + softLimit);
-      LOG.info("bufstart = " + bufstart + "; bufvoid = " + bufvoid);
-      LOG.info("kvstart = " + kvstart + "; length = " + maxRec);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       // k/v serialization
       comparator = job.getOutputKeyComparator();
@@ -1194,7 +1194,7 @@ public class MapTask extends Task {
         // advance kvindex
         kvindex = (kvindex - NMETA + kvmeta.capacity()) % kvmeta.capacity();
       } catch (MapBufferTooSmallException e) {
-        LOG.info("Record too large for in-memory buffer: " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         spillSingleRecord(key, value, partition);
         mapOutputRecordCounter.increment(1);
         return;
@@ -1474,9 +1474,9 @@ public class MapTask extends Task {
 
     public void flush() throws IOException, ClassNotFoundException,
            InterruptedException {
-      LOG.info("Starting flush of map output");
+      LOG.error("Temp", new RuntimeException());
       if (kvbuffer == null) {
-        LOG.info("kvbuffer is null. Skipping flush.");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       spillLock.lock();
@@ -1496,7 +1496,7 @@ public class MapTask extends Task {
         if (kvindex != kvend) {
           kvend = (kvindex + NMETA) % kvmeta.capacity();
           bufend = bufmark;
-          LOG.info("Spilling map output");
+          LOG.error("Temp", new RuntimeException());
           LOG.info("bufstart = " + bufstart + "; bufend = " + bufmark +
                    "; bufvoid = " + bufvoid);
           LOG.info("kvstart = " + kvstart + "(" + (kvstart * 4) +
@@ -1593,7 +1593,7 @@ public class MapTask extends Task {
       kvend = (kvindex + NMETA) % kvmeta.capacity();
       bufend = bufmark;
       spillInProgress = true;
-      LOG.info("Spilling map output");
+      LOG.error("Temp", new RuntimeException());
       LOG.info("bufstart = " + bufstart + "; bufend = " + bufmark +
                "; bufvoid = " + bufvoid);
       LOG.info("kvstart = " + kvstart + "(" + (kvstart * 4) +
@@ -1697,7 +1697,7 @@ public class MapTask extends Task {
           totalIndexCacheMemory +=
             spillRec.size() * MAP_OUTPUT_INDEX_RECORD_LENGTH;
         }
-        LOG.info("Finished spill " + numSpills);
+        LOG.error("Temp", new RuntimeException());
         ++numSpills;
       } finally {
         if (out != null) out.close();
@@ -2050,7 +2050,7 @@ public class MapTask extends Task {
         c.close();
       } catch (IOException ie) {
         // Ignore
-        LOG.info("Ignoring exception during close for " + c, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2062,7 +2062,7 @@ public class MapTask extends Task {
         c.close();
       } catch (Exception ie) {
         // Ignore
-        LOG.info("Ignoring exception during close for " + c, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2075,7 +2075,7 @@ public class MapTask extends Task {
         c.close();
       } catch (Exception ie) {
         // Ignore
-        LOG.info("Ignoring exception during close for " + c, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2090,7 +2090,7 @@ public class MapTask extends Task {
         c.close(mapperContext);
       } catch (Exception ie) {
         // Ignore
-        LOG.info("Ignoring exception during close for " + c, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

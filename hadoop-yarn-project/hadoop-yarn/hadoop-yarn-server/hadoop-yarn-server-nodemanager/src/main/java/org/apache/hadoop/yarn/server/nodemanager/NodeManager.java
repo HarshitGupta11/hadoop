@@ -323,7 +323,7 @@ public class NodeManager extends CompositeService
       nmStore.stop();
       if (null != context) {
         if (context.getDecommissioned() && nmStore.canRecover()) {
-          LOG.info("Removing state store due to decommission");
+          LOG.error("Temp", new RuntimeException());
           Configuration conf = getConfig();
           Path recoveryRoot =
               new Path(conf.get(YarnConfiguration.NM_RECOVERY_DIR));
@@ -331,7 +331,7 @@ public class NodeManager extends CompositeService
               + " due to decommission");
           FileSystem recoveryFs = FileSystem.getLocal(conf);
           if (!recoveryFs.delete(recoveryRoot, true)) {
-            LOG.warn("Unable to delete " + recoveryRoot);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -555,14 +555,14 @@ public class NodeManager extends CompositeService
         public void run() {
           try {
             if (!rmWorkPreservingRestartEnabled) {
-              LOG.info("Cleaning up running containers on resync");
+              LOG.error("Temp", new RuntimeException());
               containerManager.cleanupContainersOnNMResync();
               // Clear all known collectors for resync.
               if (context.getKnownCollectors() != null) {
                 context.getKnownCollectors().clear();
               }
             } else {
-              LOG.info("Preserving containers on resync");
+              LOG.error("Temp", new RuntimeException());
               // Re-register known timeline collectors.
               reregisterCollectors();
             }
@@ -602,7 +602,7 @@ public class NodeManager extends CompositeService
         LOG.debug("{} : {}@<{}, {}>", entry.getKey(), data.getCollectorAddr(),
             data.getRMIdentifier(), data.getVersion());
       } else {
-        LOG.debug("Remove collector data for done app {}", entry.getKey());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     knownCollectors.clear();
@@ -977,7 +977,7 @@ public class NodeManager extends CompositeService
       resyncWithRM();
       break;
     default:
-      LOG.warn("Invalid shutdown event " + event.getType() + ". Ignoring.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

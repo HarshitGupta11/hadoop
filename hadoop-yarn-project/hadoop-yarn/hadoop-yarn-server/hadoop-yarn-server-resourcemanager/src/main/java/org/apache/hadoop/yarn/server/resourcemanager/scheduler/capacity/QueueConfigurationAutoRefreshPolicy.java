@@ -134,7 +134,7 @@ public class QueueConfigurationAutoRefreshPolicy
           time > lastReloadAttempt + monitoringInterval) {
         try {
           rmContext.getRMAdminService().refreshQueues();
-          LOG.info("Queue auto refresh completed successfully");
+          LOG.error("Temp", new RuntimeException());
           lastReloadAttempt = clock.getTime();
         } catch (IOException | YarnException e) {
           LOG.error("Can't refresh queue: " + e);
@@ -160,7 +160,7 @@ public class QueueConfigurationAutoRefreshPolicy
     }
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Total time used=" + (clock.getTime() - startTs) + " ms.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

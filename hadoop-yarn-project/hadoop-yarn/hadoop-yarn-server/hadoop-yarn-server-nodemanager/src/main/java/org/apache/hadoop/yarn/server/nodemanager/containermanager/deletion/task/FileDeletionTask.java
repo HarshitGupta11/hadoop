@@ -95,32 +95,32 @@ public class FileDeletionTask extends DeletionTask implements Runnable {
    */
   @Override
   public void run() {
-    LOG.debug("Running DeletionTask : {}", this);
+    LOG.error("Temp", new RuntimeException());
     boolean error = false;
     if (null == getUser()) {
       if (baseDirs == null || baseDirs.size() == 0) {
-        LOG.debug("NM deleting absolute path : {}", subDir);
+        LOG.error("Temp", new RuntimeException());
         try {
           lfs.delete(subDir, true);
         } catch (IOException e) {
           error = true;
-          LOG.warn("Failed to delete " + subDir);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         for (Path baseDir : baseDirs) {
           Path del = subDir == null? baseDir : new Path(baseDir, subDir);
-          LOG.debug("NM deleting path : {}", del);
+          LOG.error("Temp", new RuntimeException());
           try {
             lfs.delete(del, true);
           } catch (IOException e) {
             error = true;
-            LOG.warn("Failed to delete " + subDir);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
     } else {
       try {
-        LOG.debug("Deleting path: [{}] as user [{}]", subDir, getUser());
+        LOG.error("Temp", new RuntimeException());
         if (baseDirs == null || baseDirs.size() == 0) {
           getDeletionService().getContainerExecutor().deleteAsUser(
               new DeletionAsUserContext.Builder()
@@ -137,7 +137,7 @@ public class FileDeletionTask extends DeletionTask implements Runnable {
         }
       } catch (IOException|InterruptedException e) {
         error = true;
-        LOG.warn("Failed to delete as user " + getUser(), e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (error) {

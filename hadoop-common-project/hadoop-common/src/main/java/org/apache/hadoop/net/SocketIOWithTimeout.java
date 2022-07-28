@@ -292,7 +292,7 @@ abstract class SocketIOWithTimeout {
           try {
             selector.close();
           } catch (IOException e) {
-            LOG.warn("Unexpected exception while closing selector : ", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }    
@@ -366,7 +366,7 @@ abstract class SocketIOWithTimeout {
         try {
           info.selector.selectNow();
         } catch (IOException e) {
-          LOG.info("Unexpected Exception while clearing selector : ", e);
+          LOG.error("Temp", new RuntimeException());
           // don't put the selector back.
           info.close();
           return ret; 
@@ -397,7 +397,7 @@ abstract class SocketIOWithTimeout {
         pList = pList.next;
       }      
       if (pList == null) {
-        //LOG.info("Creating new ProviderInfo : " + provider.toString());
+        //LOG.error("Temp", new RuntimeException());
         pList = new ProviderInfo();
         pList.provider = provider;
         pList.queue = new LinkedList<SelectorInfo>();

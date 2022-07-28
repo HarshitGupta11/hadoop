@@ -223,11 +223,11 @@ public class TestSnapshotDiffReport {
 
     // diff between the same snapshot
     SnapshotDiffReport report = hdfs.getSnapshotDiffReport(sub1, "s0", "s0");
-    LOG.info(report.toString());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(0, report.getDiffList().size());
 
     report = hdfs.getSnapshotDiffReport(sub1, "", "");
-    LOG.info(report.toString());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(0, report.getDiffList().size());
 
     try {
@@ -237,13 +237,13 @@ public class TestSnapshotDiffReport {
       GenericTestUtils.assertExceptionContains("null fromSnapshot", e);
     }
     report = hdfs.getSnapshotDiffReport(subsubsub1, "s0", "s2");
-    LOG.info(report.toString());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(0, report.getDiffList().size());
 
     // test path with scheme also works
     report = hdfs.getSnapshotDiffReport(hdfs.makeQualified(subsubsub1),
         "s0", "s2");
-    LOG.info(report.toString());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(0, report.getDiffList().size());
 
     verifyDiffReport(sub1, "s0", "s2",
@@ -756,7 +756,7 @@ public class TestSnapshotDiffReport {
           snapshotRootDescendantDir,
           new Snapshot(0, "s0", snapshotRootDescendantDir),
           new Snapshot(0, "s1", snapshotRootDescendantDir));
-      LOG.info("SnapshotDiffInfo: " + sdi.getFrom() + " - " + sdi.getTo());
+      LOG.error("Temp", new RuntimeException());
     } catch (IllegalArgumentException iae){
       fail("Unexpected exception when constructing SnapshotDiffInfo: " + iae);
     }
@@ -767,7 +767,7 @@ public class TestSnapshotDiffReport {
           snapshotRootNonDescendantDir,
           new Snapshot(0, "s0", snapshotRootNonDescendantDir),
           new Snapshot(0, "s1", snapshotRootNonDescendantDir));
-      LOG.info("SnapshotDiffInfo: " + sdi.getFrom() + " - " + sdi.getTo());
+      LOG.error("Temp", new RuntimeException());
       fail("SnapshotDiffInfo construction should fail for non snapshot root " +
           "or non snapshot root descendant directories!");
     } catch (IllegalArgumentException iae) {
@@ -1250,10 +1250,10 @@ public class TestSnapshotDiffReport {
     hdfs.setTimes(filePostSS, -1, now);
     SnapshotTestHelper.createSnapshot(hdfs, root, "s3");
 
-    LOG.info("\nsnapshotDiff s0 -> s1:");
-    LOG.info(hdfs.getSnapshotDiffReport(root, "s0", "s1").toString());
-    LOG.info("\nsnapshotDiff s1 -> s2:");
-    LOG.info(hdfs.getSnapshotDiffReport(root, "s1", "s2").toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     assertAtimeEquals(filePreSS, root, "s0", "s1");
     assertAtimeEquals(dirPreSS, root, "s0", "s1");
@@ -1406,8 +1406,8 @@ public class TestSnapshotDiffReport {
     // reverse the order of from and to
     SnapshotDiffReport inverseReport =
         hdfs.getSnapshotDiffReport(dirPath, to, from);
-    LOG.info(report.toString());
-    LOG.info(inverseReport.toString() + "\n");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals(entries.length, report.getDiffList().size());
     assertEquals(entries.length, inverseReport.getDiffList().size());

@@ -308,7 +308,7 @@ public class ITestS3GuardToolDynamoDB extends AbstractS3GuardToolTestBase {
         "parameters, so there will be no exception thrown.");
     final int result = run(S3GuardTool.Fsck.NAME, "-check",
         "s3a://" + getFileSystem().getBucket());
-    LOG.info("The return value of the run: {}", result);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -339,7 +339,7 @@ public class ITestS3GuardToolDynamoDB extends AbstractS3GuardToolTestBase {
     final int result = run(S3GuardTool.Fsck.NAME,
         "-" + Fsck.DDB_MS_CONSISTENCY_FLAG,
         "s3a://" + getFileSystem().getBucket());
-    LOG.info("The return value of the run: {}", result);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -361,7 +361,7 @@ public class ITestS3GuardToolDynamoDB extends AbstractS3GuardToolTestBase {
     final int result = run(S3GuardTool.Fsck.NAME,
         "-" + Fsck.FIX_FLAG,
         "s3a://" + getFileSystem().getBucket());
-    LOG.info("The return value of the run: {}", result);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(ERROR, result);
   }
 
@@ -385,7 +385,7 @@ public class ITestS3GuardToolDynamoDB extends AbstractS3GuardToolTestBase {
         "-" + Fsck.FIX_FLAG,
         "-" + Fsck.DDB_MS_CONSISTENCY_FLAG,
         "s3a://" + getFileSystem().getBucket());
-    LOG.info("The return value of the run: {}", result);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

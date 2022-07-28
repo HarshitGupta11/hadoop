@@ -225,7 +225,7 @@ public class S3ADelegationTokens extends AbstractDTService {
   @SuppressWarnings("ThrowableNotThrown")
   @Override
   protected void serviceStop() throws Exception {
-    LOG.debug("Stopping delegation tokens");
+    LOG.error("Temp", new RuntimeException());
     try {
       super.serviceStop();
     } finally {
@@ -248,7 +248,7 @@ public class S3ADelegationTokens extends AbstractDTService {
     requireServiceStarted();
     checkState(!isBoundToDT(),
         "Already Bound to a delegation token");
-    LOG.debug("No delegation tokens present: using direct authentication");
+    LOG.error("Temp", new RuntimeException());
     credentialProviders = Optional.of(tokenBinding.deployUnbonded());
   }
 
@@ -331,7 +331,7 @@ public class S3ADelegationTokens extends AbstractDTService {
     checkState(!credentialProviders.isPresent(), E_ALREADY_DEPLOYED);
     boundDT = Optional.of(token);
     AbstractS3ATokenIdentifier dti = extractIdentifier(token);
-    LOG.info("Using delegation token {}", dti);
+    LOG.error("Temp", new RuntimeException());
     decodedIdentifier = Optional.of(dti);
     try (DurationInfo ignored = new DurationInfo(LOG, DURATION_LOG_AT_INFO,
         "Creating Delegation Token")) {
@@ -382,10 +382,10 @@ public class S3ADelegationTokens extends AbstractDTService {
       final EncryptionSecrets encryptionSecrets,
       final Text renewer)
       throws IOException {
-    LOG.debug("Delegation token requested");
+    LOG.error("Temp", new RuntimeException());
     if (isBoundToDT()) {
       // the FS was created on startup with a token, so return it.
-      LOG.debug("Returning current token");
+      LOG.error("Temp", new RuntimeException());
       return getBoundDT().get();
     } else {
       // not bound to a token, so create a new one.
@@ -447,7 +447,7 @@ public class S3ADelegationTokens extends AbstractDTService {
    * @param token token created
    */
   private void noteTokenCreated(final Token<AbstractS3ATokenIdentifier> token) {
-    LOG.info("Created S3A Delegation Token: {}", token);
+    LOG.error("Temp", new RuntimeException());
     creationCount.incrementAndGet();
     stats.tokenIssued();
   }
@@ -629,11 +629,11 @@ public class S3ADelegationTokens extends AbstractDTService {
       final Text kind)
       throws DelegationTokenIOException {
 
-    LOG.debug("Looking for token for service {} in credentials", service);
+    LOG.error("Temp", new RuntimeException());
     Token<?> token = credentials.getToken(service);
     if (token != null) {
       Text tokenKind = token.getKind();
-      LOG.debug("Found token of kind {}", tokenKind);
+      LOG.error("Temp", new RuntimeException());
       if (kind.equals(tokenKind)) {
         // the Oauth implementation catches and logs here; this one
         // throws the failure up.
@@ -649,7 +649,7 @@ public class S3ADelegationTokens extends AbstractDTService {
       }
     }
     // A token for the service was not found
-    LOG.debug("No token for {} found", service);
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 

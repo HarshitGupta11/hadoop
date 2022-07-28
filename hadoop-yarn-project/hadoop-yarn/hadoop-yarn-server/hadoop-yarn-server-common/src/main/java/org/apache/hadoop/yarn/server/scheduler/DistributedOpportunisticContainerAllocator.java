@@ -257,7 +257,7 @@ public class DistributedOpportunisticContainerAllocator
       // Handle case where there are no nodes remaining after blacklist is
       // considered.
       if (loopIndex > OFF_SWITCH_LOOP && numAllocated == 0) {
-        LOG.warn("Unable to allocate any opportunistic containers.");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }

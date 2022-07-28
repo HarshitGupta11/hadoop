@@ -527,7 +527,7 @@ public class SaslDataTransferClient {
               + "sending without handshake secret.");
           sendSaslMessage(out, new byte[0]);
         } else {
-          LOG.debug("Sending handshake secret.");
+          LOG.error("Temp", new RuntimeException());
           BlockTokenIdentifier identifier = new BlockTokenIdentifier();
           identifier.readFields(new DataInputStream(
               new ByteArrayInputStream(accessToken.getIdentifier())));
@@ -536,7 +536,7 @@ public class SaslDataTransferClient {
               handshakeSecret, bpid);
         }
       } else {
-        LOG.debug("Block token id is null, sending without handshake secret.");
+        LOG.error("Temp", new RuntimeException());
         sendSaslMessage(out, new byte[0]);
       }
 

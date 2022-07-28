@@ -147,7 +147,7 @@ final class OBSObjectBucketUtils {
         }
       }
     } catch (FileNotFoundException e) {
-      LOG.debug("rename: destination path {} not found", dst);
+      LOG.error("Temp", new RuntimeException());
 
       // Parent must exist
       checkDestinationParent(owner, src, dst);
@@ -162,11 +162,11 @@ final class OBSObjectBucketUtils {
 
     // Ok! Time to start
     if (srcStatus.isFile()) {
-      LOG.debug("rename: renaming file {} to {}", src, dst);
+      LOG.error("Temp", new RuntimeException());
 
       renameFile(owner, srcKey, dstKey, srcStatus);
     } else {
-      LOG.debug("rename: renaming directory {} to {}", src, dst);
+      LOG.error("Temp", new RuntimeException());
 
       // This is a directory to directory copy
       dstKey = OBSCommonUtils.maybeAddTrailingSlash(dstKey);
@@ -274,7 +274,7 @@ final class OBSObjectBucketUtils {
       }
 
     } else {
-      LOG.debug("delete: Path is a file");
+      LOG.error("Temp", new RuntimeException());
       OBSCommonUtils.deleteObject(owner, key);
     }
 
@@ -372,7 +372,7 @@ final class OBSObjectBucketUtils {
         copyFuture.get();
       }
     } catch (InterruptedException e) {
-      LOG.warn("Interrupted while copying objects (copy)");
+      LOG.error("Temp", new RuntimeException());
       throw new InterruptedIOException(
           "Interrupted while copying objects (copy)");
     } catch (ExecutionException e) {
@@ -436,7 +436,7 @@ final class OBSObjectBucketUtils {
         }
 
         keys.add(new KeyAndVersion(summary.getObjectKey()));
-        LOG.debug("Got object to delete {}", summary.getObjectKey());
+        LOG.error("Temp", new RuntimeException());
 
         if (keys.size() == owner.getMaxEntriesToDelete()) {
           OBSCommonUtils.removeKeys(owner, keys, true, true);
@@ -459,7 +459,7 @@ final class OBSObjectBucketUtils {
 
     String key = OBSCommonUtils.pathToKey(owner, f);
     if (!key.isEmpty() && !owner.exists(f)) {
-      LOG.debug("Creating new fake directory at {}", f);
+      LOG.error("Temp", new RuntimeException());
       createFakeDirectory(owner, key);
     }
   }
@@ -566,7 +566,7 @@ final class OBSObjectBucketUtils {
       final String srcKey,
       final String dstKey, final long size)
       throws IOException {
-    LOG.debug("copyFile {} -> {} ", srcKey, dstKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       // 100MB per part
       if (size > owner.getCopyPartSize()) {
@@ -584,7 +584,7 @@ final class OBSObjectBucketUtils {
             .initiateMultipartUpload(request);
 
         final String uploadId = result.getUploadId();
-        LOG.debug("Multipart copy file, uploadId: {}", uploadId);
+        LOG.error("Temp", new RuntimeException());
         // count the parts
         long partCount = calPartCount(owner.getCopyPartSize(), size);
 
@@ -652,7 +652,7 @@ final class OBSObjectBucketUtils {
         partCopyFuture.get();
       }
     } catch (InterruptedException e) {
-      LOG.warn("Interrupted while copying objects (copy)");
+      LOG.error("Temp", new RuntimeException());
       throw new InterruptedIOException(
           "Interrupted while copying objects (copy)");
     } catch (ExecutionException e) {
@@ -745,17 +745,17 @@ final class OBSObjectBucketUtils {
       throws IOException {
     final Path path = OBSCommonUtils.qualify(owner, f);
     String key = OBSCommonUtils.pathToKey(owner, path);
-    LOG.debug("Getting path status for {}  ({})", path, key);
+    LOG.error("Temp", new RuntimeException());
     if (!StringUtils.isEmpty(key)) {
       try {
         ObjectMetadata meta = getObjectMetadata(owner, key);
 
         if (OBSCommonUtils.objectRepresentsDirectory(key,
             meta.getContentLength())) {
-          LOG.debug("Found exact file: fake directory");
+          LOG.error("Temp", new RuntimeException());
           return new OBSFileStatus(path, owner.getUsername());
         } else {
-          LOG.debug("Found exact file: normal file");
+          LOG.error("Temp", new RuntimeException());
           return new OBSFileStatus(meta.getContentLength(),
               OBSCommonUtils.dateToLong(meta.getLastModified()),
               path, owner.getDefaultBlockSize(path),
@@ -775,7 +775,7 @@ final class OBSObjectBucketUtils {
 
           if (OBSCommonUtils.objectRepresentsDirectory(newKey,
               meta.getContentLength())) {
-            LOG.debug("Found file (with /): fake directory");
+            LOG.error("Temp", new RuntimeException());
             return new OBSFileStatus(path, owner.getUsername());
           } else {
             LOG.debug(
@@ -800,7 +800,7 @@ final class OBSObjectBucketUtils {
 
     try {
       boolean isEmpty = OBSCommonUtils.innerIsFolderEmpty(owner, key);
-      LOG.debug("Is dir ({}) empty? {}", path, isEmpty);
+      LOG.error("Temp", new RuntimeException());
       return new OBSFileStatus(path, owner.getUsername());
     } catch (ObsException e) {
       if (e.getResponseCode() != OBSCommonUtils.NOT_FOUND_CODE) {
@@ -809,7 +809,7 @@ final class OBSObjectBucketUtils {
       }
     }
 
-    LOG.debug("Not Found: {}", path);
+    LOG.error("Temp", new RuntimeException());
     throw new FileNotFoundException("No such file or directory: " + path);
   }
 
@@ -818,7 +818,7 @@ final class OBSObjectBucketUtils {
     String newKey = key;
     newKey = OBSCommonUtils.maybeAddTrailingSlash(newKey);
     long[] summary = {0, 0, 1};
-    LOG.debug("Summary key {}", newKey);
+    LOG.error("Temp", new RuntimeException());
     ListObjectsRequest request = new ListObjectsRequest();
     request.setBucketName(owner.getBucket());
     request.setPrefix(newKey);
@@ -834,7 +834,7 @@ final class OBSObjectBucketUtils {
               objects.getObjects().size());
         }
         for (String prefix : objects.getCommonPrefixes()) {
-          LOG.debug("Objects in folder [" + prefix + "]:");
+          LOG.error("Temp", new RuntimeException());
           getDirectories(prefix, newKey, directories);
         }
 

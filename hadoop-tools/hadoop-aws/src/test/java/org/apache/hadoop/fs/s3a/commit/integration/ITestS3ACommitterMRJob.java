@@ -266,7 +266,7 @@ public class ITestS3ACommitterMRJob extends AbstractYarnClusterITest {
     URL log4j = getClass().getClassLoader().getResource("log4j.properties");
     if (log4j != null && "file".equals(log4j.getProtocol())) {
       Path log4jPath = new Path(log4j.toURI());
-      LOG.debug("Using log4j path {}", log4jPath);
+      LOG.error("Temp", new RuntimeException());
       mrJob.addFileToClassPath(log4jPath);
       String sysprops = String.format("-Xmx128m -Dlog4j.configuration=%s",
           log4j);
@@ -636,7 +636,7 @@ public class ITestS3ACommitterMRJob extends AbstractYarnClusterITest {
         LOG.warn("Found magic dir which should"
             + " have been deleted at {}", st);
         applyLocatedFiles(fs.listFiles(magicDir, true),
-            (status) -> LOG.warn("{}", status));
+            (status) -> LOG.error("Temp", new RuntimeException());
       } catch (FileNotFoundException ignored) {
         // expected
       }

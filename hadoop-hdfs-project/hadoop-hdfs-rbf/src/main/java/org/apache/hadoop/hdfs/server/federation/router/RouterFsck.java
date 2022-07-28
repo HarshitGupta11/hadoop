@@ -73,12 +73,12 @@ public class RouterFsck {
     try {
       String warnMsg = "Now FSCK to DFSRouter is unstable feature. " +
           "There may be incompatible changes between releases.";
-      LOG.warn(warnMsg);
+      LOG.error("Temp", new RuntimeException());
       out.println(warnMsg);
       String msg = "Federated FSCK started by " +
           UserGroupInformation.getCurrentUser() + " from " + remoteAddress +
           " at " + new Date();
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       out.println(msg);
 
       // Check each Namenode in the federation
@@ -107,7 +107,7 @@ public class RouterFsck {
           + (Time.monotonicNow() - startTime + " milliseconds"));
     } catch (Exception e) {
       String errMsg = "Fsck " + e.getMessage();
-      LOG.warn(errMsg, e);
+      LOG.error("Temp", new RuntimeException());
       out.println("Federated FSCK ended at " + new Date() + " in "
           + (Time.monotonicNow() - startTime + " milliseconds"));
       out.println(e.getMessage());

@@ -207,10 +207,10 @@ public class TestDSTimelineV20 extends DistributedShellBaseTest {
         "memory=" + containerMemoryString + ",vcores=1"
     );
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     setAndGetDSClient(new Configuration(getYarnClusterConfiguration()));
     Assert.assertTrue(getDSClient().init(args));
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     final AtomicBoolean result = new AtomicBoolean(false);
     Thread dsClientRunner = new Thread(() -> {
       try {
@@ -244,9 +244,9 @@ public class TestDSTimelineV20 extends DistributedShellBaseTest {
         }
       }
     } finally {
-      LOG.info("Signaling Client to Stop");
+      LOG.error("Temp", new RuntimeException());
       if (yarnClient != null) {
-        LOG.info("Stopping yarnClient service");
+        LOG.error("Temp", new RuntimeException());
         yarnClient.stop();
       }
     }
@@ -287,7 +287,7 @@ public class TestDSTimelineV20 extends DistributedShellBaseTest {
   @Override
   protected void checkTimeline(ApplicationId appId, boolean defaultFlow,
       boolean haveDomain, ApplicationReport appReport) throws Exception {
-    LOG.info("Started {}#checkTimeline()", getClass().getCanonicalName());
+    LOG.error("Temp", new RuntimeException());
     // For PoC check using the file-based timeline writer (YARN-3264)
     String tmpRoot = getTimelineV2StorageDir() + File.separator + "entities"
         + File.separator;
@@ -306,7 +306,7 @@ public class TestDSTimelineV20 extends DistributedShellBaseTest {
                   "test_flow_version" + File.separator + "12345678" +
                   File.separator) +
           appId.toString();
-      LOG.info("basePath for appId {}: {}", appId, basePath);
+      LOG.error("Temp", new RuntimeException());
       // for this test, we expect DS_APP_ATTEMPT AND DS_CONTAINER dirs
 
       // Verify DS_APP_ATTEMPT entities posted by the client
@@ -395,7 +395,7 @@ public class TestDSTimelineV20 extends DistributedShellBaseTest {
       } catch (Exception ex) {
         // the recursive delete can throw an exception when one of the file
         // does not exist.
-        LOG.warn("Exception deleting a file/subDirectory: {}", ex.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -151,7 +151,7 @@ class StripedWriter {
           nSuccess++;
           success = true;
         } catch (IOException e) {
-          LOG.warn(e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
         targetsStatus[i] = success;
       }
@@ -168,7 +168,7 @@ class StripedWriter {
         try {
           writers[i].endTargetBlock(packetBuf);
         } catch (IOException e) {
-          LOG.warn(e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -186,7 +186,7 @@ class StripedWriter {
         nSuccess++;
         targetsStatus[i] = true;
       } catch (Throwable e) {
-        LOG.warn(e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return nSuccess;

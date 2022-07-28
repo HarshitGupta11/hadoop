@@ -230,7 +230,7 @@ public class FSEditLog implements LogsPurgeable {
     boolean asyncEditLogging = conf.getBoolean(
         DFSConfigKeys.DFS_NAMENODE_EDITS_ASYNC_LOGGING,
         DFSConfigKeys.DFS_NAMENODE_EDITS_ASYNC_LOGGING_DEFAULT);
-    LOG.info("Edit logging is async:" + asyncEditLogging);
+    LOG.error("Temp", new RuntimeException());
     return asyncEditLogging
         ? new FSEditLogAsync(conf, storage, editsDirs)
         : new FSEditLog(conf, storage, editsDirs);
@@ -392,7 +392,7 @@ public class FSEditLog implements LogsPurgeable {
    */
   synchronized void close() {
     if (state == State.CLOSED) {
-      LOG.debug("Closing log when already closed");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -409,7 +409,7 @@ public class FSEditLog implements LogsPurgeable {
             journalSet.close();
           }
         } catch (IOException ioe) {
-          LOG.warn("Error closing journalSet", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       state = State.CLOSED;
@@ -481,7 +481,7 @@ public class FSEditLog implements LogsPurgeable {
   }
 
   synchronized boolean doEditTransaction(final FSEditLogOp op) {
-    LOG.debug("doEditTx() op={} txid={}", op, txid);
+    LOG.error("Temp", new RuntimeException());
     assert op.hasTransactionId() :
       "Transaction id is not set for " + op + " EditLog.txId=" + txid;
 
@@ -792,7 +792,7 @@ public class FSEditLog implements LogsPurgeable {
         .append(editLogStream.getNumSync())
         .append(" SyncTimes(ms): ")
         .append(journalSet.getSyncTimes());
-    LOG.info(buf.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /** Record the RPC IDs if necessary */
@@ -1359,7 +1359,7 @@ public class FSEditLog implements LogsPurgeable {
    * log.
    */
   synchronized long rollEditLog(int layoutVersion) throws IOException {
-    LOG.info("Rolling edit logs");
+    LOG.error("Temp", new RuntimeException());
     endCurrentLogSegment(true);
     
     long nextTxId = getLastWrittenTxId() + 1;
@@ -1374,7 +1374,7 @@ public class FSEditLog implements LogsPurgeable {
    */
   public synchronized void startLogSegment(long txid, 
       boolean abortCurrentLogSegment, int layoutVersion) throws IOException {
-    LOG.info("Started a new log segment at txid " + txid);
+    LOG.error("Temp", new RuntimeException());
     if (isSegmentOpen()) {
       if (getLastWrittenTxId() == txid - 1) {
         //In sync with the NN, so end and finalize the current segment`
@@ -1387,7 +1387,7 @@ public class FSEditLog implements LogsPurgeable {
             + getCurSegmentTxId() + ".";
         if (abortCurrentLogSegment) {
           //Mark the current segment as aborted.
-          LOG.warn(mess);
+          LOG.error("Temp", new RuntimeException());
           abortCurrentLogSegment();
         } else {
           throw new IOException(mess);
@@ -1406,7 +1406,7 @@ public class FSEditLog implements LogsPurgeable {
       throws IOException {
     assert Thread.holdsLock(this);
 
-    LOG.info("Starting log segment at " + segmentTxId);
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkArgument(segmentTxId > 0,
         "Bad txid: %s", segmentTxId);
     Preconditions.checkState(state == State.BETWEEN_LOG_SEGMENTS,
@@ -1497,7 +1497,7 @@ public class FSEditLog implements LogsPurgeable {
         state = State.BETWEEN_LOG_SEGMENTS;
       }
     } catch (IOException e) {
-      LOG.warn("All journals failed to abort", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1580,11 +1580,11 @@ public class FSEditLog implements LogsPurgeable {
     JournalManager jas = findBackupJournal(bnReg);
     if (jas != null) {
       // already registered
-      LOG.info("Backup node " + bnReg + " re-registers");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     
-    LOG.info("Registering new backup node: " + bnReg);
+    LOG.error("Temp", new RuntimeException());
     BackupJournalManager bjm = new BackupJournalManager(bnReg, nnReg);
     synchronized(journalSetLock) {
       journalSet.add(bjm, false);
@@ -1595,7 +1595,7 @@ public class FSEditLog implements LogsPurgeable {
       throws IOException {
     BackupJournalManager bjm = this.findBackupJournal(registration);
     if (bjm != null) {
-      LOG.info("Removing backup journal " + bjm);
+      LOG.error("Temp", new RuntimeException());
       synchronized(journalSetLock) {
         journalSet.remove(bjm);
       }

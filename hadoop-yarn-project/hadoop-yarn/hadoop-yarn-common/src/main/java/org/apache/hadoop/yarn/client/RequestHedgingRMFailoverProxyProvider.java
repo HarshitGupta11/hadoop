@@ -86,7 +86,7 @@ public class RequestHedgingRMFailoverProxyProvider<T>
         new RMRequestHedgingInvocationHandler(retriableProxies));
     String combinedInfo = Arrays.toString(rmServiceIds);
     wrappedProxy = new ProxyInfo<T>(proxyInstance, combinedInfo);
-    LOG.info("Created wrapped proxy for " + combinedInfo);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @SuppressWarnings("unchecked")
@@ -168,7 +168,7 @@ public class RequestHedgingRMFailoverProxyProvider<T>
         Object retVal;
         try {
           retVal = callResultFuture.get();
-          LOG.info("Found active RM [" + pInfo + "]");
+          LOG.error("Temp", new RuntimeException());
           return retVal;
         } catch (Exception ex) {
           // Throw exception from first responding RM so that clients can handle
@@ -194,7 +194,7 @@ public class RequestHedgingRMFailoverProxyProvider<T>
 
   @Override
   public void performFailover(T currentProxy) {
-    LOG.info("Connection lost with " + successfulProxy + ", trying to fail over.");
+    LOG.error("Temp", new RuntimeException());
     successfulProxy = null;
   }
 }

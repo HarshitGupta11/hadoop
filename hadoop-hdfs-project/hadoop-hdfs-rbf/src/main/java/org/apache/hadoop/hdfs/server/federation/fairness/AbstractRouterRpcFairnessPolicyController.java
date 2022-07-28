@@ -47,10 +47,10 @@ public class AbstractRouterRpcFairnessPolicyController
   @Override
   public boolean acquirePermit(String nsId) {
     try {
-      LOG.debug("Taking lock for nameservice {}", nsId);
+      LOG.error("Temp", new RuntimeException());
       return this.permits.get(nsId).tryAcquire(1, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
-      LOG.debug("Cannot get a permit for nameservice {}", nsId);
+      LOG.error("Temp", new RuntimeException());
     }
     return false;
   }

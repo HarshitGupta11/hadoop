@@ -292,7 +292,7 @@ public class FileSystemRMStateStore extends RMStateStore {
         assert appState != null;
         appState.attempts.put(attemptState.getAttemptId(), attemptState);
       }
-      LOG.info("Done loading applications from FS state store");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       LOG.error("Failed to load state.", e);
       throw e;
@@ -394,7 +394,7 @@ public class FileSystemRMStateStore extends RMStateStore {
           LOG.debug("Loaded RMDelegationTokenIdentifier: {} renewDate={}",
               identifier, renewDate);
         } else {
-          LOG.warn("Unknown file for recovering RMDelegationTokenSecretManager");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -408,7 +408,7 @@ public class FileSystemRMStateStore extends RMStateStore {
 
     if (!existsWithRetries(caCertPath)
         || !existsWithRetries(caPrivateKeyPath)) {
-      LOG.warn("Couldn't find Proxy CA data");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -431,14 +431,14 @@ public class FileSystemRMStateStore extends RMStateStore {
     mkdirsWithRetries(appDirPath);
     Path nodeCreatePath = getNodePath(appDirPath, appId.toString());
 
-    LOG.info("Storing info for app: " + appId + " at: " + nodeCreatePath);
+    LOG.error("Temp", new RuntimeException());
     byte[] appStateData = appStateDataPB.getProto().toByteArray();
     try {
       // currently throw all exceptions. May need to respond differently for HA
       // based on whether we have lost the right to write to FS
       writeFileWithRetries(nodeCreatePath, appStateData, true);
     } catch (Exception e) {
-      LOG.info("Error storing info for app: " + appId, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -449,14 +449,14 @@ public class FileSystemRMStateStore extends RMStateStore {
     Path appDirPath = getAppDir(rmAppRoot, appId);
     Path nodeCreatePath = getNodePath(appDirPath, appId.toString());
 
-    LOG.info("Updating info for app: " + appId + " at: " + nodeCreatePath);
+    LOG.error("Temp", new RuntimeException());
     byte[] appStateData = appStateDataPB.getProto().toByteArray();
     try {
       // currently throw all exceptions. May need to respond differently for HA
       // based on whether we have lost the right to write to FS
       updateFile(nodeCreatePath, appStateData, true);
     } catch (Exception e) {
-      LOG.info("Error updating info for app: " + appId, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -477,7 +477,7 @@ public class FileSystemRMStateStore extends RMStateStore {
       // based on whether we have lost the right to write to FS
       writeFileWithRetries(nodeCreatePath, attemptStateData, true);
     } catch (Exception e) {
-      LOG.info("Error storing info for attempt: " + appAttemptId, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -498,7 +498,7 @@ public class FileSystemRMStateStore extends RMStateStore {
       // based on whether we have lost the right to write to FS
       updateFile(nodeCreatePath, attemptStateData, true);
     } catch (Exception e) {
-      LOG.info("Error updating info for attempt: " + appAttemptId, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -522,7 +522,7 @@ public class FileSystemRMStateStore extends RMStateStore {
     ApplicationId appId =
         appState.getApplicationSubmissionContext().getApplicationId();
     Path nodeRemovePath = getAppDir(rmAppRoot, appId);
-    LOG.info("Removing info for app: " + appId + " at: " + nodeRemovePath);
+    LOG.error("Temp", new RuntimeException());
     deleteFileWithRetries(nodeRemovePath);
   }
 
@@ -538,7 +538,7 @@ public class FileSystemRMStateStore extends RMStateStore {
       RMDelegationTokenIdentifier identifier) throws Exception {
     Path nodeCreatePath = getNodePath(rmDTSecretManagerRoot,
             DELEGATION_TOKEN_PREFIX + identifier.getSequenceNumber());
-    LOG.info("Removing RMDelegationToken_" + identifier.getSequenceNumber());
+    LOG.error("Temp", new RuntimeException());
     deleteFileWithRetries(nodeCreatePath);
   }
 
@@ -558,10 +558,10 @@ public class FileSystemRMStateStore extends RMStateStore {
     RMDelegationTokenIdentifierData identifierData =
         new RMDelegationTokenIdentifierData(identifier, renewDate);
     if (isUpdate) {
-      LOG.info("Updating RMDelegationToken_" + identifier.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
       updateFile(nodeCreatePath, identifierData.toByteArray(), true);
     } else {
-      LOG.info("Storing RMDelegationToken_" + identifier.getSequenceNumber());
+      LOG.error("Temp", new RuntimeException());
       writeFileWithRetries(nodeCreatePath, identifierData.toByteArray(), true);
 
       // store sequence number
@@ -591,7 +591,7 @@ public class FileSystemRMStateStore extends RMStateStore {
           DELEGATION_KEY_PREFIX + masterKey.getKeyId());
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     try (DataOutputStream fsOut = new DataOutputStream(os)) {
-      LOG.info("Storing RMDelegationKey_" + masterKey.getKeyId());
+      LOG.error("Temp", new RuntimeException());
       masterKey.write(fsOut);
       writeFileWithRetries(nodeCreatePath, os.toByteArray(), true);
     }
@@ -602,7 +602,7 @@ public class FileSystemRMStateStore extends RMStateStore {
       removeRMDTMasterKeyState(DelegationKey masterKey) throws Exception {
     Path nodeCreatePath = getNodePath(rmDTSecretManagerRoot,
           DELEGATION_KEY_PREFIX + masterKey.getKeyId());
-    LOG.info("Removing RMDelegationKey_"+ masterKey.getKeyId());
+    LOG.error("Temp", new RuntimeException());
     deleteFileWithRetries(nodeCreatePath);
   }
 
@@ -789,12 +789,12 @@ public class FileSystemRMStateStore extends RMStateStore {
         try {
           return run();
         } catch (IOException e) {
-          LOG.info("Exception while executing an FS operation.", e);
+          LOG.error("Temp", new RuntimeException());
           if (++retry > fsNumRetries) {
-            LOG.info("Maxed out FS retries. Giving up!");
+            LOG.error("Temp", new RuntimeException());
             throw e;
           }
-          LOG.info("Retrying operation on FS. Retry no. " + retry);
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(fsRetryInterval);
         }
       }
@@ -871,7 +871,7 @@ public class FileSystemRMStateStore extends RMStateStore {
     if (existsWithRetries(dstPath)) {
       deleteFileWithRetries(dstPath);
     } else {
-      LOG.info("File doesn't exist. Skip deleting the file " + dstPath);
+      LOG.error("Temp", new RuntimeException());
     }
     renameFileWithRetries(srcPath, dstPath);
   }
@@ -988,7 +988,7 @@ public class FileSystemRMStateStore extends RMStateStore {
         byte[] childData) throws InvalidProtocolBufferException {
       if (childNodeName.startsWith(ApplicationId.appIdStrPrefix)) {
         // application
-        LOG.debug("Loading application from node: {}", childNodeName);
+        LOG.error("Temp", new RuntimeException());
         ApplicationStateDataPBImpl appState =
             new ApplicationStateDataPBImpl(
                 ApplicationStateDataProto.parseFrom(childData));
@@ -998,13 +998,13 @@ public class FileSystemRMStateStore extends RMStateStore {
       } else if (childNodeName.startsWith(
           ApplicationAttemptId.appAttemptIdStrPrefix)) {
         // attempt
-        LOG.debug("Loading application attempt from node: {}", childNodeName);
+        LOG.error("Temp", new RuntimeException());
         ApplicationAttemptStateDataPBImpl attemptState =
             new ApplicationAttemptStateDataPBImpl(
                 ApplicationAttemptStateDataProto.parseFrom(childData));
         attempts.add(attemptState);
       } else {
-        LOG.info("Unknown child node with name: " + childNodeName);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

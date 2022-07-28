@@ -311,13 +311,13 @@ class DummyHAService extends HAServiceTarget {
     @Override
     public boolean tryFence(HAServiceTarget target, String args)
         throws BadFencingConfigurationException {
-      LOG.info("tryFence(" + target + ")");
+      LOG.error("Temp", new RuntimeException());
       DummyHAService svc = (DummyHAService)target;
       synchronized (svc) {
         svc.fenceCount++;
       }
       if (svc.failToFence) {
-        LOG.info("Injected failure to fence");
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
       svc.sharedResource.release(svc);

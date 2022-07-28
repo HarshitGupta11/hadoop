@@ -86,7 +86,7 @@ public class BlockPlacementPolicyWithUpgradeDomain extends
   public String getUpgradeDomainWithDefaultValue(DatanodeInfo datanodeInfo) {
     String upgradeDomain = datanodeInfo.getUpgradeDomain();
     if (upgradeDomain == null) {
-      LOG.warn("Upgrade domain isn't defined for " + datanodeInfo);
+      LOG.error("Temp", new RuntimeException());
       upgradeDomain = datanodeInfo.getXferAddr();
     }
     return upgradeDomain;

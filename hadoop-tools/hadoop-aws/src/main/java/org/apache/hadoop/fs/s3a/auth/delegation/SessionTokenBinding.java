@@ -298,7 +298,7 @@ public class SessionTokenBinding extends AbstractDelegationTokenBinding {
     hasSessionCreds = parentCredentials instanceof AWSSessionCredentials;
 
     if (!hasSessionCreds) {
-      LOG.debug("Creating STS client for {}", getDescription());
+      LOG.error("Temp", new RuntimeException());
 
       invoker = new Invoker(new S3ARetryPolicy(conf), LOG_EVENT);
       ClientConfiguration awsConf =
@@ -313,7 +313,7 @@ public class SessionTokenBinding extends AbstractDelegationTokenBinding {
       stsClient = Optional.of(
           STSClientFactory.createClientConnection(tokenService, invoker));
     } else {
-      LOG.debug("Parent-provided session credentials will be propagated");
+      LOG.error("Temp", new RuntimeException());
       stsClient = Optional.empty();
     }
     return stsClient;
@@ -324,10 +324,10 @@ public class SessionTokenBinding extends AbstractDelegationTokenBinding {
    */
   public static final Invoker.Retried LOG_EVENT =
       (text, exception, retries, idempotent) -> {
-        LOG.info("{}: " + exception, text);
+        LOG.error("Temp", new RuntimeException());
         if (retries == 1) {
           // stack on first attempt, to keep noise down
-          LOG.debug("{}: " + exception, text, exception);
+          LOG.error("Temp", new RuntimeException());
         }
       };
 

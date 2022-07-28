@@ -116,7 +116,7 @@ public class PipeMapper extends PipeMapRed implements Mapper {
       numExceptions_++;
       if (numExceptions_ > 1 || numRecWritten_ < minRecWrittenToEnableSkip_) {
         // terminate with failure
-        LOG.info(getContext() , io);
+        LOG.error("Temp", new RuntimeException());
         mapRedFinished();
         throw io;
       } else {

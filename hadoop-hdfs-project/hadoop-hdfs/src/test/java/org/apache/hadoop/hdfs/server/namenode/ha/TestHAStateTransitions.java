@@ -179,28 +179,28 @@ public class TestHAStateTransitions {
 
       cluster.transitionToActive(nn0);
       
-      LOG.info("Starting with NN 0 active in namespace " + nsIndex);
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = HATestUtil.configureFailoverFs(cluster, conf);
       fs.mkdirs(TEST_DIR);
 
-      LOG.info("Failing over to NN 1 in namespace " + nsIndex);
+      LOG.error("Temp", new RuntimeException());
       cluster.transitionToStandby(nn0);
       cluster.transitionToActive(nn1);
       assertTrue(fs.exists(TEST_DIR));
       DFSTestUtil.writeFile(fs, TEST_FILE_PATH, TEST_FILE_DATA);
 
-      LOG.info("Failing over to NN 0 in namespace " + nsIndex);
+      LOG.error("Temp", new RuntimeException());
       cluster.transitionToStandby(nn1);
       cluster.transitionToActive(nn0);
       assertTrue(fs.exists(TEST_DIR));
       assertEquals(TEST_FILE_DATA, 
           DFSTestUtil.readFile(fs, TEST_FILE_PATH));
 
-      LOG.info("Removing test file");
+      LOG.error("Temp", new RuntimeException());
       fs.delete(TEST_DIR, true);
       assertFalse(fs.exists(TEST_DIR));
 
-      LOG.info("Failing over to NN 1 in namespace " + nsIndex);
+      LOG.error("Temp", new RuntimeException());
       cluster.transitionToStandby(nn0);
       cluster.transitionToActive(nn1);
       assertFalse(fs.exists(TEST_DIR));
@@ -302,7 +302,7 @@ public class TestHAStateTransitions {
       cluster.waitActive();
       cluster.transitionToActive(0);
       
-      LOG.info("Starting with NN 0 active");
+      LOG.error("Temp", new RuntimeException());
 
       stm = fs.create(TEST_FILE_PATH);
       long nn0t0 = NameNodeAdapter.getLeaseRenewalTime(nn0, TEST_FILE_STR);
@@ -320,7 +320,7 @@ public class TestHAStateTransitions {
           
       Thread.sleep(5); // make sure time advances!
       
-      LOG.info("Failing over to NN 1");
+      LOG.error("Temp", new RuntimeException());
       cluster.transitionToStandby(0);
       cluster.transitionToActive(1);
       long nn1t2 = NameNodeAdapter.getLeaseRenewalTime(nn1, TEST_FILE_STR);
@@ -355,7 +355,7 @@ public class TestHAStateTransitions {
       Token<DelegationTokenIdentifier> token = nn1.getRpcServer()
           .getDelegationToken(new Text(renewer));
 
-      LOG.info("Failing over to NN 1");
+      LOG.error("Temp", new RuntimeException());
       cluster.transitionToStandby(0);
       cluster.transitionToActive(1);
 

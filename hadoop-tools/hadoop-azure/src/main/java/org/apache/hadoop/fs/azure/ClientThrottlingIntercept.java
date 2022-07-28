@@ -54,7 +54,7 @@ final class ClientThrottlingIntercept {
   private ClientThrottlingIntercept() {
     readThrottler = new ClientThrottlingAnalyzer("read");
     writeThrottler = new ClientThrottlingAnalyzer("write");
-    LOG.debug("Client-side throttling is enabled for the WASB file system.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   static synchronized void initializeSingleton() {

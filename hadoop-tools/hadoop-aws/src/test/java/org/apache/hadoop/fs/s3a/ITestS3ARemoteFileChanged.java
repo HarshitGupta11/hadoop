@@ -304,7 +304,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
 
     if (conf.getClass(S3_METADATA_STORE_IMPL, MetadataStore.class) ==
         NullMetadataStore.class) {
-      LOG.debug("Enabling local S3Guard metadata store");
+      LOG.error("Temp", new RuntimeException());
       // favor LocalMetadataStore over NullMetadataStore
       conf.setClass(S3_METADATA_STORE_IMPL,
           LocalMetadataStore.class, MetadataStore.class);
@@ -457,7 +457,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
         new PathMetadata(forgedStatus, Tristate.FALSE, false));
 
     // verify the bad etag gets picked up.
-    LOG.info("Opening stream with s3guard's (invalid) status.");
+    LOG.error("Temp", new RuntimeException());
     try (FSDataInputStream instream = fs.openFile(testpath)
         .build()
         .get()) {
@@ -478,7 +478,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
 
     // By passing in the status open() doesn't need to check s3guard
     // And hence the existing file is opened
-    LOG.info("Opening stream with the original status.");
+    LOG.error("Temp", new RuntimeException());
     try (FSDataInputStream instream = fs.openFile(testpath)
         .withFileStatus(originalStatus)
         .build()
@@ -487,7 +487,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
     }
 
     // and this holds for S3A Located Status
-    LOG.info("Opening stream with S3ALocatedFileStatus.");
+    LOG.error("Temp", new RuntimeException());
     try (FSDataInputStream instream = fs.openFile(testpath)
         .withFileStatus(new S3ALocatedFileStatus(originalStatus, null))
         .build()
@@ -498,7 +498,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
     // if you pass in a status of a dir, it will be rejected
     S3AFileStatus s2 = new S3AFileStatus(true, testpath, "alice");
     assertTrue("not a directory " + s2, s2.isDirectory());
-    LOG.info("Open with directory status");
+    LOG.error("Temp", new RuntimeException());
     interceptFuture(FileNotFoundException.class, "",
         fs.openFile(testpath)
             .withFileStatus(s2)
@@ -508,7 +508,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
     // when we pass in the status, there's no HEAD request, so it's only
     // in the read call where the 404 surfaces.
     // and there, when versionID is passed to the GET, the data is returned
-    LOG.info("Testing opening a deleted file");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(testpath, false);
     try (FSDataInputStream instream = fs.openFile(testpath)
         .withFileStatus(originalStatus)
@@ -1142,7 +1142,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
    */
   private void logLocationAtDebug() {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Call hierarchy", new Exception("here"));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1258,7 +1258,7 @@ public class ITestS3ARemoteFileChanged extends AbstractS3ATestBase {
         if (callCount <= copyInconsistentCallCount) {
           String message = "preconditions not met on call " + callCount
               + " of " + copyInconsistentCallCount;
-          LOG.info("Copying {}: {}", testpath, message);
+          LOG.error("Temp", new RuntimeException());
           logLocationAtDebug();
           return null;
         }

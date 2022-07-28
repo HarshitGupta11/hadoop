@@ -146,7 +146,7 @@ public class TestableFederationInterceptor extends FederationInterceptor {
   protected void drainAllAsyncQueue(boolean waitForAsyncHBThreadFinish)
       throws YarnException {
 
-    LOG.info("waiting to drain home heartbeat handler");
+    LOG.error("Temp", new RuntimeException());
     if (waitForAsyncHBThreadFinish) {
       getHomeHeartbeartHandler().drainHeartbeatThread();
     } else {
@@ -158,7 +158,7 @@ public class TestableFederationInterceptor extends FederationInterceptor {
       }
     }
 
-    LOG.info("waiting to drain UAM heartbeat handlers");
+    LOG.error("Temp", new RuntimeException());
     UnmanagedAMPoolManager uamPool = getUnmanagedAMPool();
     if (waitForAsyncHBThreadFinish) {
       getUnmanagedAMPool().drainUAMHeartbeats();

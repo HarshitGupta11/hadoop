@@ -218,7 +218,7 @@ public class TestReplaceDatanodeFailureReplication {
 
   private void verifyFileContent(DistributedFileSystem fs,
       SlowWriter[] slowwriters) throws IOException {
-    LOG.info("Verify the file");
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < slowwriters.length; i++) {
       LOG.info(slowwriters[i].filepath + ": length=" + fs
           .getFileStatus(slowwriters[i].filepath).getLen());
@@ -240,7 +240,7 @@ public class TestReplaceDatanodeFailureReplication {
   }
 
   static void sleepSeconds(final int waittime) throws InterruptedException {
-    LOG.info("Wait " + waittime + " seconds");
+    LOG.error("Temp", new RuntimeException());
     Thread.sleep(waittime * 1000L);
   }
 
@@ -263,17 +263,17 @@ public class TestReplaceDatanodeFailureReplication {
       try {
         sleep(sleepms);
         for (; running; i++) {
-          LOG.info(getName() + " writes " + i);
+          LOG.error("Temp", new RuntimeException());
           out.write(i);
           out.hflush();
           sleep(sleepms);
         }
       } catch (InterruptedException e) {
-        LOG.info(getName() + " interrupted:" + e);
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException e) {
         throw new RuntimeException(getName(), e);
       } finally {
-        LOG.info(getName() + " terminated: i=" + i);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -283,7 +283,7 @@ public class TestReplaceDatanodeFailureReplication {
     }
 
     void joinAndClose() throws InterruptedException {
-      LOG.info(getName() + " join and close");
+      LOG.error("Temp", new RuntimeException());
       join();
       IOUtils.closeStream(out);
     }

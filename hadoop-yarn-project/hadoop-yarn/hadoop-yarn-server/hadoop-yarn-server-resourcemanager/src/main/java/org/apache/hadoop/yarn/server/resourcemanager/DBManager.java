@@ -118,14 +118,14 @@ public class DBManager implements Closeable {
     @Override
     public void run() {
       long start = Time.monotonicNow();
-      LOG.info("Starting full compaction cycle");
+      LOG.error("Temp", new RuntimeException());
       try {
         db.compactRange(null, null);
       } catch (DBException e) {
         LOG.error("Error compacting database", e);
       }
       long duration = Time.monotonicNow() - start;
-      LOG.info("Full compaction cycle completed in " + duration + " msec");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -103,7 +103,7 @@ public final class MetaRecoveryContext  {
       "without prompting. " + 
       "(c/s/q/a)\n", "c", "s", "q", "a");
     if (answer.equals("c")) {
-      LOG.info("Continuing");
+      LOG.error("Temp", new RuntimeException());
       return;
     } else if (answer.equals("s")) {
       throw new RequestStopException("user requested stop");

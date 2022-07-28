@@ -427,7 +427,7 @@ public class TestPlanner {
 
     assertTrue("Steps Generated less than disk count - false",
         newPlan.getVolumeSetPlans().size() < diskCount);
-    LOG.info("Number of steps are : %d%n", newPlan.getVolumeSetPlans().size());
+    LOG.error("Temp", new RuntimeException());
 
   }
 

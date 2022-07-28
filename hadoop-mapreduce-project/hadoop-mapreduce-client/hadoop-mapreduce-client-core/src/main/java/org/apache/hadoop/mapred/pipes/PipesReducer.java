@@ -79,7 +79,7 @@ class PipesReducer<K2 extends WritableComparable, V2 extends Writable,
   private void startApplication(OutputCollector<K3, V3> output, Reporter reporter) throws IOException {
     if (application == null) {
       try {
-        LOG.info("starting application");
+        LOG.error("Temp", new RuntimeException());
         application = 
           new Application<K2, V2, K3, V3>(
               job, null, output, reporter, 
@@ -115,9 +115,9 @@ class PipesReducer<K2 extends WritableComparable, V2 extends Writable,
         // send the abort to the application and let it clean up
         application.getDownlink().abort();
       }
-      LOG.info("waiting for finish");
+      LOG.error("Temp", new RuntimeException());
       application.waitForFinish();
-      LOG.info("got done");
+      LOG.error("Temp", new RuntimeException());
     } catch (Throwable t) {
       application.abort(t);
     } finally {

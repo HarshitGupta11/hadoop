@@ -255,7 +255,7 @@ public class WritableRpcEngine implements RpcEngine {
       }
       if (LOG.isDebugEnabled()) {
         long callTime = Time.monotonicNow() - startTime;
-        LOG.debug("Call: " + method.getName() + " " + callTime);
+        LOG.error("Temp", new RuntimeException());
       }
       return value.get();
     }
@@ -474,7 +474,7 @@ public class WritableRpcEngine implements RpcEngine {
     private static void log(String value) {
       if (value!= null && value.length() > 55)
         value = value.substring(0, 55)+"...";
-      LOG.info(value);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Deprecated

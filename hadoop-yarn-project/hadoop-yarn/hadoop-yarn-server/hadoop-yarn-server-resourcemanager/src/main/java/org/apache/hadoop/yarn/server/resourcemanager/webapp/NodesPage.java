@@ -143,7 +143,7 @@ class NodesPage extends RmView {
           // Do nothing
           break;
         default:
-          LOG.debug("Unexpected state filter for inactive RM node");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       StringBuilder nodeTableData = new StringBuilder("[\n");

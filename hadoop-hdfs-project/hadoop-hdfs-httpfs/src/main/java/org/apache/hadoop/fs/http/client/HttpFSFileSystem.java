@@ -907,7 +907,7 @@ public class HttpFSFileSystem extends FileSystem
       JSONObject json = (JSONObject) HttpFSUtils.jsonParse(conn);
       return new Path((String) json.get(TRASH_DIR_JSON));
     } catch (IOException ex) {
-      LOG.warn("Cannot find trash root of " + fullPath, ex);
+      LOG.error("Temp", new RuntimeException());
       return super.getTrashRoot(fullPath);
     }
   }

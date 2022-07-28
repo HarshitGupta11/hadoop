@@ -202,7 +202,7 @@ public class QueueManager {
     allQueues.putAll(getRoot().getInnerQueues());
     allQueues.putAll(leafQueues);
 
-    LOG.info("AllQueues : " + allQueues + "; LeafQueues : " + leafQueues);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -238,12 +238,12 @@ public class QueueManager {
     Queue q = leafQueues.get(queueName);
 
     if (q == null) {
-      LOG.info("Queue " + queueName + " is not present");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
     if(q.getChildren() != null && !q.getChildren().isEmpty()) {
-      LOG.info("Cannot submit job to parent queue " + q.getName());
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -349,7 +349,7 @@ public class QueueManager {
      * support adding new queues or removing old queues
      */
     if (!root.isHierarchySameAs(cp.getRoot())) {
-      LOG.warn(MSG_REFRESH_FAILURE_WITH_CHANGE_OF_HIERARCHY);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(MSG_REFRESH_FAILURE_WITH_CHANGE_OF_HIERARCHY);
     }
 
@@ -386,7 +386,7 @@ public class QueueManager {
     // Now switch roots.
     initialize(cp);
 
-    LOG.info("Queue configuration is refreshed successfully.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   // this method is for internal use only

@@ -166,7 +166,7 @@ public class FedBalance extends Configured implements Tool {
           .setMapNum(map).setBandwidthLimit(bandwidth).setTrash(trashOpt)
           .setDiffThreshold(diffThreshold).build();
 
-      LOG.info(context.toString());
+      LOG.error("Temp", new RuntimeException());
       // Construct the balance job.
       BalanceJob.Builder<BalanceProcedure> builder = new BalanceJob.Builder<>();
       DistCpProcedure dcp =
@@ -225,7 +225,7 @@ public class FedBalance extends Configured implements Tool {
           if (!job.isJobDone()) {
             unfinished++;
           }
-          LOG.info(job.toString());
+          LOG.error("Temp", new RuntimeException());
         }
         if (unfinished == 0) {
           break;
@@ -335,7 +335,7 @@ public class FedBalance extends Configured implements Tool {
     try {
       exitCode = ToolRunner.run(fedBalance, argv);
     } catch (Exception e) {
-      LOG.warn("Couldn't complete FedBalance operation.", e);
+      LOG.error("Temp", new RuntimeException());
       exitCode = -1;
     }
     System.exit(exitCode);

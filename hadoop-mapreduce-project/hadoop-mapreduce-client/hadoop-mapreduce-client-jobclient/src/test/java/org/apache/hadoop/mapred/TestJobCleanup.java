@@ -167,7 +167,7 @@ public class TestJobCleanup {
     JobID id = job.getID();
     job.waitForCompletion();
 
-    LOG.info("Job finished : " + job.isComplete());
+    LOG.error("Temp", new RuntimeException());
     Path testFile = new Path(outDir, filename);
     assertTrue("Done file \"" + testFile + "\" missing for job " + id,
         fileSys.exists(testFile));
@@ -234,7 +234,7 @@ public class TestJobCleanup {
       if (counters.getCounter(JobCounter.TOTAL_LAUNCHED_MAPS) == 1) {
         break;
       }
-      LOG.info("Waiting for a map task to be launched");
+      LOG.error("Temp", new RuntimeException());
       UtilsForTests.waitFor(100);
       counters = job.getCounters();
     }

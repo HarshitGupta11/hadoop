@@ -88,7 +88,7 @@ public class AlignedPlannerWithGreedy implements ReservationAgent {
   public boolean createReservation(ReservationId reservationId, String user,
       Plan plan, ReservationDefinition contract) throws PlanningException {
 
-    LOG.info("placing the following ReservationRequest: " + contract);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       boolean res =
@@ -114,7 +114,7 @@ public class AlignedPlannerWithGreedy implements ReservationAgent {
   public boolean updateReservation(ReservationId reservationId, String user,
       Plan plan, ReservationDefinition contract) throws PlanningException {
 
-    LOG.info("updating the following ReservationRequest: " + contract);
+    LOG.error("Temp", new RuntimeException());
 
     return planner.updateReservation(reservationId, user, plan, contract);
 
@@ -124,7 +124,7 @@ public class AlignedPlannerWithGreedy implements ReservationAgent {
   public boolean deleteReservation(ReservationId reservationId, String user,
       Plan plan) throws PlanningException {
 
-    LOG.info("removing the following ReservationId: " + reservationId);
+    LOG.error("Temp", new RuntimeException());
 
     return planner.deleteReservation(reservationId, user, plan);
 

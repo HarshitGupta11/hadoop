@@ -547,7 +547,7 @@ public class AbfsClient implements Closeable {
               HttpHeaderConfigurations.LAST_MODIFIED);
 
           if (DateTimeUtils.isRecentlyModified(lmt, renameRequestStartTime)) {
-            LOG.debug("Returning success response from rename idempotency logic");
+            LOG.error("Temp", new RuntimeException());
             return destStatusOp;
           }
         }
@@ -639,7 +639,7 @@ public class AbfsClient implements Closeable {
         String fileLength = destStatusOp.getResult().getResponseHeader(
             HttpHeaderConfigurations.CONTENT_LENGTH);
         if (length <= Long.parseLong(fileLength)) {
-          LOG.debug("Returning success response from append blob idempotency code");
+          LOG.error("Temp", new RuntimeException());
           return true;
         }
       }
@@ -825,7 +825,7 @@ public class AbfsClient implements Closeable {
           op.getUrl(),
           op.getRequestHeaders());
       successOp.hardSetResult(HttpURLConnection.HTTP_OK);
-      LOG.debug("Returning success response from delete idempotency logic");
+      LOG.error("Temp", new RuntimeException());
       return successOp;
     }
 
@@ -1049,7 +1049,7 @@ public class AbfsClient implements Closeable {
     try {
       encodedPath = urlEncode(path);
     } catch (AzureBlobFileSystemException ex) {
-      LOG.debug("Unexpected error.", ex);
+      LOG.error("Temp", new RuntimeException());
       throw new InvalidUriException(path);
     }
 

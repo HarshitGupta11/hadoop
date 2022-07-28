@@ -93,10 +93,10 @@ public class NodeFencer {
   }
 
   public boolean fence(HAServiceTarget fromSvc, HAServiceTarget toSvc) {
-    LOG.info("====== Beginning Service Fencing Process... ======");
+    LOG.error("Temp", new RuntimeException());
     int i = 0;
     for (FenceMethodWithArg method : methods) {
-      LOG.info("Trying method " + (++i) + "/" + methods.size() +": " + method);
+      LOG.error("Temp", new RuntimeException());
       
       try {
         // only true when target node is given, AND fencing on it failed
@@ -123,7 +123,7 @@ public class NodeFencer {
         LOG.error("Fencing method " + method + " failed with an unexpected error.", t);
         continue;
       }
-      LOG.warn("Fencing method " + method + " was unsuccessful.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     LOG.error("Unable to fence service by any configured method.");

@@ -57,10 +57,10 @@ public class ProcessTree {
       shexec = new ShellCommandExecutor(args);
       shexec.execute();
     } catch (IOException ioe) {
-      LOG.warn("setsid is not available on this machine. So not using it.");
+      LOG.error("Temp", new RuntimeException());
       setsidSupported = false;
     } finally { // handle the exit code
-      LOG.info("setsid exited with exit code " + shexec.getExitCode());
+      LOG.error("Temp", new RuntimeException());
     }
     return setsidSupported;
   }
@@ -128,7 +128,7 @@ public class ProcessTree {
       shexec = new ShellCommandExecutor(args);
       shexec.execute();
     } catch (IOException ioe) {
-      LOG.warn("Error executing shell command " + ioe);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (pid.startsWith("-")) {
         LOG.info("Sending signal to all members of process group " + pid
@@ -203,7 +203,7 @@ public class ProcessTree {
         // Sleep for some time before sending SIGKILL
         Thread.sleep(sleepTimeBeforeSigKill);
       } catch (InterruptedException i) {
-        LOG.warn("Thread sleep is interrupted.");
+        LOG.error("Temp", new RuntimeException());
       }
       if(isProcessGroup) {
         killProcessGroup(pid);

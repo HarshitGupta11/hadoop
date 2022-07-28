@@ -187,9 +187,9 @@ public class TestBlockRecovery2 {
       // Here its not failing, will again do the assertions for activeNN after
       // this waiting period and fails there if BPOS has not acknowledged
       // any NN as active.
-      LOG.warn("Failed to get active NN", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (InterruptedException e) {
-      LOG.warn("InterruptedException while waiting to see active NN", e);
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertNotNull("Failed to get ActiveNN",
         dn.getAllBpOs().get(0).getActiveNN());
@@ -445,7 +445,7 @@ public class TestBlockRecovery2 {
         try {
           return dfs.isFileClosed(filePath);
         } catch (IOException e) {
-          LOG.info("Something went wrong.", e);
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }, 300, 300000);

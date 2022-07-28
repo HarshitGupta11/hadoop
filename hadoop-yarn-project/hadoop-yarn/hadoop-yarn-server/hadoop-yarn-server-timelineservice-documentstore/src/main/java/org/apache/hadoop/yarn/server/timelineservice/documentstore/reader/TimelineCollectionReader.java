@@ -59,7 +59,7 @@ public  class TimelineCollectionReader {
 
   public TimelineCollectionReader(
       Configuration conf) throws YarnException {
-    LOG.info("Initializing TimelineCollectionReader...");
+    LOG.error("Temp", new RuntimeException());
     genericEntityDocReader = DocumentStoreFactory
         .createDocumentStoreReader(conf);
     flowRunDocReader = DocumentStoreFactory
@@ -78,7 +78,7 @@ public  class TimelineCollectionReader {
    */
   public TimelineEntityDocument readDocument(
       TimelineReaderContext context) throws IOException {
-    LOG.debug("Fetching document for entity type {}", context.getEntityType());
+    LOG.error("Temp", new RuntimeException());
     switch (TimelineEntityType.valueOf(context.getEntityType())) {
     case YARN_APPLICATION:
       return genericEntityDocReader.readDocument(
@@ -117,7 +117,7 @@ public  class TimelineCollectionReader {
   public List<TimelineEntityDocument> readDocuments(
       TimelineReaderContext context, long documentsSize) throws IOException {
     List<TimelineEntityDocument> entityDocs = new ArrayList<>();
-    LOG.debug("Fetching documents for entity type {}", context.getEntityType());
+    LOG.error("Temp", new RuntimeException());
     switch (TimelineEntityType.valueOf(context.getEntityType())) {
     case YARN_APPLICATION:
       return genericEntityDocReader.readDocumentList(
@@ -157,7 +157,7 @@ public  class TimelineCollectionReader {
    */
   public Set<String> fetchEntityTypes(
       TimelineReaderContext context) {
-    LOG.debug("Fetching all entity-types for appId : {}", context.getAppId());
+    LOG.error("Temp", new RuntimeException());
     return genericEntityDocReader.fetchEntityTypes(
         CollectionType.ENTITY.getCollectionName(), context);
   }

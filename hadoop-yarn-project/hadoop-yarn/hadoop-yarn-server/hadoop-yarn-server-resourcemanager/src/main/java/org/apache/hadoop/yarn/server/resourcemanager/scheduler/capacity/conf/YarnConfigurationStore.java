@@ -179,7 +179,7 @@ public abstract class YarnConfigurationStore {
   public void checkVersion() throws Exception {
     Version loadedVersion = getConfStoreVersion();
     Version currentVersion = getCurrentVersion();
-    LOG.info("Loaded configuration store version info {}", loadedVersion);
+    LOG.error("Temp", new RuntimeException());
 
     // when hard-coded schema version (currentVersion) is null the version check
     // is unnecessary
@@ -188,7 +188,7 @@ public abstract class YarnConfigurationStore {
     }
     // if there is no version info, treat it as CURRENT_VERSION_INFO;
     if (loadedVersion == null || loadedVersion.isCompatibleTo(currentVersion)) {
-      LOG.info("Storing configuration store version info {}", currentVersion);
+      LOG.error("Temp", new RuntimeException());
       storeVersion();
     } else {
       throw new YarnConfStoreVersionIncompatibleException(

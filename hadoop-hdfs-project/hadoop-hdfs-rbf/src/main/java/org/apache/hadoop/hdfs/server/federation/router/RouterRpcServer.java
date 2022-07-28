@@ -468,7 +468,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
     this.conf = configuration;
 
     if (this.rpcMonitor == null) {
-      LOG.info("Do not start Router RPC metrics");
+      LOG.error("Temp", new RuntimeException());
     } else {
       this.rpcMonitor.init(this.conf, this, this.router.getStateStore());
     }
@@ -480,7 +480,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
   protected void serviceStart() throws Exception {
     if (this.rpcServer != null) {
       this.rpcServer.start();
-      LOG.info("Router RPC up at: {}", this.getRpcAddress());
+      LOG.error("Temp", new RuntimeException());
     }
     super.serviceStart();
   }
@@ -618,7 +618,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
     // Log the function we are currently calling.
     if (LOG.isDebugEnabled()) {
       String methodName = getMethodName();
-      LOG.debug("Proxying operation: {}", methodName);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Store the category of the operation category for this thread
@@ -813,7 +813,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
         RemoteLocation existingLocation = getExistingLocation(src, locations);
         // Forward to the existing location and let the NN handle the error
         if (existingLocation != null) {
-          LOG.debug("{} already exists in {}.", src, existingLocation);
+          LOG.error("Temp", new RuntimeException());
           createLocation = existingLocation;
         }
       } catch (FileNotFoundException fne) {
@@ -1044,7 +1044,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
     try {
       DatanodeInfo[] dns = this.dnCache.get(type);
       if (dns == null) {
-        LOG.debug("Get null DN report from cache");
+        LOG.error("Temp", new RuntimeException());
         dns = getCachedDatanodeReportImpl(type);
         this.dnCache.put(type, dns);
       }
@@ -1068,7 +1068,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
 
     try {
       DatanodeInfo[] dns = clientProto.getDatanodeReport(type);
-      LOG.debug("Refresh cached DN report with {} datanodes", dns.length);
+      LOG.error("Temp", new RuntimeException());
       return dns;
     } finally {
       // Reset ugi to remote user for remaining operations.
@@ -1111,7 +1111,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol,
               node.getNetworkLocation());
           datanodesMap.put(nodeId, node);
         } else {
-          LOG.debug("{} is in multiple subclusters", nodeId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

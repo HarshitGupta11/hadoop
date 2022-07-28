@@ -129,7 +129,7 @@ public class TestReplication {
       isOnSameRack = false;
       isNotOnSameRack = false;
       for (int i = 0; i < datanodes.length-1; i++) {
-        LOG.info("datanode "+ i + ": "+ datanodes[i]);
+        LOG.error("Temp", new RuntimeException());
         boolean onRack = false;
         for( int j=i+1; j<datanodes.length; j++) {
            if( datanodes[i].getNetworkLocation().equals(
@@ -257,7 +257,7 @@ public class TestReplication {
               getBlockLocations(file1.toString(), 0, Long.MAX_VALUE);
     while (blocks.get(0).isCorrupt() != true) {
       try {
-        LOG.info("Waiting until block is marked as corrupt...");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(1000);
       } catch (InterruptedException ie) {
       }
@@ -410,7 +410,7 @@ public class TestReplication {
     long start = Time.monotonicNow();
     
     //wait for all the blocks to be replicated;
-    LOG.info("Checking for block replication for " + filename);
+    LOG.error("Temp", new RuntimeException());
     while (true) {
       boolean replOk = true;
       LocatedBlocks blocks = namenode.getBlockLocations(filename, 0, 
@@ -502,11 +502,11 @@ public class TestReplication {
       // Choose 3 copies of block file - delete 1 and corrupt the remaining 2
       for (MaterializedReplica replica : replicas) {
         if (fileCount == 0) {
-          LOG.info("Deleting block " + replica);
+          LOG.error("Temp", new RuntimeException());
           replica.deleteData();
         } else {
           // corrupt it.
-          LOG.info("Corrupting file " + replica);
+          LOG.error("Temp", new RuntimeException());
           replica.corruptData();
         }
         fileCount++;
@@ -517,7 +517,7 @@ public class TestReplication {
        * immediately. In our case some replication attempts will fail.
        */
       
-      LOG.info("Restarting minicluster after deleting a replica and corrupting 2 crcs");
+      LOG.error("Temp", new RuntimeException());
       conf = new HdfsConfiguration();
       conf.set(DFSConfigKeys.DFS_REPLICATION_KEY, Integer.toString(numDataNodes));
       conf.set(DFSConfigKeys.DFS_NAMENODE_RECONSTRUCTION_PENDING_TIMEOUT_SEC_KEY, Integer.toString(2));
@@ -660,7 +660,7 @@ public class TestReplication {
   @Test(timeout=60000)
   public void testNoExtraReplicationWhenBlockReceivedIsLate()
       throws Exception {
-    LOG.info("Test block replication when blockReceived is late" );
+    LOG.error("Temp", new RuntimeException());
     final short numDataNodes = 3;
     final short replication = 3;
     final Configuration conf = new Configuration();
@@ -739,7 +739,7 @@ public class TestReplication {
   @Test(timeout=60000)
   public void testReplicationWhileUnderConstruction()
       throws Exception {
-    LOG.info("Test block replication in under construction" );
+    LOG.error("Temp", new RuntimeException());
     MiniDFSCluster cluster = null;
     final short numDataNodes = 6;
     final short replication = 3;

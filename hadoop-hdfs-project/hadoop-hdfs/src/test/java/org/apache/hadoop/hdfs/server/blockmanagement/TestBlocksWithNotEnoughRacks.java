@@ -198,7 +198,7 @@ public class TestBlocksWithNotEnoughRacks {
 
       String fsckOp = DFSTestUtil.runFsck(conf, 0, true, filePath.toString(),
               "-replicate");
-      LOG.info("fsck response {}", fsckOp);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(fsckOp.contains(
               "/testFile:  Replica placement policy is violated"));
       assertTrue(fsckOp.contains(" Block should be additionally replicated" +

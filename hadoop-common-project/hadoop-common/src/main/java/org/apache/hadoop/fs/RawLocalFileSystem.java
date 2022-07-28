@@ -500,7 +500,7 @@ public class RawLocalFileSystem extends FileSystem {
 
     // The fallback behavior accomplishes the rename by a full copy.
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Falling through to a copy of " + src + " to " + dst);
+      LOG.error("Temp", new RuntimeException());
     }
     return FileUtil.copy(this, src, this, dst, true, getConf());
   }
@@ -847,7 +847,7 @@ public class RawLocalFileSystem extends FileSystem {
         try {
           loadPermissionInfoByNativeIO();
         } catch (IOException ex) {
-          LOG.debug("Native call failed", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 

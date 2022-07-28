@@ -169,7 +169,7 @@ public class TextFileBasedIdentityHandler implements IdentityHandler {
    */
   private static void loadMap(HashMap<String, String> cache, String fileLocation, int noOfFields, int keyIndex)
       throws IOException {
-    LOG.debug("Loading identity map from file {}", fileLocation);
+    LOG.error("Temp", new RuntimeException());
     int errorRecord = 0;
     File file = new File(fileLocation);
     LineIterator it = null;
@@ -185,7 +185,7 @@ public class TextFileBasedIdentityHandler implements IdentityHandler {
           cache.put(line.split(COLON)[keyIndex], line);
         }
       }
-      LOG.debug("Loaded map stats - File: {}, Loaded: {}, Error: {} ", fileLocation, cache.size(), errorRecord);
+      LOG.error("Temp", new RuntimeException());
     } catch (ArrayIndexOutOfBoundsException e) {
       LOG.error("Error while parsing mapping file", e);
     } finally {

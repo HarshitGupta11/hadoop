@@ -513,7 +513,7 @@ public class ObserverReadProxyProvider<T>
       // Either all observers have failed, observer reads are disabled,
       // or this is a write request. In any case, forward the request to
       // the active NameNode.
-      LOG.debug("Using failoverProxy to service {}", method.getName());
+      LOG.error("Temp", new RuntimeException());
       ProxyInfo<T> activeProxy = failoverProxy.getProxy();
       try {
         retVal = method.invoke(activeProxy.proxy, args);

@@ -45,7 +45,7 @@ public class TestGroupFallback {
     String username = System.getProperty("user.name");
     List<String> groupList = groups.getGroups(username);
 
-    LOG.info(username + " has GROUPS: " + groupList.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(groupList.size() > 0);
   }
 
@@ -61,7 +61,7 @@ public class TestGroupFallback {
     String username = System.getProperty("user.name");
     List<String> groupList = groups.getGroups(username);
 
-    LOG.info(username + " has GROUPS: " + groupList.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(groupList.size() > 0);
   }
 
@@ -80,7 +80,7 @@ public class TestGroupFallback {
     String username = System.getProperty("user.name");
     List<String> groupList = groups.getGroups(username);
 
-    LOG.info(username + " has GROUPS: " + groupList.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(groupList.size() > 0);
   }
 
@@ -99,7 +99,7 @@ public class TestGroupFallback {
     String username = System.getProperty("user.name");
     List<String> groupList = groups.getGroups(username);
 
-    LOG.info(username + " has GROUPS: " + groupList.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(groupList.size() > 0);
   }
 

@@ -198,7 +198,7 @@ public class ITestDelegatedMRJob extends AbstractDelegationIT {
     UserGroupInformation.setConfiguration(conf);
     assertSecurityEnabled();
 
-    LOG.info("Starting MiniMRCluster");
+    LOG.error("Temp", new RuntimeException());
     yarn = deployService(conf,
         new MiniMRYarnCluster("ITestDelegatedMRJob", 1));
 
@@ -237,7 +237,7 @@ public class ITestDelegatedMRJob extends AbstractDelegationIT {
     FileSystem resourceFS = EXTRA_JOB_RESOURCE_PATH.getFileSystem(
         getConfiguration());
     FileStatus status = resourceFS.getFileStatus(EXTRA_JOB_RESOURCE_PATH);
-    LOG.info("Extra job resource is {}", status);
+    LOG.error("Temp", new RuntimeException());
     assertTrue("Not encrypted: " + status, status.isEncrypted());
   }
 
@@ -297,9 +297,9 @@ public class ITestDelegatedMRJob extends AbstractDelegationIT {
         = submittedCredentials.getAllTokens();
 
     // log all the tokens for debugging failed test runs
-    LOG.info("Token Count = {}", tokens.size());
+    LOG.error("Temp", new RuntimeException());
     for (Token<? extends TokenIdentifier> token : tokens) {
-      LOG.info("{}", token);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // verify the source token exists

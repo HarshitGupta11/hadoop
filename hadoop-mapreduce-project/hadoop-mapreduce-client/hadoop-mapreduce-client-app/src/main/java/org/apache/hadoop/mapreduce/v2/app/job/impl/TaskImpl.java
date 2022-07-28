@@ -577,7 +577,7 @@ public abstract class TaskImpl implements Task, EventHandler<TaskEvent> {
     try {
       if (commitAttempt != null) {
         canCommit = taskAttemptID.equals(commitAttempt);
-        LOG.info("Result of canCommit for " + taskAttemptID + ":" + canCommit);
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       readLock.unlock();
@@ -625,7 +625,7 @@ public abstract class TaskImpl implements Task, EventHandler<TaskEvent> {
     TaskAttemptImpl attempt = createAttempt();
     attempt.setAvataar(avataar);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Created attempt " + attempt.getID());
+      LOG.error("Temp", new RuntimeException());
     }
     switch (attempts.size()) {
       case 0:
@@ -761,7 +761,7 @@ public abstract class TaskImpl implements Task, EventHandler<TaskEvent> {
 
   private void sendTaskSucceededEvents() {
     eventHandler.handle(new JobTaskEvent(taskId, TaskState.SUCCEEDED));
-    LOG.info("Task succeeded with attempt " + successfulAttempt);
+    LOG.error("Temp", new RuntimeException());
     if (historyTaskStartGenerated) {
       TaskFinishedEvent tfe = createTaskFinishedEvent(this,
           TaskStateInternal.SUCCEEDED);
@@ -918,7 +918,7 @@ public abstract class TaskImpl implements Task, EventHandler<TaskEvent> {
 
     @Override
     public void transition(TaskImpl task, TaskEvent event) {
-      LOG.info("Scheduling a redundant attempt for task " + task.taskId);
+      LOG.error("Temp", new RuntimeException());
       task.addAndScheduleAttempt(Avataar.SPECULATIVE);
     }
   }
@@ -933,7 +933,7 @@ public abstract class TaskImpl implements Task, EventHandler<TaskEvent> {
       if (task.commitAttempt == null) {
         // TODO: validate attemptID
         task.commitAttempt = attemptID;
-        LOG.info(attemptID + " given a go for committing the task output.");
+        LOG.error("Temp", new RuntimeException());
       } else {
         // Don't think this can be a pluggable decision, so simply raise an
         // event for the TaskAttempt to delete its output.
@@ -965,7 +965,7 @@ public abstract class TaskImpl implements Task, EventHandler<TaskEvent> {
             //  TA_KILL message to an attempt that doesn't need one for
             //  other reasons.
             !attempt.isFinished()) {
-          LOG.info("Issuing kill to other attempt " + attempt.getID());
+          LOG.error("Temp", new RuntimeException());
           task.eventHandler.handle(new TaskAttemptKillEvent(attempt.getID(),
               SPECULATION + task.successfulAttempt + " succeeded first!"));
         }

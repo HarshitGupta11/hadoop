@@ -112,7 +112,7 @@ public final class DelegatingSSLSocketFactory extends SSLSocketFactory {
    */
   @VisibleForTesting
   public static synchronized void resetDefaultFactory() {
-    LOG.info("Resetting default SSL Socket Factory");
+    LOG.error("Temp", new RuntimeException());
     instance = null;
   }
 
@@ -193,7 +193,7 @@ public final class DelegatingSSLSocketFactory extends SSLSocketFactory {
   private void bindToOpenSSLProvider()
       throws NoSuchAlgorithmException, KeyManagementException {
     if (!openSSLProviderRegistered) {
-      LOG.debug("Attempting to register OpenSSL provider");
+      LOG.error("Temp", new RuntimeException());
       org.wildfly.openssl.OpenSSLProvider.register();
       openSSLProviderRegistered = true;
     }

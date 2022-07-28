@@ -74,7 +74,7 @@ public class TestTextInputFormat {
     Reporter reporter = Reporter.NULL;
     
     int seed = new Random().nextInt();
-    LOG.info("seed = "+seed);
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
 
     localFs.delete(workDir, true);
@@ -84,7 +84,7 @@ public class TestTextInputFormat {
     for (int length = 0; length < MAX_LENGTH;
          length+= random.nextInt(MAX_LENGTH/10)+1) {
 
-      LOG.debug("creating; entries = " + length);
+      LOG.error("Temp", new RuntimeException());
 
       // create a file with length entries
       Writer writer = new OutputStreamWriter(localFs.create(file));
@@ -104,9 +104,9 @@ public class TestTextInputFormat {
       Text value = new Text();
       for (int i = 0; i < 3; i++) {
         int numSplits = random.nextInt(MAX_LENGTH/20)+1;
-        LOG.debug("splitting: requesting = " + numSplits);
+        LOG.error("Temp", new RuntimeException());
         InputSplit[] splits = format.getSplits(job, numSplits);
-        LOG.debug("splitting: got =        " + splits.length);
+        LOG.error("Temp", new RuntimeException());
 
         if (length == 0) {
            assertEquals("Files of length 0 are not returned from FileInputFormat.getSplits().", 
@@ -117,14 +117,14 @@ public class TestTextInputFormat {
         // check each split
         BitSet bits = new BitSet(length);
         for (int j = 0; j < splits.length; j++) {
-          LOG.debug("split["+j+"]= " + splits[j]);
+          LOG.error("Temp", new RuntimeException());
           RecordReader<LongWritable, Text> reader =
             format.getRecordReader(splits[j], job, reporter);
           try {
             int count = 0;
             while (reader.next(key, value)) {
               int v = Integer.parseInt(value.toString());
-              LOG.debug("read " + v);
+              LOG.error("Temp", new RuntimeException());
               if (bits.get(v)) {
                 LOG.warn("conflict with " + v + 
                          " in split " + j +
@@ -134,7 +134,7 @@ public class TestTextInputFormat {
               bits.set(v);
               count++;
             }
-            LOG.debug("splits["+j+"]="+splits[j]+" count=" + count);
+            LOG.error("Temp", new RuntimeException());
           } finally {
             reader.close();
           }
@@ -161,7 +161,7 @@ public class TestTextInputFormat {
 
     // A reporter that does nothing
     Reporter reporter = Reporter.NULL;
-    LOG.info("seed = "+seed);
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
     FileSystem localFs = FileSystem.getLocal(conf);
 
@@ -212,7 +212,7 @@ public class TestTextInputFormat {
     FileInputFormat.setInputPaths(conf, workDir);
 
     int length = 250000;
-    LOG.info("creating; entries = " + length);
+    LOG.error("Temp", new RuntimeException());
     // create a file with length entries
     Writer writer =
         new OutputStreamWriter(codec.createOutputStream(localFs.create(file)));
@@ -230,24 +230,24 @@ public class TestTextInputFormat {
     for (long splitpos = 203418; splitpos < 203430; ++splitpos) {
       TextInputFormat format = new TextInputFormat();
       format.configure(conf);
-      LOG.info("setting block size of the input file to " + splitpos);
+      LOG.error("Temp", new RuntimeException());
       conf.setLong("mapreduce.input.fileinputformat.split.minsize", splitpos);
       LongWritable key = new LongWritable();
       Text value = new Text();
       InputSplit[] splits = format.getSplits(conf, 2);
-      LOG.info("splitting: got =        " + splits.length);
+      LOG.error("Temp", new RuntimeException());
 
       // check each split
       BitSet bits = new BitSet(length);
       for (int j = 0; j < splits.length; j++) {
-        LOG.debug("split[" + j + "]= " + splits[j]);
+        LOG.error("Temp", new RuntimeException());
         RecordReader<LongWritable, Text> reader =
             format.getRecordReader(splits[j], conf, Reporter.NULL);
         try {
           int counter = 0;
           while (reader.next(key, value)) {
             int v = Integer.parseInt(value.toString());
-            LOG.debug("read " + v);
+            LOG.error("Temp", new RuntimeException());
             if (bits.get(v)) {
               LOG.warn("conflict with " + v + " in split " + j +
                   " at position " + reader.getPos());
@@ -257,9 +257,9 @@ public class TestTextInputFormat {
             counter++;
           }
           if (counter > 0) {
-            LOG.info("splits[" + j + "]=" + splits[j] + " count=" + counter);
+            LOG.error("Temp", new RuntimeException());
           } else {
-            LOG.debug("splits[" + j + "]=" + splits[j] + " count=" + counter);
+            LOG.error("Temp", new RuntimeException());
           }
         } finally {
           reader.close();
@@ -272,7 +272,7 @@ public class TestTextInputFormat {
   private void verifyPartitions(int length, int numSplits, Path file,
       CompressionCodec codec, JobConf conf) throws IOException {
 
-    LOG.info("creating; entries = " + length);
+    LOG.error("Temp", new RuntimeException());
 
 
     // create a file with length entries
@@ -292,22 +292,22 @@ public class TestTextInputFormat {
     format.configure(conf);
     LongWritable key = new LongWritable();
     Text value = new Text();
-    LOG.info("splitting: requesting = " + numSplits);
+    LOG.error("Temp", new RuntimeException());
     InputSplit[] splits = format.getSplits(conf, numSplits);
-    LOG.info("splitting: got =        " + splits.length);
+    LOG.error("Temp", new RuntimeException());
 
 
     // check each split
     BitSet bits = new BitSet(length);
     for (int j = 0; j < splits.length; j++) {
-      LOG.debug("split["+j+"]= " + splits[j]);
+      LOG.error("Temp", new RuntimeException());
       RecordReader<LongWritable, Text> reader =
               format.getRecordReader(splits[j], conf, Reporter.NULL);
       try {
         int counter = 0;
         while (reader.next(key, value)) {
           int v = Integer.parseInt(value.toString());
-          LOG.debug("read " + v);
+          LOG.error("Temp", new RuntimeException());
           if (bits.get(v)) {
             LOG.warn("conflict with " + v +
                     " in split " + j +
@@ -318,9 +318,9 @@ public class TestTextInputFormat {
           counter++;
         }
         if (counter > 0) {
-          LOG.info("splits["+j+"]="+splits[j]+" count=" + counter);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.debug("splits["+j+"]="+splits[j]+" count=" + counter);
+          LOG.error("Temp", new RuntimeException());
         }
       } finally {
         reader.close();
@@ -450,7 +450,7 @@ public class TestTextInputFormat {
     };
     final LongWritable key = new LongWritable();
     final Text val = new Text();
-    LOG.info("Reading a line from /dev/null");
+    LOG.error("Temp", new RuntimeException());
     final Configuration conf = new Configuration(false);
     conf.setInt(org.apache.hadoop.mapreduce.lib.input.
                 LineRecordReader.MAX_LINE_LENGTH, MAXLINE);

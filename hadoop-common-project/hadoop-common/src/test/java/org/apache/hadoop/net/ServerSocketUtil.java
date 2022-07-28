@@ -52,15 +52,15 @@ public class ServerSocketUtil {
       }
       try (ServerSocket s = new ServerSocket(tryPort, 50,
           InetAddress.getLoopbackAddress())) {
-        LOG.info("Using port " + tryPort);
+        LOG.error("Temp", new RuntimeException());
         return tryPort;
       } catch (IOException e) {
         tries++;
         if (tries >= retries) {
-          LOG.info("Port is already in use; giving up");
+          LOG.error("Temp", new RuntimeException());
           throw e;
         } else {
-          LOG.info("Port is already in use; trying again");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

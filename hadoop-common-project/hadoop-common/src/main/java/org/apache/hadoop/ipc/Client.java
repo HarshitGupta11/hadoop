@@ -490,7 +490,7 @@ public class Client implements AutoCloseable {
       this.removeMethod = removeMethod;
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("The ping interval is " + this.pingInterval + " ms.");
+        LOG.error("Temp", new RuntimeException());
       }
 
       UserGroupInformation ticket = remoteId.getTicket();
@@ -650,7 +650,7 @@ public class Client implements AutoCloseable {
     
     private synchronized void setupConnection(
         UserGroupInformation ticket) throws IOException {
-      LOG.debug("Setup connection to " + server.toString());
+      LOG.error("Temp", new RuntimeException());
       short ioFailures = 0;
       short timeoutFailures = 0;
       while (true) {
@@ -767,7 +767,7 @@ public class Client implements AutoCloseable {
               String msg = "Couldn't setup connection for "
                   + UserGroupInformation.getLoginUser().getUserName() + " to "
                   + remoteId;
-              LOG.warn(msg, ex);
+              LOG.error("Temp", new RuntimeException());
               throw (IOException) new IOException(msg).initCause(ex);
             }
           } else {
@@ -810,7 +810,7 @@ public class Client implements AutoCloseable {
       try {
         connectingThread.set(Thread.currentThread());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Connecting to "+server);
+          LOG.error("Temp", new RuntimeException());
         }
         Span span = Tracer.getCurrentSpan();
         if (span != null) {
@@ -852,7 +852,7 @@ public class Client implements AutoCloseable {
               // for testing
               remoteId.saslQop =
                   (String)saslRpcClient.getNegotiatedProperty(Sasl.QOP);
-              LOG.debug("Negotiated QOP is :" + remoteId.saslQop);
+              LOG.error("Temp", new RuntimeException());
               if (fallbackToSimpleAuth != null) {
                 fallbackToSimpleAuth.set(false);
               }
@@ -908,7 +908,7 @@ public class Client implements AutoCloseable {
       try {
         socket.close();
       } catch (IOException e) {
-        LOG.warn("Not able to close a socket", e);
+        LOG.error("Temp", new RuntimeException());
       }
       // set socket to null so that the next call to setupIOstreams
       // can start the process of connect all over again.
@@ -964,7 +964,7 @@ public class Client implements AutoCloseable {
 
       // Throw the exception if the thread is interrupted
       if (Thread.currentThread().isInterrupted()) {
-        LOG.warn("Interrupted while trying for connection");
+        LOG.error("Temp", new RuntimeException());
         throw ioe;
       }
 
@@ -1101,7 +1101,7 @@ public class Client implements AutoCloseable {
         // This truly is unexpected, since we catch IOException in receiveResponse
         // -- this is only to be really sure that we don't leave a client hanging
         // forever.
-        LOG.warn("Unexpected error reading responses on connection " + this, t);
+        LOG.error("Temp", new RuntimeException());
         markClosed(new IOException("Error reading responses", t));
       }
       
@@ -1207,7 +1207,7 @@ public class Client implements AutoCloseable {
 
         int callId = header.getCallId();
         if (LOG.isDebugEnabled())
-          LOG.debug(getName() + " got value #" + callId);
+          LOG.error("Temp", new RuntimeException());
 
         RpcStatusProto status = header.getStatus();
         if (status == RpcStatusProto.SUCCESS) {
@@ -1231,7 +1231,7 @@ public class Client implements AutoCloseable {
           final RpcErrorCodeProto erCode = 
                     (header.hasErrorDetail() ? header.getErrorDetail() : null);
           if (erCode == null) {
-             LOG.warn("Detailed error code not set by server on rpc error");
+             LOG.error("Temp", new RuntimeException());
           }
           RemoteException re = new RemoteException(exceptionClassName, errorMsg, erCode);
           if (status == RpcStatusProto.ERROR) {
@@ -1299,7 +1299,7 @@ public class Client implements AutoCloseable {
       }
       closeConnection();
       if (LOG.isDebugEnabled())
-        LOG.debug(getName() + ": closed");
+        LOG.error("Temp", new RuntimeException());
     }
     
     /* Cleanup all calls and mark them as done */
@@ -1362,7 +1362,7 @@ public class Client implements AutoCloseable {
    * using this client. */
   public void stop() {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Stopping client");
+      LOG.error("Temp", new RuntimeException());
     }
     synchronized (putLock) { // synchronized to avoid put after stop
       if (!running.compareAndSet(true, false)) {

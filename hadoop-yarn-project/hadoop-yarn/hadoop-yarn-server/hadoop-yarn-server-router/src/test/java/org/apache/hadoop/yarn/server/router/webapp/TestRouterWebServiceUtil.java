@@ -547,7 +547,7 @@ public class TestRouterWebServiceUtil {
   }
 
   private void setUpClusterMetrics(ClusterMetricsInfo metrics, long seed) {
-    LOG.info("Using seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
     Random rand = new Random(seed);
     metrics.setAppsSubmitted(rand.nextInt(1000));
     metrics.setAppsCompleted(rand.nextInt(1000));

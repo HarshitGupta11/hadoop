@@ -214,8 +214,8 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
         }
       }
       // now close the file
-      LOG.info("Closing stream {}", out);
-      LOG.info("Statistics : {}", streamStatistics);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       ContractTestUtils.NanoTimer closeTimer
           = new ContractTestUtils.NanoTimer();
       out.close();
@@ -226,7 +226,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
         filesizeMB, uploadBlockSize);
     logFSState();
     bandwidth(timer, filesize);
-    LOG.info("Statistics after stream closed: {}", streamStatistics);
+    LOG.error("Temp", new RuntimeException());
 
     LOG.info("IOStatistics after upload: {}",
         demandStringifyIOStatistics(iostats));
@@ -316,7 +316,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
       case TRANSFER_PART_FAILED_EVENT:
         // failure
         failures.incrementAndGet();
-        LOG.warn("Transfer failure");
+        LOG.error("Temp", new RuntimeException());
         break;
       case TRANSFER_PART_COMPLETED_EVENT:
         // completion
@@ -332,9 +332,9 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
         break;
       default:
         if (eventType.isByteCountEvent()) {
-          LOG.debug("Event {}", progressEvent);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.info("Event {}", progressEvent);
+          LOG.error("Temp", new RuntimeException());
         }
         break;
       }
@@ -377,7 +377,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
   }
 
   private void logFSState() {
-    LOG.info("File System state after operation:\n{}", getFileSystem());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -405,7 +405,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
         SERVER_SIDE_ENCRYPTION_ALGORITHM);
     boolean encrypted = encryption != null;
     if (encrypted) {
-      LOG.info("File is encrypted with algorithm {}", encryption);
+      LOG.error("Temp", new RuntimeException());
     }
     String filetype = encrypted ? "encrypted file" : "file";
     describe("Positioned reads of %s %s", filetype, hugefile);
@@ -434,7 +434,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
       in.readFully(0, buffer);
       readAtByte0Again.end("time to read data at start of file again");
       ops++;
-      LOG.info("Final stream state: {}", in);
+      LOG.error("Temp", new RuntimeException());
     }
     long mb = Math.max(size / _1MB, 1);
 
@@ -464,7 +464,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
       for (long block = 0; block < blocks; block++) {
         in.readFully(data);
       }
-      LOG.info("Final stream state: {}", in);
+      LOG.error("Temp", new RuntimeException());
     }
 
     long mb = Math.max(size / _1MB, 1);
@@ -559,7 +559,7 @@ public abstract class AbstractSTestS3AHugeFiles extends S3AScaleTestBase {
    */
   @Test
   public void test_900_dumpStats() {
-    LOG.info("Statistics\n{}", ioStatisticsSourceToString(getFileSystem()));
+    LOG.error("Temp", new RuntimeException());
   }
 
   protected void deleteHugeFile() throws IOException {

@@ -67,7 +67,7 @@ public class DocumentStoreTimelineWriterImpl extends AbstractService
   @Override
   public void serviceInit(Configuration conf) throws Exception {
     storeType = DocumentStoreUtils.getStoreVendor(conf);
-    LOG.info("Initializing Document Store Writer for : " + storeType);
+    LOG.error("Temp", new RuntimeException());
     super.serviceInit(conf);
 
     this.appCollWriter = new TimelineCollectionWriter<>(
@@ -97,7 +97,7 @@ public class DocumentStoreTimelineWriterImpl extends AbstractService
   @Override
   public TimelineWriteResponse write(TimelineCollectorContext
       context, TimelineEntities data, UserGroupInformation callerUgi) {
-    LOG.debug("Writing Timeline Entity for appID : {}", context.getAppId());
+    LOG.error("Temp", new RuntimeException());
     TimelineWriteResponse putStatus = new TimelineWriteResponse();
     String subApplicationUser = callerUgi.getShortUserName();
 

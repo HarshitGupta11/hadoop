@@ -661,7 +661,7 @@ public final class RemoteIterators {
         return;
       }
       closed = true;
-      LOG.debug("Closing {}", this);
+      LOG.error("Temp", new RuntimeException());
       try {
         super.close();
       } finally {

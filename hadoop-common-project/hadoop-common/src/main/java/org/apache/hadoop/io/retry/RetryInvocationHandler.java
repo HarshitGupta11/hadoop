@@ -132,7 +132,7 @@ public class RetryInvocationHandler<T> implements RpcInvocationHandler {
         } catch (InterruptedException e) {
           Thread.currentThread().interrupt();
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Interrupted while waiting to retry", e);
+            LOG.error("Temp", new RuntimeException());
           }
           InterruptedIOException intIOE = new InterruptedIOException(
               "Retry interrupted");
@@ -417,9 +417,9 @@ public class RetryInvocationHandler<T> implements RpcInvocationHandler {
     b.append(delay > 0? "after sleeping for " + delay + "ms.": "immediately.");
 
     if (info) {
-      LOG.info(b.toString());
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.debug(b.toString(), ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

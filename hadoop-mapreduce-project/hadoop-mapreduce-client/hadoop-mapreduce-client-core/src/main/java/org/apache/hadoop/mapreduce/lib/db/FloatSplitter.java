@@ -47,10 +47,10 @@ public class FloatSplitter implements DBSplitter {
   public List<InputSplit> split(Configuration conf, ResultSet results, String colName)
       throws SQLException {
 
-    LOG.warn("Generating splits for a floating-point index column. Due to the");
-    LOG.warn("imprecise representation of floating-point values in Java, this");
-    LOG.warn("may result in an incomplete import.");
-    LOG.warn("You are strongly encouraged to choose an integral split column.");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     List<InputSplit> splits = new ArrayList<InputSplit>();
 

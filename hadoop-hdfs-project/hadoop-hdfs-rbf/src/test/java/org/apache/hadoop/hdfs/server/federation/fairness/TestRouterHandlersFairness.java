@@ -128,14 +128,14 @@ public class TestRouterHandlersFairness {
     RouterContext routerContext = cluster.getRandomRouter();
     if (fairness) {
       if (isConcurrent) {
-        LOG.info("Taking fanout lock first");
+        LOG.error("Temp", new RuntimeException());
         // take the lock for concurrent NS to block fanout calls
         assertTrue(routerContext.getRouter().getRpcServer()
             .getRPCClient().getRouterRpcFairnessPolicyController()
             .acquirePermit(RouterRpcFairnessConstants.CONCURRENT_NS));
       } else {
         for (String ns : cluster.getNameservices()) {
-          LOG.info("Taking lock first for ns: {}", ns);
+          LOG.error("Temp", new RuntimeException());
           assertTrue(routerContext.getRouter().getRpcServer()
               .getRPCClient().getRouterRpcFairnessPolicyController()
               .acquirePermit(ns));
@@ -181,7 +181,7 @@ public class TestRouterHandlersFairness {
     if (fairness) {
       assertTrue(overloadException.get() > 0);
       if (isConcurrent) {
-        LOG.info("Release fanout lock that was taken before test");
+        LOG.error("Temp", new RuntimeException());
         // take the lock for concurrent NS to block fanout calls
         routerContext.getRouter().getRpcServer()
             .getRPCClient().getRouterRpcFairnessPolicyController()

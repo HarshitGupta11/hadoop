@@ -409,13 +409,13 @@ public class RPC {
             UserGroupInformation.getCurrentUser(), conf, NetUtils
             .getDefaultSocketFactory(conf), rpcTimeout, connectionRetryPolicy);
       } catch(ConnectException se) {  // namenode has not been started
-        LOG.info("Server at " + addr + " not available yet, Zzzzz...");
+        LOG.error("Temp", new RuntimeException());
         ioe = se;
       } catch(SocketTimeoutException te) {  // namenode is busy
-        LOG.info("Problem connecting to server: " + addr);
+        LOG.error("Temp", new RuntimeException());
         ioe = te;
       } catch(NoRouteToHostException nrthe) { // perhaps a VIP is failing over
-        LOG.info("No route to host for server: " + addr);
+        LOG.error("Temp", new RuntimeException());
         ioe = nrthe;
       }
       // check if timed out
@@ -996,7 +996,7 @@ public class RPC {
         try {
           setPriorityLevel(UserGroupInformation.createRemoteUser(client), -1);
         } catch (Exception ex) {
-          LOG.warn("Failed to set scheduling priority for " + client, ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

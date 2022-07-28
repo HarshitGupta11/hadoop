@@ -368,7 +368,7 @@ public class ApplicationImpl implements Application {
       try {
         app.appStateStore.storeApplication(app.appId, buildAppProto(app));
       } catch (Exception ex) {
-        LOG.warn("failed to update application state in state store", ex);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -642,7 +642,7 @@ public class ApplicationImpl implements Application {
 
     try {
       ApplicationId applicationID = event.getApplicationID();
-      LOG.debug("Processing {} of type {}", applicationID, event.getType());
+      LOG.error("Temp", new RuntimeException());
       ApplicationState oldState = stateMachine.getCurrentState();
       ApplicationState newState = null;
       try {

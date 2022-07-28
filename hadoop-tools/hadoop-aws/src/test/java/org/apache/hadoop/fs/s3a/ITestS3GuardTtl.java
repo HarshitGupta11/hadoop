@@ -104,7 +104,7 @@ public class ITestS3GuardTtl extends AbstractS3ATestBase {
 
   @Test
   public void testDirectoryListingAuthoritativeTtl() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
 
     final S3AFileSystem fs = getFileSystem();
     Assume.assumeTrue(fs.hasMetadataStore());
@@ -167,7 +167,7 @@ public class ITestS3GuardTtl extends AbstractS3ATestBase {
 
   @Test
   public void testFileMetadataExpiresTtl() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
 
     Path fileExpire1 = path("expirettl-" + UUID.randomUUID());
     Path fileExpire2 = path("expirettl-" + UUID.randomUUID());
@@ -236,7 +236,7 @@ public class ITestS3GuardTtl extends AbstractS3ATestBase {
    */
   @Test
   public void testCreateOnTombstonedFileSucceeds() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
     final S3AFileSystem fs = getFileSystem();
 
     String fileToTry = methodName + UUID.randomUUID().toString();
@@ -274,7 +274,7 @@ public class ITestS3GuardTtl extends AbstractS3ATestBase {
    */
   @Test
   public void testCreateParentHasTombstone() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
     final S3AFileSystem fs = getFileSystem();
 
     String dirToDelete = methodName + UUID.randomUUID().toString();
@@ -319,7 +319,7 @@ public class ITestS3GuardTtl extends AbstractS3ATestBase {
    */
   @Test
   public void testListingFilteredExpiredItems() throws Exception {
-    LOG.info("Authoritative mode: {}", authoritative);
+    LOG.error("Temp", new RuntimeException());
     final S3AFileSystem fs = getFileSystem();
 
     long oldTime = 100L;

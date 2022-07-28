@@ -116,7 +116,7 @@ public abstract class TestSchedulerOvercommit {
    */
   @Before
   public void setup() throws Exception {
-    LOG.info("Setting up the test cluster...");
+    LOG.error("Temp", new RuntimeException());
 
     // Start the Resource Manager
     Configuration conf = getConfiguration();
@@ -164,7 +164,7 @@ public abstract class TestSchedulerOvercommit {
    */
   @After
   public void cleanup() throws Exception {
-    LOG.info("Cleaning up the test cluster...");
+    LOG.error("Temp", new RuntimeException());
 
     if (am != null) {
       am.unregisterAppAttempt();
@@ -205,7 +205,7 @@ public abstract class TestSchedulerOvercommit {
         c1.getId(), ContainerState.COMPLETE, "", 0, c1.getResource());
     nm.containerStatus(containerStatus);
 
-    LOG.info("Waiting for container to be finished for app...");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(
         () -> attempt.getJustFinishedContainers().size() == 1,
         INTERVAL, 2 * 1000);
@@ -452,7 +452,7 @@ public abstract class TestSchedulerOvercommit {
         c1.getId(), ContainerState.COMPLETE, "", 0, c1.getResource());
     nm.containerStatus(containerStatus);
 
-    LOG.info("Waiting for containers to be finished for app 1...");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(
         () -> attempt.getJustFinishedContainers().size() == 1, 100, 2000);
     assertEquals(1, am.schedule().getCompletedContainersStatuses().size());
@@ -478,7 +478,7 @@ public abstract class TestSchedulerOvercommit {
     // kick the scheduling and check it took effect
     nm.nodeHeartbeat(true);
     while (allocResponse2.getAllocatedContainers().isEmpty()) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(100);
       allocResponse2 = am.schedule();
     }
@@ -554,7 +554,7 @@ public abstract class TestSchedulerOvercommit {
     List<Container> allocated = response.getAllocatedContainers();
     nm.nodeHeartbeat(true);
     for (int i = 0; allocated.isEmpty() && i < 10; i++) {
-      LOG.info("Waiting for containers to be created for app...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(INTERVAL);
       response = app.schedule();
       allocated = response.getAllocatedContainers();

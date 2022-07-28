@@ -91,14 +91,14 @@ public class TestSetFile {
   }
 
   private static RandomDatum[] generate(int count) {
-    LOG.info("generating " + count + " records in memory");
+    LOG.error("Temp", new RuntimeException());
     RandomDatum[] data = new RandomDatum[count];
     RandomDatum.Generator generator = new RandomDatum.Generator();
     for (int i = 0; i < count; i++) {
       generator.next();
       data[i] = generator.getValue();
     }
-    LOG.info("sorting " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     Arrays.sort(data);
     return data;
   }
@@ -107,7 +107,7 @@ public class TestSetFile {
                                 String file, CompressionType compress)
     throws IOException {
     MapFile.delete(fs, file);
-    LOG.info("creating with " + data.length + " records");
+    LOG.error("Temp", new RuntimeException());
     SetFile.Writer writer =
       new SetFile.Writer(conf, fs, file,
                          WritableComparator.get(RandomDatum.class),
@@ -122,14 +122,14 @@ public class TestSetFile {
     RandomDatum v = new RandomDatum();
     int sample = (int)Math.sqrt(data.length);
     Random random = new Random();
-    LOG.info("reading " + sample + " records");
+    LOG.error("Temp", new RuntimeException());
     SetFile.Reader reader = new SetFile.Reader(fs, file, conf);
     for (int i = 0; i < sample; i++) {
       if (!reader.seek(data[random.nextInt(data.length)]))
         throw new RuntimeException("wrong value at " + i);
     }
     reader.close();
-    LOG.info("done reading " + data.length);
+    LOG.error("Temp", new RuntimeException());
   }
 
 
@@ -172,11 +172,11 @@ public class TestSetFile {
       
       fs = fpath.getFileSystem(conf);
       
-      LOG.info("count = " + count);
-      LOG.info("create = " + create);
-      LOG.info("check = " + check);
-      LOG.info("compress = " + compress);
-      LOG.info("file = " + file);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       RandomDatum[] data = generate(count);
       

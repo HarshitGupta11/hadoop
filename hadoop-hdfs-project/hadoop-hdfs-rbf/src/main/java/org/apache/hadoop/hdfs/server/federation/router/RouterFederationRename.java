@@ -136,7 +136,7 @@ public class RouterFederationRename {
         }
       });
     } catch (InterruptedException e) {
-      LOG.warn("Fed balance job is interrupted.", e);
+      LOG.error("Temp", new RuntimeException());
       throw new InterruptedIOException(e.getMessage());
     }
   }
@@ -238,7 +238,7 @@ public class RouterFederationRename {
             .setDiffThreshold(diff)
             .build();
 
-    LOG.info(context.toString());
+    LOG.error("Temp", new RuntimeException());
     // Construct the balance job.
     BalanceJob.Builder<BalanceProcedure> builder = new BalanceJob.Builder<>();
     DistCpProcedure dcp =

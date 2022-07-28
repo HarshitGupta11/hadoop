@@ -73,7 +73,7 @@ public class TestSynthJobGeneration {
     int bucket3 = 0;
     for (int i = 0; i < 1000; ++i) {
       long time = wl.generateSubmissionTime();
-      LOG.info("Generated time " + time);
+      LOG.error("Temp", new RuntimeException());
       if (time < 30) {
         bucket0++;
       } else if (time < 60) {
@@ -107,14 +107,14 @@ public class TestSynthJobGeneration {
 
     SynthTraceJobProducer stjp = new SynthTraceJobProducer(conf);
 
-    LOG.info(stjp.toString());
+    LOG.error("Temp", new RuntimeException());
 
     SynthJob js = (SynthJob) stjp.getNextJob();
 
     int jobCount = 0;
 
     while (js != null) {
-      LOG.info(js.toString());
+      LOG.error("Temp", new RuntimeException());
       validateJob(js);
       js = (SynthJob) stjp.getNextJob();
       jobCount++;
@@ -132,14 +132,14 @@ public class TestSynthJobGeneration {
 
     SynthTraceJobProducer stjp = new SynthTraceJobProducer(conf);
 
-    LOG.info(stjp.toString());
+    LOG.error("Temp", new RuntimeException());
 
     SynthJob js = (SynthJob) stjp.getNextJob();
 
     int jobCount = 0;
 
     while (js != null) {
-      LOG.info(js.toString());
+      LOG.error("Temp", new RuntimeException());
       validateJob(js);
       js = (SynthJob) stjp.getNextJob();
       jobCount++;
@@ -157,14 +157,14 @@ public class TestSynthJobGeneration {
 
     SynthTraceJobProducer stjp = new SynthTraceJobProducer(conf);
 
-    LOG.info(stjp.toString());
+    LOG.error("Temp", new RuntimeException());
 
     SynthJob js = (SynthJob) stjp.getNextJob();
 
     int jobCount = 0;
 
     while (js != null) {
-      LOG.info(js.toString());
+      LOG.error("Temp", new RuntimeException());
       validateJob(js);
       js = (SynthJob) stjp.getNextJob();
       jobCount++;

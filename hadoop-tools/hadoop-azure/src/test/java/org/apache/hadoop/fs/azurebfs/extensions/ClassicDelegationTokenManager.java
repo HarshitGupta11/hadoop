@@ -96,7 +96,7 @@ public class ClassicDelegationTokenManager
   public void initialize(final Configuration configuration) throws IOException {
     initialized = true;
     owner = UserGroupInformation.getCurrentUser();
-    LOG.info("Creating Stub DT manager for {}", owner.getUserName());
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void close() {
@@ -117,7 +117,7 @@ public class ClassicDelegationTokenManager
       t.setKind(kind);
     }
     t.setService(createServiceText());
-    LOG.info("Created token {}", t);
+    LOG.error("Temp", new RuntimeException());
     return t;
   }
 
@@ -168,7 +168,7 @@ public class ClassicDelegationTokenManager
     Preconditions.checkState(fsURI == null, "already bound");
     fsURI = uri;
     canonicalServiceName = uri.toString();
-    LOG.info("Bound to {}", fsURI);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public String getCanonicalServiceName() {

@@ -63,7 +63,7 @@ public class TestViewFileSystemLocalFileSystem extends ViewFileSystemBaseTest {
 
   @Test
   public void testNflyWriteSimple() throws IOException {
-    LOG.info("Starting testNflyWriteSimple");
+    LOG.error("Temp", new RuntimeException());
     final URI[] testUris = new URI[] {
         URI.create(targetTestRoot + "/nfwd1"),
         URI.create(targetTestRoot + "/nfwd2")
@@ -101,7 +101,7 @@ public class TestViewFileSystemLocalFileSystem extends ViewFileSystemBaseTest {
 
   @Test
   public void testNflyInvalidMinReplication() throws Exception {
-    LOG.info("Starting testNflyInvalidMinReplication");
+    LOG.error("Temp", new RuntimeException());
     final URI[] testUris = new URI[] {
         URI.create(targetTestRoot + "/nfwd1"),
         URI.create(targetTestRoot + "/nfwd2")

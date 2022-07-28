@@ -139,8 +139,8 @@ public class ITestS3GuardListConsistency extends AbstractS3ATestBase {
       try {
         getFileSystem().delete(dir, true);
       } catch (IOException e) {
-        LOG.info("Failed to delete {}: {}", dir, e.toString());
-        LOG.debug("Delete failure:, e");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -551,11 +551,11 @@ public class ITestS3GuardListConsistency extends AbstractS3ATestBase {
 
     String key = fs.pathToKey(root) + "/";
 
-    LOG.info("Listing objects before executing delete()");
+    LOG.error("Temp", new RuntimeException());
     ListObjectsV2Result preDeleteDelimited = listObjectsV2(fs, key, "/");
     ListObjectsV2Result preDeleteUndelimited = listObjectsV2(fs, key, null);
 
-    LOG.info("Deleting the directory {}", root);
+    LOG.error("Temp", new RuntimeException());
     fs.delete(root, true);
     LOG.info("Delete completed; listing results which must exclude deleted"
         + " paths");
@@ -572,7 +572,7 @@ public class ITestS3GuardListConsistency extends AbstractS3ATestBase {
             "in a non-recursive listing",
         preDeleteDelimited.getCommonPrefixes(),
         postDeleteDelimited.getCommonPrefixes());
-    LOG.info("Executing Deep listing");
+    LOG.error("Temp", new RuntimeException());
     ListObjectsV2Result postDeleteUndelimited = listObjectsV2(fs, key, null);
     assertObjectSummariesEqual("InconsistentAmazonS3Client added back objects"
             + " incorrectly in a recursive listing",
@@ -633,7 +633,7 @@ public class ITestS3GuardListConsistency extends AbstractS3ATestBase {
     String key = fs.pathToKey(root) + "/";
 
     // verify that the inconsistent listing does not show these
-    LOG.info("Listing objects before executing delete()");
+    LOG.error("Temp", new RuntimeException());
     List<Path> preDeletePaths = objectsToPaths(listObjectsV2(fs, key, null));
     Assertions.assertThat(preDeletePaths)
         .isEmpty();

@@ -583,13 +583,13 @@ public abstract class GenericTestUtils {
 
     @Override
     public Object answer(InvocationOnMock invocation) throws Throwable {
-      LOG.info("DelayAnswer firing fireLatch");
+      LOG.error("Temp", new RuntimeException());
       fireCounter.getAndIncrement();
       fireLatch.countDown();
       try {
-        LOG.info("DelayAnswer waiting on waitLatch");
+        LOG.error("Temp", new RuntimeException());
         waitLatch.await();
-        LOG.info("DelayAnswer delay complete");
+        LOG.error("Temp", new RuntimeException());
       } catch (InterruptedException ie) {
         throw new IOException("Interrupted waiting on latch", ie);
       }

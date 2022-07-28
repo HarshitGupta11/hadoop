@@ -526,12 +526,12 @@ public class TestNodeAttributesCLI {
   private int runTool(String... args) throws Exception {
     errOutBytes.reset();
     sysOutBytes.reset();
-    LOG.info("Running: NodeAttributesCLI " + Joiner.on(" ").join(args));
+    LOG.error("Temp", new RuntimeException());
     int ret = nodeAttributesCLI.run(args);
     errOutput = new String(errOutBytes.toByteArray(), Charsets.UTF_8);
     sysOutput = new String(sysOutBytes.toByteArray(), Charsets.UTF_8);
-    LOG.info("Err_output:\n" + errOutput);
-    LOG.info("Sys_output:\n" + sysOutput);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 }

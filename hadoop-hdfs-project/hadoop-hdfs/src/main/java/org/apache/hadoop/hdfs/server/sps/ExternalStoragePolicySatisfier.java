@@ -109,7 +109,7 @@ public final class ExternalStoragePolicySatisfier {
                 NameNodeConnector.DEFAULT_MAX_IDLE_ITERATIONS);
         return nncs.get(0);
       } catch (IOException e) {
-        LOG.warn("Failed to connect with namenode", e);
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(3000); // retry the connection after few secs
       }
     }

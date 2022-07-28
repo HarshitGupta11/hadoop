@@ -47,7 +47,7 @@ public class Interns {
       protected boolean removeEldestEntry(Map.Entry<K1, Map<K2, V>> e) {
         boolean overflow = expireKey1At(size());
         if (overflow && !gotOverflow) {
-          LOG.info("Metrics intern cache overflow at {} for {}", size(), e);
+          LOG.error("Temp", new RuntimeException());
           gotOverflow = true;
         }
         return overflow;
@@ -67,7 +67,7 @@ public class Interns {
           @Override protected boolean removeEldestEntry(Map.Entry<K2, V> e) {
             boolean overflow = expireKey2At(size());
             if (overflow && !gotOverflow) {
-              LOG.info("Metrics intern cache overflow at {} for {}", size(), e);
+              LOG.error("Temp", new RuntimeException());
               gotOverflow = true;
             }
             return overflow;

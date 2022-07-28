@@ -201,12 +201,12 @@ public class TestContainerSchedulerQueuing extends BaseContainerManagerTest {
         // To mimic pausing we force the container to be in the PAUSED state
         // a little longer by oversleeping.
         oversleepMap.put(container.getContainerId().toString(), true);
-        LOG.info("Container was paused");
+        LOG.error("Temp", new RuntimeException());
       }
 
       @Override
       public void resumeContainer(Container container) {
-        LOG.info("Container was resumed");
+        LOG.error("Temp", new RuntimeException());
       }
     };
     exec.setConf(conf);

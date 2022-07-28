@@ -110,14 +110,14 @@ public class CrossOriginFilter implements Filter {
     String originsList = encodeHeader(req.getHeader(ORIGIN));
     if (!isCrossOrigin(originsList)) {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Header origin is null. Returning");
+        LOG.error("Temp", new RuntimeException());
       }
       return;
     }
 
     if (!areOriginsAllowed(originsList)) {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Header origins '" + originsList + "' not allowed. Returning");
+        LOG.error("Temp", new RuntimeException());
       }
       return;
     }
@@ -171,7 +171,7 @@ public class CrossOriginFilter implements Filter {
     }
     allowedMethods.addAll(
         Arrays.asList(allowedMethodsConfig.trim().split("\\s*,\\s*")));
-    LOG.info("Allowed Methods: " + getAllowedMethodsHeader());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void initializeAllowedHeaders(FilterConfig filterConfig) {
@@ -182,7 +182,7 @@ public class CrossOriginFilter implements Filter {
     }
     allowedHeaders.addAll(
         Arrays.asList(allowedHeadersConfig.trim().split("\\s*,\\s*")));
-    LOG.info("Allowed Headers: " + getAllowedHeadersHeader());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void initializeAllowedOrigins(FilterConfig filterConfig) {
@@ -194,13 +194,13 @@ public class CrossOriginFilter implements Filter {
     allowedOrigins.addAll(
         Arrays.asList(allowedOriginsConfig.trim().split("\\s*,\\s*")));
     allowAllOrigins = allowedOrigins.contains("*");
-    LOG.info("Allowed Origins: " + StringUtils.join(allowedOrigins, ','));
-    LOG.info("Allow All Origins: " + allowAllOrigins);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     List<String> discouragedAllowedOrigins = allowedOrigins.stream()
             .filter(s -> s.length() > 1 && s.contains("*") && !(s.startsWith(ALLOWED_ORIGINS_REGEX_PREFIX)))
             .collect(Collectors.toList());
     for (String discouragedAllowedOrigin : discouragedAllowedOrigins) {
-        LOG.warn("Allowed Origin pattern '" + discouragedAllowedOrigin + "' is discouraged, use the 'regex:' prefix and use a Java regular expression instead.");
+        LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -209,7 +209,7 @@ public class CrossOriginFilter implements Filter {
     if (maxAge == null) {
       maxAge = MAX_AGE_DEFAULT;
     }
-    LOG.info("Max Age: " + maxAge);
+    LOG.error("Temp", new RuntimeException());
   }
 
   static String encodeHeader(final String header) {

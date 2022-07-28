@@ -285,7 +285,7 @@ public class DirMarkerTracker {
         // there's a match
         // remove it from the map.
         entries.remove();
-        LOG.debug("Removing {}", entry.getValue());
+        LOG.error("Temp", new RuntimeException());
         removed.add(path);
       }
     }

@@ -442,7 +442,7 @@ public class RetryPolicies {
     public static MultipleLinearRandomRetry parseCommaSeparatedString(String s) {
       final String[] elements = s.split(",");
       if (elements.length == 0) {
-        LOG.warn("Illegal value: there is no element in \"" + s + "\".");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       if (elements.length % 2 != 0) {

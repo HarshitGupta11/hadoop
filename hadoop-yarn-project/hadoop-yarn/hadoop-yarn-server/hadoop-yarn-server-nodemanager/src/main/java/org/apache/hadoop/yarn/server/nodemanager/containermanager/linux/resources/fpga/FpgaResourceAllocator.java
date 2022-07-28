@@ -156,12 +156,12 @@ public class FpgaResourceAllocator {
         fpgaDevices.add(device);
         availableFpgas.get(type).add(device);
       } else {
-        LOG.warn("Duplicate device found: " + device + ". Ignored");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
     allowedFpgas = ImmutableList.copyOf(fpgaDevices);
-    LOG.info("Added a list of FPGA Devices: " + allowedFpgas);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public synchronized void updateFpga(String requestor,
@@ -170,7 +170,7 @@ public class FpgaResourceAllocator {
     device.setAocxHash(newHash);
     LOG.info("Update IPID to " + newIPID +
         " for this allocated device: " + device);
-    LOG.info("Update IP hash to " + newHash);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

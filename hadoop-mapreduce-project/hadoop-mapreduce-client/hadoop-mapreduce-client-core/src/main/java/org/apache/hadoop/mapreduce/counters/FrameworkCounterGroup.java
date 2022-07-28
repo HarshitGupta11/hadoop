@@ -159,7 +159,7 @@ public abstract class FrameworkCounterGroup<T extends Enum<T>,
     if (ours != null) {
       ours.setValue(counter.getValue());
     } else {
-      LOG.warn(counter.getName() + "is not a known counter.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -169,7 +169,7 @@ public abstract class FrameworkCounterGroup<T extends Enum<T>,
     if (counter != null) {
       counter.setValue(value);
     } else {
-      LOG.warn(name + "is not a known counter.");
+      LOG.error("Temp", new RuntimeException());
     }
     return counter;
   }
@@ -196,7 +196,7 @@ public abstract class FrameworkCounterGroup<T extends Enum<T>,
       T enumValue = valueOf(counterName);
       return findCounter(enumValue);
     } catch (IllegalArgumentException e) {
-      LOG.warn(counterName + " is not a recognized counter.");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

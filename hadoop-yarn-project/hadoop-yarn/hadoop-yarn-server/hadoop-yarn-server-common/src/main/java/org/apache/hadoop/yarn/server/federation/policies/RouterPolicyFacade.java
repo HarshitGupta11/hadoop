@@ -156,7 +156,7 @@ public class RouterPolicyFacade {
     } catch (YarnException e) {
       String errMsg = "There is no policy configured for the queue: " + queue
           + ", falling back to defaults.";
-      LOG.warn(errMsg, e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // If there is no policy configured for this queue, fallback to the baseline
@@ -173,7 +173,7 @@ public class RouterPolicyFacade {
       } catch (YarnException e) {
         String errMsg = "Cannot retrieve policy configured for the queue: "
             + queue + ", falling back to defaults.";
-        LOG.warn(errMsg, e);
+        LOG.error("Temp", new RuntimeException());
 
       }
     }

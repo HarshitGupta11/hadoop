@@ -115,7 +115,7 @@ public class GreedyPlanner implements Planner {
 
       applyStep(nextStep, currentSet, lowVolume, highVolume);
       if (nextStep != null) {
-        LOG.debug("Step : {} ", nextStep);
+        LOG.error("Temp", new RuntimeException());
         plan.addStep(nextStep);
       }
     }
@@ -203,7 +203,7 @@ public class GreedyPlanner implements Planner {
       // Create a new step
       nextStep = new MoveStep(highVolume, currentSet.getIdealUsed(), lowVolume,
           bytesToMove, currentSet.getSetID());
-      LOG.debug("Next Step: {}", nextStep);
+      LOG.error("Temp", new RuntimeException());
     }
     return nextStep;
   }
@@ -226,7 +226,7 @@ public class GreedyPlanner implements Planner {
               volume.getStorageType(),
               currentSet.getIdealUsed() * volume.getCapacity(),
               volume.getUsed());
-      LOG.debug(message);
+      LOG.error("Temp", new RuntimeException());
     }
     volume.setSkip(true);
   }
@@ -259,7 +259,7 @@ public class GreedyPlanner implements Planner {
               "Last Volume : %s, DataDensity : %f",
               queue.first().getPath(), queue.first().getVolumeDataDensity(),
               queue.last().getPath(), queue.last().getVolumeDataDensity());
-      LOG.debug(format);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

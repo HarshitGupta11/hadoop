@@ -172,7 +172,7 @@ public class DefaultS3ClientFactory extends Configured
       }
     }
     if (pathStyleAccess) {
-      LOG.debug("Enabling path style access!");
+      LOG.error("Temp", new RuntimeException());
       s3.setS3ClientOptions(S3ClientOptions.builder()
           .setPathStyleAccess(true)
           .build());
@@ -206,19 +206,19 @@ public class DefaultS3ClientFactory extends Configured
       createEndpointConfiguration(
       final String endpoint, final ClientConfiguration awsConf,
       String awsRegion) {
-    LOG.debug("Creating endpoint configuration for {}", endpoint);
+    LOG.error("Temp", new RuntimeException());
     if (endpoint == null || endpoint.isEmpty()) {
       // the default endpoint...we should be using null at this point.
-      LOG.debug("Using default endpoint -no need to generate a configuration");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 
     final URI epr = RuntimeHttpUtils.toUri(endpoint, awsConf);
-    LOG.debug("Endpoint URI = {}", epr);
+    LOG.error("Temp", new RuntimeException());
     String region = awsRegion;
     if (StringUtils.isBlank(region)) {
       if (!ServiceUtils.isS3USStandardEndpoint(endpoint)) {
-        LOG.debug("Endpoint {} is not the default; parsing", epr);
+        LOG.error("Temp", new RuntimeException());
         region = AwsHostNameUtils.parseRegion(
             epr.getHost(),
             S3_SERVICE_NAME);

@@ -299,10 +299,10 @@ public class TestDFSHAAdminMiniCluster {
   
   private int runTool(String ... args) throws Exception {
     errOutBytes.reset();
-    LOG.info("Running: DFSHAAdmin " + Joiner.on(" ").join(args));
+    LOG.error("Temp", new RuntimeException());
     int ret = tool.run(args);
     errOutput = new String(errOutBytes.toByteArray(), Charsets.UTF_8);
-    LOG.info("Output:\n" + errOutput);
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 }

@@ -60,7 +60,7 @@ public class RouterUserProtocol
 
   @Override
   public void refreshUserToGroupsMappings() throws IOException {
-    LOG.debug("Refresh user groups mapping in Router.");
+    LOG.error("Temp", new RuntimeException());
     rpcServer.checkOperation(OperationCategory.UNCHECKED);
     Set<FederationNamespaceInfo> nss = namenodeResolver.getNamespaces();
     if (nss.isEmpty()) {
@@ -74,7 +74,7 @@ public class RouterUserProtocol
 
   @Override
   public void refreshSuperUserGroupsConfiguration() throws IOException {
-    LOG.debug("Refresh superuser groups configuration in Router.");
+    LOG.error("Temp", new RuntimeException());
     rpcServer.checkOperation(OperationCategory.UNCHECKED);
     Set<FederationNamespaceInfo> nss = namenodeResolver.getNamespaces();
     if (nss.isEmpty()) {
@@ -88,7 +88,7 @@ public class RouterUserProtocol
 
   @Override
   public String[] getGroupsForUser(String user) throws IOException {
-    LOG.debug("Getting groups for user {}", user);
+    LOG.error("Temp", new RuntimeException());
     rpcServer.checkOperation(OperationCategory.UNCHECKED);
     Set<FederationNamespaceInfo> nss = namenodeResolver.getNamespaces();
     if (nss.isEmpty()) {

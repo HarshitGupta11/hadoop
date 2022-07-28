@@ -322,7 +322,7 @@ public class TestContainersMonitor extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (!processStartFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertTrue("ProcessStartFile doesn't exist!",
         processStartFile.exists());

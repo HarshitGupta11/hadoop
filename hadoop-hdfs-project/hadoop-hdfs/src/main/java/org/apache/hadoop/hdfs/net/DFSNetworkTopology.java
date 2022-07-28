@@ -122,7 +122,7 @@ public class DFSNetworkTopology extends NetworkTopology {
       Node n = chooseRandom(searchScope, excludedScope, excludedNodes);
       if (n == null) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("No node to choose.");
+          LOG.error("Temp", new RuntimeException());
         }
         // this means there is simply no node to choose from
         return null;
@@ -190,7 +190,7 @@ public class DFSNetworkTopology extends NetworkTopology {
     }
     Node node = getNode(scope);
     if (node == null) {
-      LOG.debug("Invalid scope {}, non-existing node", scope);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     if (!(node instanceof DFSTopologyNodeImpl)) {
@@ -198,7 +198,7 @@ public class DFSNetworkTopology extends NetworkTopology {
       // if a node is DatanodeDescriptor and excludedNodes contains it,
       // return null;
       if (excludedNodes != null && excludedNodes.contains(node)) {
-        LOG.debug("{} in excludedNodes", node);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       return ((DatanodeDescriptor) node).hasStorageType(type) ? node : null;
@@ -254,7 +254,7 @@ public class DFSNetworkTopology extends NetworkTopology {
     Node chosen =
         chooseRandomWithStorageTypeAndExcludeRoot(root, excludeRoot, type,
             excludedNodes);
-    LOG.debug("chooseRandom returning {}", chosen);
+    LOG.error("Temp", new RuntimeException());
     return chosen;
   }
 

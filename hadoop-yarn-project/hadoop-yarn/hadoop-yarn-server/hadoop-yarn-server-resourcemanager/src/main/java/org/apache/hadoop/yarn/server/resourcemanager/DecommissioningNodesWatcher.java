@@ -189,7 +189,7 @@ public class DecommissioningNodesWatcher {
   public synchronized void remove(NodeId nodeId) {
     DecommissioningNodeContext context = decomNodes.get(nodeId);
     if (context != null) {
-      LOG.info("remove " + nodeId + " in " + context.nodeState);
+      LOG.error("Temp", new RuntimeException());
       decomNodes.remove(nodeId);
     }
   }
@@ -283,7 +283,7 @@ public class DecommissioningNodesWatcher {
         }
         // Remove stale non-DECOMMISSIONING node
         if (d.nodeState != NodeState.DECOMMISSIONING) {
-          LOG.debug("remove {} {}", d.nodeState, d.nodeId);
+          LOG.error("Temp", new RuntimeException());
           it.remove();
           continue;
         } else if (now - d.lastUpdateTime > 60000L) {
@@ -291,7 +291,7 @@ public class DecommissioningNodesWatcher {
           RMNode rmNode = getRmNode(d.nodeId);
           if (rmNode != null &&
               rmNode.getState() == NodeState.DECOMMISSIONED) {
-            LOG.debug("remove {} {}", rmNode.getState(), d.nodeId);
+            LOG.error("Temp", new RuntimeException());
             it.remove();
             continue;
           }
@@ -299,7 +299,7 @@ public class DecommissioningNodesWatcher {
         if (d.timeoutMs >= 0 &&
             d.decommissioningStartTime + d.timeoutMs < now) {
           staleNodes.add(d.nodeId);
-          LOG.debug("Identified stale and timeout node {}", d.nodeId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -311,7 +311,7 @@ public class DecommissioningNodesWatcher {
         }
         if (rmNode.getState() == NodeState.DECOMMISSIONING &&
             checkReadyToBeDecommissioned(rmNode.getNodeID())) {
-          LOG.info("DECOMMISSIONING " + nodeId + " timeout");
+          LOG.error("Temp", new RuntimeException());
           this.rmContext.getDispatcher().getEventHandler().handle(
               new RMNodeEvent(nodeId, RMNodeEventType.DECOMMISSION));
         }
@@ -379,7 +379,7 @@ public class DecommissioningNodesWatcher {
               (mclock.getTime() - rmApp.getStartTime()) / 1000));
         }
       }
-      LOG.debug("Decommissioning node: " + sb.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

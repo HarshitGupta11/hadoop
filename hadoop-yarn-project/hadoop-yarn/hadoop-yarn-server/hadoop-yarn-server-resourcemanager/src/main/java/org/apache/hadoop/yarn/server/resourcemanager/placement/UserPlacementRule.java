@@ -47,15 +47,15 @@ public class UserPlacementRule extends FSPlacementRule {
     String cleanUser = cleanName(user);
     PlacementRule parentRule = getParentRule();
     if (parentRule != null) {
-      LOG.debug("User rule: parent rule found: {}", parentRule.getName());
+      LOG.error("Temp", new RuntimeException());
       ApplicationPlacementContext parent =
           parentRule.getPlacementForApp(asc, user);
       if (parent == null || getQueueManager().
           getQueue(parent.getQueue()) instanceof FSLeafQueue) {
-        LOG.debug("User rule: parent rule failed");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
-      LOG.debug("User rule: parent rule result: {}", parent.getQueue());
+      LOG.error("Temp", new RuntimeException());
       queueName = parent.getQueue() + DOT + cleanUser;
     } else {
       queueName = assureRoot(cleanUser);

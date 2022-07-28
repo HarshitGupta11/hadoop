@@ -173,38 +173,38 @@ public class TestDecommissionWithStriped {
 
   @Test(timeout = 120000)
   public void testFileFullBlockGroup() throws Exception {
-    LOG.info("Starting test testFileFullBlockGroup");
+    LOG.error("Temp", new RuntimeException());
     testDecommission(blockSize * dataBlocks, 9, 1, "testFileFullBlockGroup");
   }
 
   @Test(timeout = 120000)
   public void testFileMultipleBlockGroups() throws Exception {
-    LOG.info("Starting test testFileMultipleBlockGroups");
+    LOG.error("Temp", new RuntimeException());
     int writeBytes = 2 * blockSize * dataBlocks;
     testDecommission(writeBytes, 9, 1, "testFileMultipleBlockGroups");
   }
 
   @Test(timeout = 120000)
   public void testFileSmallerThanOneCell() throws Exception {
-    LOG.info("Starting test testFileSmallerThanOneCell");
+    LOG.error("Temp", new RuntimeException());
     testDecommission(cellSize - 1, 4, 1, "testFileSmallerThanOneCell");
   }
 
   @Test(timeout = 120000)
   public void testFileSmallerThanOneStripe() throws Exception {
-    LOG.info("Starting test testFileSmallerThanOneStripe");
+    LOG.error("Temp", new RuntimeException());
     testDecommission(cellSize * 2, 5, 1, "testFileSmallerThanOneStripe");
   }
 
   @Test(timeout = 120000)
   public void testDecommissionTwoNodes() throws Exception {
-    LOG.info("Starting test testDecommissionTwoNodes");
+    LOG.error("Temp", new RuntimeException());
     testDecommission(blockSize * dataBlocks, 9, 2, "testDecommissionTwoNodes");
   }
 
   @Test(timeout = 120000)
   public void testDecommissionWithURBlockForSameBlockGroup() throws Exception {
-    LOG.info("Starting test testDecommissionWithURBlocksForSameBlockGroup");
+    LOG.error("Temp", new RuntimeException());
 
     final Path ecFile = new Path(ecDir, "testDecommissionWithCorruptBlocks");
     int writeBytes = cellSize * dataBlocks * 2;
@@ -237,7 +237,7 @@ public class TestDecommissionWithStriped {
         DataNode dn = cluster.getDataNode(liveDn.getIpcPort());
         stoppedDns.add(cluster.stopDataNode(liveDn.getXferAddr()));
         cluster.setDataNodeDead(dn.getDatanodeId());
-        LOG.info("stop datanode " + dn.getDatanodeId().getHostName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     DataNode dn = cluster.getDataNode(dnLocs[stopNodeIndex].getIpcPort());
@@ -271,9 +271,9 @@ public class TestDecommissionWithStriped {
     }
     cluster.waitActive();
 
-    LOG.info("Waiting to finish decommissioning node:{}", decommisionNodes);
+    LOG.error("Temp", new RuntimeException());
     decomTh.join(20000); // waiting 20secs to finish decommission
-    LOG.info("Finished decommissioning node:{}", decommisionNodes);
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals(deadDecommissioned, fsn.getNumDecomDeadDataNodes());
     assertEquals(liveDecommissioned + decommisionNodes.size(),
@@ -425,7 +425,7 @@ public class TestDecommissionWithStriped {
    */
   @Test(timeout = 120000)
   public void testFileChecksumAfterDecommission() throws Exception {
-    LOG.info("Starting test testFileChecksumAfterDecommission");
+    LOG.error("Temp", new RuntimeException());
 
     final Path ecFile = new Path(ecDir, "testFileChecksumAfterDecommission");
     int writeBytes = cellSize * dataBlocks;
@@ -450,8 +450,8 @@ public class TestDecommissionWithStriped {
 
     // verify checksum
     FileChecksum fileChecksum2 = dfs.getFileChecksum(ecFile, writeBytes);
-    LOG.info("fileChecksum1:" + fileChecksum1);
-    LOG.info("fileChecksum2:" + fileChecksum2);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertTrue("Checksum mismatches!",
         fileChecksum1.equals(fileChecksum2));
@@ -622,7 +622,7 @@ public class TestDecommissionWithStriped {
       }
       assertTrue("Datanode: " + dn + " is not LIVE", nodeExists);
       excludeNodes.add(dn.getName());
-      LOG.info("Decommissioning node: " + dn.getName());
+      LOG.error("Temp", new RuntimeException());
     }
     writeConfigFile(excludeFile, excludeNodes);
     refreshNodes(cluster.getNamesystem(nnIndex), conf);
@@ -653,7 +653,7 @@ public class TestDecommissionWithStriped {
       }
       done = state == node.getAdminState();
     }
-    LOG.info("node " + node + " reached the state " + state);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

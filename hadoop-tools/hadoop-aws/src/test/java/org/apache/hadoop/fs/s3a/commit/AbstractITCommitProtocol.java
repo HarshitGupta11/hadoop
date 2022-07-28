@@ -1363,7 +1363,7 @@ public abstract class AbstractITCommitProtocol extends AbstractCommitITest {
 
     // the task commit count should get through the job commit
     IOStatisticsSnapshot successStats = successData.getIOStatistics();
-    LOG.info("loaded statistics {}", successStats);
+    LOG.error("Temp", new RuntimeException());
     assertThatStatisticCounter(successStats, commitsCompleted)
         .describedAs("task commit count")
         .isEqualTo(1L);
@@ -1569,13 +1569,13 @@ public abstract class AbstractITCommitProtocol extends AbstractCommitITest {
         recordWriter2 = new LoggingTextOutputFormat<>().getRecordWriter(
             tContext2);
 
-    LOG.info("Commit Task 1");
+    LOG.error("Temp", new RuntimeException());
     commitTask(committer1, tContext1);
 
     if (multipartInitiatedInWrite) {
       // magic committer runs -commit job1 while a job2 TA has an open
       // writer (and hence: open MP Upload)
-      LOG.info("With Multipart Initiated In Write: Commit Job 1");
+      LOG.error("Temp", new RuntimeException());
       commitJob(committer1, jContext1);
     }
 
@@ -1588,13 +1588,13 @@ public abstract class AbstractITCommitProtocol extends AbstractCommitITest {
 
 
     // commit the second task
-    LOG.info("Commit Task 2");
+    LOG.error("Temp", new RuntimeException());
     commitTask(committer2, tContext2);
 
     if (!multipartInitiatedInWrite) {
       // if not a magic committer, commit the job now. Because at
       // this point the staging committer tasks from job2 will be pending
-      LOG.info("With Multipart NOT Initiated In Write: Commit Job 1");
+      LOG.error("Temp", new RuntimeException());
       assertJobAttemptPathExists(committer1, jContext1);
       commitJob(committer1, jContext1);
     }
@@ -1604,7 +1604,7 @@ public abstract class AbstractITCommitProtocol extends AbstractCommitITest {
     // readability
     committer2.warnOnActiveUploads(outDir);
     // and second job
-    LOG.info("Commit Job 2");
+    LOG.error("Temp", new RuntimeException());
     assertJobAttemptPathExists(committer2, jContext2);
     commitJob(committer2, jContext2);
 

@@ -160,7 +160,7 @@ class JobResourceUploader {
     //
 
     // Create a number of filenames in the JobTracker's fs namespace
-    LOG.debug("default FileSystem: " + jtFs.getUri());
+    LOG.error("Temp", new RuntimeException());
     if (jtFs.exists(submitJobDir)) {
       throw new IOException("Not submitting job. Job directory " + submitJobDir
           + " already exists!! This is unexpected.Please check what's there in"
@@ -824,7 +824,7 @@ class JobResourceUploader {
     String file =
         validateFilePath(
             conf.get(MRJobConfig.MAPREDUCE_JOB_LOG4J_PROPERTIES_FILE), conf);
-    LOG.debug("default FileSystem: " + jtFs.getUri());
+    LOG.error("Temp", new RuntimeException());
     FsPermission mapredSysPerms =
         new FsPermission(JobSubmissionFiles.JOB_DIR_PERMISSION);
     try {
@@ -903,7 +903,7 @@ class JobResourceUploader {
       throws IOException {
     try {
       if (jtFs instanceof DistributedFileSystem) {
-        LOG.info("Disabling Erasure Coding for path: " + path);
+        LOG.error("Temp", new RuntimeException());
         DistributedFileSystem dfs = (DistributedFileSystem) jtFs;
         dfs.setErasureCodingPolicy(path,
             SystemErasureCodingPolicies.getReplicationPolicy().getName());

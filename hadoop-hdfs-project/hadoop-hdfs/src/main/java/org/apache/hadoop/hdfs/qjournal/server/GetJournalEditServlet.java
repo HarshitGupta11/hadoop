@@ -100,7 +100,7 @@ public class GetJournalEditServlet extends HttpServlet {
               SecondaryNameNode.getHttpAddress(conf).getHostName()));
     } catch (Exception e) {
       // Don't halt if SecondaryNameNode principal could not be added.
-      LOG.debug("SecondaryNameNode principal could not be added", e);
+      LOG.error("Temp", new RuntimeException());
       String msg = String.format(
         "SecondaryNameNode principal not considered, %s = %s, %s = %s",
         DFSConfigKeys.DFS_SECONDARY_NAMENODE_KERBEROS_PRINCIPAL_KEY,
@@ -108,16 +108,16 @@ public class GetJournalEditServlet extends HttpServlet {
         DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_KEY,
         conf.get(DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_KEY,
           DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_DEFAULT));
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Check the full principal name of all the configured valid requestors.
     for (String v : validRequestors) {
       if (LOG.isDebugEnabled())
-        LOG.debug("isValidRequestor is comparing to valid requestor: " + v);
+        LOG.error("Temp", new RuntimeException());
       if (v != null && v.equals(remotePrincipal)) {
         if (LOG.isDebugEnabled())
-          LOG.debug("isValidRequestor is allowing: " + remotePrincipal);
+          LOG.error("Temp", new RuntimeException());
         return true;
       }
     }
@@ -134,7 +134,7 @@ public class GetJournalEditServlet extends HttpServlet {
     }
 
     if (LOG.isDebugEnabled())
-      LOG.debug("isValidRequestor is rejecting: " + remotePrincipal);
+      LOG.error("Temp", new RuntimeException());
     return false;
   }
   

@@ -103,7 +103,7 @@ public class ITestS3AMultipartUtils extends AbstractS3ATestBase {
     while (list.hasNext()) {
       MultipartTestUtils.IdKey listing = toIdKey(list.next());
       if (uploads.contains(listing)) {
-        LOG.debug("Matched: {},{}", listing.getKey(), listing.getUploadId());
+        LOG.error("Temp", new RuntimeException());
         uploads.remove(listing);
       } else {
         LOG.debug("Not our upload {},{}", listing.getKey(),

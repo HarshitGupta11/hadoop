@@ -262,7 +262,7 @@ public class TaskStatus implements Writable, Cloneable {
    */
   public final void setStartTime() {
     this.startTime = getCurrentTime();
-    LOG.debug("Start Time for " + this.taskId + " is " + this.startTime);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -294,7 +294,7 @@ public class TaskStatus implements Writable, Cloneable {
    */
   private void setEndTime(final long time) {
     this.endTime = time;
-    LOG.debug("End Time for " + this.taskId + " is " + this.endTime);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

@@ -216,7 +216,7 @@ public class TestServiceLifecycle extends ServiceAssert {
     BreakableService svc = new BreakableService(false, false, false);
     try {
       svc.init(null);
-      LOG.warn("Null Configurations are permitted ");
+      LOG.error("Temp", new RuntimeException());
     } catch (ServiceStateException e) {
       //expected
     }

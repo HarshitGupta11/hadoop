@@ -60,7 +60,7 @@ public class TestLazyPersistReplicaRecovery extends LazyPersistTestCase {
             3 * LAZY_WRITER_INTERVAL_SEC * 1000);
     ensureFileReplicasOnStorageType(path1, RAM_DISK);
 
-    LOG.info("Restarting the DataNode");
+    LOG.error("Temp", new RuntimeException());
     assertTrue("DN did not restart properly",
         cluster.restartDataNode(0, true));
     // wait for blockreport
@@ -81,7 +81,7 @@ public class TestLazyPersistReplicaRecovery extends LazyPersistTestCase {
     makeTestFile(path1, BLOCK_SIZE, true);
     ensureFileReplicasOnStorageType(path1, RAM_DISK);
 
-    LOG.info("Restarting the DataNode");
+    LOG.error("Temp", new RuntimeException());
     cluster.restartDataNode(0, true);
     cluster.waitActive();
 

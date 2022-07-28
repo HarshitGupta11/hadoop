@@ -92,7 +92,7 @@ public class WebImageViewer implements Closeable {
       initServer(fsimage);
       channel.closeFuture().await();
     } catch (InterruptedException e) {
-      LOG.info("Interrupted. Stopping the WebImageViewer.");
+      LOG.error("Temp", new RuntimeException());
       close();
     }
   }
@@ -122,7 +122,7 @@ public class WebImageViewer implements Closeable {
     allChannels.add(channel);
 
     address = (InetSocketAddress) channel.localAddress();
-    LOG.info("WebImageViewer started. Listening on " + address.toString() + ". Press Ctrl+C to stop the viewer.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

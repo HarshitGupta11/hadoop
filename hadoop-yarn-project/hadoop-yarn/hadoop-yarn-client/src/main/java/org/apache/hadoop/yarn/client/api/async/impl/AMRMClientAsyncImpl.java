@@ -311,7 +311,7 @@ extends AMRMClientAsync<T> {
             response = client.allocate(progress);
           } catch (ApplicationAttemptNotFoundException e) {
             handler.onShutdownRequest();
-            LOG.info("Shutdown requested. Stopping callback.");
+            LOG.error("Temp", new RuntimeException());
             return;
           } catch (Throwable ex) {
             LOG.error("Exception on heartbeat", ex);
@@ -323,7 +323,7 @@ extends AMRMClientAsync<T> {
                 responseQueue.put(response);
                 break;
               } catch (InterruptedException ex) {
-                LOG.debug("Interrupted while waiting to put on response queue", ex);
+                LOG.error("Temp", new RuntimeException());
               }
             }
           }
@@ -331,7 +331,7 @@ extends AMRMClientAsync<T> {
         try {
           Thread.sleep(heartbeatIntervalMs.get());
         } catch (InterruptedException ex) {
-          LOG.debug("Heartbeater interrupted", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -352,7 +352,7 @@ extends AMRMClientAsync<T> {
           try {
             object = responseQueue.take();
           } catch (InterruptedException ex) {
-            LOG.debug("Interrupted while waiting for queue", ex);
+            LOG.error("Temp", new RuntimeException());
             Thread.currentThread().interrupt();
             continue;
           }

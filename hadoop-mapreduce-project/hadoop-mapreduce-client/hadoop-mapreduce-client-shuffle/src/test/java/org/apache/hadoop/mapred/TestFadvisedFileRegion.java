@@ -139,7 +139,7 @@ public class TestFadvisedFileRegion {
       fileRegion.customShuffleTransfer(target, -1);
       Assert.fail("Expected a IllegalArgumentException");
     } catch (IllegalArgumentException ie) {
-      LOG.info("Expected - illegal argument is passed.");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       Assert.fail("Expected a IllegalArgumentException");
     }
@@ -149,7 +149,7 @@ public class TestFadvisedFileRegion {
       fileRegion.customShuffleTransfer(target, count + 1);
       Assert.fail("Expected a IllegalArgumentException");
     } catch (IllegalArgumentException ie) {
-      LOG.info("Expected - illegal argument is passed.");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       Assert.fail("Expected a IllegalArgumentException");
     }

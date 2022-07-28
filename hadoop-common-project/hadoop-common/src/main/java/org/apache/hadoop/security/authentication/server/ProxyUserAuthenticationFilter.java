@@ -92,11 +92,11 @@ public class ProxyUserAuthenticationFilter extends AuthenticationFilter {
               };
             }
           };
-          LOG.debug("Proxy user Authentication successful");
+          LOG.error("Temp", new RuntimeException());
         } catch (AuthorizationException ex) {
           HttpExceptionUtils.createServletExceptionResponse(response,
               HttpServletResponse.SC_FORBIDDEN, ex);
-          LOG.warn("Proxy user Authentication exception", ex);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }

@@ -744,7 +744,7 @@ public class TestClientProtocolForPipelineRecovery {
         if (newNodes[i].getName().equals(newNode.getName())) {
           continue;
         }
-        LOG.info("shutdown {}", newNodes[i].getName());
+        LOG.error("Temp", new RuntimeException());
         cluster.stopDataNode(newNodes[i].getName());
       }
 

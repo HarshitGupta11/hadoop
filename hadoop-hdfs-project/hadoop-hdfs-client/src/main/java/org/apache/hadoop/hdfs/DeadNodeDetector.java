@@ -245,7 +245,7 @@ public class DeadNodeDetector extends Daemon {
       startProbeScheduler();
     }
 
-    LOG.info("Start dead node detector for DFSClient {}.", this.name);
+    LOG.error("Temp", new RuntimeException());
     state = State.INIT;
   }
 
@@ -269,7 +269,7 @@ public class DeadNodeDetector extends Daemon {
         try {
           Thread.sleep(ERROR_SLEEP_MS);
         } catch (InterruptedException e) {
-          LOG.debug("Got interrupted while DeadNodeDetector is error.", e);
+          LOG.error("Temp", new RuntimeException());
           Thread.currentThread().interrupt();
         }
         return;
@@ -336,7 +336,7 @@ public class DeadNodeDetector extends Daemon {
    * Prode datanode by probe type.
    */
   private void scheduleProbe(ProbeType type) {
-    LOG.debug("Schedule probe datanode for probe type: {}.", type);
+    LOG.error("Temp", new RuntimeException());
     DatanodeInfo datanodeInfo = null;
     if (type == ProbeType.CHECK_DEAD) {
       while ((datanodeInfo = deadNodesProbeQueue.poll()) != null) {
@@ -387,7 +387,7 @@ public class DeadNodeDetector extends Daemon {
 
     @Override
     public void run() {
-      LOG.debug("Check node: {}, type: {}.", datanodeInfo, type);
+      LOG.error("Temp", new RuntimeException());
       try {
         final ClientDatanodeProtocol proxy =
             DFSUtilClient.createClientDatanodeProtocolProxy(datanodeInfo,
@@ -457,7 +457,7 @@ public class DeadNodeDetector extends Daemon {
         LOG.debug("Skip to add dead node {} to check " +
                 "since the node is already in the probe queue.", datanodeInfo);
       } else {
-        LOG.debug("Add dead node to check: {}.", datanodeInfo);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     state = State.IDLE;
@@ -467,7 +467,7 @@ public class DeadNodeDetector extends Daemon {
     try {
       Thread.sleep(idleSleepMs);
     } catch (InterruptedException e) {
-      LOG.debug("Got interrupted while DeadNodeDetector is idle.", e);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
     }
 
@@ -523,7 +523,7 @@ public class DeadNodeDetector extends Daemon {
       datanodeInfos.add(datanodeInfo);
     }
 
-    LOG.debug("Add datanode {} to suspectAndDeadNodes.", datanodeInfo);
+    LOG.error("Temp", new RuntimeException());
     addSuspectNodeToDetect(datanodeInfo);
   }
 
@@ -601,7 +601,7 @@ public class DeadNodeDetector extends Daemon {
     try {
       Thread.sleep(time);
     } catch (InterruptedException e) {
-      LOG.debug("Got interrupted while probe is scheduling.", e);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
       return;
     }

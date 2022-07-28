@@ -253,7 +253,7 @@ public class TestQuotaByStorageType {
       dfs.rename(createdFile1foo, createdFile1bar);
       fail("Should have failed with QuotaByStorageTypeExceededException ");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
     }
 
     ContentSummary cs = dfs.getContentSummary(foo);
@@ -304,7 +304,7 @@ public class TestQuotaByStorageType {
       DFSTestUtil.createFile(dfs, createdFile3, bufLen, file3Len, BLOCKSIZE, REPLICATION, seed);
       fail("Should have failed with QuotaByStorageTypeExceededException ");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
 
       currentSSDConsumed = fnode.asDirectory().getDirectoryWithQuotaFeature()
           .getSpaceConsumed().getTypeSpaces().get(StorageType.SSD);
@@ -359,7 +359,7 @@ public class TestQuotaByStorageType {
           REPLICATION, seed);
       fail("Should have failed with QuotaByStorageTypeExceededException ");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -397,7 +397,7 @@ public class TestQuotaByStorageType {
       DFSTestUtil.createFile(dfs, createdFile2, bufLen, file2Len, BLOCKSIZE, replication, seed);
       fail("Should have failed with QuotaByStorageTypeExceededException ");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
       currentSSDConsumed = fnode.asDirectory().getDirectoryWithQuotaFeature()
           .getSpaceConsumed().getTypeSpaces().get(StorageType.SSD);
       assertEquals(file1Len, currentSSDConsumed);
@@ -425,7 +425,7 @@ public class TestQuotaByStorageType {
           REPLICATION, seed);
       fail("Should have failed with QuotaByStorageTypeExceededException ");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -534,7 +534,7 @@ public class TestQuotaByStorageType {
       fail("Should have failed with DSQuotaExceededException or " +
           "QuotaByStorageTypeExceededException ");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
       long currentSSDConsumed = testDirNode.asDirectory().getDirectoryWithQuotaFeature()
           .getSpaceConsumed().getTypeSpaces().get(StorageType.SSD);
       assertEquals(Math.min(ssdQuota, storageSpaceQuota/replication),
@@ -849,7 +849,7 @@ public class TestQuotaByStorageType {
           BLOCKSIZE, REPLICATION, seed);
       fail("should fail on QuotaByStorageTypeExceededException");
     } catch (QuotaByStorageTypeExceededException e) {
-      LOG.info("Got expected exception ", e);
+      LOG.error("Temp", new RuntimeException());
       assertThat(e.toString(),
           is(allOf(containsString("Quota by storage type"),
               containsString("DISK on path"),
@@ -886,7 +886,7 @@ public class TestQuotaByStorageType {
           BLOCKSIZE, REPLICATION, seed);
       fail("should fail on DSQuotaExceededException");
     } catch (DSQuotaExceededException e) {
-      LOG.info("Got expected exception ", e);
+      LOG.error("Temp", new RuntimeException());
       assertThat(e.toString(),
           is(allOf(containsString("DiskSpace quota"),
               containsString(testDir.toString()))));

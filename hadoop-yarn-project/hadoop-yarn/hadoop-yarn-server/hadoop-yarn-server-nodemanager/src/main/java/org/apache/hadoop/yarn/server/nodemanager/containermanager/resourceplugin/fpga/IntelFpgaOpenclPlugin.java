@@ -127,7 +127,7 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
     pathToExecutable = executable;
 
     if (!diagnose(10*1000)) {
-      LOG.warn("Intel FPGA for OpenCL diagnose failed!");
+      LOG.error("Temp", new RuntimeException());
       initialized = false;
     } else {
       initialized = true;
@@ -162,10 +162,10 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
       Shell.ShellCommandExecutor shexec = new Shell.ShellCommandExecutor(
           new String[]{"stat", "-c", "%t:%T", "/dev/" + devName});
       try {
-        LOG.debug("Get FPGA major-minor numbers from /dev/{}", devName);
+        LOG.error("Temp", new RuntimeException());
         shexec.execute();
         String[] strs = shexec.getOutput().trim().split(":");
-        LOG.debug("stat output:{}", shexec.getOutput());
+        LOG.error("Temp", new RuntimeException());
         output = Integer.parseInt(strs[0], 16) + ":" +
             Integer.parseInt(strs[1], 16);
       } catch (IOException e) {
@@ -189,8 +189,8 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
         String msg =
             "Failed to execute " + binary + " diagnose, exception message:" + e
                 .getMessage() +", output:" + output + ", continue ...";
-        LOG.warn(msg);
-        LOG.debug("{}", shexec.getOutput());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
       return shexec.getOutput();
     }
@@ -226,7 +226,7 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
     LOG.info("Got environment: " + id +
         ", search IP file in localized resources");
     if (null == id || id.isEmpty()) {
-      LOG.warn("IP_ID environment is empty, skip downloading");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 
@@ -239,12 +239,12 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
 
       if (aocxPath.isPresent()) {
         ipFilePath = aocxPath.get().toString();
-        LOG.info("Found: {}", ipFilePath);
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.warn("Requested IP file not found");
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.warn("Localized resource is null!");
+      LOG.error("Temp", new RuntimeException());
     }
 
     return ipFilePath;
@@ -277,7 +277,7 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
     try {
       shexec.execute();
       if (0 == shexec.getExitCode()) {
-        LOG.debug("{}", shexec.getOutput());
+        LOG.error("Temp", new RuntimeException());
         LOG.info("Intel aocl program " + ipPath + " to " +
             aclName + " successfully");
       } else {

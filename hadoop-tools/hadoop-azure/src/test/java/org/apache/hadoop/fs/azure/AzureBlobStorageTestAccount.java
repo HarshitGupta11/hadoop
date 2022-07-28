@@ -534,7 +534,7 @@ public final class AzureBlobStorageTestAccount implements AutoCloseable,
 
     String testAccountName = verifyWasbAccountNameInConfig(conf);
     if (testAccountName == null) {
-      LOG.warn("Skipping live Azure test because of missing test account");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return createStorageAccount(testAccountName, conf, false);

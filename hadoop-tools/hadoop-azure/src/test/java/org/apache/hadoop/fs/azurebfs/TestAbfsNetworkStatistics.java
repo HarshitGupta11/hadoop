@@ -102,7 +102,7 @@ public class TestAbfsNetworkStatistics extends AbstractAbfsIntegrationTest {
     ) {
       // Emulates doing some work.
       Thread.sleep(10);
-      LOG.info("Execute some Http requests...");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Extract the iostats from the abfsCounters instance.

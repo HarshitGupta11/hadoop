@@ -67,7 +67,7 @@ public class TestValueQueue {
     GenericTestUtils.waitFor(() -> {
       int size = valueQueue.getSize(queueName);
       if (size != queueSize) {
-        LOG.info("Current ValueQueue size is " + size);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
       return true;

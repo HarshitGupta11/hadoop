@@ -160,7 +160,7 @@ class Application<K1 extends WritableComparable, V1 extends Writable,
     
     downlink.authenticate(digestToSend, challenge);
     waitForAuthentication();
-    LOG.debug("Authentication succeeded");
+    LOG.error("Temp", new RuntimeException());
     downlink.start();
     downlink.setJobConf(conf);
   }
@@ -203,7 +203,7 @@ class Application<K1 extends WritableComparable, V1 extends Writable,
   void waitForAuthentication() throws IOException,
       InterruptedException {
     downlink.flush();
-    LOG.debug("Waiting for authentication response");
+    LOG.error("Temp", new RuntimeException());
     handler.waitForAuthentication();
   }
   
@@ -223,7 +223,7 @@ class Application<K1 extends WritableComparable, V1 extends Writable,
    * @throws IOException A wrapper around the exception that was passed in
    */
   void abort(Throwable t) throws IOException {
-    LOG.info("Aborting because of " + StringUtils.stringifyException(t));
+    LOG.error("Temp", new RuntimeException());
     try {
       downlink.abort();
       downlink.flush();
@@ -291,7 +291,7 @@ class Application<K1 extends WritableComparable, V1 extends Writable,
 
     @Override
     public void run() {
-      LOG.info("PingSocketCleaner started...");
+      LOG.error("Temp", new RuntimeException());
       while (!Thread.currentThread().isInterrupted()) {
         Socket clientSocket = null;
         try {
@@ -303,7 +303,7 @@ class Application<K1 extends WritableComparable, V1 extends Writable,
           while (readData != -1) {
             readData = clientSocket.getInputStream().read();
           }
-          LOG.debug("close socket cause client has closed.");
+          LOG.error("Temp", new RuntimeException());
           closeSocketInternal(clientSocket);
         } catch (IOException exception) {
           LOG.error("PingSocketCleaner exception", exception);

@@ -255,7 +255,7 @@ public class FSConfigToCSConfigRuleHandler {
     String action = properties.getProperty(property);
 
     if (action == null) {
-      LOG.info("No rule set for {}, defaulting to WARNING", property);
+      LOG.error("Temp", new RuntimeException());
       actions.put(property, RuleAction.WARNING);
     } else if (action.equalsIgnoreCase("warning")) {
       actions.put(property, RuleAction.WARNING);

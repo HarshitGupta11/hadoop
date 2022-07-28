@@ -104,7 +104,7 @@ public class UnmanagedAMLauncher {
   public static void main(String[] args) {
     try {
       UnmanagedAMLauncher client = new UnmanagedAMLauncher();
-      LOG.info("Initializing Client");
+      LOG.error("Temp", new RuntimeException());
       boolean doRun = client.init(args);
       if (!doRun) {
         System.exit(0);
@@ -252,7 +252,7 @@ public class UnmanagedAMLauncher {
             line = errReader.readLine();
           }
         } catch(IOException ioe) {
-          LOG.warn("Error reading the error stream", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };
@@ -266,7 +266,7 @@ public class UnmanagedAMLauncher {
             line = inReader.readLine();
           }
         } catch(IOException ioe) {
-          LOG.warn("Error reading the out stream", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };
@@ -278,7 +278,7 @@ public class UnmanagedAMLauncher {
     // wait for the process to finish and check the exit code
     try {
       int exitCode = amProc.waitFor();
-      LOG.info("AM process exited with value: " + exitCode);
+      LOG.error("Temp", new RuntimeException());
     } catch (InterruptedException e) {
       e.printStackTrace();
     } finally {
@@ -297,19 +297,19 @@ public class UnmanagedAMLauncher {
       LOG.info("ShellExecutor: Interrupted while reading the error/out stream",
           ie);
     } catch (IOException ioe) {
-      LOG.warn("Error while closing the error/out stream", ioe);
+      LOG.error("Temp", new RuntimeException());
     }
     amProc.destroy();
   }
   
   public boolean run() throws IOException, YarnException {
-    LOG.info("Starting Client");
+    LOG.error("Temp", new RuntimeException());
     
     // Connect to ResourceManager
     rmClient.start();
     try {  
       // Create launch context for app master
-      LOG.info("Setting up application submission context for ASM");
+      LOG.error("Temp", new RuntimeException());
       ApplicationSubmissionContext appContext = rmClient.createApplication()
           .getApplicationSubmissionContext();
       ApplicationId appId = appContext.getApplicationId();
@@ -332,10 +332,10 @@ public class UnmanagedAMLauncher {
   
       // unmanaged AM
       appContext.setUnmanagedAM(true);
-      LOG.info("Setting unmanaged AM");
+      LOG.error("Temp", new RuntimeException());
   
       // Submit the application to the applications manager
-      LOG.info("Submitting application to ASM");
+      LOG.error("Temp", new RuntimeException());
       rmClient.submitApplication(appContext);
 
       ApplicationReport appReport =
@@ -350,7 +350,7 @@ public class UnmanagedAMLauncher {
               YarnApplicationAttemptState.LAUNCHED);
         ApplicationAttemptId attemptId =
             attemptReport.getApplicationAttemptId();
-        LOG.info("Launching AM with application attempt id " + attemptId);
+        LOG.error("Temp", new RuntimeException());
         // launch AM
         launchAM(attemptId);
         // Monitor the application for end state
@@ -368,7 +368,7 @@ public class UnmanagedAMLauncher {
       boolean success;
       if (YarnApplicationState.FINISHED == appState
           && FinalApplicationStatus.SUCCEEDED == appStatus) {
-        LOG.info("Application has completed successfully.");
+        LOG.error("Temp", new RuntimeException());
         success = true;
       } else {
         LOG.info("Application did finished unsuccessfully." + " YarnState="
@@ -451,7 +451,7 @@ public class UnmanagedAMLauncher {
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
-        LOG.debug("Thread sleep in monitoring loop interrupted");
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Get application report for the appId we are interested in

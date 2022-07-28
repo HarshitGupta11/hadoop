@@ -159,7 +159,7 @@ public class RegularContainerAllocator extends AbstractContainerAllocator {
 
     if (!application.getCSLeafQueue().getReservationContinueLooking()) {
       if (!shouldAllocOrReserveNewContainer(schedulerKey, required)) {
-        LOG.debug("doesn't need containers based on reservation algo!");
+        LOG.error("Temp", new RuntimeException());
         ActivitiesLogger.APP.recordSkippedAppActivityWithoutAllocation(
             activitiesManager, node, application, schedulerKey,
             ActivityDiagnosticConstant.REQUEST_SKIPPED_BECAUSE_OF_RESERVATION,
@@ -628,7 +628,7 @@ public class RegularContainerAllocator extends AbstractContainerAllocator {
           // reservationsContinueLooking is set. Make sure we didn't need to
           // unreserve one.
           if (needToUnreserve) {
-            LOG.debug("we needed to unreserve to be able to allocate");
+            LOG.error("Temp", new RuntimeException());
 
             // Skip the locality request
             ActivitiesLogger.APP.recordSkippedAppActivityWithoutAllocation(
@@ -753,7 +753,7 @@ public class RegularContainerAllocator extends AbstractContainerAllocator {
     if (container == null) {
       application
           .updateAppSkipNodeDiagnostics("Scheduling of container failed. ");
-      LOG.warn("Couldn't get container for allocation!");
+      LOG.error("Temp", new RuntimeException());
       ActivitiesLogger.APP.recordAppActivityWithoutAllocation(activitiesManager,
           node, application, schedulerKey,
           ActivityDiagnosticConstant.APPLICATION_COULD_NOT_GET_CONTAINER,
@@ -799,7 +799,7 @@ public class RegularContainerAllocator extends AbstractContainerAllocator {
       // otherwise the app will be delayed for each non-local assignment.
       // This helps apps with many off-cluster requests schedule faster.
       if (allocationResult.containerNodeType != NodeType.OFF_SWITCH) {
-        LOG.debug("Resetting scheduling opportunities");
+        LOG.error("Temp", new RuntimeException());
 
         // Only reset scheduling opportunities for RACK_LOCAL if configured
         // to do so. Not resetting means we will continue to schedule

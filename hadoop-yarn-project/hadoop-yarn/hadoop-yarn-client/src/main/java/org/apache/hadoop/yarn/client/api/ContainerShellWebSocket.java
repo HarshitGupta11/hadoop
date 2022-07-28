@@ -69,7 +69,7 @@ public class ContainerShellWebSocket {
   @OnWebSocketConnect
   public void onConnect(Session s) {
     initTerminal(s);
-    LOG.info(s.getRemoteAddress().getHostString() + " connected!");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @OnWebSocketClose

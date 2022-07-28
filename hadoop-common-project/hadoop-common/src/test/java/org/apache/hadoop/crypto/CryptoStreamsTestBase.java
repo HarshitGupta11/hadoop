@@ -78,7 +78,7 @@ public abstract class CryptoStreamsTestBase {
       key.write(dataBuf);
       value.write(dataBuf);
     }
-    LOG.info("Generated " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     data = dataBuf.getData();
     dataLen = dataBuf.getLength();
   }

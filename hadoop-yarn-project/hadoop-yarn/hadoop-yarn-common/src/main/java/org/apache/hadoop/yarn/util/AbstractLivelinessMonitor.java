@@ -154,7 +154,7 @@ public abstract class AbstractLivelinessMonitor<O> extends AbstractService {
         try {
           Thread.sleep(monitorInterval);
         } catch (InterruptedException e) {
-          LOG.info(getName() + " thread interrupted");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }

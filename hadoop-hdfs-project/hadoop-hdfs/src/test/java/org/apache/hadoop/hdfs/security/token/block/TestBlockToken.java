@@ -156,7 +156,7 @@ public class TestBlockToken {
       long result = 0;
       for (TokenIdentifier tokenId : tokenIds) {
         BlockTokenIdentifier id = (BlockTokenIdentifier) tokenId;
-        LOG.info("Got: " + id.toString());
+        LOG.error("Temp", new RuntimeException());
         assertTrue("Received BlockTokenIdentifier is wrong", ident.equals(id));
         sm.checkAccess(id, null, PBHelperClient.convert(req.getBlock()),
             BlockTokenIdentifier.AccessMode.WRITE,
@@ -416,7 +416,7 @@ public class TestBlockToken {
         if (proxy != null) {
           RPC.stopProxy(proxy);
         }
-        LOG.info("Num open fds:" + countOpenFileDescriptors());
+        LOG.error("Temp", new RuntimeException());
       }
 
       int fdsAtEnd = countOpenFileDescriptors();

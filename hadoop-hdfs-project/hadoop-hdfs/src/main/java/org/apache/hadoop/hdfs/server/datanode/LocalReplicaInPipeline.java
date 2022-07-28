@@ -268,7 +268,7 @@ public class LocalReplicaInPipeline extends LocalReplica
         if (thread.isAlive()) {
           // Our thread join timed out.
           final String msg = "Join on writer thread " + thread + " timed out";
-          DataNode.LOG.warn(msg + "\n" + StringUtils.getStackTrace(thread));
+          DataNode.LOG.error("Temp", new RuntimeException());
           throw new IOException(msg);
         }
       } catch (InterruptedException e) {

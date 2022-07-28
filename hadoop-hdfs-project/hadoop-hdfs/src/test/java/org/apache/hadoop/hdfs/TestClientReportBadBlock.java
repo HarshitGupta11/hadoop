@@ -269,10 +269,10 @@ public class TestClientReportBadBlock {
       } while (nRead > 0);
     } catch (ChecksumException ce) {
       // caught ChecksumException if all replicas are bad, ignore and continue.
-      LOG.debug("DfsClientReadFile caught ChecksumException.");
+      LOG.error("Temp", new RuntimeException());
     } catch (BlockMissingException bme) {
       // caught BlockMissingException, ignore.
-      LOG.debug("DfsClientReadFile caught BlockMissingException.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -291,7 +291,7 @@ public class TestClientReportBadBlock {
         startPosition += buf.length;
       } while (nRead > 0);
     } catch (BlockMissingException bme) {
-      LOG.debug("DfsClientReadFile caught BlockMissingException.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -299,7 +299,7 @@ public class TestClientReportBadBlock {
     // Fsck health has error code 0.
     // Make sure filesystem is in healthy state
     String outStr = runFsck(conf, 0, true, "/");
-    LOG.info(outStr);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(outStr.contains(NamenodeFsck.HEALTHY_STATUS));
     if (!expected.equals("")) {
       Assert.assertTrue(outStr.contains(expected));
@@ -308,13 +308,13 @@ public class TestClientReportBadBlock {
 
   private static void verifyFsckBlockCorrupted() throws Exception {
     String outStr = runFsck(conf, 1, true, "/");
-    LOG.info(outStr);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(outStr.contains(NamenodeFsck.CORRUPT_STATUS));
   }
   
   private static void testFsckListCorruptFilesBlocks(Path filePath, int errorCode) throws Exception{
     String outStr = runFsck(conf, errorCode, true, filePath.toString(), "-list-corruptfileblocks");
-    LOG.info("fsck -list-corruptfileblocks out: " + outStr);
+    LOG.error("Temp", new RuntimeException());
     if (errorCode != 0) {
       Assert.assertTrue(outStr.contains("CORRUPT blocks"));
     }

@@ -423,7 +423,7 @@ public class AuxServices extends AbstractService
     serviceRecordMap.remove(sName);
     serviceMetaData.remove(sName);
     if (s != null) {
-      LOG.info("Removing aux service " + sName);
+      LOG.error("Temp", new RuntimeException());
       stopAuxService(s);
     }
   }
@@ -474,7 +474,7 @@ public class AuxServices extends AbstractService
       }
       s.init(customConf);
 
-      LOG.info("Initialized auxiliary service " + sName);
+      LOG.error("Temp", new RuntimeException());
     } catch (RuntimeException e) {
       LOG.error("Failed to initialize " + sName, e);
       throw e;
@@ -558,18 +558,18 @@ public class AuxServices extends AbstractService
       return null;
     }
     if (!manifestFS.exists(manifest)) {
-      LOG.warn("Manifest file " + manifest + " doesn't exist");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     FileStatus status;
     try {
       status = manifestFS.getFileStatus(manifest);
     } catch (FileNotFoundException e) {
-      LOG.warn("Manifest file " + manifest + " doesn't exist");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     if (!status.isFile()) {
-      LOG.warn("Manifest file " + manifest + " is not a file");
+      LOG.error("Temp", new RuntimeException());
     }
     if (!checkManifestOwnerAndPermissions(status)) {
       return null;
@@ -578,7 +578,7 @@ public class AuxServices extends AbstractService
       return null;
     }
     manifestModifyTS = status.getModificationTime();
-    LOG.info("Reading auxiliary services manifest " + manifest);
+    LOG.error("Temp", new RuntimeException());
     try (FSDataInputStream in = manifestFS.open(manifest)) {
       return mapper.readValue((InputStream) in, AuxServiceRecords.class);
     }
@@ -639,7 +639,7 @@ public class AuxServices extends AbstractService
             .getName());
         loadedAuxServices.add(service.getName());
         if (existingService != null && existingService.equals(service)) {
-          LOG.debug("Auxiliary service already loaded: {}", service.getName());
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         foundChanges = true;
@@ -669,7 +669,7 @@ public class AuxServices extends AbstractService
     }
 
     if (!foundChanges) {
-      LOG.info("No auxiliary services changes detected");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -851,7 +851,7 @@ public class AuxServices extends AbstractService
         + event.getApplicationID());
     switch (event.getType()) {
       case APPLICATION_INIT:
-        LOG.info("Got APPLICATION_INIT for service " + event.getServiceID());
+        LOG.error("Temp", new RuntimeException());
         AuxiliaryService service = null;
         try {
           service = serviceMap.get(event.getServiceID());
@@ -943,7 +943,7 @@ public class AuxServices extends AbstractService
     } catch (IOException e) {
       String msg = "Cannot obtain the user-name. Got exception: "
           + StringUtils.stringifyException(e);
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(msg);
     }
     return remoteUgi;
@@ -978,7 +978,7 @@ public class AuxServices extends AbstractService
         reloadManifest();
       } catch (Throwable t) {
         // Prevent uncaught exceptions from killing this thread
-        LOG.warn("Error while reloading manifest: ", t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

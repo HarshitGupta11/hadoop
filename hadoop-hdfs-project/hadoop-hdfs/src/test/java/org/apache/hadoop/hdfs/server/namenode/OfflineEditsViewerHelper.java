@@ -126,7 +126,7 @@ public class OfflineEditsViewerHelper {
    * OP_CLEAR_NS_QUOTA  (12)
    */
   private CheckpointSignature runOperations() throws IOException {
-    LOG.info("Creating edits by performing fs operations");
+    LOG.error("Temp", new RuntimeException());
     // no check, if it's not it throws an exception which is what we want
     DistributedFileSystem dfs = cluster.getFileSystem();
     DFSTestUtil.runOperations(cluster, dfs, cluster.getConfiguration(0),

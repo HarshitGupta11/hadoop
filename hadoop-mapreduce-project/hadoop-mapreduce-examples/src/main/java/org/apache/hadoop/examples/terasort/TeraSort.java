@@ -297,7 +297,7 @@ public class TeraSort extends Configured implements Tool {
       usage();
       return 2;
     }
-    LOG.info("starting");
+    LOG.error("Temp", new RuntimeException());
     Job job = Job.getInstance(getConf());
     Path inputDir = new Path(args[0]);
     Path outputDir = new Path(args[1]);
@@ -332,7 +332,7 @@ public class TeraSort extends Configured implements Tool {
     
     job.getConfiguration().setInt("dfs.replication", getOutputReplication(job));
     int ret = job.waitForCompletion(true) ? 0 : 1;
-    LOG.info("done");
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 

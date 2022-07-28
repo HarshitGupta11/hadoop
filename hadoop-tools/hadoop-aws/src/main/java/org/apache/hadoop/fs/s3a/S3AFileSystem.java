@@ -388,7 +388,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
     bucket = name.getHost();
     AuditSpan span = null;
     try {
-      LOG.debug("Initializing S3AFileSystem for {}", bucket);
+      LOG.error("Temp", new RuntimeException());
       // clone the configuration into one with propagated bucket options
       Configuration conf = propagateBucketOptions(originalConf, bucket);
       // fix up the classloader of the configuration to be whatever
@@ -401,7 +401,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       // look for delegation token support early.
       boolean delegationTokensEnabled = hasDelegationTokenBinding(conf);
       if (delegationTokensEnabled) {
-        LOG.debug("Using delegation tokens");
+        LOG.error("Temp", new RuntimeException());
       }
       // set the URI, this will do any fixup of the URI to remove secrets,
       // canonicalize.
@@ -486,9 +486,9 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
 
       inputPolicy = S3AInputPolicy.getPolicy(
           conf.getTrimmed(INPUT_FADVISE, INPUT_FADV_NORMAL));
-      LOG.debug("Input fadvise policy = {}", inputPolicy);
+      LOG.error("Temp", new RuntimeException());
       changeDetectionPolicy = ChangeDetectionPolicy.getPolicy(conf);
-      LOG.debug("Change detection policy = {}", changeDetectionPolicy);
+      LOG.error("Temp", new RuntimeException());
       boolean magicCommitterEnabled = conf.getBoolean(
           CommitConstants.MAGIC_COMMITTER_ENABLED,
           CommitConstants.DEFAULT_MAGIC_COMMITTER_ENABLED);
@@ -500,7 +500,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       boolean blockUploadEnabled = conf.getBoolean(FAST_UPLOAD, true);
 
       if (!blockUploadEnabled) {
-        LOG.warn("The \"slow\" output stream is no longer supported");
+        LOG.error("Temp", new RuntimeException());
       }
       blockOutputBuffer = conf.getTrimmed(FAST_UPLOAD_BUFFER,
           DEFAULT_FAST_UPLOAD_BUFFER);
@@ -534,7 +534,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       // directory policy, which may look at authoritative paths
       directoryPolicy = DirectoryPolicyImpl.getDirectoryPolicy(conf,
           this::allowAuthoritative);
-      LOG.debug("Directory marker retention policy is {}", directoryPolicy);
+      LOG.error("Temp", new RuntimeException());
 
       initMultipartUploads(conf);
 
@@ -575,7 +575,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
             "Value of " + S3A_BUCKET_PROBE + " should be >= 0");
     switch (bucketProbe) {
     case 0:
-      LOG.debug("skipping check for bucket existence");
+      LOG.error("Temp", new RuntimeException());
       break;
     case 1:
       logDnsLookup(getConf());
@@ -631,7 +631,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
     final String name = "s3a-transfer-" + getBucket();
     int maxThreads = conf.getInt(MAX_THREADS, DEFAULT_MAX_THREADS);
     if (maxThreads < 2) {
-      LOG.warn(MAX_THREADS + " must be at least 2: forcing to 2.");
+      LOG.error("Temp", new RuntimeException());
       maxThreads = 2;
     }
     int totalTasks = intOption(conf,
@@ -741,7 +741,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       // Then look for an existing DT for this bucket, switch to authenticating
       // with it if so.
 
-      LOG.debug("Using delegation tokens");
+      LOG.error("Temp", new RuntimeException());
       S3ADelegationTokens tokens = new S3ADelegationTokens();
       this.delegationTokens = Optional.of(tokens);
       tokens.bindToFileSystem(getCanonicalUri(),
@@ -753,10 +753,10 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       // providers.
       if (tokens.isBoundToDT()) {
         // A DT was retrieved.
-        LOG.debug("Using existing delegation token");
+        LOG.error("Temp", new RuntimeException());
         // and use the encryption settings from that client, whatever they were
       } else {
-        LOG.debug("No delegation token for this instance");
+        LOG.error("Temp", new RuntimeException());
       }
       // Get new credential chain
       credentials = tokens.getCredentialProviders();
@@ -770,7 +770,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       // DT support is disabled, so create the normal credential chain
       credentials = createAWSCredentialProviderSet(name, conf);
     }
-    LOG.debug("Using credential provider {}", credentials);
+    LOG.error("Temp", new RuntimeException());
     Class<? extends S3ClientFactory> s3ClientFactoryClass = conf.getClass(
         S3_CLIENT_FACTORY_IMPL, DEFAULT_S3_CLIENT_FACTORY_IMPL,
         S3ClientFactory.class);
@@ -1051,7 +1051,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    */
   @VisibleForTesting
   public AmazonS3 getAmazonS3ClientForTesting(String reason) {
-    LOG.warn("Access to S3A client requested, reason {}", reason);
+    LOG.error("Temp", new RuntimeException());
     return s3;
   }
 
@@ -1061,7 +1061,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    */
   protected void setAmazonS3Client(AmazonS3 client) {
     Preconditions.checkNotNull(client, "client");
-    LOG.debug("Setting S3 client to {}", client);
+    LOG.error("Temp", new RuntimeException());
     s3 = client;
 
     // Need to use a new TransferManager that uses the new client.
@@ -1202,7 +1202,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   @InterfaceStability.Unstable
   public void setInputPolicy(S3AInputPolicy inputPolicy) {
     Objects.requireNonNull(inputPolicy, "Null inputStrategy");
-    LOG.debug("Setting input strategy: {}", inputPolicy);
+    LOG.error("Temp", new RuntimeException());
     this.inputPolicy = inputPolicy;
   }
 
@@ -1266,7 +1266,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       if (urlString.endsWith(Path.SEPARATOR)) {
         // this is a path which needs root stripping off to avoid
         // confusion, See HADOOP-15430
-        LOG.debug("Stripping trailing '/' from {}", q);
+        LOG.error("Temp", new RuntimeException());
         // deal with an empty "/" at the end by mapping to the parent and
         // creating a new path from it
         q = new Path(urlString.substring(0, urlString.length() - 1));
@@ -1372,7 +1372,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
           readAhead,
           auditSpan);
     }
-    LOG.debug("Opening '{}'", readContext);
+    LOG.error("Temp", new RuntimeException());
 
     return new FSDataInputStream(
         new S3AInputStream(
@@ -1573,7 +1573,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
         // path references a file and overwrite is disabled
         throw new FileAlreadyExistsException(path + " already exists");
       }
-      LOG.debug("Overwriting file {}", path);
+      LOG.error("Temp", new RuntimeException());
     } catch (FileNotFoundException e) {
       // this means the file is not found
 
@@ -1724,13 +1724,13 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       long bytesCopied = trackDurationAndSpan(
           INVOCATION_RENAME, src.toString(), dst.toString(), () ->
           innerRename(src, dst));
-      LOG.debug("Copied {} bytes", bytesCopied);
+      LOG.error("Temp", new RuntimeException());
       return true;
     } catch (AmazonClientException e) {
       throw translateException("rename(" + src +", " + dst + ")", src, e);
     } catch (RenameFailedException e) {
-      LOG.info("{}", e.getMessage());
-      LOG.debug("rename failure", e);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       return e.getExitCode();
     }
   }
@@ -1804,7 +1804,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       }
 
     } catch (FileNotFoundException e) {
-      LOG.debug("rename: destination path {} not found", dst);
+      LOG.error("Temp", new RuntimeException());
       // Parent must exist
       Path parent = dst.getParent();
       if (!pathToKey(parent).isEmpty()
@@ -1860,7 +1860,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
     Path src = qualify(source);
     Path dst = qualify(dest);
 
-    LOG.debug("Rename path {} to {}", src, dst);
+    LOG.error("Temp", new RuntimeException());
 
     String srcKey = pathToKey(src);
     String dstKey = pathToKey(dst);
@@ -1984,7 +1984,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       auditSpan.activate();
       Path destParent = destCreated.getParent();
       if (!sourceRenamed.getParent().equals(destParent)) {
-        LOG.debug("source & dest parents are different; fix up dir markers");
+        LOG.error("Temp", new RuntimeException());
         if (!keepDirectoryMarkers(destParent)) {
           deleteUnnecessaryFakeDirectories(destParent, null);
         }
@@ -2334,7 +2334,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    * @param metastore was the throttling observed in the S3Guard metastore?
    */
   private void operationThrottled(boolean metastore) {
-    LOG.debug("Request throttled on {}", metastore ? "S3": "DynamoDB");
+    LOG.error("Temp", new RuntimeException());
     if (metastore) {
       incrementStatistic(S3GUARD_METADATASTORE_THROTTLED);
       statisticsContext.addValueToQuantiles(S3GUARD_METADATASTORE_THROTTLE_RATE,
@@ -2418,7 +2418,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
           DurationTracker duration = getDurationTrackerFactory()
               .trackDuration(ACTION_HTTP_HEAD_REQUEST.getSymbol());
           try {
-            LOG.debug("HEAD {} with change tracker {}", key, changeTracker);
+            LOG.error("Temp", new RuntimeException());
             if (changeTracker != null) {
               changeTracker.maybeApplyConstraint(request);
             }
@@ -2459,7 +2459,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       @Nullable final DurationTrackerFactory trackerFactory)
       throws IOException {
     incrementReadOperations();
-    LOG.debug("LIST {}", request);
+    LOG.error("Temp", new RuntimeException());
     validateListArguments(request);
     try(DurationInfo ignored =
             new DurationInfo(LOG, false, "LIST")) {
@@ -2668,7 +2668,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       // one or more of the keys could not be deleted.
       // log and rethrow
       List<MultiObjectDeleteException.DeleteError> errors = e.getErrors();
-      LOG.debug("Partial failure of delete, {} errors", errors.size(), e);
+      LOG.error("Temp", new RuntimeException());
       for (MultiObjectDeleteException.DeleteError error : errors) {
         LOG.debug("{}: \"{}\" - {}",
             error.getKey(), error.getCode(), error.getMessage());
@@ -2748,7 +2748,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   PutObjectResult putObjectDirect(PutObjectRequest putObjectRequest)
       throws AmazonClientException, MetadataPersistenceException {
     long len = getPutRequestLength(putObjectRequest);
-    LOG.debug("PUT {} bytes to {}", len, putObjectRequest.getKey());
+    LOG.error("Temp", new RuntimeException());
     incrementPutStartStatistics(len);
     try {
       PutObjectResult result = trackDurationOfSupplier(
@@ -2815,7 +2815,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    * @param bytes bytes in the request.
    */
   public void incrementPutStartStatistics(long bytes) {
-    LOG.debug("PUT start {} bytes", bytes);
+    LOG.error("Temp", new RuntimeException());
     incrementWriteOperations();
     incrementGauge(OBJECT_PUT_REQUESTS_ACTIVE, 1);
     if (bytes > 0) {
@@ -2831,7 +2831,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    * @param bytes bytes in the request.
    */
   public void incrementPutCompletedStatistics(boolean success, long bytes) {
-    LOG.debug("PUT completed success={}; {} bytes", success, bytes);
+    LOG.error("Temp", new RuntimeException());
     if (bytes > 0) {
       incrementStatistic(OBJECT_PUT_BYTES, bytes);
       decrementGauge(OBJECT_PUT_BYTES_PENDING, bytes);
@@ -3000,7 +3000,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
         "Deleting %d keys", keysToDelete.size())) {
       return removeKeysS3(keysToDelete, deleteFakeDir, quiet);
     } catch (MultiObjectDeleteException ex) {
-      LOG.debug("Partial delete failure");
+      LOG.error("Temp", new RuntimeException());
       // what to do if an IOE was raised? Given an exception was being
       // raised anyway, and the failures are logged, do nothing.
       if (!deleteFakeDir) {
@@ -3059,12 +3059,12 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
         } catch (AccessDeniedException e) {
           LOG.warn("Cannot create directory marker at {}: {}",
               f.getParent(), e.toString());
-          LOG.debug("Failed to create fake dir above {}", path, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       return outcome;
     } catch (FileNotFoundException e) {
-      LOG.debug("Couldn't delete {} - does not exist: {}", path, e.toString());
+      LOG.error("Temp", new RuntimeException());
       instrumentation.errorIgnored();
       return false;
     } catch (AmazonClientException e) {
@@ -3087,7 +3087,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
     // be reached if there is an empty dir marker -and if they do, it
     // is mostly harmless to create a new one.
     if (!key.isEmpty() && !s3Exists(f, StatusProbeEnum.DIRECTORIES)) {
-      LOG.debug("Creating new fake directory at {}", f);
+      LOG.error("Temp", new RuntimeException());
       createFakeDirectory(key);
     }
   }
@@ -3162,7 +3162,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
           throws FileNotFoundException,
           IOException, AmazonClientException {
     Path path = qualify(f);
-    LOG.debug("List status for path: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     Triple<RemoteIterator<S3AFileStatus>, DirListingMetadata, Boolean>
             statusesAssumingNonEmptyDir = listing
@@ -3181,7 +3181,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
               StatusProbeEnum.ALL);
       // If it is a file return directly.
       if (fileStatus.isFile()) {
-        LOG.debug("Adding: rd (not a dir): {}", path);
+        LOG.error("Temp", new RuntimeException());
         S3AFileStatus[] stats = new S3AFileStatus[1];
         stats[0] = fileStatus;
         return listing.createProvidedFileStatusIterator(
@@ -3400,7 +3400,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   public void access(final Path f, final FsAction mode)
       throws AccessControlException, FileNotFoundException, IOException {
     Path path = qualify(f);
-    LOG.debug("check access mode {} for {}", path, mode);
+    LOG.error("Temp", new RuntimeException());
     trackDurationAndSpan(
         INVOCATION_ACCESS, path, () -> {
           final S3AFileStatus stat = innerGetFileStatus(path, false,
@@ -3460,7 +3460,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       final Set<StatusProbeEnum> probes) throws IOException {
     final Path path = qualify(f);
     String key = pathToKey(path);
-    LOG.debug("Getting path status for {}  ({}); needEmptyDirectory={}",
+    LOG.error("Temp", new RuntimeException()); needEmptyDirectory={}",
         path, key, needEmptyDirectoryFlag);
 
     boolean allowAuthoritative = allowAuthoritative(path);
@@ -3491,7 +3491,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
           probes.contains(StatusProbeEnum.Head)) {
         // a file has been found in a non-auth path and the caller has not said
         // they only care about directories
-        LOG.debug("Metadata for {} found in the non-auth metastore.", path);
+        LOG.error("Temp", new RuntimeException());
         final long msModTime = pm.getFileStatus().getModificationTime();
 
         S3AFileStatus s3AFileStatus;
@@ -3637,7 +3637,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       final Set<StatusProbeEnum> probes,
       @Nullable final Set<Path> tombstones,
       final boolean needEmptyDirectoryFlag) throws IOException {
-    LOG.debug("S3GetFileStatus {}", path);
+    LOG.error("Temp", new RuntimeException());
     // either you aren't looking for the directory flag, or you are,
     // and if you are, the probe list must contain list.
     Preconditions.checkArgument(!needEmptyDirectoryFlag
@@ -3654,7 +3654,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       try {
         // look for the simple file
         ObjectMetadata meta = getObjectMetadata(key);
-        LOG.debug("Found exact file: normal file {}", key);
+        LOG.error("Temp", new RuntimeException());
         return new S3AFileStatus(meta.getContentLength(),
             dateToLong(meta.getLastModified()),
             path,
@@ -3707,7 +3707,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
 
         if (listResult.hasPrefixesOrObjects(contextAccessors, tombstones)) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Found path as directory (with /)");
+            LOG.error("Temp", new RuntimeException());
             listResult.logAtDebug(LOG);
           }
           // At least one entry has been found.
@@ -3723,7 +3723,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
           // listing does not meet the requirements.
           return new S3AFileStatus(Tristate.FALSE, path, username);
         } else if (key.isEmpty()) {
-          LOG.debug("Found root directory");
+          LOG.error("Temp", new RuntimeException());
           return new S3AFileStatus(Tristate.TRUE, path, username);
         }
       } catch (AmazonServiceException e) {
@@ -3735,7 +3735,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       }
     }
 
-    LOG.debug("Not Found: {}", path);
+    LOG.error("Temp", new RuntimeException());
     throw new FileNotFoundException("No such file or directory: " + path);
   }
 
@@ -3782,7 +3782,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   public void copyFromLocalFile(boolean delSrc, boolean overwrite, Path src,
       Path dst) throws IOException {
     checkNotClosed();
-    LOG.debug("Copying local file from {} to {}", src, dst);
+    LOG.error("Temp", new RuntimeException());
     trackDurationAndSpan(INVOCATION_COPY_FROM_LOCAL_FILE, dst, () -> {
       //  innerCopyFromLocalFile(delSrc, overwrite, src, dst);
       super.copyFromLocalFile(delSrc, overwrite, src, dst);
@@ -3816,7 +3816,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   private void innerCopyFromLocalFile(boolean delSrc, boolean overwrite,
       Path src, Path dst)
       throws IOException, FileAlreadyExistsException, AmazonClientException {
-    LOG.debug("Copying local file from {} to {}", src, dst);
+    LOG.error("Temp", new RuntimeException());
 
     // Since we have a local file, we don't need to stream into a temporary file
     LocalFileSystem local = getLocal(getConf());
@@ -3901,7 +3901,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       incrementPutCompletedStatistics(true, uploadInfo.getLength());
       return result;
     } catch (InterruptedException e) {
-      LOG.info("Interrupted: aborting upload");
+      LOG.error("Temp", new RuntimeException());
       incrementPutCompletedStatistics(false, uploadInfo.getLength());
       upload.abort();
       throw (InterruptedIOException)
@@ -3922,7 +3922,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       return;
     }
     isClosed = true;
-    LOG.debug("Filesystem {} is closed", uri);
+    LOG.error("Temp", new RuntimeException());
     if (getConf() != null) {
       String iostatisticsLoggingLevel =
           getConf().getTrimmed(IOSTATISTICS_LOGGING_LEVEL,
@@ -3956,7 +3956,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
         transfers.shutdownNow(true);
       } catch (RuntimeException e) {
         // catch and swallow for resilience.
-        LOG.debug("When shutting down", e);
+        LOG.error("Temp", new RuntimeException());
       }
       transfers = null;
     }
@@ -4036,7 +4036,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   public Token<AbstractS3ATokenIdentifier> getDelegationToken(String renewer)
       throws IOException {
     checkNotClosed();
-    LOG.debug("Delegation token requested");
+    LOG.error("Temp", new RuntimeException());
     if (delegationTokens.isPresent()) {
       return trackDurationAndSpan(
           INVOCATION_GET_DELEGATION_TOKEN, null, () ->
@@ -4045,7 +4045,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
                   (renewer != null ? new Text(renewer) : new Text())));
     } else {
       // Delegation token support is not set up
-      LOG.debug("Token support is not enabled");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -4065,7 +4065,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       return delegationTokens.get().getAdditionalTokenIssuers();
     } else {
       // Delegation token support is not set up
-      LOG.debug("Token support is not enabled");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -4120,7 +4120,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   private CopyResult copyFile(String srcKey, String dstKey, long size,
       S3ObjectAttributes srcAttributes, S3AReadOpContext readContext)
       throws IOException, InterruptedIOException  {
-    LOG.debug("copyFile {} -> {} ", srcKey, dstKey);
+    LOG.error("Temp", new RuntimeException());
 
     ProgressListener progressListener = progressEvent -> {
       switch (progressEvent.getEventType()) {
@@ -4214,7 +4214,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
   @Retries.OnceRaw
   InitiateMultipartUploadResult initiateMultipartUpload(
       InitiateMultipartUploadRequest request) throws IOException {
-    LOG.debug("Initiate multipart upload to {}", request.getKey());
+    LOG.error("Temp", new RuntimeException());
     return trackDurationOfSupplier(getDurationTrackerFactory(),
         OBJECT_MULTIPART_UPLOAD_INITIATED.getSymbol(),
         () -> getAmazonS3Client().initiateMultipartUpload(request));
@@ -4367,7 +4367,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
         for(DeleteObjectsRequest.KeyVersion kv : keysToRemove) {
           sb.append(kv.getKey()).append(",");
         }
-        LOG.debug("While deleting keys {} ", sb.toString(), e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -4638,7 +4638,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
     if (getConf().getBoolean(ETAG_CHECKSUM_ENABLED,
         ETAG_CHECKSUM_ENABLED_DEFAULT)) {
       return trackDurationAndSpan(INVOCATION_GET_FILE_CHECKSUM, path, () -> {
-        LOG.debug("getFileChecksum({})", path);
+        LOG.error("Temp", new RuntimeException());
         ObjectMetadata headers = getObjectMetadata(path, null,
             invoker,
             "getFileChecksum are");
@@ -4853,12 +4853,12 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       final boolean collectTombstones,
       final boolean forceNonAuthoritativeMS) throws IOException {
     Path path = qualify(f);
-    LOG.debug("listFiles({}, {})", path, recursive);
+    LOG.error("Temp", new RuntimeException());
     try {
       // if a status was given and it is a file.
       if (status != null && status.isFile()) {
         // simple case: File
-        LOG.debug("Path is a file: {}", path);
+        LOG.error("Temp", new RuntimeException());
         return listing.createSingleStatusIterator(
             toLocatedFileStatus(status));
       }
@@ -4923,7 +4923,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       throws FileNotFoundException, IOException {
     Path path = qualify(f);
     AuditSpan span = entryPoint(INVOCATION_LIST_LOCATED_STATUS, path);
-    LOG.debug("listLocatedStatus({}, {}", path, filter);
+    LOG.error("Temp", new RuntimeException());
     RemoteIterator<? extends LocatedFileStatus> iterator =
         once("listLocatedStatus", path.toString(),
           () -> {
@@ -4940,7 +4940,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
                   innerGetFileStatus(path, false, StatusProbeEnum.ALL);
               if (fileStatus.isFile()) {
                 // simple case: File
-                LOG.debug("Path is a file");
+                LOG.error("Temp", new RuntimeException());
                 return listing.createSingleStatusIterator(
                         filter.accept(path)
                                 ? toLocatedFileStatus(fileStatus)
@@ -5023,7 +5023,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    */
   @Retries.OnceRaw
   void abortMultipartUpload(String destKey, String uploadId) {
-    LOG.info("Aborting multipart upload {} to {}", uploadId, destKey);
+    LOG.error("Temp", new RuntimeException());
     getAmazonS3Client().abortMultipartUpload(
         getRequestFactory().newAbortMultipartUploadRequest(
             destKey,
@@ -5122,7 +5122,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
       return hasPathCapability(new Path("/"), capability);
     } catch (IOException ex) {
       // should never happen, so log and downgrade.
-      LOG.debug("Ignoring exception on hasCapability({}})", capability, ex);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -5136,7 +5136,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    * @return a reference to shared credentials.
    */
   public AWSCredentialProviderList shareCredentials(final String purpose) {
-    LOG.debug("Sharing credentials for: {}", purpose);
+    LOG.error("Temp", new RuntimeException());
     return credentials.share();
   }
 
@@ -5314,7 +5314,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
             providedStatus);
         fileStatus = ((S3ALocatedFileStatus) providedStatus).toS3AFileStatus();
       } else {
-        LOG.debug("Ignoring file status {}", providedStatus);
+        LOG.error("Temp", new RuntimeException());
         fileStatus = null;
       }
     } else {
@@ -5407,7 +5407,7 @@ public class S3AFileSystem extends FileSystem implements StreamCapabilities,
    */
   @InterfaceAudience.Private
   public static void initializeClass() {
-    LOG.debug("Initialize S3A class");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

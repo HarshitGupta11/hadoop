@@ -44,7 +44,7 @@ public class StreamInputFormat extends KeyValueTextInputFormat {
 
     // handling non-standard record reader (likely StreamXmlRecordReader) 
     FileSplit split = (FileSplit) genericSplit;
-    LOG.info("getRecordReader start.....split=" + split);
+    LOG.error("Temp", new RuntimeException());
     reporter.setStatus(split.toString());
 
     // Open the file and seek to the start of the split

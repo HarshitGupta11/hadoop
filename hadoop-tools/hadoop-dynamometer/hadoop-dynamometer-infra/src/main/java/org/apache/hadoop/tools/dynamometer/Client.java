@@ -263,7 +263,7 @@ public class Client extends Configured implements Tool {
   public int run(String[] args) {
     boolean result;
     try {
-      LOG.info("Initializing Client");
+      LOG.error("Temp", new RuntimeException());
       try {
         boolean doRun = init(args);
         if (!doRun) {
@@ -280,7 +280,7 @@ public class Client extends Configured implements Tool {
       return 1;
     }
     if (result) {
-      LOG.info("Application completed successfully");
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     LOG.error("Application failed to complete successfully");
@@ -517,7 +517,7 @@ public class Client extends Configured implements Tool {
    */
   public boolean run() throws IOException, YarnException {
 
-    LOG.info("Running Client");
+    LOG.error("Temp", new RuntimeException());
     yarnClient.start();
 
     YarnClusterMetrics clusterMetrics = yarnClient.getYarnClusterMetrics();
@@ -535,7 +535,7 @@ public class Client extends Configured implements Tool {
     YarnClientApplication app = yarnClient.createApplication();
     GetNewApplicationResponse appResponse = app.getNewApplicationResponse();
     long maxMem = appResponse.getMaximumResourceCapability().getMemorySize();
-    LOG.info("Max mem capabililty of resources in this cluster " + maxMem);
+    LOG.error("Temp", new RuntimeException());
     int maxVCores = appResponse.getMaximumResourceCapability()
         .getVirtualCores();
     LOG.info("Max virtual cores capabililty of resources in this cluster {}",
@@ -614,7 +614,7 @@ public class Client extends Configured implements Tool {
             credentials);
         if (tokens != null) {
           for (Token<?> token : tokens) {
-            LOG.info("Got dt for " + fs.getUri() + "; " + token);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         DataOutputBuffer dob = new DataOutputBuffer();
@@ -629,7 +629,7 @@ public class Client extends Configured implements Tool {
     // Set the queue to which this application is to be submitted in the RM
     appContext.setQueue(amQueue);
 
-    LOG.info("Submitting application to RM");
+    LOG.error("Temp", new RuntimeException());
     yarnClient.submitApplication(appContext);
 
     // Monitor the application
@@ -647,7 +647,7 @@ public class Client extends Configured implements Tool {
    *         remote resources.
    */
   private Map<String, String> setupRemoteResourcesGetEnv() throws IOException {
-    LOG.info("Set the environment for the application master");
+    LOG.error("Temp", new RuntimeException());
     Map<String, String> env = new HashMap<>();
 
     // Copy local resources to a remote FS to prepare them for localization
@@ -725,7 +725,7 @@ public class Client extends Configured implements Tool {
     vargs.add("1>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stdout");
     vargs.add("2>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stderr");
 
-    LOG.info("Completed setting up app master command: " + vargs);
+    LOG.error("Temp", new RuntimeException());
     return Lists.newArrayList(Joiner.on(" ").join(vargs));
   }
 
@@ -941,7 +941,7 @@ public class Client extends Configured implements Tool {
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
-        LOG.debug("Thread sleep in monitoring loop interrupted");
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Get application report for the appId we are interested in
@@ -949,7 +949,7 @@ public class Client extends Configured implements Tool {
 
       if (report.getTrackingUrl() != null && !loggedApplicationInfo) {
         loggedApplicationInfo = true;
-        LOG.info("Track the application at: " + report.getTrackingUrl());
+        LOG.error("Temp", new RuntimeException());
         LOG.info("Kill the application using: yarn application -kill "
             + report.getApplicationId());
       }
@@ -976,7 +976,7 @@ public class Client extends Configured implements Tool {
         } else if (workloadJob.isSuccessful()) {
           success = true;
         }
-        LOG.info("Infra app was killed; exiting from client.");
+        LOG.error("Temp", new RuntimeException());
         break;
       } else if (infraAppState == YarnApplicationState.FINISHED
           || infraAppState == YarnApplicationState.FAILED) {
@@ -994,7 +994,7 @@ public class Client extends Configured implements Tool {
       }
 
       if (isCompleted(workloadAppState)) {
-        LOG.info("Killing infrastructure app");
+        LOG.error("Temp", new RuntimeException());
         try {
           forceKillApplication(infraAppId);
         } catch (YarnException | IOException e) {
@@ -1034,7 +1034,7 @@ public class Client extends Configured implements Tool {
    */
   private void launchAndMonitorWorkloadDriver(Properties nameNodeProperties) {
     URI nameNodeURI = DynoInfraUtils.getNameNodeHdfsUri(nameNodeProperties);
-    LOG.info("Launching workload job using input path: " + workloadInputPath);
+    LOG.error("Temp", new RuntimeException());
     try {
       long workloadStartTime = System.currentTimeMillis()
           + workloadStartDelayMs;
@@ -1059,9 +1059,9 @@ public class Client extends Configured implements Tool {
         workloadAppState = workloadJob.getJobState();
       }
       if (isCompleted(workloadAppState)) {
-        LOG.info("Workload job completed successfully!");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.warn("Workload job failed.");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception e) {
       LOG.error("Exception encountered while running workload job", e);
@@ -1073,7 +1073,7 @@ public class Client extends Configured implements Tool {
    * or workload).
    */
   public void attemptCleanup() {
-    LOG.info("Attempting to clean up remaining running applications.");
+    LOG.error("Temp", new RuntimeException());
     if (workloadJob != null) {
       try {
         workloadAppState = workloadJob.getJobState();
@@ -1089,7 +1089,7 @@ public class Client extends Configured implements Tool {
           LOG.info("Attempting to kill workload app: {}",
               workloadJob.getJobID());
           workloadJob.killJob();
-          LOG.info("Killed workload app");
+          LOG.error("Temp", new RuntimeException());
         } catch (IOException ioe) {
           LOG.error("Unable to kill workload app ({})", workloadJob.getJobID(),
               ioe);
@@ -1098,9 +1098,9 @@ public class Client extends Configured implements Tool {
     }
     if (infraAppId != null && !Apps.isApplicationFinalState(infraAppState)) {
       try {
-        LOG.info("Attempting to kill infrastructure app: " + infraAppId);
+        LOG.error("Temp", new RuntimeException());
         forceKillApplication(infraAppId);
-        LOG.info("Killed infrastructure app");
+        LOG.error("Temp", new RuntimeException());
       } catch (YarnException | IOException e) {
         LOG.error("Unable to kill infrastructure app ({})", infraAppId, e);
       }

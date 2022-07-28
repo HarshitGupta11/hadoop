@@ -246,7 +246,7 @@ class DataStreamer extends Daemon {
       final int length, final DFSClient client) throws IOException {
     final DfsClientConf conf = client.getConf();
     final String dnAddr = first.getXferAddr(conf.isConnectToDnViaHostname());
-    LOG.debug("Connecting to datanode {}", dnAddr);
+    LOG.error("Temp", new RuntimeException());
     final InetSocketAddress isa = NetUtils.createSocketAddr(dnAddr);
     final Socket sock = client.socketFactory.createSocket();
     final int timeout = client.getDatanodeReadTimeout(length);
@@ -258,7 +258,7 @@ class DataStreamer extends Daemon {
     if (conf.getSocketSendBufferSize() > 0) {
       sock.setSendBufferSize(conf.getSocketSendBufferSize());
     }
-    LOG.debug("Send buf size {}", sock.getSendBufferSize());
+    LOG.error("Temp", new RuntimeException());
     return sock;
   }
 
@@ -388,7 +388,7 @@ class DataStreamer extends Daemon {
       } else {
         this.waitForRestart = false;
       }
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
 
     synchronized boolean isRestartingNode() {
@@ -639,7 +639,7 @@ class DataStreamer extends Daemon {
   }
 
   protected void endBlock() {
-    LOG.debug("Closing old block {}", block);
+    LOG.error("Temp", new RuntimeException());
     this.setName("DataStreamer for file " + src);
     closeResponder();
     closeStream();
@@ -679,7 +679,7 @@ class DataStreamer extends Daemon {
             try {
               dataQueue.wait(timeout);
             } catch (InterruptedException  e) {
-              LOG.debug("Thread interrupted", e);
+              LOG.error("Temp", new RuntimeException());
             }
             doSleep = false;
           }
@@ -690,7 +690,7 @@ class DataStreamer extends Daemon {
           try {
             backOffIfNecessary();
           } catch (InterruptedException e) {
-            LOG.debug("Thread interrupted", e);
+            LOG.error("Temp", new RuntimeException());
           }
           one = dataQueue.getFirst(); // regular data packet
           SpanContext[] parents = one.getTraceParents();
@@ -705,14 +705,14 @@ class DataStreamer extends Daemon {
         }
 
         // get new block from namenode.
-        LOG.debug("stage={}, {}", stage, this);
+        LOG.error("Temp", new RuntimeException());
 
         if (stage == BlockConstructionStage.PIPELINE_SETUP_CREATE) {
-          LOG.debug("Allocating new block: {}", this);
+          LOG.error("Temp", new RuntimeException());
           setPipeline(nextBlockOutputStream());
           initDataStreaming();
         } else if (stage == BlockConstructionStage.PIPELINE_SETUP_APPEND) {
-          LOG.debug("Append to block {}", block);
+          LOG.error("Temp", new RuntimeException());
           setupPipelineForAppendOrRecovery();
           if (streamerClosed) {
             continue;
@@ -753,7 +753,7 @@ class DataStreamer extends Daemon {
           }
         }
 
-        LOG.debug("{} sending {}", this, one);
+        LOG.error("Temp", new RuntimeException());
 
         // write out data to remote datanode
         try (TraceScope ignored = dfsClient.getTracer().
@@ -802,9 +802,9 @@ class DataStreamer extends Daemon {
           // Since their messages are descriptive enough, do not always
           // log a verbose stack-trace WARN for quota exceptions.
           if (e instanceof QuotaExceededException) {
-            LOG.debug("DataStreamer Quota Exception", e);
+            LOG.error("Temp", new RuntimeException());
           } else {
-            LOG.warn("DataStreamer Exception", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         lastException.set(e);
@@ -832,7 +832,7 @@ class DataStreamer extends Daemon {
           // wait for acks to arrive from datanodes
           dataQueue.wait(sendHeartbeat());
         } catch (InterruptedException  e) {
-          LOG.debug("Thread interrupted ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -896,7 +896,7 @@ class DataStreamer extends Daemon {
   void waitForAckedSeqno(long seqno) throws IOException {
     try (TraceScope ignored = dfsClient.getTracer().
         newScope("waitForAckedSeqno")) {
-      LOG.debug("{} waiting for ack for: {}", this, seqno);
+      LOG.error("Temp", new RuntimeException());
       int dnodes = nodes != null ? nodes.length : 3;
       int writeTimeout = dfsClient.getDatanodeWriteTimeout(dnodes);
       long begin = Time.monotonicNow();
@@ -928,7 +928,7 @@ class DataStreamer extends Daemon {
         }
         checkClosed();
       } catch (ClosedChannelException cce) {
-        LOG.debug("Closed channel exception", cce);
+        LOG.error("Temp", new RuntimeException());
       }
       long duration = Time.monotonicNow() - begin;
       if (duration > dfsclientSlowLogThresholdMs) {
@@ -983,7 +983,7 @@ class DataStreamer extends Daemon {
         checkClosed();
         queuePacket(packet);
       } catch (ClosedChannelException cce) {
-        LOG.debug("Closed channel exception", cce);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1022,7 +1022,7 @@ class DataStreamer extends Daemon {
         response.close();
         response.join();
       } catch (InterruptedException  e) {
-        LOG.debug("Thread interrupted", e);
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       } finally {
         response = null;
@@ -1135,7 +1135,7 @@ class DataStreamer extends Daemon {
             }
           }
 
-          LOG.debug("DFSClient {}", ack);
+          LOG.error("Temp", new RuntimeException());
 
           long seqno = ack.getSeqno();
           // processes response status from datanodes.
@@ -1229,7 +1229,7 @@ class DataStreamer extends Daemon {
               dataQueue.notifyAll();
             }
             if (!errorState.isRestartingNode()) {
-              LOG.warn("Exception for " + block, e);
+              LOG.error("Temp", new RuntimeException());
             }
             responderClosed = true;
           }
@@ -1262,7 +1262,7 @@ class DataStreamer extends Daemon {
     if (!errorState.hasDatanodeError() && !shouldHandleExternalError()) {
       return false;
     }
-    LOG.debug("start process datanode/external error, {}", this);
+    LOG.error("Temp", new RuntimeException());
     if (response != null) {
       LOG.info("Error Recovery for " + block +
           " waiting for responder to exit. ");
@@ -1359,7 +1359,7 @@ class DataStreamer extends Daemon {
   }
 
   private void addDatanode2ExistingPipeline() throws IOException {
-    DataTransferProtocol.LOG.debug("lastAckedSeqno = {}", lastAckedSeqno);
+    DataTransferProtocol.LOG.error("Temp", new RuntimeException());
       /*
        * Is data transfer necessary?  We have the following cases.
        *
@@ -1512,7 +1512,7 @@ class DataStreamer extends Daemon {
     if (nodes == null || nodes.length == 0) {
       String msg = "Could not get block locations. " + "Source file \""
           + src + "\" - Aborting..." + this;
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       lastException.set(new IOException(msg));
       streamerClosed = true;
       return;
@@ -1656,7 +1656,7 @@ class DataStreamer extends Daemon {
         // with those nodes.
         Thread.sleep(2000);
       } catch (InterruptedException e) {
-        LOG.debug("Thread interrupted", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1720,12 +1720,12 @@ class DataStreamer extends Daemon {
           0L, false);
 
       if (!success) {
-        LOG.warn("Abandoning " + block);
+        LOG.error("Temp", new RuntimeException());
         dfsClient.namenode.abandonBlock(block.getCurrentBlock(),
             stat.getFileId(), src, dfsClient.clientName);
         block.setCurrentBlock(null);
         final DatanodeInfo badNode = nodes[errorState.getBadNodeIndex()];
-        LOG.warn("Excluding datanode " + badNode);
+        LOG.error("Temp", new RuntimeException());
         excludedNodes.put(badNode, badNode);
       }
     } while (!success && --count >= 0);
@@ -1743,13 +1743,13 @@ class DataStreamer extends Daemon {
       StorageType[] nodeStorageTypes, String[] nodeStorageIDs,
       long newGS, boolean recoveryFlag) {
     if (nodes.length == 0) {
-      LOG.info("nodes are empty for write pipeline of " + block);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     String firstBadLink = "";
     boolean checkRestart = false;
     if (LOG.isDebugEnabled()) {
-      LOG.debug("pipeline = " + Arrays.toString(nodes) + ", " + this);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // persist blocks on namenode on next flush
@@ -1827,7 +1827,7 @@ class DataStreamer extends Daemon {
         restartingNodes.clear();
       } catch (IOException ie) {
         if (!errorState.isRestartingNode()) {
-          LOG.warn("Exception in createBlockOutputStream " + this, ie);
+          LOG.error("Temp", new RuntimeException());
         }
         if (ie instanceof InvalidEncryptionKeyException &&
             refetchEncryptionKey > 0) {
@@ -1932,7 +1932,7 @@ class DataStreamer extends Daemon {
                      (int)(base + Math.random() * range));
         lastCongestionBackoffTime = t;
         sb.append(" are congested. Backing off for ").append(t).append(" ms");
-        LOG.info(sb.toString());
+        LOG.error("Temp", new RuntimeException());
         congestedNodes.clear();
       }
     }
@@ -1991,7 +1991,7 @@ class DataStreamer extends Daemon {
       packet.addTraceParent(Tracer.getCurrentSpan());
       dataQueue.addLast(packet);
       lastQueuedSeqno = packet.getSeqno();
-      LOG.debug("Queued {}, {}", packet, this);
+      LOG.error("Temp", new RuntimeException());
       dataQueue.notifyAll();
     }
   }

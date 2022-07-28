@@ -156,7 +156,7 @@ public abstract class TimedHealthReporterService extends AbstractService
   }
 
   synchronized void setUnhealthyWithReport(String output) {
-    LOG.info("Health status being set as: \"" + output + "\".");
+    LOG.error("Temp", new RuntimeException());
     this.setHealthy(false);
     this.setHealthReport(output);
     this.setLastReportedTime(System.currentTimeMillis());

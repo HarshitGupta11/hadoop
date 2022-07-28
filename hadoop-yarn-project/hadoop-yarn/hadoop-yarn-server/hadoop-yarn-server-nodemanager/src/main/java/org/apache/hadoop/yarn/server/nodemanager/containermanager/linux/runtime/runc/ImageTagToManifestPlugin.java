@@ -213,14 +213,14 @@ public class ImageTagToManifestPlugin extends AbstractService
 
       index = line.lastIndexOf(":");
       if (index == -1) {
-        LOG.warn("Malformed imageTagToManifest entry: " + line);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       String imageTags = line.substring(0, index);
       String[] imageTagArray = imageTags.split(",");
       String hash = line.substring(index + 1);
       if (!hash.matches(ALPHA_NUMERIC) || hash.length() != SHA256_HASH_LENGTH) {
-        LOG.warn("Malformed image hash: " + hash);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
 
@@ -246,13 +246,13 @@ public class ImageTagToManifestPlugin extends AbstractService
       if (localImageToHash != null &&
           !localImageToHash.equals(tmpLocalImageToHash)) {
         localImageToHashCache.set(localImageToHash);
-        LOG.info("Reloaded local image tag to hash cache");
+        LOG.error("Temp", new RuntimeException());
         ret = true;
       }
       if (hdfsImageToHash != null &&
           !hdfsImageToHash.equals(tmpHdfsImageToHash)) {
         hdfsImageToHashCache.set(hdfsImageToHash);
-        LOG.info("Reloaded hdfs image tag to hash cache");
+        LOG.error("Temp", new RuntimeException());
         ret = true;
       }
     }
@@ -270,10 +270,10 @@ public class ImageTagToManifestPlugin extends AbstractService
     }
     hdfsImageToHashFile = conf.get(NM_HDFS_RUNC_IMAGE_TAG_TO_HASH_FILE);
     if (hdfsImageToHashFile == null) {
-      LOG.debug("Failed to load HDFS runC image to hash file. Config not set");
+      LOG.error("Temp", new RuntimeException());
     }
     if(hdfsImageToHashFile == null && localImageTagToHashFile == null) {
-      LOG.warn("No valid image-tag-to-hash files");
+      LOG.error("Temp", new RuntimeException());
     }
     manifestDir = conf.get(NM_RUNC_IMAGE_TOPLEVEL_DIR,
         DEFAULT_NM_RUNC_IMAGE_TOPLEVEL_DIR) + "/manifests/";
@@ -290,7 +290,7 @@ public class ImageTagToManifestPlugin extends AbstractService
   protected void serviceStart() throws Exception {
     super.serviceStart();
     if(!loadImageToHashFiles()) {
-      LOG.warn("Couldn't load any image-tag-to-hash-files");
+      LOG.error("Temp", new RuntimeException());
     }
     int runcCacheRefreshInterval = conf.getInt(NM_RUNC_CACHE_REFRESH_INTERVAL,
         DEFAULT_NM_RUNC_CACHE_REFRESH_INTERVAL);
@@ -302,7 +302,7 @@ public class ImageTagToManifestPlugin extends AbstractService
             try {
               loadImageToHashFiles();
             } catch (Exception e) {
-              LOG.warn("runC cache refresh thread caught an exception: ", e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }, runcCacheRefreshInterval, runcCacheRefreshInterval, TimeUnit.SECONDS);

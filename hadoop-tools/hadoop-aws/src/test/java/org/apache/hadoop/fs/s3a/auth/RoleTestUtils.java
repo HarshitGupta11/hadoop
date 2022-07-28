@@ -98,7 +98,7 @@ public final class RoleTestUtils {
   public static Configuration bindRolePolicy(final Configuration conf,
       final Policy policy) throws JsonProcessingException {
     String p = MODEL.toJson(policy);
-    LOG.info("Setting role policy to policy of size {}:\n{}", p.length(), p);
+    LOG.error("Temp", new RuntimeException());
     conf.set(ASSUMED_ROLE_POLICY, p);
     return conf;
   }

@@ -61,7 +61,7 @@ public class TestShellDecryptionKeyProvider {
       Assert
           .fail("fs.azure.shellkeyprovider.script is not specified, we should throw");
     } catch (KeyProviderException e) {
-      LOG.info("Received an expected exception: " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

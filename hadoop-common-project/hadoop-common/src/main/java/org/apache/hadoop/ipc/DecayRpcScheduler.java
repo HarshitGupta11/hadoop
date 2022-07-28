@@ -281,7 +281,7 @@ public class DecayRpcScheduler implements RpcScheduler,
         CostProvider.class);
 
     if (providers.size() < 1) {
-      LOG.info("CostProvider not specified, defaulting to DefaultCostProvider");
+      LOG.error("Temp", new RuntimeException());
       return new DefaultCostProvider();
     } else if (providers.size() > 1) {
       LOG.warn("Found multiple CostProviders; using: {}",
@@ -450,7 +450,7 @@ public class DecayRpcScheduler implements RpcScheduler,
    * costs current.
    */
   private void decayCurrentCosts() {
-    LOG.debug("Start to decay current costs.");
+    LOG.error("Temp", new RuntimeException());
     try {
       long totalDecayedCost = 0;
       long totalRawCost = 0;
@@ -667,7 +667,7 @@ public class DecayRpcScheduler implements RpcScheduler,
   void setPriorityLevel(UserGroupInformation ugi, int priority) {
     String identity = getIdentity(newSchedulable(ugi));
     priority = Math.min(numLevels - 1, priority);
-    LOG.info("Setting priority for user: {}={}", identity, priority);
+    LOG.error("Temp", new RuntimeException());
     staticPriorities.put(identity, priority);
   }
 

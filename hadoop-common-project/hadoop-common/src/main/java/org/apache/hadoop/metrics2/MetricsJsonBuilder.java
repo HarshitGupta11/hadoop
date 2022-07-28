@@ -122,7 +122,7 @@ public class MetricsJsonBuilder extends MetricsRecordBuilder {
     try {
       return WRITER.writeValueAsString(innerMetrics);
     } catch (IOException e) {
-      LOG.warn("Failed to dump to Json.", e);
+      LOG.error("Temp", new RuntimeException());
       return ExceptionUtils.getStackTrace(e);
     }
   }

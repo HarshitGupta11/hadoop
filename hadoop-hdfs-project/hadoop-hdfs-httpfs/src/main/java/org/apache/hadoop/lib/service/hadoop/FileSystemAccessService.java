@@ -147,7 +147,7 @@ public class FileSystemAccessService extends BaseService implements FileSystemAc
 
   @Override
   protected void init() throws ServiceException {
-    LOG.info("Using FileSystemAccess JARs version [{}]", VersionInfo.getVersion());
+    LOG.error("Temp", new RuntimeException());
     String security = getServiceConfig().get(AUTHENTICATION_TYPE, "simple").trim();
     if (security.equals("kerberos")) {
       String defaultName = getServer().getName();
@@ -169,12 +169,12 @@ public class FileSystemAccessService extends BaseService implements FileSystemAc
       } catch (IOException ex) {
         throw new ServiceException(FileSystemAccessException.ERROR.H02, ex.getMessage(), ex);
       }
-      LOG.info("Using FileSystemAccess Kerberos authentication, principal [{}] keytab [{}]", principal, keytab);
+      LOG.error("Temp", new RuntimeException());
     } else if (security.equals("simple")) {
       Configuration conf = new Configuration();
       conf.set(HADOOP_SECURITY_AUTHENTICATION, "simple");
       UserGroupInformation.setConfiguration(conf);
-      LOG.info("Using FileSystemAccess simple/pseudo authentication, principal [{}]", System.getProperty("user.name"));
+      LOG.error("Temp", new RuntimeException());
     } else {
       throw new ServiceException(FileSystemAccessException.ERROR.H09, security);
     }
@@ -195,9 +195,9 @@ public class FileSystemAccessService extends BaseService implements FileSystemAc
     }
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("FileSystemAccess FileSystem configuration:");
+      LOG.error("Temp", new RuntimeException());
       for (Map.Entry entry : serviceHadoopConf) {
-        LOG.debug("  {} = {}", entry.getKey(), entry.getValue());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     setRequiredServiceHadoopConf(serviceHadoopConf);
@@ -261,10 +261,10 @@ public class FileSystemAccessService extends BaseService implements FileSystemAc
         try {
           count += cacheFs.purgeIfIdle() ? 1 : 0;
         } catch (Throwable ex) {
-          LOG.warn("Error while purging filesystem, " + ex.toString(), ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
-      LOG.debug("Purged [{}] filesystem instances", count);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -97,7 +97,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
       try {
         cluster.stop();
       } catch (Exception e) {
-        LOG.warn("When stopping the cluster", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -274,10 +274,10 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
     cluster.start();
     DummyHAService svc1 = cluster.getService(1);
 
-    LOG.info("Faking svc0 unhealthy, should failover to svc1");
+    LOG.error("Temp", new RuntimeException());
     cluster.setHealthy(0, false);
 
-    LOG.info("Waiting for svc0 to enter initializing state");
+    LOG.error("Temp", new RuntimeException());
     cluster.waitForHAState(0, HAServiceState.INITIALIZING);
     cluster.waitForHAState(1, HAServiceState.ACTIVE);
 
@@ -302,7 +302,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
   public void testAutoFailoverOnBadState() throws Exception {
     cluster.start();
     DummyHAService svc0 = cluster.getService(0);
-    LOG.info("Faking svc0 to change the state, should failover to svc1");
+    LOG.error("Temp", new RuntimeException());
     svc0.state = HAServiceState.STANDBY;
 
     // Should fail back to svc0 at this point
@@ -339,7 +339,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
     svc2.state = HAServiceState.OBSERVER;
 
     // Verify svc2 is observer
-    LOG.info("Waiting for svc2 to enter observer state");
+    LOG.error("Temp", new RuntimeException());
     cluster.waitForHAState(2, HAServiceState.OBSERVER);
   }
 
@@ -368,7 +368,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
       cluster.waitForActiveLockHolder(null);
 
     } finally {
-      LOG.info("Allowing svc0's elector to re-establish its connection");
+      LOG.error("Temp", new RuntimeException());
       cluster.getElector(0).allowSessionReestablishmentForTests();
     }
     // svc0 should get the lock again
@@ -384,7 +384,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
     cluster.start();
     DummyHAService svc1 = cluster.getService(1);
 
-    LOG.info("Making svc1 fail to become active");
+    LOG.error("Temp", new RuntimeException());
     cluster.setFailToBecomeActive(1, true);
 
     LOG.info("Faking svc0 unhealthy, should NOT successfully " +
@@ -400,7 +400,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
     cluster.waitForHAState(0, HAServiceState.INITIALIZING);
     cluster.waitForHAState(1, HAServiceState.STANDBY);
 
-    LOG.info("Faking svc0 healthy again, should go back to svc0");
+    LOG.error("Temp", new RuntimeException());
     cluster.setHealthy(0, true);
     cluster.waitForHAState(0, HAServiceState.ACTIVE);
     cluster.waitForHAState(1, HAServiceState.STANDBY);
@@ -408,7 +408,7 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
 
     // Ensure that we can fail back to svc1  once it it is able
     // to become active (e.g the admin has restarted it)
-    LOG.info("Allowing svc1 to become active, expiring svc0");
+    LOG.error("Temp", new RuntimeException());
     svc1.failToBecomeActive = false;
     cluster.expireAndVerifyFailover(0, 1);
   }
@@ -426,21 +426,21 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
     long session0 = cluster.getElector(0).getZKSessionIdForTests();
     long session1 = cluster.getElector(1).getZKSessionIdForTests();
 
-    LOG.info("====== Stopping ZK server");
+    LOG.error("Temp", new RuntimeException());
     stopServer();
     waitForServerDown(hostPort, CONNECTION_TIMEOUT);
 
-    LOG.info("====== Waiting for services to enter NEUTRAL mode");
+    LOG.error("Temp", new RuntimeException());
     cluster.waitForElectorState(0,
         ActiveStandbyElector.State.NEUTRAL);
     cluster.waitForElectorState(1,
         ActiveStandbyElector.State.NEUTRAL);
 
-    LOG.info("====== Checking that the services didn't change HA state");
+    LOG.error("Temp", new RuntimeException());
     assertEquals(HAServiceState.ACTIVE, cluster.getService(0).state);
     assertEquals(HAServiceState.STANDBY, cluster.getService(1).state);
 
-    LOG.info("====== Restarting server");
+    LOG.error("Temp", new RuntimeException());
     startServer();
     waitForServerUp(hostPort, CONNECTION_TIMEOUT);
 
@@ -637,12 +637,12 @@ public class TestZKFailoverController extends ClientBaseWithFixes {
     cluster.start();
 
     // Failover by session expiration
-    LOG.info("====== Failing over by session expiration");
+    LOG.error("Temp", new RuntimeException());
     cluster.expireAndVerifyFailover(0, 1);
     cluster.expireAndVerifyFailover(1, 0);
 
     // Restart ZK
-    LOG.info("====== Restarting server");
+    LOG.error("Temp", new RuntimeException());
     stopServer();
     waitForServerDown(hostPort, CONNECTION_TIMEOUT);
     startServer();

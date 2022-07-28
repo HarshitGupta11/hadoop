@@ -197,7 +197,7 @@ public final class MultipartUtils {
                 () -> s3.listMultipartUploads(req)));
         LOG.debug("Listing found {} upload(s)",
             listing.getMultipartUploads().size());
-        LOG.debug("New listing state: {}", this);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

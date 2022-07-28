@@ -324,7 +324,7 @@ public class FsDatasetCache {
             new UncachingTask(key, revocationMs),
             revocationPollingMs, TimeUnit.MILLISECONDS);
       } else {
-        LOG.debug("{} has been scheduled for immediate uncaching.", key);
+        LOG.error("Temp", new RuntimeException());
         uncachingExecutor.execute(new UncachingTask(key, 0));
       }
       break;
@@ -434,7 +434,7 @@ public class FsDatasetCache {
               "files.");
           return;
         } catch (IOException e) {
-          LOG.warn("Failed to cache " + key + ": failed to open file", e);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
 
@@ -443,10 +443,10 @@ public class FsDatasetCache {
               blockFileName, key);
         } catch (ChecksumException e) {
           // Exception message is bogus since this wasn't caused by a file read
-          LOG.warn("Failed to cache " + key + ": checksum verification failed.");
+          LOG.error("Temp", new RuntimeException());
           return;
         } catch (IOException e) {
-          LOG.warn("Failed to cache the block [key=" + key + "]!", e);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
 
@@ -457,7 +457,7 @@ public class FsDatasetCache {
                                    value.state == State.CACHING_CANCELLED);
           if (value.state == State.CACHING_CANCELLED) {
             mappableBlockMap.remove(key);
-            LOG.warn("Caching of " + key + " was cancelled.");
+            LOG.error("Temp", new RuntimeException());
             return;
           }
           mappableBlockMap.put(key, new Value(mappableBlock, State.CACHED));

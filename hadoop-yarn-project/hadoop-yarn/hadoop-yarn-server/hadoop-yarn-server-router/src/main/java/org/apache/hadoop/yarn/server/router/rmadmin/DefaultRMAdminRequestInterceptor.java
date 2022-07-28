@@ -105,7 +105,7 @@ public class DefaultRMAdminRequestInterceptor
         message += ", user: " + user;
       }
 
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(message, e);
     } catch (Exception e) {
       throw new YarnRuntimeException(e);

@@ -39,11 +39,11 @@ public class JniBasedUnixGroupsMappingWithFallback implements
     if (NativeCodeLoader.isNativeCodeLoaded()) {
       this.impl = new JniBasedUnixGroupsMapping();
     } else {
-      PerformanceAdvisory.LOG.debug("Falling back to shell based");
+      PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
       this.impl = new ShellBasedUnixGroupsMapping();
     }
     if (LOG.isDebugEnabled()){
-      LOG.debug("Group mapping impl=" + impl.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

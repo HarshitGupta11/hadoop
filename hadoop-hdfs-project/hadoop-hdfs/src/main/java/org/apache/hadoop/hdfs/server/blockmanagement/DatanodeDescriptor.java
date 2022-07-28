@@ -563,7 +563,7 @@ public class DatanodeDescriptor extends DatanodeInfo {
                   info.getStorageType());
             }
           }
-          LOG.info("Removed storage {} from DataNode {}", storageInfo, this);
+          LOG.error("Temp", new RuntimeException());
         } else {
           // This can occur until all block reports are received.
           LOG.debug("Deferring removal of stale storage {} with {} blocks",
@@ -577,7 +577,7 @@ public class DatanodeDescriptor extends DatanodeInfo {
       Set<DatanodeStorageInfo> failedStorageInfos) {
     for (DatanodeStorageInfo storageInfo : failedStorageInfos) {
       if (storageInfo.getState() != DatanodeStorage.State.FAILED) {
-        LOG.info("{} failed.", storageInfo);
+        LOG.error("Temp", new RuntimeException());
         storageInfo.setState(DatanodeStorage.State.FAILED);
       }
     }
@@ -687,7 +687,7 @@ public class DatanodeDescriptor extends DatanodeInfo {
   void addBlockToBeRecovered(BlockInfo block) {
     if(recoverBlocks.contains(block)) {
       // this prevents adding the same block twice to the recovery queue
-      BlockManager.LOG.info(block + " is already in the recovery queue");
+      BlockManager.LOG.error("Temp", new RuntimeException());
       return;
     }
     recoverBlocks.offer(block);

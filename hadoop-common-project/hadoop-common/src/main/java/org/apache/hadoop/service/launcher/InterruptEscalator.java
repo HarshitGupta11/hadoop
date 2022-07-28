@@ -103,10 +103,10 @@ public class InterruptEscalator implements IrqHandler.Interrupted {
   @Override
   public void interrupted(IrqHandler.InterruptData interruptData) {
     String message = "Service interrupted by " + interruptData.toString();
-    LOG.warn(message);
+    LOG.error("Temp", new RuntimeException());
     if (!signalAlreadyReceived.compareAndSet(false, true)) {
       message = "Repeated interrupt: escalating to a JVM halt";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       // signal already received. On a second request to a hard JVM
       // halt and so bypass any blocking shutdown hooks.
       ExitUtil.halt(LauncherExitCodes.EXIT_INTERRUPTED, message);
@@ -128,7 +128,7 @@ public class InterruptEscalator implements IrqHandler.Interrupted {
       }
       forcedShutdownTimedOut = !shutdown.getServiceWasShutdown();
       if (forcedShutdownTimedOut) {
-        LOG.warn("Service did not shut down in time");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     ExitUtil.terminate(EXIT_INTERRUPTED, message);

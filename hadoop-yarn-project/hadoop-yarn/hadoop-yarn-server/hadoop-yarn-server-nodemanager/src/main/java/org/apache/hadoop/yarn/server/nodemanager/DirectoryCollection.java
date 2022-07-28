@@ -237,7 +237,7 @@ public class DirectoryCollection {
       String diskValidatorName = conf.get(YarnConfiguration.DISK_VALIDATOR,
           YarnConfiguration.DEFAULT_DISK_VALIDATOR);
       diskValidator = DiskValidatorFactory.getInstance(diskValidatorName);
-      LOG.info("Disk Validator '" + diskValidatorName + "' is loaded.");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       throw new YarnRuntimeException(e);
     }
@@ -471,7 +471,7 @@ public class DirectoryCollection {
           errorDirs.add(entry.getKey());
           break;
         default:
-          LOG.warn(entry.getValue().cause + " is unknown for disk error.");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
         directoryErrorInfo.put(entry.getKey(), errorInformation);

@@ -163,7 +163,7 @@ public class LeaseManager {
         }
       }
     }
-    LOG.info("Number of blocks under construction: {}", numUCBlocks);
+    LOG.error("Temp", new RuntimeException());
     return numUCBlocks;
   }
 
@@ -374,7 +374,7 @@ public class LeaseManager {
   private synchronized void removeLease(Lease lease, long inodeId) {
     leasesById.remove(inodeId);
     if (!lease.removeFile(inodeId)) {
-      LOG.debug("inode {} not found in lease.files (={})", inodeId, lease);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (!lease.hasFiles()) {
@@ -555,9 +555,9 @@ public class LeaseManager {
             }
           }
         } catch(InterruptedException ie) {
-          LOG.debug("{} is interrupted", name, ie);
+          LOG.error("Temp", new RuntimeException());
         } catch(Throwable e) {
-          LOG.warn("Unexpected throwable: ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -583,7 +583,7 @@ public class LeaseManager {
       if (!leaseToCheck.expiredHardLimit(Time.monotonicNow())) {
         continue;
       }
-      LOG.info("{} has expired hard limit", leaseToCheck);
+      LOG.error("Temp", new RuntimeException());
       final List<Long> removing = new ArrayList<>();
       // need to create a copy of the oldest lease files, because
       // internalReleaseLease() removes files corresponding to empty files,
@@ -622,7 +622,7 @@ public class LeaseManager {
               LOG.debug("Lease recovery for inode {} is complete. File closed"
                   + ".", id);
             } else {
-              LOG.debug("Started block recovery {} lease {}", p, leaseToCheck);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           // If a lease recovery happened, we need to sync later.
@@ -678,7 +678,7 @@ public class LeaseManager {
         lmthread.interrupt();
         lmthread.join(3000);
       } catch (InterruptedException ie) {
-        LOG.warn("Encountered exception ", ie);
+        LOG.error("Temp", new RuntimeException());
       }
       lmthread = null;
     }

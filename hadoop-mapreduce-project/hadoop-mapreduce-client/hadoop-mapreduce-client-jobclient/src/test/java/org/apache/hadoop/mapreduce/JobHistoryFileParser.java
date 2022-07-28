@@ -38,18 +38,18 @@ class JobHistoryFileParser {
   private final FileSystem fs;
 
   public JobHistoryFileParser(FileSystem fs) {
-    LOG.info("JobHistoryFileParser created with " + fs);
+    LOG.error("Temp", new RuntimeException());
     this.fs = fs;
   }
 
   public JobInfo parseHistoryFile(Path path) throws IOException {
-    LOG.info("parsing job history file " + path);
+    LOG.error("Temp", new RuntimeException());
     JobHistoryParser parser = new JobHistoryParser(fs, path);
     return parser.parse();
   }
 
   public Configuration parseConfiguration(Path path) throws IOException {
-    LOG.info("parsing job configuration file " + path);
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new Configuration(false);
     conf.addResource(fs.open(path));
     return conf;

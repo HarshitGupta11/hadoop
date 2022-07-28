@@ -439,14 +439,14 @@ public abstract class TestConfigurationFieldsBase {
     LOG_XML.debug("\n=====\n");
 
     // Create default configuration variable key/value map
-    LOG.debug("Reading Config property files for defaults\n");
+    LOG.error("Temp", new RuntimeException());
     configurationDefaultVariables = new HashMap<>();
     Arrays.stream(configurationClasses)
         .map(Class::getDeclaredFields)
         .map(this::extractDefaultVariablesFromConfigurationFields)
         .filter(Objects::nonNull)
         .forEach(map -> configurationDefaultVariables.putAll(map));
-    LOG.debug("\n=====\n");
+    LOG.error("Temp", new RuntimeException());
 
     // Find class members not in the XML file
     configurationFieldsMissingInXmlFile = compareConfigurationToXmlFields
@@ -470,9 +470,9 @@ public abstract class TestConfigurationFieldsBase {
     final int missingXmlSize = configurationFieldsMissingInXmlFile.size();
 
     for (Class c : configurationClasses) {
-      LOG.info(c.toString());
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("({} member variables)\n", configurationMemberVariables.size());
+    LOG.error("Temp", new RuntimeException());
     StringBuilder xmlErrorMsg = new StringBuilder();
     for (Class c : configurationClasses) {
       xmlErrorMsg.append(c);
@@ -484,11 +484,11 @@ public abstract class TestConfigurationFieldsBase {
     xmlErrorMsg.append(xmlFilename);
     LOG.error(xmlErrorMsg.toString());
     if (missingXmlSize == 0) {
-      LOG.info("  (None)");
+      LOG.error("Temp", new RuntimeException());
     } else {
       appendMissingEntries(xmlErrorMsg, configurationFieldsMissingInXmlFile);
     }
-    LOG.info("\n=====\n");
+    LOG.error("Temp", new RuntimeException());
     if (errorIfMissingXmlProps) {
       assertEquals(xmlErrorMsg.toString(), 0, missingXmlSize);
     }
@@ -504,7 +504,7 @@ public abstract class TestConfigurationFieldsBase {
     sb.append(" Entries: ");
     new TreeSet<>(missing).forEach(
         (s) -> {
-          LOG.info("  {}", s);
+          LOG.error("Temp", new RuntimeException());
           sb.append("  ").append(s);
         });
   }
@@ -521,7 +521,7 @@ public abstract class TestConfigurationFieldsBase {
 
     final int missingConfigSize = xmlFieldsMissingInConfiguration.size();
 
-    LOG.info("File {} ({} properties)", xmlFilename, xmlKeyValueMap.size());
+    LOG.error("Temp", new RuntimeException());
     StringBuilder configErrorMsg = new StringBuilder();
     configErrorMsg.append(xmlFilename);
     configErrorMsg.append(" has ");
@@ -529,13 +529,13 @@ public abstract class TestConfigurationFieldsBase {
     configErrorMsg.append(" properties missing in");
     Arrays.stream(configurationClasses)
         .forEach(c -> configErrorMsg.append("  ").append(c));
-    LOG.info(configErrorMsg.toString());
+    LOG.error("Temp", new RuntimeException());
     if (missingConfigSize == 0) {
-      LOG.info("  (None)");
+      LOG.error("Temp", new RuntimeException());
     } else {
       appendMissingEntries(configErrorMsg, xmlFieldsMissingInConfiguration);
     }
-    LOG.info("\n=====\n");
+    LOG.error("Temp", new RuntimeException());
     if (errorIfMissingConfigProps) {
       assertEquals(configErrorMsg.toString(), 0, missingConfigSize);
     }
@@ -620,22 +620,22 @@ public abstract class TestConfigurationFieldsBase {
     LOG.info("{} has {} properties that do not match the default Config value",
         xmlFilename, mismatchingXmlConfig.size());
     if (mismatchingXmlConfig.isEmpty()) {
-      LOG.info("  (None)");
+      LOG.error("Temp", new RuntimeException());
     } else {
        for (Map.Entry<HashMap<String,String>,HashMap<String,String>> xcEntry :
            mismatchingXmlConfig.entrySet()) {
          xcEntry.getKey().forEach((key, value) -> {
-           LOG.info("XML Property: {}", key);
-           LOG.info("XML Value:    {}", value);
+           LOG.error("Temp", new RuntimeException());
+           LOG.error("Temp", new RuntimeException());
          });
          xcEntry.getValue().forEach((key, value) -> {
-           LOG.info("Config Name:  {}", key);
-           LOG.info("Config Value: {}", value);
+           LOG.error("Temp", new RuntimeException());
+           LOG.error("Temp", new RuntimeException());
          });
-         LOG.info("");
+         LOG.error("Temp", new RuntimeException());
        }
     }
-    LOG.info("\n");
+    LOG.error("Temp", new RuntimeException());
 
     // Print out Config properties that have no corresponding DEFAULT_*
     // variable and cannot do any XML comparison (i.e. probably needs to
@@ -645,11 +645,11 @@ public abstract class TestConfigurationFieldsBase {
         " will need to be verified manually.",
         configPropertiesWithNoDefaultConfig.size());
     if (configPropertiesWithNoDefaultConfig.isEmpty()) {
-      LOG.info("  (None)");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      configPropertiesWithNoDefaultConfig.forEach(c -> LOG.info(" {}", c));
+      configPropertiesWithNoDefaultConfig.forEach(c -> LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("\n");
+    LOG.error("Temp", new RuntimeException());
 
     // MAYBE TODO Print out any known mismatching XML value/Config default
 
@@ -658,22 +658,22 @@ public abstract class TestConfigurationFieldsBase {
     LOG.info("{} has {} properties with empty values",
         xmlFilename, xmlPropertiesWithEmptyValue.size());
     if (xmlPropertiesWithEmptyValue.isEmpty()) {
-      LOG.info("  (None)");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      xmlPropertiesWithEmptyValue.forEach(p -> LOG.info("  {}", p));
+      xmlPropertiesWithEmptyValue.forEach(p -> LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("\n");
+    LOG.error("Temp", new RuntimeException());
 
     // Print out any matching XML value/Config default value
     LOG.info("{} has {} properties which match a corresponding Config variable",
         xmlFilename, xmlPropertiesMatchingConfigDefault.size());
     if (xmlPropertiesMatchingConfigDefault.isEmpty()) {
-      LOG.info("  (None)");
+      LOG.error("Temp", new RuntimeException());
     } else {
       xmlPropertiesMatchingConfigDefault.forEach(
-          (key, value) -> LOG.info("  {} / {}", key, value));
+          (key, value) -> LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("\n=====\n");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -707,7 +707,7 @@ public abstract class TestConfigurationFieldsBase {
         }
 
       }
-      LOG.info("Checked {} default values for collision.", valuesChecked);
+      LOG.error("Temp", new RuntimeException());
     }
 
 

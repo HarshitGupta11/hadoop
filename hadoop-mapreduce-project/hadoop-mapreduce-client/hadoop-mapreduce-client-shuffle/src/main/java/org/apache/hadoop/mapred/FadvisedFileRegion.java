@@ -164,7 +164,7 @@ public class FadvisedFileRegion extends DefaultFileRegion {
         NativeIO.POSIX.getCacheManipulator().posixFadviseIfPossible(identifier,
             fd, getPosition(), getCount(), POSIX_FADV_DONTNEED);
       } catch (Throwable t) {
-        LOG.warn("Failed to manage OS cache for " + identifier, t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

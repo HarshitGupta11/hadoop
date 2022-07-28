@@ -346,7 +346,7 @@ public class EditLogFileInputStream extends EditLogInputStream {
       // layoutversion
       in.getVersion(verifyVersion);
     } catch (LogHeaderCorruptException e) {
-      LOG.warn("Log file " + file + " has no valid header", e);
+      LOG.error("Temp", new RuntimeException());
       return new FSEditLogLoader.EditLogValidation(0,
           HdfsServerConstants.INVALID_TXID, true);
     }

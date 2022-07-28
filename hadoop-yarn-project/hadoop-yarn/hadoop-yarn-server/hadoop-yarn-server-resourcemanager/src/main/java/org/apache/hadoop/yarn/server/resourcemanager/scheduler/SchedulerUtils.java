@@ -232,8 +232,8 @@ public class SchedulerUtils {
 
     String labelExp = resReq.getNodeLabelExpression();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Requested Node Label Expression : " + labelExp);
-      LOG.debug("Queue Info : " + queueInfo);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // if queue has default label expression, and RR doesn't have, use the
@@ -270,7 +270,7 @@ public class SchedulerUtils {
           || null == labelExp)) {
         String message = "NodeLabel is not enabled in cluster, but resource"
             + " request contains a label expression.";
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         if (!isRecovery) {
           throw new InvalidLabelResourceRequestException(
               "Invalid resource request, node label not enabled "
@@ -457,9 +457,9 @@ public class SchedulerUtils {
         availableRI.getUnits());
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Requested resource information: " + requestedRI);
-      LOG.debug("Available resource information: " + availableRI);
-      LOG.debug("Relation of units: " + unitsRelation);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // requested resource unit is less than available resource unit

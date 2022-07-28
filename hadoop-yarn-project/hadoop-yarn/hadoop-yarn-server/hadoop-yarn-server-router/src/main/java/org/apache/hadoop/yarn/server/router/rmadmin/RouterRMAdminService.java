@@ -106,7 +106,7 @@ public class RouterRMAdminService extends AbstractService
 
   @Override
   protected void serviceStart() throws Exception {
-    LOG.info("Starting Router RMAdmin Service");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = getConfig();
     YarnRPC rpc = YarnRPC.create(conf);
     UserGroupInformation.setConfiguration(conf);
@@ -146,7 +146,7 @@ public class RouterRMAdminService extends AbstractService
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping Router RMAdminService");
+    LOG.error("Temp", new RuntimeException());
     if (this.server != null) {
       this.server.stop();
     }
@@ -274,7 +274,7 @@ public class RouterRMAdminService extends AbstractService
       try {
         // We should init the pipeline instance after it is created and then
         // add to the map, to ensure thread safe.
-        LOG.info("Initializing request processing pipeline for user: {}", user);
+        LOG.error("Temp", new RuntimeException());
 
         RMAdminRequestInterceptor interceptorChain =
             this.createRequestInterceptorChain();

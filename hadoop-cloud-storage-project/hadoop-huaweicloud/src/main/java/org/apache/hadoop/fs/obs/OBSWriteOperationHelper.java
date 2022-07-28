@@ -127,7 +127,7 @@ class OBSWriteOperationHelper {
    * @param destKey object key
    */
   void writeSuccessful(final String destKey) {
-    LOG.debug("Finished write to {}", destKey);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -149,7 +149,7 @@ class OBSWriteOperationHelper {
    * @throws IOException IO problem
    */
   String initiateMultiPartUpload(final String destKey) throws IOException {
-    LOG.debug("Initiating Multipart upload");
+    LOG.error("Temp", new RuntimeException());
     final InitiateMultipartUploadRequest initiateMPURequest =
         new InitiateMultipartUploadRequest(bucket, destKey);
     initiateMPURequest.setAcl(owner.getCannedACL());
@@ -204,7 +204,7 @@ class OBSWriteOperationHelper {
    */
   void abortMultipartUpload(final String destKey, final String uploadId)
       throws ObsException {
-    LOG.debug("Aborting multipart upload {}", uploadId);
+    LOG.error("Temp", new RuntimeException());
     obs.abortMultipartUpload(
         new AbortMultipartUploadRequest(bucket, destKey, uploadId));
   }

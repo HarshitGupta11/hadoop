@@ -45,7 +45,7 @@ public class TestSwiftFileSystemExtendedContract extends SwiftFileSystemBaseTest
       in.close();
       fail("didn't expect to get here");
     } catch (FileNotFoundException fnfe) {
-      LOG.debug("Expected: " + fnfe, fnfe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

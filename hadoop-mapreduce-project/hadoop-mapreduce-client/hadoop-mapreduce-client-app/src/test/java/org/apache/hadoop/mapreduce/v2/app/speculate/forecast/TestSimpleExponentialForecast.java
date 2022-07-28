@@ -47,7 +47,7 @@ public class TestSimpleExponentialForecast {
     while(progress <= 1.0) {
       clock.tickMsec(clockTicks);
       forecaster.incorporateReading(clock.getTime(), progress);
-      LOG.info("progress: " + progress + " --> " + forecaster.toString());
+      LOG.error("Temp", new RuntimeException());
       progress += 0.005;
     }
 
@@ -68,7 +68,7 @@ public class TestSimpleExponentialForecast {
     while(progress <= 1.0) {
       clock.tickMsec(clockTicks);
       forecaster.incorporateReading(clock.getTime(), progress);
-      LOG.info("progress: " + progress + " --> " + forecaster.toString());
+      LOG.error("Temp", new RuntimeException());
       progress += progressRates[(int)(progress / 0.25)];
     }
 
@@ -89,7 +89,7 @@ public class TestSimpleExponentialForecast {
     while(progress <= 1.0) {
       clock.tickMsec(clockTicks);
       forecaster.incorporateReading(clock.getTime(), progress);
-      LOG.info("progress: " + progress + " --> " + forecaster.toString());
+      LOG.error("Temp", new RuntimeException());
       int currInd = progressInd++ > 1000 ? 4 : (int)(progress / 0.25);
       progress += progressRates[currInd];
     }

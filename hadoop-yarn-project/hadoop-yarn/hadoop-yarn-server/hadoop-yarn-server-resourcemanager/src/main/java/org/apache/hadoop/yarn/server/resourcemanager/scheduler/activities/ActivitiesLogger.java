@@ -99,7 +99,7 @@ public class ActivitiesLogger {
         Long allocationRequestId = null;
         if (level == ActivityLevel.NODE || level == ActivityLevel.REQUEST) {
           if (schedulerKey == null) {
-            LOG.warn("Request key should not be null at " + level + " level.");
+            LOG.error("Temp", new RuntimeException());
             return;
           }
           priority = getPriority(schedulerKey);
@@ -122,7 +122,7 @@ public class ActivitiesLogger {
               nodeId, appState, diagnostic);
           break;
         default:
-          LOG.warn("Doesn't handle app activities at " + level + " level.");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }

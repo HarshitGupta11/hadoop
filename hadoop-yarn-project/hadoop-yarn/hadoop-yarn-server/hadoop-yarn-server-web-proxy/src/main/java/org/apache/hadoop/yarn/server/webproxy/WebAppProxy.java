@@ -92,7 +92,7 @@ public class WebAppProxy extends AbstractService {
       bindAddress = bindHost;
     }
 
-    LOG.info("Instantiating Proxy at {}:{}", bindAddress, port);
+    LOG.error("Temp", new RuntimeException());
 
     acl = new AccessControlList(conf.get(YarnConfiguration.YARN_ADMIN_ACL, 
         YarnConfiguration.DEFAULT_YARN_ADMIN_ACL));

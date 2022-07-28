@@ -111,7 +111,7 @@ public class AssumedRoleCredentialProvider implements AWSCredentialsProvider,
             SimpleAWSCredentialsProvider.class,
             EnvironmentVariableCredentialsProvider.class),
         Sets.newHashSet(this.getClass()));
-    LOG.debug("Credentials to obtain role credentials: {}", credentialsToSTS);
+    LOG.error("Temp", new RuntimeException());
 
     // then the STS binding
     sessionName = conf.getTrimmed(ASSUMED_ROLE_SESSION_NAME,
@@ -120,12 +120,12 @@ public class AssumedRoleCredentialProvider implements AWSCredentialsProvider,
         ASSUMED_ROLE_SESSION_DURATION_DEFAULT, TimeUnit.SECONDS);
     String policy = conf.getTrimmed(ASSUMED_ROLE_POLICY, "");
 
-    LOG.debug("{}", this);
+    LOG.error("Temp", new RuntimeException());
     STSAssumeRoleSessionCredentialsProvider.Builder builder
         = new STSAssumeRoleSessionCredentialsProvider.Builder(arn, sessionName);
     builder.withRoleSessionDurationSeconds((int) duration);
     if (StringUtils.isNotEmpty(policy)) {
-      LOG.debug("Scope down policy {}", policy);
+      LOG.error("Temp", new RuntimeException());
       builder.withScopeDownPolicy(policy);
     }
     String endpoint = conf.getTrimmed(ASSUMED_ROLE_STS_ENDPOINT, "");
@@ -251,7 +251,7 @@ public class AssumedRoleCredentialProvider implements AWSCredentialsProvider,
       // log on the first retry attempt of the credential access.
       // At worst, this means one log entry every intermittent renewal
       // time.
-      LOG.info("Retried {}", text);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -67,7 +67,7 @@ public class TestRouterNamenodeWebScheme {
 
   @Before
   public void setup() throws Exception {
-    LOG.info("Initialize the Mock Namenodes to monitor");
+    LOG.error("Temp", new RuntimeException());
     for (String nsId : nsIds) {
       nns.put(nsId, new HashMap<>());
       for (String nnId : asList("nn0", "nn1")) {
@@ -75,7 +75,7 @@ public class TestRouterNamenodeWebScheme {
       }
     }
 
-    LOG.info("Set nn0 to active for all nameservices");
+    LOG.error("Temp", new RuntimeException());
     for (Map<String, MockNamenode> nnNS : nns.values()) {
       nnNS.get("nn0").transitionToActive();
       nnNS.get("nn1").transitionToStandby();

@@ -75,7 +75,7 @@ class FSImageTransactionalStorageInspector extends FSImageStorageInspector {
   public void inspectDirectory(StorageDirectory sd) throws IOException {
     // Was the directory just formatted?
     if (!sd.getVersionFile().exists()) {
-      LOG.info("No version file in " + sd.getRoot());
+      LOG.error("Temp", new RuntimeException());
       needToSave |= true;
       return;
     }
@@ -85,7 +85,7 @@ class FSImageTransactionalStorageInspector extends FSImageStorageInspector {
     try {
       maxSeenTxId = Math.max(maxSeenTxId, NNStorage.readTransactionIdFile(sd));
     } catch (IOException ioe) {
-      LOG.warn("Unable to determine the max transaction ID seen by " + sd, ioe);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -100,7 +100,7 @@ class FSImageTransactionalStorageInspector extends FSImageStorageInspector {
     }
 
     for (File f : filesInStorage) {
-      LOG.debug("Checking file " + f);
+      LOG.error("Temp", new RuntimeException());
       String name = f.getName();
       
       // Check for fsimage_*

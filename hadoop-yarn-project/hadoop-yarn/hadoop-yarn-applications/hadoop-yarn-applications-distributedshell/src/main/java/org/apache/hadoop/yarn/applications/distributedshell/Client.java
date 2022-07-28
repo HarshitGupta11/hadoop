@@ -273,7 +273,7 @@ public class Client {
     boolean result = false;
     try {
       Client client = new Client();
-      LOG.info("Initializing Client");
+      LOG.error("Temp", new RuntimeException());
       try {
         boolean doRun = client.init(args);
         if (!doRun) {
@@ -290,7 +290,7 @@ public class Client {
       System.exit(1);
     }
     if (result) {
-      LOG.info("Application completed successfully");
+      LOG.error("Temp", new RuntimeException());
       System.exit(0);
     } 
     LOG.error("Application failed to complete successfully");
@@ -454,7 +454,7 @@ public class Client {
       try {
         Log4jPropertyHelper.updateLog4jConfiguration(Client.class, log4jPath);
       } catch (Exception e) {
-        LOG.warn("Can not set up custom log4j properties. " + e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -473,7 +473,7 @@ public class Client {
     }
 
     if (cliParser.hasOption("keep_containers_across_application_attempts")) {
-      LOG.info("keep_containers_across_application_attempts");
+      LOG.error("Temp", new RuntimeException());
       keepContainers = true;
     }
 
@@ -677,7 +677,7 @@ public class Client {
    * @throws YarnException
    */
   public boolean run() throws IOException, YarnException {
-    LOG.info("Running Client");
+    LOG.error("Temp", new RuntimeException());
     isRunning.set(true);
     yarnClient.start();
     // set the client start time.
@@ -689,7 +689,7 @@ public class Client {
 
     List<NodeReport> clusterNodeReports = yarnClient.getNodeReports(
         NodeState.RUNNING);
-    LOG.info("Got Cluster node info from ASM");
+    LOG.error("Temp", new RuntimeException());
     for (NodeReport node : clusterNodeReports) {
       LOG.info("Got node report from ASM for"
           + ", nodeId=" + node.getNodeId() 
@@ -760,7 +760,7 @@ public class Client {
     // Memory ask has to be a multiple of min and less than max. 
     // Dump out information about cluster capability as seen by the resource manager
     long maxMem = appResponse.getMaximumResourceCapability().getMemorySize();
-    LOG.info("Max mem capability of resources in this cluster " + maxMem);
+    LOG.error("Temp", new RuntimeException());
 
     // A resource ask cannot exceed the max. 
     if (amMemory > maxMem) {
@@ -771,7 +771,7 @@ public class Client {
     }
 
     int maxVCores = appResponse.getMaximumResourceCapability().getVirtualCores();
-    LOG.info("Max virtual cores capability of resources in this cluster " + maxVCores);
+    LOG.error("Temp", new RuntimeException());
     
     if (amVCores > maxVCores) {
       LOG.info("AM virtual cores specified above max threshold of cluster. " 
@@ -819,7 +819,7 @@ public class Client {
     // In this scenario, the jar file for the application master is part of the local resources
     Map<String, LocalResource> localResources = new HashMap<String, LocalResource>();
 
-    LOG.info("Copy App Master jar from local filesystem and add to local environment");
+    LOG.error("Temp", new RuntimeException());
     // Copy the application master jar to the filesystem 
     // Create a local resource to point to the destination jar path 
     FileSystem fs = FileSystem.get(conf);
@@ -905,7 +905,7 @@ public class Client {
     //amContainer.setContainerTokens(containerToken);
 
     // Set the env variables to be setup in the env where the application master will be run
-    LOG.info("Set the environment for the application master");
+    LOG.error("Temp", new RuntimeException());
     Map<String, String> env = new HashMap<String, String>();
 
     // put location of shell script into env
@@ -947,7 +947,7 @@ public class Client {
     Vector<CharSequence> vargs = new Vector<CharSequence>(30);
 
     // Set java executable command 
-    LOG.info("Setting up app master command");
+    LOG.error("Temp", new RuntimeException());
     // Need extra quote here because JAVA_HOME might contain space on Windows,
     // e.g. C:/Program Files/Java...
     vargs.add("\"" + Environment.JAVA_HOME.$$() + "/bin/java\"");
@@ -984,7 +984,7 @@ public class Client {
       // Encode the spec to avoid passing special chars via shell arguments.
       String encodedSpec = Base64.getEncoder()
           .encodeToString(placementSpec.getBytes(StandardCharsets.UTF_8));
-      LOG.info("Encode placement spec: " + encodedSpec);
+      LOG.error("Temp", new RuntimeException());
       vargs.add("--placement_spec " + encodedSpec);
     }
     if (null != nodeLabelExpression) {
@@ -1019,7 +1019,7 @@ public class Client {
       command.append(str).append(" ");
     }
 
-    LOG.info("Completed setting up app master command " + command.toString());
+    LOG.error("Temp", new RuntimeException());
     List<String> commands = new ArrayList<String>();
     commands.add(command.toString());
 
@@ -1047,7 +1047,7 @@ public class Client {
           fs.addDelegationTokens(tokenRenewer, rmCredentials);
       if (tokens != null) {
         for (Token<?> token : tokens) {
-          LOG.info("Got dt for " + fs.getUri() + "; " + token);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -1088,7 +1088,7 @@ public class Client {
     // SubmitApplicationResponse submitResp = applicationsManager.submitApplication(appRequest);
     // Ignore the response as either a valid response object is returned on success 
     // or an exception thrown to denote some form of a failure
-    LOG.info("Submitting application to ASM");
+    LOG.error("Temp", new RuntimeException());
 
     yarnClient.submitApplication(appContext);
 
@@ -1131,7 +1131,7 @@ public class Client {
         }
         needForceKill = stopSignalReceived.get();
       } catch (InterruptedException e) {
-        LOG.warn("Thread sleep in monitoring loop interrupted");
+        LOG.error("Temp", new RuntimeException());
         // if the application is to be killed when client times out;
         // then set needForceKill to true
         break;
@@ -1247,7 +1247,7 @@ public class Client {
         ApplicationMaster.getRelativePath(appName, appId, fileDstPath);
     Path dst =
         new Path(fs.getHomeDirectory(), relativePath);
-    LOG.info("Uploading file: " + fileSrcPath + " to " + dst);
+    LOG.error("Temp", new RuntimeException());
     fs.copyFromLocalFile(new Path(fileSrcPath), dst);
   }
 
@@ -1337,7 +1337,7 @@ public class Client {
     capability.setVirtualCores(amVCores);
     appContext.getAMContainerResourceRequests().get(0).setCapability(
         capability);
-    LOG.warn("AM Resource capability=" + capability);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void setContainerResources(Map<String, Resource> profiles,
@@ -1407,13 +1407,13 @@ public class Client {
 
   @VisibleForTesting
   protected void sendStopSignal() {
-    LOG.info("Sending stop Signal to Client");
+    LOG.error("Temp", new RuntimeException());
     stopSignalReceived.set(true);
     synchronized (objectLock) {
       objectLock.notifyAll();
     }
     int waitCount = 0;
-    LOG.info("Waiting for Client to exit loop");
+    LOG.error("Temp", new RuntimeException());
     while (isRunning.get()) {
       try {
         Thread.sleep(50);
@@ -1425,8 +1425,8 @@ public class Client {
         }
       }
     }
-    LOG.info("Stopping yarnClient within the DS Client");
+    LOG.error("Temp", new RuntimeException());
     yarnClient.stop();
-    LOG.info("done stopping Client");
+    LOG.error("Temp", new RuntimeException());
   }
 }

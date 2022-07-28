@@ -291,7 +291,7 @@ public class TestFSRMStateStore extends RMStateStoreTestBase {
       FileStatus stat = fs.getFileStatus(p);
       if (!stat.isDirectory()) {
         try {
-          LOG.warn("\n\n ##Testing path [" + p + "]\n\n");
+          LOG.error("Temp", new RuntimeException());
           fs.open(p);
           Assert.fail("Super user should not be able to read ["+ UserGroupInformation.getCurrentUser() + "] [" + p.getName() + "]");
         } catch (AccessControlException e) {

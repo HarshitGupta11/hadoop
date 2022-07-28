@@ -55,7 +55,7 @@ public class TestDFSStartupVersions {
     if (testCase != null) {
       testCaseLine = " testCase="+testCase;
     }
-    LOG.info("============================================================");
+    LOG.error("Temp", new RuntimeException());
     LOG.info("***TEST*** " + label + ":"
              + testCaseLine
              + " nodeType="+nodeType
@@ -187,17 +187,17 @@ public class TestDFSStartupVersions {
     final StorageInfo datanodeVer = datanodeSd.storageInfo;
     // check #0
     if (namenodeVer.getNamespaceID() != datanodeVer.getNamespaceID()) {
-      LOG.info("namespaceIDs are not equal: isVersionCompatible=false");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     // check #1
     if (!namenodeVer.getClusterID().equals(datanodeVer.getClusterID())) {
-      LOG.info("clusterIDs are not equal: isVersionCompatible=false");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     // check #2
     if (!namenodeSd.blockPoolId.equals(datanodeSd.blockPoolId)) {
-      LOG.info("blockPoolIDs are not equal: isVersionCompatible=false");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     // check #3
@@ -206,7 +206,7 @@ public class TestDFSStartupVersions {
     if (softwareLV == storedLV &&  
         datanodeVer.getCTime() == namenodeVer.getCTime()) 
       {
-        LOG.info("layoutVersions and cTimes are equal: isVersionCompatible=true");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     // check #4
@@ -216,11 +216,11 @@ public class TestDFSStartupVersions {
         (softwareLV == storedLV &&
          datanodeVer.getCTime() < namenodeVer.getCTime())) 
       {
-        LOG.info("softwareLayoutVersion is newer OR namenode cTime is newer: isVersionCompatible=true");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     // check #5
-    LOG.info("default case: isVersionCompatible=false");
+    LOG.error("Temp", new RuntimeException());
     return false;
   }
   
@@ -282,7 +282,7 @@ public class TestDFSStartupVersions {
   
   @After
   public void tearDown() throws Exception {
-    LOG.info("Shutting down MiniDFSCluster");
+    LOG.error("Temp", new RuntimeException());
     if (cluster != null) {
       cluster.shutdown();
       cluster = null;

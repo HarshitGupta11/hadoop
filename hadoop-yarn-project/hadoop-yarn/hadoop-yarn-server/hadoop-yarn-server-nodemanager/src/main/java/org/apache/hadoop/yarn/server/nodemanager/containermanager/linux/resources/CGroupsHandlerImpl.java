@@ -159,7 +159,7 @@ class CGroupsHandlerImpl implements CGroupsHandler {
       // find cgroup controller paths
       cPaths = initializeControllerPathsFromMtab(newMtab);
     } catch (IOException e) {
-      LOG.warn("Failed to initialize controller paths! Exception: " + e);
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException(
           "Failed to initialize controller paths!");
     }
@@ -241,7 +241,7 @@ class CGroupsHandlerImpl implements CGroupsHandler {
         throw new IOException("Error while reading " + mtab, e);
       } else {
         // Ignore the error, if we are running on an os other than Linux
-        LOG.warn("Error while reading " + mtab, e);
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       IOUtils.cleanupWithLogger(LOG, in);
@@ -320,7 +320,7 @@ class CGroupsHandlerImpl implements CGroupsHandler {
         rwLock.writeLock().unlock();
       }
     } else {
-      LOG.info("CGroup controller already mounted at: " + existingMountPath);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -457,7 +457,7 @@ class CGroupsHandlerImpl implements CGroupsHandler {
   public String createCGroup(CGroupController controller, String cGroupId)
       throws ResourceHandlerException {
     String path = getPathForCGroup(controller, cGroupId);
-    LOG.debug("createCgroup: {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     if (!new File(path).mkdir()) {
       throw new ResourceHandlerException("Failed to create cgroup at " + path);
@@ -477,10 +477,10 @@ class CGroupsHandlerImpl implements CGroupsHandler {
               + "/tasks"), "UTF-8"))) {
         str = inl.readLine();
         if (str != null) {
-          LOG.debug("First line in cgroup tasks file: {} {}", cgf, str);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException e) {
-        LOG.warn("Failed to read cgroup tasks file. ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -505,13 +505,13 @@ class CGroupsHandlerImpl implements CGroupsHandler {
           Thread.sleep(deleteCGroupDelay);
           deleted = cgf.delete();
           if (!deleted) {
-            LOG.warn("Failed attempt to delete cgroup: " + cgf);
+            LOG.error("Temp", new RuntimeException());
           }
         } else{
           logLineFromTasksFile(cgf);
         }
       } catch (IOException e) {
-        LOG.warn("Failed to read cgroup tasks file. ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       LOG.info("Parent Cgroups directory {} does not exist. Skipping "
@@ -527,7 +527,7 @@ class CGroupsHandlerImpl implements CGroupsHandler {
     boolean deleted = false;
     String cGroupPath = getPathForCGroup(controller, cGroupId);
 
-    LOG.debug("deleteCGroup: {}", cGroupPath);
+    LOG.error("Temp", new RuntimeException());
 
     long start = clock.getTime();
 

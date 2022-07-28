@@ -173,7 +173,7 @@ public class ContainersLauncher extends AbstractService
         ContainerLaunch runningContainer = running.get(containerId);
         if (runningContainer == null) {
           // Container not launched. So nothing needs to be done.
-          LOG.info("Container " + containerId + " not running, nothing to signal.");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
 

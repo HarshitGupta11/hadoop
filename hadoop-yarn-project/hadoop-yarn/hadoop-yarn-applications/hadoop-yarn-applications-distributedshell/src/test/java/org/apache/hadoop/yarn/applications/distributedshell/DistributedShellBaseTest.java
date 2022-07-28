@@ -325,12 +325,12 @@ public abstract class DistributedShellBaseTest {
     String[] domainArgs = appendDomainArgsForTestDSShell(baseArgs, haveDomain);
     String[] args = appendFlowArgsForTestDSShell(domainArgs, defaultFlow);
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     YarnClient yarnClient;
     dsClient = setAndGetDSClient(new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = dsClient.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     final AtomicBoolean result = new AtomicBoolean(false);
     Thread t = new Thread(() -> {
       try {

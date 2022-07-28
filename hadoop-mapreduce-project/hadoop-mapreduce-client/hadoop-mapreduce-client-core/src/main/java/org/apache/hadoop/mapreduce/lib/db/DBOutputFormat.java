@@ -102,7 +102,7 @@ extends OutputFormat<K,V> {
           connection.rollback();
         }
         catch (SQLException ex) {
-          LOG.warn(StringUtils.stringifyException(ex));
+          LOG.error("Temp", new RuntimeException());
         }
         throw new IOException(e.getMessage());
       } finally {

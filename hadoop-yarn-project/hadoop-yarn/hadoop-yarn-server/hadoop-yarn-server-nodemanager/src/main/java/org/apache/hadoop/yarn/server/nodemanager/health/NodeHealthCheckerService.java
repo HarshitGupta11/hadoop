@@ -111,7 +111,7 @@ public class NodeHealthCheckerService extends CompositeService
         reporters.add((HealthReporter) service);
         addService(service);
       } else {
-        LOG.debug("Omitting duplicate service: {}.", service.getName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

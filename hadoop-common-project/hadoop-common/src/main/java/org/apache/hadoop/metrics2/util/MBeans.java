@@ -97,7 +97,7 @@ public final class MBeans {
     if (name != null) {
       try {
         mbs.registerMBean(theMbean, name);
-        LOG.debug("Registered " + name);
+        LOG.error("Temp", new RuntimeException());
         return name;
       } catch (InstanceAlreadyExistsException iaee) {
         if (LOG.isTraceEnabled()) {
@@ -107,7 +107,7 @@ public final class MBeans {
               + "\": Instance already exists.");
         }
       } catch (Exception e) {
-        LOG.warn("Failed to register MBean \"" + name + "\"", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return null;
@@ -134,16 +134,16 @@ public final class MBeans {
   }
 
   static public void unregister(ObjectName mbeanName) {
-    LOG.debug("Unregistering "+ mbeanName);
+    LOG.error("Temp", new RuntimeException());
     final MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
     if (mbeanName == null) {
-      LOG.debug("Stacktrace: ", new Throwable());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     try {
       mbs.unregisterMBean(mbeanName);
     } catch (Exception e) {
-      LOG.warn("Error unregistering "+ mbeanName, e);
+      LOG.error("Temp", new RuntimeException());
     }
     DefaultMetricsSystem.removeMBeanName(mbeanName);
   }
@@ -163,7 +163,7 @@ public final class MBeans {
     try {
       return DefaultMetricsSystem.newMBeanName(nameStr);
     } catch (Exception e) {
-      LOG.warn("Error creating MBean object name: "+ nameStr, e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

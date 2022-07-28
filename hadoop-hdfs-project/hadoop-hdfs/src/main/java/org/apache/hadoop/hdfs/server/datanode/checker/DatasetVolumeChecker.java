@@ -205,7 +205,7 @@ public class DatasetVolumeChecker {
         dataset.getFsVolumeReferences();
 
     if (references.size() == 0) {
-      LOG.warn("checkAllVolumesAsync - no volumes can be referenced");
+      LOG.error("Temp", new RuntimeException());
       return Collections.emptySet();
     }
 
@@ -221,7 +221,7 @@ public class DatasetVolumeChecker {
       final FsVolumeReference reference = references.getReference(i);
       Optional<ListenableFuture<VolumeCheckResult>> olf =
           delegateChecker.schedule(reference.getVolume(), IGNORED_CONTEXT);
-      LOG.info("Scheduled health check for volume {}", reference.getVolume());
+      LOG.error("Temp", new RuntimeException());
       if (olf.isPresent()) {
         allVolumes.add(reference.getVolume());
         Futures.addCallback(olf.get(),
@@ -288,7 +288,7 @@ public class DatasetVolumeChecker {
       final FsVolumeSpi volume,
       Callback callback) {
     if (volume == null) {
-      LOG.debug("Cannot schedule check on null volume");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -363,7 +363,7 @@ public class DatasetVolumeChecker {
         switch(result) {
         case HEALTHY:
         case DEGRADED:
-          LOG.debug("Volume {} is {}.", reference.getVolume(), result);
+          LOG.error("Temp", new RuntimeException());
           markHealthy();
           break;
         case FAILED:
@@ -416,7 +416,7 @@ public class DatasetVolumeChecker {
         }
       } catch(Exception e) {
         // Propagating this exception is unlikely to be helpful.
-        LOG.warn("Unexpected exception", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -431,7 +431,7 @@ public class DatasetVolumeChecker {
     try {
       delegateChecker.shutdownAndWait(gracePeriod, timeUnit);
     } catch (InterruptedException e) {
-      LOG.warn("DatasetVolumeChecker interrupted during shutdown.");
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
     }
   }

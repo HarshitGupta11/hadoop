@@ -169,7 +169,7 @@ public class FieldSelectionMapReduce<K, V>
     this.reduceOutputKeyValueSpec = job.get(
         FieldSelectionHelper.REDUCE_OUTPUT_KEY_VALUE_SPEC, "0-:");
     parseOutputKeyValueSpec();
-    LOG.info(specToString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void close() throws IOException {

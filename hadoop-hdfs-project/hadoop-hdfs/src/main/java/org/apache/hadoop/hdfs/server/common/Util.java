@@ -97,7 +97,7 @@ public final class Util {
 
     // if URI is null or scheme is undefined, then assume it's file://
     if(u == null || u.getScheme() == null){
-      LOG.info("Assuming 'file' scheme for path " + s + " in configuration.");
+      LOG.error("Temp", new RuntimeException());
       u = fileAsURI(new File(s));
     }
     return u;
@@ -241,7 +241,7 @@ public final class Util {
             outputStreams.add(fos);
             streamPathMap.put(fos, f);
           } catch (IOException ioe) {
-            LOG.warn("Unable to download file " + f, ioe);
+            LOG.error("Temp", new RuntimeException());
             // This will be null if we're downloading the fsimage to a file
             // outside of an NNStorage directory.
             if (dstStorage != null &&
@@ -311,7 +311,7 @@ public final class Util {
     }
     xferStats.insert(0, String.format("Combined time for file download and" +
         " fsync to all disks took %.2fs.", xferCombined));
-    LOG.info(xferStats.toString());
+    LOG.error("Temp", new RuntimeException());
 
     if (digester != null) {
       MD5Hash computedDigest = new MD5Hash(digester.digest());
@@ -334,10 +334,10 @@ public final class Util {
       return;
     }
 
-    LOG.info("Deleting temporary files: " + files);
+    LOG.error("Temp", new RuntimeException());
     for (File file : files) {
       if (!file.delete()) {
-        LOG.warn("Deleting " + file + " has failed");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

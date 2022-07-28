@@ -122,7 +122,7 @@ public class TestParentQueue {
     
     conf.setCapacity(Q_B, 70);
     
-    LOG.info("Setup top-level queues a and b");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void setupSingleLevelQueuesWithAbsoluteResource(
@@ -137,7 +137,7 @@ public class TestParentQueue {
     conf.setMinimumResourceRequirement("", Q_B,
         QUEUE_B_RESOURCE);
 
-    LOG.info("Setup top-level queues a and b with absolute resource");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private FiCaSchedulerApp getMockApplication(int appId, String user) {
@@ -607,7 +607,7 @@ public class TestParentQueue {
     // A = 1/3, B = 6/15, C = 3/6, D=0/6
     // Ensure a1 won't alloc above max-cap although it should get 
     // scheduling opportunity now, right after a2
-    LOG.info("here");
+    LOG.error("Temp", new RuntimeException());
     ((ParentQueue)a).setMaxCapacity(.1f);  // a should be capped at 3/30
     stubQueueAllocation(a1, clusterResource, node_2, 1*GB); // shouldn't be 
                                                             // allocated due 

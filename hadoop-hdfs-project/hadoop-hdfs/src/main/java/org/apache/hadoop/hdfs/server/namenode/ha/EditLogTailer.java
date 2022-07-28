@@ -271,7 +271,7 @@ public class EditLogTailer {
     try {
       tailerThread.join();
     } catch (InterruptedException e) {
-      LOG.warn("Edit log tailer thread exited with an exception");
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(e);
     } finally {
       rollEditsRpcExecutor.shutdown();
@@ -333,7 +333,7 @@ public class EditLogTailer {
       long lastTxnId = image.getLastAppliedTxId();
       
       if (LOG.isDebugEnabled()) {
-        LOG.debug("lastTxnId: " + lastTxnId);
+        LOG.error("Temp", new RuntimeException());
       }
       Collection<EditLogInputStream> streams;
       long startTime = Time.monotonicNow();
@@ -352,7 +352,7 @@ public class EditLogTailer {
             Time.monotonicNow() - startTime);
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug("edit streams to load from: " + streams.size());
+        LOG.error("Temp", new RuntimeException());
       }
       
       // Once we have streams to load, errors encountered are legitimate cause
@@ -418,7 +418,7 @@ public class EditLogTailer {
    */
   @VisibleForTesting
   void triggerActiveLogRoll() {
-    LOG.info("Triggering log roll on remote NameNode");
+    LOG.error("Temp", new RuntimeException());
     Future<Void> future = null;
     try {
       future = rollEditsRpcExecutor.submit(getNameNodeProxy());
@@ -426,7 +426,7 @@ public class EditLogTailer {
       lastRollTimeMs = monotonicNow();
       lastRollTriggerTxId = lastLoadedTxnId;
     } catch (ExecutionException e) {
-      LOG.warn("Unable to trigger a roll of the active NN", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (TimeoutException e) {
       if (future != null) {
         future.cancel(true);
@@ -434,7 +434,7 @@ public class EditLogTailer {
       LOG.warn(String.format(
           "Unable to finish rolling edits in %d ms", rollEditsTimeoutMs));
     } catch (InterruptedException e) {
-      LOG.warn("Unable to trigger a roll of the active NN", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -512,7 +512,7 @@ public class EditLogTailer {
             namesystem.getFSImage().getStorage().updateNameDirSize();
           }
         } catch (EditLogInputException elie) {
-          LOG.warn("Error while reading edits from disk. Will try again.", elie);
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException ie) {
           // interrupter should have already set shouldRun to false
           continue;
@@ -535,7 +535,7 @@ public class EditLogTailer {
           }
           EditLogTailer.this.sleep(currentSleepTimeMs);
         } catch (InterruptedException e) {
-          LOG.warn("Edit log tailer interrupted: {}", e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -601,7 +601,7 @@ public class EditLogTailer {
             cachedActiveProxy = new NamenodeProtocolTranslatorPB(proxy);
             break;
           } catch (IOException e) {
-            LOG.info("Failed to reach " + currentNN, e);
+            LOG.error("Temp", new RuntimeException());
             // couldn't even reach this NN, try the next one
             nnLoopCount++;
           }

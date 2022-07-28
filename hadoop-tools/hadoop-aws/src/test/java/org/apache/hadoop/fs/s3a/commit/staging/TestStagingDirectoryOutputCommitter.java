@@ -187,7 +187,7 @@ public class TestStagingDirectoryOutputCommitter
         FS_S3A_COMMITTER_STAGING_CONFLICT_MODE);
     String sourceStr = Arrays.stream(sources)
         .collect(Collectors.joining(","));
-    LOG.info("source of conflict mode {}", sourceStr);
+    LOG.error("Temp", new RuntimeException());
     String baseConfVal = baseConf
         .getTrimmed(FS_S3A_COMMITTER_STAGING_CONFLICT_MODE);
     assertEquals("conflict mode in core config from " + sourceStr,

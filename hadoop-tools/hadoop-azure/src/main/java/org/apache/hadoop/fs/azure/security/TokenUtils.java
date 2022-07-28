@@ -51,7 +51,7 @@ public final class TokenUtils {
     String urlString = (String) m.get(URL_STRING);
     if (urlString != null) {
       final Token<DelegationTokenIdentifier> token = new Token<>();
-      LOG.debug("Read url string param - {}", urlString);
+      LOG.error("Temp", new RuntimeException());
       token.decodeFromUrlString(urlString);
       return token;
     }

@@ -75,7 +75,7 @@ public class TimelineCollectorManager extends CompositeService {
     String timelineWriterClassName = conf.get(
         YarnConfiguration.TIMELINE_SERVICE_WRITER_CLASS,
             YarnConfiguration.DEFAULT_TIMELINE_SERVICE_WRITER_CLASS);
-    LOG.info("Using TimelineWriter: " + timelineWriterClassName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> timelineWriterClazz = Class.forName(timelineWriterClassName);
       if (TimelineWriter.class.isAssignableFrom(timelineWriterClazz)) {
@@ -139,14 +139,14 @@ public class TimelineCollectorManager extends CompositeService {
           collector.setWriter(writer);
           collector.start();
           collectors.put(appId, collector);
-          LOG.info("the collector for " + appId + " was added");
+          LOG.error("Temp", new RuntimeException());
           collectorInTable = collector;
           postPut(appId, collectorInTable);
         } catch (Exception e) {
           throw new YarnRuntimeException(e);
         }
       } else {
-        LOG.info("the collector for " + appId + " already exists!");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return collectorInTable;
@@ -189,7 +189,7 @@ public class TimelineCollectorManager extends CompositeService {
         // stop the service to do clean up
         collector.stop();
       }
-      LOG.info("The collector service for " + appId + " was removed");
+      LOG.error("Temp", new RuntimeException());
     }
     return collector != null;
   }

@@ -104,7 +104,7 @@ public final class MultiObjectDeleteSupport extends AbstractStoreOperation {
               ? (" (" + error.getVersionId() + ")")
               : ""),
           error.getMessage());
-      LOG.warn(item);
+      LOG.error("Temp", new RuntimeException());
       result.append(item);
       if (exitCode == null || exitCode.isEmpty() || ACCESS_DENIED.equals(code)) {
         exitCode = code;
@@ -238,17 +238,17 @@ public final class MultiObjectDeleteSupport extends AbstractStoreOperation {
           }
         }
         if (toDelete) {
-          LOG.debug("Removing deleted object from S3Guard Store {}", path);
+          LOG.error("Temp", new RuntimeException());
           metadataStore.delete(path, operationState);
         } else {
-          LOG.debug("Retaining S3Guard directory entry {}", path);
+          LOG.error("Temp", new RuntimeException());
           retainedMarkers.add(path);
         }
       } catch (IOException e) {
         // trouble: we failed to delete the far end entry
         // try with the next one.
         // if this is a big network failure, this is going to be noisy.
-        LOG.warn("Failed to update S3Guard store with deletion of {}", path);
+        LOG.error("Temp", new RuntimeException());
         failures.add(Pair.of(path, e));
       }
       // irrespective of the S3Guard outcome, it is declared as deleted, as
@@ -256,7 +256,7 @@ public final class MultiObjectDeleteSupport extends AbstractStoreOperation {
       deletedPaths.add(path);
     });
     if (LOG.isDebugEnabled()) {
-      undeleted.forEach(p -> LOG.debug("Deleted {}", p));
+      undeleted.forEach(p -> LOG.error("Temp", new RuntimeException());
     }
     return Triple.of(undeletedPaths, deletedPaths, failures);
   }

@@ -108,7 +108,7 @@ public class ContainerLogsUtils {
       File logFile = new File(logPathURI.getPath());
       return logFile;
     } catch (IOException e) {
-      LOG.warn("Failed to find log file", e);
+      LOG.error("Temp", new RuntimeException());
       throw new NotFoundException("Cannot find this log on the local disk.");
     }
   }

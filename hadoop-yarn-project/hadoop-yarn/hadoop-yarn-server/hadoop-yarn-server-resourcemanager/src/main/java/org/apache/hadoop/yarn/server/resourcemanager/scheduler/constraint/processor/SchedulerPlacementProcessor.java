@@ -45,7 +45,7 @@ public class SchedulerPlacementProcessor extends AbstractPlacementProcessor {
             + scheduler.getClass().getCanonicalName()
             + " cannot handle placement constraints, rejecting this "
             + "allocate operation";
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnException(message);
       }
     }

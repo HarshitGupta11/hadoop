@@ -408,7 +408,7 @@ public class Invoker {
     do {
       try {
         if (retryCount > 0) {
-          LOG.debug("retry #{}", retryCount);
+          LOG.error("Temp", new RuntimeException());
         }
         // execute the operation, returning if successful
         return operation.apply();
@@ -454,7 +454,7 @@ public class Invoker {
       } catch (Exception e) {
         // The retry policy raised an exception
         // log that something happened
-        LOG.warn("{}: exception in retry processing", text, e);
+        LOG.error("Temp", new RuntimeException());
         // and fail the execution with the last execution exception.
         shouldRetry = false;
       }
@@ -481,7 +481,7 @@ public class Invoker {
     try {
       once(action, path, operation);
     } catch (Exception e) {
-      LOG.debug("Action {} failed", action, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -501,7 +501,7 @@ public class Invoker {
     try {
       return Optional.of(once(action, path, operation));
     } catch (Exception e) {
-      LOG.debug("Action {} failed", action, e);
+      LOG.error("Temp", new RuntimeException());
       return Optional.empty();
     }
   }
@@ -559,10 +559,10 @@ public class Invoker {
         IOException exception,
         int retries,
         boolean idempotent) {
-      LOG.debug("{}: " + exception, text);
+      LOG.error("Temp", new RuntimeException());
       if (retries == 1) {
         // stack on first attempt, to keep noise down
-        LOG.debug("{}: " + exception, text, exception);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   };

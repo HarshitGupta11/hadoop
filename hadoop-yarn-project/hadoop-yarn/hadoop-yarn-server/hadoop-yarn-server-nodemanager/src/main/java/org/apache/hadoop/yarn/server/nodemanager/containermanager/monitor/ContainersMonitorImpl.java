@@ -161,7 +161,7 @@ public class ContainersMonitorImpl extends AbstractService implements
     processTreeClass = this.conf.getClass(
             YarnConfiguration.NM_CONTAINER_MON_PROCESS_TREE, null,
             ResourceCalculatorProcessTree.class);
-    LOG.info("Using ResourceCalculatorProcessTree: {}", this.processTreeClass);
+    LOG.error("Temp", new RuntimeException());
 
     this.containerMetricsEnabled =
         this.conf.getBoolean(YarnConfiguration.NM_CONTAINER_METRICS_ENABLE,
@@ -205,10 +205,10 @@ public class ContainersMonitorImpl extends AbstractService implements
     strictMemoryEnforcement = conf.getBoolean(
         YarnConfiguration.NM_MEMORY_RESOURCE_ENFORCED,
         YarnConfiguration.DEFAULT_NM_MEMORY_RESOURCE_ENFORCED);
-    LOG.info("Physical memory check enabled: {}", pmemCheckEnabled);
-    LOG.info("Virtual memory check enabled: {}", vmemCheckEnabled);
-    LOG.info("Elastic memory control enabled: {}", elasticMemoryEnforcement);
-    LOG.info("Strict memory control enabled: {}", strictMemoryEnforcement);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     if (elasticMemoryEnforcement) {
       if (!CGroupElasticMemoryController.isAvailable()) {
@@ -233,12 +233,12 @@ public class ContainersMonitorImpl extends AbstractService implements
 
     containersMonitorEnabled =
         isContainerMonitorEnabled() && monitoringInterval > 0;
-    LOG.info("ContainersMonitor enabled: {}", containersMonitorEnabled);
+    LOG.error("Temp", new RuntimeException());
 
     logMonitorEnabled =
             conf.getBoolean(YarnConfiguration.NM_CONTAINER_LOG_MONITOR_ENABLED,
                     YarnConfiguration.DEFAULT_NM_CONTAINER_LOG_MONITOR_ENABLED);
-    LOG.info("Container Log Monitor Enabled: "+ logMonitorEnabled);
+    LOG.error("Temp", new RuntimeException());
 
     nodeCpuPercentageForYARN =
         NodeManagerHardwareUtils.getNodeCpuPercentage(this.conf);
@@ -324,7 +324,7 @@ public class ContainersMonitorImpl extends AbstractService implements
       try {
         this.monitoringThread.join();
       } catch (InterruptedException e) {
-        LOG.info("ContainersMonitorImpl monitoring thread interrupted");
+        LOG.error("Temp", new RuntimeException());
       }
       if (this.oomListenerThread != null) {
         this.oomListenerThread.stopListening();
@@ -505,7 +505,7 @@ public class ContainersMonitorImpl extends AbstractService implements
             tmp.append(" ");
           }
           tmp.append("]");
-          LOG.debug("Current ProcessTree list : {}", tmp);
+          LOG.error("Temp", new RuntimeException());
         }
 
         // Temporary structure to calculate the total resource utilization of
@@ -619,7 +619,7 @@ public class ContainersMonitorImpl extends AbstractService implements
         if (pId != null) {
           // pId will be null, either if the container is not spawned yet
           // or if the container's pid is removed from ContainerExecutor
-          LOG.debug("Tracking ProcessTree {} for the first time", pId);
+          LOG.error("Temp", new RuntimeException());
           ResourceCalculatorProcessTree pt =
               getResourceCalculatorProcessTree(pId);
           ptInfo.setPid(pId);
@@ -649,7 +649,7 @@ public class ContainersMonitorImpl extends AbstractService implements
             String exposedPorts = containerExecutor.getExposedPorts(container);
             container.setExposedPorts(exposedPorts);
           } else {
-            LOG.info("{} is missing. Not setting ip and hostname", containerId);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -793,7 +793,7 @@ public class ContainersMonitorImpl extends AbstractService implements
         // Virtual or physical memory over limit. Fail the container and
         // remove
         // the corresponding process tree
-        LOG.warn(msg);
+        LOG.error("Temp", new RuntimeException());
         // warn if not a leader
         if (!pTree.checkPidPgrpidForMatch()) {
           LOG.error("Killed container process with PID {} "
@@ -803,7 +803,7 @@ public class ContainersMonitorImpl extends AbstractService implements
         eventDispatcher.getEventHandler().handle(
                 new ContainerKillEvent(containerId,
                       containerExitStatus, msg));
-        LOG.info("Removed ProcessTree with root {}", pId);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -825,7 +825,7 @@ public class ContainersMonitorImpl extends AbstractService implements
                   currentPmemUsage, cpuUsagePercentPerCore);
         }
       } else {
-        LOG.info("{} does not exist to report", containerId);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -913,11 +913,11 @@ public class ContainersMonitorImpl extends AbstractService implements
               }
               if (killMsg != null
                   && trackingContainers.remove(containerId) != null) {
-                LOG.warn(killMsg);
+                LOG.error("Temp", new RuntimeException());
                 eventDispatcher.getEventHandler().handle(
                     new ContainerKillEvent(containerId,
                         ContainerExitStatus.KILLED_FOR_EXCESS_LOGS, killMsg));
-                LOG.info("Removed ProcessTree with root " + ptInfo.getPID());
+                LOG.error("Temp", new RuntimeException());
                 break;
               }
             }
@@ -1017,7 +1017,7 @@ public class ContainersMonitorImpl extends AbstractService implements
 
   @Override
   public void setAllocatedResourcesForContainers(final Resource resource) {
-    LOG.info("Setting the resources allocated to containers to {}", resource);
+    LOG.error("Temp", new RuntimeException());
     this.maxVCoresAllottedForContainers = resource.getVirtualCores();
     this.maxPmemAllottedForContainers = convertMBytesToBytes(
         resource.getMemorySize());
@@ -1088,7 +1088,7 @@ public class ContainersMonitorImpl extends AbstractService implements
             containerId);
         return;
       }
-      LOG.info("Changing resource-monitoring for {}", containerId);
+      LOG.error("Temp", new RuntimeException());
       updateContainerMetrics(monitoringEvent);
       Resource resource = changeEvent.getResource();
       long pmemLimit = convertMBytesToBytes(resource.getMemorySize());
@@ -1100,7 +1100,7 @@ public class ContainersMonitorImpl extends AbstractService implements
 
   private void onStopMonitoringContainer(
       ContainersMonitorEvent monitoringEvent, ContainerId containerId) {
-    LOG.info("Stopping resource-monitoring for {}", containerId);
+    LOG.error("Temp", new RuntimeException());
     updateContainerMetrics(monitoringEvent);
     trackingContainers.remove(containerId);
   }
@@ -1109,7 +1109,7 @@ public class ContainersMonitorImpl extends AbstractService implements
       ContainersMonitorEvent monitoringEvent, ContainerId containerId) {
     ContainerStartMonitoringEvent startEvent =
         (ContainerStartMonitoringEvent) monitoringEvent;
-    LOG.info("Starting resource-monitoring for {}", containerId);
+    LOG.error("Temp", new RuntimeException());
     updateContainerMetrics(monitoringEvent);
     trackingContainers.put(containerId,
         new ProcessTreeInfo(containerId, null, null,

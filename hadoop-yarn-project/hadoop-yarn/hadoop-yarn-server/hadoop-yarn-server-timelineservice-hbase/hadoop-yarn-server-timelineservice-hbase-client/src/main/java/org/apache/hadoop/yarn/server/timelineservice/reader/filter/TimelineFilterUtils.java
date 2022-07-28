@@ -249,7 +249,7 @@ public final class TimelineFilterUtils {
         strSet.add(((TimelineExistsFilter)filter).getValue());
         break;
       default:
-        LOG.info("Unexpected filter type " + filter.getFilterType());
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
@@ -304,7 +304,7 @@ public final class TimelineFilterUtils {
                 kvFilter.getKeyMustExist()));
         break;
       default:
-        LOG.info("Unexpected filter type " + filter.getFilterType());
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }

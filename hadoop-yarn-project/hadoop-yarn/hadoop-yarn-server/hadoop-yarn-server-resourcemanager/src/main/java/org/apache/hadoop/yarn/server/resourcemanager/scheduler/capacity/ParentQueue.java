@@ -391,7 +391,7 @@ public class ParentQueue extends AbstractCSQueue {
       this.childQueues.clear();
       this.childQueues.addAll(childQueues);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("setChildQueues: " + getChildQueuesToPrint());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       writeLock.unlock();
@@ -566,7 +566,7 @@ public class ParentQueue extends AbstractCSQueue {
         weightsAreUsed = getCapacityConfigurationTypeForQueues(childQueues)
             == QueueCapacityType.WEIGHT;
       } catch (IOException e) {
-        LOG.warn("Caught Exception during auto queue creation", e);
+        LOG.error("Temp", new RuntimeException());
       }
       if (!weightsAreUsed) {
         throw new SchedulerDynamicEditException(
@@ -694,7 +694,7 @@ public class ParentQueue extends AbstractCSQueue {
           }
           // Re-init existing queues
           childQueue.reinitialize(newChildQueue, clusterResource);
-          LOG.info(getQueuePath() + ": re-configured queue: " + childQueue);
+          LOG.error("Temp", new RuntimeException());
         } else{
           // New child queue, do not re-init
 
@@ -1183,7 +1183,7 @@ public class ParentQueue extends AbstractCSQueue {
       super.releaseResource(clusterResource, releasedResource,
           node.getPartition());
 
-      LOG.debug("completedContainer {}, cluster={}", this, clusterResource);
+      LOG.error("Temp", new RuntimeException());
 
     } finally {
       writeLock.unlock();

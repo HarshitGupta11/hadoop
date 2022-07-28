@@ -251,7 +251,7 @@ public class ScriptBasedMapping extends CachedDNSToSwitchMapping {
           s.execute();
           allOutput.append(s.getOutput()).append(" ");
         } catch (Exception e) {
-          LOG.warn("Exception running " + s, e);
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         loopCount++;

@@ -168,7 +168,7 @@ public class TestLazyPersistReplicaPlacement extends LazyPersistTestCase {
       makeTestFile(path, BLOCK_SIZE, false);
       fail("Block placement to RAM_DISK should have failed without lazyPersist flag");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -211,7 +211,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
                 .getContainerToken());
         containerStartTime = containerTokenIdentifier.getCreationTime();
       } catch (Exception e) {
-        LOG.info("Could not get container creation time, using current time");
+        LOG.error("Temp", new RuntimeException());
       }
       org.apache.hadoop.yarn.service.api.records.Container container =
           new org.apache.hadoop.yarn.service.api.records.Container();
@@ -367,7 +367,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
       if (event.getStatus() != null && event.getStatus().getExitStatus() != 0) {
         LOG.error(builder.toString());
       } else{
-        LOG.info(builder.toString());
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (compInstance.timelineServiceEnabled) {
@@ -463,7 +463,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
         // append to global diagnostics that will be reported to RM.
         scheduler.getDiagnostics().append(containerDiag);
         scheduler.getDiagnostics().append(exitDiag);
-        LOG.warn(exitDiag);
+        LOG.error("Temp", new RuntimeException());
 
         compInstance.getContainerSpec().setState(ContainerState.FAILED);
         comp.getComponentSpec().setState(ComponentState.FAILED);
@@ -614,7 +614,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
       if (instance.upgradeInProgress.compareAndSet(false, true)) {
         instance.cancelUpgrade();
       } else {
-        LOG.info("{} pending cancellation", event.getContainerId());
+        LOG.error("Temp", new RuntimeException());
         instance.pendingCancelUpgrade = true;
       }
     }
@@ -635,7 +635,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
         if (instance.getServiceVersion().equals(
             cancelStatus.getTargetVersion())) {
           // previous upgrade didn't happen so just go back to READY
-          LOG.info("{} nothing to cancel", event.getContainerId());
+          LOG.error("Temp", new RuntimeException());
           cancelStatus.decContainersThatNeedUpgrade();
           instance.setContainerState(ContainerState.READY);
           ComponentEvent checkState = new ComponentEvent(
@@ -648,7 +648,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
           instance.cancelUpgrade();
         }
       } else {
-        LOG.info("{} pending cancellation", event.getContainerId());
+        LOG.error("Temp", new RuntimeException());
         instance.pendingCancelUpgrade = true;
       }
       return ComponentInstanceState.CANCEL_UPGRADING;
@@ -656,7 +656,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
   }
 
   private void cancelUpgrade() {
-    LOG.info("{} cancelling upgrade", container.getId());
+    LOG.error("Temp", new RuntimeException());
     setContainerState(ContainerState.UPGRADING);
     Component.UpgradeStatus cancelStatus = component.getCancelUpgradeStatus();
     reInitHelper(cancelStatus);
@@ -687,7 +687,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
       // container relaunch (see YARN-8265).
       cancelOnSuccess = false;
     }
-    LOG.info("{} retrieve status after {}", compInstanceId, initialDelay);
+    LOG.error("Temp", new RuntimeException());
     containerStatusFuture =
         scheduler.executorService.scheduleAtFixedRate(
             new ContainerStatusRetriever(scheduler, event.getContainerId(),
@@ -882,7 +882,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
           new TypeReference<Map<String, List<Map<String, String>>>>(){});
       container.setExposedPorts(ports);
     } catch (IOException e) {
-      LOG.warn("Unable to process container ports mapping: {}", e);
+      LOG.error("Temp", new RuntimeException());
     }
     setContainerStatus(status.getContainerId(), status);
     if (containerRec != null && timelineServiceEnabled && doRegistryUpdate) {
@@ -968,7 +968,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
   // Release the container, dec running,
   // cleanup registry, hdfs dir, and send record to ATS
   public void destroy() {
-    LOG.info(getCompInstanceId() + ": Flexed down by user, destroying.");
+    LOG.error("Temp", new RuntimeException());
     diagnostics.append(getCompInstanceId() + ": Flexed down by user");
 
     // update metrics
@@ -1027,7 +1027,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
         }
       }
     } catch (IOException e) {
-      LOG.warn(getCompInstanceId() + ": Failed to delete directory", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1115,7 +1115,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
 
   private void initializeLocalizationStatusRetriever(
       ContainerId containerId) {
-    LOG.info("{} retrieve localization statuses", compInstanceId);
+    LOG.error("Temp", new RuntimeException());
     lclizationRetrieverFuture = scheduler.executorService.scheduleAtFixedRate(
         new LocalizationStatusRetriever(scheduler, containerId, this),
         0, 1, TimeUnit.SECONDS
@@ -1125,7 +1125,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
   private void cancelLclRetriever() {
     if (lclizationRetrieverFuture != null &&
         !lclizationRetrieverFuture.isDone()) {
-      LOG.info("{} cancelling localization retriever", compInstanceId);
+      LOG.error("Temp", new RuntimeException());
       lclizationRetrieverFuture.cancel(true);
     }
   }

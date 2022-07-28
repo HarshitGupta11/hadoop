@@ -35,7 +35,7 @@ public class TestDFSStripedInputStreamWithRandomECPolicy extends
 
   public TestDFSStripedInputStreamWithRandomECPolicy() {
     ecPolicy = StripedFileTestUtil.getRandomNonDefaultECPolicy();
-    LOG.info("{}", ecPolicy.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

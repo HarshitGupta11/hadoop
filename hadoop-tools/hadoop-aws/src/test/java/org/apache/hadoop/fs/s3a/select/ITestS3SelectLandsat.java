@@ -214,7 +214,7 @@ public class ITestS3SelectLandsat extends AbstractS3SelectTest {
         + "s._3 = '0.0'\n"
         + LIMITED;
     List<String> list = selectLandsatFile(selectConf, sql);
-    LOG.info("Line count: {}", list.size());
+    LOG.error("Temp", new RuntimeException());
     verifySelectionCount(1, SELECT_LIMIT, sql, list);
   }
 
@@ -228,7 +228,7 @@ public class ITestS3SelectLandsat extends AbstractS3SelectTest {
 
     List<String> list = selectLandsatFile(selectConf,
         SELECT_ENTITY_ID_ALL_CLOUDS);
-    LOG.info("Line count: {}", list.size());
+    LOG.error("Temp", new RuntimeException());
     verifySelectionCount(1, SELECT_LIMIT, SELECT_ENTITY_ID_ALL_CLOUDS, list);
     String line1 = list.get(0);
     assertThat("no column filtering from " + SELECT_ENTITY_ID_ALL_CLOUDS,
@@ -247,7 +247,7 @@ public class ITestS3SelectLandsat extends AbstractS3SelectTest {
     List<String> list = parseToLines(
         select(fc, getLandsatGZ(), selectConf, SELECT_ENTITY_ID_ALL_CLOUDS),
         SELECT_LIMIT * 2);
-    LOG.info("Line count: {}", list.size());
+    LOG.error("Temp", new RuntimeException());
     verifySelectionCount(1, SELECT_LIMIT, SELECT_ENTITY_ID_ALL_CLOUDS, list);
   }
 
@@ -433,7 +433,7 @@ public class ITestS3SelectLandsat extends AbstractS3SelectTest {
       // this test, unlike the simpler one, doesn't try to read past the
       // EOF. Know this: it will be slow.
 
-      LOG.info("Seek statistics {}", streamStats);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

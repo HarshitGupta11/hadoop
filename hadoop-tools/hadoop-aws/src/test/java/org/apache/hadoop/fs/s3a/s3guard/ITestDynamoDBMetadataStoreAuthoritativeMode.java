@@ -578,7 +578,7 @@ public class ITestDynamoDBMetadataStoreAuthoritativeMode
       final RemoteIterator<LocatedFileStatus> st
           = authFS.listLocatedStatus(subdir);
       applyLocatedFiles(st,
-          f -> LOG.info("{}", f));
+          f -> LOG.error("Temp", new RuntimeException());
       return null;
     });
     expectAuthNonRecursive(subdir);

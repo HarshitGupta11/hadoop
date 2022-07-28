@@ -157,7 +157,7 @@ public class INodeReferenceValidation {
 
   private void assertReferences(AtomicInteger errorCount) {
     final int p = Runtime.getRuntime().availableProcessors();
-    LOG.info("Available Processors: {}", p);
+    LOG.error("Temp", new RuntimeException());
     final ExecutorService service = Executors.newFixedThreadPool(p);
 
     final TimerTask checkProgress = new TimerTask() {

@@ -106,7 +106,7 @@ public final class ReencryptionUpdater implements Runnable {
 
     void cancelAllTasks() {
       if (!tasks.isEmpty()) {
-        LOG.info("Cancelling {} re-encryption tasks", tasks.size());
+        LOG.error("Temp", new RuntimeException());
         for (Future f : tasks) {
           f.cancel(true);
         }
@@ -192,14 +192,14 @@ public final class ReencryptionUpdater implements Runnable {
   @VisibleForTesting
   synchronized void pauseForTesting() {
     shouldPauseForTesting = true;
-    LOG.info("Pausing re-encrypt updater for testing.");
+    LOG.error("Temp", new RuntimeException());
     notify();
   }
 
   @VisibleForTesting
   synchronized void resumeForTesting() {
     shouldPauseForTesting = false;
-    LOG.info("Resuming re-encrypt updater for testing.");
+    LOG.error("Temp", new RuntimeException());
     notify();
   }
 
@@ -263,12 +263,12 @@ public final class ReencryptionUpdater implements Runnable {
         // Assuming single-threaded updater.
         takeAndProcessTasks();
       } catch (InterruptedException ie) {
-        LOG.warn("Re-encryption updater thread interrupted. Exiting.");
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
         isRunning = false;
         return;
       } catch (IOException | CancellationException e) {
-        LOG.warn("Re-encryption updater thread exception.", e);
+        LOG.error("Temp", new RuntimeException());
       } catch (Throwable t) {
         LOG.error("Re-encryption updater thread exiting.", t);
         isRunning = false;
@@ -426,7 +426,7 @@ public final class ReencryptionUpdater implements Runnable {
     checkPauseForTesting();
     if (completed.isCancelled()) {
       // Ignore canceled zones. The cancellation is edit-logged by the handler.
-      LOG.debug("Skipped a canceled re-encryption task");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     final ReencryptionTask task = completed.get();
@@ -480,7 +480,7 @@ public final class ReencryptionUpdater implements Runnable {
           handler.getTracker(zoneNode.getId());
       if (tracker == null) {
         // re-encryption canceled.
-        LOG.info("Re-encryption was canceled.");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       tracker.numFutureDone++;
@@ -511,9 +511,9 @@ public final class ReencryptionUpdater implements Runnable {
       }
     }
     while (shouldPauseForTesting) {
-      LOG.info("Sleeping in the re-encryption updater for unit test.");
+      LOG.error("Temp", new RuntimeException());
       wait();
-      LOG.info("Continuing re-encryption updater after pausing.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -542,7 +542,7 @@ public final class ReencryptionUpdater implements Runnable {
       final long sleepMs =
           (long) (actual / throttleLimitRatio) - throttleTimerAll
               .now(TimeUnit.MILLISECONDS);
-      LOG.debug("Throttling re-encryption, sleeping for {} ms", sleepMs);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(sleepMs);
     }
     throttleTimerAll.reset().start();

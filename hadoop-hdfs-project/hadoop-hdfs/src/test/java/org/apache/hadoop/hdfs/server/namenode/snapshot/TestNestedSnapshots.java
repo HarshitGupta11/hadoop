@@ -211,7 +211,7 @@ public class TestNestedSnapshots {
 
     int s = 0;
     for(; s < SNAPSHOTLIMIT; s++) {
-      SnapshotTestHelper.LOG.info("Creating snapshot number: {}", s);
+      SnapshotTestHelper.LOG.error("Temp", new RuntimeException());
       final String snapshotName = "s" + s;
       hdfs.createSnapshot(dir, snapshotName);
 
@@ -226,7 +226,7 @@ public class TestNestedSnapshots {
       hdfs.createSnapshot(dir, "s" + s);
       Assert.fail("Expected to fail to create snapshot, but didn't.");
     } catch(IOException ioe) {
-      SnapshotTestHelper.LOG.info("The exception is expected.", ioe);
+      SnapshotTestHelper.LOG.error("Temp", new RuntimeException());
     }
 
     for(int f = 0; f < SNAPSHOTLIMIT; f += step) {

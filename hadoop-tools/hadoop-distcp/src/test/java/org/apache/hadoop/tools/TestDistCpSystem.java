@@ -206,7 +206,7 @@ public class TestDistCpSystem {
 
   private void compareFiles(FileSystem fs, FileStatus srcStat,
       FileStatus dstStat) throws Exception {
-    LOG.info("Comparing " + srcStat + " and " + dstStat);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(srcStat.isDirectory(), dstStat.isDirectory());
     assertEquals(srcStat.getReplication(), dstStat.getReplication());
     assertEquals("File POSIX permission should match",
@@ -317,14 +317,14 @@ public class TestDistCpSystem {
     final String testRoot = "/testdir";
     FsShell shell = new FsShell(fs.getConf());
 
-    LOG.info("ls before distcp");
-    LOG.info(execCmd(shell, "-lsr", testRoot));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("_____ running distcp: " + args[0] + " " + args[1]);
+    LOG.error("Temp", new RuntimeException());
     ToolRunner.run(conf, new DistCp(), args);
 
-    LOG.info("ls after distcp");
-    LOG.info(execCmd(shell, "-lsr", testRoot));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     FileStatus[] dstStat = getFileStatus(fs, testDst, srcFiles);
     for (int i=0; i< dstStat.length; i++) {
@@ -364,10 +364,10 @@ public class TestDistCpSystem {
     copyAndVerify(fs, srcFiles, srcStats, testDst, args);
 
     // modify last file and rerun distcp with -update option
-    LOG.info("Modify a file and copy again");
+    LOG.error("Temp", new RuntimeException());
     for(int i=srcFiles.length-1; i >=0; --i) {
       if (!srcFiles[i].isDirectory()) {
-        LOG.info("Modifying " + srcStats[i].getPath());
+        LOG.error("Temp", new RuntimeException());
         DFSTestUtil.appendFileNewBlock(fs, srcStats[i].getPath(),
             (int)BLOCK_SIZE * 3);
         break;
@@ -448,7 +448,7 @@ public class TestDistCpSystem {
         nnUri + testDst
     };
 
-    LOG.info("_____ running distcp: " + args[0] + " " + args[1]);
+    LOG.error("Temp", new RuntimeException());
     ToolRunner.run(conf, new DistCp(), args);
 
     String realTgtPath = testDst;

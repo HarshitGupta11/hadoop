@@ -179,7 +179,7 @@ public class TestMRAppMaster {
       MRAppMaster.initAndStartAppMaster(appMaster, conf, userName);
     } catch (IOException e) {
       //The IO Exception is expected
-      LOG.info("Caught expected Exception", e);
+      LOG.error("Temp", new RuntimeException());
       caught = true;
     }
     assertTrue(caught);
@@ -256,7 +256,7 @@ public class TestMRAppMaster {
       MRAppMaster.initAndStartAppMaster(appMaster, conf, userName);
     } catch (IOException e) {
       //The IO Exception is expected
-      LOG.info("Caught expected Exception", e);
+      LOG.error("Temp", new RuntimeException());
       caught = true;
     }
     assertTrue(caught);
@@ -294,7 +294,7 @@ public class TestMRAppMaster {
       MRAppMaster.initAndStartAppMaster(appMaster, conf, userName);
     } catch (IOException e) {
       //The IO Exception is expected
-      LOG.info("Caught expected Exception", e);
+      LOG.error("Temp", new RuntimeException());
       caught = true;
     }
     assertTrue(caught);
@@ -332,7 +332,7 @@ public class TestMRAppMaster {
       MRAppMaster.initAndStartAppMaster(appMaster, conf, userName);
     } catch (IOException e) {
       //The IO Exception is expected
-      LOG.info("Caught expected Exception", e);
+      LOG.error("Temp", new RuntimeException());
       caught = true;
     }
     assertTrue(caught);

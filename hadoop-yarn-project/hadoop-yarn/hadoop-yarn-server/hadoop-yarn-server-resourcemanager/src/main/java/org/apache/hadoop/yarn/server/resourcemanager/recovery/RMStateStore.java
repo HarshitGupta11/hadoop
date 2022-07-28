@@ -238,7 +238,7 @@ public abstract class RMStateStore extends AbstractService {
           ((RMStateStoreAppEvent) event).getAppState();
       ApplicationId appId =
           appState.getApplicationSubmissionContext().getApplicationId();
-      LOG.info("Storing info for app: " + appId);
+      LOG.error("Temp", new RuntimeException());
       try {
         store.storeApplicationStateInternal(appId, appState);
         store.notifyApplication(
@@ -276,7 +276,7 @@ public abstract class RMStateStore extends AbstractService {
           ((RMStateUpdateAppEvent) event).getResult();
       ApplicationId appId =
           appState.getApplicationSubmissionContext().getApplicationId();
-      LOG.info("Updating info for app: " + appId);
+      LOG.error("Temp", new RuntimeException());
       try {
         if (isAppStateFinal(appState)) {
           pruneAppState(appState);
@@ -351,7 +351,7 @@ public abstract class RMStateStore extends AbstractService {
           ((RMStateStoreRemoveAppEvent) event).getAppState();
       ApplicationId appId =
           appState.getApplicationSubmissionContext().getApplicationId();
-      LOG.info("Removing info for app: " + appId);
+      LOG.error("Temp", new RuntimeException());
       try {
         store.removeApplicationStateInternal(appState);
       } catch (Exception e) {
@@ -377,7 +377,7 @@ public abstract class RMStateStore extends AbstractService {
       ApplicationAttemptStateData attemptState =
           ((RMStateStoreAppAttemptEvent) event).getAppAttemptState();
       try {
-        LOG.debug("Storing info for attempt: {}", attemptState.getAttemptId());
+        LOG.error("Temp", new RuntimeException());
         store.storeApplicationAttemptStateInternal(attemptState.getAttemptId(),
             attemptState);
         store.notifyApplicationAttempt(new RMAppAttemptEvent
@@ -435,7 +435,7 @@ public abstract class RMStateStore extends AbstractService {
       boolean isFenced = false;
       RMStateStoreRMDTEvent dtEvent = (RMStateStoreRMDTEvent) event;
       try {
-        LOG.info("Storing RMDelegationToken and SequenceNumber");
+        LOG.error("Temp", new RuntimeException());
         store.storeRMDelegationTokenState(
             dtEvent.getRmDTIdentifier(), dtEvent.getRenewDate());
       } catch (Exception e) {
@@ -461,7 +461,7 @@ public abstract class RMStateStore extends AbstractService {
       boolean isFenced = false;
       RMStateStoreRMDTEvent dtEvent = (RMStateStoreRMDTEvent) event;
       try {
-        LOG.info("Removing RMDelegationToken and SequenceNumber");
+        LOG.error("Temp", new RuntimeException());
         store.removeRMDelegationTokenState(dtEvent.getRmDTIdentifier());
       } catch (Exception e) {
         LOG.error("Error While Removing RMDelegationToken and SequenceNumber ",
@@ -486,7 +486,7 @@ public abstract class RMStateStore extends AbstractService {
       boolean isFenced = false;
       RMStateStoreRMDTEvent dtEvent = (RMStateStoreRMDTEvent) event;
       try {
-        LOG.info("Updating RMDelegationToken and SequenceNumber");
+        LOG.error("Temp", new RuntimeException());
         store.updateRMDelegationTokenState(
             dtEvent.getRmDTIdentifier(), dtEvent.getRenewDate());
       } catch (Exception e) {
@@ -513,7 +513,7 @@ public abstract class RMStateStore extends AbstractService {
       RMStateStoreRMDTMasterKeyEvent dtEvent =
           (RMStateStoreRMDTMasterKeyEvent) event;
       try {
-        LOG.info("Storing RMDTMasterKey.");
+        LOG.error("Temp", new RuntimeException());
         store.storeRMDTMasterKeyState(dtEvent.getDelegationKey());
       } catch (Exception e) {
         LOG.error("Error While Storing RMDTMasterKey.", e);
@@ -538,7 +538,7 @@ public abstract class RMStateStore extends AbstractService {
       RMStateStoreRMDTMasterKeyEvent dtEvent =
           (RMStateStoreRMDTMasterKeyEvent) event;
       try {
-        LOG.info("Removing RMDTMasterKey.");
+        LOG.error("Temp", new RuntimeException());
         store.removeRMDTMasterKeyState(dtEvent.getDelegationKey());
       } catch (Exception e) {
         LOG.error("Error While Removing RMDTMasterKey.", e);
@@ -562,7 +562,7 @@ public abstract class RMStateStore extends AbstractService {
       RMStateStoreAMRMTokenEvent amrmEvent = (RMStateStoreAMRMTokenEvent) event;
       boolean isFenced = false;
       try {
-        LOG.info("Updating AMRMToken");
+        LOG.error("Temp", new RuntimeException());
         store.storeOrUpdateAMRMTokenSecretManagerState(
             amrmEvent.getAmrmTokenSecretManagerState(), amrmEvent.isUpdate());
       } catch (Exception e) {
@@ -644,7 +644,7 @@ public abstract class RMStateStore extends AbstractService {
       boolean isFenced = false;
       RMStateStoreProxyCAEvent caEvent = (RMStateStoreProxyCAEvent) event;
       try {
-        LOG.info("Storing CA Certificate and Private Key");
+        LOG.error("Temp", new RuntimeException());
         store.storeProxyCACertState(
             caEvent.getCaCert(), caEvent.getCaPrivateKey());
       } catch (Exception e) {
@@ -674,7 +674,7 @@ public abstract class RMStateStore extends AbstractService {
       ApplicationAttemptId attemptId =
           ((RMStateStoreRemoveAppAttemptEvent) event).getApplicationAttemptId();
       ApplicationId appId = attemptId.getApplicationId();
-      LOG.info("Removing attempt " + attemptId + " from app: " + appId);
+      LOG.error("Temp", new RuntimeException());
       try {
         store.removeApplicationAttemptInternal(attemptId);
       } catch (Exception e) {
@@ -863,7 +863,7 @@ public abstract class RMStateStore extends AbstractService {
    */
   public void checkVersion() throws Exception {
     Version loadedVersion = loadVersion();
-    LOG.info("Loaded RM state version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion != null && loadedVersion.equals(getCurrentVersion())) {
       return;
     }
@@ -872,7 +872,7 @@ public abstract class RMStateStore extends AbstractService {
       loadedVersion = getCurrentVersion();
     }
     if (loadedVersion.isCompatibleTo(getCurrentVersion())) {
-      LOG.info("Storing RM state version info " + getCurrentVersion());
+      LOG.error("Temp", new RuntimeException());
       storeVersion();
     } else {
       throw new RMStateVersionIncompatibleException(
@@ -1240,7 +1240,7 @@ public abstract class RMStateStore extends AbstractService {
     this.writeLock.lock();
     try {
 
-      LOG.debug("Processing event of type {}", event.getType());
+      LOG.error("Temp", new RuntimeException());
 
       final RMStateStoreState oldState = getRMStateStoreState();
 

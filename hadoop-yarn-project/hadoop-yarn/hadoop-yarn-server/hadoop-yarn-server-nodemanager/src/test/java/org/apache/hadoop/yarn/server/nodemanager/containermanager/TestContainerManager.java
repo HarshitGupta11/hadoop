@@ -457,7 +457,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (!processStartFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertTrue("ProcessStartFile doesn't exist!",
         processStartFile.exists());
@@ -543,7 +543,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     String newPid = null;
     timeoutSecs = 0;
     while (timeoutSecs++ < 20) {
-      LOG.info("Waiting for New process file to be created!!");
+      LOG.error("Temp", new RuntimeException());
       // Now verify the contents of the file
       BufferedReader reader =
           new BufferedReader(new FileReader(oldStartFile));
@@ -717,7 +717,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (container.isReInitializing() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for ReInitialization to complete..");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertFalse(container.isReInitializing());
 
@@ -725,7 +725,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     // Wait for new processStartfile to be created
     while (!oldStartFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for New process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Now verify the contents of the file
@@ -909,7 +909,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
       System.out.println("\nFiles: " +
           Arrays.toString(oldStartFile.getParentFile().list()));
       Thread.sleep(1000);
-      LOG.info("Waiting for New process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Now verify the contents of the file
@@ -1002,7 +1002,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     // Wait for new processStartfile to be created
     while (!startFile.exists() && timeoutSecs++ < maxTimeToWait) {
       Thread.sleep(1000);
-      LOG.info("Waiting for New process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1035,7 +1035,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (!startFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertTrue("ProcessStartFile doesn't exist!",
         startFile.exists());
@@ -2066,7 +2066,7 @@ public class TestContainerManager extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (!processStartFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertTrue("ProcessStartFile doesn't exist!",
         processStartFile.exists());

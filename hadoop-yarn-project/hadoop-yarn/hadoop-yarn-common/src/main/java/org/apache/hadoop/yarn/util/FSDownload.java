@@ -343,7 +343,7 @@ public class FSDownload implements Callable<Path> {
             lowerDst.endsWith(".tar")) {
           FileUtil.unTar(inputStream, dst, lowerDst.endsWith("gz"));
         } else {
-          LOG.warn("Cannot unpack " + source);
+          LOG.error("Temp", new RuntimeException());
           try (OutputStream outputStream =
                    destinationFileSystem.create(destination, true)) {
             IOUtils.copy(inputStream, outputStream);
@@ -369,7 +369,7 @@ public class FSDownload implements Callable<Path> {
               "was specified as PATTERN");
           FileUtil.unTar(inputStream, dst, lowerDst.endsWith("gz"));
         } else {
-          LOG.warn("Cannot unpack " + source);
+          LOG.error("Temp", new RuntimeException());
           try (OutputStream outputStream =
                    destinationFileSystem.create(destination, true)) {
             IOUtils.copy(inputStream, outputStream);
@@ -468,7 +468,7 @@ public class FSDownload implements Callable<Path> {
       perm = isDir ? PRIVATE_DIR_PERMS : PRIVATE_FILE_PERMS;
     }
 
-    LOG.debug("Changing permissions for path {} to perm {}", path, perm);
+    LOG.error("Temp", new RuntimeException());
 
     final FsPermission fPerm = perm;
     if (null == userUgi) {

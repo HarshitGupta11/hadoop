@@ -83,7 +83,7 @@ public final class FederationUtil {
         port = Integer.parseInt(webAddressSplit[1]);
       }
       URL jmxURL = new URL(scheme, host, port, "/jmx?qry=" + beanQuery);
-      LOG.debug("JMX URL: {}", jmxURL);
+      LOG.error("Temp", new RuntimeException());
       // Create a URL connection
       URLConnection conn = connectionFactory.openConnection(
           jmxURL, UserGroupInformation.isSecurityEnabled());

@@ -641,7 +641,7 @@ public class TestRMWebServices extends JerseyTestBase {
     assertEquals("incorrect number of elements in: " + info, 1, info.length());
     info = info.getJSONObject("schedulerInfo");
 
-    LOG.debug("schedulerInfo: {}", info);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("incorrect number of elements in: " + info, 11, info.length());
 
     verifyClusterSchedulerFifoGeneric(info.getString("type"),

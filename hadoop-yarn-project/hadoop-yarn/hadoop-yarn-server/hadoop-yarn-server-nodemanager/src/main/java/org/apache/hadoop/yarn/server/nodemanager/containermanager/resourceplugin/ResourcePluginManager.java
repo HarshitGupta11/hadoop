@@ -93,7 +93,7 @@ public class ResourcePluginManager {
   private String[] getPluginsFromConfig(Configuration conf) {
     String[] plugins = conf.getStrings(YarnConfiguration.NM_RESOURCE_PLUGINS);
     if (plugins == null || plugins.length == 0) {
-      LOG.info("No Resource plugins found from configuration!");
+      LOG.error("Temp", new RuntimeException());
     }
     LOG.info("Found Resource plugins from configuration: "
         + Arrays.toString(plugins));
@@ -126,7 +126,7 @@ public class ResourcePluginManager {
                   + " should be loaded and initialized");
         }
         plugin.initialize(context);
-        LOG.info("Initialized plugin {}", plugin);
+        LOG.error("Temp", new RuntimeException());
         pluginMap.put(resourceName, plugin);
       }
     }
@@ -162,7 +162,7 @@ public class ResourcePluginManager {
     LOG.info("The pluggable device framework enabled,"
         + "trying to load the vendor plugins");
     if (null == deviceMappingManager) {
-      LOG.debug("DeviceMappingManager initialized.");
+      LOG.error("Temp", new RuntimeException());
       deviceMappingManager = new DeviceMappingManager(context);
     }
     String[] pluginClassNames = configuration.getStrings(
@@ -216,14 +216,14 @@ public class ResourcePluginManager {
           pluginClassName);
       DevicePluginAdapter pluginAdapter = new DevicePluginAdapter(
           resourceName, dpInstance, deviceMappingManager);
-      LOG.info("Adapter of {} created. Initializing..", pluginClassName);
+      LOG.error("Temp", new RuntimeException());
       try {
         pluginAdapter.initialize(context);
       } catch (YarnException e) {
         throw new YarnRuntimeException("Adapter of "
             + pluginClassName + " init failed!");
       }
-      LOG.info("Adapter of {} init success!", pluginClassName);
+      LOG.error("Temp", new RuntimeException());
       // Store plugin as adapter instance
       pluginMap.put(request.getResourceName(), pluginAdapter);
       // If the device plugin implements DevicePluginScheduler interface

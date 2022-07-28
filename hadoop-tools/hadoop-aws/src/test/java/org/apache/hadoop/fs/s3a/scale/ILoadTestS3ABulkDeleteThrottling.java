@@ -191,9 +191,9 @@ public class ILoadTestS3ABulkDeleteThrottling extends S3AScaleTestBase {
     LOG.info("Test run completed against {}:\n see {}", getFileSystem(),
         results);
     if (testWasThrottled) {
-      LOG.warn("Test was throttled");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.info("No throttling recorded in filesystem");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -204,7 +204,7 @@ public class ILoadTestS3ABulkDeleteThrottling extends S3AScaleTestBase {
 
   private void maybeSleep() throws InterruptedException, IOException {
     if (testWasThrottled) {
-      LOG.info("Sleeping briefly to let store recover");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(30_000);
       getFileSystem().delete(path("recovery"), true);
       testWasThrottled = false;
@@ -242,7 +242,7 @@ public class ILoadTestS3ABulkDeleteThrottling extends S3AScaleTestBase {
       completionService.submit(() -> {
         final long startTime = System.currentTimeMillis();
         Thread.currentThread().setName("#" + id);
-        LOG.info("Issuing request {}", id);
+        LOG.error("Temp", new RuntimeException());
         final ContractTestUtils.NanoTimer timer =
             new ContractTestUtils.NanoTimer();
         Exception ex = null;
@@ -269,7 +269,7 @@ public class ILoadTestS3ABulkDeleteThrottling extends S3AScaleTestBase {
       stats.add(timer);
       if (ex != null) {
         // throttling event occurred.
-        LOG.info("Throttled at event {}", i, ex);
+        LOG.error("Temp", new RuntimeException());
         throttled.add(timer);
         throttledEvents.add(outcome);
       } else {
@@ -281,7 +281,7 @@ public class ILoadTestS3ABulkDeleteThrottling extends S3AScaleTestBase {
 
     jobTimer.end("Execution of operations");
     // now print the stats
-    LOG.info("Summary file is " + csvFile);
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Made {} requests with {} throttle events\n: {}\n{}\n{}",
         requestCount,
         throttled.getCount(),

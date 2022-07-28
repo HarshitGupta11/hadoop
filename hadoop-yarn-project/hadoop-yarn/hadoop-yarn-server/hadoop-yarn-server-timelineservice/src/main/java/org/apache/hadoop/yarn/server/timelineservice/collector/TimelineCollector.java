@@ -151,7 +151,7 @@ public abstract class TimelineCollector extends CompositeService {
    */
   public TimelineWriteResponse putEntities(TimelineEntities entities,
       UserGroupInformation callerUgi) throws IOException {
-    LOG.debug("putEntities(entities={}, callerUgi={})", entities, callerUgi);
+    LOG.error("Temp", new RuntimeException());
 
     TimelineWriteResponse response;
     // synchronize on the writer object so that no other threads can
@@ -177,7 +177,7 @@ public abstract class TimelineCollector extends CompositeService {
    */
   public TimelineWriteResponse putDomain(TimelineDomain domain,
       UserGroupInformation callerUgi) throws IOException {
-    LOG.debug("putDomain(domain={}, callerUgi={})", domain, callerUgi);
+    LOG.error("Temp", new RuntimeException());
 
     TimelineWriteResponse response;
     synchronized (writer) {

@@ -503,7 +503,7 @@ public class TestRPC extends TestRpcBase {
         proxy.error(null, newEmptyRequest());
       } catch (ServiceException e) {
         if(LOG.isDebugEnabled()) {
-          LOG.debug("Caught " + e);
+          LOG.error("Temp", new RuntimeException());
         }
         caught = true;
       }
@@ -730,7 +730,7 @@ public class TestRPC extends TestRpcBase {
     } catch (ServiceException e) {
       assertTrue(e.getCause() instanceof RemoteException);
       RemoteException re = (RemoteException) e.getCause();
-      LOG.info("LOGGING MESSAGE: " + re.getLocalizedMessage());
+      LOG.error("Temp", new RuntimeException());
       assertEquals("RPC error code should be UNAUTHORIZED",
           RpcErrorCodeProto.FATAL_UNAUTHORIZED, re.getErrorCode());
       assertTrue(re.unwrapRemoteException() instanceof AccessControlException);
@@ -752,7 +752,7 @@ public class TestRPC extends TestRpcBase {
       proxy.echo(null, newEchoRequest(""));
     } catch (ServiceException e) {
       RemoteException re = (RemoteException) e.getCause();
-      LOG.info("LOGGING MESSAGE: " + re.getLocalizedMessage());
+      LOG.error("Temp", new RuntimeException());
       assertEquals("RPC error code should be UNAUTHORIZED",
           RpcErrorCodeProto.FATAL_UNAUTHORIZED, re.getErrorCode());
       assertTrue(re.unwrapRemoteException() instanceof AccessControlException);
@@ -1277,13 +1277,13 @@ public class TestRPC extends TestRpcBase {
         double avgRespTimePriority1 = MetricsAsserts.getDoubleGauge(
             "Priority.1.AvgResponseTime", rb2);
 
-        LOG.info("DecayedCallVolume: {}", decayedCallVolume1);
-        LOG.info("CallVolume: {}", rawCallVolume1);
-        LOG.info("UniqueCaller: {}", uniqueCaller1);
-        LOG.info("Priority.0.CompletedCallVolume: {}", callVolumePriority0);
-        LOG.info("Priority.1.CompletedCallVolume: {}", callVolumePriority1);
-        LOG.info("Priority.0.AvgResponseTime: {}", avgRespTimePriority0);
-        LOG.info("Priority.1.AvgResponseTime: {}", avgRespTimePriority1);
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
 
         return decayedCallVolume1 > beginDecayedCallVolume &&
             rawCallVolume1 > beginRawCallVolume &&
@@ -1381,7 +1381,7 @@ public class TestRPC extends TestRpcBase {
         fail("RPC should time out.");
       } catch (ServiceException e) {
         assertTrue(e.getCause() instanceof SocketTimeoutException);
-        LOG.info("got expected timeout.", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Test RPC timeout when ipc.client.ping is false.
@@ -1394,7 +1394,7 @@ public class TestRPC extends TestRpcBase {
         fail("RPC should time out.");
       } catch (ServiceException e) {
         assertTrue(e.getCause() instanceof SocketTimeoutException);
-        LOG.info("got expected timeout.", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Test negative timeout value.
@@ -1404,7 +1404,7 @@ public class TestRPC extends TestRpcBase {
         proxy = getClient(addr, c);
         proxy.sleep(null, newSleepRequest(2000));
       } catch (ServiceException e) {
-        LOG.info("got unexpected exception.", e);
+        LOG.error("Temp", new RuntimeException());
         fail("RPC should not time out.");
       }
 
@@ -1421,7 +1421,7 @@ public class TestRPC extends TestRpcBase {
           // multiple of ping interval: 1600 (= 800 * (1000 / 800 + 1))
           proxy.sleep(null, newSleepRequest(1300));
         } catch (ServiceException e) {
-          LOG.info("got unexpected exception.", e);
+          LOG.error("Temp", new RuntimeException());
           fail("RPC should not time out.");
         }
 
@@ -1429,7 +1429,7 @@ public class TestRPC extends TestRpcBase {
         fail("RPC should time out.");
       } catch (ServiceException e) {
         assertTrue(e.getCause() instanceof SocketTimeoutException);
-        LOG.info("got expected timeout.", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
     } finally {

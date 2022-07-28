@@ -240,7 +240,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
    */
   private synchronized void clearActiveBlock() {
     if (activeBlock != null) {
-      LOG.debug("Clearing active block");
+      LOG.error("Temp", new RuntimeException());
     }
     activeBlock = null;
   }
@@ -303,7 +303,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
     if (hasException.get()) {
       String closeWarning = String.format(
           "write has error. bs : pre upload obs[%s] has error.", key);
-      LOG.warn(closeWarning);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(closeWarning);
     }
     OBSDataBlocks.validateWriteArgs(source, offset, len);
@@ -375,11 +375,11 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
    */
   private synchronized void uploadCurrentBlock() throws IOException {
     Preconditions.checkState(hasActiveBlock(), "No active block");
-    LOG.debug("Writing block # {}", blockCount);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       if (multiPartUpload == null) {
-        LOG.debug("Initiating Multipart upload");
+        LOG.error("Temp", new RuntimeException());
         multiPartUpload = new MultiPartUpload();
       }
       multiPartUpload.uploadBlockAsync(getActiveBlock());
@@ -407,13 +407,13 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
   public synchronized void close() throws IOException {
     if (closed.getAndSet(true)) {
       // already closed
-      LOG.debug("Ignoring close() as stream is already closed");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (hasException.get()) {
       String closeWarning = String.format(
           "closed has error. bs : pre write obs[%s] has error.", key);
-      LOG.warn(closeWarning);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(closeWarning);
     }
     // do upload
@@ -447,7 +447,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
    * @throws IOException any problem
    */
   private synchronized void appendFsFile() throws IOException {
-    LOG.debug("bucket is posix, to append file. key is {}", key);
+    LOG.error("Temp", new RuntimeException());
     final OBSDataBlocks.DataBlock block = getActiveBlock();
     WriteFileRequest writeFileReq;
     if (block instanceof OBSDataBlocks.DiskBlock) {
@@ -533,7 +533,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
       String flushWarning = String.format(
           "flushOrSync has error. bs : pre write obs[%s] has error.",
           key);
-      LOG.warn(flushWarning);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(flushWarning);
     }
     if (fs.isFsBucket()) {
@@ -543,7 +543,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
       // clear
       clearHFlushOrSync();
     } else {
-      LOG.warn("not posix bucket, not support hflush or hsync.");
+      LOG.error("Temp", new RuntimeException());
       flush();
     }
   }
@@ -587,7 +587,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
       // then complete the operation
       multiPartUpload.complete(partETags);
     }
-    LOG.debug("Upload complete for {}", writeOperationHelper.toString(key));
+    LOG.error("Temp", new RuntimeException());
   }
 
   private synchronized void completeCurrentBlock() throws IOException {
@@ -673,7 +673,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
      */
     private void uploadBlockAsync(final OBSDataBlocks.DataBlock block)
         throws IOException {
-      LOG.debug("Queueing upload of {}", block);
+      LOG.error("Temp", new RuntimeException());
 
       final int size = block.dataSize();
       final int currentPartNumber = partETagsFutures.size() + 1;
@@ -741,8 +741,8 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
       try {
         return Futures.allAsList(partETagsFutures).get();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted partUpload", ie);
-        LOG.debug("Cancelling futures");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         for (ListenableFuture<PartEtag> future : partETagsFutures) {
           future.cancel(true);
         }
@@ -754,8 +754,8 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
       } catch (ExecutionException ee) {
         // there is no way of recovering so abort
         // cancel all partUploads
-        LOG.debug("While waiting for upload completion", ee);
-        LOG.debug("Cancelling futures");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         for (ListenableFuture<PartEtag> future : partETagsFutures) {
           future.cancel(true);
         }
@@ -782,7 +782,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
               + " id '%s' with %s partitions ",
           key, uploadId, partETags.size());
       try {
-        LOG.debug(operation);
+        LOG.error("Temp", new RuntimeException());
         return writeOperationHelper.completeMultipartUpload(key,
             uploadId, partETags);
       } catch (ObsException e) {
@@ -801,7 +801,7 @@ class OBSBlockOutputStream extends OutputStream implements Syncable {
               "Aborting multi-part upload for '%s', id '%s",
               writeOperationHelper, uploadId);
       try {
-        LOG.debug(operation);
+        LOG.error("Temp", new RuntimeException());
         writeOperationHelper.abortMultipartUpload(key, uploadId);
       } catch (ObsException e) {
         LOG.warn(

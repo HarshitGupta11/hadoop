@@ -320,7 +320,7 @@ public class SelectTool extends S3GuardTool {
       cleanupWithLogger(LOG, stream);
     }
 
-    LOG.debug("Statistics {}", stream);
+    LOG.error("Temp", new RuntimeException());
 
     expectedLines.ifPresent(l -> {
       if (l != linesRead) {

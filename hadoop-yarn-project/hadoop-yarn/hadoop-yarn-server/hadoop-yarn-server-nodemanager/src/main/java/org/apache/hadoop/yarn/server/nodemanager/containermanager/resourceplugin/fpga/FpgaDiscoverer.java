@@ -78,9 +78,9 @@ public class FpgaDiscoverer extends Configured {
     setConf(config);
     this.plugin.initPlugin(config);
     // Try to diagnose FPGA
-    LOG.info("Trying to diagnose FPGA information ...");
+    LOG.error("Temp", new RuntimeException());
     if (!diagnose()) {
-      LOG.warn("Failed to pass FPGA devices diagnose");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

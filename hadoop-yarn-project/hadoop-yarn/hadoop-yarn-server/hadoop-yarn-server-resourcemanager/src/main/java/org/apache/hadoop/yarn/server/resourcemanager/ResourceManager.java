@@ -518,7 +518,7 @@ public class ResourceManager extends CompositeService
   protected ResourceScheduler createScheduler() {
     String schedulerClassName = conf.get(YarnConfiguration.RM_SCHEDULER,
         YarnConfiguration.DEFAULT_RM_SCHEDULER);
-    LOG.info("Using Scheduler: " + schedulerClassName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> schedulerClazz = Class.forName(schedulerClassName);
       if (ResourceScheduler.class.isAssignableFrom(schedulerClazz)) {
@@ -541,7 +541,7 @@ public class ResourceManager extends CompositeService
     if (reservationClassName == null) {
       return null;
     }
-    LOG.info("Using ReservationSystem: " + reservationClassName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> reservationClazz = Class.forName(reservationClassName);
       if (ReservationSystem.class.isAssignableFrom(reservationClazz)) {
@@ -560,7 +560,7 @@ public class ResourceManager extends CompositeService
   protected SystemServiceManager createServiceManager() {
     String schedulerClassName =
         YarnConfiguration.DEFAULT_YARN_API_SYSTEM_SERVICES_CLASS;
-    LOG.info("Using SystemServiceManager: " + schedulerClassName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> schedulerClazz = Class.forName(schedulerClassName);
       if (SystemServiceManager.class.isAssignableFrom(schedulerClazz)) {
@@ -655,7 +655,7 @@ public class ResourceManager extends CompositeService
       publishers.add(publisherV2);
     }
     if (publishers.isEmpty()) {
-      LOG.info("TimelineServicePublisher is not configured");
+      LOG.error("Temp", new RuntimeException());
       SystemMetricsPublisher noopPublisher = new NoOpSystemMetricPublisher();
       publishers.add(noopPublisher);
     }
@@ -873,7 +873,7 @@ public class ResourceManager extends CompositeService
           reservationSystem.setRMContext(rmContext);
           addIfService(reservationSystem);
           rmContext.setReservationSystem(reservationSystem);
-          LOG.info("Initialized Reservation system");
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -916,7 +916,7 @@ public class ResourceManager extends CompositeService
         }
         federationStateStoreService = createFederationStateStoreService();
         addIfService(federationStateStoreService);
-        LOG.info("Initialized Federation membership.");
+        LOG.error("Temp", new RuntimeException());
       }
 
       proxyCAManager = new ProxyCAManager(new ProxyCA(), rmContext);
@@ -987,14 +987,14 @@ public class ResourceManager extends CompositeService
 
       if(recoveryEnabled) {
         try {
-          LOG.info("Recovery started");
+          LOG.error("Temp", new RuntimeException());
           rmStore.checkVersion();
           if (rmContext.isWorkPreservingRecoveryEnabled()) {
             rmContext.setEpoch(rmStore.getAndIncrementEpoch());
           }
           RMState state = rmStore.loadState();
           recover(state);
-          LOG.info("Recovery ended");
+          LOG.error("Temp", new RuntimeException());
         } catch (Exception e) {
           // the Exception from loadState() needs to be handled for
           // HA and we need to give up master status if we got fenced
@@ -1006,7 +1006,7 @@ public class ResourceManager extends CompositeService
           long epoch = conf.getLong(YarnConfiguration.RM_EPOCH,
               YarnConfiguration.DEFAULT_RM_EPOCH);
           rmContext.setEpoch(epoch);
-          LOG.info("Epoch set for Federation: " + epoch);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -1049,7 +1049,7 @@ public class ResourceManager extends CompositeService
       if (HAUtil.isHAEnabled(getConfig())) {
         // If we're in an HA config, the right answer is always to go into
         // standby.
-        LOG.warn("Transitioning the resource manager to standby.");
+        LOG.error("Temp", new RuntimeException());
         handleTransitionToStandByInNewThread();
       } else {
         // If we're stand-alone, we probably want to shut down, but the if and
@@ -1207,7 +1207,7 @@ public class ResourceManager extends CompositeService
       if (rmContext.isHAEnabled()) {
         try {
           // Transition to standby and reinit active services
-          LOG.info("Transitioning RM to Standby mode");
+          LOG.error("Temp", new RuntimeException());
           transitionToStandby(true);
           EmbeddedElector elector = rmContext.getLeaderElectorService();
           if (elector != null) {
@@ -1350,7 +1350,7 @@ public class ResourceManager extends CompositeService
 
     URI uri = URI.create("http://" + NetUtils.getHostPortString(httpAddr));
     builder.addEndpoint(uri);
-    LOG.info("Starting Web-server for " + name + " at: " + uri);
+    LOG.error("Temp", new RuntimeException());
 
     return builder;
   }
@@ -1427,10 +1427,10 @@ public class ResourceManager extends CompositeService
       } else {
         if (onDiskPath.endsWith(".war")) {
           uiWebAppContext.setWar(onDiskPath);
-          LOG.info("Using war file at: " + onDiskPath);
+          LOG.error("Temp", new RuntimeException());
         } else {
           uiWebAppContext.setResourceBase(onDiskPath);
-          LOG.info("Using webapps at: " + onDiskPath);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -1503,10 +1503,10 @@ public class ResourceManager extends CompositeService
 
   synchronized void transitionToActive() throws Exception {
     if (rmContext.getHAServiceState() == HAServiceProtocol.HAServiceState.ACTIVE) {
-      LOG.info("Already in active state");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
-    LOG.info("Transitioning to active state");
+    LOG.error("Temp", new RuntimeException());
 
     this.rmLoginUGI.doAs(new PrivilegedExceptionAction<Void>() {
       @Override
@@ -1522,25 +1522,25 @@ public class ResourceManager extends CompositeService
     });
 
     rmContext.setHAServiceState(HAServiceProtocol.HAServiceState.ACTIVE);
-    LOG.info("Transitioned to active state");
+    LOG.error("Temp", new RuntimeException());
   }
 
   synchronized void transitionToStandby(boolean initialize)
       throws Exception {
     if (rmContext.getHAServiceState() ==
         HAServiceProtocol.HAServiceState.STANDBY) {
-      LOG.info("Already in standby state");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
-    LOG.info("Transitioning to standby state");
+    LOG.error("Temp", new RuntimeException());
     HAServiceState state = rmContext.getHAServiceState();
     rmContext.setHAServiceState(HAServiceProtocol.HAServiceState.STANDBY);
     if (state == HAServiceProtocol.HAServiceState.ACTIVE) {
       stopActiveServices();
       reinitialize(initialize);
     }
-    LOG.info("Transitioned to standby state");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -1822,9 +1822,9 @@ public class ResourceManager extends CompositeService
     rmStore.init(conf);
     rmStore.start();
     try {
-      LOG.info("Deleting ResourceManager state store...");
+      LOG.error("Temp", new RuntimeException());
       rmStore.deleteStore();
-      LOG.info("State store deleted");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       rmStore.stop();
     }
@@ -1878,9 +1878,9 @@ public class ResourceManager extends CompositeService
     rmStore.start();
     try {
       ApplicationId removeAppId = ApplicationId.fromString(applicationId);
-      LOG.info("Deleting application " + removeAppId + " from state store");
+      LOG.error("Temp", new RuntimeException());
       rmStore.removeApplication(removeAppId);
-      LOG.info("Application is deleted from state store");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       rmStore.stop();
     }

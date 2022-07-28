@@ -107,7 +107,7 @@ public class CosNFileSystem extends FileSystem {
         this.getWorkingDirectory());
     this.owner = getOwnerId();
     this.group = getGroupId();
-    LOG.debug("owner:" + owner + ", group:" + group);
+    LOG.error("Temp", new RuntimeException());
 
     BufferPool.getInstance().initialize(this.getConf());
 
@@ -253,7 +253,7 @@ public class CosNFileSystem extends FileSystem {
       }
 
     } catch (FileNotFoundException e) {
-      LOG.debug("Creating a new file: [{}] in COS.", f);
+      LOG.error("Temp", new RuntimeException());
     }
 
     Path absolutePath = makeAbsolute(f);
@@ -292,12 +292,12 @@ public class CosNFileSystem extends FileSystem {
 
   @Override
   public boolean delete(Path f, boolean recursive) throws IOException {
-    LOG.debug("Ready to delete path: [{}]. recursive: [{}].", f, recursive);
+    LOG.error("Temp", new RuntimeException());
     FileStatus status;
     try {
       status = getFileStatus(f);
     } catch (FileNotFoundException e) {
-      LOG.debug("Ready to delete the file: [{}], but it does not exist.", f);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     Path absolutePath = makeAbsolute(f);
@@ -342,7 +342,7 @@ public class CosNFileSystem extends FileSystem {
       }
 
     } else {
-      LOG.debug("Delete the file: {}", f);
+      LOG.error("Temp", new RuntimeException());
       createParent(f);
       store.delete(key);
     }
@@ -365,10 +365,10 @@ public class CosNFileSystem extends FileSystem {
     FileMetadata meta = store.retrieveMetadata(key);
     if (meta != null) {
       if (meta.isFile()) {
-        LOG.debug("Path: [{}] is a file. COS key: [{}]", f, key);
+        LOG.error("Temp", new RuntimeException());
         return newFile(meta, absolutePath);
       } else {
-        LOG.debug("Path: [{}] is a dir. COS key: [{}]", f, key);
+        LOG.error("Temp", new RuntimeException());
         return newDirectory(meta, absolutePath);
       }
     }
@@ -380,12 +380,12 @@ public class CosNFileSystem extends FileSystem {
     // Considering that the object store's directory is a common prefix in
     // the object key, it needs to check the existence of the path by listing
     // the COS key.
-    LOG.debug("List COS key: [{}] to check the existence of the path.", key);
+    LOG.error("Temp", new RuntimeException());
     PartialListing listing = store.list(key, 1);
     if (listing.getFiles().length > 0
         || listing.getCommonPrefixes().length > 0) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Path: [{}] is a directory. COS key: [{}]", f, key);
+        LOG.error("Temp", new RuntimeException());
       }
       return newDirectory(absolutePath);
     }
@@ -494,7 +494,7 @@ public class CosNFileSystem extends FileSystem {
               "Can't make directory for path '%s', it is a file.", parent));
         }
       } catch (FileNotFoundException e) {
-        LOG.debug("The Path: [{}] does not exist.", path);
+        LOG.error("Temp", new RuntimeException());
       }
       parent = parent.getParent();
     } while (parent != null);
@@ -550,7 +550,7 @@ public class CosNFileSystem extends FileSystem {
           break;
         }
       } catch (FileNotFoundException e) {
-        LOG.debug("Making dir: [{}] in COS", f);
+        LOG.error("Temp", new RuntimeException());
 
         String folderPath = pathToKey(makeAbsolute(f));
         if (!folderPath.endsWith(PATH_DELIMITER)) {
@@ -572,7 +572,7 @@ public class CosNFileSystem extends FileSystem {
       }
     } catch (FileNotFoundException e) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Make directory: [{}] in COS.", f);
+        LOG.error("Temp", new RuntimeException());
       }
 
       String folderPath = pathToKey(makeAbsolute(f));
@@ -591,7 +591,7 @@ public class CosNFileSystem extends FileSystem {
     if (fs.isDirectory()) {
       throw new FileNotFoundException("'" + f + "' is a directory");
     }
-    LOG.info("Open the file: [{}] for reading.", f);
+    LOG.error("Temp", new RuntimeException());
     Path absolutePath = makeAbsolute(f);
     String key = pathToKey(absolutePath);
     long fileSize = store.getFileLength(key);
@@ -602,11 +602,11 @@ public class CosNFileSystem extends FileSystem {
 
   @Override
   public boolean rename(Path src, Path dst) throws IOException {
-    LOG.debug("Rename source path: [{}] to dest path: [{}].", src, dst);
+    LOG.error("Temp", new RuntimeException());
 
     // Renaming the root directory is not allowed
     if (src.isRoot()) {
-      LOG.debug("Cannot rename the root directory of a filesystem.");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -747,7 +747,7 @@ public class CosNFileSystem extends FileSystem {
     try {
       copyFileContext.awaitAllFinish(copiesToFinishes);
     } catch (InterruptedException e) {
-      LOG.warn("interrupted when wait copies to finish");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       copyFileContext.lock();
     }
@@ -759,14 +759,14 @@ public class CosNFileSystem extends FileSystem {
     Path parent = path.getParent();
     if (parent != null) {
       String parentKey = pathToKey(parent);
-      LOG.debug("Create parent key: {}", parentKey);
+      LOG.error("Temp", new RuntimeException());
       if (!parentKey.equals(PATH_DELIMITER)) {
         String key = pathToKey(makeAbsolute(parent));
         if (key.length() > 0) {
           try {
             store.storeEmptyFile(key + PATH_DELIMITER);
           } catch (IOException e) {
-            LOG.debug("Store a empty file in COS failed.", e);
+            LOG.error("Temp", new RuntimeException());
             throw e;
           }
         }

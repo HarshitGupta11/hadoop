@@ -69,7 +69,7 @@ public class ConvertedConfigValidator {
       cs.setRMContext(rmContext);
       cs.serviceInit(csConfig);
       cs.serviceStart();
-      LOG.info("Capacity scheduler was successfully started");
+      LOG.error("Temp", new RuntimeException());
       cs.serviceStop();
     } catch (Exception e) {
       LOG.error("Could not start Capacity Scheduler", e);

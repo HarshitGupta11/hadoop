@@ -151,7 +151,7 @@ public class ViewFileSystem extends FileSystem {
         try {
           fs.close();
         } catch (IOException e) {
-          LOG.info("Fail closing ViewFileSystem's child filesystem " + fs, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

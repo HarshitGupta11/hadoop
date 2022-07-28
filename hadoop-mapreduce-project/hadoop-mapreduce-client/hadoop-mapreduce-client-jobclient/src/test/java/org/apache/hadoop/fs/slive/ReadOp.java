@@ -118,21 +118,21 @@ class ReadOp extends Operation {
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with reading", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (BadFileException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.BAD_FILES, 1L));
-      LOG.warn("Error reading bad file", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error reading", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (is != null) {
         try {
           is.close();
         } catch (IOException e) {
-          LOG.warn("Error closing read stream", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

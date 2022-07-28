@@ -132,7 +132,7 @@ public final class CommonCallableSupplier<T> implements Supplier {
           "Waiting for task completion")) {
         future.join();
       } catch (Exception e) {
-        LOG.debug("Ignoring exception raised in task completion: ");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

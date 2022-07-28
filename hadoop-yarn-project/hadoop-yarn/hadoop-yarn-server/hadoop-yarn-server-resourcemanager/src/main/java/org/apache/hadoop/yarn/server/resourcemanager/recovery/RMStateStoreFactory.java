@@ -31,7 +31,7 @@ public class RMStateStoreFactory {
     Class<? extends RMStateStore> storeClass =
         conf.getClass(YarnConfiguration.RM_STORE,
             MemoryRMStateStore.class, RMStateStore.class);
-    LOG.info("Using RMStateStore implementation - " + storeClass);
+    LOG.error("Temp", new RuntimeException());
     return ReflectionUtils.newInstance(storeClass, conf);
   }
 }

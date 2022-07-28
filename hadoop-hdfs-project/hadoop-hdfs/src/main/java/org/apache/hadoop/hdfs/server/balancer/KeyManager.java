@@ -156,7 +156,7 @@ public class KeyManager implements Closeable, DataEncryptionKeyFactory {
         blockKeyUpdater.daemon.interrupt();
       }
     } catch(Exception e) {
-      LOG.warn("Exception shutting down access key updater thread", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -169,7 +169,7 @@ public class KeyManager implements Closeable, DataEncryptionKeyFactory {
 
     BlockKeyUpdater(final long sleepInterval) {
       this.sleepInterval = sleepInterval;
-      LOG.info("Update block keys every " + StringUtils.formatTime(sleepInterval));
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
@@ -184,7 +184,7 @@ public class KeyManager implements Closeable, DataEncryptionKeyFactory {
           Thread.sleep(sleepInterval);
         }
       } catch (InterruptedException e) {
-        LOG.debug("InterruptedException in block key updater thread", e);
+        LOG.error("Temp", new RuntimeException());
       } catch (Throwable e) {
         LOG.error("Exception in block key updater thread", e);
         shouldRun = false;
@@ -196,7 +196,7 @@ public class KeyManager implements Closeable, DataEncryptionKeyFactory {
       try {
         daemon.interrupt();
       } catch(Exception e) {
-        LOG.warn("Exception shutting down key updater thread", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -1664,7 +1664,7 @@ public class TestExternalStoragePolicySatisfier {
       for (Block block : moveAttemptFinishedBlks) {
         actualBlockMovements.add(block);
       }
-      LOG.info("Movement attempted blocks:{}", actualBlockMovements);
+      LOG.error("Temp", new RuntimeException());
     }
 
     public List<Block> getActualBlockMovements() {

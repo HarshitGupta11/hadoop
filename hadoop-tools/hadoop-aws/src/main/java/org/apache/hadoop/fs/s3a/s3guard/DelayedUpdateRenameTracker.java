@@ -141,7 +141,7 @@ public class DelayedUpdateRenameTracker extends RenameTracker {
 
   @Override
   public IOException renameFailed(final Exception ex) {
-    LOG.warn("Rename has failed; updating s3guard with destination state");
+    LOG.error("Temp", new RuntimeException());
     try (DurationInfo ignored = new DurationInfo(LOG,
         "Cleaning up deleted paths")) {
       // the destination paths are updated; the source is left alone.
@@ -152,7 +152,7 @@ public class DelayedUpdateRenameTracker extends RenameTracker {
       }
       deleteParentPaths();
     } catch (IOException | SdkBaseException e) {
-      LOG.warn("Ignoring error raised in AWS SDK ", e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return super.renameFailed(ex);

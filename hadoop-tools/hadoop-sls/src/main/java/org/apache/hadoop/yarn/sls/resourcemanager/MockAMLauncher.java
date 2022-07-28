@@ -101,7 +101,7 @@ public class MockAMLauncher extends ApplicationMasterLauncher
 
         ams.notifyAMContainerLaunched(
             event.getAppAttempt().getMasterContainer());
-        LOG.info("Notify AM launcher launched:" + amContainer.getId());
+        LOG.error("Temp", new RuntimeException());
 
         se.getNmMap().get(amContainer.getNodeId())
             .addNewContainer(amContainer, -1);

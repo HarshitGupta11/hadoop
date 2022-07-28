@@ -117,7 +117,7 @@ public class TestReconstructStripedBlocksWithRackAwareness {
       if (dn.getDatanodeId().getHostName().equals(hostname)) {
         dnProp = cluster.stopDataNode(i);
         cluster.setDataNodeDead(dn.getDatanodeId());
-        LOG.info("stop datanode " + dn.getDatanodeId().getHostName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return dnProp;
@@ -164,7 +164,7 @@ public class TestReconstructStripedBlocksWithRackAwareness {
         cellSize * dataBlocks * 2, (short) 1, 0L);
     GenericTestUtils.waitFor(() ->
         bm.numOfUnderReplicatedBlocks() == 0, 100, 30000);
-    LOG.info("Created file {}", file);
+    LOG.error("Temp", new RuntimeException());
 
     final INodeFile fileNode = fsn.getFSDirectory()
         .getINode4Write(file.toString()).asFile();
@@ -184,7 +184,7 @@ public class TestReconstructStripedBlocksWithRackAwareness {
 
     // make sure we have 6 racks again
     NetworkTopology topology = bm.getDatanodeManager().getNetworkTopology();
-    LOG.info("topology is: {}", topology);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(hosts.length, topology.getNumOfLeaves());
     Assert.assertEquals(dataBlocks, topology.getNumOfRacks());
 

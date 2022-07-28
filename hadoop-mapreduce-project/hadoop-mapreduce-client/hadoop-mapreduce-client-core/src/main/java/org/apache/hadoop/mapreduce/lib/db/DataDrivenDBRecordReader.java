@@ -131,7 +131,7 @@ public class DataDrivenDBRecordReader<T extends DBWritable> extends DBRecordRead
           conditionClauses.toString()));
     }
 
-    LOG.debug("Using query: " + query.toString());
+    LOG.error("Temp", new RuntimeException());
 
     return query.toString();
   }

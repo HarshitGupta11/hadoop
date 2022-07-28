@@ -294,7 +294,7 @@ public class DFSStripedOutputStream extends DFSOutputStream
                          throws IOException {
     super(dfsClient, src, stat, flag, progress, checksum, favoredNodes, false);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Creating DFSStripedOutputStream for " + src);
+      LOG.error("Temp", new RuntimeException());
     }
 
     ecPolicy = stat.getErasureCodingPolicy();
@@ -402,10 +402,10 @@ public class DFSStripedOutputStream extends DFSOutputStream
 
     final int failCount = failedStreamers.size() + newFailed.size();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("checkStreamers: " + streamers);
-      LOG.debug("healthy streamer count=" + (numAllBlocks - failCount));
-      LOG.debug("original failed streamers: " + failedStreamers);
-      LOG.debug("newly failed streamers: " + newFailed);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     if (failCount > (numAllBlocks - numDataBlocks)) {
       closeAllStreamers();
@@ -431,7 +431,7 @@ public class DFSStripedOutputStream extends DFSOutputStream
 
   private void handleStreamerFailure(String err, Exception e,
       StripedDataStreamer streamer) throws IOException {
-    LOG.warn("Failed: " + err + ", " + this, e);
+    LOG.error("Temp", new RuntimeException());
     streamer.getErrorState().setInternalError();
     streamer.close(true);
     checkStreamers();
@@ -445,7 +445,7 @@ public class DFSStripedOutputStream extends DFSOutputStream
     for (short i = 0; i < numAllBlocks; i++) {
       final StripedDataStreamer oldStreamer = getStripedDataStreamer(i);
       if (!oldStreamer.isHealthy()) {
-        LOG.info("replacing previously failed streamer " + oldStreamer);
+        LOG.error("Temp", new RuntimeException());
         StripedDataStreamer streamer = new StripedDataStreamer(oldStreamer.stat,
             dfsClient, src, oldStreamer.progress,
             oldStreamer.checksum4WriteBlock, cachingStrategy, byteArrayManager,
@@ -784,7 +784,7 @@ public class DFSStripedOutputStream extends DFSOutputStream
       for (StripedDataStreamer streamer : healthyStreamers) {
         if (!coordinator.updateStreamerMap.containsKey(streamer)) {
           // close the streamer if it is too slow to create new connection
-          LOG.info("close the slow stream " + streamer);
+          LOG.error("Temp", new RuntimeException());
           streamer.setStreamerAsClosed();
           failed.add(streamer);
         }
@@ -1366,7 +1366,7 @@ public class DFSStripedOutputStream extends DFSOutputStream
       if (corruptBlockCount == numAllBlocks - numDataBlocks) {
         sb.append(" It's at high risk of losing data.");
       }
-      LOG.warn(sb.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

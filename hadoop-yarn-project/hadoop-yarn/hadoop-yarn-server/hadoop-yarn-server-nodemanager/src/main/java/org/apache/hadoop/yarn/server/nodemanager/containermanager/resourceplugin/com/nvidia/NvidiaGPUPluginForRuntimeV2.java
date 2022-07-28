@@ -159,7 +159,7 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
       lastTimeFoundDevices = r;
       return r;
     } catch (IOException e) {
-      LOG.debug("Failed to get output from {}", pathOfGpuBinary);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(e);
     }
   }
@@ -177,7 +177,7 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
         gpuMinorNumbersSB.append(device.getMinorNumber() + ",");
       }
       String minorNumbers = gpuMinorNumbersSB.toString();
-      LOG.info("Nvidia Docker v2 assigned GPU: " + minorNumbers);
+      LOG.error("Temp", new RuntimeException());
       return DeviceRuntimeSpec.Builder.newInstance()
           .addEnv(nvidiaVisibleDevices,
               minorNumbers.substring(0, minorNumbers.length() - 1))
@@ -197,15 +197,15 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
     String output = null;
     // output "major:minor" in hex
     try {
-      LOG.debug("Get major numbers from /dev/{}", devName);
+      LOG.error("Temp", new RuntimeException());
       output = shellExecutor.getMajorMinorInfo(devName);
       String[] strs = output.trim().split(":");
-      LOG.debug("stat output:{}", output);
+      LOG.error("Temp", new RuntimeException());
       output = Integer.toString(Integer.parseInt(strs[0], 16));
     } catch (IOException e) {
       String msg =
           "Failed to get major number from reading /dev/" + devName;
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
     } catch (NumberFormatException e) {
       LOG.error("Failed to parse device major number from stat output");
       output = null;
@@ -287,7 +287,7 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
         sb.append("\t\t]\n");
       }
       sb.append("}\n");
-      LOG.debug(sb.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -422,7 +422,7 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
       Map.Entry<Set<Device>, Integer> element = iterator.next();
       if (availableDevices.containsAll(element.getKey())) {
         allocation.addAll(element.getKey());
-        LOG.info("Topology scheduler allocated: " + allocation);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
     }
@@ -666,11 +666,11 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
       if (null != envBinaryPath) {
         if (new File(envBinaryPath).exists()) {
           pathOfGpuBinary = envBinaryPath;
-          LOG.info("Use nvidia gpu binary: " + pathOfGpuBinary);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }
-      LOG.info("Search binary..");
+      LOG.error("Temp", new RuntimeException());
       // search if binary exists in default folders
       File binaryFile;
       boolean found = false;
@@ -679,7 +679,7 @@ public class NvidiaGPUPluginForRuntimeV2 implements DevicePlugin,
         if (binaryFile.exists()) {
           found = true;
           pathOfGpuBinary = binaryFile.getAbsolutePath();
-          LOG.info("Found binary:" + pathOfGpuBinary);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }

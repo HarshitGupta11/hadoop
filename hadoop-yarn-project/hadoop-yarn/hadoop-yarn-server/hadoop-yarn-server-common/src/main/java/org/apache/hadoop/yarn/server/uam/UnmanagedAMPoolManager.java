@@ -177,7 +177,7 @@ public class UnmanagedAMPoolManager extends AbstractService {
         throw new YarnException("getNewApplication got null response");
       }
       appId = response.getApplicationId();
-      LOG.info("Received new application ID {} from RM", appId);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       rmClient = null;
     }
@@ -228,7 +228,7 @@ public class UnmanagedAMPoolManager extends AbstractService {
 
     Token<AMRMTokenIdentifier> amrmToken = null;
     try {
-      LOG.info("Launching UAM id {} for application {}", uamId, appId);
+      LOG.error("Temp", new RuntimeException());
       amrmToken = uam.launchUAM();
     } catch (Exception e) {
       // Add the map earlier and remove here if register failed because we want
@@ -270,7 +270,7 @@ public class UnmanagedAMPoolManager extends AbstractService {
     this.unmanagedAppMasterMap.put(uamId, uam);
 
     try {
-      LOG.info("Reattaching UAM id {} for application {}", uamId, appId);
+      LOG.error("Temp", new RuntimeException());
       uam.reAttachUAM(uamToken);
     } catch (Exception e) {
       // Add the map earlier and remove here if register failed because we want
@@ -366,7 +366,7 @@ public class UnmanagedAMPoolManager extends AbstractService {
       // Only remove the UAM when the unregister finished
       this.unmanagedAppMasterMap.remove(uamId);
       this.appIdMap.remove(uamId);
-      LOG.info("UAM id {} is unregistered", uamId);
+      LOG.error("Temp", new RuntimeException());
     }
     return response;
   }

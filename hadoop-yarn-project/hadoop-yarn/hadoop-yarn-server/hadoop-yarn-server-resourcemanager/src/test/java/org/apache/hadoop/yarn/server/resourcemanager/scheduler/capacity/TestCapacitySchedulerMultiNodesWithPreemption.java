@@ -194,7 +194,7 @@ public class TestCapacitySchedulerMultiNodesWithPreemption
       }
       return false;
     }, 10, 30000);
-    LOG.info("Preempted node is: " + preemptedNode.get().getNodeId());
+    LOG.error("Temp", new RuntimeException());
 
 
     // Step 5: Don't release the container from NodeManager so that Reservation

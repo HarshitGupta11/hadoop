@@ -62,7 +62,7 @@ public class ShutdownThreadsHelper {
       thread.join(timeoutInMilliSeconds);
       return true;
     } catch (InterruptedException ie) {
-      LOG.warn("Interrupted while shutting down thread - " + thread.getName());
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }

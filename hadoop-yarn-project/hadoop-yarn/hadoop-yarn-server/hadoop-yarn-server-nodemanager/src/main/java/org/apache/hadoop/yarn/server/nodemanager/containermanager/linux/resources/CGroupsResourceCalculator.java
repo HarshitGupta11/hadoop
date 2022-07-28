@@ -145,7 +145,7 @@ public class CGroupsResourceCalculator extends ResourceCalculatorProcessTree {
 
   @Override
   public float getCpuUsagePercent() {
-    LOG.debug("Process {} jiffies:{}", pid, processTotalJiffies);
+    LOG.error("Temp", new RuntimeException());
     return cpuTimeTracker.getCpuTrackerUsagePercent();
   }
 
@@ -180,7 +180,7 @@ public class CGroupsResourceCalculator extends ResourceCalculatorProcessTree {
       cpuTimeTracker.updateElapsedJiffies(processTotalJiffies,
           clock.getTime());
     } catch (YarnException e) {
-      LOG.warn("Failed to parse " + pid, e);
+      LOG.error("Temp", new RuntimeException());
     }
     processPhysicalMemory = getMemorySize(memStat);
     if (memswStat.exists()) {
@@ -224,7 +224,7 @@ public class CGroupsResourceCalculator extends ResourceCalculatorProcessTree {
         return false;
       }
     } catch (SecurityException se) {
-      LOG.warn("Failed to get Operating System name. " + se);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     return true;
@@ -239,7 +239,7 @@ public class CGroupsResourceCalculator extends ResourceCalculatorProcessTree {
       });
       return mem[0];
     } catch (YarnException e) {
-      LOG.warn("Failed to parse cgroups " + memswStat, e);
+      LOG.error("Temp", new RuntimeException());
     }
     return UNAVAILABLE;
   }
@@ -294,7 +294,7 @@ public class CGroupsResourceCalculator extends ResourceCalculatorProcessTree {
                 new File(cgroupPath).toPath().getFileName().toString();
             result[0] = cGroupsHandler.getRelativePathForCGroup(cgroup);
           } else {
-            LOG.warn("Invalid cgroup path for " + pidCgroupFile);
+            LOG.error("Temp", new RuntimeException());
           }
           return Result.Exit;
         }

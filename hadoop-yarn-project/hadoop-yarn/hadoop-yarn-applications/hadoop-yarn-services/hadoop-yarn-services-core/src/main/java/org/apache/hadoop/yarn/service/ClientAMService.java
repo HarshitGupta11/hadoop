@@ -106,7 +106,7 @@ public class ClientAMService extends AbstractService
     bindAddress = NetUtils.createSocketAddrForHost(nodeHostString,
         server.getListenerAddress().getPort());
 
-    LOG.info("Instantiated ClientAMService at " + bindAddress);
+    LOG.error("Temp", new RuntimeException());
     super.serviceStart();
   }
 
@@ -147,7 +147,7 @@ public class ClientAMService extends AbstractService
   @Override
   public StopResponseProto stop(StopRequestProto requestProto)
       throws IOException, YarnException {
-    LOG.info("Stop the service by {}", UserGroupInformation.getCurrentUser());
+    LOG.error("Temp", new RuntimeException());
     context.scheduler.getDiagnostics()
         .append("Stopped by user " + UserGroupInformation.getCurrentUser());
     context.scheduler.setGracefulStop(FinalApplicationStatus.ENDED);
@@ -193,7 +193,7 @@ public class ClientAMService extends AbstractService
       throws IOException, YarnException {
     ServiceEvent event = new ServiceEvent(ServiceEventType.START);
     context.scheduler.getDispatcher().getEventHandler().handle(event);
-    LOG.info("Restart service by {}", UserGroupInformation.getCurrentUser());
+    LOG.error("Temp", new RuntimeException());
     return RestartServiceResponseProto.newBuilder().build();
   }
 
@@ -207,7 +207,7 @@ public class ClientAMService extends AbstractService
         ComponentInstanceEvent event =
             new ComponentInstanceEvent(ContainerId.fromString(containerId),
                 ComponentInstanceEventType.UPGRADE);
-        LOG.info("Upgrade container {}", containerId);
+        LOG.error("Temp", new RuntimeException());
         context.scheduler.getDispatcher().getEventHandler().handle(event);
       }
     }

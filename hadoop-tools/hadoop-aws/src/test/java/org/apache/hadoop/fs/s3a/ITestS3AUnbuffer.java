@@ -140,9 +140,9 @@ public class ITestS3AUnbuffer extends AbstractS3ATestBase {
       inputStream = fs.open(dest);
       streamStatsStr = demandStringifyIOStatisticsSource(inputStream);
 
-      LOG.info("initial stream statistics {}", streamStatsStr);
+      LOG.error("Temp", new RuntimeException());
       readAndAssertBytesRead(inputStream, firstBytesToRead);
-      LOG.info("stream statistics after read {}", streamStatsStr);
+      LOG.error("Temp", new RuntimeException());
       inputStream.unbuffer();
 
       // Validate that calling unbuffer updates the input stream statistics
@@ -156,7 +156,7 @@ public class ITestS3AUnbuffer extends AbstractS3ATestBase {
       bytesRead.reset();
       readAndAssertBytesRead(inputStream, secondBytesToRead);
       inputStream.unbuffer();
-      LOG.info("stream statistics after second read {}", streamStatsStr);
+      LOG.error("Temp", new RuntimeException());
       bytesRead.assertDiffEquals(secondBytesToRead);
       final long bytesInClose = bytesReadInClose.diff();
       expectedFinalBytesRead = firstBytesToRead + secondBytesToRead;
@@ -165,10 +165,10 @@ public class ITestS3AUnbuffer extends AbstractS3ATestBase {
 
       totalBytesRead.assertDiffEquals(expectedTotalBytesRead);
     } finally {
-      LOG.info("Closing stream");
+      LOG.error("Temp", new RuntimeException());
       IOUtils.closeStream(inputStream);
     }
-    LOG.info("stream statistics after close {}", streamStatsStr);
+    LOG.error("Temp", new RuntimeException());
 
     // Validate that closing the file does not further change the statistics
     totalBytesRead.assertDiffEquals(expectedTotalBytesRead);

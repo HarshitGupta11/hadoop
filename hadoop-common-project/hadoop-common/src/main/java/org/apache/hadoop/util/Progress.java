@@ -98,7 +98,7 @@ public class Progress {
       sum += progressWeightagesForPhases.get(i);
     }
     if (sum > 1.0) {
-      LOG.warn("Sum of weightages can not be more than 1.0; But sum = " + sum);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return phase;

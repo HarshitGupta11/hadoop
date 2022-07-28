@@ -688,7 +688,7 @@ public final class MarkerTool extends S3GuardTool {
         if (verbose) {
           println(out, "  Directory Marker %s/", key);
         }
-        LOG.debug("{}", key);
+        LOG.error("Temp", new RuntimeException());
         tracker.markerFound(statusPath,
             key + "/",
             locatedStatus);
@@ -707,7 +707,7 @@ public final class MarkerTool extends S3GuardTool {
         break;
       }
     }
-    LOG.debug("Listing summary {}", listing);
+    LOG.error("Temp", new RuntimeException());
     if (verbose) {
       println(out, "%nListing statistics:%n  %s%n",
           ioStatisticsSourceToString(listing));

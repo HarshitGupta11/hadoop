@@ -147,7 +147,7 @@ public class TestDelegationTokenFetcher {
       assertTrue("The non verbose output is expected to start with \""
           + expectedNonVerbose +"\"",
           resNonVerbose.startsWith(expectedNonVerbose));
-      LOG.info(resNonVerbose);
+      LOG.error("Temp", new RuntimeException());
       LOG.info(
           DelegationTokenFetcher.printTokensToString(conf, p, true));
 

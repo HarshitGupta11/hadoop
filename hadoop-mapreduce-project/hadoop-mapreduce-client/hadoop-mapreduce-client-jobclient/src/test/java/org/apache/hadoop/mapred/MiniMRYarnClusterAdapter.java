@@ -59,7 +59,7 @@ public class MiniMRYarnClusterAdapter implements MiniMRClientCluster {
   @Override
   public void restart() {
     if (!miniMRYarnCluster.getServiceState().equals(STATE.STARTED)){
-      LOG.warn("Cannot restart the mini cluster, start it first");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     Configuration oldConf = new Configuration(getConfig());

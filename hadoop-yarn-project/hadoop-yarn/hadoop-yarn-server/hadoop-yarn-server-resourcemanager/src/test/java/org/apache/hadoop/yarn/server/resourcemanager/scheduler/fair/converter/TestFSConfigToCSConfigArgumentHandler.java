@@ -322,7 +322,7 @@ public class TestFSConfigToCSConfigArgumentHandler {
     // validate params
     verify(mockConverter).convert(conversionParams.capture());
     FSConfigToCSConfigConverterParams params = conversionParams.getValue();
-    LOG.info("FS config converter parameters: " + params);
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals("Yarn site config",
         FSConfigConverterTestCommons.YARN_SITE_XML,
@@ -354,7 +354,7 @@ public class TestFSConfigToCSConfigArgumentHandler {
     // validate params
     verify(mockConverter).convert(conversionParams.capture());
     FSConfigToCSConfigConverterParams params = conversionParams.getValue();
-    LOG.info("FS config converter parameters: " + params);
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals("Yarn site config",
         FSConfigConverterTestCommons.YARN_SITE_XML,
@@ -387,7 +387,7 @@ public class TestFSConfigToCSConfigArgumentHandler {
     // validate params
     verify(mockConverter).convert(conversionParams.capture());
     FSConfigToCSConfigConverterParams params = conversionParams.getValue();
-    LOG.info("FS config converter parameters: " + params);
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals("Yarn site config",
         FSConfigConverterTestCommons.YARN_SITE_XML,

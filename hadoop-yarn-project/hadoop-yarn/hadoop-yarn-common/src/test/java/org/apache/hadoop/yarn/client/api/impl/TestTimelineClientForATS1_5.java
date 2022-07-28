@@ -69,7 +69,7 @@ public class TestTimelineClientForATS1_5 {
             .getAbsoluteFile();
     localFS.delete(new Path(localActiveDir.getAbsolutePath()), true);
     localActiveDir.mkdir();
-    LOG.info("Created activeDir in " + localActiveDir.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
     authUgi = UserGroupInformation.getCurrentUser();
   }
 

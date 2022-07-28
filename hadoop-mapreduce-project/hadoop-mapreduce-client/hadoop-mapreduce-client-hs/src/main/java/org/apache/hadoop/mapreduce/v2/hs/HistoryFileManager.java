@@ -287,7 +287,7 @@ public class HistoryFileManager extends AbstractService {
 
     public void delete(HistoryFileInfo fileInfo) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Removing from cache " + fileInfo);
+        LOG.error("Temp", new RuntimeException());
       }
       cache.remove(fileInfo.getJobId());
     }
@@ -347,7 +347,7 @@ public class HistoryFileManager extends AbstractService {
         }
       } else {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Scan not needed of " + fs.getPath());
+          LOG.error("Temp", new RuntimeException());
         }
         // reset scanTime
         scanTime = System.currentTimeMillis();
@@ -400,12 +400,12 @@ public class HistoryFileManager extends AbstractService {
     @VisibleForTesting
     synchronized void moveToDone() throws IOException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("moveToDone: " + historyFile);
+        LOG.error("Temp", new RuntimeException());
       }
       if (!isMovePending()) {
         // It was either deleted or is already in done. Either way do nothing
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Move no longer pending");
+          LOG.error("Temp", new RuntimeException());
         }
         return;
       }
@@ -417,21 +417,21 @@ public class HistoryFileManager extends AbstractService {
         JobId jobId = jobIndexInfo.getJobId();
 
         if (historyFile == null) {
-          LOG.info("No file for job-history with " + jobId + " found in cache!");
+          LOG.error("Temp", new RuntimeException());
         }
 
         if (confFile == null) {
-          LOG.info("No file for jobConf with " + jobId + " found in cache!");
+          LOG.error("Temp", new RuntimeException());
         }
 
         if (summaryFile == null || !intermediateDoneDirFc.util().exists(
             summaryFile)) {
-          LOG.info("No summary file for job: " + jobId);
+          LOG.error("Temp", new RuntimeException());
         } else {
           String jobSummaryString = getJobSummary(intermediateDoneDirFc,
               summaryFile);
-          SUMMARY_LOG.info(jobSummaryString);
-          LOG.info("Deleting JobSummary file: [" + summaryFile + "]");
+          SUMMARY_LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           intermediateDoneDirFc.delete(summaryFile, false);
           summaryFile = null;
         }
@@ -496,7 +496,7 @@ public class HistoryFileManager extends AbstractService {
     protected synchronized void delete() throws IOException {
       try {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("deleting " + historyFile + " and " + confFile);
+          LOG.error("Temp", new RuntimeException());
         }
         state = HistoryInfoState.DELETED;
         doneDirFc.delete(doneDirFc.makeQualified(historyFile), false);
@@ -536,7 +536,7 @@ public class HistoryFileManager extends AbstractService {
         try {
           wait();
         } catch (InterruptedException e) {
-          LOG.warn("Waiting has been interrupted");
+          LOG.error("Temp", new RuntimeException());
           throw new RuntimeException(e);
         }
       }
@@ -764,7 +764,7 @@ public class HistoryFileManager extends AbstractService {
           fc.setPermission(path, fsp);
         }
       } catch (FileAlreadyExistsException e) {
-        LOG.info("Directory: [" + path + "] already exists.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -782,11 +782,11 @@ public class HistoryFileManager extends AbstractService {
    */
   @SuppressWarnings("unchecked")
   void initExisting() throws IOException {
-    LOG.info("Initializing Existing Jobs...");
+    LOG.error("Temp", new RuntimeException());
     List<FileStatus> timestampedDirList = findTimestampedDirectories();
     // Sort first just so insertion is in a consistent order
     Collections.sort(timestampedDirList);
-    LOG.info("Found " + timestampedDirList.size() + " directories to load");
+    LOG.error("Temp", new RuntimeException());
     for (FileStatus fs : timestampedDirList) {
       // TODO Could verify the correct format for these directories.
       addDirectoryToSerialNumberIndex(fs.getPath());
@@ -830,7 +830,7 @@ public class HistoryFileManager extends AbstractService {
 
   private void addDirectoryToSerialNumberIndex(Path serialDirPath) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Adding " + serialDirPath + " to serial index");
+      LOG.error("Temp", new RuntimeException());
     }
     String serialPart = serialDirPath.getName();
     String timestampPart = JobHistoryUtils
@@ -850,13 +850,13 @@ public class HistoryFileManager extends AbstractService {
 
   private void addDirectoryToJobListCache(Path path) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Adding " + path + " to job list cache.");
+      LOG.error("Temp", new RuntimeException());
     }
     List<FileStatus> historyFileList = scanDirectoryForHistoryFiles(path,
         doneDirFc);
     for (FileStatus fs : historyFileList) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Adding in history for " + fs.getPath());
+        LOG.error("Temp", new RuntimeException());
       }
       JobIndexInfo jobIndexInfo = FileNameIndexUtils.getIndexInfo(fs.getPath()
           .getName());
@@ -926,7 +926,7 @@ public class HistoryFileManager extends AbstractService {
     // case where we are looking for a particular job.
     List<FileStatus> userDirList = JobHistoryUtils.localGlobber(
         intermediateDoneDirFc, intermediateDoneDirPath, "");
-    LOG.debug("Scanning intermediate dirs");
+    LOG.error("Temp", new RuntimeException());
     for (FileStatus userDir : userDirList) {
       String name = userDir.getPath().getName();
       UserLogDir dir = userDirModificationTimeMap.get(name);
@@ -949,16 +949,16 @@ public class HistoryFileManager extends AbstractService {
    */
   private void scanIntermediateDirectory(final Path absPath) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Scanning intermediate dir " + absPath);
+      LOG.error("Temp", new RuntimeException());
     }
     List<FileStatus> fileStatusList = scanDirectoryForHistoryFiles(absPath,
         intermediateDoneDirFc);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Found " + fileStatusList.size() + " files");
+      LOG.error("Temp", new RuntimeException());
     }
     for (FileStatus fs : fileStatusList) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("scanning file: "+ fs.getPath());
+        LOG.error("Temp", new RuntimeException());
       }
       JobIndexInfo jobIndexInfo = FileNameIndexUtils.getIndexInfo(fs.getPath()
           .getName());
@@ -978,11 +978,11 @@ public class HistoryFileManager extends AbstractService {
           try {
             found.delete();
           } catch (IOException e) {
-            LOG.warn("Error cleaning up a HistoryFile that is out of date.", e);
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Scheduling move to done of " +found);
+            LOG.error("Temp", new RuntimeException());
           }
 
           moveToDoneExecutor.execute(new Runnable() {
@@ -1000,7 +1000,7 @@ public class HistoryFileManager extends AbstractService {
       } else if (!old.isMovePending()) {
         //This is a duplicate so just delete it
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Duplicate: deleting");
+          LOG.error("Temp", new RuntimeException());
         }
         fileInfo.delete();
       }
@@ -1093,7 +1093,7 @@ public class HistoryFileManager extends AbstractService {
 
   private void moveToDoneNow(final Path src, final Path target)
       throws IOException {
-    LOG.info("Moving " + src.toString() + " to " + target.toString());
+    LOG.error("Temp", new RuntimeException());
     try {
       intermediateDoneDirFc.rename(src, target, Options.Rename.NONE);
     } catch (FileNotFoundException e) {

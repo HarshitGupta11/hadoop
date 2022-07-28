@@ -126,7 +126,7 @@ public class HostRestrictingAuthorizationFilter implements Filter {
           return true;
         }
       } catch (IOException e) {
-        LOG.warn("Got IOException {}; returned false", e);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }
@@ -159,7 +159,7 @@ public class HostRestrictingAuthorizationFilter implements Filter {
    */
   private void loadRuleMap(String ruleString) throws IllegalArgumentException {
     if (ruleString == null || ruleString.equals("")) {
-      LOG.debug("Got no rules - will disallow anyone access");
+      LOG.error("Temp", new RuntimeException());
     } else {
       // value: user1,network/bits1,path_glob1|user2,network/bits2,path_glob2...
       Pattern comma_split = Pattern.compile(",");

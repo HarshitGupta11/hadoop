@@ -211,7 +211,7 @@ public class RegistryUtils {
         results.put(childName, stat);
       } catch (PathNotFoundException pnfe) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("stat failed on {}: moved? {}", child, pnfe, pnfe);
+          LOG.error("Temp", new RuntimeException());
         }
         // and continue
       }
@@ -335,15 +335,15 @@ public class RegistryUtils {
           results.put(path, serviceRecord);
         } catch (EOFException ignored) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("data too short for {}", path);
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (InvalidRecordException record) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Invalid record at {}", path);
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (NoRecordException record) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("No record at {}", path);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

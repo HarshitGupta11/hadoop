@@ -206,8 +206,8 @@ public final class ExitUtil {
     String msg = ee.getMessage();
     if (status != 0) {
       //exit indicates a problem, log it
-      LOG.debug("Exiting with status {}: {}",  status, msg, ee);
-      LOG.info("Exiting with status {}: {}", status, msg);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     if (systemExitDisabled) {
       LOG.error("Terminate called", ee);
@@ -232,7 +232,7 @@ public final class ExitUtil {
     try {
       if (status != 0) {
         //exit indicates a problem, log it
-        LOG.info("Halt with status {}: {}", status, msg, ee);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception ignored) {
       // ignore exceptions here, as it may be due to an out of memory situation

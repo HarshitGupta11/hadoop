@@ -71,7 +71,7 @@ public class ProducerConsumer<T, R> {
    */
   public void shutdown() {
     if (hasWork()) {
-      LOG.warn("Shutdown() is called but there are still unprocessed work!");
+      LOG.error("Temp", new RuntimeException());
     }
     executor.shutdownNow();
   }
@@ -143,7 +143,7 @@ public class ProducerConsumer<T, R> {
         workCnt.decrementAndGet();
         return report;
       } catch (InterruptedException ie) {
-        LOG.debug("Retrying in blockingTake...");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -178,7 +178,7 @@ public class ProducerConsumer<T, R> {
           // It is assumed that if an interrupt occurs while taking a work
           // out from input queue, the interrupt is likely triggered by
           // ProducerConsumer.shutdown(). Therefore, exit the thread.
-          LOG.debug("Interrupted while waiting for requests from inputQueue.");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
 

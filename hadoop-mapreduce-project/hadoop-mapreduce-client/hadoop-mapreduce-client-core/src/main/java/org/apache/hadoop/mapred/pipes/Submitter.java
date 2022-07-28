@@ -473,7 +473,7 @@ public class Submitter extends Configured implements Tool {
         setExecutable(job, results.getOptionValue("program"));
       }
       if (results.hasOption("jobconf")) {
-        LOG.warn("-jobconf option is deprecated, please use -D instead.");
+        LOG.error("Temp", new RuntimeException());
         String options = results.getOptionValue("jobconf");
         StringTokenizer tokenizer = new StringTokenizer(options, ",");
         while (tokenizer.hasMoreTokens()) {
@@ -503,7 +503,7 @@ public class Submitter extends Configured implements Tool {
       runJob(job);
       return 0;
     } catch (ParseException pe) {
-      LOG.info("Error : " + pe);
+      LOG.error("Temp", new RuntimeException());
       cli.printUsage();
       return 1;
     }

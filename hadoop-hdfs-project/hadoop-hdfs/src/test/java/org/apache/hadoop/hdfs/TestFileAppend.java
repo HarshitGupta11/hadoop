@@ -337,7 +337,7 @@ public class TestFileAppend{
       fs1.append(p);
       Assert.fail();
     } catch(RemoteException re) {
-      AppendTestUtil.LOG.info("Got an exception:", re);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(AlreadyBeingCreatedException.class.getName(),
           re.getClassName());
     } finally {
@@ -378,7 +378,7 @@ public class TestFileAppend{
       fs1.append(p);
       Assert.fail();
     } catch(RemoteException re) {
-      AppendTestUtil.LOG.info("Got an exception:", re);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(AlreadyBeingCreatedException.class.getName(),
           re.getClassName());
     } finally {

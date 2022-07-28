@@ -67,7 +67,7 @@ class SleepOp extends Operation {
     } catch (InterruptedException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with sleeping", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return out;
   }

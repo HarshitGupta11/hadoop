@@ -80,7 +80,7 @@ public class NativeCollectorOnlyHandler<K, V> implements CommandDispatcher, Clos
     }
     
     if (null != combinerHandler) {
-      LOG.info("[NativeCollectorOnlyHandler] combiner is not null");
+      LOG.error("Temp", new RuntimeException());
     }
 
     final INativeHandler nativeHandler = NativeBatchProcessor.create(

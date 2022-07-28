@@ -114,7 +114,7 @@ public abstract class AbstractGangliaSink implements MetricsSink {
    */
   @Override
   public void init(SubsetConfiguration conf) {
-    LOG.debug("Initializing the GangliaSink for Ganglia metrics.");
+    LOG.error("Temp", new RuntimeException());
 
     this.conf = conf;
 
@@ -148,7 +148,7 @@ public abstract class AbstractGangliaSink implements MetricsSink {
 
     try {
       if (multicastEnabled) {
-        LOG.info("Enabling multicast for Ganglia with TTL " + multicastTtl);
+        LOG.error("Temp", new RuntimeException());
         datagramSocket = new MulticastSocket();
         ((MulticastSocket) datagramSocket).setTimeToLive(multicastTtl);
       } else {

@@ -63,7 +63,7 @@ public class TestSecureLogins extends AbstractSecureRegistryTest {
   @Test
   public void testHasRealm() throws Throwable {
     assertNotNull(getRealm());
-    LOG.info("ZK principal = {}", getPrincipalAndRealm(ZOOKEEPER_LOCALHOST));
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -95,7 +95,7 @@ public class TestSecureLogins extends AbstractSecureRegistryTest {
       assertNotNull("Unset: "+ Environment.JAAS_CONF_KEY, confFilename);
       String config = FileUtils.readFileToString(new File(confFilename),
           Charset.defaultCharset());
-      LOG.info("{}=\n{}", confFilename, config);
+      LOG.error("Temp", new RuntimeException());
       RegistrySecurity.setZKSaslClientProperties(ALICE, ALICE_CLIENT_CONTEXT);
     } finally {
       client.logout();
@@ -135,7 +135,7 @@ public class TestSecureLogins extends AbstractSecureRegistryTest {
     File krb5conf = getKdc().getKrb5conf();
     String krbConfig = FileUtils.readFileToString(krb5conf,
         Charset.defaultCharset());
-    LOG.info("krb5.conf at {}:\n{}", krb5conf, krbConfig);
+    LOG.error("Temp", new RuntimeException());
     Subject subject = new Subject();
     Class<?> kerb5LoginClass =
         Class.forName(KerberosUtil.getKrb5LoginModuleName());
@@ -188,7 +188,7 @@ public class TestSecureLogins extends AbstractSecureRegistryTest {
     String defaultRealm = KerberosUtil.getDefaultRealm();
     assertNotEmpty("No default Kerberos Realm",
         defaultRealm);
-    LOG.info("Default Realm '{}'", defaultRealm);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -197,7 +197,7 @@ public class TestSecureLogins extends AbstractSecureRegistryTest {
         KerberosName.hasRulesBeenSet());
     String rules = KerberosName.getRules();
     assertEquals(kerberosRule, rules);
-    LOG.info(rules);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -219,7 +219,7 @@ public class TestSecureLogins extends AbstractSecureRegistryTest {
     UserGroupInformation ugi = loginUGI(ZOOKEEPER, keytab_zk);
     RegistrySecurity.UgiInfo ugiInfo =
         new RegistrySecurity.UgiInfo(ugi);
-    LOG.info("logged in as: {}", ugiInfo);
+    LOG.error("Temp", new RuntimeException());
     assertTrue("security is not enabled: " + ugiInfo,
         UserGroupInformation.isSecurityEnabled());
     assertTrue("login is keytab based: " + ugiInfo,

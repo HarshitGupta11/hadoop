@@ -241,7 +241,7 @@ public class ITestSessionDelegationInFileystem extends AbstractDelegationIT {
     Token<?>[] tokens = fs.addDelegationTokens(YARN_RM, cred);
     assertEquals("Number of tokens", 1, tokens.length);
     Token<?> token = requireNonNull(tokens[0], "token");
-    LOG.info("FS token is {}", token);
+    LOG.error("Temp", new RuntimeException());
     Text service = delegationTokens.getService();
     Token<? extends TokenIdentifier> retrieved = requireNonNull(
         cred.getToken(service),
@@ -269,7 +269,7 @@ public class ITestSessionDelegationInFileystem extends AbstractDelegationIT {
     Token<?>[] tokens = cred.getAllTokens().toArray(new Token<?>[0]);
     Token<?> token0 = tokens[0];
     Text service = token0.getService();
-    LOG.info("Token = " + token0);
+    LOG.error("Temp", new RuntimeException());
     Token<?> token1 = requireNonNull(
         ugi.getCredentials().getToken(service), "Token from " + service);
     assertEquals("retrieved token", token0, token1);
@@ -354,7 +354,7 @@ public class ITestSessionDelegationInFileystem extends AbstractDelegationIT {
     // existing token
     Path testPath = path("testDTFileSystemClient");
     try (S3AFileSystem delegatedFS = newS3AInstance(uri, conf)) {
-      LOG.info("Delegated filesystem is: {}", delegatedFS);
+      LOG.error("Temp", new RuntimeException());
       assertBoundToDT(delegatedFS, tokenKind);
       if (encryptionTestEnabled()) {
         assertNotNull("Encryption propagation failed",
@@ -631,7 +631,7 @@ public class ITestSessionDelegationInFileystem extends AbstractDelegationIT {
     String s = DelegationTokenFetcher.printTokensToString(conf,
         new Path(tokenfile.toURI()),
         false);
-    LOG.info("Tokens: {}", s);
+    LOG.error("Temp", new RuntimeException());
     DelegationTokenFetcher.main(conf,
         args("--print", tokenFilePath));
     DelegationTokenFetcher.main(conf,
@@ -713,7 +713,7 @@ public class ITestSessionDelegationInFileystem extends AbstractDelegationIT {
     int r =  doAs(aliceUser,
         () ->ToolRunner.run(getConfiguration(), dt, args));
     String s = dtUtilContent.toString();
-    LOG.info("\n{}", s);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(expected, r);
     return s;
   }

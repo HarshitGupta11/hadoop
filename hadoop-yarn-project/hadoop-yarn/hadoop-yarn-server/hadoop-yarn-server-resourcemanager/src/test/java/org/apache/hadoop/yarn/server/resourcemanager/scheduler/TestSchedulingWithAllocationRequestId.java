@@ -245,7 +245,7 @@ public class TestSchedulingWithAllocationRequestId
       int size) throws Exception {
     AllocateResponse allocResponse = am.doHeartbeat();
     while (allocResponse.getAllocatedContainers().size() < size) {
-      LOG.info("Waiting for containers to be created for app...");
+      LOG.error("Temp", new RuntimeException());
       nm.nodeHeartbeat(true);
       ((AbstractYarnScheduler) rm.getResourceScheduler()).update();
       Thread.sleep(100);

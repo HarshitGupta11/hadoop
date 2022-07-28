@@ -60,18 +60,18 @@ public class TestLightWeightHashSet{
 
   @Test
   public void testEmptyBasic() {
-    LOG.info("Test empty basic");
+    LOG.error("Temp", new RuntimeException());
     Iterator<Integer> iter = set.iterator();
     // iterator should not have next
     assertFalse(iter.hasNext());
     assertEquals(0, set.size());
     assertTrue(set.isEmpty());
-    LOG.info("Test empty - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testOneElementBasic() {
-    LOG.info("Test one element basic");
+    LOG.error("Temp", new RuntimeException());
     set.add(list.get(0));
     // set should be non-empty
     assertEquals(1, set.size());
@@ -84,12 +84,12 @@ public class TestLightWeightHashSet{
     // iterator should not have next
     assertEquals(list.get(0), iter.next());
     assertFalse(iter.hasNext());
-    LOG.info("Test one element basic - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testMultiBasic() {
-    LOG.info("Test multi element basic");
+    LOG.error("Temp", new RuntimeException());
     // add once
     for (Integer i : list) {
       assertTrue(set.add(i));
@@ -121,12 +121,12 @@ public class TestLightWeightHashSet{
     }
     // check the number of element from the iterator
     assertEquals(list.size(), num);
-    LOG.info("Test multi element basic - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveOne() {
-    LOG.info("Test remove one");
+    LOG.error("Temp", new RuntimeException());
     assertTrue(set.add(list.get(0)));
     assertEquals(1, set.size());
 
@@ -144,12 +144,12 @@ public class TestLightWeightHashSet{
 
     iter = set.iterator();
     assertTrue(iter.hasNext());
-    LOG.info("Test remove one - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveMulti() {
-    LOG.info("Test remove multi");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -166,12 +166,12 @@ public class TestLightWeightHashSet{
     for (int i = NUM / 2; i < NUM; i++) {
       assertTrue(set.contains(list.get(i)));
     }
-    LOG.info("Test remove multi - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveAll() {
-    LOG.info("Test remove all");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -187,12 +187,12 @@ public class TestLightWeightHashSet{
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
     assertTrue(set.isEmpty());
-    LOG.info("Test remove all - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveAllViaIterator() {
-    LOG.info("Test remove all via iterator");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -214,12 +214,12 @@ public class TestLightWeightHashSet{
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
     assertTrue(set.isEmpty());
-    LOG.info("Test remove all via iterator - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollAll() {
-    LOG.info("Test poll all");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -240,12 +240,12 @@ public class TestLightWeightHashSet{
 
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
-    LOG.info("Test poll all - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollNMulti() {
-    LOG.info("Test pollN multi");
+    LOG.error("Temp", new RuntimeException());
 
     // use addAll
     set.addAll(list);
@@ -281,12 +281,12 @@ public class TestLightWeightHashSet{
     assertTrue(set.isEmpty());
     assertEquals(0, set.size());
 
-    LOG.info("Test pollN multi - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollNMultiArray() {
-    LOG.info("Test pollN multi array");
+    LOG.error("Temp", new RuntimeException());
 
     // use addAll
     set.addAll(list);
@@ -340,12 +340,12 @@ public class TestLightWeightHashSet{
     assertEquals(0, poll.length);
     // //////
 
-    LOG.info("Test pollN multi array- DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testClear() {
-    LOG.info("Test clear");
+    LOG.error("Temp", new RuntimeException());
     // use addAll
     set.addAll(list);
     assertEquals(NUM, set.size());
@@ -360,12 +360,12 @@ public class TestLightWeightHashSet{
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
 
-    LOG.info("Test clear - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testCapacity() {
-    LOG.info("Test capacity");
+    LOG.error("Temp", new RuntimeException());
     float maxF = LightWeightHashSet.DEFAULT_MAX_LOAD_FACTOR;
     float minF = LightWeightHashSet.DEFAUT_MIN_LOAD_FACTOR;
 
@@ -400,12 +400,12 @@ public class TestLightWeightHashSet{
     assertEquals(Math.max(LightWeightHashSet.MINIMUM_CAPACITY, expCap / 2),
         set.getCapacity());
 
-    LOG.info("Test capacity - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testOther() {
-    LOG.info("Test other");
+    LOG.error("Temp", new RuntimeException());
 
     // remove all
     assertTrue(set.addAll(list));
@@ -451,7 +451,7 @@ public class TestLightWeightHashSet{
       assertTrue(sub2.contains(array2[i]));
     }
 
-    LOG.info("Test other - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
   
   @Test

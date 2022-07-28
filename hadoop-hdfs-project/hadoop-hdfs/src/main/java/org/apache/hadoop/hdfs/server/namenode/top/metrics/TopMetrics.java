@@ -138,7 +138,7 @@ public class TopMetrics implements MetricsSource {
   }
 
   public void report(long currTime, String userName, String cmd) {
-    LOG.debug("a metric is reported: cmd: {} user: {}", cmd, userName);
+    LOG.error("Temp", new RuntimeException());
     userName = UserGroupInformation.trimLoginMethod(userName);
     for (RollingWindowManager rollingWindowManager : rollingWindowManagers
         .values()) {

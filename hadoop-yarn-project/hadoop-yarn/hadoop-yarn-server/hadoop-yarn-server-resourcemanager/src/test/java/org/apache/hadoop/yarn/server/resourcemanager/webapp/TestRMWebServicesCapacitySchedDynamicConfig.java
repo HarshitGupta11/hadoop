@@ -371,7 +371,7 @@ public class TestRMWebServicesCapacitySchedDynamicConfig extends
     assertEquals(MediaType.APPLICATION_JSON_TYPE + "; " + JettyUtils.UTF_8,
         response.getType().toString());
     String jsonString = response.getEntity(String.class);
-    LOG.debug("Received JSON response: " + jsonString);
+    LOG.error("Temp", new RuntimeException());
     return new JSONObject(jsonString);
   }
 

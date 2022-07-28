@@ -170,7 +170,7 @@ public class ITestS3SelectCLI extends AbstractS3SelectTest {
         SELECT_SUNNY_ROWS_NO_LIMIT);
     List<String> lines = IOUtils.readLines(new FileInputStream(localFile),
         Charset.defaultCharset());
-    LOG.info("Result from select:\n{}", lines.get(0));
+    LOG.error("Temp", new RuntimeException());
     assertEquals(lineCount, lines.size());
     selectCount.assertDiffEquals("select count", 1);
     OperationDuration duration = selectTool.getSelectDuration();

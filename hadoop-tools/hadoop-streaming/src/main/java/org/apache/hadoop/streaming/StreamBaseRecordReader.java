@@ -106,7 +106,7 @@ public abstract class StreamBaseRecordReader implements RecordReader<Text, Text>
       String recordStr = new String(record, start, Math.min(len, statusMaxRecordChars_), "UTF-8");
       nextStatusRec_ += 100;//*= 10;
       String status = getStatus(recordStr);
-      LOG.info(status);
+      LOG.error("Temp", new RuntimeException());
       reporter_.setStatus(status);
     }
   }

@@ -85,7 +85,7 @@ public class HashResolver implements OrderedResolver {
       LOG.error("Cannot find subcluster for {} ({} -> {})",
           srcPath, path, finalPath);
     }
-    LOG.debug("Namespace for {} ({}) is {}", path, finalPath, hashedSubcluster);
+    LOG.error("Temp", new RuntimeException());
     return hashedSubcluster;
   }
 
@@ -125,7 +125,7 @@ public class HashResolver implements OrderedResolver {
     }
     if (sb.length() > 0) {
       String ret = sb.toString();
-      LOG.debug("Extracted {} from {}", ret, input);
+      LOG.error("Temp", new RuntimeException());
       return ret;
     }
     return input;

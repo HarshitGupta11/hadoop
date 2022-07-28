@@ -117,7 +117,7 @@ public class SystemServiceManagerImpl extends AbstractService
       this.loginUGI = UserGroupInformation.isSecurityEnabled() ?
           UserGroupInformation.getLoginUser() :
           UserGroupInformation.getCurrentUser();
-      LOG.info("UserGroupInformation initialized to {}", loginUGI);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -134,7 +134,7 @@ public class SystemServiceManagerImpl extends AbstractService
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping {}", getName());
+    LOG.error("Temp", new RuntimeException());
     stopExecutors.set(true);
 
     if (serviceLaucher != null) {
@@ -142,7 +142,7 @@ public class SystemServiceManagerImpl extends AbstractService
       try {
         serviceLaucher.join();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted Exception while stopping", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -168,12 +168,12 @@ public class SystemServiceManagerImpl extends AbstractService
         UserGroupInformation userUgi = getProxyUser(user);
         serviceClient = createServiceClient(userUgi);
         for (Service service : services) {
-          LOG.info("POST: createService = {} user = {}", service, userUgi);
+          LOG.error("Temp", new RuntimeException());
           try {
             launchServices(userUgi, serviceClient, service);
           } catch (IOException | UndeclaredThrowableException e) {
             if (e.getCause() != null) {
-              LOG.warn(e.getCause().getMessage());
+              LOG.error("Temp", new RuntimeException());
             } else {
               String message =
                   "Failed to create service " + service.getName() + " : ";
@@ -182,7 +182,7 @@ public class SystemServiceManagerImpl extends AbstractService
           }
         }
       } catch (InterruptedException e) {
-        LOG.warn("System service launcher thread interrupted", e);
+        LOG.error("Temp", new RuntimeException());
         break;
       } catch (Exception e) {
         LOG.error("Error while submitting services for user " + user, e);
@@ -191,7 +191,7 @@ public class SystemServiceManagerImpl extends AbstractService
           try {
             serviceClient.close();
           } catch (IOException e) {
-            LOG.warn("Error while closing serviceClient for user {}", user);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -278,12 +278,12 @@ public class SystemServiceManagerImpl extends AbstractService
       return;
     }
     try {
-      LOG.info("Scan for launch type on {}", systemServiceDir);
+      LOG.error("Temp", new RuntimeException());
       RemoteIterator<FileStatus> iterLaunchType = list(systemServiceDir);
       while (iterLaunchType.hasNext()) {
         FileStatus launchType = iterLaunchType.next();
         if (!launchType.isDirectory()) {
-          LOG.debug("Scanner skips for unknown file {}", launchType.getPath());
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         if (launchType.getPath().getName().equals(SYNC)) {
@@ -292,7 +292,7 @@ public class SystemServiceManagerImpl extends AbstractService
           scanForUserServiceDefinition(launchType.getPath(), asyncUserServices);
         } else {
           badDirSkipCounter++;
-          LOG.debug("Scanner skips for unknown dir {}.", launchType.getPath());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (FileNotFoundException e) {
@@ -306,7 +306,7 @@ public class SystemServiceManagerImpl extends AbstractService
   // 2nd level for service definitions under user
   private void scanForUserServiceDefinition(Path userDirPath,
       Map<String, Set<Service>> userServices) throws IOException {
-    LOG.info("Scan for users on {}", userDirPath);
+    LOG.error("Temp", new RuntimeException());
     RemoteIterator<FileStatus> iterUsers = list(userDirPath);
     while (iterUsers.hasNext()) {
       FileStatus userDir = iterUsers.next();
@@ -318,7 +318,7 @@ public class SystemServiceManagerImpl extends AbstractService
         continue;
       }
       String userName = userDir.getPath().getName();
-      LOG.info("Scanning service definitions for user {}.", userName);
+      LOG.error("Temp", new RuntimeException());
 
       //2nd level scan
       RemoteIterator<FileStatus> iterServices = list(userDir.getPath());
@@ -326,7 +326,7 @@ public class SystemServiceManagerImpl extends AbstractService
         FileStatus serviceCache = iterServices.next();
         String filename = serviceCache.getPath().getName();
         if (!serviceCache.isFile()) {
-          LOG.info("Scanner skips for unknown dir {}", filename);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         if (!filename.endsWith(YARN_FILE_SUFFIX)) {
@@ -361,10 +361,10 @@ public class SystemServiceManagerImpl extends AbstractService
   private Service getServiceDefinition(Path filePath) {
     Service service = null;
     try {
-      LOG.debug("Loading service definition from FS: {}", filePath);
+      LOG.error("Temp", new RuntimeException());
       service = jsonSerDeser.load(fs, filePath);
     } catch (IOException e) {
-      LOG.info("Error while loading service definition from FS: {}", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return service;
   }

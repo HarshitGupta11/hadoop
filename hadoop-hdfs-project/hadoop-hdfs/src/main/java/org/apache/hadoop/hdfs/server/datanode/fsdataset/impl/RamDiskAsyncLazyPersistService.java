@@ -181,16 +181,16 @@ class RamDiskAsyncLazyPersistService {
    */
   synchronized void shutdown() {
     if (executors == null) {
-      LOG.warn("AsyncLazyPersistService has already shut down.");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.info("Shutting down all async lazy persist service threads");
+      LOG.error("Temp", new RuntimeException());
 
       for (Map.Entry<String, ThreadPoolExecutor> e : executors.entrySet()) {
         e.getValue().shutdown();
       }
       // clear the executor map so that calling execute again will fail.
       executors = null;
-      LOG.info("All async lazy persist service threads have been shut down");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

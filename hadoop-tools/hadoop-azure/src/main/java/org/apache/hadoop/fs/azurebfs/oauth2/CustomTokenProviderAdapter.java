@@ -56,7 +56,7 @@ public final class CustomTokenProviderAdapter extends AccessTokenProvider
   }
 
   protected AzureADToken refreshToken() throws IOException {
-    LOG.debug("AADToken: refreshing custom based token");
+    LOG.error("Temp", new RuntimeException());
 
     AzureADToken azureADToken = new AzureADToken();
 

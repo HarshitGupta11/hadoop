@@ -47,7 +47,7 @@ public class AbstractAbfsScaleTest extends AbstractAbfsIntegrationTest  {
   @Override
   public void setup() throws Exception {
     super.setup();
-    LOG.debug("Scale test operation count = {}", getOperationCount());
+    LOG.error("Temp", new RuntimeException());
     Configuration rawConfiguration = getRawConfiguration();
     assumeScaleTestsEnabled(rawConfiguration);
   }

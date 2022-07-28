@@ -45,7 +45,7 @@ public final class PlannerFactory {
             .format("Creating a %s for Node : %s IP : %s ID : %s",
                 GREEDY_PLANNER, node.getDataNodeName(), node.getDataNodeIP(),
                 node.getDataNodeUUID());
-        LOG.debug(message);
+        LOG.error("Temp", new RuntimeException());
       }
       return new GreedyPlanner(threshold, node);
     }

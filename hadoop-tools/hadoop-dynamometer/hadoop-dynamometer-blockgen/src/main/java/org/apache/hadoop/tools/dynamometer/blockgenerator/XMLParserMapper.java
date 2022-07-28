@@ -74,7 +74,7 @@ public class XMLParserMapper
 
       blockIndex++;
       if (blockIndex % 1000000 == 0) {
-        LOG.info("Processed " + blockIndex + " blocks");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

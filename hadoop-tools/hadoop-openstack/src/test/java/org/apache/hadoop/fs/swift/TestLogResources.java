@@ -34,7 +34,7 @@ public class TestLogResources implements SwiftTestConstants {
   private void printf(String format, Object... args) {
     String msg = String.format(format, args);
     System.out.printf(msg + "\n");
-    LOG.info(msg);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(timeout = SWIFT_TEST_TIMEOUT)

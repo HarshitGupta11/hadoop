@@ -36,10 +36,10 @@ public class TestWritableUtils {
     DataInputBuffer inbuf = new DataInputBuffer();
     WritableUtils.writeVInt(buf, val);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Value = " + val);
+      LOG.error("Temp", new RuntimeException());
       BytesWritable printer = new BytesWritable();
       printer.set(buf.getData(), 0, buf.getLength());
-      LOG.debug("Buffer = " + printer);
+      LOG.error("Temp", new RuntimeException());
     }
     inbuf.reset(buf.getData(), 0, buf.getLength());
     assertEquals(val, WritableUtils.readVInt(inbuf));

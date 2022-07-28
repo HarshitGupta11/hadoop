@@ -81,7 +81,7 @@ public abstract class AbstractContractRootDirectoryTest extends AbstractFSContra
     Path root = new Path("/");
     assertIsDirectory(root);
     boolean deleted = getFileSystem().delete(root, true);
-    LOG.info("rm -r / of empty dir result is {}", deleted);
+    LOG.error("Temp", new RuntimeException());
     assertIsDirectory(root);
   }
 
@@ -120,7 +120,7 @@ public abstract class AbstractContractRootDirectoryTest extends AbstractFSContra
         new LambdaTestUtils.ProportionalRetryInterval(50, 1000));
     // then try to delete the empty one
     boolean deleted = fs.delete(root, false);
-    LOG.info("rm / of empty dir result is {}", deleted);
+    LOG.error("Temp", new RuntimeException());
     assertIsDirectory(root);
   }
 
@@ -159,7 +159,7 @@ public abstract class AbstractContractRootDirectoryTest extends AbstractFSContra
       ContractTestUtils.touch(getFileSystem(), file);
       boolean deleted = getFileSystem().delete(root, true);
       assertIsDirectory(root);
-      LOG.info("rm -rf / result is {}", deleted);
+      LOG.error("Temp", new RuntimeException());
       if (deleted) {
         assertPathDoesNotExist("expected file to be deleted", file);
       } else {

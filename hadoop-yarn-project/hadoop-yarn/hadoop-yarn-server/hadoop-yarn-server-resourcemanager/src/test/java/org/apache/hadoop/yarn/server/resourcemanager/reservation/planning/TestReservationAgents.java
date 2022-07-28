@@ -110,7 +110,7 @@ public class TestReservationAgents {
 
     long seed = rand.nextLong();
     rand.setSeed(seed);
-    LOG.info("Running with seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
 
     // setting completely loose quotas
     long timeWindow = 1000000L;

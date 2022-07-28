@@ -152,7 +152,7 @@ public class AliyunOSSBlockOutputStream extends OutputStream {
   private void removeTemporaryFiles() {
     for (File file : blockFiles.values()) {
       if (file != null && file.exists() && !file.delete()) {
-        LOG.warn("Failed to delete temporary file {}", file);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -166,7 +166,7 @@ public class AliyunOSSBlockOutputStream extends OutputStream {
       try {
         File blockFile = blockFiles.get(partETagFuture.get().getPartNumber());
         if (blockFile != null && blockFile.exists() && !blockFile.delete()) {
-          LOG.warn("Failed to delete temporary file {}", blockFile);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (InterruptedException | ExecutionException e) {
         throw new IOException(e);
@@ -204,18 +204,18 @@ public class AliyunOSSBlockOutputStream extends OutputStream {
    * @throws IOException IO Problems
    */
   private List<PartETag> waitForAllPartUploads() throws IOException {
-    LOG.debug("Waiting for {} uploads to complete", partETagsFutures.size());
+    LOG.error("Temp", new RuntimeException());
     try {
       return Futures.allAsList(partETagsFutures).get();
     } catch (InterruptedException ie) {
-      LOG.warn("Interrupted partUpload", ie);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
       return null;
     } catch (ExecutionException ee) {
       //there is no way of recovering so abort
       //cancel all partUploads
-      LOG.debug("While waiting for upload completion", ee);
-      LOG.debug("Cancelling futures");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       for (ListenableFuture<PartETag> future : partETagsFutures) {
         future.cancel(true);
       }

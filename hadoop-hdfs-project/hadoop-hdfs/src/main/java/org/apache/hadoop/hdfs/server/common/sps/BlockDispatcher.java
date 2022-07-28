@@ -123,7 +123,7 @@ public class BlockDispatcher {
       sock.setKeepAlive(true);
       OutputStream unbufOut = sock.getOutputStream();
       InputStream unbufIn = sock.getInputStream();
-      LOG.debug("Connecting to datanode {}", blkMovingInfo.getTarget());
+      LOG.error("Temp", new RuntimeException());
 
       IOStreamPair saslStreams = saslClient.socketSend(sock, unbufOut,
           unbufIn, km, accessToken, blkMovingInfo.getTarget());

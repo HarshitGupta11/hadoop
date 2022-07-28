@@ -80,7 +80,7 @@ class MockApplications {
       String[] appConfigComponents = appConfig.split("\t");
       String queueName = appConfigComponents[0];
       if (mulp <= 0 && appConfigComponents.length > 2 && appConfigComponents[2] != null) {
-        LOG.info("Mulp value: " + appConfigComponents[2]);
+        LOG.error("Temp", new RuntimeException());
         mulp = 100 / (Integer.parseInt(appConfigComponents[2]));
       }
 
@@ -101,7 +101,7 @@ class MockApplications {
     when(queue.getMinimumAllocation()).thenReturn(Resource.newInstance(1,1));
     when(mockApp.app.getCSLeafQueue()).thenReturn(queue);
 
-    LOG.debug("Application mock: queue: " + mockApp.queueName + ", appId:" + mockApp.app);
+    LOG.error("Temp", new RuntimeException());
 
     Set<String> users = userMap.computeIfAbsent(mockApp.queueName, k -> new HashSet<>());
     users.add(mockApp.app.getUser());

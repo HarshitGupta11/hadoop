@@ -140,7 +140,7 @@ public class AdminStatesBaseTest {
     Random rand = new Random(seed);
     rand.nextBytes(buffer);
     stm.write(buffer);
-    LOG.info("Created file " + name + " with " + repl + " replicas.");
+    LOG.error("Temp", new RuntimeException());
     if (completeFile) {
       stm.close();
       return null;
@@ -295,7 +295,7 @@ public class AdminStatesBaseTest {
    */
   protected void putNodeInService(int nnIndex,
       DatanodeInfo outOfServiceNode) throws IOException {
-    LOG.info("Putting node: " + outOfServiceNode + " in service");
+    LOG.error("Temp", new RuntimeException());
     ArrayList<String> decommissionNodes = new ArrayList<>();
     Map<String, Long> maintenanceNodes = new HashMap<>();
 
@@ -349,7 +349,7 @@ public class AdminStatesBaseTest {
         }
         done = (state == node.getAdminState());
       }
-      LOG.info("node " + node + " reached the state " + state);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

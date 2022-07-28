@@ -71,7 +71,7 @@ public class ITestWasbAbfsCompatibility extends AbstractAbfsIntegrationTest {
 
     // create file using wasb
     Path path2 = new Path("/testfiles/~12/!008/3/nativeFsTestfile");
-    LOG.info("{}", wasb.getUri());
+    LOG.error("Temp", new RuntimeException());
     try(FSDataOutputStream nativeFsStream = wasb.create(path2, true)) {
       nativeFsStream.write(WASB_TEST_CONTEXT.getBytes());
       nativeFsStream.flush();

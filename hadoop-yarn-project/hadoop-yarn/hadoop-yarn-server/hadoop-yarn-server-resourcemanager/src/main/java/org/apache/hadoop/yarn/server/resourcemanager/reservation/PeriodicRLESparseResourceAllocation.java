@@ -160,13 +160,13 @@ public class PeriodicRLESparseResourceAllocation
     // TODO revesit decrementing endTime
     if (!Resources.fitsIn(resource, getMinimumCapacityInInterval(
         new ReservationInterval(startTime, endTime - 1)))) {
-      LOG.info("Request to remove more resources than what is available");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     if (startTime >= 0 && endTime > startTime && endTime <= timePeriod) {
       return super.removeInterval(interval, resource);
     } else {
-      LOG.info("Interval extends beyond the end time " + timePeriod);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }

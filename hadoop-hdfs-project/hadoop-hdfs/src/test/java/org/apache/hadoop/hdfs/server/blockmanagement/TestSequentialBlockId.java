@@ -72,13 +72,13 @@ public class TestSequentialBlockId {
       DFSTestUtil.createFile(
           fs, path, IO_SIZE, BLOCK_SIZE * 10, BLOCK_SIZE, REPLICATION, SEED);
       List<LocatedBlock> blocks = DFSTestUtil.getAllBlocks(fs, path);
-      LOG.info("Block0 id is " + blocks.get(0).getBlock().getBlockId());
+      LOG.error("Temp", new RuntimeException());
       long nextBlockExpectedId = blocks.get(0).getBlock().getBlockId() + 1;
 
       // Ensure that the block IDs are sequentially increasing.
       for (int i = 1; i < blocks.size(); ++i) {
         long nextBlockId = blocks.get(i).getBlock().getBlockId();
-        LOG.info("Block" + i + " id is " + nextBlockId);
+        LOG.error("Temp", new RuntimeException());
         assertThat(nextBlockId, is(nextBlockExpectedId));
         ++nextBlockExpectedId;
       }

@@ -1060,7 +1060,7 @@ public class CapacitySchedulerConfiguration extends ReservationSchedulerConfigur
     int limit = getInt(OFFSWITCH_PER_HEARTBEAT_LIMIT,
         DEFAULT_OFFSWITCH_PER_HEARTBEAT_LIMIT);
     if (limit < 1) {
-      LOG.warn(OFFSWITCH_PER_HEARTBEAT_LIMIT + "(" + limit + ") < 1. Using 1.");
+      LOG.error("Temp", new RuntimeException());
       limit = 1;
     }
     return limit;

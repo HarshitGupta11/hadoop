@@ -131,17 +131,17 @@ public class TestGridmixSubmission extends CommonJobTest {
       JobStoryProducer jsp = dgm.createJobStoryProducer(inputFile.toString(),
               conf);
 
-      LOG.info("Verifying JobStory from compressed trace...");
+      LOG.error("Temp", new RuntimeException());
       verifyWordCountJobStory(jsp.getNextJob());
 
       expandGzippedTrace(lfs, inputFile, tempFile);
       jsp = dgm.createJobStoryProducer(tempFile.toString(), conf);
-      LOG.info("Verifying JobStory from uncompressed trace...");
+      LOG.error("Temp", new RuntimeException());
       verifyWordCountJobStory(jsp.getNextJob());
 
       tmpIs = lfs.open(tempFile);
       System.setIn(tmpIs);
-      LOG.info("Verifying JobStory from trace in standard input...");
+      LOG.error("Temp", new RuntimeException());
       jsp = dgm.createJobStoryProducer("-", conf);
       verifyWordCountJobStory(jsp.getNextJob());
     } finally {
@@ -156,18 +156,18 @@ public class TestGridmixSubmission extends CommonJobTest {
   @Test (timeout=500000)
   public void testReplaySubmit() throws Exception {
     policy = GridmixJobSubmissionPolicy.REPLAY;
-    LOG.info(" Replay started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(null, false);
-    LOG.info(" Replay ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
 
   }
 
   @Test (timeout=500000)
   public void testStressSubmit() throws Exception {
     policy = GridmixJobSubmissionPolicy.STRESS;
-    LOG.info(" Stress started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(null, false);
-    LOG.info(" Stress ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
   }
 
   // test empty request should be hint message

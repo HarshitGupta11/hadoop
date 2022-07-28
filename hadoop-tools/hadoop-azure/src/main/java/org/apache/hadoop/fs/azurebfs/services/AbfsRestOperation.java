@@ -201,7 +201,7 @@ public class AbfsRestOperation {
     }
 
     retryCount = 0;
-    LOG.debug("First execution of REST operation - {}", operationType);
+    LOG.error("Temp", new RuntimeException());
     while (!executeHttpOperation(retryCount)) {
       try {
         ++retryCount;
@@ -236,7 +236,7 @@ public class AbfsRestOperation {
       switch(client.getAuthType()) {
         case Custom:
         case OAuth:
-          LOG.debug("Authenticating request with OAuth2 access token");
+          LOG.error("Temp", new RuntimeException());
           httpOperation.getConnection().setRequestProperty(HttpHeaderConfigurations.AUTHORIZATION,
               client.getAccessToken());
           break;
@@ -245,7 +245,7 @@ public class AbfsRestOperation {
           break;
         case SharedKey:
           // sign the HTTP request
-          LOG.debug("Signing request with shared key");
+          LOG.error("Temp", new RuntimeException());
           // sign the HTTP request
           client.getSharedKeyCredentials().signRequest(
               httpOperation.getConnection(),
@@ -253,7 +253,7 @@ public class AbfsRestOperation {
           break;
       }
     } catch (IOException e) {
-      LOG.debug("Auth failure: {}, {}", method, url);
+      LOG.error("Temp", new RuntimeException());
       throw new AbfsRestOperationException(-1, null,
           "Auth failure: " + e.getMessage(), e);
     }
@@ -292,7 +292,7 @@ public class AbfsRestOperation {
       return false;
     } catch (IOException ex) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("HttpRequestFailure: {}, {}", httpOperation.toString(), ex);
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (!client.getRetryPolicy().shouldRetry(retryCount, -1)) {
@@ -304,7 +304,7 @@ public class AbfsRestOperation {
       AbfsClientThrottlingIntercept.updateMetrics(operationType, httpOperation);
     }
 
-    LOG.debug("HttpRequest: {}: {}", operationType, httpOperation.toString());
+    LOG.error("Temp", new RuntimeException());
 
     if (client.getRetryPolicy().shouldRetry(retryCount, httpOperation.getStatusCode())) {
       return false;

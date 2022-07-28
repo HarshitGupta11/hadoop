@@ -83,10 +83,10 @@ public class SecureStorageInterfaceImpl extends StorageInterface {
       Configuration conf) throws SecureModeException {
 
     if (useLocalSASKeyMode) {
-      LOG.debug("Authenticating with SecureStorage and local SAS key");
+      LOG.error("Temp", new RuntimeException());
       this.sasKeyGenerator = new LocalSASKeyGeneratorImpl(conf);
     } else {
-      LOG.debug("Authenticating with SecureStorage and remote SAS key generation");
+      LOG.error("Temp", new RuntimeException());
       RemoteSASKeyGeneratorImpl remoteSasKeyGenerator =
           new RemoteSASKeyGeneratorImpl(conf);
       try {

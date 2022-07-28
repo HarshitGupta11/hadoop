@@ -86,7 +86,7 @@ class ProvidedVolumeImpl extends FsVolumeImpl {
     String prefixStr = prefix.toString();
     String pathStr = fullPath.toString();
     if (!pathStr.startsWith(prefixStr)) {
-      LOG.debug("Path {} is not a prefix of the path {}", prefix, fullPath);
+      LOG.error("Temp", new RuntimeException());
       return pathStr;
     }
     String suffix = pathStr.replaceFirst("^" + prefixStr, "");
@@ -144,7 +144,7 @@ class ProvidedVolumeImpl extends FsVolumeImpl {
       this.df = new ProvidedVolumeDF();
       bpVolumeMap.initBlockPool(bpid);
       this.numRetries = conf.getInt(DFS_PROVIDED_ALIASMAP_LOAD_RETRIES, 0);
-      LOG.info("Created alias map using class: " + aliasMap.getClass());
+      LOG.error("Temp", new RuntimeException());
     }
 
     BlockAliasMap<FileRegion> getBlockAliasMap() {
@@ -316,7 +316,7 @@ class ProvidedVolumeImpl extends FsVolumeImpl {
     // do not report less than 0 remaining space for PROVIDED storage
     // to prevent marking it as over capacity on NN
     if (remaining < 0L) {
-      LOG.warn("Volume {} has less than 0 available space", this);
+      LOG.error("Temp", new RuntimeException());
       return 0L;
     }
     return remaining;
@@ -453,7 +453,7 @@ class ProvidedVolumeImpl extends FsVolumeImpl {
       try {
         reader = blockAliasMap.getReader(null, bpid);
       } catch (IOException e) {
-        LOG.warn("Exception in getting reader from provided alias map");
+        LOG.error("Temp", new RuntimeException());
       }
       if (reader != null) {
         blockIterator = reader.iterator();
@@ -530,7 +530,7 @@ class ProvidedVolumeImpl extends FsVolumeImpl {
   void getVolumeMap(ReplicaMap volumeMap,
       final RamDiskReplicaTracker ramDiskReplicaMap)
           throws IOException {
-    LOG.info("Creating volumemap for provided volume " + this);
+    LOG.error("Temp", new RuntimeException());
     for (ProvidedBlockPoolSlice s : bpSlices.values()) {
       s.fetchVolumeMap(volumeMap, ramDiskReplicaMap, remoteFS);
     }
@@ -611,7 +611,7 @@ class ProvidedVolumeImpl extends FsVolumeImpl {
   @Override
   public void compileReport(String bpid, Collection<ScanInfo> report,
       ReportCompiler reportCompiler) throws InterruptedException, IOException {
-    LOG.info("Compiling report for volume: {}; bpid: {}", this, bpid);
+    LOG.error("Temp", new RuntimeException());
     if (bpSlices.containsKey(bpid)) {
       bpSlices.get(bpid).compileReport(report, reportCompiler);
     }

@@ -142,7 +142,7 @@ public class KerberosName {
       try {
         defaultRealm = KerberosUtil.getDefaultRealm();
       } catch (Exception ke) {
-        LOG.debug("Kerberos krb5 configuration not found, setting default realm to empty");
+        LOG.error("Temp", new RuntimeException());
         defaultRealm = "";
       }
     }

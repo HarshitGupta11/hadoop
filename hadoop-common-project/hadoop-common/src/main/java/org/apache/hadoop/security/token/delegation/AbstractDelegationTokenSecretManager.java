@@ -364,7 +364,7 @@ extends AbstractDelegationTokenIdentifier>
    * and only by tokenRemoverThread afterwards.
    */
   private void updateCurrentKey() throws IOException {
-    LOG.info("Updating the current master key for generating delegation tokens");
+    LOG.error("Temp", new RuntimeException());
     /* Create a new currentKey with an estimated expiry date. */
     int newCurrentId;
     synchronized (this) {
@@ -661,14 +661,14 @@ extends AbstractDelegationTokenIdentifier>
       Collection<TokenIdent> expiredTokens) throws IOException {
     for (TokenIdent ident : expiredTokens) {
       logExpireToken(ident);
-      LOG.info("Removing expired token " + formatTokenId(ident));
+      LOG.error("Temp", new RuntimeException());
       removeStoredToken(ident);
     }
   }
 
   public void stopThreads() {
     if (LOG.isDebugEnabled())
-      LOG.debug("Stopping expired delegation token remover thread");
+      LOG.error("Temp", new RuntimeException());
     running = false;
     
     if (tokenRemoverThread != null) {

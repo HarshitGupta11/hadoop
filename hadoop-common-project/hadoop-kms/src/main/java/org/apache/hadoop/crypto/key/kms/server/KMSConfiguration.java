@@ -183,10 +183,10 @@ public class KMSConfiguration {
           PropertyConfigurator.configure(log4jUrl);
         }
       }
-      LOG.debug("KMS log starting");
+      LOG.error("Temp", new RuntimeException());
       if (fromClasspath) {
-        LOG.warn("Log4j configuration file '{}' not found", LOG4J_PROPERTIES);
-        LOG.warn("Logging with INFO level to standard output");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -51,7 +51,7 @@ public class MultiPhaseProcedure extends BalanceProcedure {
   @Override
   public boolean execute() throws IOException {
     if (currentPhase < totalPhase) {
-      LOG.info("Current phase {}", currentPhase);
+      LOG.error("Temp", new RuntimeException());
       Path phase = new Path(path, "phase-" + currentPhase);
       if (!fs.exists(phase)) {
         fs.mkdirs(phase);

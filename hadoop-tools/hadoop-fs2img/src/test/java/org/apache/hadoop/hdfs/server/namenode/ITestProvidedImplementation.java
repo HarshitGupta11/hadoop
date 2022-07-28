@@ -162,7 +162,7 @@ public class ITestProvidedImplementation {
         new File(providedPath.toUri()).toString());
     File imageDir = new File(providedPath.toUri());
     if (!imageDir.exists()) {
-      LOG.info("Creating directory: " + imageDir);
+      LOG.error("Temp", new RuntimeException());
       imageDir.mkdirs();
     }
 
@@ -177,7 +177,7 @@ public class ITestProvidedImplementation {
           new Path(providedPath, filePrefix + i + fileSuffix).toUri());
       if(!newFile.exists()) {
         try {
-          LOG.info("Creating " + newFile.toString());
+          LOG.error("Temp", new RuntimeException());
           newFile.createNewFile();
           Writer writer = new OutputStreamWriter(
               new FileOutputStream(newFile.getAbsolutePath()), "utf-8");
@@ -313,7 +313,7 @@ public class ITestProvidedImplementation {
   @Test(timeout=20000)
   public void testLoadImage() throws Exception {
     final long seed = r.nextLong();
-    LOG.info("providedPath: " + providedPath);
+    LOG.error("Temp", new RuntimeException());
     createImage(new RandomTreeWalk(seed), nnDirPath, FixedBlockResolver.class);
     startCluster(nnDirPath, 0,
         new StorageType[] {StorageType.PROVIDED, StorageType.DISK}, null,
@@ -436,7 +436,7 @@ public class ITestProvidedImplementation {
     for (TreePath e : new FSTreeWalk(providedPath, conf)) {
       FileStatus rs = e.getFileStatus();
       Path hp = removePrefix(providedPath, rs.getPath());
-      LOG.info("path: " + hp.toUri().getPath());
+      LOG.error("Temp", new RuntimeException());
       e.accept(count++);
       assertTrue(fs.exists(hp));
       FileStatus hs = fs.getFileStatus(hp);
@@ -478,7 +478,7 @@ public class ITestProvidedImplementation {
     for (TreePath e : new FSTreeWalk(providedPath, conf)) {
       FileStatus rs = e.getFileStatus();
       Path hp = removePrefix(providedPath, rs.getPath());
-      LOG.info("path: " + hp.toUri().getPath());
+      LOG.error("Temp", new RuntimeException());
       e.accept(count++);
       assertTrue(fs.exists(hp));
       FileStatus hs = fs.getFileStatus(hp);
@@ -594,7 +594,7 @@ public class ITestProvidedImplementation {
     // set the replication to 4, and test that the file has
     // the required replication.
     short newReplication = 4;
-    LOG.info("Setting replication of file {} to {}", filename, newReplication);
+    LOG.error("Temp", new RuntimeException());
     fs.setReplication(file, newReplication);
     DFSTestUtil.waitForReplication((DistributedFileSystem) fs,
         file, newReplication, 10000);
@@ -1034,15 +1034,15 @@ public class ITestProvidedImplementation {
         verifyFileSystemContents(nn1);
         fail("Read operation should fail as no Namenode is active");
       } catch (RemoteException e) {
-        LOG.info("verifyPaths failed!. Expected exception: {}" + e);
+        LOG.error("Temp", new RuntimeException());
       }
       cluster.transitionToActive(nn1);
-      LOG.info("Verifying data from NN with index = {}", nn1);
+      LOG.error("Temp", new RuntimeException());
       verifyFileSystemContents(nn1);
       // transition to the second namenode.
       cluster.transitionToStandby(nn1);
       cluster.transitionToActive(nn2);
-      LOG.info("Verifying data from NN with index = {}", nn2);
+      LOG.error("Temp", new RuntimeException());
       verifyFileSystemContents(nn2);
 
       cluster.shutdownNameNodes();
@@ -1050,7 +1050,7 @@ public class ITestProvidedImplementation {
         verifyFileSystemContents(nn2);
         fail("Read operation should fail as no Namenode is active");
       } catch (NullPointerException e) {
-        LOG.info("verifyPaths failed!. Expected exception: {}" + e);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       verifyFileSystemContents(nnIndexes.get(0));
@@ -1197,7 +1197,7 @@ public class ITestProvidedImplementation {
         {"/pod0/rack0", "/pod0/rack0", "/pod0/rack1", "/pod0/rack1",
             "/pod1/rack0", "/pod1/rack0", "/pod1/rack1", "/pod1/rack1" };
     for (String policy: policies) {
-      LOG.info("Using policy: " + packageName + "." + policy);
+      LOG.error("Temp", new RuntimeException());
       conf.set(DFS_BLOCK_REPLICATOR_CLASSNAME_KEY, packageName + "." + policy);
       startCluster(nnDirPath, racks.length,
           new StorageType[]{StorageType.PROVIDED, StorageType.DISK},

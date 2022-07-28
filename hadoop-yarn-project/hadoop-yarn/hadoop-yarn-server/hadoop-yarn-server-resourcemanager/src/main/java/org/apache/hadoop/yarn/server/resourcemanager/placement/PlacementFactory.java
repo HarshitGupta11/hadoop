@@ -52,7 +52,7 @@ public final class PlacementFactory {
       throws ClassNotFoundException {
     Class<? extends PlacementRule> ruleClass = Class.forName(ruleStr)
         .asSubclass(PlacementRule.class);
-    LOG.info("Using PlacementRule implementation - " + ruleClass);
+    LOG.error("Temp", new RuntimeException());
     return ReflectionUtils.newInstance(ruleClass, conf);
   }
 
@@ -66,7 +66,7 @@ public final class PlacementFactory {
    */
   public static PlacementRule getPlacementRule(
       Class<? extends PlacementRule> ruleClass, Object initArg) {
-    LOG.info("Creating PlacementRule implementation: " + ruleClass);
+    LOG.error("Temp", new RuntimeException());
     PlacementRule rule = ReflectionUtils.newInstance(ruleClass, null);
     rule.setConfig(initArg);
     return rule;

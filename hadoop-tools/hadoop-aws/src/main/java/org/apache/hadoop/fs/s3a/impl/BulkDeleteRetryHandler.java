@@ -94,14 +94,14 @@ public class BulkDeleteRetryHandler extends AbstractStoreOperation {
   public void bulkDeleteRetried(
       DeleteObjectsRequest deleteRequest,
       Exception ex) {
-    LOG.debug("Retrying on error during bulk delete", ex);
+    LOG.error("Temp", new RuntimeException());
     if (isThrottleException(ex)) {
       onDeleteThrottled(deleteRequest);
     } else if (isSymptomOfBrokenConnection(ex)) {
       // this is one which surfaces when an HTTPS connection is broken while
       // the service is reading the result.
       // it is treated as a throttle event for statistics
-      LOG.warn("Bulk delete operation interrupted: {}", ex.getMessage());
+      LOG.error("Temp", new RuntimeException());
       onDeleteThrottled(deleteRequest);
     } else {
       incrementStatistic(IGNORED_ERRORS);

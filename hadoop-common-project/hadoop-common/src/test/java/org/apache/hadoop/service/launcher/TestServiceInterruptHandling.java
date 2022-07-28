@@ -110,7 +110,7 @@ public class TestServiceInterruptHandling
 
     @Override
     public void interrupted(IrqHandler.InterruptData data) {
-      LOG.info("Interrupt caught");
+      LOG.error("Temp", new RuntimeException());
       this.interruptData = data;
     }
   }

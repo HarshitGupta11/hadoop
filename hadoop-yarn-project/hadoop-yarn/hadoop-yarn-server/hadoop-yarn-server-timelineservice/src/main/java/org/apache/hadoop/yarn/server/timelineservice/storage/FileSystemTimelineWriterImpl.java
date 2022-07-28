@@ -141,7 +141,7 @@ public class FileSystemTimelineWriterImpl extends AbstractService
               .append("\n").toString().getBytes("UTF-8");
       writeFileWithRetries(filePath, record);
     } catch (Exception ioe) {
-      LOG.warn("Interrupted operation:" + ioe.getMessage());
+      LOG.error("Temp", new RuntimeException());
       TimelineWriteError error = createTimelineWriteError(entity);
       /*
        * TODO: set an appropriate error code after PoC could possibly be:
@@ -254,9 +254,9 @@ public class FileSystemTimelineWriterImpl extends AbstractService
         try {
           return run();
         } catch (IOException e) {
-          LOG.info("Exception while executing a FS operation.", e);
+          LOG.error("Temp", new RuntimeException());
           if (++retry > fsNumRetries) {
-            LOG.info("Maxed out FS retries. Giving up!");
+            LOG.error("Temp", new RuntimeException());
             throw e;
           }
           LOG.info("Will retry operation on FS. Retry no. " + retry +

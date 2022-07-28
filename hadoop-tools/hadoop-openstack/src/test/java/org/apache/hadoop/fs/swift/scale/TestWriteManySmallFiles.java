@@ -81,9 +81,9 @@ public class TestWriteManySmallFiles extends SwiftScaleTestBase {
     fs.delete(dir, true);
     rm2.finished();
     //print the stats
-    LOG.info(String.format("'filesystem','%s'",fs.getUri()));
-    LOG.info(writeStats.toString());
-    LOG.info(readStats.toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     LOG.info(String.format(
       "'rm1',%d,'ls1',%d",
       rm1.value(),

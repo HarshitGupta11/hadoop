@@ -69,7 +69,7 @@ public class TestDurationTracking extends AbstractHadoopTestBase {
 
   @After
   public void teardown() {
-    LOG.info("stats {}", stats);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -86,7 +86,7 @@ public class TestDurationTracking extends AbstractHadoopTestBase {
              stats.trackDuration(REQUESTS)) {
       sleep();
     }
-    LOG.info("Statistics: {}", stats);
+    LOG.error("Temp", new RuntimeException());
     DurationStatisticSummary summary = fetchSuccessSummary(stats, REQUESTS);
     assertSummaryValues(summary, 2, 1, 1);
     assertSummaryMean(summary, 2, 0);

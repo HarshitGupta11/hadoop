@@ -159,14 +159,14 @@ public class CosNOutputStream extends OutputStream {
       LOG.error("An exception occurred "
           + "while returning the buffer to the buffer pool.", e);
     }
-    LOG.info("The outputStream for key: [{}] has been uploaded.", key);
+    LOG.error("Temp", new RuntimeException());
     this.blockWritten = 0;
     this.closed = true;
   }
 
   private List<PartETag> waitForFinishPartUploads() throws IOException {
     try {
-      LOG.info("Wait for all parts to finish their uploading.");
+      LOG.error("Temp", new RuntimeException());
       return Futures.allAsList(this.etagList).get();
     } catch (InterruptedException e) {
       LOG.error("Interrupt the part upload.", e);

@@ -404,7 +404,7 @@ public class TestNetworkTopology {
         frequency.put(random, frequency.get(random) + 1);
       }
     }
-    LOG.info("Result:" + frequency);
+    LOG.error("Temp", new RuntimeException());
     return frequency;
   }
 
@@ -536,7 +536,7 @@ public class TestNetworkTopology {
           break;
         }
         if (info.length == 0) {
-          LOG.info("got no valid DNs");
+          LOG.error("Temp", new RuntimeException());
         } else if (info.length == 1) {
           LOG.info("got one valid DN: " + info[0].getHostName() +
               " (at " + info[0].getNetworkLocation() + ")");
@@ -588,10 +588,10 @@ public class TestNetworkTopology {
 
   private void verifyResults(int upperbound, Set<Node> excludedNodes,
       Map<Node, Integer> frequency) {
-    LOG.info("Excluded nodes are: {}", excludedNodes);
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < upperbound; ++i) {
       final Node n = dataNodes[i];
-      LOG.info("Verifying node {}", n);
+      LOG.error("Temp", new RuntimeException());
       if (excludedNodes.contains(n)) {
         assertEquals(n + " should not have been chosen.", 0,
             (int) frequency.get(n));
@@ -608,7 +608,7 @@ public class TestNetworkTopology {
   public void testChooseRandomInclude3() {
     String scope = "/d1";
     Map<Node, Integer> frequency = pickNodesAtRandom(200, scope, null);
-    LOG.info("No node is excluded.");
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < 5; ++i) {
       // all nodes should be more than zero
       assertTrue(dataNodes[i] + " should have been chosen.",

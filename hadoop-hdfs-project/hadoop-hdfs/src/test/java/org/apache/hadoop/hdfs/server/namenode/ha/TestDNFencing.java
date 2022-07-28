@@ -294,7 +294,7 @@ public class TestDNFencing {
     nn1.getRpcServer().setReplication(TEST_FILE, (short) 2);
     while (BlockManagerTestUtil.getComputedDatanodeWork(
         nn1.getNamesystem().getBlockManager()) > 0) {
-      LOG.info("Getting more replication work computed");
+      LOG.error("Temp", new RuntimeException());
     }
     BlockManager bm1 = nn1.getNamesystem().getBlockManager();
     while (bm1.getPendingReconstructionBlocksCount() > 0) {

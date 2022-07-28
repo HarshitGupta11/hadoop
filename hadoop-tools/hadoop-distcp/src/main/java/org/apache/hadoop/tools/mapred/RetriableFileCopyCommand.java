@@ -127,7 +127,7 @@ public class RetriableFileCopyCommand extends RetriableCommand {
       Mapper.Context context, EnumSet<FileAttribute> fileAttributes,
       FileStatus sourceStatus)
       throws IOException {
-    LOG.info("Copying {} to {}", source.getPath(), target);
+    LOG.error("Temp", new RuntimeException());
 
     final boolean toAppend = action == FileAction.APPEND;
     final boolean useTempTarget = !toAppend && !directWrite;
@@ -163,7 +163,7 @@ public class RetriableFileCopyCommand extends RetriableCommand {
             target);
         promoteTmpToTarget(targetPath, target, targetFS);
       }
-      LOG.info("Completed writing {} ({} bytes)", target, bytesRead);
+      LOG.error("Temp", new RuntimeException());
       return bytesRead;
     } finally {
       // note that for append case, it is possible that we append partial data
@@ -266,7 +266,7 @@ public class RetriableFileCopyCommand extends RetriableCommand {
     Path tempFile = new Path(root, ".distcp.tmp." +
         context.getTaskAttemptID().toString() +
         "." + String.valueOf(System.currentTimeMillis()));
-    LOG.info("Creating temp file: {}", tempFile);
+    LOG.error("Temp", new RuntimeException());
     return tempFile;
   }
 

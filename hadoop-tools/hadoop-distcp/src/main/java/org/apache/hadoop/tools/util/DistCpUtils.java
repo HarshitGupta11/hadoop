@@ -69,7 +69,7 @@ public class DistCpUtils {
   public static long getFileSize(Path path, Configuration configuration)
                                             throws IOException {
     if (LOG.isDebugEnabled())
-      LOG.debug("Retrieving file size for: " + path);
+      LOG.error("Temp", new RuntimeException());
     return path.getFileSystem(configuration).getFileStatus(path).getLen();
   }
 
@@ -353,7 +353,7 @@ public class DistCpUtils {
       long curPos = 0;
       if (numBlocks <= blocksPerChunk) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("  add file " + clfs);
+          LOG.error("Temp", new RuntimeException());
         }
         copyListingFileStatus.add(clfs);
       } else {
@@ -368,7 +368,7 @@ public class DistCpUtils {
             clfs1.setChunkOffset(curPos);
             clfs1.setChunkLength(curLength);
             if (LOG.isDebugEnabled()) {
-              LOG.debug("  add file chunk " + clfs1);
+              LOG.error("Temp", new RuntimeException());
             }
             copyListingFileStatus.add(clfs1);
             curPos += curLength;
@@ -377,7 +377,7 @@ public class DistCpUtils {
       }
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("  add file/dir " + clfs);
+        LOG.error("Temp", new RuntimeException());
       }
       copyListingFileStatus.add(clfs);
     }

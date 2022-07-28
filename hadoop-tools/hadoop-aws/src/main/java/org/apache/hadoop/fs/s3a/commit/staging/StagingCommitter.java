@@ -126,11 +126,11 @@ public class StagingCommitter extends AbstractS3ACommitter {
     S3AFileSystem fs = getS3AFileSystem(finalOutputPath,
         context.getConfiguration(), false);
     s3KeyPrefix = fs.pathToKey(finalOutputPath);
-    LOG.debug("{}: final output path is {}", getRole(), finalOutputPath);
+    LOG.error("Temp", new RuntimeException());
     // forces evaluation and caching of the resolution mode.
     ConflictResolution mode = getConflictResolutionMode(getJobContext(),
         fs.getConf());
-    LOG.debug("Conflict resolution mode: {}", mode);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -346,7 +346,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
     checkNotNull(attemptPath,
         "No attemptPath path in {}", this);
 
-    LOG.debug("Scanning {} for files to commit", attemptPath);
+    LOG.error("Temp", new RuntimeException());
 
     return listAndFilter(getTaskAttemptFilesystem(context),
         attemptPath, true, HIDDEN_FILE_FILTER);
@@ -484,7 +484,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
   public void cleanupStagingDirs() {
     Path workPath = getWorkPath();
     if (workPath != null) {
-      LOG.debug("Cleaning up work path {}", workPath);
+      LOG.error("Temp", new RuntimeException());
       ignoreIOExceptions(LOG, "cleaning up", workPath.toString(),
           () -> deleteQuietly(workPath.getFileSystem(getConf()),
               workPath, true));
@@ -514,7 +514,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
       abortPendingUploads(context, pending, suppressExceptions, true);
     } catch (FileNotFoundException e) {
       // nothing to list
-      LOG.debug("No job directory to read uploads from");
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       failed = true;
       maybeIgnore(suppressExceptions, "aborting job", e);
@@ -577,12 +577,12 @@ public class StagingCommitter extends AbstractS3ACommitter {
       // This could be made more efficient with a probe "hasChildren(Path)"
       // which returns true if there is >1 entry under a given path.
       FileStatus[] stats = fs.listStatus(attemptPath);
-      LOG.debug("{} files to commit under {}", stats.length, attemptPath);
+      LOG.error("Temp", new RuntimeException());
       return stats.length > 0;
     } catch (FileNotFoundException e) {
       // list didn't find a directory, so nothing to commit
       // TODO: throw this up as an error?
-      LOG.info("No files to commit");
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -592,7 +592,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
     try (DurationInfo d = new DurationInfo(LOG,
         "%s: commit task %s", getRole(), context.getTaskAttemptID())) {
       int count = commitTaskInternal(context, getTaskOutput(context));
-      LOG.info("{}: upload file count: {}", getRole(), count);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       LOG.error("{}: commit of task {} failed",
           getRole(), context.getTaskAttemptID(), e);
@@ -615,12 +615,12 @@ public class StagingCommitter extends AbstractS3ACommitter {
   protected int commitTaskInternal(final TaskAttemptContext context,
       List<? extends FileStatus> taskOutput)
       throws IOException {
-    LOG.debug("{}: commitTaskInternal", getRole());
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = context.getConfiguration();
 
     final Path attemptPath = getTaskAttemptPath(context);
     FileSystem attemptFS = getTaskAttemptFilesystem(context);
-    LOG.debug("{}: attempt path is {}", getRole(), attemptPath);
+    LOG.error("Temp", new RuntimeException());
 
     // add the commits file to the wrapped committer's task attempt location.
     // of this method.
@@ -638,7 +638,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
     if (taskOutput.isEmpty()) {
       // there is nothing to write. needsTaskCommit() should have caught
       // this, so warn that there is some kind of problem in the protocol.
-      LOG.warn("{}: No files to commit", getRole());
+      LOG.error("Temp", new RuntimeException());
     } else {
       boolean threw = true;
       // before the uploads, report some progress
@@ -666,7 +666,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
                       partition,
                       uploadPartSize,
                       context);
-              LOG.debug("{}: adding pending commit {}", getRole(), commit);
+              LOG.error("Temp", new RuntimeException());
               commits.add(commit);
             });
 
@@ -704,10 +704,10 @@ public class StagingCommitter extends AbstractS3ACommitter {
       Paths.clearTempFolderInfo(context.getTaskAttemptID());
     }
 
-    LOG.debug("Committing wrapped task");
+    LOG.error("Temp", new RuntimeException());
     wrappedCommitter.commitTask(context);
 
-    LOG.debug("Cleaning up attempt dir {}", attemptPath);
+    LOG.error("Temp", new RuntimeException());
     attemptFS.delete(attemptPath, true);
     return commits.size();
   }
@@ -819,7 +819,7 @@ public class StagingCommitter extends AbstractS3ACommitter {
       int limit = 10;
       RemoteIterator<LocatedFileStatus> lf
           = getDestFS().listFiles(path, true);
-      LOG.info("Partial Directory listing");
+      LOG.error("Temp", new RuntimeException());
       while (limit > 0 && lf.hasNext()) {
         limit--;
         LocatedFileStatus status = lf.next();
@@ -831,8 +831,8 @@ public class StagingCommitter extends AbstractS3ACommitter {
       }
       cleanupRemoteIterator(lf);
     } catch (IOException e) {
-      LOG.info("Discarding exception raised when listing {}: " + e, path);
-      LOG.debug("stack trace ", e);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     return new PathExistsException(path.toString(),
         description + ": " + InternalCommitterConstants.E_DEST_EXISTS);

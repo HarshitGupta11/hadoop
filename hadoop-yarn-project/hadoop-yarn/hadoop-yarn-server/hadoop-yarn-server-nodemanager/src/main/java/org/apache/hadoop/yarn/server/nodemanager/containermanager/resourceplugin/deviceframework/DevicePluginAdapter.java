@@ -89,7 +89,7 @@ public class DevicePluginAdapter implements ResourcePlugin {
         devicePlugin, this);
     deviceResourceUpdater = new DeviceResourceUpdaterImpl(
         resourceName, devicePlugin);
-    LOG.info(resourceName + " plugin adapter initialized");
+    LOG.error("Temp", new RuntimeException());
     return;
   }
 

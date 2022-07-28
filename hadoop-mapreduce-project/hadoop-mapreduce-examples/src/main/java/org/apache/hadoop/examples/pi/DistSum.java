@@ -160,7 +160,7 @@ public final class DistSum extends Configured implements Tool {
         TaskInputOutputContext<?, ?, NullWritable, TaskResult> context
         ) throws IOException, InterruptedException {
       String s;
-      LOG.info(s = "sigma=" + sigma);
+      LOG.error("Temp", new RuntimeException());
       context.setStatus(s);
 
       final long start = Time.monotonicNow();
@@ -168,7 +168,7 @@ public final class DistSum extends Configured implements Tool {
       final long duration = Time.monotonicNow() - start;
       final TaskResult result = new TaskResult(sigma, duration);
 
-      LOG.info(s = "result=" + result);
+      LOG.error("Temp", new RuntimeException());
       context.setStatus(s);
       context.write(NullWritable.get(), result);
     }
@@ -274,7 +274,7 @@ public final class DistSum extends Configured implements Tool {
         final Summation[] parts = sigma.partition(nParts);
         for(int i = 0; i < parts.length; ++i) {
           splits.add(new SummationSplit(parts[i]));
-          //LOG.info("parts[" + i + "] = " + parts[i]);
+          //LOG.error("Temp", new RuntimeException());
         }
         return splits;
       }
@@ -348,7 +348,7 @@ public final class DistSum extends Configured implements Tool {
         final Summation[] parts = sigma.getElement().partition(nParts);
         for(int i = 0; i < parts.length; ++i) {
           context.write(new IntWritable(i), new SummationWritable(parts[i]));
-          LOG.info("parts[" + i + "] = " + parts[i]);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -368,7 +368,7 @@ public final class DistSum extends Configured implements Tool {
       @Override
       protected void reduce(IntWritable index, Iterable<SummationWritable> sums,
           Context context) throws IOException, InterruptedException {
-        LOG.info("index=" + index);
+        LOG.error("Temp", new RuntimeException());
         for(SummationWritable sigma : sums)
           compute(sigma.getElement(), context);
       }
@@ -501,7 +501,7 @@ public final class DistSum extends Configured implements Tool {
 
   /** Convert a String to a (String, TaskResult) pair */
   public static Map.Entry<String, TaskResult> string2TaskResult(final String s) {
-    //  LOG.info("line = " + line);
+    //  LOG.error("Temp", new RuntimeException());
     int j = s.indexOf(NAME);
     if (j == 0) {
       int i = j + NAME.length() + 1;

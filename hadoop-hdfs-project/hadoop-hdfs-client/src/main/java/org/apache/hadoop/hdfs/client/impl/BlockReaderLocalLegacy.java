@@ -118,7 +118,7 @@ class BlockReaderLocalLegacy implements BlockReader {
             }
           });
         } catch (InterruptedException e) {
-          LOG.warn("encountered exception ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       return proxy;
@@ -291,7 +291,7 @@ class BlockReaderLocalLegacy implements BlockReader {
       // channel for the DataNode to notify the client that the path has been
       // invalidated.  Therefore, our only option is to skip caching.
       if (pathinfo != null && !storageType.isTransient()) {
-        LOG.debug("Cached location of block {} as {}", blk, pathinfo);
+        LOG.error("Temp", new RuntimeException());
         localDatanodeInfo.setBlockLocalPathInfo(blk, pathinfo);
       }
     } catch (IOException e) {
@@ -620,7 +620,7 @@ class BlockReaderLocalLegacy implements BlockReader {
 
   @Override
   public synchronized long skip(long n) throws IOException {
-    LOG.debug("skip {}", n);
+    LOG.error("Temp", new RuntimeException());
     if (n <= 0) {
       return 0;
     }

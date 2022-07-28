@@ -206,11 +206,11 @@ public class DumpS3GuardDynamoTable extends AbstractS3GuardDynamoDBDiagnostic {
 
         final File destFile = new File(destPath + STORE_CSV)
             .getCanonicalFile();
-        LOG.info("Writing Store details to {}", destFile);
+        LOG.error("Temp", new RuntimeException());
         try (CsvFile csv = new CsvFile(destFile);
              DurationInfo ignored = new DurationInfo(LOG, "List metastore")) {
 
-          LOG.info("Base path: {}", basePath);
+          LOG.error("Temp", new RuntimeException());
           dumpMetastore(csv, basePath);
         }
 
@@ -293,7 +293,7 @@ public class DumpS3GuardDynamoTable extends AbstractS3GuardDynamoDBDiagnostic {
       try {
         fileStatuses = getFilesystem().listStatus(path);
       } catch (FileNotFoundException e) {
-        LOG.warn("File {} was not found", path);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       // entries
@@ -363,10 +363,10 @@ public class DumpS3GuardDynamoTable extends AbstractS3GuardDynamoDBDiagnostic {
       while (st.hasNext()) {
         count++;
         S3AFileStatus next = st.next();
-        LOG.debug("[{}] {}", count, next);
+        LOG.error("Temp", new RuntimeException());
         csv.entry(next);
       }
-      LOG.info("entry count: {}", count);
+      LOG.error("Temp", new RuntimeException());
     }
     return count;
   }
@@ -432,7 +432,7 @@ public class DumpS3GuardDynamoTable extends AbstractS3GuardDynamoDBDiagnostic {
    * @param md metadata to log.
    */
   private void dumpEntry(CsvFile csv, DDBPathMetadata md) {
-    LOG.debug("{}", md.prettyPrint());
+    LOG.error("Temp", new RuntimeException());
     csv.entry(md);
   }
 
@@ -574,16 +574,16 @@ public class DumpS3GuardDynamoTable extends AbstractS3GuardDynamoDBDiagnostic {
     if (ex != null && ex.getExitCode() != 0) {
       throw ex;
     }
-    LOG.info("Results:");
+    LOG.error("Temp", new RuntimeException());
     Pair<Long, Long> r = dump.getScanEntryResult();
-    LOG.info("Metastore entries: {}", r);
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Metastore scan total {}, entries {}, tombstones {}",
         r.getLeft() + r.getRight(),
         r.getLeft(),
         r.getRight());
-    LOG.info("S3 count {}", dump.getRawObjectStoreCount());
-    LOG.info("Treewalk Count {}", dump.getTreewalkCount());
-    LOG.info("List Status Count {}", dump.getListStatusCount());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     r = dump.getSecondScanResult();
     if (r != null) {
       LOG.info("Second metastore scan total {}, entries {}, tombstones {}",

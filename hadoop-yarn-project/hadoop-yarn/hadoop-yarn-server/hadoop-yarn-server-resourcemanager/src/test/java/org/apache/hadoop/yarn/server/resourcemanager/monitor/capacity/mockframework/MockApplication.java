@@ -112,7 +112,7 @@ class MockApplication {
         ignoreExclusivityContainers.put(partition, new TreeSet<>());
       }
       ignoreExclusivityContainers.get(partition).add(mockContainer.rmContainerMock);
-      LOG.info("Added an ignore-exclusivity container to partition {}, new size is: {}", partition, ignoreExclusivityContainers.get(partition).size());
+      LOG.error("Temp", new RuntimeException());
 
     }
     LOG.debug("add container to app=" + appAttemptId + " res=" + containerSpec.resource + " node="

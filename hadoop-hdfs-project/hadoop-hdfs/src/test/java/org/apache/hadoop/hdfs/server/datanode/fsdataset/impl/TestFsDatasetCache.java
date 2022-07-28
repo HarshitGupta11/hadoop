@@ -272,7 +272,7 @@ public class TestFsDatasetCache {
   }
 
   private void testCacheAndUncacheBlock() throws Exception {
-    LOG.info("beginning testCacheAndUncacheBlock");
+    LOG.error("Temp", new RuntimeException());
     final int NUM_BLOCKS = 5;
 
     DFSTestUtil.verifyExpectedCacheUsage(0, 0, fsd);
@@ -325,7 +325,7 @@ public class TestFsDatasetCache {
            cmds > numUncacheCommands);
       numUncacheCommands = cmds;
     }
-    LOG.info("finishing testCacheAndUncacheBlock");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(timeout=600000)
@@ -349,7 +349,7 @@ public class TestFsDatasetCache {
           ByteBuffer mmap, long length) throws IOException {
         if (seenIdentifiers.contains(identifier)) {
           // mlock succeeds the second time.
-          LOG.info("mlocking " + identifier);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
         seenIdentifiers.add(identifier);
@@ -362,7 +362,7 @@ public class TestFsDatasetCache {
 
   @Test(timeout=600000)
   public void testFilesExceedMaxLockedMemory() throws Exception {
-    LOG.info("beginning testFilesExceedMaxLockedMemory");
+    LOG.error("Temp", new RuntimeException());
 
     // Create some test files that will exceed total cache capacity
     final int numFiles = 5;
@@ -421,12 +421,12 @@ public class TestFsDatasetCache {
       curCachedBlocks -= uncachedBytes / BLOCK_SIZE;
       DFSTestUtil.verifyExpectedCacheUsage(total, curCachedBlocks, fsd);
     }
-    LOG.info("finishing testFilesExceedMaxLockedMemory");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(timeout=600000)
   public void testUncachingBlocksBeforeCachingFinishes() throws Exception {
-    LOG.info("beginning testUncachingBlocksBeforeCachingFinishes");
+    LOG.error("Temp", new RuntimeException());
     final int NUM_BLOCKS = 5;
 
     DFSTestUtil.verifyExpectedCacheUsage(0, 0, fsd);
@@ -453,7 +453,7 @@ public class TestFsDatasetCache {
       @Override
       public void mlock(String identifier,
           ByteBuffer mmap, long length) throws IOException {
-        LOG.info("An mlock operation is starting on " + identifier);
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -475,7 +475,7 @@ public class TestFsDatasetCache {
 
     // wait until all caching jobs are finished cancelling.
     current = DFSTestUtil.verifyExpectedCacheUsage(0, 0, fsd);
-    LOG.info("finishing testUncachingBlocksBeforeCachingFinishes");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(timeout=60000)
@@ -591,7 +591,7 @@ public class TestFsDatasetCache {
               "be cached.   Right now only " + blocksCached + " blocks are cached.");
           return false;
         }
-        LOG.info(TOTAL_BLOCKS_PER_CACHE + " blocks are now cached.");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }, 1000, 30000);
@@ -624,7 +624,7 @@ public class TestFsDatasetCache {
                 " to be cached.  stats = " + entry.getStats());
             return false;
           }
-          LOG.info("directive " + shortCacheDirectiveId + " has been cached.");
+          LOG.error("Temp", new RuntimeException());
         } catch (IOException e) {
           Assert.fail("unexpected exception" + e.toString());
         }

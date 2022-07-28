@@ -619,7 +619,7 @@ public class TestIPC {
     String msg = StringUtils.stringifyException(t);
     assertTrue("Exception should contain substring '" + substring + "':\n" +
         msg, msg.contains(substring));
-    LOG.info("Got expected exception", t);
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**
@@ -681,7 +681,7 @@ public class TestIPC {
         call(client, RANDOM.nextLong(), address, conf);
         fail("Expected an exception to have been thrown");
       } catch (Exception e) {
-        LOG.info("caught expected exception", e);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(StringUtils.stringifyException(e).contains(
             "Injected fault"));
       }
@@ -711,7 +711,7 @@ public class TestIPC {
           MIN_SLEEP_TIME / 2, conf);
       fail("Expected an exception to have been thrown");
     } catch (SocketTimeoutException e) {
-      LOG.info("Get a SocketTimeoutException ", e);
+      LOG.error("Temp", new RuntimeException());
     }
     // set timeout to be bigger than 3*ping interval
     call(client, new LongWritable(RANDOM.nextLong()), addr,
@@ -735,7 +735,7 @@ public class TestIPC {
           MIN_SLEEP_TIME * 2, conf);
       fail("Expected an exception to have been thrown");
     } catch (SocketTimeoutException e) {
-      LOG.info("Get a SocketTimeoutException ", e);
+      LOG.error("Temp", new RuntimeException());
     }
     client.stop();
   }
@@ -885,7 +885,7 @@ public class TestIPC {
     }
     LOG.info("(initial clients) need:"+initialClients
         +" connections have:"+server.getNumOpenConnections());
-    LOG.info("ipc layer should be blocked");
+    LOG.error("Temp", new RuntimeException());
     assertEquals(callQ, server.getCallQueueLen());
     assertEquals(initialClients, server.getNumOpenConnections());
     
@@ -915,7 +915,7 @@ public class TestIPC {
     
     // sanity check that no calls have finished
     assertEquals(clients, callFinishedLatch.getCount());
-    LOG.info("releasing the calls");
+    LOG.error("Temp", new RuntimeException());
     server.callBlockLatch.countDown();
     callFinishedLatch.await();
     for (Thread t : threads) {
@@ -1099,7 +1099,7 @@ public class TestIPC {
     client.stop();
     try {
       assertTrue(Thread.currentThread().isInterrupted());
-      LOG.info("Expected thread interrupt during client cleanup");
+      LOG.error("Temp", new RuntimeException());
     } catch (AssertionError e) {
       LOG.error("The Client did not interrupt after handling an Interrupted Exception");
       Assert.fail("The Client did not interrupt after handling an Interrupted Exception");

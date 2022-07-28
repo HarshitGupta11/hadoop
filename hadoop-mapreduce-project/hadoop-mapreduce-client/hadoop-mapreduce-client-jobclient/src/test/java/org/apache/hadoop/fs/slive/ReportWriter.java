@@ -69,7 +69,7 @@ class ReportWriter {
    *          the print writer if specified to also write to
    */
   private void writeMessage(String msg, PrintWriter os) {
-    LOG.info(msg);
+    LOG.error("Temp", new RuntimeException());
     if (os != null) {
       os.println(msg);
     }

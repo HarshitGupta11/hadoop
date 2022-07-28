@@ -122,7 +122,7 @@ public class TestNMExpiry {
 
           Thread.sleep(1000);
         } catch(Exception e) {
-          LOG.info("failed to heartbeat ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } 

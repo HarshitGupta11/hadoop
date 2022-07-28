@@ -48,7 +48,7 @@ public class TestCosNInputStream {
     Configuration configuration = new Configuration();
     this.fs = CosNTestUtils.createTestFileSystem(configuration);
     this.testRootDir = CosNTestUtils.createTestPath(new Path("/test"));
-    LOG.info("test root dir: " + this.testRootDir);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @After
@@ -69,7 +69,7 @@ public class TestCosNInputStream {
 
     ContractTestUtils.generateTestFile(
         this.fs, seekTestFilePath, fileSize, 256, 255);
-    LOG.info("5MB file for seek test has created.");
+    LOG.error("Temp", new RuntimeException());
 
     FSDataInputStream inputStream = this.fs.open(seekTestFilePath);
     int seekTimes = 5;
@@ -79,18 +79,18 @@ public class TestCosNInputStream {
       assertTrue("expected position at: " +
               pos + ", but got: " + inputStream.getPos(),
           inputStream.getPos() == pos);
-      LOG.info("completed seeking at pos: " + inputStream.getPos());
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("begin to random position seeking test...");
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random();
     for (int i = 0; i < seekTimes; i++) {
       long pos = Math.abs(random.nextLong()) % fileSize;
-      LOG.info("seeking for pos: " + pos);
+      LOG.error("Temp", new RuntimeException());
       inputStream.seek(pos);
       assertTrue("expected position at: " +
               pos + ", but got: " + inputStream.getPos(),
           inputStream.getPos() == pos);
-      LOG.info("completed seeking at pos: " + inputStream.getPos());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -104,7 +104,7 @@ public class TestCosNInputStream {
     long fileSize = 5 * Unit.MB;
     ContractTestUtils.generateTestFile(
         this.fs, seekTestFilePath, fileSize, 256, 255);
-    LOG.info("5MB file for getPos test has created.");
+    LOG.error("Temp", new RuntimeException());
 
     FSDataInputStream inputStream = this.fs.open(seekTestFilePath);
     Random random = new Random();
@@ -113,7 +113,7 @@ public class TestCosNInputStream {
     assertTrue("expected position at: " +
             pos + ", but got: " + inputStream.getPos(),
         inputStream.getPos() == pos);
-    LOG.info("completed get pos tests.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -137,7 +137,7 @@ public class TestCosNInputStream {
 
     ContractTestUtils.generateTestFile(
         this.fs, readTestFilePath, fileSize, 256, 255);
-    LOG.info("read test file: " + readTestFilePath + " has created.");
+    LOG.error("Temp", new RuntimeException());
 
     FSDataInputStream inputStream = this.fs.open(readTestFilePath);
     byte[] buf = new byte[bufLen];

@@ -113,9 +113,9 @@ public class TestShutdownHookManager {
 
     // now execute the hook shutdown sequence
     INVOCATION_COUNT.set(0);
-    LOG.info("invoking executeShutdown()");
+    LOG.error("Temp", new RuntimeException());
     int timeouts = mgr.executeShutdown();
-    LOG.info("Shutdown completed");
+    LOG.error("Temp", new RuntimeException());
     assertEquals("Number of timed out hooks", 1, timeouts);
 
     List<ShutdownHookManager.HookEntry> hooks
@@ -268,13 +268,13 @@ public class TestShutdownHookManager {
         if (sleepTime > 0) {
           sleep(sleepTime);
         }
-        LOG.info("Completed shutdown of {}", name);
+        LOG.error("Temp", new RuntimeException());
         completed = true;
         if (expectFailure) {
           assertion = new AssertionError("Expected a failure of " + name);
         }
       } catch (InterruptedException ex) {
-        LOG.info("Shutdown {} interrupted exception", name, ex);
+        LOG.error("Temp", new RuntimeException());
         interrupted = true;
         if (!expectFailure) {
           assertion = new AssertionError("Timeout of " + name, ex);

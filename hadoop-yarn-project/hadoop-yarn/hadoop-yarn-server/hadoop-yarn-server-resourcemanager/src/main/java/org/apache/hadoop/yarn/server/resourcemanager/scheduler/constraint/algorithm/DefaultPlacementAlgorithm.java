@@ -138,7 +138,7 @@ public class DefaultPlacementAlgorithm implements ConstraintPlacementAlgorithm {
     SchedulerNode lastSatisfiedNode = null;
     while (requestIterator.hasNext()) {
       if (allNodes.isEmpty()) {
-        LOG.warn("No nodes available for placement at the moment !!");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
       SchedulingRequest schedulingRequest = requestIterator.next();
@@ -176,7 +176,7 @@ public class DefaultPlacementAlgorithm implements ConstraintPlacementAlgorithm {
             lastSatisfiedNode = node;
           }
         } catch (InvalidAllocationTagsQueryException e) {
-          LOG.warn("Got exception from TagManager !", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -258,7 +258,7 @@ public class DefaultPlacementAlgorithm implements ConstraintPlacementAlgorithm {
                 applicationId, pReq.getSchedulingRequest().getAllocationTags());
           }
         } catch (InvalidAllocationTagsQueryException e) {
-          LOG.warn("Got exception from TagManager !", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       if (num > 0) {

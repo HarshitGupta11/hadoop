@@ -423,7 +423,7 @@ public class AbfsHttpOperation implements AbfsPerfLoggable {
   }
 
   /**
-   * When the request fails, this function is used to parse the responseAbfsHttpClient.LOG.debug("ExpectedError: ", ex);
+   * When the request fails, this function is used to parse the responseAbfsHttpClient.LOG.error("Temp", new RuntimeException());
    * and extract the storageErrorCode and storageErrorMessage.  Any errors
    * encountered while attempting to process the error response are logged,
    * but otherwise ignored.
@@ -477,7 +477,7 @@ public class AbfsHttpOperation implements AbfsPerfLoggable {
       // Ignore errors that occur while attempting to parse the storage
       // error, since the response may have been handled by the HTTP driver
       // or for other reasons have an unexpected
-      LOG.debug("ExpectedError: ", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

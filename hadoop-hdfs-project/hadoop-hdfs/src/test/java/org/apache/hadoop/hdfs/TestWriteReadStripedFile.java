@@ -217,7 +217,7 @@ public class TestWriteReadStripedFile {
 
     if (withDataNodeFailure) {
       int dnIndex = 1; // TODO: StripedFileTestUtil.random.nextInt(dataBlocks);
-      LOG.info("stop DataNode " + dnIndex);
+      LOG.error("Temp", new RuntimeException());
       stopDataNode(srcPath, dnIndex);
     }
 

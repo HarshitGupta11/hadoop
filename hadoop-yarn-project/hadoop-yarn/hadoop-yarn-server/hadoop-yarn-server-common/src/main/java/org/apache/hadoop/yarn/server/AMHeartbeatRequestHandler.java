@@ -118,7 +118,7 @@ public class AMHeartbeatRequestHandler extends Thread {
         lastResponseId = response.getResponseId();
         // update token if RM has reissued/renewed
         if (response.getAMRMToken() != null) {
-          LOG.debug("Received new AMRMToken");
+          LOG.error("Temp", new RuntimeException());
           YarnServerSecurityUtils.updateAMRMToken(response.getAMRMToken(),
               userUgi, conf);
         }
@@ -132,7 +132,7 @@ public class AMHeartbeatRequestHandler extends Thread {
         }
         requestInfo.getCallback().callback(response);
       } catch (InterruptedException ex) {
-        LOG.debug("Interrupted while waiting for queue", ex);
+        LOG.error("Temp", new RuntimeException());
       } catch (Throwable ex) {
         LOG.warn(
             "Error occurred while processing heart beat for " + applicationId,
@@ -172,7 +172,7 @@ public class AMHeartbeatRequestHandler extends Thread {
       this.requestQueue.put(new AsyncAllocateRequestInfo(request, callback));
     } catch (InterruptedException ex) {
       // Should not happen as we have MAX_INT queue length
-      LOG.debug("Interrupted while waiting to put on response queue", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

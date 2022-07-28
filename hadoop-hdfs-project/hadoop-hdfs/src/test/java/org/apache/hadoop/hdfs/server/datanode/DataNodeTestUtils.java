@@ -229,7 +229,7 @@ public class DataNodeTestUtils {
       // This can be thrown if reconfiguration tries to use a failed volume.
       // We need to swallow the exception, because some of our tests want to
       // cover this case.
-      LOG.warn("Could not reconfigure DataNode.", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -256,7 +256,7 @@ public class DataNodeTestUtils {
    */
   public static void waitForDiskError(DataNode dn, FsVolumeSpi volume)
       throws Exception {
-    LOG.info("Starting to wait for datanode to detect disk failure.");
+    LOG.error("Temp", new RuntimeException());
     final long lastDiskErrorCheck = dn.getLastDiskErrorCheck();
     dn.checkDiskErrorAsync(volume);
     // Wait 10 seconds for checkDiskError thread to finish and discover volume

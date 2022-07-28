@@ -173,14 +173,14 @@ public class MountTableResolver
         DFS_ROUTER_DEFAULT_NAMESERVICE_ENABLE_DEFAULT);
 
     if (!this.defaultNSEnable) {
-      LOG.warn("Default name service is disabled.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     this.defaultNameService = conf.get(DFS_ROUTER_DEFAULT_NAMESERVICE, "");
 
     if (this.defaultNameService.equals("")) {
       this.defaultNSEnable = false;
-      LOG.warn("Default name service is not set.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.info("Default name service: {}, enabled to read or write",
           this.defaultNameService);
@@ -252,7 +252,7 @@ public class MountTableResolver
    * @param path Source path.
    */
   private void invalidateLocationCache(final String path) {
-    LOG.debug("Invalidating {} from {}", path, locationCache);
+    LOG.error("Temp", new RuntimeException());
     if (locationCache == null || locationCache.size() == 0) {
       return;
     }
@@ -268,19 +268,19 @@ public class MountTableResolver
       String src = loc.getSourcePath();
       if (src != null) {
         if (isParentEntry(key, path)) {
-          LOG.debug("Removing {}", src);
+          LOG.error("Temp", new RuntimeException());
           it.remove();
         }
       } else {
         String dest = loc.getDefaultLocation().getDest();
         if (dest.startsWith(path)) {
-          LOG.debug("Removing default cache {}", dest);
+          LOG.error("Temp", new RuntimeException());
           it.remove();
         }
       }
     }
 
-    LOG.debug("Location cache after invalidation: {}", locationCache);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -313,7 +313,7 @@ public class MountTableResolver
         if (!newEntries.containsKey(srcPath)) {
           this.tree.remove(srcPath);
           invalidateLocationCache(srcPath);
-          LOG.info("Removed stale mount point {} from resolver", srcPath);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -324,7 +324,7 @@ public class MountTableResolver
           // Add node, it does not exist
           this.tree.put(srcPath, entry);
           invalidateLocationCache(srcPath);
-          LOG.info("Added new mount point {} to resolver", srcPath);
+          LOG.error("Temp", new RuntimeException());
         } else {
           // Node exists, check for updates
           MountTable existingEntry = this.tree.get(srcPath);
@@ -333,7 +333,7 @@ public class MountTableResolver
                 existingEntry, entry);
             this.tree.put(srcPath, entry);
             invalidateLocationCache(srcPath);
-            LOG.info("Updated mount point {} in resolver", srcPath);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -417,7 +417,7 @@ public class MountTableResolver
    * Clears all data.
    */
   public void clear() {
-    LOG.info("Clearing all mount location caches");
+    LOG.error("Temp", new RuntimeException());
     writeLock.lock();
     try {
       if (this.locationCache != null) {

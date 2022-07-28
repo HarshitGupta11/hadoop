@@ -110,7 +110,7 @@ public class TestMRSequenceFileInputFilter {
       reader.initialize(split, mcontext);
       try {
         while (reader.nextKeyValue()) {
-          LOG.info("Accept record " + reader.getCurrentKey().toString());
+          LOG.error("Temp", new RuntimeException());
           count++;
         }
       } finally {
@@ -123,7 +123,7 @@ public class TestMRSequenceFileInputFilter {
   @Test
   public void testRegexFilter() throws Exception {
     // set the filter class
-    LOG.info("Testing Regex Filter with patter: \\A10*");
+    LOG.error("Temp", new RuntimeException());
     SequenceFileInputFilter.setFilterClass(job, 
       SequenceFileInputFilter.RegexFilter.class);
     SequenceFileInputFilter.RegexFilter.setPattern(
@@ -135,7 +135,7 @@ public class TestMRSequenceFileInputFilter {
     // for a variety of lengths
     for (int length = 1; length < MAX_LENGTH;
          length += random.nextInt(MAX_LENGTH / 10) + 1) {
-      LOG.info("******Number of records: " + length);
+      LOG.error("Temp", new RuntimeException());
       createSequenceFile(length);
       int count = countRecords(0);
       assertEquals(count, length==0 ? 0 : (int)Math.log10(length) + 1);
@@ -147,7 +147,7 @@ public class TestMRSequenceFileInputFilter {
 
   @Test
   public void testPercentFilter() throws Exception {
-    LOG.info("Testing Percent Filter with frequency: 1000");
+    LOG.error("Temp", new RuntimeException());
     // set the filter class
     SequenceFileInputFilter.setFilterClass(job, 
       SequenceFileInputFilter.PercentFilter.class);
@@ -160,10 +160,10 @@ public class TestMRSequenceFileInputFilter {
     // for a variety of lengths
     for (int length = 0; length < MAX_LENGTH;
          length += random.nextInt(MAX_LENGTH / 10) + 1) {
-      LOG.info("******Number of records: "+length);
+      LOG.error("Temp", new RuntimeException());
       createSequenceFile(length);
       int count = countRecords(1);
-      LOG.info("Accepted " + count + " records");
+      LOG.error("Temp", new RuntimeException());
       int expectedCount = length / 1000;
       if (expectedCount * 1000 != length)
         expectedCount++;
@@ -177,7 +177,7 @@ public class TestMRSequenceFileInputFilter {
   @Test
   public void testMD5Filter() throws Exception {
     // set the filter class
-    LOG.info("Testing MD5 Filter with frequency: 1000");
+    LOG.error("Temp", new RuntimeException());
     SequenceFileInputFilter.setFilterClass(job, 
       SequenceFileInputFilter.MD5Filter.class);
     SequenceFileInputFilter.MD5Filter.setFrequency(
@@ -189,9 +189,9 @@ public class TestMRSequenceFileInputFilter {
     // for a variety of lengths
     for (int length = 0; length < MAX_LENGTH;
          length += random.nextInt(MAX_LENGTH / 10) + 1) {
-      LOG.info("******Number of records: " + length);
+      LOG.error("Temp", new RuntimeException());
       createSequenceFile(length);
-      LOG.info("Accepted " + countRecords(0) + " records");
+      LOG.error("Temp", new RuntimeException());
     }
     // clean up
     fs.delete(inDir, true);

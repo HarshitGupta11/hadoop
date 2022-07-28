@@ -429,7 +429,7 @@ public class TestDecommissioningStatus {
     Thread.sleep(1000);
 
     // Shutdown dn1
-    LOG.info("Shutdown dn1");
+    LOG.error("Temp", new RuntimeException());
     DatanodeID dnID = cluster.getDataNodes().get(1).getDatanodeId();
     String dnName = dnID.getXferAddr();
     DatanodeDescriptor dnDescriptor1 = dm.getDatanode(dnID);
@@ -439,7 +439,7 @@ public class TestDecommissioningStatus {
         false, 30000);
 
     // Shutdown dn0
-    LOG.info("Shutdown dn0");
+    LOG.error("Temp", new RuntimeException());
     dnID = cluster.getDataNodes().get(0).getDatanodeId();
     dnName = dnID.getXferAddr();
     DatanodeDescriptor dnDescriptor0 = dm.getDatanode(dnID);
@@ -449,7 +449,7 @@ public class TestDecommissioningStatus {
         false, 30000);
 
     // Decommission the nodes.
-    LOG.info("Decommissioning nodes");
+    LOG.error("Temp", new RuntimeException());
     hostsFileWriter.initExcludeHosts(nodes);
     dm.refreshNodes(conf);
     BlockManagerTestUtil.recheckDecommissionState(dm);
@@ -465,7 +465,7 @@ public class TestDecommissioningStatus {
     assertTrue(underreplicated > 0);
 
     // Bring back dn0
-    LOG.info("Bring back dn0");
+    LOG.error("Temp", new RuntimeException());
     cluster.restartDataNode(stoppedDN0, true);
     do {
       dnID = cluster.getDataNodes().get(0).getDatanodeId();
@@ -477,7 +477,7 @@ public class TestDecommissioningStatus {
     }
 
     // Bring back dn1
-    LOG.info("Bring back dn1");
+    LOG.error("Temp", new RuntimeException());
     cluster.restartDataNode(stoppedDN1, true);
     do {
       dnID = cluster.getDataNodes().get(1).getDatanodeId();
@@ -493,7 +493,7 @@ public class TestDecommissioningStatus {
     assertEquals(underreplicated, bm.getLowRedundancyBlocksCount());
 
     // Start up a node.
-    LOG.info("Starting two more nodes");
+    LOG.error("Temp", new RuntimeException());
     cluster.startDataNodes(conf, 2, true, null, null);
     cluster.waitActive();
     // Replication should fix it.

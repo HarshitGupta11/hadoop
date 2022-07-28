@@ -105,7 +105,7 @@ public class TestRackResolver {
           // Simulate condition where resolving host returns empty string
           returnList.add("");
         }
-        LOG.info("Received resolve request for " + host);
+        LOG.error("Temp", new RuntimeException());
         if (host.startsWith("host")) {
           returnList.add("/" + host.replace("host", "rack"));
         }

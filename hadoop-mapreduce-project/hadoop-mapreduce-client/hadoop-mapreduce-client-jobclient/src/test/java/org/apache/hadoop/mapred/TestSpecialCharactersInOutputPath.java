@@ -56,7 +56,7 @@ public class TestSpecialCharactersInOutputPath {
     FileSystem fs = FileSystem.get(fileSys, conf);
     fs.delete(outDir, true);
     if (!fs.mkdirs(inDir)) {
-      LOG.warn("Can't create " + inDir);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     // generate an input file
@@ -92,7 +92,7 @@ public class TestSpecialCharactersInOutputPath {
     }
           
     // return job result
-    LOG.info("job is complete: " + runningJob.isSuccessful());
+    LOG.error("Temp", new RuntimeException());
     return (runningJob.isSuccessful());
   }
 

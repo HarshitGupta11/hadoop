@@ -78,7 +78,7 @@ public class ITestNativeAzureFileSystemLive extends
           }
 
           if (fs.rename(src, dest)) {
-            LOG.info("rename succeeded for thread " + threadNumber);
+            LOG.error("Temp", new RuntimeException());
             successfulRenameCount.incrementAndGet();
           }
         } catch (IOException e) {
@@ -109,7 +109,7 @@ public class ITestNativeAzureFileSystemLive extends
       throw unexpectedError.get();
     }
     assertEquals(1, successfulRenameCount.get());
-    LOG.info("Success, only one rename operation succeeded!");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -143,7 +143,7 @@ public class ITestNativeAzureFileSystemLive extends
   @Test
   public void testDeleteThrowsExceptionWithLeaseExistsErrorMessage()
       throws Exception {
-    LOG.info("Starting test");
+    LOG.error("Temp", new RuntimeException());
     // Create the file
     Path path = methodPath();
     fs.create(path);
@@ -162,9 +162,9 @@ public class ITestNativeAzureFileSystemLive extends
         SelfRenewingLease lease = null;
         try {
           lease = store.acquireLease(fullKey);
-          LOG.info("Lease acquired: " + lease.getLeaseID());
+          LOG.error("Temp", new RuntimeException());
         } catch (AzureException e) {
-          LOG.warn("Lease acqusition thread unable to acquire lease", e);
+          LOG.error("Temp", new RuntimeException());
         } finally {
           leaseAttemptComplete.countDown();
         }
@@ -186,11 +186,11 @@ public class ITestNativeAzureFileSystemLive extends
 
         try {
           if (lease != null){
-            LOG.info("Freeing lease");
+            LOG.error("Temp", new RuntimeException());
             lease.free();
           }
         } catch (StorageException se) {
-          LOG.warn("Unable to free lease.", se);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };

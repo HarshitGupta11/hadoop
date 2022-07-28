@@ -337,7 +337,7 @@ public class AMLauncher implements Runnable {
     switch (eventType) {
     case LAUNCH:
       try {
-        LOG.info("Launching master" + application.getAppAttemptId());
+        LOG.error("Temp", new RuntimeException());
         launch();
         handler.handle(new RMAppAttemptEvent(application.getAppAttemptId(),
             RMAppAttemptEventType.LAUNCHED, System.currentTimeMillis()));
@@ -347,22 +347,22 @@ public class AMLauncher implements Runnable {
       break;
     case CLEANUP:
       try {
-        LOG.info("Cleaning master " + application.getAppAttemptId());
+        LOG.error("Temp", new RuntimeException());
         cleanup();
       } catch(IOException ie) {
-        LOG.info("Error cleaning master ", ie);
+        LOG.error("Temp", new RuntimeException());
       } catch (YarnException e) {
         StringBuilder sb = new StringBuilder("Container ");
         sb.append(masterContainer.getId().toString())
             .append(" is not handled by this NodeManager");
         if (!e.getMessage().contains(sb.toString())) {
           // Ignoring if container is already killed by Node Manager.
-          LOG.info("Error cleaning master ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       break;
     default:
-      LOG.warn("Received unknown event-type " + eventType + ". Ignoring.");
+      LOG.error("Temp", new RuntimeException());
       break;
     }
   }
@@ -382,7 +382,7 @@ public class AMLauncher implements Runnable {
   protected void onAMLaunchFailed(ContainerId containerId, Exception ie) {
     String message = "Error launching " + application.getAppAttemptId()
             + ". Got exception: " + StringUtils.stringifyException(ie);
-    LOG.info(message);
+    LOG.error("Temp", new RuntimeException());
     handler.handle(new RMAppAttemptEvent(application
            .getAppAttemptId(), RMAppAttemptEventType.LAUNCH_FAILED, message));
   }

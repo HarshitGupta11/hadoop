@@ -624,7 +624,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
   private int handleExitCode(ContainerExecutionException e, Container container,
       ContainerId containerId) throws ConfigurationException {
     int exitCode = e.getExitCode();
-    LOG.warn("Exit code from container {} is : {}", containerId, exitCode);
+    LOG.error("Temp", new RuntimeException());
     // 143 (SIGTERM) and 137 (SIGKILL) exit codes means the container was
     // terminated/killed forcefully. In all other cases, log the
     // output
@@ -876,12 +876,12 @@ public class LinuxContainerExecutor extends ContainerExecutor {
 
     List<String> pathsToDelete = new ArrayList<String>();
     if (baseDirs == null || baseDirs.size() == 0) {
-      LOG.info("Deleting absolute path : {}", dir);
+      LOG.error("Temp", new RuntimeException());
       pathsToDelete.add(dirString);
     } else {
       for (Path baseDir : baseDirs) {
         Path del = dir == null ? baseDir : new Path(baseDir, dir);
-        LOG.info("Deleting path : {}", del);
+        LOG.error("Temp", new RuntimeException());
         pathsToDelete.add(del.toString());
         deleteAsUserOp.appendArgs(baseDir.toUri().getPath());
       }
@@ -985,7 +985,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
           false);
     } catch (PrivilegedOperationException e) {
       int exitCode = e.getExitCode();
-      LOG.warn("Exception in LinuxContainerExecutor mountCgroups ", e);
+      LOG.error("Temp", new RuntimeException());
 
       throw new IOException("Problem mounting cgroups " + cgroupKVs +
           "; exit code = " + exitCode + " and output: " + e.getOutput(),
@@ -1010,14 +1010,14 @@ public class LinuxContainerExecutor extends ContainerExecutor {
       if (DockerCommandExecutor.isRemovable(
           DockerCommandExecutor.getContainerStatus(containerId, privOpExecutor,
               nmContext))) {
-        LOG.info("Removing Docker container : {}", containerId);
+        LOG.error("Temp", new RuntimeException());
         DockerRmCommand dockerRmCommand = new DockerRmCommand(containerId,
             ResourceHandlerModule.getCgroupsRelativeRoot());
         DockerCommandExecutor.executeDockerCommand(dockerRmCommand, containerId,
             null, privOpExecutor, false, nmContext);
       }
     } catch (ContainerExecutionException e) {
-      LOG.warn("Unable to remove docker container: {}", containerId);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1025,7 +1025,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
   void postComplete(final ContainerId containerId) {
     try {
       if (resourceHandlerChain != null) {
-        LOG.debug("{} post complete", containerId);
+        LOG.error("Temp", new RuntimeException());
         resourceHandlerChain.postComplete(containerId);
       }
     } catch (ResourceHandlerException e) {
@@ -1044,7 +1044,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
     List<String> localDirs = dirsHandler.getLocalDirs();
     if (file.exists()) {
       if (!file.delete()) {
-        LOG.warn("Unable to delete {}", sysFSPath);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (file.createNewFile()) {

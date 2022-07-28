@@ -187,7 +187,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     // Add labels to another node
     params = new MultivaluedMapImpl();
@@ -200,7 +200,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     // Add labels to another node
     params = new MultivaluedMapImpl();
@@ -213,7 +213,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     // Verify, using get-labels-to-Nodes
     response =
@@ -270,7 +270,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     // Verify
     response =
@@ -322,7 +322,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
     // Verify
     response =
         r.path("ws").path("v1").path("cluster")
@@ -345,7 +345,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     // Verify
     response =
@@ -466,7 +466,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .queryParams(params)
             .accept(MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     //setting rmWebService for non Centralized NodeLabel Configuration
     rmWebService.isCentralizedNodeLabelConfiguration = false;
@@ -507,7 +507,7 @@ public class TestRMWebServicesNodeLabels extends JerseyTestBase {
             .accept(MediaType.APPLICATION_JSON)
             .entity("{\"nodeLabelName\": [\"x\"]}", MediaType.APPLICATION_JSON)
             .post(ClientResponse.class);
-    LOG.info("posted node nodelabel");
+    LOG.error("Temp", new RuntimeException());
 
     // Verify, using node-to-labels that previous operation has failed
     response =

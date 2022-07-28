@@ -61,7 +61,7 @@ public class MutableRates extends MutableMetric {
     protocolCache.add(protocol);
     for (Method method : protocol.getDeclaredMethods()) {
       String name = method.getName();
-      LOG.debug(name);
+      LOG.error("Temp", new RuntimeException());
       try { registry.newRate(name, name, false, true); }
       catch (Exception e) {
         LOG.error("Error creating rate metrics for "+ method.getName(), e);

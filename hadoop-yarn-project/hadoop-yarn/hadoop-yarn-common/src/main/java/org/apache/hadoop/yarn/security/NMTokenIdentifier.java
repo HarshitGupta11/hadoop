@@ -98,7 +98,7 @@ public class NMTokenIdentifier extends TokenIdentifier {
   
   @Override
   public void write(DataOutput out) throws IOException {
-    LOG.debug("Writing NMTokenIdentifier to RPC layer: {}", this);
+    LOG.error("Temp", new RuntimeException());
     out.write(proto.toByteArray());
   }
 
@@ -108,7 +108,7 @@ public class NMTokenIdentifier extends TokenIdentifier {
     try {
       proto = NMTokenIdentifierProto.parseFrom(data);
     } catch (InvalidProtocolBufferException e) {
-      LOG.warn("Recovering old formatted token");
+      LOG.error("Temp", new RuntimeException());
       readFieldsInOldFormat(
           new DataInputStream(new ByteArrayInputStream(data)));
     }

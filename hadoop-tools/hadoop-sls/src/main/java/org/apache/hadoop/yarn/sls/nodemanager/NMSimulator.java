@@ -133,7 +133,7 @@ public class NMSimulator extends TaskRunner.Task {
       while ((cs = containerQueue.poll()) != null) {
         runningContainers.remove(cs.getId());
         completedContainerList.add(cs.getId());
-        LOG.debug("Container {} has completed", cs.getId());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     

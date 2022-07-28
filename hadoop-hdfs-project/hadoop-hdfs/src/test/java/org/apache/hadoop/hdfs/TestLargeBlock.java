@@ -60,7 +60,7 @@ public class TestLargeBlock {
     FSDataOutputStream stm = fileSys.create(name, true, fileSys.getConf()
         .getInt(CommonConfigurationKeys.IO_FILE_BUFFER_SIZE_KEY, 4096),
         (short) repl, blockSize);
-    LOG.info("createFile: Created " + name + " with " + repl + " replica.");
+    LOG.error("Temp", new RuntimeException());
     return stm;
   }
 
@@ -195,11 +195,11 @@ public class TestLargeBlock {
 
       // write to file
       writeFile(stm, fileSize);
-      LOG.info("File " + file1 + " written to.");
+      LOG.error("Temp", new RuntimeException());
 
       // close file
       stm.close();
-      LOG.info("File " + file1 + " closed.");
+      LOG.error("Temp", new RuntimeException());
 
       // Make sure a client can read it
       checkFullFile(fs, file1, fileSize);

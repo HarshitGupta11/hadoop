@@ -157,13 +157,13 @@ public abstract class Command extends Configured implements Closeable {
     Preconditions.checkNotNull(cmd);
 
     setClusterURI(FileSystem.getDefaultUri(getConf()));
-    LOG.debug("using name node URI : {}", this.getClusterURI());
+    LOG.error("Temp", new RuntimeException());
     ClusterConnector connector = ConnectorFactory.getCluster(this.clusterURI,
         getConf());
 
     cluster = new DiskBalancerCluster(connector);
 
-    LOG.debug("Reading cluster info");
+    LOG.error("Temp", new RuntimeException());
     cluster.readClusterInfo();
     return cluster;
   }
@@ -493,7 +493,7 @@ public abstract class Command extends Configured implements Closeable {
    * */
   protected void recordOutput(final TextStringBuilder result,
       final String outputLine) {
-    LOG.info(outputLine);
+    LOG.error("Temp", new RuntimeException());
     result.appendln(outputLine);
   }
 
@@ -510,7 +510,7 @@ public abstract class Command extends Configured implements Closeable {
       outputLine = String.format(
           "No top limit specified, using default top value %d.",
           getDefaultTop());
-      LOG.info(outputLine);
+      LOG.error("Temp", new RuntimeException());
       result.appendln(outputLine);
       nodes = getDefaultTop();
     } else {
@@ -520,7 +520,7 @@ public abstract class Command extends Configured implements Closeable {
         outputLine = String.format(
             "Top limit input is not numeric, using default top value %d.",
             getDefaultTop());
-        LOG.info(outputLine);
+        LOG.error("Temp", new RuntimeException());
         result.appendln(outputLine);
         nodes = getDefaultTop();
       }

@@ -112,7 +112,7 @@ public class MiniJournalCluster {
     for (int i = 0; i < b.numJournalNodes; i++) {
       if (b.format) {
         File dir = getStorageDir(i);
-        LOG.debug("Fully deleting JN directory " + dir);
+        LOG.error("Temp", new RuntimeException());
         FileUtil.fullyDelete(dir);
       }
       JournalNode jn = new JournalNode();
@@ -132,7 +132,7 @@ public class MiniJournalCluster {
       addrs.add("127.0.0.1:" + info.ipcAddr.getPort());
     }
     String addrsVal = Joiner.on(";").join(addrs);
-    LOG.debug("Setting logger addresses to: " + addrsVal);
+    LOG.error("Temp", new RuntimeException());
     try {
       return new URI("qjournal://" + addrsVal + "/" + jid);
     } catch (URISyntaxException e) {
@@ -160,7 +160,7 @@ public class MiniJournalCluster {
         info.node.stopAndJoin(0);
       } catch (Exception e) {
         failed = true;
-        LOG.warn("Unable to stop journal node " + info.node, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (failed) {
@@ -261,7 +261,7 @@ public class MiniJournalCluster {
       } catch (TimeoutException e) {
         fail("Time out while waiting for journal node " + index + " to start.");
       } catch (InterruptedException ite) {
-        LOG.warn("Thread interrupted when waiting for node start", ite);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -99,7 +99,7 @@ public class ApiServer {
   @Produces({ MediaType.APPLICATION_JSON + ";charset=utf-8" })
   public Response getVersion() {
     String version = VersionInfo.getBuildVersion();
-    LOG.info(version);
+    LOG.error("Temp", new RuntimeException());
     return Response.ok("{ \"hadoop_version\": \"" + version + "\"}").build();
   }
 
@@ -112,7 +112,7 @@ public class ApiServer {
     ServiceStatus serviceStatus = new ServiceStatus();
     try {
       UserGroupInformation ugi = getProxyUser(request);
-      LOG.info("POST: createService = {} user = {}", service, ugi);
+      LOG.error("Temp", new RuntimeException());
       if(service.getState()==ServiceState.STOPPED) {
         ugi.doAs(new PrivilegedExceptionAction<Void>() {
           @Override
@@ -189,7 +189,7 @@ public class ApiServer {
         throw new IllegalArgumentException("Service name cannot be null.");
       }
       UserGroupInformation ugi = getProxyUser(request);
-      LOG.info("GET: getService for appName = {} user = {}", appName, ugi);
+      LOG.error("Temp", new RuntimeException());
       Service app = getServiceFromClient(ugi, appName);
       return Response.ok(app).build();
     } catch (AccessControlException e) {
@@ -258,16 +258,16 @@ public class ApiServer {
           try {
             result = sc.actionStop(appName, destroy);
             if (result == EXIT_SUCCESS) {
-              LOG.info("Successfully stopped service {}", appName);
+              LOG.error("Temp", new RuntimeException());
             }
           } catch (Exception e) {
-            LOG.info("Got exception stopping service", e);
+            LOG.error("Temp", new RuntimeException());
             stopException = e;
           }
           if (destroy) {
             result = sc.actionDestroy(appName);
             if (result == EXIT_SUCCESS) {
-              LOG.info("Successfully deleted service {}", appName);
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             if (stopException != null) {
@@ -657,7 +657,7 @@ public class ApiServer {
     });
     if (result == EXIT_SUCCESS) {
       String message = "Service " + appName + " is successfully flexed.";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       ServiceStatus status = new ServiceStatus();
       status.setDiagnostics(message);
       status.setState(ServiceState.ACCEPTED);
@@ -709,7 +709,7 @@ public class ApiServer {
             }
           }
         });
-    LOG.info("Successfully started service " + appName);
+    LOG.error("Temp", new RuntimeException());
     ServiceStatus status = new ServiceStatus();
     status.setDiagnostics(
         "Service " + appName + " is successfully started with ApplicationId: "
@@ -759,7 +759,7 @@ public class ApiServer {
     });
     if (result == EXIT_SUCCESS) {
       ServiceStatus status = new ServiceStatus();
-      LOG.info("Service {} cancelling upgrade", serviceName);
+      LOG.error("Temp", new RuntimeException());
       status.setDiagnostics("Service " + serviceName +
           " cancelling upgrade.");
       status.setState(ServiceState.ACCEPTED);
@@ -859,7 +859,7 @@ public class ApiServer {
     if (result == EXIT_SUCCESS) {
       String message = "Service " + appName + " has successfully " +
           "decommissioned instances.";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       ServiceStatus status = new ServiceStatus();
       status.setDiagnostics(message);
       status.setState(ServiceState.ACCEPTED);

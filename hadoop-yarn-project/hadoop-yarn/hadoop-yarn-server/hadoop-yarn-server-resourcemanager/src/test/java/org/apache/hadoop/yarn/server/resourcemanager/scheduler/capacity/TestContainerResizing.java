@@ -96,7 +96,7 @@ public class TestContainerResizing {
       try {
         Thread.sleep(1000);
       } catch(InterruptedException e) {
-        LOG.debug("Thread interrupted.");
+        LOG.error("Temp", new RuntimeException());
       }
       return super.allocateContainersToNode(candidates, withNodeHeartbeat);
     }

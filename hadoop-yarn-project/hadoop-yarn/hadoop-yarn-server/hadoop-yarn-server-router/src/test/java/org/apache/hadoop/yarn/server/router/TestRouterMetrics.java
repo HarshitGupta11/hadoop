@@ -41,7 +41,7 @@ public class TestRouterMetrics {
   @BeforeClass
   public static void init() {
 
-    LOG.info("Test: aggregate metrics are initialized correctly");
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(0, metrics.getNumSucceededAppsCreated());
     Assert.assertEquals(0, metrics.getNumSucceededAppsSubmitted());
@@ -57,7 +57,7 @@ public class TestRouterMetrics {
     Assert.assertEquals(0,
         metrics.getAppAttemptsFailedRetrieved());
 
-    LOG.info("Test: aggregate metrics are updated correctly");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -282,32 +282,32 @@ public class TestRouterMetrics {
   // Records failures for all calls
   private class MockBadSubCluster {
     public void getNewApplication() {
-      LOG.info("Mocked: failed getNewApplication call");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrAppsFailedCreated();
     }
 
     public void submitApplication() {
-      LOG.info("Mocked: failed submitApplication call");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrAppsFailedSubmitted();
     }
 
     public void forceKillApplication() {
-      LOG.info("Mocked: failed forceKillApplication call");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrAppsFailedKilled();
     }
 
     public void getApplicationReport() {
-      LOG.info("Mocked: failed getApplicationReport call");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrAppsFailedRetrieved();
     }
 
     public void getApplicationAttemptReport() {
-      LOG.info("Mocked: failed getApplicationAttemptReport call");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrAppsFailedRetrieved();
     }
 
     public void getApplicationsReport() {
-      LOG.info("Mocked: failed getApplicationsReport call");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrMultipleAppsFailedRetrieved();
     }
   }

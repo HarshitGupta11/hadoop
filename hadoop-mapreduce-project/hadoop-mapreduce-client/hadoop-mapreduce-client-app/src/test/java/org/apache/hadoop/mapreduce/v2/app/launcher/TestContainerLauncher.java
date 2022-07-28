@@ -307,7 +307,7 @@ public class TestContainerLauncher {
     app.waitForState(job, JobState.FAILED);
 
     String diagnostics = attempt.getDiagnostics().toString();
-    LOG.info("attempt.getDiagnostics: " + diagnostics);
+    LOG.error("Temp", new RuntimeException());
 
       Assert.assertTrue(diagnostics.contains("Container launch failed for "
           + "container_0_0000_01_000000 : "));
@@ -350,7 +350,7 @@ public class TestContainerLauncher {
       public void run() {
         // do nothing substantial
 
-        LOG.info("Processing the event " + event.toString());
+        LOG.error("Temp", new RuntimeException());
 
         numEventsProcessing.incrementAndGet();
         // Stall

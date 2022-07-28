@@ -119,7 +119,7 @@ public class EntityCacheItem {
       updateRefreshTimeToNow();
       metrics.addCacheRefreshTime(Time.monotonicNow() - startTime);
     } else {
-      LOG.debug("Cache new enough, skip refreshing");
+      LOG.error("Temp", new RuntimeException());
       metrics.incrNoRefreshCacheRead();
     }
     return store;
@@ -135,7 +135,7 @@ public class EntityCacheItem {
         store.close();
       }
     } catch (IOException e) {
-      LOG.warn("Error closing timeline store", e);
+      LOG.error("Temp", new RuntimeException());
     }
     store = null;
     // reset offsets so next time logs are re-parsed
@@ -144,7 +144,7 @@ public class EntityCacheItem {
         log.setOffset(0);
       }
     }
-    LOG.debug("Cache for group {} released. ", groupId);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private boolean needRefresh() {

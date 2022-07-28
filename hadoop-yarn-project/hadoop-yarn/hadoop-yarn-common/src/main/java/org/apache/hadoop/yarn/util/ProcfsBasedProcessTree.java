@@ -180,7 +180,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
         return false;
       }
     } catch (SecurityException se) {
-      LOG.warn("Failed to get Operating System name.", se);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     return true;
@@ -264,7 +264,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
         }
       }
 
-      LOG.debug("{}", this);
+      LOG.error("Temp", new RuntimeException());
 
       if (smapsEnabled) {
         // Update smaps info
@@ -406,7 +406,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
               LOG.debug(" total({}): PID : {}, info : {}, total : {}",
                   olderThanAge, p.getPid(), info, (total * KB_TO_BYTES));
             }
-            LOG.debug("{}", procMemInfo);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -414,7 +414,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
     if (total > 0) {
       total *= KB_TO_BYTES; // convert to bytes
     }
-    LOG.info("SmapBasedCumulativeRssmem (bytes) : " + total);
+    LOG.error("Temp", new RuntimeException());
     return total; // size
   }
 
@@ -465,7 +465,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
   @Override
   public float getCpuUsagePercent() {
     BigInteger processTotalJiffies = getTotalProcessJiffies();
-    LOG.debug("Process {} jiffies:{}", pid, processTotalJiffies);
+    LOG.error("Temp", new RuntimeException());
     cpuTimeTracker.updateElapsedJiffies(processTotalJiffies,
         clock.getTime());
     return cpuTimeTracker.getCpuTrackerUsagePercent();
@@ -544,7 +544,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
         ret = null;
       }
     } catch (IOException io) {
-      LOG.warn("Error reading the stream", io);
+      LOG.error("Temp", new RuntimeException());
       ret = null;
     } finally {
       // Close the streams
@@ -553,10 +553,10 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
         try {
           in.close();
         } catch (IOException i) {
-          LOG.warn("Error closing the stream", i);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException i) {
-        LOG.warn("Error closing the stream", i);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -733,7 +733,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
           }
         }
       } catch (IOException io) {
-        LOG.warn("Error reading the stream", io);
+        LOG.error("Temp", new RuntimeException());
         ret = "N/A";
       } finally {
         // Close the streams
@@ -742,10 +742,10 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
           try {
             in.close();
           } catch (IOException i) {
-            LOG.warn("Error closing the stream", i);
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (IOException i) {
-          LOG.warn("Error closing the stream", i);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -788,7 +788,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
           if (memInfo.find()) {
             String key = memInfo.group(1).trim();
             String value = memInfo.group(2).replace(KB, "").trim();
-            LOG.debug("MemInfo : {} : Value  : {}", key, value);
+            LOG.error("Temp", new RuntimeException());
 
             if (memoryMappingInfo != null) {
               memoryMappingInfo.setMemInfo(key, value);
@@ -934,7 +934,7 @@ public class ProcfsBasedProcessTree extends ResourceCalculatorProcessTree {
       if (info == null) {
         return;
       }
-      LOG.debug("setMemInfo : memInfo : {}", info);
+      LOG.error("Temp", new RuntimeException());
       switch (info) {
       case SIZE:
         size = val;

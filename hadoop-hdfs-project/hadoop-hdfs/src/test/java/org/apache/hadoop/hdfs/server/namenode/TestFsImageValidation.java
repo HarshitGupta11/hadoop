@@ -78,7 +78,7 @@ public class TestFsImageValidation {
 
   static void runTestToCommaSeparatedNumber(long n) {
     final String s = FsImageValidation.Util.toCommaSeparatedNumber(n);
-    LOG.info("{} ?= {}", n, s);
+    LOG.error("Temp", new RuntimeException());
     for(int i = s.length(); i > 0;) {
       for(int j = 0; j < 3 && i > 0; j++) {
         Assert.assertTrue(Character.isDigit(s.charAt(--i)));

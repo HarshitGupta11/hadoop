@@ -114,7 +114,7 @@ public class LogWebService implements AppInfoProvider {
             HttpURLConnection conn = null;
             try {
               conn = new AuthenticatedURL().openConnection(url, token);
-              LOG.info("LogWeService:Connecetion created.");
+              LOG.error("Temp", new RuntimeException());
             } catch (AuthenticationException e) {
               throw new IOException(e);
             }

@@ -151,7 +151,7 @@ public class DistCpProcedure extends BalanceProcedure {
 
   @Override
   public boolean execute() throws RetryException, IOException {
-    LOG.info("Stage={}", stage.name());
+    LOG.error("Temp", new RuntimeException());
     switch (stage) {
     case PRE_CHECK:
       preCheck();
@@ -206,7 +206,7 @@ public class DistCpProcedure extends BalanceProcedure {
           updateStage(Stage.DIFF_DISTCP);
           return;
         } else {
-          LOG.warn("DistCp failed. Failure={}", job.getFailureInfo());
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         throw new RetryException();
@@ -230,7 +230,7 @@ public class DistCpProcedure extends BalanceProcedure {
       if (job.isComplete()) {
         jobId = null;
         if (job.isSuccessful()) {
-          LOG.info("DistCp succeeded. jobId={}", job.getJobID());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw new IOException("DistCp failed. jobId=" + job.getJobID()
               + " failure=" + job.getFailureInfo());
@@ -328,7 +328,7 @@ public class DistCpProcedure extends BalanceProcedure {
   void updateStage(Stage value) {
     String oldStage = stage == null ? "null" : stage.name();
     String newStage = value == null ? "null" : value.name();
-    LOG.info("Stage updated from {} to {}.", oldStage, newStage);
+    LOG.error("Temp", new RuntimeException());
     stage = value;
   }
 
@@ -495,7 +495,7 @@ public class DistCpProcedure extends BalanceProcedure {
       distCp = new DistCp(config,
           OptionsParser.parse(command.toArray(new String[]{})));
       Job job = distCp.createAndSubmitJob();
-      LOG.info("Submit distcp job={}", job);
+      LOG.error("Temp", new RuntimeException());
       if (enabledForTest) {
         localJob = job;
       }

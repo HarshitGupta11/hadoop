@@ -82,7 +82,7 @@ public class TestRouterWebHdfsMethods {
     // the file is created at default ns (ns0)
     String path = "/tmp/file";
     URL url = new URL(getUri(path));
-    LOG.info("URL: {}", url);
+    LOG.error("Temp", new RuntimeException());
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestMethod("PUT");
     assertEquals(HttpURLConnection.HTTP_CREATED, conn.getResponseCode());
@@ -100,7 +100,7 @@ public class TestRouterWebHdfsMethods {
         router.getRouter(), mountPoint,
         DestinationOrder.RANDOM, Collections.singletonList("ns1"));
     URL url = new URL(getUri(path));
-    LOG.info("URL: {}", url);
+    LOG.error("Temp", new RuntimeException());
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestMethod("PUT");
     assertEquals(HttpURLConnection.HTTP_CREATED, conn.getResponseCode());

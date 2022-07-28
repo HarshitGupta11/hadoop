@@ -167,13 +167,13 @@ class CreateOp extends Operation {
     } catch (IOException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with creating", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (os != null) {
         try {
           os.close();
         } catch (IOException e) {
-          LOG.warn("Error closing create stream", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

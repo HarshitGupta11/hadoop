@@ -216,7 +216,7 @@ public class MagicS3GuardCommitter extends AbstractS3ACommitter {
     Path taskOutcomePath = new Path(jobAttemptPath,
         taskAttemptID.getTaskID().toString() +
         CommitConstants.PENDINGSET_SUFFIX);
-    LOG.info("Saving work of {} to {}", taskAttemptID, taskOutcomePath);
+    LOG.error("Temp", new RuntimeException());
     LOG.debug("task statistics\n{}",
         IOStatisticsLogging.demandStringifyIOStatisticsSource(pendingSet));
     try {

@@ -165,7 +165,7 @@ public class VolumeImpl implements Volume {
         return response.isSupported() ? VolumeState.VALIDATED
             : VolumeState.UNAVAILABLE;
       } catch (YarnException | IOException e) {
-        LOG.warn("Got exception while calling the CSI adaptor", e);
+        LOG.error("Temp", new RuntimeException());
         return VolumeState.UNAVAILABLE;
       }
     }

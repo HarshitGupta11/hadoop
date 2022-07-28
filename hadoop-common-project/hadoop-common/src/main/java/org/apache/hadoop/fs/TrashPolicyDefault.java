@@ -151,7 +151,7 @@ public class TrashPolicyDefault extends TrashPolicy {
     for (int i = 0; i < 2; i++) {
       try {
         if (!fs.mkdirs(baseTrashPath, PERMISSION)) {      // create current
-          LOG.warn("Can't create(mkdir) trash directory: " + baseTrashPath);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       } catch (FileAlreadyExistsException e) {
@@ -169,7 +169,7 @@ public class TrashPolicyDefault extends TrashPolicy {
         --i;
         continue;
       } catch (IOException e) {
-        LOG.warn("Can't create trash directory: " + baseTrashPath, e);
+        LOG.error("Temp", new RuntimeException());
         cause = e;
         break;
       }
@@ -185,7 +185,7 @@ public class TrashPolicyDefault extends TrashPolicy {
         // move to current trash
         fs.rename(path, trashPath,
             Rename.TO_TRASH);
-        LOG.info("Moved: '" + path + "' to trash at: " + trashPath);
+        LOG.error("Temp", new RuntimeException());
         return true;
       } catch (IOException e) {
         cause = e;
@@ -301,13 +301,13 @@ public class TrashPolicyDefault extends TrashPolicy {
             }
           }
         } catch (Exception e) {
-          LOG.warn("RuntimeException during Trash.Emptier.run(): ", e); 
+          LOG.error("Temp", new RuntimeException());
         }
       }
       try {
         fs.close();
       } catch(IOException e) {
-        LOG.warn("Trash cannot close FileSystem: ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -339,7 +339,7 @@ public class TrashPolicyDefault extends TrashPolicy {
     while (true) {
       try {
         fs.rename(current, checkpoint, Rename.NONE);
-        LOG.info("Created trash checkpoint: " + checkpoint.toUri().getPath());
+        LOG.error("Temp", new RuntimeException());
         break;
       } catch (FileAlreadyExistsException e) {
         if (++attempt > 1000) {
@@ -352,7 +352,7 @@ public class TrashPolicyDefault extends TrashPolicy {
 
   private void deleteCheckpoint(Path trashRoot, boolean deleteImmediately)
       throws IOException {
-    LOG.info("TrashPolicyDefault#deleteCheckpoint for trashRoot: " + trashRoot);
+    LOG.error("Temp", new RuntimeException());
 
     FileStatus[] dirs = null;
     try {
@@ -374,15 +374,15 @@ public class TrashPolicyDefault extends TrashPolicy {
       try {
         time = getTimeFromCheckpoint(name);
       } catch (ParseException e) {
-        LOG.warn("Unexpected item in trash: "+dir+". Ignoring.");
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
 
       if (((now - deletionInterval) > time) || deleteImmediately) {
         if (fs.delete(path, true)) {
-          LOG.info("Deleted trash checkpoint: "+dir);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.warn("Couldn't delete checkpoint: " + dir + " Ignoring.");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

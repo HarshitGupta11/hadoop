@@ -45,7 +45,7 @@ public class HadoopYarnProtoRPC extends YarnRPC {
   @Override
   public Object getProxy(Class protocol, InetSocketAddress addr,
       Configuration conf) {
-    LOG.debug("Creating a HadoopYarnProtoRpc proxy for protocol {}", protocol);
+    LOG.error("Temp", new RuntimeException());
     return RpcFactoryProvider.getClientFactory(conf).getClient(protocol, 1,
         addr, conf);
   }

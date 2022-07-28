@@ -223,7 +223,7 @@ public class NNStorage extends Storage implements Closeable,
    * @param val Whether restoration attempt should be made.
    */
   void setRestoreFailedStorage(boolean val) {
-    LOG.warn("set restore failed storage to {}", val);
+    LOG.error("Temp", new RuntimeException());
     restoreFailedStorage = val;
   }
 
@@ -253,7 +253,7 @@ public class NNStorage extends Storage implements Closeable,
                 .getAbsolutePath(), sd.getStorageDirType(),
             FileUtil.canWrite(root));
         if (root.exists() && FileUtil.canWrite(root)) {
-          LOG.info("restoring dir {}", sd.getRoot().getAbsolutePath());
+          LOG.error("Temp", new RuntimeException());
           this.addStorageDir(sd); // restore
           this.removedStorageDirs.remove(sd);
         }
@@ -359,7 +359,7 @@ public class NNStorage extends Storage implements Closeable,
         }
       }
     } catch (IOException ioe) {
-      LOG.warn("Error converting file to URI", ioe);
+      LOG.error("Temp", new RuntimeException());
     }
     return null;
   }
@@ -877,7 +877,7 @@ public class NNStorage extends Storage implements Closeable,
 
     if(LOG.isDebugEnabled()){
       String lsd = listStorageDirectories();
-      LOG.debug("current list of storage dirs:{}", lsd);
+      LOG.error("Temp", new RuntimeException());
     }
 
     LOG.warn("About to remove corresponding storage: {}", sd.getRoot()
@@ -895,7 +895,7 @@ public class NNStorage extends Storage implements Closeable,
 
     if(LOG.isDebugEnabled()){
       String lsd = listStorageDirectories();
-      LOG.debug("at the end current list of storage dirs:{}", lsd);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -932,7 +932,7 @@ public class NNStorage extends Storage implements Closeable,
               startOpt.getClusterId());
         }
       }
-      LOG.info("Using clusterid: {}", getClusterID());
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -1008,10 +1008,10 @@ public class NNStorage extends Storage implements Closeable,
           return cid;
         }
       } catch (Exception e) {
-        LOG.warn("this sd not available: {}", e.getLocalizedMessage());
+        LOG.error("Temp", new RuntimeException());
       } //ignore
     }
-    LOG.warn("couldn't find any VERSION file containing valid ClusterId");
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 
@@ -1025,7 +1025,7 @@ public class NNStorage extends Storage implements Closeable,
     try {
       ip = DNS.getDefaultIP("default");
     } catch (UnknownHostException e) {
-      LOG.warn("Could not find ip address of \"default\" inteface.");
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
     

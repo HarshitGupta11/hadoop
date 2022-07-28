@@ -102,8 +102,8 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
     this.maxVersion = conf.getInt(
         YarnConfiguration.SCHEDULER_CONFIGURATION_FS_MAX_VERSION,
         YarnConfiguration.DEFAULT_SCHEDULER_CONFIGURATION_FS_MAX_VERSION);
-    LOG.info("schedulerConfDir=" + schedulerConfPathStr);
-    LOG.info("capacity scheduler file max version = " + maxVersion);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     if (!fileSystem.exists(schedulerConfDir)) {
       if (!fileSystem.mkdirs(schedulerConfDir)) {
@@ -134,7 +134,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
    */
   @Override
   public void logMutation(LogMutation logMutation) throws IOException {
-    LOG.info(new GsonBuilder().serializeNulls().create().toJson(logMutation));
+    LOG.error("Temp", new RuntimeException());
     oldConf = new Configuration(schedConf);
     Map<String, String> mutations = logMutation.getUpdates();
     for (Map.Entry<String, String> kv : mutations.entrySet()) {
@@ -157,7 +157,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
   public void confirmMutation(LogMutation pendingMutation,
       boolean isValid) throws Exception {
     if (pendingMutation == null || tempConfigPath == null) {
-      LOG.warn("pendingMutation or tempConfigPath is null, do nothing");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (isValid) {
@@ -188,7 +188,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
     }
     for (int i = 0; i < fileStatuses.length; i++) {
       fileSystem.delete(fileStatuses[i].getPath(), false);
-      LOG.info("delete config file " + fileStatuses[i].getPath());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -207,7 +207,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
   private void removeTmpConfigFile() throws IOException {
     // call confirmMutation() make sure tempConfigPath is not null
     fileSystem.delete(tempConfigPath, true);
-    LOG.info("delete temp configuration file: " + tempConfigPath);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private Configuration getConfigurationFromFileSystem() throws IOException {
@@ -257,7 +257,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
     try (FSDataOutputStream out = fileSystem.create(configVersionFile, true)) {
       out.writeLong(configVersion);
     } catch (IOException e) {
-      LOG.info("Failed to write config version at {}", configVersionFile, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -267,7 +267,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
     try (FSDataInputStream in = fileSystem.open(configVersionFile)) {
       return in.readLong();
     } catch (IOException e) {
-      LOG.info("Failed to read config version at {}", configVersionFile, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -321,7 +321,7 @@ public class FSSchedulerConfigurationStore extends YarnConfigurationStore {
     if (fileStatuses.length > this.maxVersion) {
       for (int i = 0; i < configFileNum - this.maxVersion; i++) {
         fileSystem.delete(fileStatuses[i].getPath(), false);
-        LOG.info("delete config file " + fileStatuses[i].getPath());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -272,7 +272,7 @@ public class Listing extends AbstractStoreOperation {
     String key = maybeAddTrailingSlash(pathToKey(path));
     String delimiter = recursive ? null : "/";
     if (recursive) {
-      LOG.debug("Recursive list of all entries under {}", key);
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.debug("Requesting all entries under {} with delimiter '{}'",
           key, delimiter);
@@ -445,7 +445,7 @@ public class Listing extends AbstractStoreOperation {
     }
 
     S3ListRequest request = createListObjectsRequest(key, "/", span);
-    LOG.debug("listStatus: doing listObjects for directory {}", key);
+    LOG.error("Temp", new RuntimeException());
 
     FileStatusListingIterator filesItr = createFileStatusListingIterator(
             path,
@@ -599,7 +599,7 @@ public class Listing extends AbstractStoreOperation {
       } else {
         // turn to file status that are only in provided list
         if (providedStatusIterator == null) {
-          LOG.debug("Start iterating the provided status.");
+          LOG.error("Temp", new RuntimeException());
           providedStatusIterator = providedStatus.values().iterator();
         }
         return false;
@@ -627,7 +627,7 @@ public class Listing extends AbstractStoreOperation {
       } else {
         if (providedStatusIterator.hasNext()) {
           status = providedStatusIterator.next();
-          LOG.debug("Returning provided file status {}", status);
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw new NoSuchElementException();
         }
@@ -654,7 +654,7 @@ public class Listing extends AbstractStoreOperation {
           // acceptors; declare that the request was successful
           return true;
         } else {
-          LOG.debug("All entries in batch were filtered...continuing");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       // if this code is reached, it means that all remaining
@@ -680,7 +680,7 @@ public class Listing extends AbstractStoreOperation {
         String key = summary.getKey();
         Path keyPath = getStoreContext().getContextAccessors().keyToPath(key);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("{}: {}", keyPath, stringify(summary));
+          LOG.error("Temp", new RuntimeException());
         }
         // Skip over keys that are ourselves and old S3N _$folder$ files
         if (acceptor.accept(keyPath, summary) && filter.accept(keyPath)) {
@@ -688,11 +688,11 @@ public class Listing extends AbstractStoreOperation {
                   listingOperationCallbacks.getDefaultBlockSize(keyPath),
                   getStoreContext().getUsername(),
               summary.getETag(), null);
-          LOG.debug("Adding: {}", status);
+          LOG.error("Temp", new RuntimeException());
           stats.add(status);
           added++;
         } else {
-          LOG.debug("Ignoring: {}", keyPath);
+          LOG.error("Temp", new RuntimeException());
           ignored++;
         }
       }
@@ -705,11 +705,11 @@ public class Listing extends AbstractStoreOperation {
         if (acceptor.accept(keyPath, prefix) && filter.accept(keyPath)) {
           S3AFileStatus status = new S3AFileStatus(Tristate.FALSE, keyPath,
               getStoreContext().getUsername());
-          LOG.debug("Adding directory: {}", status);
+          LOG.error("Temp", new RuntimeException());
           added++;
           stats.add(status);
         } else {
-          LOG.debug("Ignoring directory: {}", keyPath);
+          LOG.error("Temp", new RuntimeException());
           ignored++;
         }
       }
@@ -877,7 +877,7 @@ public class Listing extends AbstractStoreOperation {
           // Requesting next batch of results.
           fetchNextBatchAsyncIfPresent();
           listingCount++;
-          LOG.debug("New listing status: {}", this);
+          LOG.error("Temp", new RuntimeException());
         } catch (AmazonClientException e) {
           throw translateException("listObjects()", listPath, e);
         }

@@ -170,7 +170,7 @@ class RedundantEditLogInputStream extends EditLogInputStream {
       }
       return nextOp();
     } catch (IOException e) {
-      LOG.warn("encountered an exception", e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

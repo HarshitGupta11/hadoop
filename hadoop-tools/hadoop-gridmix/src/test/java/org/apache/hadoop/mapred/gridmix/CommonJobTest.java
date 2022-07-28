@@ -104,7 +104,7 @@ public class CommonJobTest {
 
     @Override
     protected void onSuccess(Job job) {
-      LOG.info(" Job Success " + job);
+      LOG.error("Temp", new RuntimeException());
       retiredJobs.add(job);
     }
 

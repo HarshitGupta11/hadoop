@@ -162,7 +162,7 @@ public abstract class AbstractS3ATestBase extends AbstractFSContractTestBase
       } catch (Exception e) {
         // If is this is not due to the FS being closed: log.
         if (!e.toString().contains(E_FS_CLOSED)) {
-          LOG.warn("Marker Tool Failure", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

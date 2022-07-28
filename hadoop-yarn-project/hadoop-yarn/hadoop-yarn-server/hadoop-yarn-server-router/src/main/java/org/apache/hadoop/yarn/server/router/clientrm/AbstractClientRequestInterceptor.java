@@ -119,7 +119,7 @@ public abstract class AbstractClientRequestInterceptor
         message += ", user: " + user;
       }
 
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(message, e);
     }
   }

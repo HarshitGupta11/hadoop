@@ -187,7 +187,7 @@ public class TestDataNodeMXBean extends SaslDataTransferTestCase {
       String bpActorInfo = (String)mbs.getAttribute(mxbeanName,
           "BPServiceActorInfo");
       Assert.assertEquals(dn.getBPServiceActorInfo(), bpActorInfo);
-      LOG.info("bpActorInfo is " + bpActorInfo);
+      LOG.error("Temp", new RuntimeException());
       TypeReference<ArrayList<Map<String, String>>> typeRef
           = new TypeReference<ArrayList<Map<String, String>>>() {};
       ArrayList<Map<String, String>> bpActorInfoList =
@@ -199,8 +199,8 @@ public class TestDataNodeMXBean extends SaslDataTransferTestCase {
           CommonConfigurationKeys.IPC_MAXIMUM_DATA_LENGTH_DEFAULT);
       int maxBlockReportSize =
           Integer.valueOf(bpActorInfoList.get(0).get("maxBlockReportSize"));
-      LOG.info("maxDataLength is " + maxDataLength);
-      LOG.info("maxBlockReportSize is " + maxBlockReportSize);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       assertTrue("maxBlockReportSize should be greater than zero",
           maxBlockReportSize > 0);
       assertEquals("maxDataLength should be exactly "

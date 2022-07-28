@@ -119,7 +119,7 @@ public class TestZKRMStateStorePerf extends RMStateStoreTestBase
   @SuppressWarnings("unchecked")
   @Override
   public int run(String[] args) {
-    LOG.info("Starting ZKRMStateStorePerf ver." + version);
+    LOG.error("Temp", new RuntimeException());
 
     int numApp = ZK_PERF_NUM_APP_DEFAULT;
     int numAppAttemptPerApp = ZK_PERF_NUM_APPATTEMPT_PER_APP;
@@ -225,7 +225,7 @@ public class TestZKRMStateStorePerf extends RMStateStoreTestBase
     long loadTime = storeEnd - storeStart;
 
     String resultMsg =  "ZKRMStateStore takes " + loadTime + " msec to loadState.";
-    LOG.info(resultMsg);
+    LOG.error("Temp", new RuntimeException());
     System.out.println(resultMsg);
 
     // cleanup

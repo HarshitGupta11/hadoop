@@ -172,7 +172,7 @@ public class CapacitySchedulerQueueManager implements SchedulerQueueManager<
     this.queueStateManager.initialize(this);
     root.updateClusterResource(csContext.getClusterResource(),
         new ResourceLimits(csContext.getClusterResource()));
-    LOG.info("Initialized root queue " + root);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -321,7 +321,7 @@ public class CapacitySchedulerQueueManager implements SchedulerQueueManager<
 
     newQueues.add(queue);
 
-    LOG.info("Initialized queue: " + fullQueueName);
+    LOG.error("Temp", new RuntimeException());
     return queue;
   }
 
@@ -450,7 +450,7 @@ public class CapacitySchedulerQueueManager implements SchedulerQueueManager<
    */
   public void removeLegacyDynamicQueue(String queueName)
       throws SchedulerDynamicEditException {
-    LOG.info("Removing queue: " + queueName);
+    LOG.error("Temp", new RuntimeException());
     CSQueue q = this.getQueue(queueName);
     if (q == null || !(AbstractAutoCreatedLeafQueue.class.isAssignableFrom(
         q.getClass()))) {
@@ -513,7 +513,7 @@ public class CapacitySchedulerQueueManager implements SchedulerQueueManager<
     parent.addChildQueue(newQueue);
     addQueue(queuePath, newQueue);
 
-    LOG.info("Creation of AutoCreatedLeafQueue " + newQueue + " succeeded");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

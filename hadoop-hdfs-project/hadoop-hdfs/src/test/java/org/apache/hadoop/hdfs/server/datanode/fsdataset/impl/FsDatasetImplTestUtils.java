@@ -120,7 +120,7 @@ public class FsDatasetImplTestUtils implements FsDatasetTestUtils {
     @Override
     public void corruptData() throws IOException {
       checkFile(blockFile);
-      LOG.info("Corrupting block file: " + blockFile);
+      LOG.error("Temp", new RuntimeException());
       final int BUF_SIZE = 32;
       byte[] buf = new byte[BUF_SIZE];
       try (RandomAccessFile raf = new RandomAccessFile(blockFile, "rw")) {
@@ -136,7 +136,7 @@ public class FsDatasetImplTestUtils implements FsDatasetTestUtils {
     @Override
     public void corruptData(byte[] newContent) throws IOException {
       checkFile(blockFile);
-      LOG.info("Corrupting block file with new content: " + blockFile);
+      LOG.error("Temp", new RuntimeException());
       try (RandomAccessFile raf = new RandomAccessFile(blockFile, "rw")) {
         raf.write(newContent);
       }
@@ -144,20 +144,20 @@ public class FsDatasetImplTestUtils implements FsDatasetTestUtils {
 
     @Override
     public void truncateData(long newSize) throws IOException {
-      LOG.info("Truncating block file: " + blockFile);
+      LOG.error("Temp", new RuntimeException());
       truncate(blockFile, newSize);
     }
 
     @Override
     public void deleteData() throws IOException {
-      LOG.info("Deleting block file: " + blockFile);
+      LOG.error("Temp", new RuntimeException());
       delete(blockFile);
     }
 
     @Override
     public void corruptMeta() throws IOException {
       checkFile(metaFile);
-      LOG.info("Corrupting meta file: " + metaFile);
+      LOG.error("Temp", new RuntimeException());
       Random random = new Random();
       try (RandomAccessFile raf = new RandomAccessFile(metaFile, "rw")) {
         FileChannel channel = raf.getChannel();
@@ -169,13 +169,13 @@ public class FsDatasetImplTestUtils implements FsDatasetTestUtils {
 
     @Override
     public void deleteMeta() throws IOException {
-      LOG.info("Deleting metadata file: " + metaFile);
+      LOG.error("Temp", new RuntimeException());
       delete(metaFile);
     }
 
     @Override
     public void truncateMeta(long newSize) throws IOException {
-      LOG.info("Truncating metadata file: " + metaFile);
+      LOG.error("Temp", new RuntimeException());
       truncate(metaFile, newSize);
     }
 

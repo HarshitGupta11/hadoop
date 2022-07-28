@@ -687,7 +687,7 @@ public class ITestAzureBlobFileSystemRandomRead extends
       character = (character == 'z') ? 'a' : (char) ((int) character + 1);
     }
 
-    LOG.info(String.format("Creating test file %s of size: %d ", testFilePath, testFileSize));
+    LOG.error("Temp", new RuntimeException());
     ContractTestUtils.NanoTimer timer = new ContractTestUtils.NanoTimer();
 
     try (FSDataOutputStream outputStream = fs.create(testFilePath)) {
@@ -697,7 +697,7 @@ public class ITestAzureBlobFileSystemRandomRead extends
         outputStream.write(buffer);
         bytesWritten += buffer.length;
       }
-      LOG.info("Closing stream {}", outputStream);
+      LOG.error("Temp", new RuntimeException());
       ContractTestUtils.NanoTimer closeTimer
               = new ContractTestUtils.NanoTimer();
       outputStream.close();

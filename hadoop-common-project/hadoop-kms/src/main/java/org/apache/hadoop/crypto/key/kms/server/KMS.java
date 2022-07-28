@@ -183,7 +183,7 @@ public class KMS {
           .type(MediaType.APPLICATION_JSON)
           .header("Location", getKeyURI(requestURL, name)).entity(json).build();
     } catch (Exception e) {
-      LOG.debug("Exception in createKey.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -198,7 +198,7 @@ public class KMS {
       UserGroupInformation user = HttpUserGroupInformation.get();
       assertAccess(KMSACLs.Type.DELETE, user, KMSOp.DELETE_KEY, name);
       checkNotEmpty(name, "name");
-      LOG.debug("Deleting key with name {}.", name);
+      LOG.error("Temp", new RuntimeException());
       user.doAs(new PrivilegedExceptionAction<Void>() {
         @Override
         public Void run() throws Exception {
@@ -212,7 +212,7 @@ public class KMS {
       LOG.trace("Exiting deleteKey method.");
       return Response.ok().build();
     } catch (Exception e) {
-      LOG.debug("Exception in deleteKey.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -229,7 +229,7 @@ public class KMS {
       UserGroupInformation user = HttpUserGroupInformation.get();
       assertAccess(KMSACLs.Type.ROLLOVER, user, KMSOp.ROLL_NEW_VERSION, name);
       checkNotEmpty(name, "name");
-      LOG.debug("Rolling key with name {}.", name);
+      LOG.error("Temp", new RuntimeException());
       final String material = (String)
               jsonMaterial.get(KMSRESTConstants.MATERIAL_FIELD);
       if (material != null) {
@@ -263,7 +263,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in rolloverKey.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -279,7 +279,7 @@ public class KMS {
       checkNotEmpty(name, "name");
       UserGroupInformation user = HttpUserGroupInformation.get();
       assertAccess(INVALIDATE_CACHE_TYPES, user, KMSOp.INVALIDATE_CACHE, name);
-      LOG.debug("Invalidating cache with key name {}.", name);
+      LOG.error("Temp", new RuntimeException());
 
       user.doAs(new PrivilegedExceptionAction<Void>() {
         @Override
@@ -294,7 +294,7 @@ public class KMS {
       LOG.trace("Exiting invalidateCache for key name {}.", name);
       return Response.ok().build();
     } catch (Exception e) {
-      LOG.debug("Exception in invalidateCache for key name {}.", name, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -327,7 +327,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in getKeysmetadata.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -356,7 +356,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in getkeyNames.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -367,11 +367,11 @@ public class KMS {
       throws Exception {
     try {
       LOG.trace("Entering getKey method.");
-      LOG.debug("Getting key information for key with name {}.", name);
+      LOG.error("Temp", new RuntimeException());
       LOG.trace("Exiting getKey method.");
       return getMetadata(name);
     } catch (Exception e) {
-      LOG.debug("Exception in getKey.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -388,7 +388,7 @@ public class KMS {
       checkNotEmpty(name, "name");
       KMSWebApp.getAdminCallsMeter().mark();
       assertAccess(KMSACLs.Type.GET_METADATA, user, KMSOp.GET_METADATA, name);
-      LOG.debug("Getting metadata for key with name {}.", name);
+      LOG.error("Temp", new RuntimeException());
 
       KeyProvider.Metadata metadata = user.doAs(
               new PrivilegedExceptionAction<KeyProvider.Metadata>() {
@@ -405,7 +405,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in getMetadata.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -422,7 +422,7 @@ public class KMS {
       checkNotEmpty(name, "name");
       KMSWebApp.getKeyCallsMeter().mark();
       assertAccess(KMSACLs.Type.GET, user, KMSOp.GET_CURRENT_KEY, name);
-      LOG.debug("Getting key version for key with name {}.", name);
+      LOG.error("Temp", new RuntimeException());
 
       KeyVersion keyVersion = user.doAs(
               new PrivilegedExceptionAction<KeyVersion>() {
@@ -439,7 +439,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in getCurrentVersion.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -455,7 +455,7 @@ public class KMS {
       checkNotEmpty(versionName, "versionName");
       KMSWebApp.getKeyCallsMeter().mark();
       assertAccess(KMSACLs.Type.GET, user, KMSOp.GET_KEY_VERSION);
-      LOG.debug("Getting key with version name {}.", versionName);
+      LOG.error("Temp", new RuntimeException());
 
       KeyVersion keyVersion = user.doAs(
               new PrivilegedExceptionAction<KeyVersion>() {
@@ -474,7 +474,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in getKeyVersion.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -500,7 +500,7 @@ public class KMS {
 
       Object retJSON;
       if (edekOp.equals(KMSRESTConstants.EEK_GENERATE)) {
-        LOG.debug("edek Operation is Generate.");
+        LOG.error("Temp", new RuntimeException());
         assertAccess(KMSACLs.Type.GENERATE_EEK, user, KMSOp.GENERATE_EEK, name);
 
         final List<EncryptedKeyVersion> retEdeks =
@@ -546,7 +546,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(retJSON)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in generateEncryptedKeys.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -604,7 +604,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(retJSON)
           .build();
     } catch (Exception e) {
-      LOG.debug("Exception in reencryptEncryptedKeys.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -692,7 +692,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(retJSON)
           .build();
     } catch (Exception e) {
-      LOG.debug("Exception in handleEncryptedKeyOp.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -709,7 +709,7 @@ public class KMS {
       checkNotEmpty(name, "name");
       KMSWebApp.getKeyCallsMeter().mark();
       assertAccess(KMSACLs.Type.GET, user, KMSOp.GET_KEY_VERSIONS, name);
-      LOG.debug("Getting key versions for key {}", name);
+      LOG.error("Temp", new RuntimeException());
 
       List<KeyVersion> ret = user.doAs(
               new PrivilegedExceptionAction<List<KeyVersion>>() {
@@ -726,7 +726,7 @@ public class KMS {
       return Response.ok().type(MediaType.APPLICATION_JSON).entity(json)
               .build();
     } catch (Exception e) {
-      LOG.debug("Exception in getKeyVersions.", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }

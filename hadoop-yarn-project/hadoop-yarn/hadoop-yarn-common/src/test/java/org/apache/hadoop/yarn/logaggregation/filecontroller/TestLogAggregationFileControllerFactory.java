@@ -101,7 +101,7 @@ public class TestLogAggregationFileControllerFactory extends Configured {
         factory.getConfiguredLogAggregationFileControllerList();
     FileSystem fs = FileSystem.get(getConf());
     Path logPath = fileControllers.get(0).getRemoteAppLogDir(appId, APP_OWNER);
-    LOG.debug("Checking " + logPath);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       if (fs.exists(logPath)) {

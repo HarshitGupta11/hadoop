@@ -127,7 +127,7 @@ public class TestFailureToReadEdits {
       while (true) {
         try {
           basePort = 10000 + RANDOM.nextInt(1000) * 4;
-          LOG.info("Set SHARED_DIR_HA cluster's basePort to " + basePort);
+          LOG.error("Temp", new RuntimeException());
           MiniDFSNNTopology topology =
               MiniQJMHACluster.createDefaultTopology(basePort);
           cluster = new MiniDFSCluster.Builder(conf)

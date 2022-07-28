@@ -404,7 +404,7 @@ public class RMServerUtils {
     try {
       user = UserGroupInformation.getCurrentUser();
     } catch (IOException ioe) {
-      LOG.warn("Couldn't get current user", ioe);
+      LOG.error("Temp", new RuntimeException());
       RMAuditLogger.logFailure("UNKNOWN", method, "",
           "AdminService", "Couldn't get current user");
       throw ioe;

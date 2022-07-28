@@ -63,7 +63,7 @@ public class ECPolicyLoader {
     try {
       File policyFile = getPolicyFile(policyFilePath);
       if (!policyFile.exists()) {
-        LOG.warn("Not found any EC policy file");
+        LOG.error("Temp", new RuntimeException());
         return Collections.emptyList();
       }
       return loadECPolicies(policyFile);
@@ -84,7 +84,7 @@ public class ECPolicyLoader {
   private List<ErasureCodingPolicy> loadECPolicies(File policyFile)
       throws ParserConfigurationException, IOException, SAXException {
 
-    LOG.info("Loading EC policy file " + policyFile);
+    LOG.error("Temp", new RuntimeException());
 
     // Read and parse the EC policy file.
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -305,7 +305,7 @@ public class ECPolicyLoader {
                     + " value " + value + " is found. It should be an integer");
               }
             } else {
-              LOG.warn("Invalid tagName: " + tagName);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         } else {

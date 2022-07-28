@@ -94,7 +94,7 @@ public class TestApplicationMasterExpiry {
 //      switch(event.getType()) {
 //      case EXPIRE:
 //        expired = true;
-//        LOG.info("Received expiry from application " + event.getApplicationId());
+//        LOG.error("Temp", new RuntimeException());
 //        synchronized(expiry) {
 //          expiry.addAndGet(1);
 //        }

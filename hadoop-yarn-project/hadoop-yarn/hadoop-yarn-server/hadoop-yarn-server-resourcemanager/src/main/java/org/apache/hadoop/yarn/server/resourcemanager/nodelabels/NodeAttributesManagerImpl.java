@@ -199,7 +199,7 @@ public class NodeAttributesManagerImpl extends NodeAttributesManager {
             .append(StringUtils.join(entry.getValue().keySet(), ","))
             .append("] ,");
       }
-      LOG.debug("{}", logMsg);
+      LOG.error("Temp", new RuntimeException());
 
       if (null != dispatcher && NodeAttribute.PREFIX_CENTRALIZED
           .equals(attributePrefix)) {
@@ -657,7 +657,7 @@ public class NodeAttributesManagerImpl extends NodeAttributesManager {
         store.removeNodeAttributes(mappingList);
         break;
       default:
-        LOG.warn("Unsupported operation");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (IOException e) {
       LOG.error("Failed to store attribute modification to storage");
@@ -743,7 +743,7 @@ public class NodeAttributesManagerImpl extends NodeAttributesManager {
 
     // Notify RM
     if (rmContext != null && rmContext.getDispatcher() != null) {
-      LOG.info("Updated NodeAttribute event to RM:" + newNodeToAttributesMap);
+      LOG.error("Temp", new RuntimeException());
       rmContext.getDispatcher().getEventHandler().handle(
           new NodeAttributesUpdateSchedulerEvent(newNodeToAttributesMap));
     }

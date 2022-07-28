@@ -117,7 +117,7 @@ public class TestRawLocalFileSystemContract extends FileSystemContractBaseTest {
       // DF.getFilesystem() only provides indirect info about FS type, but it's
       // the best we have.  `df -T` would be better, but isn't cross-platform.
       rfsType = (new DF(rfsPath, conf)).getFilesystem();
-      LOG.info("DF.Filesystem is {} for path {}", rfsType, rfsPath);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ex) {
       LOG.error("DF failed on path {}", rfsPathStr);
       rfsType = Shell.osType.toString();

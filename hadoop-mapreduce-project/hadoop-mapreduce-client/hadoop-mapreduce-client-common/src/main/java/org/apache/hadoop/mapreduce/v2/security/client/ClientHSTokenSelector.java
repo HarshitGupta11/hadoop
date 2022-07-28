@@ -40,7 +40,7 @@ public class ClientHSTokenSelector implements
     if (service == null) {
       return null;
     }
-    LOG.debug("Looking for a token with service " + service.toString());
+    LOG.error("Temp", new RuntimeException());
     for (Token<? extends TokenIdentifier> token : tokens) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("Token kind is " + token.getKind().toString()

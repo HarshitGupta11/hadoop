@@ -54,7 +54,7 @@ public class ClientCredsTokenProvider extends AccessTokenProvider {
 
   @Override
   protected AzureADToken refreshToken() throws IOException {
-    LOG.debug("AADToken: refreshing client-credential based token");
+    LOG.error("Temp", new RuntimeException());
     return AzureADAuthenticator.getTokenUsingClientCreds(authEndpoint, clientId, clientSecret);
   }
 

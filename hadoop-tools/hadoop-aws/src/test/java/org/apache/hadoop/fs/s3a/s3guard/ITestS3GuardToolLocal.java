@@ -241,7 +241,7 @@ public class ITestS3GuardToolLocal extends AbstractS3GuardToolTestBase {
       String output = exec(cmd, cmd.getName(),
           "-" + BucketInfo.GUARDED_FLAG,
           getFileSystem().getUri().toString());
-      LOG.info("Exec output=\n{}", output);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       cmd.setStore(new NullMetadataStore());
     }
@@ -257,7 +257,7 @@ public class ITestS3GuardToolLocal extends AbstractS3GuardToolTestBase {
           "-" + READ_FLAG, "100",
           "-" + WRITE_FLAG, "100",
           getFileSystem().getUri().toString());
-      LOG.info("Exec output=\n{}", output);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       cmd.setStore(new NullMetadataStore());
     }
@@ -429,7 +429,7 @@ public class ITestS3GuardToolLocal extends AbstractS3GuardToolTestBase {
               parsedUploads);
           return;
         }
-        LOG.debug("Not matched: {}", line);
+        LOG.error("Temp", new RuntimeException());
         output.add(line);
       }
     }

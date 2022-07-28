@@ -93,18 +93,18 @@ class TruncateOp extends Operation {
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with truncating", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException | UnsupportedOperationException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with truncating", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return out;
   }
 
   private void waitForRecovery(FileSystem fs, Path fn, long newLength)
       throws IOException {
-    LOG.info("Waiting on truncate file recovery for " + fn);
+    LOG.error("Temp", new RuntimeException());
     for(;;) {
       FileStatus stat = fs.getFileStatus(fn);
       if(stat.getLen() == newLength) break;

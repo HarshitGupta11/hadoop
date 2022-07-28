@@ -43,7 +43,7 @@ public class RetryCacheMetrics {
     name = "RetryCache."+ retryCache.getCacheName();
     registry = new MetricsRegistry(name);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Initialized "+ registry);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

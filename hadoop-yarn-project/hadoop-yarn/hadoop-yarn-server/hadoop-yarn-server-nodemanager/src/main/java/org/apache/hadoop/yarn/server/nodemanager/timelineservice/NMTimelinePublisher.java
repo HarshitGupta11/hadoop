@@ -109,7 +109,7 @@ public class NMTimelinePublisher extends CompositeService {
     this.nmLoginUGI =  UserGroupInformation.isSecurityEnabled() ?
         UserGroupInformation.getLoginUser() :
         UserGroupInformation.getCurrentUser();
-    LOG.info("Initialized NMTimelinePublisher UGI to " + nmLoginUGI);
+    LOG.error("Temp", new RuntimeException());
 
     String webAppURLWithoutScheme =
         WebAppUtils.getNMWebAppURLWithoutScheme(conf);
@@ -427,10 +427,10 @@ public class NMTimelinePublisher extends CompositeService {
       }
     } catch (IOException e) {
       LOG.error("Error when publishing entity " + entity);
-      LOG.debug("Error when publishing entity {}", entity, e);
+      LOG.error("Temp", new RuntimeException());
     } catch (YarnException e) {
       LOG.error("Error when publishing entity " + entity, e.getMessage());
-      LOG.debug("Error when publishing entity {}", entity, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -542,7 +542,7 @@ public class NMTimelinePublisher extends CompositeService {
         appToClientMap.put(appId, timelineClient);
       } catch (IOException | InterruptedException | RuntimeException |
           Error e) {
-        LOG.warn("Unable to create timeline client for app " + appId, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

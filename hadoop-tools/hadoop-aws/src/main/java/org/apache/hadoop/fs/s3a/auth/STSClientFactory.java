@@ -133,7 +133,7 @@ public class STSClientFactory {
           isNotEmpty(stsRegion),
           "STS endpoint is set to %s but no signing region was provided",
           stsEndpoint);
-      LOG.debug("STS Endpoint={}; region='{}'", stsEndpoint, stsRegion);
+      LOG.error("Temp", new RuntimeException());
       builder.withEndpointConfiguration(
           new AwsClientBuilder.EndpointConfiguration(stsEndpoint, stsRegion));
     } else {
@@ -196,13 +196,13 @@ public class STSClientFactory {
         final long duration,
         final TimeUnit timeUnit) throws IOException {
       int durationSeconds = (int) timeUnit.toSeconds(duration);
-      LOG.debug("Requesting session token of duration {}", duration);
+      LOG.error("Temp", new RuntimeException());
       final GetSessionTokenRequest request = new GetSessionTokenRequest();
       request.setDurationSeconds(durationSeconds);
       return invoker.retry("request session credentials", "",
           true,
           () ->{
-            LOG.info("Requesting Amazon STS Session credentials");
+            LOG.error("Temp", new RuntimeException());
             return tokenService.getSessionToken(request).getCredentials();
           });
     }

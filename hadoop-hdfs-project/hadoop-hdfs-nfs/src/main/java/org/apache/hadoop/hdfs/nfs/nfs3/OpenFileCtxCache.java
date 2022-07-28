@@ -52,7 +52,7 @@ class OpenFileCtxCache {
   OpenFileCtxCache(NfsConfiguration config, long streamTimeout) {
     maxStreams = config.getInt(NfsConfigKeys.DFS_NFS_MAX_OPEN_FILES_KEY,
         NfsConfigKeys.DFS_NFS_MAX_OPEN_FILES_DEFAULT);
-    LOG.info("Maximum open streams is " + maxStreams);
+    LOG.error("Temp", new RuntimeException());
     this.streamTimeout = streamTimeout;
     streamMonitor = new StreamMonitor();
   }
@@ -80,7 +80,7 @@ class OpenFileCtxCache {
       OpenFileCtx ctx = pairs.getValue();
       if (!ctx.getActiveState()) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Got one inactive stream: " + ctx);
+          LOG.error("Temp", new RuntimeException());
         }
         return pairs;
       }
@@ -98,16 +98,16 @@ class OpenFileCtxCache {
     }
 
     if (idlest == null) {
-      LOG.warn("No eviction candidate. All streams have pending work.");
+      LOG.error("Temp", new RuntimeException());
       return null;
     } else {
       long idleTime = Time.monotonicNow()
           - idlest.getValue().getLastAccessTime();
       if (idleTime < NfsConfigKeys.DFS_NFS_STREAM_TIMEOUT_MIN_DEFAULT) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("idlest stream's idle time:" + idleTime);
+          LOG.error("Temp", new RuntimeException());
         }
-        LOG.warn("All opened streams are busy, can't remove any from cache.");
+        LOG.error("Temp", new RuntimeException());
         return null;
       } else {
         return idlest;
@@ -127,7 +127,7 @@ class OpenFileCtxCache {
           return false;
         } else {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Evict stream ctx: " + pairs.getValue());
+            LOG.error("Temp", new RuntimeException());
           }
           toEvict = openFileMap.remove(pairs.getKey());
           Preconditions.checkState(toEvict == pairs.getValue(),
@@ -263,7 +263,7 @@ class OpenFileCtxCache {
           lastWakeupTime = Time.monotonicNow();
 
         } catch (InterruptedException e) {
-          LOG.info("StreamMonitor got interrupted");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }

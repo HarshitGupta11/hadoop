@@ -88,7 +88,7 @@ public class TestJournalNodeRespectsBindHostKeys {
 
   @Test (timeout=300000)
   public void testRpcBindHostKey() throws IOException {
-    LOG.info("Testing without " + DFS_JOURNALNODE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // NN should not bind the wildcard address by default.
     jCluster = new MiniJournalCluster.Builder(conf).format(true)
@@ -98,7 +98,7 @@ public class TestJournalNodeRespectsBindHostKeys {
     assertThat("Bind address not expected to be wildcard by default.",
         address, not("/" + WILDCARD_ADDRESS));
 
-    LOG.info("Testing with " + DFS_JOURNALNODE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_JOURNALNODE_RPC_BIND_HOST_KEY, WILDCARD_ADDRESS);
@@ -114,7 +114,7 @@ public class TestJournalNodeRespectsBindHostKeys {
 
   @Test(timeout=300000)
   public void testHttpBindHostKey() throws IOException {
-    LOG.info("Testing without " + DFS_JOURNALNODE_HTTP_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // NN should not bind the wildcard address by default.
     conf.set(DFS_JOURNALNODE_HTTP_ADDRESS_KEY, LOCALHOST_SERVER_ADDRESS);
@@ -125,7 +125,7 @@ public class TestJournalNodeRespectsBindHostKeys {
     assertFalse("HTTP Bind address not expected to be wildcard by default.",
         address.startsWith(WILDCARD_ADDRESS));
 
-    LOG.info("Testing with " + DFS_JOURNALNODE_HTTP_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_JOURNALNODE_HTTP_BIND_HOST_KEY, WILDCARD_ADDRESS);
@@ -168,7 +168,7 @@ public class TestJournalNodeRespectsBindHostKeys {
    */
   @Test (timeout=300000)
   public void testHttpsBindHostKey() throws Exception {
-    LOG.info("Testing behavior without " + DFS_JOURNALNODE_HTTPS_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     setupSsl();
 
@@ -183,7 +183,7 @@ public class TestJournalNodeRespectsBindHostKeys {
     assertFalse("HTTP Bind address not expected to be wildcard by default.",
         address.startsWith(WILDCARD_ADDRESS));
 
-    LOG.info("Testing behavior with " + DFS_JOURNALNODE_HTTPS_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_JOURNALNODE_HTTPS_BIND_HOST_KEY, WILDCARD_ADDRESS);

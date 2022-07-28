@@ -192,7 +192,7 @@ public class TestStoragePolicySatisfierWithStripedFile {
       // move file to ARCHIVE
       client.setStoragePolicy(barDir, "COLD");
       hdfsAdmin.satisfyStoragePolicy(new Path(fooFile));
-      LOG.info("Sets storage policy to COLD and invoked satisfyStoragePolicy");
+      LOG.error("Temp", new RuntimeException());
       cluster.triggerHeartbeats();
 
       // verify storage types and locations
@@ -301,7 +301,7 @@ public class TestStoragePolicySatisfierWithStripedFile {
       // storage type.
       client.setStoragePolicy(barDir, "COLD");
       hdfsAdmin.satisfyStoragePolicy(new Path(fooFile));
-      LOG.info("Sets storage policy to COLD and invoked satisfyStoragePolicy");
+      LOG.error("Temp", new RuntimeException());
       cluster.triggerHeartbeats();
 
       waitForAttemptedItems(1, 30000);
@@ -489,7 +489,7 @@ public class TestStoragePolicySatisfierWithStripedFile {
       // storage type.
       client.setStoragePolicy(barDir, "COLD");
       hdfsAdmin.satisfyStoragePolicy(new Path(fooFile));
-      LOG.info("Sets storage policy to COLD and invoked satisfyStoragePolicy");
+      LOG.error("Temp", new RuntimeException());
       cluster.triggerHeartbeats();
 
       waitForAttemptedItems(1, 30000);

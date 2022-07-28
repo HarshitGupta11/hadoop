@@ -77,7 +77,7 @@ class HdfsWriter extends SimpleChannelInboundHandler<HttpContent> {
     resp.headers().set(CONNECTION, CLOSE);
     ctx.writeAndFlush(resp).addListener(ChannelFutureListener.CLOSE);
     if (LOG != null && LOG.isDebugEnabled()) {
-      LOG.debug("Exception in channel handler ", cause);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

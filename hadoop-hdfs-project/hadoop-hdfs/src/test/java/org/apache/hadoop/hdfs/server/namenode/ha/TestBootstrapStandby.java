@@ -158,7 +158,7 @@ public class TestBootstrapStandby {
       assertEquals(0, forceBootstrap(i));
 
       // Should have copied over the namespace from the active
-      LOG.info("Checking namenode: " + i);
+      LOG.error("Temp", new RuntimeException());
       FSImageTestUtil.assertNNHasCheckpoints(cluster, i,
           ImmutableList.of((int) expectedCheckpointTxId));
     }
@@ -309,7 +309,7 @@ public class TestBootstrapStandby {
               testSuccessfulBaseCase();
               bootStrapped.set(true);
             } catch (Exception e) {
-              LOG.info(e.getMessage());
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
@@ -322,7 +322,7 @@ public class TestBootstrapStandby {
       }, 50, timeOut);
       fail("Did not timeout");
     } catch (TimeoutException e) {
-      LOG.info("Encountered expected timeout.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
   private void removeStandbyNameDirs() {
@@ -330,7 +330,7 @@ public class TestBootstrapStandby {
       for (URI u : cluster.getNameDirs(i)) {
         assertTrue(u.getScheme().equals("file"));
         File dir = new File(u.getPath());
-        LOG.info("Removing standby dir " + dir);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(FileUtil.fullyDelete(dir));
       }
     }

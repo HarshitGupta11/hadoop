@@ -54,13 +54,13 @@ public class FakeCsiDriver {
         .addService(new FakeCsiIdentityService())
         .build();
     server.start();
-    LOG.info("Server started, listening on " + socketAddress);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void stop() {
     if (server != null) {
       server.shutdown();
-      LOG.info("Server has been shutdown");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

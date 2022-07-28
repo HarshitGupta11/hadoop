@@ -529,7 +529,7 @@ public class HadoopLogsAnalyzer extends Configured implements Tool {
       IOException {
     if (input != null) {
       input.close();
-      LOG.info("File closed: " + currentFileName);
+      LOG.error("Temp", new RuntimeException());
       input = null;
     }
 
@@ -1700,7 +1700,7 @@ public class HadoopLogsAnalyzer extends Configured implements Tool {
     while (line != null) {
       if (debug
           && (lineNumber < 1000000L && lineNumber % 1000L == 0 || lineNumber % 1000000L == 0)) {
-        LOG.debug("" + lineNumber + " " + line.second());
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (line.first() == null) {
@@ -1713,7 +1713,7 @@ public class HadoopLogsAnalyzer extends Configured implements Tool {
 
           processParsedLine(new ParsedLine(line.second(), version));
         } catch (StringIndexOutOfBoundsException e) {
-          LOG.warn("anomalous line #" + lineNumber + ":" + line, e);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         jobconf = new ParsedConfigFile(line.first(), line.second());

@@ -555,7 +555,7 @@ public class TestNameNodeMXBean {
 
   @Test (timeout = 120000)
   public void testMaintenanceNodes() throws Exception {
-    LOG.info("Starting testMaintenanceNodes");
+    LOG.error("Temp", new RuntimeException());
     int expirationInMs = 30 * 1000;
     Configuration conf = new Configuration();
     conf.setInt(DFSConfigKeys.DFS_HEARTBEAT_INTERVAL_KEY, 1);
@@ -587,7 +587,7 @@ public class TestNameNodeMXBean {
       // 1. Verify nodes for DatanodeReportType.LIVE state
       String liveNodesInfo = (String) (mbs.getAttribute(mxbeanName,
           "LiveNodes"));
-      LOG.info("Live Nodes: " + liveNodesInfo);
+      LOG.error("Temp", new RuntimeException());
       Map<String, Map<String, Object>> liveNodes =
           (Map<String, Map<String, Object>>) JSON.parse(liveNodesInfo);
       assertEquals(fsn.getLiveNodes(), liveNodesInfo);
@@ -614,11 +614,11 @@ public class TestNameNodeMXBean {
             (Map<String, Map<String, Object>>) JSON.parse(
                 enteringMaintenanceNodesInfo);
         if (enteringMaintenanceNodes.size() <= 0) {
-          LOG.info("Waiting for a node to Enter Maintenance state!");
+          LOG.error("Temp", new RuntimeException());
           Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
           continue;
         }
-        LOG.info("Nodes entering Maintenance: " + enteringMaintenanceNodesInfo);
+        LOG.error("Temp", new RuntimeException());
         recheck = false;
         assertEquals(fsn.getEnteringMaintenanceNodes(),
             enteringMaintenanceNodesInfo);

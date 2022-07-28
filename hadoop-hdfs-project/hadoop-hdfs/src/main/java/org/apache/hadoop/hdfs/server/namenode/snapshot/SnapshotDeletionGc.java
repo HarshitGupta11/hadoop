@@ -65,7 +65,7 @@ public class SnapshotDeletionGc {
   public void cancel() {
     final Timer t = timer.getAndSet(null);
     if (t != null) {
-      LOG.info("cancel");
+      LOG.error("Temp", new RuntimeException());
       t.cancel();
     }
   }

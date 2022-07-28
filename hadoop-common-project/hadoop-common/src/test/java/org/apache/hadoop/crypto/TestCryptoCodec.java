@@ -84,7 +84,7 @@ public class TestCryptoCodec {
   public void testJceAesCtrCryptoCodec() throws Exception {
     GenericTestUtils.assumeInNativeProfile();
     if (!NativeCodeLoader.buildSupportsOpenssl()) {
-      LOG.warn("Skipping test since openSSL library not loaded");
+      LOG.error("Temp", new RuntimeException());
       Assume.assumeTrue(false);
     }
     Assert.assertEquals(null, OpensslCipher.getLoadingFailureReason());
@@ -108,7 +108,7 @@ public class TestCryptoCodec {
   public void testJceSm4CtrCryptoCodec() throws Exception {
     GenericTestUtils.assumeInNativeProfile();
     if (!NativeCodeLoader.buildSupportsOpenssl()) {
-      LOG.warn("Skipping test since openSSL library not loaded");
+      LOG.error("Temp", new RuntimeException());
       Assume.assumeTrue(false);
     }
     conf.set(HADOOP_SECURITY_CRYPTO_CIPHER_SUITE_KEY, "SM4/CTR/NoPadding");
@@ -137,7 +137,7 @@ public class TestCryptoCodec {
   public void testOpensslAesCtrCryptoCodec() throws Exception {
     GenericTestUtils.assumeInNativeProfile();
     if (!NativeCodeLoader.buildSupportsOpenssl()) {
-      LOG.warn("Skipping test since openSSL library not loaded");
+      LOG.error("Temp", new RuntimeException());
       Assume.assumeTrue(false);
     }
     Assert.assertEquals(null, OpensslCipher.getLoadingFailureReason());
@@ -161,7 +161,7 @@ public class TestCryptoCodec {
   public void testOpensslSm4CtrCryptoCodec() throws Exception {
     GenericTestUtils.assumeInNativeProfile();
     if (!NativeCodeLoader.buildSupportsOpenssl()) {
-      LOG.warn("Skipping test since openSSL library not loaded");
+      LOG.error("Temp", new RuntimeException());
       Assume.assumeTrue(false);
     }
     conf.set(HADOOP_SECURITY_CRYPTO_JCE_PROVIDER_KEY,
@@ -193,7 +193,7 @@ public class TestCryptoCodec {
     } catch (ClassNotFoundException cnfe) {
       throw new IOException("Illegal crypto codec!");
     }
-    LOG.info("Created a Codec object of type: " + encCodecClass);
+    LOG.error("Temp", new RuntimeException());
     
     // Generate data
     DataOutputBuffer data = new DataOutputBuffer();
@@ -206,7 +206,7 @@ public class TestCryptoCodec {
       key.write(data);
       value.write(data);
     }
-    LOG.info("Generated " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     
     // Encrypt data
     DataOutputBuffer encryptedDataBuffer = new DataOutputBuffer();
@@ -215,7 +215,7 @@ public class TestCryptoCodec {
     out.write(data.getData(), 0, data.getLength());
     out.flush();
     out.close();
-    LOG.info("Finished encrypting data");
+    LOG.error("Temp", new RuntimeException());
     
     CryptoCodec decCodec = null;
     try {
@@ -224,7 +224,7 @@ public class TestCryptoCodec {
     } catch (ClassNotFoundException cnfe) {
       throw new IOException("Illegal crypto codec!");
     }
-    LOG.info("Created a Codec object of type: " + decCodecClass);
+    LOG.error("Temp", new RuntimeException());
     
     // Decrypt data
     DataInputBuffer decryptedDataBuffer = new DataInputBuffer();
@@ -298,7 +298,7 @@ public class TestCryptoCodec {
         expected, in.read());
     } while (expected != -1);
 
-    LOG.info("SUCCESS! Completed checking " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     
     // Check secure random generator
     testSecureRandom(encCodec);

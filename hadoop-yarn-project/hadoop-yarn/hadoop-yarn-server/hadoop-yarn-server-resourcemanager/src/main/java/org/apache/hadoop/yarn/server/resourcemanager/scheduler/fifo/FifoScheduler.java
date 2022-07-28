@@ -445,7 +445,7 @@ public class FifoScheduler extends
     SchedulerApplication<FifoAppAttempt> application =
         applications.get(applicationId);
     if (application == null){
-      LOG.warn("Couldn't find application " + applicationId);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -474,7 +474,7 @@ public class FifoScheduler extends
           && container.getState().equals(RMContainerState.RUNNING)) {
         // do not kill the running container in the case of work-preserving AM
         // restart.
-        LOG.info("Skip killing " + container.getContainerId());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       super.completedContainer(container,
@@ -505,7 +505,7 @@ public class FifoScheduler extends
         continue;
       }
 
-      LOG.debug("pre-assignContainers");
+      LOG.error("Temp", new RuntimeException());
       application.showRequests();
       synchronized (application) {
         // Check if this resource is on the blacklist
@@ -530,7 +530,7 @@ public class FifoScheduler extends
         }
       }
       
-      LOG.debug("post-assignContainers");
+      LOG.error("Temp", new RuntimeException());
       application.showRequests();
 
       // Done
@@ -989,7 +989,7 @@ public class FifoScheduler extends
     ContainerStatus status = SchedulerUtils.createKilledContainerStatus(
         container.getContainerId(),
         "Killed by RM to simulate an AM container failure");
-    LOG.info("Killing container " + container);
+    LOG.error("Temp", new RuntimeException());
     completedContainer(container, status, RMContainerEventType.KILL);
   }
 

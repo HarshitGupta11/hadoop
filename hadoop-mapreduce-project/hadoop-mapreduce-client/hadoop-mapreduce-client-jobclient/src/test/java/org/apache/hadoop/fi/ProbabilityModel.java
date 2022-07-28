@@ -59,7 +59,7 @@ public class ProbabilityModel {
         System.getProperty(ALL_PROBABILITIES, 
             conf.get(ALL_PROBABILITIES, Float.toString(DEFAULT_PROB))));
 
-    LOG.info(ALL_PROBABILITIES + "=" + conf.get(ALL_PROBABILITIES));
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -96,7 +96,7 @@ public class ProbabilityModel {
 
     float ret = conf.getFloat(newProbName,
         conf.getFloat(ALL_PROBABILITIES, DEFAULT_PROB));
-    LOG.debug("Request for " + newProbName + " returns=" + ret);
+    LOG.error("Temp", new RuntimeException());
     // Make sure that probability level is valid.
     if (ret < DEFAULT_PROB || ret > MAX_PROB) 
       ret = conf.getFloat(ALL_PROBABILITIES, DEFAULT_PROB);

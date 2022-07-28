@@ -66,7 +66,7 @@ public class TestSwiftFileSystemConcurrency extends SwiftFileSystemBaseTest {
         try {
           assertDeleted(new Path(TEST_RACE_CONDITION_ON_DELETE_DIR), true);
         } catch (IOException e) {
-          LOG.warn("deletion thread:" + e, e);
+          LOG.error("Temp", new RuntimeException());
           thread1Ex = e;
           throw new RuntimeException(e);
         }
@@ -80,7 +80,7 @@ public class TestSwiftFileSystemConcurrency extends SwiftFileSystemBaseTest {
           outputStream.write(message.getBytes());
           outputStream.close();
         } catch (IOException e) {
-          LOG.warn("writer thread:" + e, e);
+          LOG.error("Temp", new RuntimeException());
           thread2Ex = e;
           throw new RuntimeException(e);
         }
@@ -96,7 +96,7 @@ public class TestSwiftFileSystemConcurrency extends SwiftFileSystemBaseTest {
     }
     try {
       fs.open(fileToRead);
-      LOG.info("concurrency test failed to trigger a failure");
+      LOG.error("Temp", new RuntimeException());
     } catch (FileNotFoundException expected) {
 
     }

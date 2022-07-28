@@ -127,7 +127,7 @@ public class ApiServiceClient extends AppAdminClient {
               sb.append("?user.name=")
                   .append(username);
             } catch (IOException e) {
-              LOG.debug("Fail to resolve username: {}", e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           Builder builder = client
@@ -137,15 +137,15 @@ public class ApiServiceClient extends AppAdminClient {
             String challenge = YarnClientUtils.generateToken(server[0]);
             builder.header(HttpHeaders.AUTHORIZATION, "Negotiate " +
                 challenge);
-            LOG.debug("Authorization: Negotiate {}", challenge);
+            LOG.error("Temp", new RuntimeException());
           }
           ClientResponse test = builder.get(ClientResponse.class);
           if (test.getStatus() == 200) {
             return scheme + host;
           }
         } catch (Exception e) {
-          LOG.info("Fail to connect to: " + host);
-          LOG.debug("Root cause: ", e);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           diagnosticsMsg.append("Error connecting to " + host
               + " due to " + e.getMessage() + "\n");
         }
@@ -291,7 +291,7 @@ public class ApiServiceClient extends AppAdminClient {
       output = response.getEntity(String.class);
     }
     if (response.getStatus() <= 299) {
-      LOG.info(output);
+      LOG.error("Temp", new RuntimeException());
       return EXIT_SUCCESS;
     } else {
       LOG.error(output);
@@ -346,7 +346,7 @@ public class ApiServiceClient extends AppAdminClient {
           fileName);
     }
     Path filePath = new Path(file.getAbsolutePath());
-    LOG.info("Loading service definition from local FS: " + filePath);
+    LOG.error("Temp", new RuntimeException());
     Service service = jsonSerDeser
         .load(FileSystem.getLocal(getConfig()), filePath);
     if (!StringUtils.isEmpty(serviceName)) {
@@ -574,7 +574,7 @@ public class ApiServiceClient extends AppAdminClient {
           loadAppJsonFromLocalFS(path.getAbsolutePath(), appName, null, null);
       service.setState(ServiceState.EXPRESS_UPGRADING);
       String buffer = jsonSerDeser.toJson(service);
-      LOG.info("Upgrade in progress. Please wait..");
+      LOG.error("Temp", new RuntimeException());
       ClientResponse response = getApiClient(getServicePath(appName))
           .put(ClientResponse.class, buffer);
       result = processResponse(response);
@@ -711,7 +711,7 @@ public class ApiServiceClient extends AppAdminClient {
       service.setName(appName);
       service.setState(ServiceState.CANCEL_UPGRADING);
       String buffer = jsonSerDeser.toJson(service);
-      LOG.info("Cancel upgrade in progress. Please wait..");
+      LOG.error("Temp", new RuntimeException());
       ClientResponse response = getApiClient(getServicePath(appName))
           .put(ClientResponse.class, buffer);
       result = processResponse(response);

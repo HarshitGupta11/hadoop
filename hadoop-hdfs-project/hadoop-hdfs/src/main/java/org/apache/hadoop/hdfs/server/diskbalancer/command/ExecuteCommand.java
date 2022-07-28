@@ -59,7 +59,7 @@ public class ExecuteCommand extends Command {
    */
   @Override
   public void execute(CommandLine cmd) throws Exception {
-    LOG.info("Executing \"execute plan\" command");
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(cmd.hasOption(DiskBalancerCLI.EXECUTE));
     verifyCommandOptions(DiskBalancerCLI.EXECUTE, cmd);
 

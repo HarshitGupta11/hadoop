@@ -92,7 +92,7 @@ public class DefaultOOMHandler implements Runnable {
             "Container %s is out of its limits, using %d " +
                 "when requested only %d",
             container.getContainerId(), usage, request);
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (ResourceHandlerException ex) {
       LOG.warn(String.format("Could not access memory resource for %s",
@@ -153,7 +153,7 @@ public class DefaultOOMHandler implements Runnable {
         try {
           Thread.sleep(10);
         } catch (InterruptedException e) {
-          LOG.debug("Interrupted while waiting for processes to disappear");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       containerKilled = true;
@@ -249,7 +249,7 @@ public class DefaultOOMHandler implements Runnable {
         String message = String.format(
             "container %s killed by elastic cgroups OOM handler.",
             candidate.container.getContainerId());
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         containerKilled = true;
       }
     }

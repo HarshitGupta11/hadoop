@@ -51,7 +51,7 @@ public class TestMapCollection {
       this.fillChar = fillChar;
       r = new Random();
       final long seed = r.nextLong();
-      LOG.info("seed: " + seed);
+      LOG.error("Temp", new RuntimeException());
       r.setSeed(seed);
     }
     @Override
@@ -317,7 +317,7 @@ public class TestMapCollection {
     job.setMapOutputValueClass(ValWritable.class);
     job.setSortComparatorClass(VariableComparator.class);
 
-    LOG.info("Running " + name);
+    LOG.error("Temp", new RuntimeException());
     assertTrue("Job failed!", job.waitForCompletion(false));
   }
 
@@ -498,7 +498,7 @@ public class TestMapCollection {
         RecordFactory.class);
     final Random r = new Random();
     final long seed = r.nextLong();
-    LOG.info("SEED: " + seed);
+    LOG.error("Temp", new RuntimeException());
     r.setSeed(seed);
     conf.set(MRJobConfig.MAP_SORT_SPILL_PERCENT,
         Float.toString(Math.max(0.1f, r.nextFloat())));
@@ -520,7 +520,7 @@ public class TestMapCollection {
         RecordFactory.class);
     final Random r = new Random();
     final long seed = r.nextLong();
-    LOG.info("SEED: " + seed);
+    LOG.error("Temp", new RuntimeException());
     r.setSeed(seed);
     conf.set(MRJobConfig.MAP_SORT_SPILL_PERCENT,
         Float.toString(Math.max(0.1f, r.nextFloat())));

@@ -295,7 +295,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
       BlockInfo blockInfo = blockManager.getStoredBlock(block);
       if (blockInfo == null || blockInfo.isDeleted()) {
         out.println("Block "+ blockId +" " + NONEXISTENT_STATUS);
-        LOG.warn("Block "+ blockId + " " + NONEXISTENT_STATUS);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       final INodeFile iNode = namenode.getNamesystem().getBlockCollection(blockInfo);
@@ -342,10 +342,10 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
       }
     } catch (Exception e) {
       String errMsg = "Fsck on blockId '" + blockId;
-      LOG.warn(errMsg, e);
+      LOG.error("Temp", new RuntimeException());
       out.println(e.getMessage());
       out.print("\n\n" + errMsg);
-      LOG.warn("Error in looking up block", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       namenode.getNamesystem().readUnlock("fsck");
     }
@@ -396,14 +396,14 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
           blockIdCK(blk);
           sb.append(blk + "\n");
         }
-        LOG.info("{}", sb.toString());
+        LOG.error("Temp", new RuntimeException());
         out.flush();
         return;
       }
 
       String msg = "FSCK started by " + UserGroupInformation.getCurrentUser()
           + " from " + remoteAddress + " for path " + path + " at " + new Date();
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       out.println(msg);
 
       if (snapshottableDirs != null) {
@@ -474,7 +474,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
       }
     } catch (Exception e) {
       String errMsg = "Fsck on path '" + path + "' " + FAILURE_STATUS;
-      LOG.warn(errMsg, e);
+      LOG.error("Temp", new RuntimeException());
       out.println("FSCK ended at " + new Date() + " in "
           + (Time.monotonicNow() - startTime + " milliseconds"));
       out.println(e.getMessage());
@@ -909,7 +909,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
       }
       res.corruptFiles++;
       if (isOpen) {
-        LOG.info("Fsck: ignoring open file " + path);
+        LOG.error("Temp", new RuntimeException());
       } else {
         if (doMove) copyBlocksToLostFound(parent, file, blocks);
         if (doDelete) deleteCorruptedFile(path);
@@ -958,7 +958,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
   private void deleteCorruptedFile(String path) {
     try {
       namenode.getRpcServer().delete(path, true);
-      LOG.info("Fsck: deleted corrupt file " + path);
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       LOG.error("Fsck: error deleting corrupted file " + path, e);
       internalError = true;
@@ -1068,7 +1068,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
         if (failures >= HdfsClientConfigKeys.DFS_CLIENT_MAX_BLOCK_ACQUIRE_FAILURES_DEFAULT) {
           throw new IOException("Could not obtain block " + lblock, ie);
         }
-        LOG.info("Could not obtain block from any node:  " + ie);
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(10000);
         }  catch (InterruptedException iex) {
@@ -1117,7 +1117,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
             build();
       }  catch (IOException ex) {
         // Put chosen node into dead list, continue
-        LOG.info("Failed to connect to " + targetAddr + ":" + ex);
+        LOG.error("Temp", new RuntimeException());
         deadNodes.add(chosenNode);
       }
     }
@@ -1183,7 +1183,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
         lfInitedOk = dfs.mkdirs(lfName, null, true);
         lostFound = lfName;
       } else if (!lfStatus.isDirectory()) { // exists but not a directory
-        LOG.warn("Cannot use /lost+found : a regular file with this name exists.");
+        LOG.error("Temp", new RuntimeException());
         lfInitedOk = false;
       }  else { // exists and is a directory
         lostFound = lfName;
@@ -1194,7 +1194,7 @@ public class NamenodeFsck implements DataEncryptionKeyFactory {
       lfInitedOk = false;
     }
     if (lostFound == null) {
-      LOG.warn("Cannot initialize /lost+found .");
+      LOG.error("Temp", new RuntimeException());
       lfInitedOk = false;
       internalError = true;
     }

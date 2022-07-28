@@ -73,7 +73,7 @@ public abstract class AbstractSchedulerPlanFollower implements PlanFollower {
   @Override
   public synchronized void synchronizePlan(Plan plan, boolean shouldReplan) {
     String planQueueName = plan.getQueueName();
-    LOG.debug("Running plan follower edit policy for plan: {}", planQueueName);
+    LOG.error("Temp", new RuntimeException());
     // align with plan step
     long step = plan.getStep();
     long now = clock.getTime();
@@ -110,7 +110,7 @@ public abstract class AbstractSchedulerPlanFollower implements PlanFollower {
         try {
           plan.getReplanner().plan(plan, null);
         } catch (PlanningException e) {
-          LOG.warn("Exception while trying to replan: {}", planQueueName, e);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         shouldResize = true;
@@ -262,10 +262,10 @@ public abstract class AbstractSchedulerPlanFollower implements PlanFollower {
         int size = (appsInQueue == null ? 0 : appsInQueue.size());
         if (size > 0) {
           scheduler.killAllAppsInQueue(expiredReservation);
-          LOG.info("Killing applications in queue: {}", expiredReservation);
+          LOG.error("Temp", new RuntimeException());
         } else {
           scheduler.removeQueue(expiredReservation);
-          LOG.info("Queue: " + expiredReservation + " removed");
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (YarnException e) {
         LOG.warn("Exception while trying to expire reservation: {}",

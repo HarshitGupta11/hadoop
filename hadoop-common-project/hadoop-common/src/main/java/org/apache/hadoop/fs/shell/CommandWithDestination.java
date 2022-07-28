@@ -228,7 +228,7 @@ abstract class CommandWithDestination extends FsCommand {
       }
     } else if (dst.exists) {
       if (!dst.stat.isDirectory() && !overwrite) {
-        LOG.debug("Destination file exists: {}", dst.stat);
+        LOG.error("Temp", new RuntimeException());
         throw new PathExistsException(dst.toString());
       }
     } else if (!dst.parentExists()) {

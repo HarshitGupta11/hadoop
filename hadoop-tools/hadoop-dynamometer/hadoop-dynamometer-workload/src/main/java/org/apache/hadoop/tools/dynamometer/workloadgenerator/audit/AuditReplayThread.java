@@ -91,7 +91,7 @@ public class AuditReplayThread extends Thread {
         -1);
     createBlocks = mapperConf.getBoolean(AuditReplayMapper.CREATE_BLOCKS_KEY,
         AuditReplayMapper.CREATE_BLOCKS_DEFAULT);
-    LOG.info("Start timestamp: " + startTimestampMs);
+    LOG.error("Temp", new RuntimeException());
     for (REPLAYCOUNTERS rc : REPLAYCOUNTERS.values()) {
       replayCountersMap.put(rc, new GenericCounter());
     }
@@ -159,10 +159,10 @@ public class AuditReplayThread extends Thread {
     long delay = startTimestampMs - currentEpoch;
     try {
       if (delay > 0) {
-        LOG.info("Sleeping for " + delay + " ms");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(delay);
       } else {
-        LOG.warn("Starting late by " + (-1 * delay) + " ms");
+        LOG.error("Temp", new RuntimeException());
       }
 
       AuditReplayCommand cmd = commandQueue.take();
@@ -219,7 +219,7 @@ public class AuditReplayThread extends Thread {
       replayCommand = ReplayCommand
           .valueOf(command.getCommand().split(" ")[0].toUpperCase());
     } catch (IllegalArgumentException iae) {
-      LOG.warn("Unsupported/invalid command: " + command);
+      LOG.error("Temp", new RuntimeException());
       replayCountersMap.get(REPLAYCOUNTERS.TOTALUNSUPPORTEDCOMMANDS)
           .increment(1);
       return false;
@@ -319,7 +319,7 @@ public class AuditReplayThread extends Thread {
           .get(replayCommand + INDIVIDUAL_COMMANDS_COUNT_SUFFIX).increment(1);
       return true;
     } catch (IOException e) {
-      LOG.debug("IOException: " + e.getLocalizedMessage());
+      LOG.error("Temp", new RuntimeException());
       individualCommandsMap
           .get(replayCommand + INDIVIDUAL_COMMANDS_INVALID_SUFFIX).increment(1);
       return false;

@@ -142,7 +142,7 @@ public class TestNamenodeStorageDirectives {
     FileSystem fs = cluster.getFileSystem();
 
     if (!fs.exists(path)) {
-      LOG.info("verifyFileReplicasOnStorageType: file {} does not exist", path);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     long fileLength = client.getFileInfo(path.toString()).getLen();

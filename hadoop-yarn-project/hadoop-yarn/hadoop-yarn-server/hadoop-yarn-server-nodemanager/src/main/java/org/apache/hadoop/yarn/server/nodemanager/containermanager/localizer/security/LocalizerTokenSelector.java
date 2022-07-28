@@ -38,15 +38,15 @@ public class LocalizerTokenSelector implements
   public Token<LocalizerTokenIdentifier> selectToken(Text service,
       Collection<Token<? extends TokenIdentifier>> tokens) {
 
-    LOG.debug("Using localizerTokenSelector.");
+    LOG.error("Temp", new RuntimeException());
 
     for (Token<? extends TokenIdentifier> token : tokens) {
-      LOG.debug("Token of kind {} is found", token.getKind());
+      LOG.error("Temp", new RuntimeException());
       if (LocalizerTokenIdentifier.KIND.equals(token.getKind())) {
         return (Token<LocalizerTokenIdentifier>) token;
       }
     }
-    LOG.debug("Returning null.");
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 }

@@ -172,14 +172,14 @@ public abstract class RpcProgram extends ChannelInboundHandlerAdapter {
     }
     
     if (this.progNumber != call.getProgram()) {
-      LOG.warn("Invalid RPC call program " + call.getProgram());
+      LOG.error("Temp", new RuntimeException());
       sendAcceptedReply(call, remoteAddress, AcceptState.PROG_UNAVAIL, ctx);
       return;
     }
 
     int ver = call.getVersion();
     if (ver < lowProgVersion || ver > highProgVersion) {
-      LOG.warn("Invalid RPC call version " + ver);
+      LOG.error("Temp", new RuntimeException());
       sendAcceptedReply(call, remoteAddress, AcceptState.PROG_MISMATCH, ctx);
       return;
     }

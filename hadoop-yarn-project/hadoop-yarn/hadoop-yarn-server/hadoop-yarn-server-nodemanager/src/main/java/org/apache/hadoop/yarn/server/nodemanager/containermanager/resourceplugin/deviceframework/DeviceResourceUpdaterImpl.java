@@ -48,7 +48,7 @@ public class DeviceResourceUpdaterImpl extends NodeResourceUpdaterPlugin {
   @Override
   public void updateConfiguredResource(Resource res)
       throws YarnException {
-    LOG.info(resourceName + " plugin update resource ");
+    LOG.error("Temp", new RuntimeException());
     Set<Device> devices = null;
     try {
       devices = devicePlugin.getDevices();

@@ -201,7 +201,7 @@ public class BlockTokenSecretManager extends
     if (!isMaster) {
       return null;
     }
-    LOG.debug("Exporting access keys");
+    LOG.error("Temp", new RuntimeException());
     return new ExportedBlockKeys(true, keyUpdateInterval, tokenLifetime,
         currentKey, allKeys.values().toArray(new BlockKey[0]));
   }
@@ -225,7 +225,7 @@ public class BlockTokenSecretManager extends
     if (isMaster || exportedKeys == null) {
       return;
     }
-    LOG.info("Setting block keys");
+    LOG.error("Temp", new RuntimeException());
     removeExpiredKeys();
     this.currentKey = exportedKeys.getCurrentKey();
     BlockKey[] receivedKeys = exportedKeys.getAllKeys();
@@ -255,7 +255,7 @@ public class BlockTokenSecretManager extends
       return false;
     }
 
-    LOG.info("Updating block keys");
+    LOG.error("Temp", new RuntimeException());
     removeExpiredKeys();
     // set final expiry date of retiring currentKey
     allKeys.put(currentKey.getKeyId(), new BlockKey(currentKey.getKeyId(),
@@ -483,7 +483,7 @@ public class BlockTokenSecretManager extends
     identifier.setExpiryDate(timer.now() + tokenLifetime);
     identifier.setKeyId(key.getKeyId());
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Generating block token for " + identifier);
+      LOG.error("Temp", new RuntimeException());
     }
     return createPassword(identifier.getBytes(), key.getKey());
   }

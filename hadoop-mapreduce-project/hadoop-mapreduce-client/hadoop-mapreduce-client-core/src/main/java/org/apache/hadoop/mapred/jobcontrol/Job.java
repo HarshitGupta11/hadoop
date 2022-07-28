@@ -95,7 +95,7 @@ public class Job extends ControlledJob {
     try {
       super.setJob(org.apache.hadoop.mapreduce.Job.getInstance(jobConf));
     } catch (IOException ioe) { 
-      LOG.info("Exception" + ioe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -267,7 +267,7 @@ public class PBImageCorruptionDetector extends PBImageTextWriter {
   protected void buildNamespace(InputStream in, List<Long> refIdList)
       throws IOException {
     corrChecker.saveNodeRefIds(refIdList);
-    LOG.debug("Saved INodeReference ids of size {}.", refIdList.size());
+    LOG.error("Temp", new RuntimeException());
     int count = 0;
     while (true) {
       FsImageProto.INodeDirectorySection.DirEntry e =
@@ -277,7 +277,7 @@ public class PBImageCorruptionDetector extends PBImageTextWriter {
       }
       count++;
       if (LOG.isDebugEnabled() && count % 10000 == 0) {
-        LOG.debug("Scanned {} directories.", count);
+        LOG.error("Temp", new RuntimeException());
       }
       long parentId = e.getParent();
       if (!corrChecker.isNodeIdExist(parentId)) {
@@ -309,14 +309,14 @@ public class PBImageCorruptionDetector extends PBImageTextWriter {
         putDirChildToMetadataMap(parentId, refIdList.get(refId));
       }
     }
-    LOG.info("Scanned {} INode directories to build namespace.", count);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
   public void afterOutput() throws IOException {
     if (!corruptionsMap.isEmpty()) {
       // Also write out corruptions when the path could be not be decided
-      LOG.info("Outputting {} more corrupted nodes.", corruptionsMap.size());
+      LOG.error("Temp", new RuntimeException());
       for (PBImageCorruption c : corruptionsMap.values()) {
         long id = c.getId();
         String name = "";

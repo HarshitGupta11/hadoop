@@ -187,7 +187,7 @@ public class LocalMetadataStore implements MetadataStore {
       }
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("get({}) -> {}", path, m == null ? "null" : m.prettyPrint());
+        LOG.error("Temp", new RuntimeException());
       }
       return m;
     }
@@ -225,7 +225,7 @@ public class LocalMetadataStore implements MetadataStore {
   public void move(@Nullable Collection<Path> pathsToDelete,
       @Nullable Collection<PathMetadata> pathsToCreate,
       @Nullable final BulkOperationState operationState) throws IOException {
-    LOG.info("Move {} to {}", pathsToDelete, pathsToCreate);
+    LOG.error("Temp", new RuntimeException());
 
     if (pathsToCreate == null) {
       pathsToCreate = Collections.emptyList();
@@ -239,13 +239,13 @@ public class LocalMetadataStore implements MetadataStore {
 
       // 1. Delete pathsToDelete
       for (Path meta : pathsToDelete) {
-        LOG.debug("move: deleting metadata {}", meta);
+        LOG.error("Temp", new RuntimeException());
         delete(meta, null);
       }
 
       // 2. Create new destination path metadata
       for (PathMetadata meta : pathsToCreate) {
-        LOG.debug("move: adding metadata {}", meta);
+        LOG.error("Temp", new RuntimeException());
         put(meta, null);
       }
 
@@ -279,7 +279,7 @@ public class LocalMetadataStore implements MetadataStore {
 
       /* Add entry for this file. */
       if (LOG.isDebugEnabled()) {
-        LOG.debug("put {} -> {}", path, meta.prettyPrint());
+        LOG.error("Temp", new RuntimeException());
       }
       LocalMetadataEntry entry = localCache.getIfPresent(path);
       if(entry == null){
@@ -345,7 +345,7 @@ public class LocalMetadataStore implements MetadataStore {
       final List<Path> unchangedEntries,
       final BulkOperationState operationState) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("put dirMeta {}", meta.prettyPrint());
+      LOG.error("Temp", new RuntimeException());
     }
     LocalMetadataEntry entry =
         localCache.getIfPresent(standardize(meta.getPath()));
@@ -519,12 +519,12 @@ public class LocalMetadataStore implements MetadataStore {
     // If there's no entry, delete should silently succeed
     // (based on MetadataStoreTestBase#testDeleteNonExisting)
     if(entry == null){
-      LOG.warn("Delete: path {} is missing from cache.", path);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
     // Remove target file entry
-    LOG.debug("delete file entry for {}", path);
+    LOG.error("Temp", new RuntimeException());
     if(entry.hasPathMeta()){
       if (tombstone) {
         PathMetadata pmd = PathMetadata.tombstone(path,
@@ -537,7 +537,7 @@ public class LocalMetadataStore implements MetadataStore {
 
     // If this path is a dir, remove its listing
     if(entry.hasDirMeta()) {
-      LOG.debug("removing listing of {}", path);
+      LOG.error("Temp", new RuntimeException());
       entry.setDirListingMetadata(null);
     }
 
@@ -552,7 +552,7 @@ public class LocalMetadataStore implements MetadataStore {
     if (parent != null) {
       DirListingMetadata dir = getDirListingMeta(parent);
       if (dir != null) {
-        LOG.debug("removing parent's entry for {} ", path);
+        LOG.error("Temp", new RuntimeException());
         if (tombstone) {
           dir.markDeleted(path, ttlTimeProvider.getNow());
         } else {

@@ -318,10 +318,10 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
     // the write lock. All accesses to the lock are via these variables, so that
     // effectively disables the read lock.
     if (enableRL) {
-      LOG.info("The datanode lock is a read write lock");
+      LOG.error("Temp", new RuntimeException());
       this.datasetReadLock = new AutoCloseableLock(datasetRWLock.readLock());
     } else {
-      LOG.info("The datanode lock is an exclusive write lock");
+      LOG.error("Temp", new RuntimeException());
       this.datasetReadLock = this.datasetWriteLock;
     }
     this.datasetWriteLockCondition = datasetWriteLock.newCondition();
@@ -584,7 +584,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
 
     builder.build();
     activateVolume(tempVolumeMap, sd, storageType, ref);
-    LOG.info("Added volume - " + location + ", StorageType: " + storageType);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -878,11 +878,11 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
       long addr = cacheManager.getCacheAddress(
           b.getBlockPoolId(), b.getBlockId());
       if (addr != -1) {
-        LOG.debug("Get InputStream by cache address.");
+        LOG.error("Temp", new RuntimeException());
         return FsDatasetUtil.getDirectInputStream(
             addr + seekOffset, info.getBlockDataLength() - seekOffset);
       }
-      LOG.debug("Get InputStream by cache file path.");
+      LOG.error("Temp", new RuntimeException());
       return FsDatasetUtil.getInputStreamAndSeek(
           new File(cachePath), seekOffset);
     }
@@ -1040,7 +1040,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
         LOG.debug("Copied " + srcReplica.getMetadataURI() + " meta to "
             + dstMeta + " and calculated checksum");
       } else {
-        LOG.debug("Copied " + srcReplica.getBlockURI() + " to " + dstFile);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return new File[] {dstMeta, dstFile};
@@ -1069,7 +1069,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
           + dstMeta, e);
     }
     if (LOG.isDebugEnabled()) {
-      LOG.info("Linked " + srcReplica.getBlockURI() + " to " + dstFile);
+      LOG.error("Temp", new RuntimeException());
     }
     return new File[]{dstMeta, dstFile};
   }
@@ -1404,7 +1404,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
             " should be greater than the replica " + b + "'s generation stamp");
       }
       ReplicaInfo replicaInfo = getReplicaInfo(b);
-      LOG.info("Appending to " + replicaInfo);
+      LOG.error("Temp", new RuntimeException());
       if (replicaInfo.getState() != ReplicaState.FINALIZED) {
         throw new ReplicaNotFoundException(
             ReplicaNotFoundException.UNFINALIZED_REPLICA + b);
@@ -1535,7 +1535,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   @Override  // FsDatasetSpi
   public ReplicaHandler recoverAppend(
       ExtendedBlock b, long newGS, long expectedBlockLen) throws IOException {
-    LOG.info("Recover failed append to " + b);
+    LOG.error("Temp", new RuntimeException());
 
     while (true) {
       try {
@@ -1568,7 +1568,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   @Override // FsDatasetSpi
   public Replica recoverClose(ExtendedBlock b, long newGS,
       long expectedBlockLen) throws IOException {
-    LOG.info("Recover failed close " + b);
+    LOG.error("Temp", new RuntimeException());
     while (true) {
       try {
         try (AutoCloseableLock lock = datasetWriteLock.acquire()) {
@@ -1666,7 +1666,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   public ReplicaHandler recoverRbw(
       ExtendedBlock b, long newGS, long minBytesRcvd, long maxBytesRcvd)
       throws IOException {
-    LOG.info("Recover RBW replica " + b);
+    LOG.error("Temp", new RuntimeException());
     long startTimeMs = Time.monotonicNow();
     try {
       while (true) {
@@ -1683,7 +1683,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
             if (!rbw.attemptToSetWriter(null, Thread.currentThread())) {
               throw new MustStopExistingWriter(rbw);
             }
-            LOG.info("At " + datanode.getDisplayName() + ", Recovering " + rbw);
+            LOG.error("Temp", new RuntimeException());
             return recoverRbwImpl(rbw, b, newGS, minBytesRcvd, maxBytesRcvd);
           }
         } catch (MustStopExistingWriter e) {
@@ -2048,7 +2048,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
 
         // delete the on-disk temp file
         if (delBlockFromDisk(replicaInfo)) {
-          LOG.warn("Block " + b + " unfinalized and removed. ");
+          LOG.error("Temp", new RuntimeException());
         }
         if (replicaInfo.getVolume().isTransientStorage()) {
           ramDiskReplicaTracker.discardReplica(b.getBlockPoolId(),
@@ -2071,11 +2071,11 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   private boolean delBlockFromDisk(ReplicaInfo info) {
     
     if (!info.deleteBlockData()) {
-      LOG.warn("Not able to delete the block data for replica " + info);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } else { // remove the meta file
       if (!info.deleteMetadata()) {
-        LOG.warn("Not able to delete the meta data for replica " + info);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }
@@ -2262,7 +2262,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
       datanode.checkDiskErrorAsync(r.getVolume());
     }
 
-    LOG.debug("blockId={}, replica={}", blockId, r);
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 
@@ -2337,7 +2337,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
         }
         removing = volumeMap.remove(bpid, invalidBlks[i]);
         addDeletingBlock(bpid, removing.getBlockId());
-        LOG.debug("Block file {} is to be deleted", removing.getBlockURI());
+        LOG.error("Temp", new RuntimeException());
         if (removing instanceof ReplicaInPipeline) {
           ((ReplicaInPipeline) removing).releaseAllBytesReserved();
         }
@@ -2532,9 +2532,9 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
       StandardMBean bean = new StandardMBean(this,FSDatasetMBean.class);
       mbeanName = MBeans.register("DataNode", "FSDatasetState-" + datanodeUuid, bean);
     } catch (NotCompliantMBeanException e) {
-      LOG.warn("Error registering FSDatasetState MBean", e);
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Registered FSDatasetState MBean");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override // FsDatasetSpi
@@ -2647,11 +2647,11 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
               .build();
 
           volumeMap.add(bpid, diskBlockInfo);
-          LOG.warn("Added missing block to memory " + diskBlockInfo);
+          LOG.error("Temp", new RuntimeException());
         } else {
           // replica exists in memory but not in the provided store
           volumeMap.remove(bpid, blockId);
-          LOG.warn("Deleting missing provided block " + memBlockInfo);
+          LOG.error("Temp", new RuntimeException());
         }
         return;
       }
@@ -2714,7 +2714,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
           ramDiskReplicaTracker.addReplica(
               bpid, blockId, (FsVolumeImpl) vol, lockedBytesReserved);
         }
-        LOG.warn("Added missing block to memory " + diskBlockInfo);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       /*
@@ -2740,7 +2740,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
             }
           } else {
             if (!fileIoProvider.delete(vol, diskFile)) {
-              LOG.warn("Failed to delete " + diskFile);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
@@ -2770,9 +2770,9 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
               + memMetaFile.getAbsolutePath()
               + " does not match file found by scan ";
           if (!diskMetaFileExists) {
-            LOG.warn(warningPrefix + "null");
+            LOG.error("Temp", new RuntimeException());
           } else if (memMetaFile.compareTo(diskMetaFile) != 0) {
-            LOG.warn(warningPrefix + diskMetaFile.getAbsolutePath());
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           // Metadata file corresponding to block in memory is missing
@@ -2790,7 +2790,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
             memBlockInfo.setGenerationStamp(gs);
           } catch (IllegalArgumentException e) {
             //exception arises because the URI cannot be converted to a file
-            LOG.warn("Block URI could not be resolved to a file", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -2819,7 +2819,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
         datanode.reportBadBlocks(new ExtendedBlock(bpid, corruptBlock),
             memBlockInfo.getVolume());
       } catch (IOException e) {
-        LOG.warn("Failed to report bad block " + corruptBlock, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -3077,7 +3077,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   @Override
   public void addBlockPool(String bpid, Configuration conf)
       throws IOException {
-    LOG.info("Adding block pool " + bpid);
+    LOG.error("Temp", new RuntimeException());
     AddBlockPoolException volumeExceptions = new AddBlockPoolException();
     try (AutoCloseableLock lock = datasetWriteLock.acquire()) {
       try {
@@ -3110,7 +3110,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   @Override
   public void shutdownBlockPool(String bpid) {
     try (AutoCloseableLock lock = datasetWriteLock.acquire()) {
-      LOG.info("Removing block pool " + bpid);
+      LOG.error("Temp", new RuntimeException());
       Map<DatanodeStorage, BlockListAsLongs> blocksPerVolume
           = getBlockReports(bpid);
       volumeMap.cleanUpBlockPool(bpid);
@@ -3153,7 +3153,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
       } catch (ClosedChannelException e) {
         continue;
       } catch (IOException e) {
-        LOG.warn(e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         used = 0;
         free = 0;
       }
@@ -3292,7 +3292,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
     RamDiskReplica block = null;
     block = ramDiskReplicaTracker.getReplica(bpId, blockId);
     if (block != null) {
-      LOG.warn("Failed to save replica " + block + ". re-enqueueing it.");
+      LOG.error("Temp", new RuntimeException());
       ramDiskReplicaTracker.reenqueueReplicaNotPersisted(block);
     }
   }
@@ -3433,10 +3433,10 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
         }
         succeeded = true;
       } catch(IOException ioe) {
-        LOG.warn("Exception saving replica " + block, ioe);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         if (!succeeded && block != null) {
-          LOG.warn("Failed to save replica " + block + ". re-enqueueing it.");
+          LOG.error("Temp", new RuntimeException());
           onFailLazyPersist(block.getBlockPoolId(), block.getBlockId());
         }
       }
@@ -3461,7 +3461,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
         }
 
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Evicting block " + replicaState);
+          LOG.error("Temp", new RuntimeException());
         }
 
         ReplicaInfo replicaInfo, newReplicaInfo;
@@ -3513,10 +3513,10 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
             numSuccessiveFailures = 0;
           }
         } catch (InterruptedException e) {
-          LOG.info("LazyWriter was interrupted, exiting");
+          LOG.error("Temp", new RuntimeException());
           break;
         } catch (Exception e) {
-          LOG.warn("Ignoring exception in LazyWriter:", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -3599,7 +3599,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
     try {
       ((LazyWriter) lazyWriter.getRunnable()).evictBlocks(bytesNeeded);
     } catch(IOException ioe) {
-      LOG.info("Ignoring exception ", ioe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

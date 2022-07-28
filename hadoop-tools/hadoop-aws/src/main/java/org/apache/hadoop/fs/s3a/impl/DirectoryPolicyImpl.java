@@ -182,11 +182,11 @@ public final class DirectoryPolicyImpl
     switch (option.toLowerCase(Locale.ENGLISH)) {
     case DIRECTORY_MARKER_POLICY_DELETE:
       // backwards compatible.
-      LOG.debug("Directory markers will be deleted");
+      LOG.error("Temp", new RuntimeException());
       policy = DELETE;
       break;
     case DIRECTORY_MARKER_POLICY_KEEP:
-      LOG.info("Directory markers will be kept");
+      LOG.error("Temp", new RuntimeException());
       policy = KEEP;
       break;
     case DIRECTORY_MARKER_POLICY_AUTHORITATIVE:

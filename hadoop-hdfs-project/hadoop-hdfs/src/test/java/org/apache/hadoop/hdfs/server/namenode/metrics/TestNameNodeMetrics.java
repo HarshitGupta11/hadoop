@@ -864,7 +864,7 @@ public class TestNameNodeMetrics {
         cluster2.shutdown();
         break;
       } catch (Exception e) {
-        LOG.warn("Unable to set up HA cluster, exception thrown: " + e);
+        LOG.error("Temp", new RuntimeException());
         retryCount++;
       }
     }

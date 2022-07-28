@@ -135,7 +135,7 @@ public class ILoadTestSessionCredentials extends S3AScaleTestBase {
   public void testCreate10Tokens() throws Throwable {
     File file = fetchTokens(10);
     String csv = FileUtils.readFileToString(file, "UTF-8");
-    LOG.info("CSV data\n{}", csv);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -206,7 +206,7 @@ public class ILoadTestSessionCredentials extends S3AScaleTestBase {
       stats.add(timer);
       if (ex != null) {
         // throttling event occurred.
-        LOG.info("Throttled at event {}", i, ex);
+        LOG.error("Temp", new RuntimeException());
         throttled.add(timer);
         throttledEvents.add(outcome);
       } else {
@@ -218,7 +218,7 @@ public class ILoadTestSessionCredentials extends S3AScaleTestBase {
 
     jobTimer.end("Execution of fetch calls");
     // now print the stats
-    LOG.info("Summary file is " + csvFile);
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Fetched {} tokens with {} throttle events\n: {}\n{}\n{}",
         tokens,
         throttled.getCount(),

@@ -85,7 +85,7 @@ class FSPreemptionThread extends Thread {
         }
         starvedApp.preemptionTriggered(delayBeforeNextStarvationCheck);
       } catch (InterruptedException e) {
-        LOG.info("Preemption thread interrupted! Exiting.");
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       }
     }
@@ -284,7 +284,7 @@ class FSPreemptionThread extends Thread {
         ContainerStatus status = SchedulerUtils.createPreemptedContainerStatus(
             container.getContainerId(), SchedulerUtils.PREEMPTED_CONTAINER);
 
-        LOG.info("Killing container " + container);
+        LOG.error("Temp", new RuntimeException());
         scheduler.completedContainer(
             container, status, RMContainerEventType.KILL);
       }

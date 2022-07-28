@@ -106,14 +106,14 @@ public class TestSaveNamespace {
       StorageDirectory sd = (StorageDirectory)args[1];
 
       if (count++ == 1) {
-        LOG.info("Injecting fault for sd: " + sd);
+        LOG.error("Temp", new RuntimeException());
         if (throwRTE) {
           throw new RuntimeException("Injected fault: saveFSImage second time");
         } else {
           throw new IOException("Injected fault: saveFSImage second time");
         }
       }
-      LOG.info("Not injecting fault for sd: " + sd);
+      LOG.error("Temp", new RuntimeException());
       return (Void)invocation.callRealMethod();
     }
   }
@@ -133,10 +133,10 @@ public class TestSaveNamespace {
 
       if (faultType == Fault.WRITE_STORAGE_ALL ||
           (faultType==Fault.WRITE_STORAGE_ONE && count++==1)) {
-        LOG.info("Injecting fault for sd: " + sd);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException("Injected fault: writeProperties second time");
       }
-      LOG.info("Not injecting fault for sd: " + sd);
+      LOG.error("Temp", new RuntimeException());
       return (Void)invocation.callRealMethod();
     }
   }
@@ -222,7 +222,7 @@ public class TestSaveNamespace {
         if (!shouldFail) {
           throw e;
         } else {
-          LOG.info("Test caught expected exception", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       
@@ -285,9 +285,9 @@ public class TestSaveNamespace {
 
       // Save namespace - should mark the first storage dir as faulty
       // since it's not traversable.
-      LOG.info("Doing the first savenamespace.");
+      LOG.error("Temp", new RuntimeException());
       fsn.saveNamespace(0, 0);
-      LOG.info("First savenamespace sucessful.");      
+      LOG.error("Temp", new RuntimeException());
       
       assertTrue("Savenamespace should have marked one directory as bad." +
                  " But found " + storage.getRemovedStorageDirs().size() +
@@ -299,9 +299,9 @@ public class TestSaveNamespace {
       // The next call to savenamespace should try inserting the
       // erroneous directory back to fs.name.dir. This command should
       // be successful.
-      LOG.info("Doing the second savenamespace.");
+      LOG.error("Temp", new RuntimeException());
       fsn.saveNamespace(0, 0);
-      LOG.warn("Second savenamespace sucessful.");
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Savenamespace should have been successful in removing " +
                  " bad directories from Image."  +
                  " But found " + storage.getRemovedStorageDirs().size() +
@@ -309,20 +309,20 @@ public class TestSaveNamespace {
                  storage.getRemovedStorageDirs().size() == 0);
 
       // Now shut down and restart the namesystem
-      LOG.info("Shutting down fsimage.");
+      LOG.error("Temp", new RuntimeException());
       originalImage.close();
       fsn.close();      
       fsn = null;
 
       // Start a new namesystem, which should be able to recover
       // the namespace from the previous incarnation.
-      LOG.info("Loading new FSmage from disk.");
+      LOG.error("Temp", new RuntimeException());
       fsn = FSNamesystem.loadFromDisk(conf);
 
       // Make sure the image loaded including our edit.
-      LOG.info("Checking reloaded image.");
+      LOG.error("Temp", new RuntimeException());
       checkEditExists(fsn, 1);
-      LOG.info("Reloaded image is good.");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (rootDir.exists()) {
         fs.setPermission(rootPath, permissionAll);
@@ -425,7 +425,7 @@ public class TestSaveNamespace {
         fsn.saveNamespace(0, 0);
         fail("saveNamespace did not fail even when all directories failed!");
       } catch (IOException ioe) {
-        LOG.info("Got expected exception", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
       
       // Ensure that, if storage dirs come back online, things work again.
@@ -464,7 +464,7 @@ public class TestSaveNamespace {
     try {
       doAnEdit(fsn, 1);
       CheckpointSignature sig = fsn.rollEditLog();
-      LOG.warn("Checkpoint signature: " + sig);
+      LOG.error("Temp", new RuntimeException());
       // Do another edit
       doAnEdit(fsn, 2);
 
@@ -594,7 +594,7 @@ public class TestSaveNamespace {
         GenericTestUtils.assertExceptionContains(
             "SaveNamespaceCancelledException", t);
       }
-      LOG.info("Successfully cancelled a saveNamespace");
+      LOG.error("Temp", new RuntimeException());
 
 
       // Check that we have only the original image and not any

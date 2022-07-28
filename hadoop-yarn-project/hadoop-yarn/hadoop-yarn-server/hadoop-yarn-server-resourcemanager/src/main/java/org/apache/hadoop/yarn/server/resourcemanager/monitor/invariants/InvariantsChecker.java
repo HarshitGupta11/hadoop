@@ -73,7 +73,7 @@ public abstract class InvariantsChecker implements SchedulingEditPolicy {
     if (getThrowOnInvariantViolation()) {
       throw new InvariantViolationException(message);
     } else {
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

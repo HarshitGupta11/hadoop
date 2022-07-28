@@ -110,7 +110,7 @@ public class TestNetUtils {
       socket.close();
       fail("Should not have connected");
     } catch (UnknownHostException uhe) {
-      LOG.info("Got exception: ", uhe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -456,7 +456,7 @@ public class TestNetUtils {
     assertNotNull("Null Exception", e);
     IOException wrapped = NetUtils.wrapException("desthost", DEST_PORT,
          "localhost", LOCAL_PORT, e);
-    LOG.info(wrapped.toString(), wrapped);
+    LOG.error("Temp", new RuntimeException());
     if(!(wrapped.getClass().equals(expectedClass))) {
       throw new AssertionError("Wrong exception class; expected "
          + expectedClass

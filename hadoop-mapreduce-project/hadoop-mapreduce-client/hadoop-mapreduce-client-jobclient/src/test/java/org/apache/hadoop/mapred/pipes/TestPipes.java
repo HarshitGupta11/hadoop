@@ -72,7 +72,7 @@ public class TestPipes {
   @Test
   public void testPipes() throws IOException {
     if (System.getProperty("compile.c++") == null) {
-      LOG.info("compile.c++ is not defined, so skipping TestPipes");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     MiniDFSCluster dfs = null;

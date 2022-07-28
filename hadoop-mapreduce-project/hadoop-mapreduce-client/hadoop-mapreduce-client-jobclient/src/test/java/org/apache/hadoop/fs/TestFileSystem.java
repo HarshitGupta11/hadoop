@@ -88,7 +88,7 @@ public class TestFileSystem {
     if (seed == 0)
       seed = new Random().nextLong();
 
-    LOG.info("seed = "+seed);
+    LOG.error("Temp", new RuntimeException());
 
     createControlFile(fs, megaBytes, numFiles, seed);
     writeTest(fs, false);
@@ -131,7 +131,7 @@ public class TestFileSystem {
                                        long megaBytes, int numFiles,
                                        long seed) throws Exception {
 
-    LOG.info("creating control file: "+megaBytes+" bytes, "+numFiles+" files");
+    LOG.error("Temp", new RuntimeException());
 
     Path controlFile = new Path(CONTROL_DIR, "files");
     fs.delete(controlFile, true);
@@ -152,7 +152,7 @@ public class TestFileSystem {
           size = -size;
         size = size % maxSize;
 
-        //LOG.info(" adding: name="+name+" size="+size);
+        //LOG.error("Temp", new RuntimeException());
 
         writer.append(name, new LongWritable(size));
 
@@ -161,7 +161,7 @@ public class TestFileSystem {
     } finally {
       writer.close();
     }
-    LOG.info("created control file for: "+totalSize+" bytes");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public static class WriteMapper extends Configured
@@ -486,9 +486,9 @@ public class TestFileSystem {
       }
     }
 
-    LOG.info("seed = "+seed);
-    LOG.info("files = " + files);
-    LOG.info("megaBytes = " + megaBytes);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   
     FileSystem fs = FileSystem.get(conf);
 
@@ -544,7 +544,7 @@ public class TestFileSystem {
       cluster = new MiniDFSCluster.Builder(conf).nameNodePort(port)
           .numDataNodes(2).build();
       URI uri = cluster.getFileSystem().getUri();
-      LOG.info("uri=" + uri);
+      LOG.error("Temp", new RuntimeException());
 
       {
         FileSystem fs = FileSystem.get(uri, new Configuration());
@@ -559,7 +559,7 @@ public class TestFileSystem {
         URI uri2 = new URI(uri.getScheme(), uri.getUserInfo(),
             uri.getHost(), HdfsClientConfigKeys.DFS_NAMENODE_RPC_PORT_DEFAULT,
             uri.getPath(), uri.getQuery(), uri.getFragment());
-        LOG.info("uri2=" + uri2);
+        LOG.error("Temp", new RuntimeException());
         FileSystem fs = FileSystem.get(uri2, conf);
         checkPath(cluster, fs);
         for(int i = 0; i < 100; i++) {

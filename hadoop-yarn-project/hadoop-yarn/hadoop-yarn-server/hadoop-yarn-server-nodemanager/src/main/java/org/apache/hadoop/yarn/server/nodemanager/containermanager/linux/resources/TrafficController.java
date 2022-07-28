@@ -134,7 +134,7 @@ import java.util.regex.Pattern;
 
     File tmpDir = new File(tmpDirPath);
     if (!(tmpDir.exists() || tmpDir.mkdirs())) {
-      LOG.warn("Unable to create directory: " + tmpDirPath);
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException("Unable to create directory: " +
           tmpDirPath);
     }
@@ -150,19 +150,19 @@ import java.util.regex.Pattern;
     String state = null;
 
     if (!recoveryEnabled) {
-      LOG.info("NM recovery is not enabled. We'll wipe tc state before proceeding.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       //NM recovery enabled - run a state check
       state = readState();
       if (checkIfAlreadyBootstrapped(state)) {
-        LOG.info("TC configuration is already in place. Not wiping state.");
+        LOG.error("Temp", new RuntimeException());
 
         //We already have the list of existing container classes, if any
         //that were created after bootstrapping
         reacquireContainerClasses(state);
         return;
       } else {
-        LOG.info("TC configuration is incomplete. Wiping tc state before proceeding");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -171,7 +171,7 @@ import java.util.regex.Pattern;
   }
 
   private void initializeState() throws ResourceHandlerException {
-    LOG.info("Initializing tc state.");
+    LOG.error("Temp", new RuntimeException());
 
     BatchBuilder builder = new BatchBuilder(PrivilegedOperation.
         OperationType.TC_MODIFY_STATE)
@@ -186,7 +186,7 @@ import java.util.regex.Pattern;
     try {
       privilegedOperationExecutor.executePrivilegedOperation(op, false);
     } catch (PrivilegedOperationException e) {
-      LOG.warn("Failed to bootstrap outbound bandwidth configuration");
+      LOG.error("Temp", new RuntimeException());
 
       throw new ResourceHandlerException(
           "Failed to bootstrap outbound bandwidth configuration", e);
@@ -222,16 +222,16 @@ import java.util.regex.Pattern;
       Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
 
       if (pattern.matcher(state).find()) {
-        LOG.debug("Matched regex: {}", regex);
+        LOG.error("Temp", new RuntimeException());
       } else {
         String logLine = new StringBuffer("Failed to match regex: ")
               .append(regex).append(" Current state: ").append(state).toString();
-        LOG.warn(logLine);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }
 
-    LOG.info("Bootstrap check succeeded");
+    LOG.error("Temp", new RuntimeException());
 
     return true;
   }
@@ -256,11 +256,11 @@ import java.util.regex.Pattern;
       String output =
           privilegedOperationExecutor.executePrivilegedOperation(op, true);
 
-      LOG.debug("TC state: {}" + output);
+      LOG.error("Temp", new RuntimeException());
 
       return output;
     } catch (PrivilegedOperationException e) {
-      LOG.warn("Failed to bootstrap outbound bandwidth rules");
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException(
           "Failed to bootstrap outbound bandwidth rules", e);
     }
@@ -273,7 +273,7 @@ import java.util.regex.Pattern;
     PrivilegedOperation op = builder.commitBatchToTempFile();
 
     try {
-      LOG.info("Wiping tc state.");
+      LOG.error("Temp", new RuntimeException());
       privilegedOperationExecutor.executePrivilegedOperation(op, false);
     } catch (PrivilegedOperationException e) {
       LOG.warn("Failed to wipe tc state. This could happen if the interface" +
@@ -308,10 +308,10 @@ import java.util.regex.Pattern;
             int classId = Integer.parseInt(classMatcher.group(1));
             if (classId >= MIN_CONTAINER_CLASS_ID) {
               classIdSet.set(classId - MIN_CONTAINER_CLASS_ID);
-              LOG.info("Reacquired container classid: " + classId);
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
-            LOG.warn("Unable to match classid in string:" + tcClass);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -328,15 +328,15 @@ import java.util.regex.Pattern;
       String output =
           privilegedOperationExecutor.executePrivilegedOperation(op, true);
 
-      LOG.debug("TC stats output:{}", output);
+      LOG.error("Temp", new RuntimeException());
 
       Map<Integer, Integer> classIdBytesStats = parseStatsString(output);
 
-      LOG.debug("classId -> bytes sent {}", classIdBytesStats);
+      LOG.error("Temp", new RuntimeException());
 
       return classIdBytesStats;
     } catch (PrivilegedOperationException e) {
-      LOG.warn("Failed to get tc stats");
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException("Failed to get tc stats", e);
     }
   }
@@ -459,7 +459,7 @@ import java.util.regex.Pattern;
     //e.g 4325381 -> 00420005
     String classIdStr = String.format("%08x", Integer.parseInt(input));
 
-    LOG.debug("ClassId hex string : {}", classIdStr);
+    LOG.error("Temp", new RuntimeException());
 
     //extract and return 4 digits
     //e.g 00420005 -> 0005

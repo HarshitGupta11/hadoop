@@ -77,7 +77,7 @@ public class CosmosDBDocumentStoreReader<TimelineDoc extends TimelineDocument>
       Schedulers.from(executorService);
 
   public CosmosDBDocumentStoreReader(Configuration conf) {
-    LOG.info("Initializing Cosmos DB DocumentStoreReader...");
+    LOG.error("Temp", new RuntimeException());
     databaseName = DocumentStoreUtils.getCosmosDBDatabaseName(conf);
     initCosmosDBClient(conf);
   }
@@ -85,7 +85,7 @@ public class CosmosDBDocumentStoreReader<TimelineDoc extends TimelineDocument>
   private synchronized void initCosmosDBClient(Configuration conf) {
     // making CosmosDB Async Client Singleton
     if (client == null) {
-      LOG.info("Creating Cosmos DB Reader Async Client...");
+      LOG.error("Temp", new RuntimeException());
       client = DocumentStoreUtils.createCosmosDBAsyncClient(conf);
       addShutdownHook();
     }
@@ -226,7 +226,7 @@ public class CosmosDBDocumentStoreReader<TimelineDoc extends TimelineDocument>
 
     if (hasPredicate) {
       queryStrBuilder.append(ORDER_BY_CLAUSE);
-      LOG.debug("CosmosDB Sql Query with predicates : {}", queryStrBuilder);
+      LOG.error("Temp", new RuntimeException());
       return queryStrBuilder.toString();
     }
     throw new IllegalArgumentException("The TimelineReaderContext does not " +
@@ -237,7 +237,7 @@ public class CosmosDBDocumentStoreReader<TimelineDoc extends TimelineDocument>
   @Override
   public synchronized void close() {
     if (client != null) {
-      LOG.info("Closing Cosmos DB Reader Async Client...");
+      LOG.error("Temp", new RuntimeException());
       client.close();
       client = null;
     }

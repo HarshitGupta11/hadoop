@@ -287,7 +287,7 @@ public class ContractTestUtils extends Assert {
     if (errors > 0) {
       String message = String.format(" %d errors in file of length %d",
                                      errors, len);
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       // the range either side of the first error to print
       // this is a purely arbitrary number, to aid user debugging
       final int overlap = 10;
@@ -306,7 +306,7 @@ public class ContractTestUtils extends Assert {
                                expected,
                                toChar(expected));
         }
-        LOG.warn(line);
+        LOG.error("Temp", new RuntimeException());
       }
       fail(message);
     }
@@ -457,10 +457,10 @@ public class ContractTestUtils extends Assert {
   public static FileStatus[] deleteChildren(FileSystem fileSystem,
       Path path,
       boolean recursive) throws IOException {
-    LOG.debug("Deleting children of {} (recursive={})", path, recursive);
+    LOG.error("Temp", new RuntimeException());
     FileStatus[] children = listChildren(fileSystem, path);
     for (FileStatus entry : children) {
-      LOG.debug("Deleting {}", entry);
+      LOG.error("Temp", new RuntimeException());
       fileSystem.delete(entry.getPath(), recursive);
     }
     return children;
@@ -487,7 +487,7 @@ public class ContractTestUtils extends Assert {
 
   public static void noteAction(String action) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("==============  "+ action +" =============");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -499,7 +499,7 @@ public class ContractTestUtils extends Assert {
    * @throws AssumptionViolatedException always
    */
   public static void downgrade(String message, Throwable failure) {
-    LOG.warn("Downgrading test " + message, failure);
+    LOG.error("Temp", new RuntimeException());
     AssumptionViolatedException ave =
         new AssumptionViolatedException(failure, null);
     throw ave;
@@ -520,7 +520,7 @@ public class ContractTestUtils extends Assert {
    * @throws AssumptionViolatedException always
    */
   public static void skip(String message) {
-    LOG.info("Skipping: {}", message);
+    LOG.error("Temp", new RuntimeException());
     throw new AssumptionViolatedException(message);
   }
 
@@ -1424,7 +1424,7 @@ public class ContractTestUtils extends Assert {
 
     FileStatus[] statuses = fs.listStatus(path);
     for (FileStatus status : statuses) {
-      LOG.info("{}{}", status.getPath(), status.isDirectory() ? "*" : "");
+      LOG.error("Temp", new RuntimeException());
     }
     for (FileStatus status : statuses) {
       dirsAndFiles.add(status);

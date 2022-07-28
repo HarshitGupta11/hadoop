@@ -50,9 +50,9 @@ public class RMInfo implements RMInfoMXBean {
       bean = new StandardMBean(this, RMInfoMXBean.class);
       rmStatusBeanName = MBeans.register("ResourceManager", "RMInfo", bean);
     } catch (NotCompliantMBeanException e) {
-      LOG.warn("Error registering RMInfo MBean", e);
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Registered RMInfo MBean");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void unregister() {

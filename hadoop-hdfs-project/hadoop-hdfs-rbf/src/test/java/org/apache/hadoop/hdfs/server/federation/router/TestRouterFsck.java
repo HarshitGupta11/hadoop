@@ -171,7 +171,7 @@ public class TestRouterFsck {
             httpResponse.getStatusLine().getStatusCode());
         String out = EntityUtils.toString(
             httpResponse.getEntity(), StandardCharsets.UTF_8);
-        LOG.info(out);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(out.contains("Federated FSCK started"));
         // assert 1 file exists in a cluster and 3 files exist
         // in another cluster
@@ -197,7 +197,7 @@ public class TestRouterFsck {
             httpResponse.getStatusLine().getStatusCode());
         String out = EntityUtils.toString(
             httpResponse.getEntity(), StandardCharsets.UTF_8);
-        LOG.info(out);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(out.contains("Federated FSCK started"));
         assertTrue(out.contains("Total files:\t1"));
         // ns1 does not have files under /testdir

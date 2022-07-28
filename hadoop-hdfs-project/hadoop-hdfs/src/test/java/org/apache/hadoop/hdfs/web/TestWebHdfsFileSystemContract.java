@@ -166,10 +166,10 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
 
     //replace query with mix case letters
     final URL url = webhdfs.toUrl(op, p);
-    WebHdfsFileSystem.LOG.info("url      = " + url);
+    WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
     final URL replaced = new URL(url.toString().replace(op.toQueryString(),
         "Op=mkDIrs"));
-    WebHdfsFileSystem.LOG.info("replaced = " + replaced);
+    WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
 
     //connect with the replaced URL.
     final HttpURLConnection conn = (HttpURLConnection)replaced.openConnection();
@@ -178,7 +178,7 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
     final BufferedReader in = new BufferedReader(new InputStreamReader(
         conn.getInputStream()));
     for(String line; (line = in.readLine()) != null; ) {
-      WebHdfsFileSystem.LOG.info("> " + line);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
     }
 
     //check if the command successes.
@@ -193,7 +193,7 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
       fs.open(p).read();
       fail("Expected FileNotFoundException was not thrown");
     } catch(FileNotFoundException fnfe) {
-      WebHdfsFileSystem.LOG.info("This is expected.", fnfe);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -265,7 +265,7 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
 
     final WebHdfsFileSystem webhdfs = (WebHdfsFileSystem)fs;
     final URL url = webhdfs.toUrl(GetOpParam.Op.NULL, root);
-    WebHdfsFileSystem.LOG.info("null url=" + url);
+    WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(url.toString().contains("v1"));
 
     //test root permission
@@ -283,7 +283,7 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
       out.close();
       fail();
     } catch(IOException e) {
-      WebHdfsFileSystem.LOG.info("This is expected.", e);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
     }
 
     //open file using root path 
@@ -292,7 +292,7 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
       in.read();
       fail();
     } catch(IOException e) {
-      WebHdfsFileSystem.LOG.info("This is expected.", e);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -485,11 +485,11 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
       conn.disconnect();
 
       //remove NamenodeAddressParam
-      WebHdfsFileSystem.LOG.info("redirect = " + redirect);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
       final int i = redirect.indexOf(NamenodeAddressParam.NAME);
       final int j = redirect.indexOf("&", i);
       String modified = redirect.substring(0, i - 1) + redirect.substring(j);
-      WebHdfsFileSystem.LOG.info("modified = " + modified);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
 
       //connect to datanode
       conn = (HttpURLConnection)new URL(modified).openConnection();
@@ -510,7 +510,7 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
         WebHdfsFileSystem.jsonParse(conn, false);
         fail();
       } catch(IOException ioe) {
-        WebHdfsFileSystem.LOG.info("GOOD", ioe);
+        WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
       }
       conn.disconnect();
     }
@@ -570,10 +570,10 @@ public class TestWebHdfsFileSystemContract extends FileSystemContractBaseTest {
       conn.disconnect();
 
       //remove createparent
-      WebHdfsFileSystem.LOG.info("redirect = " + redirect);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
       String re = "&" + dnCreateParam + "=[^&]*";
       String modified = redirect.replaceAll(re, "");
-      WebHdfsFileSystem.LOG.info("modified = " + modified);
+      WebHdfsFileSystem.LOG.error("Temp", new RuntimeException());
 
       //connect to datanode
       conn = (HttpURLConnection)new URL(modified).openConnection();

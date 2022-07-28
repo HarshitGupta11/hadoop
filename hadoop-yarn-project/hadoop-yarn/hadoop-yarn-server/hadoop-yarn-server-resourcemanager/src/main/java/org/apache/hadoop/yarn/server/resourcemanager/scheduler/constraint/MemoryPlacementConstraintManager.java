@@ -86,7 +86,7 @@ public class MemoryPlacementConstraintManager
     readLock.lock();
     try {
       if (appConstraints.get(appId) != null) {
-        LOG.warn("Application {} has already been registered.", appId);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       // Go over each sourceTag-constraint pair, validate it, and add it to the

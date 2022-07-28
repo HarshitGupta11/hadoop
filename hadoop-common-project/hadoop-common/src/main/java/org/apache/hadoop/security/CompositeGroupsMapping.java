@@ -78,7 +78,7 @@ public class CompositeGroupsMapping
       } catch (Exception e) {
         LOG.warn("Unable to get groups for user {} via {} because: {}",
             user, provider.getClass().getSimpleName(), e.toString());
-        LOG.debug("Stacktrace: ", e);
+        LOG.error("Temp", new RuntimeException());
       }        
       if (!groups.isEmpty()) {
         groupSet.addAll(groups);
@@ -118,7 +118,7 @@ public class CompositeGroupsMapping
       } catch (Exception e) {
         LOG.warn("Unable to get groups for user {} via {} because: {}",
             user, provider.getClass().getSimpleName(), e.toString());
-        LOG.debug("Stacktrace: ", e);
+        LOG.error("Temp", new RuntimeException());
       }
       if (groups != null && !groups.isEmpty()) {
         groupSet.addAll(groups);

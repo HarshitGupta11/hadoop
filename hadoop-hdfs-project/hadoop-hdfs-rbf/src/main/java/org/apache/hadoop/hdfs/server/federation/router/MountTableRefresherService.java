@@ -211,7 +211,7 @@ public class MountTableRefresherService extends AbstractService {
     try {
       routerStore.loadCache(true);
     } catch (IOException e) {
-      LOG.warn("RouterStore load cache failed,", e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     List<RouterState> cachedRecords = routerStore.getCachedRecords();
@@ -242,7 +242,7 @@ public class MountTableRefresherService extends AbstractService {
               client.getMountTableManager(), adminAddress));
         } catch (ExecutionException execExcep) {
           // Can not connect, seems router is stopped now.
-          LOG.warn(ROUTER_CONNECT_ERROR_MSG, adminAddress, execExcep);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -275,7 +275,7 @@ public class MountTableRefresherService extends AbstractService {
       boolean allReqCompleted =
           countDownLatch.await(cacheUpdateTimeout, TimeUnit.MILLISECONDS);
       if (!allReqCompleted) {
-        LOG.warn("Not all router admins updated their cache");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (InterruptedException e) {
       LOG.error("Mount table cache refresher was interrupted.", e);

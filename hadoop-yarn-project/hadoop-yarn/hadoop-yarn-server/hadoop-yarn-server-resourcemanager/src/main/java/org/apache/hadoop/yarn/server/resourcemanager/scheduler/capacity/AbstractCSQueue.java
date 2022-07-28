@@ -1419,7 +1419,7 @@ public abstract class AbstractCSQueue implements CSQueue {
       if (getState() == QueueState.STOPPED) {
         updateQueueState(QueueState.DRAINING);
       }
-      LOG.info("Recover draining state for queue " + this.getQueuePath());
+      LOG.error("Temp", new RuntimeException());
       if (getParent() != null && getParent().getState() == QueueState.STOPPED) {
         ((AbstractCSQueue) getParent()).recoverDrainingState();
       }

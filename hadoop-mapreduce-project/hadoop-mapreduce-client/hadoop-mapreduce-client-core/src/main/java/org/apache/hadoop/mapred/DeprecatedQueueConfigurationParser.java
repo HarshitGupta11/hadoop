@@ -67,7 +67,7 @@ class DeprecatedQueueConfigurationParser extends QueueConfigurationParser {
         Queue q = new Queue(name, acls, state);
         list.add(q);
       } catch (Throwable t) {
-        LOG.warn("Not able to initialize queue " + name);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return list;

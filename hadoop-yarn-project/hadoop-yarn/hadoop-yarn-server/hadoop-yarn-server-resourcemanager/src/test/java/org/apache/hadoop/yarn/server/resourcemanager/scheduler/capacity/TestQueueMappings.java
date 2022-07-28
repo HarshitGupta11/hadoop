@@ -68,7 +68,7 @@ public class TestQueueMappings {
     conf.setCapacity(Q1_PATH, 10);
     conf.setCapacity(Q2_PATH, 90);
 
-    LOG.info("Setup top-level queues q1 and q2");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test

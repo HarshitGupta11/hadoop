@@ -147,7 +147,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
     // rest being scheduled does not lead to a termination.
     runningTasks.incrementAndGet();
     for (Path p : inputDirs) {
-      LOG.debug("Queuing scan of directory {}", p);
+      LOG.error("Temp", new RuntimeException());
       runningTasks.incrementAndGet();
       ListenableFuture<ProcessInitialInputPathCallable.Result> future = exec
           .submit(new ProcessInitialInputPathCallable(p, conf, inputFilter));
@@ -159,7 +159,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
 
     lock.lock();
     try {
-      LOG.debug("Waiting scan completion");
+      LOG.error("Temp", new RuntimeException());
       while (runningTasks.get() != 0 && unknownError == null) {
         condition.await();
       }
@@ -168,12 +168,12 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
       // either the scan completed or an error was raised.
       // in the case of an error shutting down the executor will interrupt all
       // active threads, which can add noise to the logs.
-      LOG.debug("Scan complete: shutting down");
+      LOG.error("Temp", new RuntimeException());
       this.exec.shutdownNow();
     }
 
     if (this.unknownError != null) {
-      LOG.debug("Scan failed", this.unknownError);
+      LOG.error("Temp", new RuntimeException());
       if (this.unknownError instanceof Error) {
         throw (Error) this.unknownError;
       } else if (this.unknownError instanceof RuntimeException) {
@@ -187,9 +187,9 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
       }
     }
     if (!this.invalidInputErrors.isEmpty()) {
-      LOG.debug("Invalid Input Errors raised");
+      LOG.error("Temp", new RuntimeException());
       for (IOException error : invalidInputErrors) {
-        LOG.debug("Error", error);
+        LOG.error("Temp", new RuntimeException());
       }
       if (this.newApi) {
         throw new org.apache.hadoop.mapreduce.lib.input.InvalidInputException(
@@ -216,7 +216,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
    * full execution queue.
    */
   private void registerError(Throwable t) {
-    LOG.debug("Error", t);
+    LOG.error("Temp", new RuntimeException());
     lock.lock();
     try {
       if (unknownError == null) {
@@ -257,7 +257,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
     if (stats != null) {
       // demand creation of IO statistics.
       synchronized (this) {
-        LOG.debug("Adding IOStatistics: {}", stats);
+        LOG.error("Temp", new RuntimeException());
         if (iostats == null) {
           // demand create the statistics
           iostats = snapshotIOStatistics(stats);
@@ -303,7 +303,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
     public Result call() throws Exception {
       Result result = new Result();
       result.fs = fs;
-      LOG.debug("ProcessInputDirCallable {}", fileStatus);
+      LOG.error("Temp", new RuntimeException());
       if (fileStatus.isDirectory()) {
         RemoteIterator<LocatedFileStatus> iter = fs
             .listLocatedStatus(fileStatus.getPath());
@@ -351,7 +351,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
         }
         if (!result.dirsNeedingRecursiveCalls.isEmpty()) {
           for (FileStatus fileStatus : result.dirsNeedingRecursiveCalls) {
-            LOG.debug("Queueing directory scan {}", fileStatus.getPath());
+            LOG.error("Temp", new RuntimeException());
             runningTasks.incrementAndGet();
             ListenableFuture<ProcessInputDirCallable.Result> future = exec
                 .submit(new ProcessInputDirCallable(result.fs, fileStatus,
@@ -397,7 +397,7 @@ public class LocatedFileStatusFetcher implements IOStatisticsSource {
       Result result = new Result();
       FileSystem fs = path.getFileSystem(conf);
       result.fs = fs;
-      LOG.debug("ProcessInitialInputPathCallable path {}", path);
+      LOG.error("Temp", new RuntimeException());
       FileStatus[] matches = fs.globStatus(path, inputFilter);
       if (matches == null) {
         result.addError(new IOException("Input path does not exist: " + path));

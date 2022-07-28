@@ -530,7 +530,7 @@ public class TestDataNodeVolumeFailure {
         if (underReplicatedBlocks > 0) {
           return true;
         }
-        LOG.info("There is no under replicated block after volume failure.");
+        LOG.error("Temp", new RuntimeException());
 
         return false;
       }
@@ -611,7 +611,7 @@ public class TestDataNodeVolumeFailure {
     final String newDirs = badDataDir.toString() + "," + data5.toString();
     final Configuration newConf = new Configuration(conf);
     newConf.set(DFSConfigKeys.DFS_DATANODE_DATA_DIR_KEY, newDirs);
-    LOG.info("Setting dfs.datanode.data.dir for new DataNode as {}", newDirs);
+    LOG.error("Temp", new RuntimeException());
     newConf.setInt(DFSConfigKeys.DFS_DATANODE_FAILED_VOLUMES_TOLERATED_KEY,
         tolerated ? 1 : 0);
 
@@ -925,7 +925,7 @@ public class TestDataNodeVolumeFailure {
    */
   @Test(timeout = 120000)
   public void testVolumeFailureDuringStartup() throws Exception {
-    LOG.debug("Data dir: is " +  dataDir.getPath());
+    LOG.error("Temp", new RuntimeException());
 
     // fail the volume
     data_fail = cluster.getInstanceStorageDir(1, 0);

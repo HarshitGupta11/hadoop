@@ -91,7 +91,7 @@ public class MRAsyncDiskService {
       Path absoluteSubdir = new Path(volumes[v], TOBEDELETED);
       if (!localFileSystem.mkdirs(absoluteSubdir)) {
         // We should tolerate missing volumes. 
-        LOG.warn("Cannot create " + TOBEDELETED + " in " + volumes[v] + ". Ignored.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
@@ -216,10 +216,10 @@ public class MRAsyncDiskService {
           LOG.warn("Failure in " + this + " with exception "
               + StringUtils.stringifyException(e));
         } else {
-          LOG.warn("Failure in " + this);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
-        LOG.debug("Successfully did " + this.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   };

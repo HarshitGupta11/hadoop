@@ -170,10 +170,10 @@ public class MembershipStoreImpl
         LOG.info("NN registration state has changed: {} -> {}",
             existingEntry, record);
       } else {
-        LOG.debug("Updating NN registration: {} -> {}", existingEntry, record);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.info("Inserting new NN registration: {}", record);
+      LOG.error("Temp", new RuntimeException());
     }
 
     boolean status = getDriver().put(record, true, false);
@@ -304,7 +304,7 @@ public class MembershipStoreImpl
       // Otherwise, return most recent by class comparator
     } else if (records.size() > 0) {
       TreeSet<MembershipState> sortedList = new TreeSet<>(records);
-      LOG.debug("Quorum failed, using most recent: {}", sortedList.first());
+      LOG.error("Temp", new RuntimeException());
       return sortedList.first();
     } else {
       return null;

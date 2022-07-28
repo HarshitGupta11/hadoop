@@ -466,7 +466,7 @@ public class TestLogsCLI {
     cli.setConf(conf);
 
     int exitCode = cli.run(new String[] { "-applicationId", appId.toString() });
-    LOG.info(sysOutStream.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(exitCode == 0);
     assertTrue(sysOutStream.toString().contains(
         logMessage(containerId1, "syslog")));
@@ -485,7 +485,7 @@ public class TestLogsCLI {
     // Check fetching data for application attempt with applicationId defined
     exitCode = cli.run(new String[] {"-applicationId", appId.toString(),
         "-applicationAttemptId", appAttemptId1.toString()});
-    LOG.info(sysOutStream.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(exitCode == 0);
     assertTrue(sysOutStream.toString().contains(
             logMessage(containerId1, "syslog")));
@@ -504,7 +504,7 @@ public class TestLogsCLI {
     // Check fetching data for application attempt without application defined
     exitCode = cli.run(new String[] {
         "-applicationAttemptId", appAttemptId1.toString()});
-    LOG.info(sysOutStream.toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(exitCode == 0);
     assertTrue(sysOutStream.toString().contains(
             logMessage(containerId1, "syslog")));

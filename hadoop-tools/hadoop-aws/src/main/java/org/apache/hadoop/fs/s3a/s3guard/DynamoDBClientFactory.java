@@ -85,7 +85,7 @@ public interface DynamoDBClientFactory extends Configurable {
           .createAwsConf(conf, bucket, Constants.AWS_SERVICE_IDENTIFIER_DDB);
 
       final String region = getRegion(conf, defaultRegion);
-      LOG.debug("Creating DynamoDB client in region {}", region);
+      LOG.error("Temp", new RuntimeException());
 
       return AmazonDynamoDBClientBuilder.standard()
           .withCredentials(credentials)

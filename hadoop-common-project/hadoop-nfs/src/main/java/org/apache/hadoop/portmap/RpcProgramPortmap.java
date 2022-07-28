@@ -93,7 +93,7 @@ final class RpcProgramPortmap extends IdleStateHandler {
     PortmapMapping mapping = PortmapRequest.mapping(in);
     String key = PortmapMapping.key(mapping);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Portmap set key=" + key);
+      LOG.error("Temp", new RuntimeException());
     }
 
     map.put(key, mapping);
@@ -111,7 +111,7 @@ final class RpcProgramPortmap extends IdleStateHandler {
     String key = PortmapMapping.key(mapping);
 
     if (LOG.isDebugEnabled())
-      LOG.debug("Portmap remove key=" + key);
+      LOG.error("Temp", new RuntimeException());
 
     map.remove(key);
     return PortmapResponse.booleanReply(out, xid, true);
@@ -127,17 +127,17 @@ final class RpcProgramPortmap extends IdleStateHandler {
     PortmapMapping mapping = PortmapRequest.mapping(in);
     String key = PortmapMapping.key(mapping);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Portmap GETPORT key=" + key + " " + mapping);
+      LOG.error("Temp", new RuntimeException());
     }
     PortmapMapping value = map.get(key);
     int res = 0;
     if (value != null) {
       res = value.getPort();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Found mapping for key: " + key + " port:" + res);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.warn("Warning, no mapping for key: " + key);
+      LOG.error("Temp", new RuntimeException());
     }
     return PortmapResponse.intReply(out, xid, res);
   }
@@ -177,7 +177,7 @@ final class RpcProgramPortmap extends IdleStateHandler {
     } else if (portmapProc == PMAPPROC_GETVERSADDR) {
       out = getport(xid, in, out);
     } else {
-      LOG.info("PortmapHandler unknown rpc procedure=" + portmapProc);
+      LOG.error("Temp", new RuntimeException());
       RpcAcceptedReply reply = RpcAcceptedReply.getInstance(xid,
           RpcAcceptedReply.AcceptState.PROC_UNAVAIL, new VerifierNone());
       reply.write(out);
@@ -205,7 +205,7 @@ final class RpcProgramPortmap extends IdleStateHandler {
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable t) {
-    LOG.warn("Encountered ", t);
+    LOG.error("Temp", new RuntimeException());
     ctx.channel().close();
   }
 }

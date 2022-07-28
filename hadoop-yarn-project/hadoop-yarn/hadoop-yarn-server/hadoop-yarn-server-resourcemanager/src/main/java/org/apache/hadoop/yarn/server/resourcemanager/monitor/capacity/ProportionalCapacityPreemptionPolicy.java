@@ -161,7 +161,7 @@ public class ProportionalCapacityPreemptionPolicy
 
   public void init(Configuration config, RMContext context,
       ResourceScheduler sched) {
-    LOG.info("Preemption monitor:" + this.getClass().getCanonicalName());
+    LOG.error("Temp", new RuntimeException());
     assert null == scheduler : "Unexpected duplicate call to init";
     if (!(sched instanceof CapacityScheduler)) {
       throw new YarnRuntimeException("Class " +
@@ -341,7 +341,7 @@ public class ProportionalCapacityPreemptionPolicy
     containerBasedPreemptOrKill(root, clusterResources);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Total time used=" + (clock.getTime() - startTs) + " ms.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -671,7 +671,7 @@ public class ProportionalCapacityPreemptionPolicy
       sb.append(", ");
       tq.appendLogString(sb);
     }
-    LOG.debug(sb.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void addTempQueuePartition(TempQueuePerPartition queuePartition) {

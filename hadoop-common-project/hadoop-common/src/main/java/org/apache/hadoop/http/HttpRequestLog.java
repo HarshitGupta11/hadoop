@@ -63,7 +63,7 @@ public class HttpRequestLog {
       // In some dependent projects, log4j may not even be on the classpath at
       // runtime, in which case the above instanceof check will throw
       // NoClassDefFoundError.
-      LOG.debug("Could not load Log4JLogger class", err);
+      LOG.error("Temp", new RuntimeException());
       isLog4JLogger = false;
     }
     if (isLog4JLogger) {
@@ -74,12 +74,12 @@ public class HttpRequestLog {
       try {
         appender = httpLogger.getAppender(appenderName);
       } catch (LogConfigurationException e) {
-        LOG.warn("Http request log for {} could not be created", loggerName);
+        LOG.error("Temp", new RuntimeException());
         throw e;
       }
 
       if (appender == null) {
-        LOG.info("Http request log for {} is not defined", loggerName);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
 
@@ -92,11 +92,11 @@ public class HttpRequestLog {
         return new CustomRequestLog(logWriter,
             CustomRequestLog.EXTENDED_NCSA_FORMAT);
       } else {
-        LOG.warn("Jetty request log for {} was of the wrong class", loggerName);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
     } else {
-      LOG.warn("Jetty request log can only be enabled using Log4j");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

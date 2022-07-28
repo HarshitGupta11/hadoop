@@ -823,7 +823,7 @@ public class TestJobHistoryEventHandler {
           new Path(testWorkDir.getAbsolutePath()), true);
       return testWorkDir.getAbsolutePath();
     } catch (Exception e) {
-      LOG.warn("Could not cleanup", e);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException("could not cleanup test dir", e);
     }
   }

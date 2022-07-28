@@ -123,7 +123,7 @@ public abstract class TaskStatus implements Writable, Cloneable {
     // if the diag-info has already reached its max then log and return
     if (diagnosticInfo != null 
         && diagnosticInfo.length() == getMaxStringSize()) {
-      LOG.info("task-diagnostic-info for task " + taskid + " : " + info);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     diagnosticInfo = 
@@ -146,7 +146,7 @@ public abstract class TaskStatus implements Writable, Cloneable {
         this.stateString = stateString;
       } else {
         // log it
-        LOG.info("state-string for task " + taskid + " : " + stateString);
+        LOG.error("Temp", new RuntimeException());
         // trim the state string
         this.stateString = stateString.substring(0, getMaxStringSize());
       }

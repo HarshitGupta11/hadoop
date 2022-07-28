@@ -104,7 +104,7 @@ public class ShortCircuitCache implements Closeable {
         if (ShortCircuitCache.this.closed) return;
         long curMs = Time.monotonicNow();
 
-        LOG.debug("{}: cache cleaner running at {}", this, curMs);
+        LOG.error("Temp", new RuntimeException());
 
         int numDemoted = demoteOldEvictableMmaped(curMs);
         int numPurged = 0;
@@ -459,7 +459,7 @@ public class ShortCircuitCache implements Closeable {
           purgeReason = "purging replica because it is stale.";
         }
         if (purgeReason != null) {
-          LOG.debug("{}: {}", this, purgeReason);
+          LOG.error("Temp", new RuntimeException());
           purge(replica);
         }
       }
@@ -709,7 +709,7 @@ public class ShortCircuitCache implements Closeable {
             info = fetch(key, waitable);
             break;
           } catch (RetriableException e) {
-            LOG.debug("{}: retrying {}", this, e.getMessage());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -743,7 +743,7 @@ public class ShortCircuitCache implements Closeable {
       LOG.trace("{}: found waitable for {}", this, key);
       info = waitable.await();
     } catch (InterruptedException e) {
-      LOG.info(this + ": interrupted while waiting for " + key);
+      LOG.error("Temp", new RuntimeException());
       Thread.currentThread().interrupt();
       throw new RetriableException("interrupted");
     }
@@ -754,7 +754,7 @@ public class ShortCircuitCache implements Closeable {
     }
     ShortCircuitReplica replica = info.getReplica();
     if (replica == null) {
-      LOG.warn(this + ": failed to get " + key);
+      LOG.error("Temp", new RuntimeException());
       return info;
     }
     if (replica.purged) {
@@ -785,7 +785,7 @@ public class ShortCircuitCache implements Closeable {
       LOG.trace("{}: loading {}", this, key);
       info = creator.createShortCircuitReplicaInfo();
     } catch (RuntimeException e) {
-      LOG.warn(this + ": failed to load " + key, e);
+      LOG.error("Temp", new RuntimeException());
     }
     if (info == null) info = new ShortCircuitReplicaInfo();
     lock.lock();
@@ -806,7 +806,7 @@ public class ShortCircuitCache implements Closeable {
           LOG.info(this + ": could not load " + key + " due to InvalidToken " +
               "exception.", info.getInvalidTokenException());
         } else {
-          LOG.warn(this + ": failed to load " + key);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       newWaitable.provide(info);
@@ -890,7 +890,7 @@ public class ShortCircuitCache implements Closeable {
       lock.lock();
       if (closed) return;
       closed = true;
-      LOG.info(this + ": closing");
+      LOG.error("Temp", new RuntimeException());
       maxNonMmappedEvictableLifespanMs = 0;
       maxEvictableMmapedSize = 0;
       // Close and join cacheCleaner thread.

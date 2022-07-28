@@ -650,7 +650,7 @@ public abstract class LogAggregationFileController {
     try {
       containerId = ContainerId.fromString(containerIdStr);
     } catch (IllegalArgumentException exc) {
-      LOG.warn("Could not parse container id from aggregated log.", exc);
+      LOG.error("Temp", new RuntimeException());
     }
     if (containerId != null && containerId.getApplicationAttemptId() != null) {
       return containerId.getApplicationAttemptId().equals(appAttemptId);

@@ -234,12 +234,12 @@ public class SaslRpcClient {
       case KERBEROS: {
         if (ugi.getRealAuthenticationMethod().getAuthMethod() !=
             AuthMethod.KERBEROS) {
-          LOG.debug("client isn't using kerberos");
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         String serverPrincipal = getServerPrincipal(authType);
         if (serverPrincipal == null) {
-          LOG.debug("protocol doesn't use kerberos");
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
         if (LOG.isDebugEnabled()) {
@@ -271,7 +271,7 @@ public class SaslRpcClient {
    */
   private Token<?> getServerToken(SaslAuth authType) throws IOException {
     TokenInfo tokenInfo = SecurityUtil.getTokenInfo(protocol, conf);
-    LOG.debug("Get token info proto:" + protocol + " info:" + tokenInfo);
+    LOG.error("Temp", new RuntimeException());
     if (tokenInfo == null) { // protocol has no support for tokens
       return null;
     }
@@ -296,7 +296,7 @@ public class SaslRpcClient {
   @VisibleForTesting
   String getServerPrincipal(SaslAuth authType) throws IOException {
     KerberosInfo krbInfo = SecurityUtil.getKerberosInfo(protocol, conf);
-    LOG.debug("Get kerberos info proto:" + protocol + " info:" + krbInfo);
+    LOG.error("Temp", new RuntimeException());
     if (krbInfo == null) { // protocol has no support for kerberos
       return null;
     }
@@ -450,7 +450,7 @@ public class SaslRpcClient {
   private void sendSaslMessage(OutputStream out, RpcSaslProto message)
       throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Sending sasl message "+message);
+      LOG.error("Temp", new RuntimeException());
     }
     ResponseBuffer buf = new ResponseBuffer();
     saslHeader.writeDelimitedTo(buf);
@@ -587,7 +587,7 @@ public class SaslRpcClient {
 
     // all messages must be RPC SASL wrapped, else an exception is thrown
     private void readNextRpcPacket() throws IOException {
-      LOG.debug("reading next wrapped RPC packet");
+      LOG.error("Temp", new RuntimeException());
       DataInputStream dis = new DataInputStream(in);
       int rpcLen = dis.readInt();
       byte[] rpcBuf = new byte[rpcLen];
@@ -608,7 +608,7 @@ public class SaslRpcClient {
           isWrapped = true;
           byte[] token = saslMessage.getToken().toByteArray();
           if (LOG.isDebugEnabled()) {
-            LOG.debug("unwrapping token of length:" + token.length);
+            LOG.error("Temp", new RuntimeException());
           }
           token = saslClient.unwrap(token, 0, token.length);
           unwrappedRpcBuffer = ByteBuffer.wrap(token);
@@ -627,7 +627,7 @@ public class SaslRpcClient {
     @Override
     public void write(byte[] buf, int off, int len) throws IOException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("wrapping token of length:" + len);
+        LOG.error("Temp", new RuntimeException());
       }
       buf = saslClient.wrap(buf, off, len);
       RpcSaslProto saslMessage = RpcSaslProto.newBuilder()
@@ -677,12 +677,12 @@ public class SaslRpcClient {
       }
       if (nc != null) {
         if (LOG.isDebugEnabled())
-          LOG.debug("SASL client callback: setting username: " + userName);
+          LOG.error("Temp", new RuntimeException());
         nc.setName(userName);
       }
       if (pc != null) {
         if (LOG.isDebugEnabled())
-          LOG.debug("SASL client callback: setting userPassword");
+          LOG.error("Temp", new RuntimeException());
         pc.setPassword(userPassword);
       }
       if (rc != null) {

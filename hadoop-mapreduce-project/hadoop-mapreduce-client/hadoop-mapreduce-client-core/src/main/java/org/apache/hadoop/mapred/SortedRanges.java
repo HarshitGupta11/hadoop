@@ -88,7 +88,7 @@ class SortedRanges implements Writable{
     SortedSet<Range> headSet = ranges.headSet(range);
     if(headSet.size()>0) {
       Range previousRange = headSet.last();
-      LOG.debug("previousRange "+previousRange);
+      LOG.error("Temp", new RuntimeException());
       if(startIndex<previousRange.getEndIndex()) {
         //previousRange overlaps this range
         //remove the previousRange
@@ -141,13 +141,13 @@ class SortedRanges implements Writable{
     SortedSet<Range> headSet = ranges.headSet(range);
     if(headSet.size()>0) {
       Range previousRange = headSet.last();
-      LOG.debug("previousRange "+previousRange);
+      LOG.error("Temp", new RuntimeException());
       if(startIndex<previousRange.getEndIndex()) {
         //previousRange overlaps this range
         //narrow down the previousRange
         if(ranges.remove(previousRange)) {
           indicesCount-=previousRange.getLength();
-          LOG.debug("removed previousRange "+previousRange);
+          LOG.error("Temp", new RuntimeException());
         }
         add(previousRange.getStartIndex(), startIndex);
         if(endIndex<=previousRange.getEndIndex()) {
@@ -181,7 +181,7 @@ class SortedRanges implements Writable{
       Range recRange = new Range(start, end-start);
       ranges.add(recRange);
       indicesCount+=recRange.getLength();
-      LOG.debug("added "+recRange);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -345,7 +345,7 @@ class SortedRanges implements Writable{
     
     private void doNext() {
       next++;
-      LOG.debug("currentIndex "+next +"   "+range);
+      LOG.error("Temp", new RuntimeException());
       skipIfInRange();
       while(next>=range.getEndIndex() && rangeIterator.hasNext()) {
         range = rangeIterator.next();
@@ -357,7 +357,7 @@ class SortedRanges implements Writable{
       if(next>=range.getStartIndex() && 
           next<range.getEndIndex()) {
         //need to skip the range
-        LOG.warn("Skipping index " + next +"-" + range.getEndIndex());
+        LOG.error("Temp", new RuntimeException());
         next = range.getEndIndex();
         
       }

@@ -72,7 +72,7 @@ final class RestCsrfPreventionFilterHandler
   RestCsrfPreventionFilterHandler(
       RestCsrfPreventionFilter restCsrfPreventionFilter) {
     if(restCsrfPreventionFilter == null) {
-      LOG.warn("Got null for restCsrfPreventionFilter - will not do any filtering.");
+      LOG.error("Temp", new RuntimeException());
     }
     this.restCsrfPreventionFilter = restCsrfPreventionFilter;
   }

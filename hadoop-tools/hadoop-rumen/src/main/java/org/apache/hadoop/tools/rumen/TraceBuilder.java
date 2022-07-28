@@ -218,7 +218,7 @@ public class TraceBuilder extends Configured implements Tool {
         try {
           inputDemuxer.bindTo(p, getConf());
         } catch (IOException e) {
-          LOG.warn("Unable to bind Path " + p + " .  Skipping...", e);
+          LOG.error("Temp", new RuntimeException());
 
           continue;
         }
@@ -281,7 +281,7 @@ public class TraceBuilder extends Configured implements Tool {
         traceWriter.output(jobBuilder.build());
         jobBuilder = null;
       } else {
-        LOG.warn("No job found in traces: ");
+        LOG.error("Temp", new RuntimeException());
       }
 
       topologyWriter.output(topologyBuilder.build());

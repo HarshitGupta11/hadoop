@@ -285,7 +285,7 @@ public class TestCompositeService {
     serviceManager.addTestService(service);
     try {
       serviceManager.init(null);
-      LOG.warn("Null Configurations are permitted " + serviceManager);
+      LOG.error("Temp", new RuntimeException());
     } catch (ServiceStateException e) {
       //expected
     }

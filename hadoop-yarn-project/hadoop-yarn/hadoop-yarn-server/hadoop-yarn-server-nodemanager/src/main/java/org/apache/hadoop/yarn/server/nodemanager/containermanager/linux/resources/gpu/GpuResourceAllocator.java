@@ -124,7 +124,7 @@ public class GpuResourceAllocator {
               ", this should not occur under normal circumstances!");
     }
 
-    LOG.info("Starting recovery of GpuDevice for {}.", containerId);
+    LOG.error("Temp", new RuntimeException());
     for (Serializable gpuDeviceSerializable : c.getResourceMappings()
         .getAssignedResources(GPU_URI)) {
       if (!(gpuDeviceSerializable instanceof GpuDevice)) {
@@ -156,7 +156,7 @@ public class GpuResourceAllocator {
       LOG.info("ContainerId {} is assigned to GpuDevice {} on recovery.",
           containerId, gpuDevice);
     }
-    LOG.info("Finished recovery of GpuDevice for {}.", containerId);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -202,7 +202,7 @@ public class GpuResourceAllocator {
       } catch (InterruptedException e) {
         // On any interrupt, break the loop and continue execution.
         Thread.currentThread().interrupt();
-        LOG.warn("Interrupted while waiting for available GPU");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
@@ -211,7 +211,7 @@ public class GpuResourceAllocator {
       String message = "Could not get valid GPU device for container '" +
           container.getContainerId()
           + "' as some other containers might not releasing GPUs.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException(message);
     }
     return allocation;
@@ -296,7 +296,7 @@ public class GpuResourceAllocator {
    */
   public synchronized void unassignGpus(ContainerId containerId) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Trying to unassign GPU device from container " + containerId);
+      LOG.error("Temp", new RuntimeException());
     }
     usedDevices.entrySet().removeIf(entry ->
         entry.getValue().equals(containerId));

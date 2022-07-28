@@ -85,7 +85,7 @@ class Checkpointer extends Daemon {
     try {
       initialize(conf);
     } catch(IOException e) {
-      LOG.warn("Checkpointer got exception", e);
+      LOG.error("Temp", new RuntimeException());
       shutdown();
       throw e;
     }
@@ -210,7 +210,7 @@ class Checkpointer extends Daemon {
     sig.validateStorageInfo(bnImage);
 
     long lastApplied = bnImage.getLastAppliedTxId();
-    LOG.debug("Doing checkpoint. Last applied: " + lastApplied);
+    LOG.error("Temp", new RuntimeException());
     RemoteEditLogManifest manifest =
       getRemoteNamenodeProxy().getEditLogManifest(bnImage.getLastAppliedTxId() + 1);
 
@@ -242,7 +242,7 @@ class Checkpointer extends Daemon {
       }
 
       if(needReloadImage) {
-        LOG.info("Loading image with txid " + sig.mostRecentCheckpointTxId);
+        LOG.error("Temp", new RuntimeException());
         File file = bnStorage.findImageFile(NameNodeFile.IMAGE,
             sig.mostRecentCheckpointTxId);
         bnImage.reloadFromImageFile(file, backupNode.getNamesystem());

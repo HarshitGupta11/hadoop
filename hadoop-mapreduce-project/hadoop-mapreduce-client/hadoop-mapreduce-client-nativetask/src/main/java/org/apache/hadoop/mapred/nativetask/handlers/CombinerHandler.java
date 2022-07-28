@@ -63,7 +63,7 @@ class CombinerHandler<K, V> implements ICombineHandler, CommandDispatcher {
     if (null == combinerClazz) {
       return null;
     } else {
-      LOG.info("NativeTask Combiner is enabled, class = " + combinerClazz);
+      LOG.error("Temp", new RuntimeException());
     }
 
     final Counter combineInputCounter = context.getTaskReporter().getCounter(

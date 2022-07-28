@@ -519,7 +519,7 @@ public class RouterAdminServer extends AbstractService
       safeModeService.setManualSafeMode(false);
       success = verifySafeMode(false);
       if (success) {
-        LOG.info("STATE* Safe mode is OFF.\n" + "It was turned off manually.");
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.error("Unable to leave safemode.");
       }
@@ -534,7 +534,7 @@ public class RouterAdminServer extends AbstractService
     RouterSafemodeService safeModeService = this.router.getSafemodeService();
     if (safeModeService != null) {
       isInSafeMode = safeModeService.isInSafeMode();
-      LOG.info("Safemode status retrieved successfully.");
+      LOG.error("Temp", new RuntimeException());
     }
     return GetSafeModeResponse.newInstance(isInSafeMode);
   }
@@ -660,7 +660,7 @@ public class RouterAdminServer extends AbstractService
     if (namespaceExists(nsId)) {
       success = getDisabledNameserviceStore().disableNameservice(nsId);
       if (success) {
-        LOG.info("Nameservice {} disabled successfully.", nsId);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.error("Unable to disable Nameservice {}", nsId);
       }
@@ -695,7 +695,7 @@ public class RouterAdminServer extends AbstractService
     if (disabled.contains(nsId)) {
       success = store.enableNameservice(nsId);
       if (success) {
-        LOG.info("Nameservice {} enabled successfully.", nsId);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.error("Unable to enable Nameservice {}", nsId);
       }

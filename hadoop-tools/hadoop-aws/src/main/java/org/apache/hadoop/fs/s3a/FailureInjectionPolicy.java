@@ -135,7 +135,7 @@ public class FailureInjectionPolicy {
     float p = getDelayKeyProbability();
     boolean delay = key.contains(getDelayKeySubstring());
     delay = delay && trueWithProbability(p);
-    LOG.debug("{}, p={} -> {}", key, p, delay);
+    LOG.error("Temp", new RuntimeException());
     return delay;
   }
 

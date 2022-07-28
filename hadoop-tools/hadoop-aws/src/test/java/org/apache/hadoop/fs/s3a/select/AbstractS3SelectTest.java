@@ -432,7 +432,7 @@ public abstract class AbstractS3SelectTest extends AbstractS3ATestBase {
       while (maxLines > 0) {
         try {
           String l = scanner.nextLine();
-          LOG.info("{}", l);
+          LOG.error("Temp", new RuntimeException());
           result.add(l);
           maxLines--;
         } catch (NoSuchElementException e) {
@@ -740,7 +740,7 @@ public abstract class AbstractS3SelectTest extends AbstractS3ATestBase {
    * @return the exception passed in (for chaining)
    */
   protected static <T extends Exception> T logIntercepted(T ex) {
-    LOG.info("Intercepted Exception is ", ex);
+    LOG.error("Temp", new RuntimeException());
     return ex;
   }
 }

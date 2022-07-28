@@ -56,7 +56,7 @@ public class SchedulerService extends BaseService implements Scheduler {
   public void init() throws ServiceException {
     int threads = getServiceConfig().getInt(CONF_THREADS, 5);
     scheduler = new ScheduledThreadPoolExecutor(threads);
-    LOG.debug("Scheduler started");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -65,17 +65,17 @@ public class SchedulerService extends BaseService implements Scheduler {
       long limit = Time.now() + 30 * 1000;
       scheduler.shutdownNow();
       while (!scheduler.awaitTermination(1000, TimeUnit.MILLISECONDS)) {
-        LOG.debug("Waiting for scheduler to shutdown");
+        LOG.error("Temp", new RuntimeException());
         if (Time.now() > limit) {
-          LOG.warn("Gave up waiting for scheduler to shutdown");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
       if (scheduler.isTerminated()) {
-        LOG.debug("Scheduler shutdown");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (InterruptedException ex) {
-      LOG.warn(ex.getMessage(), ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -101,10 +101,10 @@ public class SchedulerService extends BaseService implements Scheduler {
           String instrName = callable.getClass().getSimpleName();
           Instrumentation instr = getServer().get(Instrumentation.class);
           if (getServer().getStatus() == Server.Status.HALTED) {
-            LOG.debug("Skipping [{}], server status [{}]", callable, getServer().getStatus());
+            LOG.error("Temp", new RuntimeException());
             instr.incr(INST_GROUP, instrName + ".skips", 1);
           } else {
-            LOG.debug("Executing [{}]", callable);
+            LOG.error("Temp", new RuntimeException());
             instr.incr(INST_GROUP, instrName + ".execs", 1);
             Instrumentation.Cron cron = instr.createCron().start();
             try {

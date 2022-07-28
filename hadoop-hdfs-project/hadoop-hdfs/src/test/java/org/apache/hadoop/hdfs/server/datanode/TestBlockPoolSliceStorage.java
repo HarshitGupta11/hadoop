@@ -106,8 +106,8 @@ public class TestBlockPoolSliceStorage {
             BlockPoolSliceStorage.TRASH_ROOT_DIR +
             blockFileSubdir.substring(0, blockFileSubdir.length() - 1);
 
-    LOG.info("Got subdir {}", blockFileSubdir);
-    LOG.info("Generated file path {}", testFilePath);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     ReplicaInfo info = Mockito.mock(ReplicaInfo.class);
     Mockito.when(info.getBlockURI()).thenReturn(new File(testFilePath).toURI());
@@ -133,7 +133,7 @@ public class TestBlockPoolSliceStorage {
             Storage.STORAGE_DIR_CURRENT +
             blockFileSubdir.substring(0, blockFileSubdir.length() - 1);
 
-    LOG.info("Generated deleted file path {}", deletedFilePath);
+    LOG.error("Temp", new RuntimeException());
     assertThat(storage.getRestoreDirectory(new File(deletedFilePath)),
                is(expectedRestorePath));
 

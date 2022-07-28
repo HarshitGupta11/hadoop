@@ -61,7 +61,7 @@ public final class AbfsTestUtils extends AbstractAbfsIntegrationTest{
               container.getName(),
               container.getUri());
     }
-    LOG.info("Found {} test containers", count);
+    LOG.error("Temp", new RuntimeException());
   }
 
 
@@ -80,6 +80,6 @@ public final class AbfsTestUtils extends AbstractAbfsIntegrationTest{
         count++;
       }
     }
-    LOG.info("Deleted {} test containers", count);
+    LOG.error("Temp", new RuntimeException());
   }
 }

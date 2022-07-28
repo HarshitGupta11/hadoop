@@ -631,7 +631,7 @@ final class OBSCommonUtils {
 
       return result.toArray(new FileStatus[0]);
     } else {
-      LOG.debug("Adding: rd (not a dir): {}", path);
+      LOG.error("Temp", new RuntimeException());
       FileStatus[] stats = new FileStatus[1];
       stats[0] = fileStatus;
       return stats;
@@ -685,7 +685,7 @@ final class OBSCommonUtils {
       final boolean isEmptyDir,
       final boolean recursive)
       throws IOException {
-    LOG.info("obs delete the {} root directory of {}", bucket, recursive);
+    LOG.error("Temp", new RuntimeException());
     if (isEmptyDir) {
       return true;
     }
@@ -709,7 +709,7 @@ final class OBSCommonUtils {
    */
   static boolean innerMkdirs(final OBSFileSystem owner, final Path path)
       throws IOException, FileAlreadyExistsException, ObsException {
-    LOG.debug("Making directory: {}", path);
+    LOG.error("Temp", new RuntimeException());
     FileStatus fileStatus;
     try {
       fileStatus = owner.getFileStatus(path);
@@ -733,7 +733,7 @@ final class OBSCommonUtils {
                     + " since it is a file.", fPart));
           }
         } catch (FileNotFoundException fnfe) {
-          LOG.debug("file {} not fount, but ignore.", path);
+          LOG.error("Temp", new RuntimeException());
         }
         fPart = fPart.getParent();
       } while (fPart != null);
@@ -815,7 +815,7 @@ final class OBSCommonUtils {
       final OBSFileSystem owner, final ObjectListing objects) {
     String delimiter = objects.getDelimiter();
     int maxKeyNum = objects.getMaxKeys();
-    // LOG.debug("delimiters: "+objects.getDelimiter());
+    // LOG.error("Temp", new RuntimeException());
     ListObjectsRequest request = new ListObjectsRequest();
     request.setMarker(objects.getNextMarker());
     request.setBucketName(owner.getBucket());
@@ -950,7 +950,7 @@ final class OBSCommonUtils {
     if (!objects.getCommonPrefixes().isEmpty() || !objects.getObjects()
         .isEmpty()) {
       if (isFolderEmpty(obsKey, objects)) {
-        LOG.debug("Found empty directory {}", obsKey);
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
       if (LOG.isDebugEnabled()) {
@@ -963,20 +963,20 @@ final class OBSCommonUtils {
               summary.getMetadata().getContentLength());
         }
         for (String prefix : objects.getCommonPrefixes()) {
-          LOG.debug("Prefix: {}", prefix);
+          LOG.error("Temp", new RuntimeException());
         }
       }
-      LOG.debug("Found non-empty directory {}", obsKey);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } else if (obsKey.isEmpty()) {
-      LOG.debug("Found root directory");
+      LOG.error("Temp", new RuntimeException());
       return true;
     } else if (owner.isFsBucket()) {
-      LOG.debug("Found empty directory {}", obsKey);
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
 
-    LOG.debug("Not Found: {}", obsKey);
+    LOG.error("Temp", new RuntimeException());
     throw new FileNotFoundException("No such file or directory: " + obsKey);
   }
 
@@ -1108,12 +1108,12 @@ final class OBSCommonUtils {
       if (c != null) {
         try {
           if (LOG != null) {
-            LOG.debug("Closing {}", c);
+            LOG.error("Temp", new RuntimeException());
           }
           c.close();
         } catch (Exception e) {
           if (LOG != null && LOG.isDebugEnabled()) {
-            LOG.debug("Exception in closing {}", c, e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -1257,7 +1257,7 @@ final class OBSCommonUtils {
         v >= min,
         String.format("Value of %s: %d is below the minimum value %d", key,
             v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -1279,7 +1279,7 @@ final class OBSCommonUtils {
         v >= min,
         String.format("Value of %s: %d is below the minimum value %d", key,
             v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -1302,7 +1302,7 @@ final class OBSCommonUtils {
         v >= min,
         String.format("Value of %s: %d is below the minimum value %d", key,
             v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -1377,7 +1377,7 @@ final class OBSCommonUtils {
     Preconditions.checkArgument(StringUtils.isNotEmpty(bucket), "bucket");
     final String bucketPrefix = OBSConstants.FS_OBS_BUCKET_PREFIX + bucket
         + '.';
-    LOG.debug("Propagating entries under {}", bucketPrefix);
+    LOG.error("Temp", new RuntimeException());
     final Configuration dest = new Configuration(source);
     for (Map.Entry<String, String> entry : source) {
       final String key = entry.getKey();
@@ -1390,13 +1390,13 @@ final class OBSCommonUtils {
       final String stripped = key.substring(bucketPrefix.length());
       if (stripped.startsWith("bucket.") || "impl".equals(stripped)) {
         // tell user off
-        LOG.debug("Ignoring bucket option {}", key);
+        LOG.error("Temp", new RuntimeException());
       } else {
         // propagate the value, building a new origin field.
         // to track overwrites, the generic key is overwritten even if
         // already matches the new one.
         final String generic = OBSConstants.FS_OBS_PREFIX + stripped;
-        LOG.debug("Updating {}", generic);
+        LOG.error("Temp", new RuntimeException());
         dest.set(generic, value, key);
       }
     }
@@ -1422,7 +1422,7 @@ final class OBSCommonUtils {
       List<String> all = Lists.newArrayList(customCredentials);
       all.addAll(hadoopCredentials);
       String joined = StringUtils.join(all, ',');
-      LOG.debug("Setting {} to {}", CREDENTIAL_PROVIDER_PATH, joined);
+      LOG.error("Temp", new RuntimeException());
       conf.set(CREDENTIAL_PROVIDER_PATH, joined, "patch of "
           + OBSConstants.OBS_SECURITY_CREDENTIAL_PROVIDER_PATH);
     }
@@ -1532,12 +1532,12 @@ final class OBSCommonUtils {
       if (exe != null) {
         try {
           if (LOG != null) {
-            LOG.debug("Shutdown {}", exe);
+            LOG.error("Temp", new RuntimeException());
           }
           exe.shutdown();
         } catch (Exception e) {
           if (LOG != null && LOG.isDebugEnabled()) {
-            LOG.debug("Exception in shutdown {}", exe, e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

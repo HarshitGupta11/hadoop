@@ -502,7 +502,7 @@ public class TestWebHdfsUrl {
     String path = "/testWebHdfsUrlEncoding" + unreserved + punct;
     URL url =
         WebHdfsTestUtil.toUrl(fs, GetOpParam.Op.LISTSTATUS, new Path(path));
-    WebHdfsTestUtil.LOG.info(url.getPath());
+    WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
     assertEquals(WebHdfsFileSystem.PATH_PREFIX + path, url.getPath());
   }
 

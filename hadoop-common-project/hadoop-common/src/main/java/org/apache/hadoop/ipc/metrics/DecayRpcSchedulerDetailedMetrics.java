@@ -54,7 +54,7 @@ public class DecayRpcSchedulerDetailedMetrics {
     name = "DecayRpcSchedulerDetailedMetrics."+ ns;
     registry = new MetricsRegistry("decayrpcschedulerdetailed")
         .tag("port", "RPC port", String.valueOf(ns));
-    LOG.debug(registry.info().toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   public static DecayRpcSchedulerDetailedMetrics create(String ns) {
@@ -67,7 +67,7 @@ public class DecayRpcSchedulerDetailedMetrics {
    * Initialize the metrics for JMX with priority levels.
    */
   public void init(int numLevels) {
-    LOG.info("Initializing RPC stats for {} priority levels", numLevels);
+    LOG.error("Temp", new RuntimeException());
     queueNamesForLevels = new String[numLevels];
     processingNamesForLevels = new String[numLevels];
     for (int i = 0; i < numLevels; i++) {

@@ -122,7 +122,7 @@ public class NvidiaDockerV1CommandPlugin implements DockerCommandPlugin {
           addToCommand(DEVICE_OPTION, getValue(str));
         } else if (str.startsWith(VOLUME_DRIVER_OPTION)) {
           volumeDriver = getValue(str);
-          LOG.debug("Found volume-driver:{}", volumeDriver);
+          LOG.error("Temp", new RuntimeException());
         } else if (str.startsWith(MOUNT_RO_OPTION)) {
           String mount = getValue(str);
           if (!mount.endsWith(":ro")) {
@@ -285,7 +285,7 @@ public class NvidiaDockerV1CommandPlugin implements DockerCommandPlugin {
         if (VOLUME_NAME_PATTERN.matcher(mountSource).matches()) {
           // This is a valid named volume
           newVolumeName = mountSource;
-          LOG.debug("Found volume name for GPU:{}", newVolumeName);
+          LOG.error("Temp", new RuntimeException());
           break;
         } else{
           LOG.debug("Failed to match {} to named-volume regex pattern",

@@ -170,11 +170,11 @@ public class ITestS3SelectMRJob extends AbstractS3SelectTest {
     // log the success info
     Path successPath = new Path(output, "_SUCCESS");
     SuccessData success = SuccessData.load(fs, successPath);
-    LOG.info("Job _SUCCESS\n{}", success);
+    LOG.error("Temp", new RuntimeException());
 
     // process the results by ver
     //
-    LOG.info("Results for query \n{}", query);
+    LOG.error("Temp", new RuntimeException());
     final AtomicLong parts = new AtomicLong(0);
     S3AUtils.applyLocatedFiles(fs.listFiles(output, false),
         (status) -> {
@@ -183,7 +183,7 @@ public class ITestS3SelectMRJob extends AbstractS3SelectTest {
           if (path.getName().startsWith("part-")) {
             parts.incrementAndGet();
             String result = readStringFromFile(path);
-            LOG.info("{}\n{}", path, result);
+            LOG.error("Temp", new RuntimeException());
             String[] lines = result.split("\n", -1);
             int l = lines.length;
             // add a bit of slack here in case some new processing

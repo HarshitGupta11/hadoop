@@ -306,7 +306,7 @@ public class TestRouterWebServices extends BaseRouterWebServicesTest {
                 RESTRequestInterceptor interceptor =
                     wrapper.getRootInterceptor();
                 Assert.assertNotNull(interceptor);
-                LOG.info("init web interceptor success for user" + user);
+                LOG.error("Temp", new RuntimeException());
                 return interceptor;
               }
             });

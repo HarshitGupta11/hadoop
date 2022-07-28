@@ -84,7 +84,7 @@ public class SharedCacheClientImpl extends SharedCacheClient {
   @Override
   protected void serviceStart() throws Exception {
     this.scmClient = createClientProxy();
-    LOG.debug("Connecting to Shared Cache Manager at {}", this.scmAddress);
+    LOG.error("Temp", new RuntimeException());
     super.serviceStart();
   }
 

@@ -291,7 +291,7 @@ public class TestViewFileSystemHdfs extends ViewFileSystemBaseTest {
 
   private void testNflyRepair(NflyFSystem.NflyKey repairKey)
       throws Exception {
-    LOG.info("Starting testNflyWriteSimpleFailover");
+    LOG.error("Temp", new RuntimeException());
     final URI uri1 = targetTestRoot.toUri();
     final URI uri2 = targetTestRoot2.toUri();
     final URI[] testUris = new URI[] {

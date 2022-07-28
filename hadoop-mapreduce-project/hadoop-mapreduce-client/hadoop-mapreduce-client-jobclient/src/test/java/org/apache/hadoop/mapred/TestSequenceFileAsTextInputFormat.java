@@ -50,7 +50,7 @@ public class TestSequenceFileAsTextInputFormat {
     Reporter reporter = Reporter.NULL;
     
     int seed = new Random().nextInt();
-    //LOG.info("seed = "+seed);
+    //LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
 
     fs.delete(dir, true);
@@ -61,7 +61,7 @@ public class TestSequenceFileAsTextInputFormat {
     for (int length = 0; length < MAX_LENGTH;
          length+= random.nextInt(MAX_LENGTH/10)+1) {
 
-      //LOG.info("creating; entries = " + length);
+      //LOG.error("Temp", new RuntimeException());
 
       // create a file with length entries
       SequenceFile.Writer writer =
@@ -84,9 +84,9 @@ public class TestSequenceFileAsTextInputFormat {
       for (int i = 0; i < 3; i++) {
         int numSplits =
           random.nextInt(MAX_LENGTH/(SequenceFile.SYNC_INTERVAL/20))+1;
-        //LOG.info("splitting: requesting = " + numSplits);
+        //LOG.error("Temp", new RuntimeException());
         InputSplit[] splits = format.getSplits(job, numSplits);
-        //LOG.info("splitting: got =        " + splits.length);
+        //LOG.error("Temp", new RuntimeException());
 
         // check each split
         BitSet bits = new BitSet(length);
@@ -101,15 +101,15 @@ public class TestSequenceFileAsTextInputFormat {
             int count = 0;
             while (reader.next(key, value)) {
               // if (bits.get(key.get())) {
-              // LOG.info("splits["+j+"]="+splits[j]+" : " + key.get());
-              // LOG.info("@"+reader.getPos());
+              // LOG.error("Temp", new RuntimeException());
+              // LOG.error("Temp", new RuntimeException());
               // }
               int keyInt = Integer.parseInt(key.toString());
               assertFalse("Key in multiple partitions.", bits.get(keyInt));
               bits.set(keyInt);
               count++;
             }
-            //LOG.info("splits["+j+"]="+splits[j]+" count=" + count);
+            //LOG.error("Temp", new RuntimeException());
           } finally {
             reader.close();
           }

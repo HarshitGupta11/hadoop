@@ -126,7 +126,7 @@ public class TestReplicationPolicyConsiderLoad
       dataNodes[2].stopDecommission();
       namenode.getNamesystem().writeUnlock();
     }
-    NameNode.LOG.info("Done working on it");
+    NameNode.LOG.error("Temp", new RuntimeException());
   }
 
   @Test

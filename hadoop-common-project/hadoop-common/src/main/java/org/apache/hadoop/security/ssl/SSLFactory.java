@@ -278,7 +278,7 @@ public class SSLFactory implements ConnectionConfigurator {
       String cipherName = (String)iterator.next();
       if(defaultEnabledCipherSuites.contains(cipherName)) {
         defaultEnabledCipherSuites.remove(cipherName);
-        LOG.debug("Disabling cipher suite {}.", cipherName);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

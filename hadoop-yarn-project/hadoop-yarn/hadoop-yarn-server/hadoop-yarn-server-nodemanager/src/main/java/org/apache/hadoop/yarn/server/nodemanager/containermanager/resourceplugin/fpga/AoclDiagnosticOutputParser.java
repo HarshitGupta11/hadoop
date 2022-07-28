@@ -106,8 +106,8 @@ final class AoclDiagnosticOutputParser {
         }
 
         if (section == null) {
-          LOG.warn("Unsupported diagnose output");
-          LOG.warn("aocl output is: " + output);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           return Collections.emptyList();
         }
 
@@ -126,7 +126,7 @@ final class AoclDiagnosticOutputParser {
           Matcher fieldMatcher = Pattern.compile(fieldRegexes[i])
               .matcher(section);
           if (!fieldMatcher.find()) {
-            LOG.warn("Couldn't find " + fieldRegexes[i] + " pattern");
+            LOG.error("Temp", new RuntimeException());
             fields[i] = "";
             continue;
           }
@@ -151,14 +151,14 @@ final class AoclDiagnosticOutputParser {
               Integer.parseInt(mmn[1]),
               aliasName));
         } else {
-          LOG.warn("Failed to retrieve major/minor number for device");
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
       return devices;
     } else {
-      LOG.warn("The diagnostic has failed");
-      LOG.warn("Output of aocl is: " + output);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       return Collections.emptyList();
     }
   }

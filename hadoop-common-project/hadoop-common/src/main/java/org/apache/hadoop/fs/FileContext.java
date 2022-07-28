@@ -299,7 +299,7 @@ public class FileContext implements PathCapabilities {
           try {
             fc.delete(path, true);
           } catch (IOException e) {
-            LOG.warn("Ignoring failure to deleteOnExit for path " + path);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

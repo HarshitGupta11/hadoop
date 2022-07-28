@@ -114,7 +114,7 @@ public class RpcProgramMountd extends RpcProgram implements MountInterface {
   @Override
   public XDR nullOp(XDR out, int xid, InetAddress client) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("MOUNT NULLOP : " + " client: " + client);
+      LOG.error("Temp", new RuntimeException());
     }
     return RpcAcceptedReply.getAcceptInstance(xid, new VerifierNone()).write(
         out);
@@ -134,16 +134,16 @@ public class RpcProgramMountd extends RpcProgram implements MountInterface {
 
     String path = xdr.readString();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("MOUNT MNT path: " + path + " client: " + client);
+      LOG.error("Temp", new RuntimeException());
     }
 
     String host = client.getHostName();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Got host: " + host + " path: " + path);
+      LOG.error("Temp", new RuntimeException());
     }
     URI exportURI = exports.get(path);
     if (exportURI == null) {
-      LOG.info("Path " + path + " is not shared.");
+      LOG.error("Temp", new RuntimeException());
       MountResponse.writeMNTResponse(Nfs3Status.NFS3ERR_NOENT, out, xid, null);
       return out;
     }
@@ -183,7 +183,7 @@ public class RpcProgramMountd extends RpcProgram implements MountInterface {
   @Override
   public XDR dump(XDR out, int xid, InetAddress client) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("MOUNT NULLOP : " + " client: " + client);
+      LOG.error("Temp", new RuntimeException());
     }
 
     List<MountEntry> copy = new ArrayList<MountEntry>(mounts);
@@ -195,7 +195,7 @@ public class RpcProgramMountd extends RpcProgram implements MountInterface {
   public XDR umnt(XDR xdr, XDR out, int xid, InetAddress client) {
     String path = xdr.readString();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("MOUNT UMNT path: " + path + " client: " + client);
+      LOG.error("Temp", new RuntimeException());
     }
     
     String host = client.getHostName();
@@ -207,7 +207,7 @@ public class RpcProgramMountd extends RpcProgram implements MountInterface {
   @Override
   public XDR umntall(XDR out, int xid, InetAddress client) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("MOUNT UMNTALL : " + " client: " + client);
+      LOG.error("Temp", new RuntimeException());
     }
     mounts.clear();
     return RpcAcceptedReply.getAcceptInstance(xid, new VerifierNone()).write(

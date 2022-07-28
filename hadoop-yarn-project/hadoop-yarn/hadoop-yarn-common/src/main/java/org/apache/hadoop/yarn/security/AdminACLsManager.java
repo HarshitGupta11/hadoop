@@ -71,7 +71,7 @@ public class AdminACLsManager {
       owner = UserGroupInformation.getCurrentUser();
       adminAcl.addUser(owner.getShortUserName());
     } catch (IOException e){
-      LOG.warn("Could not add current user to admin:" + e);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnRuntimeException(e);
     }
 

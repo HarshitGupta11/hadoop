@@ -347,7 +347,7 @@ public class GenericOptionsParser {
       Path p = localFs.makeQualified(new Path(fileName));
       localFs.getFileStatus(p);
       if(LOG.isDebugEnabled()) {
-        LOG.debug("setting conf tokensFile: " + fileName);
+        LOG.error("Temp", new RuntimeException());
       }
       UserGroupInformation.getCurrentUser().addCredentials(
           Credentials.readTokenStorageFile(p, conf));
@@ -496,7 +496,7 @@ public class GenericOptionsParser {
     List<Path> jars = FileUtil.getJarsInDirectory(path.toString(),
         fs.equals(FileSystem.getLocal(conf)));
     if (jars.isEmpty()) {
-      LOG.warn(path + " does not have jars in it. It will be ignored.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       for (Path jar: jars) {
         finalPaths.add(jar.makeQualified(fs.getUri(),
@@ -573,7 +573,7 @@ public class GenericOptionsParser {
       processGeneralOptions(commandLine);
       parsed = true;
     } catch(ParseException e) {
-      LOG.warn("options parsing failed: "+e.getMessage());
+      LOG.error("Temp", new RuntimeException());
 
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp("general options are: ", opts);

@@ -569,7 +569,7 @@ public final class SwiftRestClient {
       throttleDelay
       );
     if (LOG.isDebugEnabled()) {
-      LOG.debug(serviceDescription);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       this.authUri = new URI(stringAuthUri);
@@ -628,7 +628,7 @@ public final class SwiftRestClient {
             offset,
             offset + length - 1);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("getData:" + range);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return getData(path,
@@ -744,7 +744,7 @@ public final class SwiftRestClient {
             }
           });
     } catch (IOException e) {
-      LOG.warn("Failed to get the location of " + path + ": " + e, e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -1096,7 +1096,7 @@ public final class SwiftRestClient {
       authenticationRequest = authRequest;
     }
 
-    LOG.debug("started authentication");
+    LOG.error("Temp", new RuntimeException());
     return perform("authentication",
                    authUri,
                    new AuthenticationPost(authenticationRequest));
@@ -1166,14 +1166,14 @@ public final class SwiftRestClient {
         String descr = String.format("[%s: %s]; ", name, type);
         catList.append(descr);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Catalog entry " + descr);
+          LOG.error("Temp", new RuntimeException());
         }
         if (name.equals(SERVICE_CATALOG_SWIFT)
             || name.equals(SERVICE_CATALOG_CLOUD_FILES)
             || type.equals(SERVICE_CATALOG_OBJECT_STORE)) {
           //swift is found
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Found swift catalog as " + name + " => " + type);
+            LOG.error("Temp", new RuntimeException());
           }
           //now go through the endpoints
           for (Endpoint endpoint : catalog.getEndpoints()) {
@@ -1186,7 +1186,7 @@ public final class SwiftRestClient {
                                   internalURL);
             regionList.append(descr);
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Endpoint " + descr);
+              LOG.error("Temp", new RuntimeException());
             }
             if (region == null || endpointRegion.equals(region)) {
               endpointURI = usePublicURL ? publicURL : internalURL;
@@ -1233,7 +1233,7 @@ public final class SwiftRestClient {
       setAuthDetails(endpointURI, objectLocation, accessToken);
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("authenticated against " + endpointURI);
+        LOG.error("Temp", new RuntimeException());
       }
       createDefaultContainer();
       return accessToken;
@@ -1245,7 +1245,7 @@ public final class SwiftRestClient {
     final String data = JSONUtil.toJSON(new AuthenticationRequestWrapper(
             authenticationRequest));
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Authenticating with " + authenticationRequest);
+      LOG.error("Temp", new RuntimeException());
     }
     return new StringEntity(data, ContentType.create("application/json",
         "UTF-8"));
@@ -1469,7 +1469,7 @@ public final class SwiftRestClient {
             resp.getStatusLine()
     );
     if (LOG.isDebugEnabled()) {
-      LOG.debug(errorMessage);
+      LOG.error("Temp", new RuntimeException());
     }
     //send the command
     switch (statusCode) {
@@ -1698,12 +1698,12 @@ public final class SwiftRestClient {
       }
       //any other URL: try again
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Reauthenticating");
+        LOG.error("Temp", new RuntimeException());
       }
       //re-auth, this may recurse into the same dir
       authenticate();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Retrying original request");
+        LOG.error("Temp", new RuntimeException());
       }
       resp = execWithDebugOutput(req, client);
     }
@@ -1726,11 +1726,11 @@ public final class SwiftRestClient {
       for (Header header : req.getAllHeaders()) {
         builder.append(header.toString());
       }
-      LOG.debug(builder.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     HttpResponse resp = client.execute(req);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Status code = " + resp.getStatusLine().getStatusCode());
+      LOG.error("Temp", new RuntimeException());
     }
     return resp;
   }

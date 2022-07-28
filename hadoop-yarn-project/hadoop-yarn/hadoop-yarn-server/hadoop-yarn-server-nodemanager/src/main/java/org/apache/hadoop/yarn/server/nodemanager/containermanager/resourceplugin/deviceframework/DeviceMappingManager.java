@@ -151,7 +151,7 @@ public class DeviceMappingManager {
       String message = "Could not get valid " + resourceName
           + " device for container '" + container.getContainerId()
           + "' as some other containers might not releasing them.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException(message);
     }
     return allocation;
@@ -164,7 +164,7 @@ public class DeviceMappingManager {
     ContainerId containerId = container.getContainerId();
     int requestedDeviceCount = getRequestedDeviceCount(resourceName,
         requestedResource);
-    LOG.debug("Try allocating {} {}", requestedDeviceCount, resourceName);
+    LOG.error("Temp", new RuntimeException());
     // Assign devices to container if requested some.
     if (requestedDeviceCount > 0) {
       if (requestedDeviceCount > getAvailableDevices(resourceName)) {

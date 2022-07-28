@@ -209,7 +209,7 @@ public class TestDelegationToken {
       action.run();
       Assert.fail("action did not throw " + except);
     } catch (Throwable th) {
-      LOG.info("Caught an exception: ", th);
+      LOG.error("Temp", new RuntimeException());
       assertEquals("action threw wrong exception", except, th.getClass());
     }
   }
@@ -311,7 +311,7 @@ public class TestDelegationToken {
       identifier.readFields(new DataInputStream(
           new ByteArrayInputStream(tokenId)));
       Assert.assertTrue(null != dtSecretManager.retrievePassword(identifier));
-      LOG.info("Sleep to expire the token");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(2000);
       //Token should be expired
       try {
@@ -322,7 +322,7 @@ public class TestDelegationToken {
         //Success
       }
       dtSecretManager.renewToken(token, "JobTracker");
-      LOG.info("Sleep beyond the max lifetime");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(2000);
       
       shouldThrow(new PrivilegedExceptionAction<Object>() {

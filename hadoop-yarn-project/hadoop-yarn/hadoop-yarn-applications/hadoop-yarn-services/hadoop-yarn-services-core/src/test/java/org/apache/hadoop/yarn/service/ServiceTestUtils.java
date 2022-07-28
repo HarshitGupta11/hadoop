@@ -213,7 +213,7 @@ public class ServiceTestUtils {
 
   protected void setupInternal(int numNodeManager)
       throws Exception {
-    LOG.info("Starting up YARN cluster");
+    LOG.error("Temp", new RuntimeException());
     if (conf == null) {
       setConf(new YarnConfiguration());
       conf.setBoolean(YarnConfiguration.YARN_MINICLUSTER_FIXED_PORTS, false);
@@ -253,7 +253,7 @@ public class ServiceTestUtils {
     zkCluster.start();
     conf.set(YarnConfiguration.RM_ZK_ADDRESS, zkCluster.getConnectString());
     conf.set(KEY_REGISTRY_ZK_QUORUM, zkCluster.getConnectString());
-    LOG.info("ZK cluster: " + zkCluster.getConnectString());
+    LOG.error("Temp", new RuntimeException());
 
     curatorService = new CuratorService("testCuratorService");
     curatorService.init(conf);
@@ -296,7 +296,7 @@ public class ServiceTestUtils {
       OutputStream os = new FileOutputStream(new File(url.getPath()));
       os.write(bytesOut.toByteArray());
       os.close();
-      LOG.info("Write yarn-site.xml configs to: " + url);
+      LOG.error("Temp", new RuntimeException());
     }
     if (hdfsCluster == null) {
       HdfsConfiguration hdfsConfig = new HdfsConfiguration();
@@ -307,7 +307,7 @@ public class ServiceTestUtils {
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      LOG.info("setup thread sleep interrupted. message=" + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -470,10 +470,10 @@ public class ServiceTestUtils {
         Service retrievedApp = client.getStatus(exampleApp.getName());
         int totalReadyContainers = 0;
         allContainers.clear();
-        LOG.info("Num Components " + retrievedApp.getComponents().size());
+        LOG.error("Temp", new RuntimeException());
         for (Component component : retrievedApp.getComponents()) {
-          LOG.info("looking for  " + component.getName());
-          LOG.info(component.toString());
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           if (component.getContainers() != null) {
             if (component.getContainers().size() == exampleApp
                 .getComponent(component.getName()).getNumberOfContainers()) {
@@ -484,7 +484,7 @@ public class ServiceTestUtils {
                 if (container.getState() == ContainerState.READY) {
                   totalReadyContainers++;
                   allContainers.put(component.getName(), container.getId());
-                  LOG.info("Found 1 ready container " + container.getId());
+                  LOG.error("Temp", new RuntimeException());
                 }
               }
             } else {

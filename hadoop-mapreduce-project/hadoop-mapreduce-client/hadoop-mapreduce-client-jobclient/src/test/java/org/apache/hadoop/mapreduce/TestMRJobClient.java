@@ -90,7 +90,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
     job.submit();
     int i = 0;
     while (i++ < 200 && job.getJobID() == null) {
-      LOG.info("waiting for jobId...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(100);
     }
     return job;
@@ -98,7 +98,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
 
   public static int runTool(Configuration conf, Tool tool, String[] args,
       OutputStream out) throws Exception {
-    LOG.info("args = " + Arrays.toString(args));
+    LOG.error("Temp", new RuntimeException());
     PrintStream oldOut = System.out;
     PrintStream newOut = new PrintStream(out, true);
     try {
@@ -320,7 +320,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
         new ByteArrayInputStream(out.toByteArray())));
     int counter = 0;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       counter++;
     }
     assertEquals(0, counter);
@@ -342,7 +342,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
         new ByteArrayInputStream(out.toByteArray())));
     int counter = 0;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       counter++;
     }
     assertEquals(1, counter);
@@ -363,7 +363,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
         new ByteArrayInputStream(out.toByteArray())));
     int counter = 0;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       counter++;
     }
     assertEquals(2, counter);
@@ -587,7 +587,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
     int counter = 0;
     String attemptId = ("attempt" + jobId.substring(3));
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       if (line.contains(attemptId)) {
         counter++;
       }
@@ -611,7 +611,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
         new ByteArrayInputStream(out.toByteArray())));
 
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       if (!line.contains("Job state:")) {
         continue;
       }
@@ -657,7 +657,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
     String line;
     int counter = 0;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       if (line.contains(jobId)) {
         counter++;
       }
@@ -680,7 +680,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
           out.toByteArray())));
     counter = 0;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       if (line.contains(job.getJobID().toString())) {
         counter++;
       }
@@ -698,7 +698,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
     BufferedReader br = new BufferedReader(new InputStreamReader(pis));
     String line;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       if (!line.contains(jobId)) {
         continue;
       }
@@ -755,7 +755,7 @@ public class TestMRJobClient extends ClusterMapReduceTestCase {
     BufferedReader br = new BufferedReader(new InputStreamReader(pis));
     String line = null;
     while ((line = br.readLine()) != null) {
-      LOG.info("line = " + line);
+      LOG.error("Temp", new RuntimeException());
       if (!line.contains(jobId)) {
         continue;
       }

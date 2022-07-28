@@ -83,14 +83,14 @@ public abstract class FSPlacementRule extends PlacementRule {
   @Override
   public void setConfig(Object initArg) {
     if (null == initArg) {
-      LOG.debug("Null object passed in: no config set");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (initArg instanceof Element) {
-      LOG.debug("Setting config from XML");
+      LOG.error("Temp", new RuntimeException());
       setConfig((Element) initArg);
     } else if (initArg instanceof Boolean) {
-      LOG.debug("Setting config from Boolean");
+      LOG.error("Temp", new RuntimeException());
       setConfig((Boolean) initArg);
     } else {
       LOG.info("Unknown object type passed in as config for rule {}: {}",

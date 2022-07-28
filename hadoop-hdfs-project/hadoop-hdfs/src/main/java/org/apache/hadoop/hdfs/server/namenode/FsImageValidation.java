@@ -132,7 +132,7 @@ public class FsImageValidation {
         LOG.info("setLogLevel {} to {}, getEffectiveLevel() = {}",
             clazz.getName(), level, logger.getEffectiveLevel());
       } else {
-        LOG.warn("Failed setLogLevel {} to {}", clazz.getName(), level);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -181,7 +181,7 @@ public class FsImageValidation {
 
   int run(Configuration conf, AtomicInteger errorCount) throws Exception {
     final int initCount = errorCount.get();
-    LOG.info(Util.memoryInfo());
+    LOG.error("Temp", new RuntimeException());
     initConf(conf);
 
     // check INodeReference
@@ -189,7 +189,7 @@ public class FsImageValidation {
 
     // check INodeMap
     INodeMapValidation.run(namesystem.getFSDirectory(), errorCount);
-    LOG.info(Util.memoryInfo());
+    LOG.error("Temp", new RuntimeException());
 
     final int d = errorCount.get() - initCount;
     if (d > 0) {
@@ -256,9 +256,9 @@ public class FsImageValidation {
       AtomicInteger errorCount) throws Exception {
     INodeReferenceValidation.start();
     final FSNamesystem namesystem = loadImage(conf);
-    LOG.info(Util.memoryInfo());
+    LOG.error("Temp", new RuntimeException());
     INodeReferenceValidation.end(errorCount);
-    LOG.info(Util.memoryInfo());
+    LOG.error("Temp", new RuntimeException());
     return namesystem;
   }
 
@@ -328,13 +328,13 @@ public class FsImageValidation {
     static synchronized void println(String format, Object... args) {
       final String s = String.format(format, args);
       System.out.println(s);
-      LOG.info(s);
+      LOG.error("Temp", new RuntimeException());
     }
 
     static synchronized void warn(String format, Object... args) {
       final String s = "WARN: " + String.format(format, args);
       System.out.println(s);
-      LOG.warn(s);
+      LOG.error("Temp", new RuntimeException());
     }
 
     static synchronized void printError(String message, Throwable t) {
@@ -351,7 +351,7 @@ public class FsImageValidation {
       final String s = "FSIMAGE_ERROR " + count + ": "
           + String.format(format, args);
       System.out.println(s);
-      LOG.info(s);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

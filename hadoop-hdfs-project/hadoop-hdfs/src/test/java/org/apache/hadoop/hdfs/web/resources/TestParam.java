@@ -59,7 +59,7 @@ public class TestParam {
       new AccessTimeParam(-2L);
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -78,7 +78,7 @@ public class TestParam {
       new BlockSizeParam(0L);
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -97,7 +97,7 @@ public class TestParam {
       new BufferSizeParam(0);
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -118,7 +118,7 @@ public class TestParam {
       new DestinationParam("abc");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -139,7 +139,7 @@ public class TestParam {
       new ModificationTimeParam(-2L);
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -154,7 +154,7 @@ public class TestParam {
       new OverwriteParam("abc");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -176,7 +176,7 @@ public class TestParam {
       new PermissionParam("-1");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     new PermissionParam("1777");
@@ -185,21 +185,21 @@ public class TestParam {
       new PermissionParam("2000");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new PermissionParam("8");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new PermissionParam("abc");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -214,7 +214,7 @@ public class TestParam {
       new RecursiveParam("abc");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -239,7 +239,7 @@ public class TestParam {
       new ReplicationParam((short)0);
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -327,7 +327,7 @@ public class TestParam {
       new AclPermissionParam("user::rw--,group::rwx-,other::rw-");
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     new AclPermissionParam(
@@ -337,21 +337,21 @@ public class TestParam {
       new AclPermissionParam("user:r-,group:rwx,other:rw-");
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new AclPermissionParam("default:::r-,default:group::rwx,other::rw-");
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new AclPermissionParam("user:r-,group::rwx,other:rw-,mask:rw-,temp::rwx");
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -453,42 +453,42 @@ public class TestParam {
       new FsActionParam("rw");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new FsActionParam("qwx");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new FsActionParam("qrwx");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new FsActionParam("rwxx");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new FsActionParam("xwr");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
       new FsActionParam("r-w");
       Assert.fail();
     } catch(IllegalArgumentException e) {
-      LOG.info("EXPECTED: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

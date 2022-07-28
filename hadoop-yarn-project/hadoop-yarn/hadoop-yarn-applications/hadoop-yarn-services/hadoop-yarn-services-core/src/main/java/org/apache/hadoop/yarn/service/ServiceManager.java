@@ -308,7 +308,7 @@ public class ServiceManager implements EventHandler<ServiceEvent> {
             ComponentEventType.CANCEL_UPGRADE)
             .setTargetSpec(component)
             .setUpgradeVersion(upgradeVersion);
-        LOG.info("Upgrade component {} {}", component.getName(), cancelUpgrade);
+        LOG.error("Temp", new RuntimeException());
         context.scheduler.getDispatcher().getEventHandler()
             .handle(needUpgradeEvent);
       });
@@ -343,7 +343,7 @@ public class ServiceManager implements EventHandler<ServiceEvent> {
     try {
       String upgradeVersionToDel = cancelUpgrade? cancelledVersion :
           upgradeVersion;
-      LOG.info("[SERVICE]: delete upgrade dir version {}", upgradeVersionToDel);
+      LOG.error("Temp", new RuntimeException());
       fs.deleteClusterUpgradeDir(getName(), upgradeVersionToDel);
 
       for (String comp : compsAffectedByUpgrade) {
@@ -495,7 +495,7 @@ public class ServiceManager implements EventHandler<ServiceEvent> {
         serviceSpec.getState();
     if (!curState.equals(state)) {
       serviceSpec.setState(state);
-      LOG.info("[SERVICE] spec state changed from {} -> {}", curState, state);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

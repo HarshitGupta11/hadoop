@@ -168,10 +168,10 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
   private ArrayList<String> CreateTestRequestIdentifiers(
       int numberOfRequests) {
     ArrayList<String> testContexts = new ArrayList<String>();
-    LOG.info("Creating " + numberOfRequests + " contexts for testing");
+    LOG.error("Temp", new RuntimeException());
     for (int ep = 0; ep < numberOfRequests; ep++) {
       testContexts.add("test-endpoint-" + Integer.toString(ep));
-      LOG.info("Created test context: " + testContexts.get(ep));
+      LOG.error("Temp", new RuntimeException());
     }
     return testContexts;
   }
@@ -214,7 +214,7 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
           .fail("The request to finish application master should have failed");
     } catch (Throwable ex) {
       // This is expected. So nothing required here.
-      LOG.info("Finish registration failed as expected because it was not registered");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -227,7 +227,7 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
           .fail("The request to finish application master should have failed");
     } catch (Throwable ex) {
       // This is expected. So nothing required here.
-      LOG.info("Finish registration failed as expected because it was not registered");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -262,7 +262,7 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
           .fail("The request to finish application master should have failed");
     } catch (Throwable ex) {
       // This is expected. So nothing required here.
-      LOG.info("Finish registration failed as expected because it was not registered");
+      LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -272,7 +272,7 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
           .fail("The request to finish application master should have failed");
     } catch (Throwable ex) {
       // This is expected. So nothing required here.
-      LOG.info("Finish registration failed as expected because it was not registered");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -281,10 +281,10 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
       throws Exception {
     int numberOfRequests = 5;
     ArrayList<String> testContexts = new ArrayList<String>();
-    LOG.info("Creating " + numberOfRequests + " contexts for testing");
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < numberOfRequests; i++) {
       testContexts.add("test-endpoint-" + Integer.toString(i));
-      LOG.info("Created test context: " + testContexts.get(i));
+      LOG.error("Temp", new RuntimeException());
 
       RegisterApplicationMasterResponse registerResponse =
           registerApplicationMaster(i);
@@ -326,7 +326,7 @@ public class TestAMRMProxyService extends BaseAMRMProxyTest {
           .fail("The request to allocate application master should have failed");
     } catch (Throwable ex) {
       // This is expected. So nothing required here.
-      LOG.info("AllocateRequest failed as expected because AM was not registered");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

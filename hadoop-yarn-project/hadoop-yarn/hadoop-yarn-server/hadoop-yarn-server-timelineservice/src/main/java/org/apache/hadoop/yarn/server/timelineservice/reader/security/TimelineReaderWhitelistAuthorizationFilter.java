@@ -105,19 +105,19 @@ public class TimelineReaderWhitelistAuthorizationFilter implements Filter {
         listAllowedUsers =
             YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READ_ALLOWED_USERS;
       }
-      LOG.info("listAllowedUsers=" + listAllowedUsers);
+      LOG.error("Temp", new RuntimeException());
       allowedUsersAclList = new AccessControlList(listAllowedUsers);
-      LOG.info("allowedUsersAclList=" + allowedUsersAclList.getUsers());
+      LOG.error("Temp", new RuntimeException());
       // also allow admins
       String adminAclListStr =
           conf.getInitParameter(YarnConfiguration.YARN_ADMIN_ACL);
       if (StringUtils.isEmpty(adminAclListStr)) {
         adminAclListStr =
             TimelineReaderWhitelistAuthorizationFilter.EMPTY_STRING;
-        LOG.info("adminAclList not set, hence setting it to \"\"");
+        LOG.error("Temp", new RuntimeException());
       }
       adminAclList = new AccessControlList(adminAclListStr);
-      LOG.info("adminAclList=" + adminAclList.getUsers());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

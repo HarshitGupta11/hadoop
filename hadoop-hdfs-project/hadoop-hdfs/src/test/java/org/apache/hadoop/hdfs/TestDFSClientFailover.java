@@ -216,7 +216,7 @@ public class TestDFSClientFailover {
       FileSystem.get(uri, conf).exists(new Path("/test"));
       fail("Successfully got proxy provider for misconfigured FS");
     } catch (IOException ioe) {
-      LOG.info("got expected exception", ioe);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("expected exception did not contain helpful message",
           StringUtils.stringifyException(ioe).contains(
           "Could not find any configured addresses for URI " + uri));
@@ -245,7 +245,7 @@ public class TestDFSClientFailover {
       nsList.set(0, ns);
       return ns;
     } catch (Throwable t) {
-      LOG.info("Unable to spy on DNS. Skipping test.", t);
+      LOG.error("Temp", new RuntimeException());
       // In case the JDK we're testing on doesn't work like Sun's, just
       // skip the test.
       Assume.assumeNoException(t);

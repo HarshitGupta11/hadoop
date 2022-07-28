@@ -62,13 +62,13 @@ public class TestInjectionForSimulatedStorage {
     long start = Time.monotonicNow();
     
     //wait for all the blocks to be replicated;
-    LOG.info("Checking for block replication for " + filename);
+    LOG.error("Temp", new RuntimeException());
     
     LocatedBlocks blocks = namenode.getBlockLocations(filename, 0, Long.MAX_VALUE);
     assertEquals(numBlocks, blocks.locatedBlockCount());
     
     for (int i = 0; i < numBlocks; ++i) {
-      LOG.info("Checking for block:" + (i+1));
+      LOG.error("Temp", new RuntimeException());
       while (true) { // Loop to check for block i (usually when 0 is done all will be done
         blocks = namenode.getBlockLocations(filename, 0, Long.MAX_VALUE);
         assertEquals(numBlocks, blocks.locatedBlockCount());
@@ -147,7 +147,7 @@ public class TestInjectionForSimulatedStorage {
        * immediately. In our case some replication attempts will fail.
        */
       
-      LOG.info("Restarting minicluster");
+      LOG.error("Temp", new RuntimeException());
       conf = new HdfsConfiguration();
       SimulatedFSDataset.setFactory(conf);
       conf.set(DFSConfigKeys.DFS_NAMENODE_SAFEMODE_THRESHOLD_PCT_KEY, "0.0f"); 
@@ -167,7 +167,7 @@ public class TestInjectionForSimulatedStorage {
       }
       // Insert all the blocks in the first data node
       
-      LOG.info("Inserting " + uniqueBlocks.size() + " blocks");
+      LOG.error("Temp", new RuntimeException());
       cluster.injectBlocks(0, uniqueBlocks, null);
       
       dfsClient = new DFSClient(new InetSocketAddress("localhost",

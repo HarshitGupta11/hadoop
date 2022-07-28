@@ -286,7 +286,7 @@ public class HAUtil {
           }
         } catch (Exception e) {
           //Ignore the exception while connecting to a namenode.
-          LOG.debug("Error while connecting to namenode", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } else {

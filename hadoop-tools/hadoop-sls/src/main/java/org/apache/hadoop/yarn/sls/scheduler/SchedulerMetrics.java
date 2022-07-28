@@ -512,7 +512,7 @@ public abstract class SchedulerMetrics {
                 metricsOutputDir + "/realtimetrack.json"), "UTF-8"));
         metricsLogBW.write("[");
       } catch (IOException e) {
-        LOG.info(e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -532,7 +532,7 @@ public abstract class SchedulerMetrics {
           }
           metricsLogBW.flush();
         } catch (IOException e) {
-          LOG.info(e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -540,7 +540,7 @@ public abstract class SchedulerMetrics {
 
   void tearDown() throws Exception {
     setRunning(false);
-    LOG.info("Scheduler Metrics tears down");
+    LOG.error("Temp", new RuntimeException());
     if (metricsLogBW != null)  {
       metricsLogBW.write("]");
       metricsLogBW.close();
@@ -673,7 +673,7 @@ public abstract class SchedulerMetrics {
       jobRuntimeLogBW.write(sb.toString() + EOL);
       jobRuntimeLogBW.flush();
     } catch (IOException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -389,7 +389,7 @@ class CosNativeFileSystemStore implements NativeFileSystemStore {
    */
   @Override
   public InputStream retrieve(String key) throws IOException {
-    LOG.debug("Retrieve object key: [{}].", key);
+    LOG.error("Temp", new RuntimeException());
     GetObjectRequest getObjectRequest =
         new GetObjectRequest(this.bucketName, key);
     try {
@@ -597,7 +597,7 @@ class CosNativeFileSystemStore implements NativeFileSystemStore {
 
   @Override
   public void delete(String key) throws IOException {
-    LOG.debug("Delete object key: [{}] from bucket: {}.", key, this.bucketName);
+    LOG.error("Temp", new RuntimeException());
     try {
       DeleteObjectRequest deleteObjectRequest =
           new DeleteObjectRequest(bucketName, key);
@@ -612,7 +612,7 @@ class CosNativeFileSystemStore implements NativeFileSystemStore {
   }
 
   public void rename(String srcKey, String dstKey) throws IOException {
-    LOG.debug("Rename source key: [{}] to dest key: [{}].", srcKey, dstKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       CopyObjectRequest copyObjectRequest =
           new CopyObjectRequest(bucketName, srcKey, bucketName, dstKey);
@@ -633,7 +633,7 @@ class CosNativeFileSystemStore implements NativeFileSystemStore {
 
   @Override
   public void copy(String srcKey, String dstKey) throws IOException {
-    LOG.debug("Copy source key: [{}] to dest key: [{}].", srcKey, dstKey);
+    LOG.error("Temp", new RuntimeException());
     try {
       CopyObjectRequest copyObjectRequest =
           new CopyObjectRequest(bucketName, srcKey, bucketName, dstKey);
@@ -668,7 +668,7 @@ class CosNativeFileSystemStore implements NativeFileSystemStore {
 
   @Override
   public long getFileLength(String key) throws IOException {
-    LOG.debug("Get file length. COS key: {}", key);
+    LOG.error("Temp", new RuntimeException());
     GetObjectMetadataRequest getObjectMetadataRequest =
         new GetObjectMetadataRequest(bucketName, key);
     try {
@@ -731,7 +731,7 @@ class CosNativeFileSystemStore implements NativeFileSystemStore {
         // Retry all server errors
         if (statusCode / 100 == 5) {
           if (retryIndex <= this.maxRetryTimes) {
-            LOG.info(errMsg);
+            LOG.error("Temp", new RuntimeException());
             long sleepLeast = retryIndex * 300L;
             long sleepBound = retryIndex * 500L;
             try {

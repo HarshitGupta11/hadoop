@@ -126,7 +126,7 @@ public abstract class MetadataStoreTestBase extends HadoopTestBase {
   @Before
   public void setUp() throws Exception {
     Thread.currentThread().setName("setup");
-    LOG.debug("== Setup. ==");
+    LOG.error("Temp", new RuntimeException());
     contract = createContract();
     ms = contract.getMetadataStore();
     assertNotNull("null MetadataStore", ms);
@@ -140,12 +140,12 @@ public abstract class MetadataStoreTestBase extends HadoopTestBase {
   @After
   public void tearDown() throws Exception {
     Thread.currentThread().setName("teardown");
-    LOG.debug("== Tear down. ==");
+    LOG.error("Temp", new RuntimeException());
     if (ms != null) {
       try {
         ms.destroy();
       } catch (Exception e) {
-        LOG.warn("Failed to destroy tables in teardown", e);
+        LOG.error("Temp", new RuntimeException());
       }
       IOUtils.closeStream(ms);
       ms = null;
@@ -195,7 +195,7 @@ public abstract class MetadataStoreTestBase extends HadoopTestBase {
       final Path p = iterator.next().getPath();
       actual.add(Path.getPathWithoutSchemeAndAuthority(p).toString());
     }
-    LOG.info("We got {} by iterating DescendantsIterator", actual);
+    LOG.error("Temp", new RuntimeException());
 
     if (!allowMissing()) {
       Assertions.assertThat(actual)

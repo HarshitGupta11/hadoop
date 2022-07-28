@@ -211,7 +211,7 @@ public class HSQLDBFederationStateStore extends SQLFederationStateStore {
     try {
       conn = super.conn;
 
-      LOG.info("Database Init: Start");
+      LOG.error("Temp", new RuntimeException());
 
       conn.prepareStatement(TABLE_APPLICATIONSHOMESUBCLUSTER).execute();
       conn.prepareStatement(TABLE_MEMBERSHIP).execute();
@@ -233,7 +233,7 @@ public class HSQLDBFederationStateStore extends SQLFederationStateStore {
       conn.prepareStatement(SP_GETPOLICYCONFIGURATION).execute();
       conn.prepareStatement(SP_GETPOLICIESCONFIGURATIONS).execute();
 
-      LOG.info("Database Init: Complete");
+      LOG.error("Temp", new RuntimeException());
     } catch (SQLException e) {
       LOG.error("ERROR: failed to inizialize HSQLDB " + e.getMessage());
     }

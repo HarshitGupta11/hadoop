@@ -204,7 +204,7 @@ public class DelegationTokenRenewer
       try {
         INSTANCE.join();
       } catch (InterruptedException e) {
-        LOG.warn("Failed to reset renewer");
+        LOG.error("Temp", new RuntimeException());
       } finally {
         INSTANCE = null;
       }
@@ -242,7 +242,7 @@ public class DelegationTokenRenewer
       } catch (InterruptedException ie) {
         LOG.error("Interrupted while canceling token for " + fs.getUri()
             + "filesystem");
-        LOG.debug("Exception in removeRenewAction: {}", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -259,7 +259,7 @@ public class DelegationTokenRenewer
       } catch (InterruptedException ie) {
         return;
       } catch (Exception ie) {
-        FileSystem.LOG.warn("Failed to renew token, action=" + action, ie);
+        FileSystem.LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -187,7 +187,7 @@ public class TestApplicationMasterServiceInterceptor {
     // kick the scheduler
     nm1.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().size() < 1) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       alloc1Response = am1.schedule();
       allocCount++;

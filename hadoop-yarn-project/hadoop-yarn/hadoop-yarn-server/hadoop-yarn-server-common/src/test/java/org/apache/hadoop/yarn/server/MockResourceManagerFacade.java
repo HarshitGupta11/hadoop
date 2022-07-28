@@ -266,7 +266,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
 
     validateRunning();
     ApplicationAttemptId attemptId = getAppIdentifier();
-    LOG.info("Registering application attempt: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     ApplicationId appId = attemptId.getApplicationId();
 
     List<Container> containersFromPreviousAttempt = null;
@@ -299,12 +299,12 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
       // We reuse the port number to indicate whether the unit test want us to
       // wait here
       if (request.getRpcPort() > 1000) {
-        LOG.info("Register call in RM start waiting");
+        LOG.error("Temp", new RuntimeException());
         try {
           registerSyncObj.wait();
-          LOG.info("Register call in RM wait finished");
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException e) {
-          LOG.info("Register call in RM wait interrupted", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -321,12 +321,12 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     validateRunning();
 
     ApplicationAttemptId attemptId = getAppIdentifier();
-    LOG.info("Finishing application attempt: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     ApplicationId appId = attemptId.getApplicationId();
 
     if (shouldReRegisterNext) {
       String message = "AM is not registered, should re-register.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ApplicationMasterNotRegisteredException(message);
     }
 
@@ -356,12 +356,12 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     validateRunning();
 
     ApplicationAttemptId attemptId = getAppIdentifier();
-    LOG.info("Allocate from application attempt: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     ApplicationId appId = attemptId.getApplicationId();
 
     if (shouldReRegisterNext) {
       String message = "AM is not registered, should re-register.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ApplicationMasterNotRegisteredException(message);
     }
 
@@ -370,12 +370,12 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
       if (shouldWaitForSyncNextAllocate) {
         shouldWaitForSyncNextAllocate = false;
 
-        LOG.info("Allocate call in RM start waiting");
+        LOG.error("Temp", new RuntimeException());
         try {
           allocateSyncObj.wait();
-          LOG.info("Allocate call in RM wait finished");
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException e) {
-          LOG.info("Allocate call in RM wait interrupted", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -416,7 +416,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     List<ContainerStatus> completedList = new ArrayList<>();
     if (request.getReleaseList() != null
         && request.getReleaseList().size() > 0) {
-      LOG.info("Releasing containers: " + request.getReleaseList().size());
+      LOG.error("Temp", new RuntimeException());
       synchronized (applicationContainerIdMap) {
         Assert.assertTrue(
             "The application id is not registered before allocate(): " + appId,
@@ -517,7 +517,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     if (request.getApplicationSubmissionContext() != null) {
       appId = request.getApplicationSubmissionContext().getApplicationId();
     }
-    LOG.info("Application submitted: " + appId);
+    LOG.error("Temp", new RuntimeException());
     applicationMap.add(appId);
 
     if (request.getApplicationSubmissionContext().getUnmanagedAM()
@@ -542,7 +542,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
             "Trying to kill an absent application: " + appId);
       }
     }
-    LOG.info("Force killing application: " + appId);
+    LOG.error("Temp", new RuntimeException());
     return KillApplicationResponse.newInstance(true);
   }
 

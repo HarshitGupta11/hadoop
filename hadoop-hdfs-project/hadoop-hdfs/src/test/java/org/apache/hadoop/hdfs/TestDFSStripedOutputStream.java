@@ -248,7 +248,7 @@ public class TestDFSStripedOutputStream {
       fail("Creating a file with block size smaller than "
           + "ec policy's cell size should fail");
     } catch (IOException expected) {
-      LOG.info("Caught expected exception", expected);
+      LOG.error("Temp", new RuntimeException());
       GenericTestUtils
           .assertExceptionContains("less than the cell size", expected);
     }

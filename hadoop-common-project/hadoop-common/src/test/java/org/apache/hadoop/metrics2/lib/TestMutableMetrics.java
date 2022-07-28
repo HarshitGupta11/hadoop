@@ -209,7 +209,7 @@ public class TestMutableMetrics {
         new CountDownLatch(threads.length);
     final CountDownLatch secondSnapshotsFinished = new CountDownLatch(1);
     long seed = new Random().nextLong();
-    LOG.info("Random seed = " + seed);
+    LOG.error("Temp", new RuntimeException());
     final Random sleepRandom = new Random(seed);
     for (int tIdx = 0; tIdx < threads.length; tIdx++) {
       final int threadIdx = tIdx;

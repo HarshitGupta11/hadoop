@@ -265,10 +265,10 @@ public class TestGpuDiscoverer {
         discoverer.getPathOfGpuBinary());
     assertNull(discoverer.getEnvironmentToRunCommand().get(PATH));
 
-    LOG.debug("Querying nvidia-smi correctly, once...");
+    LOG.error("Temp", new RuntimeException());
     discoverer.getGpuDeviceInformation();
 
-    LOG.debug("Replacing script with faulty version!");
+    LOG.error("Temp", new RuntimeException());
     createFaultyNvidiaSmiScript(fakeBinary);
 
     final String terminateMsg = "Failed to execute GPU device " +
@@ -277,7 +277,7 @@ public class TestGpuDiscoverer {
 
     for (int i = 0; i < 10; i++) {
       try {
-        LOG.debug("Executing faulty nvidia-smi script...");
+        LOG.error("Temp", new RuntimeException());
         discoverer.getGpuDeviceInformation();
         fail("Query of GPU device info via nvidia-smi should fail as " +
             "script should be faulty: " + fakeBinary);

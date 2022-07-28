@@ -117,7 +117,7 @@ public class Globber {
         return fc.getFileStatus(path);
       }
     } catch (FileNotFoundException e) {
-      LOG.debug("getFileStatus({}) failed; returning null", path, e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -130,7 +130,7 @@ public class Globber {
         return fc.util().listStatus(path);
       }
     } catch (FileNotFoundException e) {
-      LOG.debug("listStatus({}) failed; returning empty array", path, e);
+      LOG.error("Temp", new RuntimeException());
       return new FileStatus[0];
     }
   }
@@ -217,7 +217,7 @@ public class Globber {
     String pathPatternString = pathPattern.toUri().getPath();
     List<String> flattenedPatterns = GlobExpander.expand(pathPatternString);
 
-    LOG.debug("Filesystem glob {}", pathPatternString);
+    LOG.error("Temp", new RuntimeException());
     // Now loop over all flattened patterns.  In every case, we'll be trying to
     // match them to entries in the filesystem.
     ArrayList<FileStatus> results = 
@@ -229,7 +229,7 @@ public class Globber {
       // path you go down influences how the path must be made absolute.
       Path absPattern = fixRelativePart(new Path(
           flatPattern.isEmpty() ? Path.CUR_DIR : flatPattern));
-      LOG.debug("Pattern: {}", absPattern);
+      LOG.error("Temp", new RuntimeException());
       // Now we break the flattened, absolute pattern into path components.
       // For example, /a/*/c would be broken into the list [a, *, c]
       List<String> components =
@@ -267,7 +267,7 @@ public class Globber {
         if (globFilter.hasPattern()) {
           sawWildcard = true;
         }
-        LOG.debug("Component {}, patterned={}", component, sawWildcard);
+        LOG.error("Temp", new RuntimeException());
         if (candidates.isEmpty() && sawWildcard) {
           // Optimization: if there are no more candidates left, stop examining 
           // the path components.  We can only do this if we've already seen
@@ -316,7 +316,7 @@ public class Globber {
                   continue;
                 }
                 if (!status.isDirectory()) {
-                  LOG.debug("Resolved entry is a file; skipping: {}", status);
+                  LOG.error("Temp", new RuntimeException());
                   continue;
                 }
               } else {

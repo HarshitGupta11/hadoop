@@ -84,7 +84,7 @@ public class HsJobsBlock extends HtmlBlock {
             th("Reduces Completed").
             th("Elapsed Time").__().__().
         tbody();
-    LOG.info("Getting list of all Jobs.");
+    LOG.error("Temp", new RuntimeException());
     // Write all the data into a JavaScript array of arrays for JQuery
     // DataTables to display
     StringBuilder jobsTableData = new StringBuilder("[\n");

@@ -74,7 +74,7 @@ public abstract class AccessTokenProvider {
    */
   protected boolean isTokenAboutToExpire() {
     if (token == null) {
-      LOG.debug("AADToken: no token. Returning expiring=true");
+      LOG.error("Temp", new RuntimeException());
       return true;   // no token should have same response as expired token
     }
     boolean expiring = false;

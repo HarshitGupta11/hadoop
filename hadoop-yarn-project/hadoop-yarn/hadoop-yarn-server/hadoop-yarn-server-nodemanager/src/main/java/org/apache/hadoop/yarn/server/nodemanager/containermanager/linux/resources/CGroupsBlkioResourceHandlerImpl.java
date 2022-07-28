@@ -77,7 +77,7 @@ public class CGroupsBlkioResourceHandlerImpl implements DiskResourceHandler {
     } catch (IOException e) {
       String msg = "Couldn't read " + PARTITIONS_FILE +
           "; can't determine disk scheduler type";
-      LOG.warn(msg, e);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     String[] lines = data.split(System.lineSeparator());
@@ -137,7 +137,7 @@ public class CGroupsBlkioResourceHandlerImpl implements DiskResourceHandler {
     } catch (ResourceHandlerException re) {
       cGroupsHandler.deleteCGroup(CGroupsHandler.CGroupController.BLKIO,
           cgroupId);
-      LOG.warn("Could not update cgroup for container", re);
+      LOG.error("Temp", new RuntimeException());
       throw re;
     }
     List<PrivilegedOperation> ret = new ArrayList<>();

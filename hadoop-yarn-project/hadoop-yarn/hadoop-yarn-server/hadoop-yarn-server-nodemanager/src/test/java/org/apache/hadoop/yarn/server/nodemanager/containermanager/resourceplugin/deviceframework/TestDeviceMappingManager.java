@@ -181,7 +181,7 @@ public class TestDeviceMappingManager {
 
     containerLauncher.shutdown();
     while (!containerLauncher.awaitTermination(10, TimeUnit.SECONDS)) {
-      LOG.info("Wait for the threads to finish");
+      LOG.error("Temp", new RuntimeException());
     }
 
     Long endTime = System.currentTimeMillis();
@@ -263,7 +263,7 @@ public class TestDeviceMappingManager {
 
     containerLauncher.shutdown();
     while (!containerLauncher.awaitTermination(10, TimeUnit.SECONDS)) {
-      LOG.info("Wait for the threads to finish");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Ensure invocation times
@@ -329,7 +329,7 @@ public class TestDeviceMappingManager {
         deviceResourceHandler.preStart(container);
         if (doCleanup) {
           int seconds = new Random().nextInt(5);
-          LOG.info("sleep " + seconds);
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(seconds * 1000);
           deviceResourceHandler.postComplete(getContainerId(cId));
         }

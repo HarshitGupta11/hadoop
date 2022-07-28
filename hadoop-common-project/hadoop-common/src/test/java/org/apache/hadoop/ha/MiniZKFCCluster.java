@@ -117,12 +117,12 @@ public class MiniZKFCCluster {
     ctx.addThread(thrs[0]);
     thrs[0].start();
     
-    LOG.info("Waiting for svc0 to enter active state");
+    LOG.error("Temp", new RuntimeException());
     waitForHAState(0, HAServiceState.ACTIVE);
 
     // add the remaining zkfc
     for (int i = 1; i < count; i++) {
-      LOG.info("Adding svc" + i);
+      LOG.error("Temp", new RuntimeException());
       thrs[i] = new DummyZKFCThread(ctx, svcs.get(i));
       thrs[i].start();
       waitForHAState(i, HAServiceState.STANDBY);
@@ -244,7 +244,7 @@ public class MiniZKFCCluster {
     
     assertArrayEquals(Ints.toByteArray(svcs.get(idx).index), data);
     long session = stat.getEphemeralOwner();
-    LOG.info("Expiring svc " + idx + "'s zookeeper session " + session);
+    LOG.error("Temp", new RuntimeException());
     zks.closeSession(session);
   }
   

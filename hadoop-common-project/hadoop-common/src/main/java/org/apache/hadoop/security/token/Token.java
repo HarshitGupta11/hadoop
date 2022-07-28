@@ -140,14 +140,14 @@ public class Token<T extends TokenIdentifier> implements Writable {
           } catch (ServiceConfigurationError | LinkageError e) {
             // failure to load a token implementation
             // log at debug and continue.
-            LOG.debug("Failed to load token identifier implementation", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
       cls = tokenKindMap.get(kind);
     }
     if (cls == null) {
-      LOG.debug("Cannot find class for token kind {}", kind);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return cls;
@@ -257,7 +257,7 @@ public class Token<T extends TokenIdentifier> implements Writable {
       assert !publicToken.isPrivate();
       publicService = publicToken.service;
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Cloned private token {} from {}", this, publicToken);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -470,11 +470,11 @@ public class Token<T extends TokenIdentifier> implements Writable {
         } catch (ServiceConfigurationError e) {
           // failure to load a token implementation
           // log at debug and continue.
-          LOG.debug("Failed to load token renewer implementation", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
-    LOG.warn("No TokenRenewer defined for token kind {}", kind);
+    LOG.error("Temp", new RuntimeException());
     return renewer;
   }
 

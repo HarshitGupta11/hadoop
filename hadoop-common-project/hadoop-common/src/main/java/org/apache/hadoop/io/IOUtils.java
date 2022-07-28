@@ -321,7 +321,7 @@ public class IOUtils {
       try {
         sock.close();
       } catch (IOException ignored) {
-        LOG.debug("Ignoring exception while closing socket", ignored);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

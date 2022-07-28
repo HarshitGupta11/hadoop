@@ -89,7 +89,7 @@ class DynamicInputChunk<K, V> {
   public void assignTo(TaskID taskId) throws IOException {
     Path newPath = new Path(chunkContext.getChunkRootPath(), taskId.toString());
     if (!chunkContext.getFs().rename(chunkFilePath, newPath)) {
-      LOG.warn(chunkFilePath + " could not be assigned to " + taskId);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

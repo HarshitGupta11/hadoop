@@ -158,7 +158,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubClusterRegister Request."));
     }
@@ -173,7 +173,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Information."));
     }
@@ -191,7 +191,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Id information."));
     }
@@ -209,7 +209,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid SubCluster Id information."));
     }
@@ -227,7 +227,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster State information."));
     }
@@ -279,7 +279,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid timestamp information."));
     }
@@ -297,7 +297,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid timestamp information."));
     }
@@ -318,7 +318,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -335,7 +335,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -353,7 +353,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -371,7 +371,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -389,7 +389,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -407,7 +407,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -424,7 +424,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -441,7 +441,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage()
           .startsWith("Missing SubCluster Endpoint information."));
     }
@@ -463,7 +463,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -480,7 +480,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -497,7 +497,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -513,7 +513,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -529,7 +529,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -546,7 +546,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -563,7 +563,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -579,7 +579,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().contains("valid host:port authority:"));
     }
 
@@ -607,7 +607,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubClusterDeregister Request."));
     }
@@ -621,7 +621,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Id information."));
     }
@@ -635,7 +635,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid SubCluster Id information."));
     }
@@ -649,7 +649,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster State information."));
     }
@@ -663,7 +663,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(e.getMessage().startsWith("Invalid non-final state: "));
     }
   }
@@ -690,7 +690,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubClusterHeartbeat Request."));
     }
@@ -704,7 +704,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Id information."));
     }
@@ -719,7 +719,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid SubCluster Id information."));
     }
@@ -733,7 +733,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster State information."));
     }
@@ -748,7 +748,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid timestamp information."));
     }
@@ -762,7 +762,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid capability information."));
     }
@@ -776,7 +776,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid capability information."));
     }
@@ -804,7 +804,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing GetSubClusterInfo Request."));
     }
@@ -818,7 +818,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Id information."));
     }
@@ -832,7 +832,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid SubCluster Id information."));
     }
@@ -894,7 +894,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Id information."));
     }
@@ -911,7 +911,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid SubCluster Id information."));
     }
@@ -988,7 +988,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Missing SubCluster Id information."));
     }
@@ -1005,7 +1005,7 @@ public class TestFederationStateStoreInputValidator {
           .validate(request);
       Assert.fail();
     } catch (FederationStateStoreInvalidInputException e) {
-      LOG.info(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(
           e.getMessage().startsWith("Invalid SubCluster Id information."));
     }

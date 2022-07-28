@@ -55,7 +55,7 @@ public class QueryCommand extends Command {
    */
   @Override
   public void execute(CommandLine cmd) throws Exception {
-    LOG.info("Executing \"query plan\" command.");
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(cmd.hasOption(DiskBalancerCLI.QUERY));
     verifyCommandOptions(DiskBalancerCLI.QUERY, cmd);
     String nodeName = cmd.getOptionValue(DiskBalancerCLI.QUERY);
@@ -69,7 +69,7 @@ public class QueryCommand extends Command {
           getConf().getTrimmed(DFSConfigKeys.DFS_DATANODE_IPC_ADDRESS_KEY,
               DFSConfigKeys.DFS_DATANODE_IPC_ADDRESS_DEFAULT)).getPort();
       nodeAddress = nodeName + ":" + defaultIPC;
-      LOG.debug("Using default data node port :  {}", nodeAddress);
+      LOG.error("Temp", new RuntimeException());
     }
 
     ClientDatanodeProtocol dataNode = getDataNodeProxy(nodeAddress);

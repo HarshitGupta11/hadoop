@@ -93,7 +93,7 @@ public final class CombinedHostsFileReader {
         tryOldFormat = true;
       }
     } else {
-      LOG.warn(hostsFilePath + " is empty." + REFER_TO_DOC_MSG);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (tryOldFormat) {
@@ -110,7 +110,7 @@ public final class CombinedHostsFileReader {
           DatanodeAdminProperties properties = iterator.next();
           all.add(properties);
         }
-        LOG.warn(hostsFilePath + " has legacy JSON format." + REFER_TO_DOC_MSG);
+        LOG.error("Temp", new RuntimeException());
       } catch (Throwable ex) {
         LOG.warn(hostsFilePath + " has invalid JSON format." + REFER_TO_DOC_MSG,
                 ex);

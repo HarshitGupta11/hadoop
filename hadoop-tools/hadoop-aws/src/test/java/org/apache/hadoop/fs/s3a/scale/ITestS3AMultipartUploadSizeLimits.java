@@ -201,7 +201,7 @@ public class ITestS3AMultipartUploadSizeLimits extends S3AScaleTestBase {
     // check the stream
     final IOStatistics iostats = stream.getIOStatistics();
     final String sstr = ioStatisticsToPrettyString(iostats);
-    LOG.info("IOStatistics for stream: {}", sstr);
+    LOG.error("Temp", new RuntimeException());
     verifyStatisticCounterValue(iostats, INVOCATION_ABORT.getSymbol(), 1);
     verifyStatisticCounterValue(iostats,
         OBJECT_MULTIPART_UPLOAD_ABORTED.getSymbol(), 1);

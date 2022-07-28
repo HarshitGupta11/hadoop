@@ -117,7 +117,7 @@ public class RemoteWasbAuthorizerImpl implements WasbAuthorizerInterface {
   @Override
   public void init(Configuration conf)
       throws IOException {
-    LOG.debug("Initializing RemoteWasbAuthorizerImpl instance");
+    LOG.error("Temp", new RuntimeException());
     this.isKerberosSupportEnabled =
         conf.getBoolean(Constants.AZURE_KERBEROS_SUPPORT_PROPERTY_NAME, false);
     this.isSpnegoTokenCacheEnabled =

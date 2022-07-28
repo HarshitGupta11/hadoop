@@ -97,7 +97,7 @@ public class ConfiguredRMFailoverProxyProvider<T>
   public synchronized void performFailover(T currentProxy) {
     currentProxyIndex = (currentProxyIndex + 1) % rmServiceIds.length;
     conf.set(YarnConfiguration.RM_HA_ID, rmServiceIds[currentProxyIndex]);
-    LOG.info("Failing over to " + rmServiceIds[currentProxyIndex]);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

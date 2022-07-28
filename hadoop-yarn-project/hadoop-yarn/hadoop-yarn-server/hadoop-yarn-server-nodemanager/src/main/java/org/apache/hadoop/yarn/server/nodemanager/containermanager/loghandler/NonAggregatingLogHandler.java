@@ -242,7 +242,7 @@ public class NonAggregatingLogHandler extends AbstractService implements
           lfs.getFileStatus(logDir);
           localAppLogDirs.add(logDir);
         } catch (UnsupportedFileSystemException ue) {
-          LOG.warn("Unsupported file system used for log dir " + logDir, ue);
+          LOG.error("Temp", new RuntimeException());
           continue;
         } catch (IOException ie) {
           continue;

@@ -377,7 +377,7 @@ public class ClientRMService extends AbstractService implements
     ApplicationId applicationId = org.apache.hadoop.yarn.server.utils.BuilderUtils
         .newApplicationId(recordFactory, ResourceManager.getClusterTimeStamp(),
             applicationCounter.incrementAndGet());
-    LOG.info("Allocated new applicationId: " + applicationId.getId());
+    LOG.error("Temp", new RuntimeException());
     return applicationId;
   }
 
@@ -410,7 +410,7 @@ public class ClientRMService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ie);
     }
 
@@ -605,7 +605,7 @@ public class ClientRMService extends AbstractService implements
       // Safety
       user = UserGroupInformation.getCurrentUser().getShortUserName();
     } catch (IOException ie) {
-      LOG.warn("Unable to get the current user.", ie);
+      LOG.error("Temp", new RuntimeException());
       RMAuditLogger.logFailure(user, AuditConstants.SUBMIT_APP_REQUEST,
           ie.getMessage(), "ClientRMService",
           "Exception in submitting application", applicationId, callerContext,
@@ -643,7 +643,7 @@ public class ClientRMService extends AbstractService implements
     // Check whether app has already been put into rmContext,
     // If it is, simply return the response
     if (rmContext.getRMApps().get(applicationId) != null) {
-      LOG.info("This is an earlier submitted application: " + applicationId);
+      LOG.error("Temp", new RuntimeException());
       return SubmitApplicationResponse.newInstance();
     }
 
@@ -703,7 +703,7 @@ public class ClientRMService extends AbstractService implements
           submissionContext.getQueue(),
           submissionContext.getNodeLabelExpression());
     } catch (YarnException e) {
-      LOG.info("Exception in submitting " + applicationId, e);
+      LOG.error("Temp", new RuntimeException());
       RMAuditLogger.logFailure(user, AuditConstants.SUBMIT_APP_REQUEST,
           e.getMessage(), "ClientRMService",
           "Exception in submitting application", applicationId, callerContext,
@@ -794,7 +794,7 @@ public class ClientRMService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       RMAuditLogger.logFailure("UNKNOWN", AuditConstants.KILL_APP_REQUEST,
               "UNKNOWN", "ClientRMService", "Error getting UGI",
               applicationId, callerContext);
@@ -881,7 +881,7 @@ public class ClientRMService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ie);
     }
 
@@ -1028,7 +1028,7 @@ public class ClientRMService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ie);
     }
 
@@ -1071,7 +1071,7 @@ public class ClientRMService extends AbstractService implements
           AuditConstants.GET_QUEUE_INFO_REQUEST,
           "ClientRMService", arguments);
     } catch (IOException ioe) {
-      LOG.info("Failed to getQueueInfo for " + request.getQueueName(), ioe);
+      LOG.error("Temp", new RuntimeException());
       RMAuditLogger.logFailure(callerUGI.getUserName(),
           AuditConstants.GET_QUEUE_INFO_REQUEST, "UNKNOWN", "ClientRMService",
           ioe.getMessage(), arguments);
@@ -1700,7 +1700,7 @@ public class ClientRMService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ie);
     }
 
@@ -1819,7 +1819,7 @@ public class ClientRMService extends AbstractService implements
     try {
       callerUGI = UserGroupInformation.getCurrentUser();
     } catch (IOException ie) {
-      LOG.info("Error getting UGI ", ie);
+      LOG.error("Temp", new RuntimeException());
       RMAuditLogger.logFailure("UNKNOWN", operation, "UNKNOWN",
           "ClientRMService", "Error getting UGI", applicationId);
       throw RPCUtil.getRemoteException(ie);

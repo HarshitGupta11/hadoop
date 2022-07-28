@@ -481,7 +481,7 @@ public abstract class AbstractContractCreateTest extends
         path, supportsSync, supportsFlush, metadataUpdatedOnHSync);
 
     try (FSDataOutputStream out = fs.create(path, true)) {
-      LOG.info("Created output stream {}", out);
+      LOG.error("Temp", new RuntimeException());
 
       // probe stream for support for flush/sync, whose capabilities
       // of supports/does not support must match what is expected
@@ -547,7 +547,7 @@ public abstract class AbstractContractCreateTest extends
           assertEquals('a', in.read());
           assertEquals('b', in.read());
           assertEquals(-1, in.read());
-          LOG.info("Successfully read synced data on a new reader {}", in);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         // no sync. Let's do a flush and see what happens.
@@ -584,7 +584,7 @@ public abstract class AbstractContractCreateTest extends
 
       final String stats = ioStatisticsSourceToString(out);
       if (!stats.isEmpty()) {
-        LOG.info("IOStatistics {}", stats);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

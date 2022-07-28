@@ -165,7 +165,7 @@ public class TestApplicationLimits {
     conf.setUserLimit(CapacitySchedulerConfiguration.ROOT + "." + A, 50);
     conf.setUserLimitFactor(CapacitySchedulerConfiguration.ROOT + "." + A, 5.0f);
     
-    LOG.info("Setup top-level queues a and b");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private FiCaSchedulerApp getMockApplication(int appId, String user,

@@ -283,7 +283,7 @@ public class TestWebHDFS {
       byte[] buf, byte[] expected) throws IOException { 
     long remaining = length - offset;
     long checked = 0;
-    LOG.info("XXX SEEK: offset=" + offset + ", remaining=" + remaining);
+    LOG.error("Temp", new RuntimeException());
 
     final Ticker t = new Ticker("SEEK", "offset=%d, remaining=%d",
         offset, remaining);
@@ -307,7 +307,7 @@ public class TestWebHDFS {
       byte[] buf, byte[] expected) throws IOException {
     long remaining = length - offset;
     long checked = 0;
-    LOG.info("XXX PREAD: offset=" + offset + ", remaining=" + remaining);
+    LOG.error("Temp", new RuntimeException());
 
     final Ticker t = new Ticker("PREAD", "offset=%d, remaining=%d",
         offset, remaining);
@@ -1553,7 +1553,7 @@ public class TestWebHDFS {
     conn.setRequestMethod(TYPE);
     conn.setInstanceFollowRedirects(false);
     String response = IOUtils.toString(conn.getInputStream());
-    LOG.info("Response was : " + response);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(
       "Response wasn't " + HttpURLConnection.HTTP_OK,
       HttpURLConnection.HTTP_OK, conn.getResponseCode());
@@ -1581,14 +1581,14 @@ public class TestWebHDFS {
   public void testWebHdfsNoRedirect() throws Exception {
     final Configuration conf = WebHdfsTestUtil.createConf();
     cluster = new MiniDFSCluster.Builder(conf).numDataNodes(3).build();
-    LOG.info("Started cluster");
+    LOG.error("Temp", new RuntimeException());
     InetSocketAddress addr = cluster.getNameNode().getHttpAddress();
 
     URL url = new URL("http", addr.getHostString(), addr.getPort(),
         WebHdfsFileSystem.PATH_PREFIX + "/testWebHdfsNoRedirectCreate"
             + "?op=CREATE"
             + Param.toSortedString("&", new NoRedirectParam(true)));
-    LOG.info("Sending create request " + url);
+    LOG.error("Temp", new RuntimeException());
     checkResponseContainsLocation(url, "PUT");
 
     // Write a file that we can read
@@ -1603,20 +1603,20 @@ public class TestWebHDFS {
     url = new URL("http", addr.getHostString(), addr.getPort(),
         WebHdfsFileSystem.PATH_PREFIX + "/testWebHdfsNoRedirect" + "?op=OPEN"
             + Param.toSortedString("&", new NoRedirectParam(true)));
-    LOG.info("Sending open request " + url);
+    LOG.error("Temp", new RuntimeException());
     checkResponseContainsLocation(url, "GET");
 
     url = new URL("http", addr.getHostString(), addr.getPort(),
         WebHdfsFileSystem.PATH_PREFIX + "/testWebHdfsNoRedirect"
             + "?op=GETFILECHECKSUM"
             + Param.toSortedString("&", new NoRedirectParam(true)));
-    LOG.info("Sending getfilechecksum request " + url);
+    LOG.error("Temp", new RuntimeException());
     checkResponseContainsLocation(url, "GET");
 
     url = new URL("http", addr.getHostString(), addr.getPort(),
         WebHdfsFileSystem.PATH_PREFIX + "/testWebHdfsNoRedirect" + "?op=APPEND"
             + Param.toSortedString("&", new NoRedirectParam(true)));
-    LOG.info("Sending append request " + url);
+    LOG.error("Temp", new RuntimeException());
     checkResponseContainsLocation(url, "POST");
   }
 

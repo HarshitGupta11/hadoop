@@ -382,7 +382,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
     } else {
       getStore().initialize(filesystem, new S3Guard.TtlTimeProvider(conf));
     }
-    LOG.info("Metadata store {} is initialized.", getStore());
+    LOG.error("Temp", new RuntimeException());
     return getStore();
   }
 
@@ -401,7 +401,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
    * @throws ExitUtil.ExitException if the FS is not an S3A FS
    */
   protected void initS3AFileSystem(String path) throws IOException {
-    LOG.debug("Initializing S3A FS to {}", path);
+    LOG.error("Temp", new RuntimeException());
     URI uri = toUri(path);
     // Make sure that S3AFileSystem does not hold an actual MetadataStore
     // implementation.
@@ -414,7 +414,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
         S3_METADATA_STORE_IMPL, S3GUARD_METASTORE_NULL);
     String updatedBucketOption = S3AUtils.getBucketOption(conf, bucket,
         S3_METADATA_STORE_IMPL);
-    LOG.debug("updated bucket store option {}", updatedBucketOption);
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(S3GUARD_METASTORE_NULL.equals(updatedBucketOption),
         "Expected bucket option to be %s but was %s",
         S3GUARD_METASTORE_NULL, updatedBucketOption);
@@ -438,7 +438,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
       if (!paths.isEmpty()) {
         initS3AFileSystem(paths.get(0));
       } else {
-        LOG.debug("No path on command line, so not instantiating FS");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return getFilesystem() != null;
@@ -625,13 +625,13 @@ public abstract class S3GuardTool extends Configured implements Tool,
       String cmk = commands.getOptValue(CMK_FLAG);
       if (commands.getOpt(SSE_FLAG)) {
         getConf().setBoolean(S3GUARD_DDB_TABLE_SSE_ENABLED, true);
-        LOG.debug("SSE flag is passed to command {}", this.getName());
+        LOG.error("Temp", new RuntimeException());
         if (!StringUtils.isEmpty(cmk)) {
           if (SSE_DEFAULT_MASTER_KEY.equals(cmk)) {
             LOG.warn("Ignoring default DynamoDB table KMS Master Key " +
                 "alias/aws/dynamodb in configuration");
           } else {
-            LOG.debug("Setting customer managed CMK {}", cmk);
+            LOG.error("Temp", new RuntimeException());
             getConf().set(S3GUARD_DDB_TABLE_SSE_CMK, cmk);
           }
         }
@@ -806,7 +806,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
       } catch (FileNotFoundException e) {
         // indication that the table was not found
         println(out, "Metadata Store does not exist.");
-        LOG.debug("Failed to bind to store to be destroyed", e);
+        LOG.error("Temp", new RuntimeException());
         return SUCCESS;
       }
 
@@ -818,7 +818,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
       } catch (TableDeleteTimeoutException e) {
         LOG.warn("The table is been deleted but it is still (briefly)"
             + " listed as present in AWS");
-        LOG.debug("Timeout waiting for table disappearing", e);
+        LOG.error("Temp", new RuntimeException());
       }
       println(out, "Metadata store is deleted.");
       return SUCCESS;
@@ -1292,7 +1292,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
       // config to avoid side effects like creating the table if not exists
       Configuration unguardedConf = getConf();
       if (commands.getOpt(UNGUARDED_FLAG)) {
-        LOG.debug("Unguarded flag is passed to command :" + this.getName());
+        LOG.error("Temp", new RuntimeException());
         clearBucketOption(unguardedConf, fsURI.getHost(), S3_METADATA_STORE_IMPL);
         unguardedConf.set(S3_METADATA_STORE_IMPL, S3GUARD_METASTORE_NULL);
       }
@@ -1309,7 +1309,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
         // Caller cannot get the location of this bucket due to permissions
         // in their role or the bucket itself.
         // Note and continue.
-        LOG.debug("failed to get bucket location", e);
+        LOG.error("Temp", new RuntimeException());
         println(out, LOCATION_UNKNOWN);
       }
       boolean usingS3Guard = !(store instanceof NullMetadataStore);
@@ -2104,7 +2104,7 @@ public abstract class S3GuardTool extends Configured implements Tool,
       throw new ExitUtil.ExitException(E_USAGE, "No arguments provided");
     }
     final String subCommand = otherArgs[0];
-    LOG.debug("Executing command {}", subCommand);
+    LOG.error("Temp", new RuntimeException());
     switch (subCommand) {
     case Init.NAME:
       command = new Init(conf);
@@ -2170,18 +2170,18 @@ public abstract class S3GuardTool extends Configured implements Tool,
       exit(E_USAGE, e.getMessage());
     } catch (ExitUtil.ExitException e) {
       // explicitly raised exit code
-      LOG.debug("Exception raised", e);
+      LOG.error("Temp", new RuntimeException());
       exit(e.getExitCode(), e.toString());
     } catch (FileNotFoundException e) {
       // Bucket doesn't exist or similar - return code of 44, "404".
       errorln(e.toString());
-      LOG.debug("Not found:", e);
+      LOG.error("Temp", new RuntimeException());
       exit(EXIT_NOT_FOUND, e.toString());
     } catch (Throwable e) {
       if (e instanceof ExitCodeProvider) {
         // this exception provides its own exit code
         final ExitCodeProvider ec = (ExitCodeProvider) e;
-        LOG.debug("Exception raised", e);
+        LOG.error("Temp", new RuntimeException());
         exit(ec.getExitCode(), e.toString());
       } else {
         e.printStackTrace(System.err);

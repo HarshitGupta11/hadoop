@@ -612,7 +612,7 @@ public class BlockRecoveryWorker {
                 new RecoveryTaskContiguous(b).recover();
               }
             } catch (IOException e) {
-              LOG.warn("recover Block: {} FAILED: {}", b, e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         } finally {

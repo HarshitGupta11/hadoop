@@ -270,7 +270,7 @@ public class DelegationTokenRenewer extends AbstractService {
       try {
         delayedRemovalThread.join(1000);
       } catch (InterruptedException e) {
-        LOG.info("Interrupted while joining on delayed removal thread.", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -384,7 +384,7 @@ public class DelegationTokenRenewer extends AbstractService {
           tokenWithConf = queue.take();
           final TokenWithConf current = tokenWithConf;
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Cancelling token " + tokenWithConf.token.getService());
+            LOG.error("Temp", new RuntimeException());
           }
           // need to use doAs so that http can find the kerberos tgt
           UserGroupInformation.getLoginUser()
@@ -477,7 +477,7 @@ public class DelegationTokenRenewer extends AbstractService {
       return; // nothing to add
     }
 
-    LOG.debug("Registering tokens for renewal for: appId = {}", applicationId);
+    LOG.error("Temp", new RuntimeException());
 
     Collection<Token<?>> tokens = ts.getAllTokens();
     long now = System.currentTimeMillis();
@@ -493,7 +493,7 @@ public class DelegationTokenRenewer extends AbstractService {
     for (Token<?> token : tokens) {
       if (token.isManaged()) {
         if (token.getKind().equals(HDFS_DELEGATION_KIND)) {
-          LOG.info(applicationId + " found existing hdfs token " + token);
+          LOG.error("Temp", new RuntimeException());
           hasHdfsToken = true;
         }
         if (skipTokenRenewal(token)) {
@@ -598,7 +598,7 @@ public class DelegationTokenRenewer extends AbstractService {
           renewToken(dttr);
           setTimerForTokenRenewal(dttr);// set the next one
         } else {
-          LOG.info("The token was removed already. Token = [" +dttr +"]");
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (Exception e) {
         LOG.error("Exception renewing token" + token + ". Not rescheduled", e);
@@ -640,7 +640,7 @@ public class DelegationTokenRenewer extends AbstractService {
     // calculate timer time
     long expiresIn = token.expirationDate - System.currentTimeMillis();
     if (expiresIn <= 0) {
-      LOG.info("Will not renew token " + token);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     long renewIn = token.expirationDate - expiresIn/10; // little bit before the expiration
@@ -671,7 +671,7 @@ public class DelegationTokenRenewer extends AbstractService {
     } catch (InterruptedException e) {
       throw new IOException(e);
     }
-    LOG.info("Renewed delegation-token= [" + dttr + "]");
+    LOG.error("Temp", new RuntimeException());
   }
 
   // Request new hdfs token if the token is about to expire, and remove the old
@@ -703,12 +703,12 @@ public class DelegationTokenRenewer extends AbstractService {
               iter.remove();
               allTokens.remove(t.token);
               t.cancelTimer();
-              LOG.info("Removed expiring token " + t);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
       }
-      LOG.info("Token= (" + dttr + ") is expiring, request new token.");
+      LOG.error("Temp", new RuntimeException());
       requestNewHdfsDelegationTokenAsProxyUser(applicationIds, dttr.user,
           dttr.shouldCancelAtEnd);
     }
@@ -720,7 +720,7 @@ public class DelegationTokenRenewer extends AbstractService {
       InterruptedException {
     boolean incrTokenSequenceNo = false;
     if (!hasProxyUserPrivileges) {
-      LOG.info("RM proxy-user privilege is not enabled. Skip requesting hdfs tokens.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     // Get new hdfs tokens for this user
@@ -742,7 +742,7 @@ public class DelegationTokenRenewer extends AbstractService {
           for (ApplicationId applicationId : referringAppIds) {
             appTokens.get(applicationId).add(tokenToRenew);
           }
-          LOG.info("Received new token " + token);
+          LOG.error("Temp", new RuntimeException());
           incrTokenSequenceNo = true;
         }
       }
@@ -795,7 +795,7 @@ public class DelegationTokenRenewer extends AbstractService {
     if(t.shouldCancelAtEnd) {
       dtCancelThread.cancelToken(t.token, t.conf);
     } else {
-      LOG.info("Did not cancel "+t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -923,7 +923,7 @@ public class DelegationTokenRenewer extends AbstractService {
           try {
             wait(waitTimeMs);
           } catch (InterruptedException e) {
-            LOG.info("Delayed Deletion Thread Interrupted. Shutting it down");
+            LOG.error("Temp", new RuntimeException());
             return;
           }
         }

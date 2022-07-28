@@ -321,7 +321,7 @@ public class TestMRJobs {
   private void testSleepJobInternal(Configuration sleepConf,
       boolean useRemoteJar, boolean jobSubmissionShouldSucceed,
       ResourceViolation violation) throws Exception {
-    LOG.info("\n\n\nStarting testSleepJob: useRemoteJar=" + useRemoteJar);
+    LOG.error("Temp", new RuntimeException());
 
     if (!jobSubmissionShouldSucceed && violation == null) {
       Assert.fail("Test is misconfigured. jobSubmissionShouldSucceed is set"
@@ -655,7 +655,7 @@ public class TestMRJobs {
   public void testRandomWriter() throws IOException, InterruptedException,
       ClassNotFoundException {
     
-    LOG.info("\n\n\nStarting testRandomWriter().");
+    LOG.error("Temp", new RuntimeException());
     if (!(new File(MiniMRYarnCluster.APPJAR)).exists()) {
       LOG.info("MRAppJar " + MiniMRYarnCluster.APPJAR
                + " not found. Not running test.");
@@ -714,7 +714,7 @@ public class TestMRJobs {
   public void testFailingMapper() throws IOException, InterruptedException,
       ClassNotFoundException {
 
-    LOG.info("\n\n\nStarting testFailingMapper().");
+    LOG.error("Temp", new RuntimeException());
 
     if (!(new File(MiniMRYarnCluster.APPJAR)).exists()) {
       LOG.info("MRAppJar " + MiniMRYarnCluster.APPJAR
@@ -796,7 +796,7 @@ public class TestMRJobs {
   public void testSleepJobWithSecurityOn() throws IOException,
       InterruptedException, ClassNotFoundException {
 
-    LOG.info("\n\n\nStarting testSleepJobWithSecurityOn().");
+    LOG.error("Temp", new RuntimeException());
 
     if (!(new File(MiniMRYarnCluster.APPJAR)).exists()) {
       return;
@@ -817,9 +817,9 @@ public class TestMRJobs {
     // the same JVM.
     UserGroupInformation user = UserGroupInformation.getCurrentUser();
 
-    LOG.info("User name is " + user.getUserName());
+    LOG.error("Temp", new RuntimeException());
     for (Token<? extends TokenIdentifier> str : user.getTokens()) {
-      LOG.info("Token is " + str.encodeToUrlString());
+      LOG.error("Temp", new RuntimeException());
     }
     user.doAs(new PrivilegedExceptionAction<Void>() {
       @Override
@@ -882,7 +882,7 @@ public class TestMRJobs {
         break;
       }
       if (pollElapsed >= 60000) {
-        LOG.warn("application did not reach terminal state within 60 seconds");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
@@ -908,7 +908,7 @@ public class TestMRJobs {
                nmConf.getTrimmedStrings(YarnConfiguration.NM_LOG_DIRS)) {
         final Path absSyslogGlob =
             new Path(logDir + Path.SEPARATOR + syslogGlob);
-        LOG.info("Checking for glob: " + absSyslogGlob);
+        LOG.error("Temp", new RuntimeException());
         final FileStatus[] syslogs = localFs.globStatus(absSyslogGlob);
         for (FileStatus slog : syslogs) {
           boolean foundAppMaster = job.isUber();
@@ -994,7 +994,7 @@ public class TestMRJobs {
         archivesMap.get("distributed.fourth.jar"), "distributed.jar.inside4")));
 
       // Check the class loaders
-      LOG.info("Java Classpath: " + System.getProperty("java.class.path"));
+      LOG.error("Temp", new RuntimeException());
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
       // Both the file and the archive should have been added to classpath, so
       // both should be reachable via the class loader.
@@ -1202,7 +1202,7 @@ public class TestMRJobs {
         break;
       }
       if (pollElapsed >= 60000) {
-        LOG.warn("application did not reach terminal state within 60 seconds");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
@@ -1226,7 +1226,7 @@ public class TestMRJobs {
                nmConf.getTrimmedStrings(YarnConfiguration.NM_LOG_DIRS)) {
         final Path absSyslogGlob =
             new Path(logDir + Path.SEPARATOR + syslogGlob);
-        LOG.info("Checking for glob: " + absSyslogGlob);
+        LOG.error("Temp", new RuntimeException());
         for (FileStatus syslog : localFs.globStatus(absSyslogGlob)) {
           boolean foundAppMaster = false;
           boolean foundThreadDump = false;

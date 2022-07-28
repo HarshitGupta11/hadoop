@@ -139,7 +139,7 @@ public class FileOutputCommitter extends PathOutputCommitter {
     algorithmVersion =
         conf.getInt(FILEOUTPUTCOMMITTER_ALGORITHM_VERSION,
                     FILEOUTPUTCOMMITTER_ALGORITHM_VERSION_DEFAULT);
-    LOG.info("File Output Committer Algorithm version is " + algorithmVersion);
+    LOG.error("Temp", new RuntimeException());
     if (algorithmVersion != 1 && algorithmVersion != 2) {
       throw new IOException("Only 1 or 2 algorithm version is supported");
     }
@@ -357,7 +357,7 @@ public class FileOutputCommitter extends PathOutputCommitter {
         LOG.error("Mkdirs failed to create " + jobAttemptPath);
       }
     } else {
-      LOG.warn("Output Path is null in setupJob()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -441,7 +441,7 @@ public class FileOutputCommitter extends PathOutputCommitter {
         }
       }
     } else {
-      LOG.warn("Output Path is null in commitJob()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -536,7 +536,7 @@ public class FileOutputCommitter extends PathOutputCommitter {
         }
       }
     } else {
-      LOG.warn("Output Path is null in cleanupJob()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -616,15 +616,15 @@ public class FileOutputCommitter extends PathOutputCommitter {
                 "Deleting the temporary directory of '%s': '%s'",
                 attemptId, taskAttemptPath));
             if(!fs.delete(taskAttemptPath, true)) {
-              LOG.warn("Could not delete " + taskAttemptPath);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
       } else {
-        LOG.warn("No Output found for " + attemptId);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.warn("Output Path is null in commitTask()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -646,10 +646,10 @@ public class FileOutputCommitter extends PathOutputCommitter {
       }
       FileSystem fs = taskAttemptPath.getFileSystem(context.getConfiguration());
       if(!fs.delete(taskAttemptPath, true)) {
-        LOG.warn("Could not delete "+taskAttemptPath);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.warn("Output Path is null in abortTask()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -702,7 +702,7 @@ public class FileOutputCommitter extends PathOutputCommitter {
           previousAttempt, context);
       FileSystem fs = previousCommittedTaskPath.getFileSystem(context.getConfiguration());
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Trying to recover task from " + previousCommittedTaskPath);
+        LOG.error("Temp", new RuntimeException());
       }
       if (algorithmVersion == 1) {
         if (fs.exists(previousCommittedTaskPath)) {
@@ -719,7 +719,7 @@ public class FileOutputCommitter extends PathOutputCommitter {
                 " to " + committedTaskPath);
           }
         } else {
-            LOG.warn(attemptId+" had no output to recover.");
+            LOG.error("Temp", new RuntimeException());
         }
       } else {
         // essentially a no-op, but for backwards compatibility
@@ -732,10 +732,10 @@ public class FileOutputCommitter extends PathOutputCommitter {
           mergePaths(fs, from, outputPath, context);
         } catch (FileNotFoundException ignored) {
         }
-        LOG.info("Done recovering task " + attemptId);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.warn("Output Path is null in recoverTask()");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -145,7 +145,7 @@ public class Nfs3Utils {
     }
     
     if (RpcProgramNfs3.LOG.isDebugEnabled()) {
-      RpcProgramNfs3.LOG.debug(WRITE_RPC_END + xid);
+      RpcProgramNfs3.LOG.error("Temp", new RuntimeException());
     }
     ByteBuf outBuf = XDR.writeMessageTcp(out, true);
     channel.writeAndFlush(outBuf);
@@ -153,7 +153,7 @@ public class Nfs3Utils {
   
   public static void writeChannelCommit(Channel channel, XDR out, int xid) {
     if (RpcProgramNfs3.LOG.isDebugEnabled()) {
-      RpcProgramNfs3.LOG.debug("Commit done:" + xid);
+      RpcProgramNfs3.LOG.error("Temp", new RuntimeException());
     }
     ByteBuf outBuf = XDR.writeMessageTcp(out, true);
     channel.writeAndFlush(outBuf);

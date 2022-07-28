@@ -58,7 +58,7 @@ public class S3GuardFsckViolationHandler {
 
   public void logError(S3GuardFsck.ComparePair comparePair) throws IOException {
     if (!comparePair.containsViolation()) {
-      LOG.debug("There is no violation in the compare pair: {}", comparePair);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -73,7 +73,7 @@ public class S3GuardFsckViolationHandler {
 
   public void doFix(S3GuardFsck.ComparePair comparePair) throws IOException {
     if (!comparePair.containsViolation()) {
-      LOG.debug("There is no violation in the compare pair: {}", comparePair);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -83,7 +83,7 @@ public class S3GuardFsckViolationHandler {
 
     handleComparePair(comparePair, sB, HandleMode.FIX);
 
-    LOG.info(sB.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

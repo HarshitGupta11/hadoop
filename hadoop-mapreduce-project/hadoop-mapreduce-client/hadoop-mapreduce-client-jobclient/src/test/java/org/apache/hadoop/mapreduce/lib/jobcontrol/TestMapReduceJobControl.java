@@ -126,7 +126,7 @@ public class TestMapReduceJobControl extends HadoopTestCase {
 
   @Test
   public void testJobControlWithFailJob() throws Exception {
-    LOG.info("Starting testJobControlWithFailJob");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = createJobConf();
 
     cleanupData(conf);
@@ -150,7 +150,7 @@ public class TestMapReduceJobControl extends HadoopTestCase {
 
   @Test
   public void testJobControlWithKillJob() throws Exception {
-    LOG.info("Starting testJobControlWithKillJob");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = createJobConf();
     cleanupData(conf);
@@ -189,7 +189,7 @@ public class TestMapReduceJobControl extends HadoopTestCase {
 
   @Test
   public void testJobControl() throws Exception {
-    LOG.info("Starting testJobControl");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = createJobConf();
 
@@ -209,7 +209,7 @@ public class TestMapReduceJobControl extends HadoopTestCase {
   
   @Test(timeout = 30000)
   public void testControlledJob() throws Exception {
-    LOG.info("Starting testControlledJob");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = createJobConf();
     cleanupData(conf);

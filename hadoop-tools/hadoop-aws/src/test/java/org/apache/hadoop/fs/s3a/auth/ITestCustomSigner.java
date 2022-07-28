@@ -73,7 +73,7 @@ public class ITestCustomSigner extends AbstractS3ATestBase {
         fs.getBucket());
     endpoint = fs.getConf()
         .get(Constants.ENDPOINT, Constants.CENTRAL_ENDPOINT);
-    LOG.info("Test endpoint is {}", endpoint);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -166,13 +166,13 @@ public class ITestCustomSigner extends AbstractS3ATestBase {
 
     public CustomSigner() {
       int c = INSTANTIATION_COUNT.incrementAndGet();
-      LOG.info("Creating Signer #{}", c);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
     public void sign(SignableRequest<?> request, AWSCredentials credentials) {
       int c = INVOCATION_COUNT.incrementAndGet();
-      LOG.info("Signing request #{}", c);
+      LOG.error("Temp", new RuntimeException());
 
       String host = request.getEndpoint().getHost();
       String bucketName = host.split("\\.")[0];

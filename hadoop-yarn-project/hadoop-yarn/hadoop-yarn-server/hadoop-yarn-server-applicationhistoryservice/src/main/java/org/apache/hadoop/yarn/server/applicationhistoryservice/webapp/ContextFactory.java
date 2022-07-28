@@ -100,7 +100,7 @@ public final class ContextFactory {
         try {
           return newContext(classes, properties);
         } catch (Exception e) {
-          LOG.warn("Error while Creating JAXBContext", e);
+          LOG.error("Temp", new RuntimeException());
           throw e;
         }
       }
@@ -113,7 +113,7 @@ public final class ContextFactory {
         }
       }
     } catch(Exception e) {
-      LOG.warn("Error while Creating JAXBContext", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
     return cacheContext;

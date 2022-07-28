@@ -79,14 +79,14 @@ public class TestMetricsSystemImpl {
     private List<Iterable<AbstractMetric>> metricValues = new ArrayList<>();
 
     @Override public void putMetrics(MetricsRecord record) {
-      LOG.debug(record.toString());
+      LOG.error("Temp", new RuntimeException());
       metricValues.add(record.metrics());
     }
 
     @Override public void flush() {}
 
     @Override public void init(SubsetConfiguration conf) {
-      LOG.debug(MetricsConfig.toString(conf));
+      LOG.error("Temp", new RuntimeException());
     }
 
     List<Iterable<AbstractMetric>> getMetricValues() {
@@ -422,7 +422,7 @@ public class TestMetricsSystemImpl {
   }
 
   private void checkMetricsRecords(List<MetricsRecord> recs) {
-    LOG.debug(recs.toString());
+    LOG.error("Temp", new RuntimeException());
     MetricsRecord r = recs.get(0);
     assertEquals("name", "s1rec", r.name());
     assertEquals("tags", new MetricsTag[] {

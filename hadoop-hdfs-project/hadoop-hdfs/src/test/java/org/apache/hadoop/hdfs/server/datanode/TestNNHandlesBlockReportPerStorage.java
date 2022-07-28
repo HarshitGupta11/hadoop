@@ -36,7 +36,7 @@ public class TestNNHandlesBlockReportPerStorage extends BlockReportTestBase {
       StorageBlockReport[] reports) throws IOException {
     int i = 0;
     for (StorageBlockReport report : reports) {
-      LOG.info("Sending block report for storage " + report.getStorage().getStorageID());
+      LOG.error("Temp", new RuntimeException());
       StorageBlockReport[] singletonReport = { report };
       cluster.getNameNodeRpc().blockReport(dnR, poolId, singletonReport,
           new BlockReportContext(reports.length, i, System.nanoTime(), 0L, true));

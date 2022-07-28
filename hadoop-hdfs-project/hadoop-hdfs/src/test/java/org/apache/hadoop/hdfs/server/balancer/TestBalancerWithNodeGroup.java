@@ -184,7 +184,7 @@ public class TestBalancerWithNodeGroup {
     assertEquals(ExitStatus.SUCCESS.getExitCode(), r);
 
     waitForHeartBeat(totalUsedSpace, totalCapacity);
-    LOG.info("Rebalancing with default factor.");
+    LOG.error("Temp", new RuntimeException());
     waitForBalancer(totalUsedSpace, totalCapacity);
   }
   
@@ -198,7 +198,7 @@ public class TestBalancerWithNodeGroup {
     assertEquals("Balancer did not exit with NO_MOVE_PROGRESS",
         ExitStatus.NO_MOVE_PROGRESS.getExitCode(), r);
     waitForHeartBeat(totalUsedSpace, totalCapacity);
-    LOG.info("Rebalancing with default factor.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private Set<ExtendedBlock> getBlocksOnRack(List<LocatedBlock> blks, String rack) {

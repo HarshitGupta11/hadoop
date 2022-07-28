@@ -334,7 +334,7 @@ class StripedReader {
           }
         }
       } catch (InterruptedException e) {
-        LOG.info("Read data interrupted.", e);
+        LOG.error("Temp", new RuntimeException());
         cancelReads(futures.keySet());
         clearFuturesAndService();
         break;
@@ -439,7 +439,7 @@ class StripedReader {
         );
         futures.remove(future);
       } catch (InterruptedException e) {
-        LOG.info("Clear stale futures from service is interrupted.", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

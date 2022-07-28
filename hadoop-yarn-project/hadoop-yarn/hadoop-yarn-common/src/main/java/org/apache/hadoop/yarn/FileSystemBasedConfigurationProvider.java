@@ -55,13 +55,13 @@ public class FileSystemBasedConfigurationProvider
         YarnConfiguration.NM_CONFIGURATION_FILES.contains(name)) {
       filePath = new Path(this.configDir, name);
       if (!fs.exists(filePath)) {
-        LOG.info(filePath + " not found");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
     } else {
       filePath = new Path(name);
       if (!fs.exists(filePath)) {
-        LOG.info(filePath + " not found");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
     }

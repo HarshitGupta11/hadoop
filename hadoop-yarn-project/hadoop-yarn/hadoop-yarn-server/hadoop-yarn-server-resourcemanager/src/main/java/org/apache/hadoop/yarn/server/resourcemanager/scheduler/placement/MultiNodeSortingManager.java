@@ -60,7 +60,7 @@ public class MultiNodeSortingManager<N extends SchedulerNode>
 
   @Override
   public void serviceInit(Configuration configuration) throws Exception {
-    LOG.info("Initializing NodeSortingService=" + getName());
+    LOG.error("Temp", new RuntimeException());
     super.serviceInit(configuration);
     this.conf = configuration;
     this.skipNodeInterval = YarnConfiguration.getSkipNodeInterval(conf);
@@ -68,7 +68,7 @@ public class MultiNodeSortingManager<N extends SchedulerNode>
 
   @Override
   public void serviceStart() throws Exception {
-    LOG.info("Starting NodeSortingService=" + getName());
+    LOG.error("Temp", new RuntimeException());
     createAllPolicies();
     super.serviceStart();
   }

@@ -258,6 +258,6 @@ public class TestClientDistributedCacheManager {
       }
       writer = null;
     }
-    LOG.info("created: " + p);
+    LOG.error("Temp", new RuntimeException());
   }
 }

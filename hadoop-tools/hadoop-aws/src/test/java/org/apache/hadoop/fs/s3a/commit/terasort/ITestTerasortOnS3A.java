@@ -341,7 +341,7 @@ public class ITestTerasortOnS3A extends AbstractYarnClusterITest {
     String text = results.toString();
     File resultsFile = File.createTempFile("results", ".csv");
     FileUtils.write(resultsFile, text, StandardCharsets.UTF_8);
-    LOG.info("Results are in {}\n{}", resultsFile, text);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -365,11 +365,11 @@ public class ITestTerasortOnS3A extends AbstractYarnClusterITest {
    * @throws Exception any failure.
    */
   protected void dumpOutputTree(Path path) throws Exception {
-    LOG.info("Files under output directory {}", path);
+    LOG.error("Temp", new RuntimeException());
     try {
       lsR(getFileSystem(), path, true);
     } catch (FileNotFoundException e) {
-      LOG.info("Output directory {} not found", path);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

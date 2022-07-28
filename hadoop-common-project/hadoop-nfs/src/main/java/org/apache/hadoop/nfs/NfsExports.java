@@ -161,7 +161,7 @@ public class NfsExports {
     mMatches = new ArrayList<Match>(matchStrings.length);
     for(String mStr : matchStrings) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Processing match string '" + mStr + "'");
+        LOG.error("Temp", new RuntimeException());
       }
       mStr = mStr.trim();
       if(!mStr.isEmpty()) {
@@ -376,17 +376,17 @@ public class NfsExports {
     }
     if (host.equals("*")) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using match all for '" + host + "' and " + privilege);
+        LOG.error("Temp", new RuntimeException());
       }
       return new AnonymousMatch(privilege);
     } else if (CIDR_FORMAT_SHORT.matcher(host).matches()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using CIDR match for '" + host + "' and " + privilege);
+        LOG.error("Temp", new RuntimeException());
       }
       return new CIDRMatch(privilege, new SubnetUtils(host).getInfo());
     } else if (CIDR_FORMAT_LONG.matcher(host).matches()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using CIDR match for '" + host + "' and " + privilege);
+        LOG.error("Temp", new RuntimeException());
       }
       String[] pair = host.split("/");
       return new CIDRMatch(privilege,
@@ -394,12 +394,12 @@ public class NfsExports {
     } else if (host.contains("*") || host.contains("?") || host.contains("[")
         || host.contains("]") || host.contains("(") || host.contains(")")) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using Regex match for '" + host + "' and " + privilege);
+        LOG.error("Temp", new RuntimeException());
       }
       return new RegexMatch(privilege, host);
     } else if (HOSTNAME_FORMAT.matcher(host).matches()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Using exact match for '" + host + "' and " + privilege);
+        LOG.error("Temp", new RuntimeException());
       }
       return new ExactMatch(privilege, host);
     } else {

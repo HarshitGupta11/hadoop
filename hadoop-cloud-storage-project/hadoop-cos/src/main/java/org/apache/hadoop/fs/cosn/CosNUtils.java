@@ -98,7 +98,7 @@ public final class CosNUtils {
       throw new IllegalArgumentException("class " + credClass + " " +
           ABSTRACT_CREDENTIAL_PROVIDER);
     }
-    LOG.debug("Credential Provider class: " + credClass.getName());
+    LOG.error("Temp", new RuntimeException());
 
     try {
       // new credClass()

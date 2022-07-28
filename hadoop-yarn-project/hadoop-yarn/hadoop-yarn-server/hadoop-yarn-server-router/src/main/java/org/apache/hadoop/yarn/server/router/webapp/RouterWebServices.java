@@ -264,7 +264,7 @@ public class RouterWebServices implements RMWebServiceProtocol {
       try {
         // We should init the pipeline instance after it is created and then
         // add to the map, to ensure thread safe.
-        LOG.info("Initializing request processing pipeline for user: {}", user);
+        LOG.error("Temp", new RuntimeException());
 
         RESTRequestInterceptor interceptorChain =
             this.createRequestInterceptorChain();

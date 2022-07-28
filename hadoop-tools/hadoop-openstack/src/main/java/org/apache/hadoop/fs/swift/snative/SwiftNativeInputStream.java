@@ -144,7 +144,7 @@ class SwiftNativeInputStream extends FSInputStream {
     } catch (IOException e) {
       String msg = "IOException while reading " + path
                    + ": " +e + ", attempting to reopen.";
-      LOG.debug(msg, e);
+      LOG.error("Temp", new RuntimeException());
       if (reopenBuffer()) {
         result = httpStream.read();
       }
@@ -173,7 +173,7 @@ class SwiftNativeInputStream extends FSInputStream {
       //other IO problems are viewed as transient and re-attempted
       LOG.info("Received IOException while reading '" + path +
                "', attempting to reopen: " + e);
-      LOG.debug("IOE on read()" + e, e);
+      LOG.error("Temp", new RuntimeException());
       if (reopenBuffer()) {
         result = httpStream.read(b, off, len);
       }
@@ -223,7 +223,7 @@ class SwiftNativeInputStream extends FSInputStream {
       if (httpStream != null) {
         reasonClosed = reason;
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Closing HTTP input stream : " + reason);
+          LOG.error("Temp", new RuntimeException());
         }
         httpStream.close();
       }
@@ -314,12 +314,12 @@ class SwiftNativeInputStream extends FSInputStream {
                 + "; offset="+offset);
     }
     if (offset == 0) {
-      LOG.debug("seek is no-op");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
     if (offset < 0) {
-      LOG.debug("seek is backwards");
+      LOG.error("Temp", new RuntimeException());
     } else if ((rangeOffset + offset < bufferSize)) {
       //if the seek is in  range of that requested, scan forwards
       //instead of closing and re-opening a new HTTP connection
@@ -329,11 +329,11 @@ class SwiftNativeInputStream extends FSInputStream {
                        + "offset= %d ; bufferOffset=%d",
                        pos, targetPos, offset, rangeOffset);
       try {
-        LOG.debug("chomping ");
+        LOG.error("Temp", new RuntimeException());
         chompBytes(offset);
       } catch (IOException e) {
         //this is assumed to be recoverable with a seek -or more likely to fail
-        LOG.debug("while chomping ",e);
+        LOG.error("Temp", new RuntimeException());
       }
       if (targetPos - pos == 0) {
         LOG.trace("chomping successful");
@@ -342,7 +342,7 @@ class SwiftNativeInputStream extends FSInputStream {
       LOG.trace("chomping failed");
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Seek is beyond buffer size of " + bufferSize);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

@@ -644,7 +644,7 @@ public class TaskLog {
     if (!LOG_DIR.exists()) {
       boolean b = LOG_DIR.mkdirs();
       if (!b) {
-        LOG.debug("mkdirs failed. Ignoring.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return LOG_DIR;

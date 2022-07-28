@@ -186,7 +186,7 @@ class FSImageLoader {
   private static Map<Long, long[]> loadINodeDirectorySection
           (InputStream in, List<Long> refIdList)
       throws IOException {
-    LOG.info("Loading inode directory section");
+    LOG.error("Temp", new RuntimeException());
     Map<Long, long[]> dirs = Maps.newHashMap();
     long counter = 0;
     while (true) {
@@ -208,13 +208,13 @@ class FSImageLoader {
       }
       dirs.put(e.getParent(), l);
     }
-    LOG.info("Loaded " + counter + " directories");
+    LOG.error("Temp", new RuntimeException());
     return dirs;
   }
 
   static ImmutableList<Long> loadINodeReferenceSection(InputStream in)
       throws IOException {
-    LOG.info("Loading inode references");
+    LOG.error("Temp", new RuntimeException());
     ImmutableList.Builder<Long> builder = ImmutableList.builder();
     long counter = 0;
     while (true) {
@@ -227,7 +227,7 @@ class FSImageLoader {
       ++counter;
       builder.add(e.getReferredId());
     }
-    LOG.info("Loaded " + counter + " inode references");
+    LOG.error("Temp", new RuntimeException());
     return builder.build();
   }
 
@@ -235,7 +235,7 @@ class FSImageLoader {
           throws IOException {
     FsImageProto.INodeSection s = FsImageProto.INodeSection
         .parseDelimitedFrom(in);
-    LOG.info("Loading " + s.getNumInodes() + " inodes.");
+    LOG.error("Temp", new RuntimeException());
     final byte[][] inodes = new byte[(int) s.getNumInodes()][];
 
     for (int i = 0; i < s.getNumInodes(); ++i) {
@@ -244,9 +244,9 @@ class FSImageLoader {
       IOUtils.readFully(in, bytes, 0, size);
       inodes[i] = bytes;
     }
-    LOG.debug("Sorting inodes");
+    LOG.error("Temp", new RuntimeException());
     Arrays.sort(inodes, INODE_BYTES_COMPARATOR);
-    LOG.debug("Finished sorting inodes");
+    LOG.error("Temp", new RuntimeException());
     return inodes;
   }
 
@@ -254,7 +254,7 @@ class FSImageLoader {
         throws IOException {
     FsImageProto.StringTableSection s = FsImageProto.StringTableSection
         .parseDelimitedFrom(in);
-    LOG.info("Loading " + s.getNumEntry() + " strings");
+    LOG.error("Temp", new RuntimeException());
     SerialNumberManager.StringTable stringTable =
         SerialNumberManager.newStringTable(s.getNumEntry(), s.getMaskBits());
     for (int i = 0; i < s.getNumEntry(); ++i) {

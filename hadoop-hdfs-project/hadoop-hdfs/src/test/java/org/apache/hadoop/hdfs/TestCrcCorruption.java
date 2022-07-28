@@ -137,7 +137,7 @@ public class TestCrcCorruption {
         fail("Write did not fail");
       } catch (IOException ioe) {
         // we should get an ioe
-        DFSClient.LOG.info("Got expected exception", ioe);
+        DFSClient.LOG.error("Temp", new RuntimeException());
       }
     } finally {
       if (cluster != null) { cluster.shutdown(); }
@@ -180,7 +180,7 @@ public class TestCrcCorruption {
         ReplicaInfo replica = replicas.get(idx);
         ExtendedBlock eb = new ExtendedBlock(bpid, replica);
         if (idx % 3 == 0) {
-          LOG.info("Deliberately removing meta for block " + eb);
+          LOG.error("Temp", new RuntimeException());
           cluster.deleteMeta(dnIdx, eb);
         } else if (idx % 3 == 1) {
           final int newSize = 2;  // bytes
@@ -198,7 +198,7 @@ public class TestCrcCorruption {
       //
       assertTrue("Corrupted replicas not handled properly.",
                  util.checkFiles(fs, "/srcdat"));
-      LOG.info("All File still have a valid replica");
+      LOG.error("Temp", new RuntimeException());
 
       //
       // set replication factor back to 1. This causes only one replica of
@@ -294,7 +294,7 @@ public class TestCrcCorruption {
                           true);
         fail("Didn't get exception");
       } catch (IOException ioe) {
-        DFSClient.LOG.info("Got expected exception", ioe);
+        DFSClient.LOG.error("Temp", new RuntimeException());
       }
 
     } finally {

@@ -182,8 +182,8 @@ public class WriteOperationHelper implements WriteOperations {
    */
   void operationRetried(String text, Exception ex, int retries,
       boolean idempotent) {
-    LOG.info("{}: Retried {}: {}", text, retries, ex.toString());
-    LOG.debug("Stack", ex);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     owner.operationRetried(text, ex, retries, idempotent);
   }
 
@@ -285,7 +285,7 @@ public class WriteOperationHelper implements WriteOperations {
    * @param ex Any exception raised which triggered the failure.
    */
   public void writeFailed(Exception ex) {
-    LOG.debug("Write to {} failed", this, ex);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -308,7 +308,7 @@ public class WriteOperationHelper implements WriteOperations {
    */
   @Retries.RetryTranslated
   public String initiateMultiPartUpload(String destKey) throws IOException {
-    LOG.debug("Initiating Multipart upload to {}", destKey);
+    LOG.error("Temp", new RuntimeException());
     try (AuditSpan span = activateAuditSpan()) {
       return retry("initiate MultiPartUpload", destKey, true,
           () -> {
@@ -458,16 +458,16 @@ public class WriteOperationHelper implements WriteOperations {
   @Retries.RetryTranslated
   public int abortMultipartUploadsUnderPath(String prefix)
       throws IOException {
-    LOG.debug("Aborting multipart uploads under {}", prefix);
+    LOG.error("Temp", new RuntimeException());
     int count = 0;
     List<MultipartUpload> multipartUploads = listMultipartUploads(prefix);
-    LOG.debug("Number of outstanding uploads: {}", multipartUploads.size());
+    LOG.error("Temp", new RuntimeException());
     for (MultipartUpload upload: multipartUploads) {
       try {
         abortMultipartUpload(upload);
         count++;
       } catch (FileNotFoundException e) {
-        LOG.debug("Already aborted: {}", upload.getKey(), e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return count;
@@ -722,7 +722,7 @@ public class WriteOperationHelper implements WriteOperations {
     if (LOG.isDebugEnabled()) {
       LOG.debug("Initiating select call {} {}",
           source, request.getExpression());
-      LOG.debug(SelectBinding.toString(request));
+      LOG.error("Temp", new RuntimeException());
     }
     return invoker.retry(
         action,

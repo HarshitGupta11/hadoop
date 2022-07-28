@@ -57,7 +57,7 @@ public class RMStateStoreUtils {
     try {
       identifierData.readFields(fsIn);
     } catch (InvalidProtocolBufferException e) {
-      LOG.warn("Recovering old formatted token");
+      LOG.error("Temp", new RuntimeException());
       fsIn.reset();
       YARNDelegationTokenIdentifier identifier =
           new RMDelegationTokenIdentifier();

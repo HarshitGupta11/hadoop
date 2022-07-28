@@ -202,7 +202,7 @@ public abstract class FileSystemCounterGroup<C extends Counter>
     }
     catch (Exception e) {
       if (create) throw new IllegalArgumentException(e);
-      LOG.warn(counterName + " is not a recognized counter.");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

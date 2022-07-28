@@ -95,14 +95,14 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
       unwrappedDaoClasses = conf.getClasses(
           YarnConfiguration.YARN_HTTP_WEBAPP_CUSTOM_UNWRAPPED_DAO_CLASSES);
     } catch (Exception e) {
-      LOG.warn("Failed to load custom dao class: " + e);
+      LOG.error("Temp", new RuntimeException());
       loadCustom = false;
     }
 
     if (loadCustom) {
       if (daoClasses != null) {
         Collections.addAll(finalcTypesList, daoClasses);
-        LOG.debug("Added custom dao classes: " + Arrays.toString(daoClasses));
+        LOG.error("Temp", new RuntimeException());
       }
       if (unwrappedDaoClasses != null) {
         Collections.addAll(finalRootUnwrappedTypesList, unwrappedDaoClasses);

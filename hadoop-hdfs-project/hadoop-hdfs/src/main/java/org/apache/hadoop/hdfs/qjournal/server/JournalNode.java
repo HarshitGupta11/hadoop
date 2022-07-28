@@ -102,7 +102,7 @@ public class JournalNode implements Tool, Configurable, JournalNodeMXBean {
     Journal journal = journalsById.get(jid);
     if (journal == null) {
       File logDir = getLogDir(jid, nameServiceId);
-      LOG.info("Initializing journal in directory " + logDir);
+      LOG.error("Temp", new RuntimeException());
       journal = new Journal(conf, logDir, jid, startOpt, new ErrorReporter());
       journalsById.put(jid, journal);
       // Start SyncJouranl thread, if JournalNode Sync is enabled
@@ -284,7 +284,7 @@ public class JournalNode implements Tool, Configurable, JournalNodeMXBean {
       try {
         httpServer.stop();
       } catch (IOException ioe) {
-        LOG.warn("Unable to stop HTTP server for " + this, ioe);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     

@@ -425,9 +425,9 @@ public class DirectoryScanner implements Runnable {
    * running, and an error is logged.
    */
   void shutdown() {
-    LOG.info("Shutdown has been called");
+    LOG.error("Temp", new RuntimeException());
     if (!shouldRun.getAndSet(false)) {
-      LOG.warn("Shutdown has been called, but periodic scanner not started");
+      LOG.error("Temp", new RuntimeException());
     }
     if (masterThread != null) {
       masterThread.shutdown();
@@ -461,7 +461,7 @@ public class DirectoryScanner implements Runnable {
    */
   @VisibleForTesting
   public void reconcile() throws IOException {
-    LOG.debug("reconcile start DirectoryScanning");
+    LOG.error("Temp", new RuntimeException());
     scan();
 
     // HDFS-14476: run checkAndUpdate with batch to avoid holding the lock too
@@ -584,7 +584,7 @@ public class DirectoryScanner implements Runnable {
       synchronized (diffs) {
         diffs.addAll(bpid, diffRecord);
       }
-      LOG.info("Scan Results: {}", statsRecord);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -652,7 +652,7 @@ public class DirectoryScanner implements Runnable {
             break;
           }
         } catch (Exception ex) {
-          LOG.warn("Error compiling report. Continuing.", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (IOException e) {
@@ -735,7 +735,7 @@ public class DirectoryScanner implements Runnable {
         if (runningTime >= throttleLimitMsPerSec) {
           final long sleepTime;
           if (runningTime >= 1000L) {
-            LOG.warn("Unable to throttle within the second. Blocking for 1s.");
+            LOG.error("Temp", new RuntimeException());
             sleepTime = 1000L;
           } else {
             // Sleep for the expected time plus any time processing ran over

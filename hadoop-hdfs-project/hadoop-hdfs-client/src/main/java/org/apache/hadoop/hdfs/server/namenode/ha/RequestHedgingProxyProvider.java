@@ -179,7 +179,7 @@ public class RequestHedgingProxyProvider<T> extends
       // thread from stepping to following codes.
       try {
         Object retVal = method.invoke(currentUsedProxy.proxy, args);
-        LOG.debug("Invocation successful on [{}]", currentUsedProxy.proxyInfo);
+        LOG.error("Temp", new RuntimeException());
         return retVal;
       } catch (InvocationTargetException ex) {
         Exception unwrappedException = unwrapInvocationTargetException(ex);
@@ -239,9 +239,9 @@ public class RequestHedgingProxyProvider<T> extends
    */
   private void logProxyException(Exception ex, String proxyInfo) {
     if (isStandbyException(ex)) {
-      LOG.debug("Invocation returned standby exception on [{}]", proxyInfo, ex);
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.warn("Invocation returned exception on [{}]", proxyInfo, ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

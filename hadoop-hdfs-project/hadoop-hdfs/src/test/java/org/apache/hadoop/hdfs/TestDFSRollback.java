@@ -60,7 +60,7 @@ public class TestDFSRollback {
    * Writes an INFO log message containing the parameters.
    */
   void log(String label, int numDirs) {
-    LOG.info("============================================================");
+    LOG.error("Temp", new RuntimeException());
     LOG.info("***TEST " + (testCounter++) + "*** " 
              + label + ":"
              + " numDirs="+numDirs);
@@ -346,7 +346,7 @@ public class TestDFSRollback {
 
   @After
   public void tearDown() throws Exception {
-    LOG.info("Shutting down MiniDFSCluster");
+    LOG.error("Temp", new RuntimeException());
     if (cluster != null) {
       cluster.shutdown();
       cluster = null;

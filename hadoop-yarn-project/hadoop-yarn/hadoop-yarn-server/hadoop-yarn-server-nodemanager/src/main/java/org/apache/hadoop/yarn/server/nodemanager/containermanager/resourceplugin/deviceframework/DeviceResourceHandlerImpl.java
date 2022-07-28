@@ -135,7 +135,7 @@ public class DeviceResourceHandlerImpl implements ResourceHandler {
     String containerIdStr = container.getContainerId().toString();
     DeviceMappingManager.DeviceAllocation allocation =
         deviceMappingManager.assignDevices(resourceName, container);
-    LOG.debug("Allocated to {}: {}", containerIdStr, allocation);
+    LOG.error("Temp", new RuntimeException());
     DeviceRuntimeSpec spec;
     try {
       spec = devicePlugin.onDevicesAllocated(
@@ -147,7 +147,7 @@ public class DeviceResourceHandlerImpl implements ResourceHandler {
 
     // cgroups operation based on allocation
     if (spec != null) {
-      LOG.warn("Runtime spec in non-Docker container is not supported yet!");
+      LOG.error("Temp", new RuntimeException());
     }
     // Create device cgroups for the container
     cGroupsHandler.createCGroup(CGroupsHandler.CGroupController.DEVICES,
@@ -230,7 +230,7 @@ public class DeviceResourceHandlerImpl implements ResourceHandler {
     } catch (PrivilegedOperationException e) {
       cGroupsHandler.deleteCGroup(CGroupsHandler.CGroupController.DEVICES,
           containerIdStr);
-      LOG.warn("Could not update cgroup for container", e);
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException(e);
     }
   }
@@ -280,7 +280,7 @@ public class DeviceResourceHandlerImpl implements ResourceHandler {
       int major = device.getMajorNumber();
       int minor = device.getMinorNumber();
       if (major == -1 && minor == -1) {
-        LOG.warn("Non device number provided, cannot decide the device type");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       // Get type from the device numbers
@@ -289,14 +289,14 @@ public class DeviceResourceHandlerImpl implements ResourceHandler {
     }
     DeviceType deviceType;
     try {
-      LOG.debug("Try to get device type from device path: {}", devName);
+      LOG.error("Temp", new RuntimeException());
       String output = shellWrapper.getDeviceFileType(devName);
-      LOG.debug("stat output:{}", output);
+      LOG.error("Temp", new RuntimeException());
       deviceType = output.startsWith("c") ? DeviceType.CHAR : DeviceType.BLOCK;
     } catch (IOException e) {
       String msg =
           "Failed to get device type from stat " + devName;
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return deviceType;

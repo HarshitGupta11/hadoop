@@ -252,7 +252,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
      */
     public static void logAppSummary(RMApp app) {
       if (app != null) {
-        LOG.info(createAppSummary(app).toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -378,7 +378,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
             .handle(new RMAppEvent(applicationId, RMAppEventType.START));
       }
     } catch (Exception e) {
-      LOG.warn("Unable to parse credentials for " + applicationId, e);
+      LOG.error("Temp", new RuntimeException());
       // Sending APP_REJECTED is fine, since we assume that the
       // RMApp is in NEW state and thus we haven't yet informed the
       // scheduler about the existence of the application
@@ -532,7 +532,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
         null) {
       String message = "Application with id " + applicationId
           + " is already present! Cannot add a duplicate!";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(message);
     }
 
@@ -641,7 +641,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
     // recover applications
     Map<ApplicationId, ApplicationStateData> appStates =
         state.getApplicationState();
-    LOG.info("Recovering " + appStates.size() + " applications");
+    LOG.error("Temp", new RuntimeException());
 
     int count = 0;
 
@@ -675,7 +675,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
         moveApplicationAcrossQueue(applicationId,
             event.getTargetQueueForMove());
       } catch (YarnException e) {
-        LOG.warn("Move Application has failed: " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
       break;
     default :
@@ -931,7 +931,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
     Set<String> applicationTags = context.getApplicationTags();
     String userNameFromAppTag = getUserNameFromApplicationTag(applicationTags);
     if (userNameFromAppTag != null) {
-      LOG.debug("Found 'userid' '{}' in application tag", userNameFromAppTag);
+      LOG.error("Temp", new RuntimeException());
       UserGroupInformation callerUGI = UserGroupInformation
               .createRemoteUser(user);
       // check if the actual user has rights to submit application to the
@@ -939,7 +939,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
       ApplicationPlacementContext appPlacementContext = placementManager
               .placeApplication(context, userNameFromAppTag);
       if (appPlacementContext == null) {
-        LOG.warn("No rule was found for user '{}'", userNameFromAppTag);
+        LOG.error("Temp", new RuntimeException());
         return usernameUsedForPlacement;
       }
       String queue = appPlacementContext.getQueue();
@@ -956,7 +956,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
                 userNameFromAppTag, queue, user);
       }
     } else {
-      LOG.warn("'userid' was not found in application tags");
+      LOG.error("Temp", new RuntimeException());
     }
     return usernameUsedForPlacement;
   }
@@ -983,7 +983,7 @@ public class RMAppManager implements EventHandler<RMAppManagerEvent>,
         if (userIdTag.length == 2) {
           return userIdTag[1];
         } else {
-          LOG.warn("Found wrongly qualified username in tag");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

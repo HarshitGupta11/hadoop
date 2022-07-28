@@ -168,7 +168,7 @@ public class TestViewFileSystemLinkMergeSlash extends ViewFileSystemBaseTest {
     FileStatus stat = vfs.getFileStatus(new Path(viewFsUri.toString() +
         testFileName));
 
-    LOG.info("File stat: " + stat);
+    LOG.error("Temp", new RuntimeException());
     vfs.close();
   }
 

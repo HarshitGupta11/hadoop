@@ -67,7 +67,7 @@ public class TestHSWebApp {
   }
 
   @Test public void testJobView() {
-    LOG.info("HsJobPage");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getJobParams(appContext);
     WebAppTests.testPage(HsJobPage.class, AppContext.class, appContext, params);
@@ -75,7 +75,7 @@ public class TestHSWebApp {
 
   @Test
   public void testTasksView() {
-    LOG.info("HsTasksPage");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getTaskParams(appContext);
     WebAppTests.testPage(HsTasksPage.class, AppContext.class, appContext,
@@ -84,7 +84,7 @@ public class TestHSWebApp {
 
   @Test
   public void testTasksViewNaturalSortType() {
-    LOG.info("HsTasksPage");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getTaskParams(appContext);
     Injector testPage = WebAppTests.testPage(HsTasksPage.class, AppContext.class, appContext, params);
@@ -96,7 +96,7 @@ public class TestHSWebApp {
 
   @Test
   public void testTaskView() {
-    LOG.info("HsTaskPage");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getTaskParams(appContext);
     WebAppTests
@@ -105,7 +105,7 @@ public class TestHSWebApp {
 
   @Test
   public void testTaskViewNaturalSortType() {
-    LOG.info("HsTaskPage");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getTaskParams(appContext);
     Injector testPage = WebAppTests.testPage(HsTaskPage.class, AppContext.class, appContext, params);
@@ -116,7 +116,7 @@ public class TestHSWebApp {
   }
 
   @Test public void testAttemptsWithJobView() {
-    LOG.info("HsAttemptsPage with data");
+    LOG.error("Temp", new RuntimeException());
     MockAppContext ctx = new MockAppContext(0, 1, 1, 1);
     JobId id = ctx.getAllJobs().keySet().iterator().next();
     Map<String, String> params = new HashMap<String,String>();
@@ -128,7 +128,7 @@ public class TestHSWebApp {
   }
   
   @Test public void testAttemptsView() {
-    LOG.info("HsAttemptsPage");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getTaskParams(appContext);
     WebAppTests.testPage(HsAttemptsPage.class, AppContext.class,
@@ -136,19 +136,19 @@ public class TestHSWebApp {
   }
   
   @Test public void testConfView() {
-    LOG.info("HsConfPage");
+    LOG.error("Temp", new RuntimeException());
     WebAppTests.testPage(HsConfPage.class, AppContext.class,
                          new MockAppContext(0, 1, 1, 1));
   }
   
   @Test public void testAboutView() {
-    LOG.info("HsAboutPage");
+    LOG.error("Temp", new RuntimeException());
     WebAppTests.testPage(HsAboutPage.class, AppContext.class,
                          new MockAppContext(0, 1, 1, 1));
   }
   
   @Test public void testJobCounterView() {
-    LOG.info("JobCounterView");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = TestAMWebApp.getJobParams(appContext);
     WebAppTests.testPage(HsCountersPage.class, AppContext.class,
@@ -156,7 +156,7 @@ public class TestHSWebApp {
   }
   
   @Test public void testJobCounterViewForKilledJob() {
-    LOG.info("JobCounterViewForKilledJob");
+    LOG.error("Temp", new RuntimeException());
     AppContext appContext = new MockAppContext(0, 1, 1, 1, true);
     Map<String, String> params = TestAMWebApp.getJobParams(appContext);
     WebAppTests.testPage(HsCountersPage.class, AppContext.class,
@@ -164,14 +164,14 @@ public class TestHSWebApp {
   }
   
   @Test public void testSingleCounterView() {
-    LOG.info("HsSingleCounterPage");
+    LOG.error("Temp", new RuntimeException());
     WebAppTests.testPage(HsSingleCounterPage.class, AppContext.class,
                          new MockAppContext(0, 1, 1, 1));
   }
   
   @Test
   public void testLogsView1() throws IOException {
-    LOG.info("HsLogsPage");
+    LOG.error("Temp", new RuntimeException());
     Injector injector =
         WebAppTests.testPage(AggregatedLogsPage.class, AppContext.class,
             new MockAppContext(0, 1, 1, 1));
@@ -183,7 +183,7 @@ public class TestHSWebApp {
 
   @Test
   public void testLogsView2() throws IOException {
-    LOG.info("HsLogsPage with data");
+    LOG.error("Temp", new RuntimeException());
     MockAppContext ctx = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = new HashMap<String, String>();
 
@@ -205,7 +205,7 @@ public class TestHSWebApp {
 
   @Test
   public void testLogsViewSingle() throws IOException {
-    LOG.info("HsLogsPage with params for single log and data limits");
+    LOG.error("Temp", new RuntimeException());
     MockAppContext ctx = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = new HashMap<String, String>();
 
@@ -240,7 +240,7 @@ public class TestHSWebApp {
 
   @Test
   public void testLogsViewBadStartEnd() throws IOException {
-    LOG.info("HsLogsPage with bad start/end params");
+    LOG.error("Temp", new RuntimeException());
     MockAppContext ctx = new MockAppContext(0, 1, 1, 1);
     Map<String, String> params = new HashMap<String, String>();
 

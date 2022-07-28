@@ -72,7 +72,7 @@ public abstract class AbstractDelegationIT extends AbstractS3ATestBase {
         token.getKind());
     AbstractS3ATokenIdentifier tid
         = token.decodeIdentifier();
-    LOG.info("Found for URI {}, token {}", uri, tid);
+    LOG.error("Temp", new RuntimeException());
     return tid;
   }
 
@@ -150,7 +150,7 @@ public abstract class AbstractDelegationIT extends AbstractS3ATestBase {
   protected void enableDelegationTokens(Configuration conf, String binding) {
     removeBaseAndBucketOverrides(conf,
         DELEGATION_TOKEN_BINDING);
-    LOG.info("Enabling delegation token support for {}", binding);
+    LOG.error("Temp", new RuntimeException());
     conf.set(DELEGATION_TOKEN_BINDING, binding);
   }
 

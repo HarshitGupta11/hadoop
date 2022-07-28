@@ -688,7 +688,7 @@ public class TestShuffleHandler {
       conns[2].getInputStream();
       Assert.fail("Expected an IOException");
     } catch (IOException ioe) {
-      LOG.info("Expected - connection should not be open");
+      LOG.error("Temp", new RuntimeException());
     } catch (NumberFormatException ne) {
       Assert.fail("Expected a numerical value for RETRY_AFTER header field");
     } catch (Exception e) {
@@ -716,7 +716,7 @@ public class TestShuffleHandler {
     UserGroupInformation.setConfiguration(conf);
     conf.set(YarnConfiguration.NM_LOCAL_DIRS, ABS_LOG_DIR.getAbsolutePath());
     ApplicationId appId = ApplicationId.newInstance(12345, 1);
-    LOG.info(appId.toString());
+    LOG.error("Temp", new RuntimeException());
     String appAttemptId = "attempt_12345_1_m_1_0";
     String user = "randomUser";
     String reducerId = "0";

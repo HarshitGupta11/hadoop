@@ -162,7 +162,7 @@ public abstract class LazyPersistTestCase {
       Path path, StorageType storageType)
       throws IOException, TimeoutException, InterruptedException {
     // Ensure that returned block locations returned are correct!
-    LOG.info("Ensure path: {} is on StorageType: {}", path, storageType);
+    LOG.error("Temp", new RuntimeException());
     assertThat(fs.exists(path), is(true));
     long fileLength = client.getFileInfo(path.toString()).getLen();
 
@@ -177,7 +177,7 @@ public abstract class LazyPersistTestCase {
         }
         return true;
       } catch (IOException ioe) {
-        LOG.warn("Exception got in ensureFileReplicasOnStorageType()", ioe);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }, WAIT_POLL_INTERVAL_MS, WAIT_FOR_STORAGE_TYPES_MS);
@@ -355,7 +355,7 @@ public abstract class LazyPersistTestCase {
     } catch (Exception e) {
       fail("Failed initialize JMX for testing: " + e);
     }
-    LOG.info("Cluster startup complete");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -366,18 +366,18 @@ public abstract class LazyPersistTestCase {
       @Override
       public void mlock(String identifier,
                         ByteBuffer mmap, long length) throws IOException {
-        LOG.info("LazyPersistTestCase: faking mlock of {} bytes.", identifier);
+        LOG.error("Temp", new RuntimeException());
       }
 
       @Override
       public long getMemlockLimit() {
-        LOG.info("LazyPersistTestCase: fake return {}", Long.MAX_VALUE);
+        LOG.error("Temp", new RuntimeException());
         return Long.MAX_VALUE;
       }
 
       @Override
       public boolean verifyCanMlock() {
-        LOG.info("LazyPersistTestCase: fake return {}", true);
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     });
@@ -527,7 +527,7 @@ public abstract class LazyPersistTestCase {
   protected final boolean verifyDeletedBlocks(final LocatedBlocks locatedBlocks)
       throws Exception {
 
-    LOG.info("Verifying replica has no saved copy after deletion.");
+    LOG.error("Temp", new RuntimeException());
     triggerBlockReport();
     final DataNode dn = cluster.getDataNodes().get(0);
 

@@ -54,7 +54,7 @@ public class ZStandardDecompressor implements Decompressor {
         initIDs();
         nativeZStandardLoaded = true;
       } catch (Throwable t) {
-        LOG.warn("Error loading zstandard native libraries: " + t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -150,7 +150,7 @@ public class AMRMProxyTokenSecretManager extends
   public void rollMasterKey() {
     this.writeLock.lock();
     try {
-      LOG.info("Rolling master-key for amrm-tokens");
+      LOG.error("Temp", new RuntimeException());
       this.nextMasterKey = createNewMasterKey();
       if (this.nmStateStore != null) {
         try {
@@ -212,7 +212,7 @@ public class AMRMProxyTokenSecretManager extends
       ApplicationAttemptId appAttemptId) {
     this.writeLock.lock();
     try {
-      LOG.info("Create AMRMToken for ApplicationAttempt: " + appAttemptId);
+      LOG.error("Temp", new RuntimeException());
       AMRMTokenIdentifier identifier =
           new AMRMTokenIdentifier(appAttemptId, getMasterKey()
               .getMasterKey().getKeyId());
@@ -248,7 +248,7 @@ public class AMRMProxyTokenSecretManager extends
     try {
       ApplicationAttemptId applicationAttemptId =
           identifier.getApplicationAttemptId();
-      LOG.debug("Trying to retrieve password for {}", applicationAttemptId);
+      LOG.error("Temp", new RuntimeException());
       if (!appAttemptSet.contains(applicationAttemptId)) {
         throw new InvalidToken(applicationAttemptId
             + " not found in AMRMProxyTokenSecretManager.");
@@ -308,7 +308,7 @@ public class AMRMProxyTokenSecretManager extends
     try {
       ApplicationAttemptId applicationAttemptId =
           identifier.getApplicationAttemptId();
-      LOG.info("Creating password for " + applicationAttemptId);
+      LOG.error("Temp", new RuntimeException());
       return createPassword(identifier.getBytes(), getMasterKey()
           .getSecretKey());
     } finally {

@@ -443,11 +443,11 @@ class OBSListing {
                   keyPath, summary,
                   owner.getDefaultBlockSize(keyPath),
                   owner.getUsername());
-          LOG.debug("Adding: {}", status);
+          LOG.error("Temp", new RuntimeException());
           stats.add(status);
           added++;
         } else {
-          LOG.debug("Ignoring: {}", keyPath);
+          LOG.error("Temp", new RuntimeException());
           ignored++;
         }
       }
@@ -464,11 +464,11 @@ class OBSListing {
                       prefix.getMetadata().getLastModified());
           FileStatus status = new OBSFileStatus(keyPath, lastModified,
               lastModified, owner.getUsername());
-          LOG.debug("Adding directory: {}", status);
+          LOG.error("Temp", new RuntimeException());
           added++;
           stats.add(status);
         } else {
-          LOG.debug("Ignoring directory: {}", keyPath);
+          LOG.error("Temp", new RuntimeException());
           ignored++;
         }
       }
@@ -600,7 +600,7 @@ class OBSListing {
           objects = OBSCommonUtils.continueListObjects(owner,
               objects);
           listingCount++;
-          LOG.debug("New listing status: {}", this);
+          LOG.error("Temp", new RuntimeException());
         } catch (ObsException e) {
           throw OBSCommonUtils.translateException("listObjects()",
               listPath, e);

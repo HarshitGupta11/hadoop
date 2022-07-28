@@ -224,7 +224,7 @@ public class AMRMClientRelayer implements ApplicationMasterProtocol {
     } catch (InvalidApplicationMasterRequestException e) {
       if (e.getMessage()
           .contains(AMRMClientUtils.APP_ALREADY_REGISTERED_MESSAGE)) {
-        LOG.info("Concurrent thread successfully re-registered, moving on.");
+        LOG.error("Temp", new RuntimeException());
       } else {
         throw e;
       }

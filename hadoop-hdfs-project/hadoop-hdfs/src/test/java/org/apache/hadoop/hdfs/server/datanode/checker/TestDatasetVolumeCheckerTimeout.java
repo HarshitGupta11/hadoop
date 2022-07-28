@@ -83,7 +83,7 @@ public class TestDatasetVolumeCheckerTimeout {
 
   @Test (timeout = 300000)
   public void testDiskCheckTimeout() throws Exception {
-    LOG.info("Executing {}", testName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
     final FsVolumeSpi volume = makeSlowVolume();
 
     final DatasetVolumeChecker checker =

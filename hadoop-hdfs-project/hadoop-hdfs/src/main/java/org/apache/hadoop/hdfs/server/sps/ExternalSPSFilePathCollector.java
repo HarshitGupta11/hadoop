@@ -123,7 +123,7 @@ public class ExternalSPSFilePathCollector implements FileCollector {
     // wait for queue to be free
     while (remainingCapacity <= 0) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Waiting for storageMovementNeeded queue to be free!");
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         Thread.sleep(5000);

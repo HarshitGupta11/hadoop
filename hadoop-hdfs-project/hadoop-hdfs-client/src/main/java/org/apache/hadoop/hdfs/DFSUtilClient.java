@@ -504,7 +504,7 @@ public class DFSUtilClient {
     if (ports == null || ports.length == 0) {
       return address;
     }
-    LOG.info("Using server auxiliary ports " + Arrays.toString(ports));
+    LOG.error("Temp", new RuntimeException());
     URI uri;
     try {
       uri = new URI(address);
@@ -513,7 +513,7 @@ public class DFSUtilClient {
       // happens in unit test, as MiniDFSCluster sets the value to
       // 127.0.0.1:0, without schema (i.e. "hdfs://"). While in practice, this
       // should not be the case. So log a warning message here.
-      LOG.warn("NameNode address is not a valid uri:" + address);
+      LOG.error("Temp", new RuntimeException());
       return address;
     }
     // Ignore the port, only take the schema(e.g. hdfs) and host (e.g.
@@ -880,7 +880,7 @@ public class DFSUtilClient {
     try {
       sock = socketFactory.createSocket();
       String dnAddr = dn.getXferAddr(connectToDnViaHostname);
-      LOG.debug("Connecting to datanode {}", dnAddr);
+      LOG.error("Temp", new RuntimeException());
       NetUtils.connect(sock, NetUtils.createSocketAddr(dnAddr), timeout);
       sock.setTcpNoDelay(getClientDataTransferTcpNoDelay(conf));
       sock.setSoTimeout(timeout);

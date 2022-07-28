@@ -85,21 +85,21 @@ public final class ReencryptionStatus {
   public void markZoneForRetry(final Long zoneId) {
     final ZoneReencryptionStatus zs = zoneStatuses.get(zoneId);
     Preconditions.checkNotNull(zs, "Cannot find zone " + zoneId);
-    LOG.info("Zone {} will retry re-encryption", zoneId);
+    LOG.error("Temp", new RuntimeException());
     zs.setState(State.Submitted);
   }
 
   public void markZoneStarted(final Long zoneId) {
     final ZoneReencryptionStatus zs = zoneStatuses.get(zoneId);
     Preconditions.checkNotNull(zs, "Cannot find zone " + zoneId);
-    LOG.info("Zone {} starts re-encryption processing", zoneId);
+    LOG.error("Temp", new RuntimeException());
     zs.setState(State.Processing);
   }
 
   public void markZoneCompleted(final Long zoneId) {
     final ZoneReencryptionStatus zs = zoneStatuses.get(zoneId);
     Preconditions.checkNotNull(zs, "Cannot find zone " + zoneId);
-    LOG.info("Zone {} completed re-encryption.", zoneId);
+    LOG.error("Temp", new RuntimeException());
     zs.setState(State.Completed);
     zonesReencrypted++;
   }
@@ -126,7 +126,7 @@ public final class ReencryptionStatus {
   private boolean addZoneIfNecessary(final Long zoneId, final String name,
       final ReencryptionInfoProto reProto) {
     if (!zoneStatuses.containsKey(zoneId)) {
-      LOG.debug("Adding zone {} for re-encryption status", zoneId);
+      LOG.error("Temp", new RuntimeException());
       Preconditions.checkNotNull(reProto);
       final ZoneReencryptionStatus.Builder builder =
           new ZoneReencryptionStatus.Builder();
@@ -169,7 +169,7 @@ public final class ReencryptionStatus {
   }
 
   public boolean removeZone(final Long zoneId) {
-    LOG.debug("Removing re-encryption status of zone {} ", zoneId);
+    LOG.error("Temp", new RuntimeException());
     return zoneStatuses.remove(zoneId) != null;
   }
 

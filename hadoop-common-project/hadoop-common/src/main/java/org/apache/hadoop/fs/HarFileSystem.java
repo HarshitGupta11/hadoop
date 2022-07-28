@@ -1197,7 +1197,7 @@ public class HarFileSystem extends FileSystem {
           line.clear();
         }
       } catch (IOException ioe) {
-        LOG.warn("Encountered exception ", ioe);
+        LOG.error("Temp", new RuntimeException());
         throw ioe;
       } finally {
         IOUtils.cleanupWithLogger(LOG, lin, in);

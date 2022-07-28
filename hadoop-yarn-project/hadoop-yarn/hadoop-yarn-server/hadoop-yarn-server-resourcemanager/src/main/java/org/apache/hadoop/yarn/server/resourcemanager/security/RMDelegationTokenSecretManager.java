@@ -89,7 +89,7 @@ public class RMDelegationTokenSecretManager extends
   @Override
   protected void storeNewMasterKey(DelegationKey newKey) {
     try {
-      LOG.info("storing master key with keyID " + newKey.getKeyId());
+      LOG.error("Temp", new RuntimeException());
       rm.getRMContext().getStateStore().storeRMDTMasterKey(newKey);
     } catch (Exception e) {
       if (!shouldIgnoreException(e)) {
@@ -103,7 +103,7 @@ public class RMDelegationTokenSecretManager extends
   @Override
   protected void removeStoredMasterKey(DelegationKey key) {
     try {
-      LOG.info("removing master key with keyID " + key.getKeyId());
+      LOG.error("Temp", new RuntimeException());
       rm.getRMContext().getStateStore().removeRMDTMasterKey(key);
     } catch (Exception e) {
       if (!shouldIgnoreException(e)) {
@@ -193,7 +193,7 @@ public class RMDelegationTokenSecretManager extends
   @Override
   public void recover(RMState rmState) throws Exception {
 
-    LOG.info("recovering RMDelegationTokenSecretManager.");
+    LOG.error("Temp", new RuntimeException());
     // recover RMDTMasterKeys
     for (DelegationKey dtKey : rmState.getRMDTSecretManagerState()
       .getMasterKeyState()) {

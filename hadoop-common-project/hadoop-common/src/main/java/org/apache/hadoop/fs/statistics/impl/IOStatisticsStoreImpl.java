@@ -172,7 +172,7 @@ final class IOStatisticsStoreImpl extends WrappedIOStatistics
   @Override
   public void setCounter(final String key, final long value) {
     setAtomicLong(counterMap.get(key), value);
-    LOG.debug("Setting counter {} to {}", key, value);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

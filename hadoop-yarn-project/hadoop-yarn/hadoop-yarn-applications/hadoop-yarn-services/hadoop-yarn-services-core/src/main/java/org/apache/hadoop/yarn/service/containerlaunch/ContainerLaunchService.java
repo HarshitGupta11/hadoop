@@ -116,7 +116,7 @@ public class ContainerLaunchService extends AbstractService{
         resolvedParams = provider.buildContainerLaunchContext(launcher, service,
             instance, fs, getConfig(), container, componentLaunchContext);
         if (!reInit) {
-          LOG.info("launching container {}", container.getId());
+          LOG.error("Temp", new RuntimeException());
           instance.getComponent().getScheduler().getNmClient()
               .startContainerAsync(container,
                   launcher.completeContainerLaunch());

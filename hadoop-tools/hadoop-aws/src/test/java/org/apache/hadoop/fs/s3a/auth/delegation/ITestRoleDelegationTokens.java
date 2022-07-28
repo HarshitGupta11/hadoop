@@ -119,6 +119,6 @@ public class ITestRoleDelegationTokens extends ITestSessionDelegationTokens {
         access);
     assertTrue("No AWS policy rules from FS", !rules.isEmpty());
     String ruleset = new RoleModel().toJson(new RoleModel.Policy(rules));
-    LOG.info("Access policy for {}\n{}", fs.getUri(), ruleset);
+    LOG.error("Temp", new RuntimeException());
   }
 }

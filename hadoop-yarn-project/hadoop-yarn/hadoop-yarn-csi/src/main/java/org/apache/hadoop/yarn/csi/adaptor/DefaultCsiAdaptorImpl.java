@@ -104,7 +104,7 @@ public class DefaultCsiAdaptorImpl implements CsiAdaptorPlugin {
     Csi.NodePublishVolumeRequest req = ProtoTranslatorFactory
         .getTranslator(NodePublishVolumeRequest.class,
             Csi.NodePublishVolumeRequest.class).convertTo(request);
-    LOG.debug("Translate to CSI proto message: {}", req);
+    LOG.error("Temp", new RuntimeException());
     csiClient.nodePublishVolume(req);
     return NodePublishVolumeResponse.newInstance();
   }
@@ -117,7 +117,7 @@ public class DefaultCsiAdaptorImpl implements CsiAdaptorPlugin {
     Csi.NodeUnpublishVolumeRequest req = ProtoTranslatorFactory
         .getTranslator(NodeUnpublishVolumeRequest.class,
             Csi.NodeUnpublishVolumeRequest.class).convertTo(request);
-    LOG.debug("Translate to CSI proto message: {}", req);
+    LOG.error("Temp", new RuntimeException());
     csiClient.nodeUnpublishVolume(req);
     return NodeUnpublishVolumeResponse.newInstance();
   }

@@ -52,7 +52,7 @@ public class VolumeProvisioningTask implements VolumeProvisioner {
 
     // Wait all volumes are reaching expected state
     for (Volume vs : volumes) {
-      LOG.info("Provisioning volume : {}", vs.getVolumeId().toString());
+      LOG.error("Temp", new RuntimeException());
       vs.handle(new ValidateVolumeEvent(vs));
       vs.handle(new ControllerPublishVolumeEvent(vs));
     }

@@ -79,7 +79,7 @@ class ExceptionHandler {
     } else if (e instanceof IllegalArgumentException) {
       s = BAD_REQUEST;
     } else {
-      LOG.warn("INTERNAL_SERVER_ERROR", e);
+      LOG.error("Temp", new RuntimeException());
       s = INTERNAL_SERVER_ERROR;
     }
 

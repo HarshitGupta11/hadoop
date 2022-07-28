@@ -99,7 +99,7 @@ public class NamenodeBeanMetrics
       // TODO this needs to be done with the Metrics from FSNamesystem
       StandardMBean bean = new StandardMBean(this, FSNamesystemMBean.class);
       this.fsBeanName = MBeans.register("NameNode", "FSNamesystem", bean);
-      LOG.info("Registered FSNamesystem MBean: {}", this.fsBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad FSNamesystem MBean setup", e);
     }
@@ -108,7 +108,7 @@ public class NamenodeBeanMetrics
       StandardMBean bean = new StandardMBean(this, FSNamesystemMBean.class);
       this.fsStateBeanName =
           MBeans.register("NameNode", "FSNamesystemState", bean);
-      LOG.info("Registered FSNamesystemState MBean: {}", this.fsStateBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad FSNamesystemState MBean setup", e);
     }
@@ -116,7 +116,7 @@ public class NamenodeBeanMetrics
     try {
       StandardMBean bean = new StandardMBean(this, NameNodeMXBean.class);
       this.nnInfoBeanName = MBeans.register("NameNode", "NameNodeInfo", bean);
-      LOG.info("Registered NameNodeInfo MBean: {}", this.nnInfoBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad NameNodeInfo MBean setup", e);
     }
@@ -125,7 +125,7 @@ public class NamenodeBeanMetrics
       StandardMBean bean = new StandardMBean(this, NameNodeStatusMXBean.class);
       this.nnStatusBeanName =
           MBeans.register("NameNode", "NameNodeStatus", bean);
-      LOG.info("Registered NameNodeStatus MBean: {}", this.nnStatusBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad NameNodeStatus MBean setup", e);
     }
@@ -195,7 +195,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getUsedCapacity();
     } catch (IOException e) {
-      LOG.debug("Failed to get the used capacity", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -205,7 +205,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getRemainingCapacity();
     } catch (IOException e) {
-      LOG.debug("Failed to get remaining capacity", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -215,7 +215,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getTotalCapacity();
     } catch (IOException e) {
-      LOG.debug("Failed to Get total capacity", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -225,7 +225,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getProvidedSpace();
     } catch (IOException e) {
-      LOG.debug("Failed to get provided capacity", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -292,7 +292,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getNumBlocks();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of blocks", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -302,7 +302,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getNumOfMissingBlocks();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of missing blocks", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -419,7 +419,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getCorruptFilesCount();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of corrupt files.", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -572,7 +572,7 @@ public class NamenodeBeanMetrics
     try {
       return getRouter().getStartTime();
     } catch (IOException e) {
-      LOG.debug("Failed to get the router startup time", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -633,7 +633,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getNumFiles();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of files", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -648,7 +648,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getNumLiveNodes();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of live nodes", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -658,7 +658,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getNumDeadNodes();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of dead nodes", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }
@@ -668,7 +668,7 @@ public class NamenodeBeanMetrics
     try {
       return getRBFMetrics().getNumStaleNodes();
     } catch (IOException e) {
-      LOG.debug("Failed to get number of stale nodes", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return 0;
   }

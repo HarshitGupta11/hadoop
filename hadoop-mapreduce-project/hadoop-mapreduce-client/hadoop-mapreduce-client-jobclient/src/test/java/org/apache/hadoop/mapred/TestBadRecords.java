@@ -122,7 +122,7 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
   private void validateOutput(JobConf conf, RunningJob runningJob, 
       List<String> mapperBadRecords, List<String> redBadRecords) 
     throws Exception{
-    LOG.info(runningJob.getCounters().toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(runningJob.isSuccessful());
     
     //validate counters
@@ -155,7 +155,7 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
     List<String> mapSkipped = new ArrayList<String>();
     List<String> redSkipped = new ArrayList<String>();
     for(Path skipPath : skips) {
-      LOG.info("skipPath: " + skipPath);
+      LOG.error("Temp", new RuntimeException());
       
       SequenceFile.Reader reader = new SequenceFile.Reader(
           getFileSystem(), skipPath, conf);
@@ -165,7 +165,7 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
       key = reader.next(key);
       while(key!=null) {
         value = reader.getCurrentValue(value);
-        LOG.debug("key:"+key+" value:"+value.toString());
+        LOG.error("Temp", new RuntimeException());
         if(skipPath.getName().contains("_r_")) {
           redSkipped.add(value.toString());
         } else {
@@ -183,9 +183,9 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
         new Utils.OutputFileUtils.OutputFilesFilter()));
     
     List<String> mapperOutput=getProcessed(input, mapperBadRecords);
-    LOG.debug("mapperOutput " + mapperOutput.size());
+    LOG.error("Temp", new RuntimeException());
     List<String> reducerOutput=getProcessed(mapperOutput, redBadRecords);
-    LOG.debug("reducerOutput " + reducerOutput.size());
+    LOG.error("Temp", new RuntimeException());
     
    if (outputFiles.length > 0) {
       InputStream is = getFileSystem().open(outputFiles[0]);
@@ -197,7 +197,7 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
         StringTokenizer tokeniz = new StringTokenizer(line, "\t");
         String key = tokeniz.nextToken();
         String value = tokeniz.nextToken();
-        LOG.debug("Output: key:"+key + "  value:"+value);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(value.contains("hello"));
         
         
@@ -235,18 +235,18 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
         OutputCollector<LongWritable, Text> output, Reporter reporter)
         throws IOException {
       String str = val.toString();
-      LOG.debug("MAP key:" +key +"  value:" + str);
+      LOG.error("Temp", new RuntimeException());
       if(MAPPER_BAD_RECORDS.get(0).equals(str)) {
-        LOG.warn("MAP Encountered BAD record");
+        LOG.error("Temp", new RuntimeException());
         System.exit(-1);
       }
       else if(MAPPER_BAD_RECORDS.get(1).equals(str)) {
-        LOG.warn("MAP Encountered BAD record");
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("Bad record "+str);
       }
       else if(MAPPER_BAD_RECORDS.get(2).equals(str)) {
         try {
-          LOG.warn("MAP Encountered BAD record");
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(15*60*1000);
         } catch (InterruptedException e) {
           e.printStackTrace();
@@ -264,14 +264,14 @@ public class TestBadRecords extends ClusterMapReduceTestCase {
         throws IOException {
       while(values.hasNext()) {
         Text value = values.next();
-        LOG.debug("REDUCE key:" +key +"  value:" + value);
+        LOG.error("Temp", new RuntimeException());
         if(REDUCER_BAD_RECORDS.get(0).equals(value.toString())) {
-          LOG.warn("REDUCE Encountered BAD record");
+          LOG.error("Temp", new RuntimeException());
           System.exit(-1);
         }
         else if(REDUCER_BAD_RECORDS.get(1).equals(value.toString())) {
           try {
-            LOG.warn("REDUCE Encountered BAD record");
+            LOG.error("Temp", new RuntimeException());
             Thread.sleep(15*60*1000);
           } catch (InterruptedException e) {
             e.printStackTrace();

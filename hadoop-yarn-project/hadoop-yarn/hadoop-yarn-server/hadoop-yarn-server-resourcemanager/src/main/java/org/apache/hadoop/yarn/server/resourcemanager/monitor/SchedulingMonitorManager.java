@@ -54,7 +54,7 @@ public class SchedulingMonitorManager {
       if (!runningSchedulingMonitors.isEmpty()) {
         // If monitors disabled while we have some running monitors, we should
         // stop them.
-        LOG.info("Scheduling Monitor disabled, stopping all services");
+        LOG.error("Temp", new RuntimeException());
         stopAndRemoveAll();
       }
 
@@ -81,7 +81,7 @@ public class SchedulingMonitorManager {
           policyClass = Class.forName(s);
         } catch (ClassNotFoundException e) {
           String message = "Failed to find class of specified policy=" + s;
-          LOG.warn(message);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnException(message);
         }
 
@@ -99,7 +99,7 @@ public class SchedulingMonitorManager {
         } else {
           String message =
               "Specified policy=" + s + " is not a SchedulingEditPolicy class.";
-          LOG.warn(message);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnException(message);
         }
       }
@@ -142,9 +142,9 @@ public class SchedulingMonitorManager {
     SchedulingMonitor mon = runningSchedulingMonitors.get(name);
     try {
       mon.stop();
-      LOG.info("Sucessfully stopped monitor=" + mon.getName());
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
-      LOG.warn("Exception while stopping monitor=" + mon.getName(), e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

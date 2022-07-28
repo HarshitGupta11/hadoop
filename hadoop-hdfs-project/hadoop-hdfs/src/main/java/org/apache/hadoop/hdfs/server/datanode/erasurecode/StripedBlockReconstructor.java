@@ -67,7 +67,7 @@ class StripedBlockReconstructor extends StripedReconstructor
       // Currently we don't check the acks for packets, this is similar as
       // block replication.
     } catch (Throwable e) {
-      LOG.warn("Failed to reconstruct striped block: {}", getBlockGroup(), e);
+      LOG.error("Temp", new RuntimeException());
       getDatanode().getMetrics().incrECFailedReconstructionTasks();
     } finally {
       float xmitWeight = getErasureCodingWorker().getXmitWeight();

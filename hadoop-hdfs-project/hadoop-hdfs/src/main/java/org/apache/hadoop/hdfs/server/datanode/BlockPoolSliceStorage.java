@@ -298,7 +298,7 @@ public class BlockPoolSliceStorage extends Storage {
    */
   void remove(File absPathToRemove) {
     Preconditions.checkArgument(absPathToRemove.isAbsolute());
-    LOG.info("Removing block level storage: {}", absPathToRemove);
+    LOG.error("Temp", new RuntimeException());
     for (Iterator<StorageDirectory> it = getStorageDirs().iterator();
          it.hasNext(); ) {
       StorageDirectory sd = it.next();
@@ -383,7 +383,7 @@ public class BlockPoolSliceStorage extends Storage {
       // during rolling upgrade rollback. They are deleted during rolling
       // upgrade downgrade.
       int restored = restoreBlockFilesFromTrash(getTrashRootDir(sd));
-      LOG.info("Restored {} block files from trash.", restored);
+      LOG.error("Temp", new RuntimeException());
     }
     readProperties(sd);
     checkVersionUpgradable(this.layoutVersion);
@@ -515,7 +515,7 @@ public class BlockPoolSliceStorage extends Storage {
     // 4.rename <SD>/current/<bpid>/previous.tmp to
     // <SD>/current/<bpid>/previous
     rename(bpTmpDir, bpPrevDir);
-    LOG.info("Upgrade of {} is complete", name);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -641,7 +641,7 @@ public class BlockPoolSliceStorage extends Storage {
     
     // 3. delete removed.tmp dir
     deleteDir(tmpDir);
-    LOG.info("Rollback of {} is complete", bpSd.getRoot());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /*
@@ -678,7 +678,7 @@ public class BlockPoolSliceStorage extends Storage {
         } catch (IOException ex) {
           LOG.error("Finalize upgrade for {} failed.", dataDirPath, ex);
         }
-        LOG.info("Finalize upgrade for {} is complete.", dataDirPath);
+        LOG.error("Temp", new RuntimeException());
       }
 
       @Override
@@ -772,7 +772,7 @@ public class BlockPoolSliceStorage extends Storage {
       File blockFile = new File(blockURI);
       return getTrashDirectory(blockFile);
     } catch (IllegalArgumentException e) {
-      LOG.warn("Failed to get block file for replica {}", info, e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return null;
@@ -800,7 +800,7 @@ public class BlockPoolSliceStorage extends Storage {
   String getRestoreDirectory(File blockFile) {
     Matcher matcher = BLOCK_POOL_TRASH_PATH_PATTERN.matcher(blockFile.getParent());
     String restoreDirectory = matcher.replaceFirst("$1$2" + STORAGE_DIR_CURRENT + "$4");
-    LOG.info("Restoring {} to {}", blockFile, restoreDirectory);
+    LOG.error("Temp", new RuntimeException());
     return restoreDirectory;
   }
 
@@ -826,7 +826,7 @@ public class BlockPoolSliceStorage extends Storage {
       public void run() {
         for(File trashRoot : trashRoots){
           FileUtil.fullyDelete(trashRoot);
-          LOG.info("Cleared trash for storage directory {}", trashRoot);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -870,9 +870,9 @@ public class BlockPoolSliceStorage extends Storage {
       File markerFile = new File(bpRoot, ROLLING_UPGRADE_MARKER_FILE);
       if (!storagesWithRollingUpgradeMarker.contains(bpRoot.toString())) {
         if (!markerFile.exists() && markerFile.createNewFile()) {
-          LOG.info("Created {}", markerFile);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.info("{} already exists.", markerFile);
+          LOG.error("Temp", new RuntimeException());
         }
         storagesWithRollingUpgradeMarker.add(bpRoot.toString());
         storagesWithoutRollingUpgradeMarker.remove(bpRoot.toString());
@@ -896,10 +896,10 @@ public class BlockPoolSliceStorage extends Storage {
       File markerFile = new File(bpRoot, ROLLING_UPGRADE_MARKER_FILE);
       if (!storagesWithoutRollingUpgradeMarker.contains(bpRoot.toString())) {
         if (markerFile.exists()) {
-          LOG.info("Deleting {}", markerFile);
+          LOG.error("Temp", new RuntimeException());
           doFinalize(sd.getCurrentDir());
           if (!markerFile.delete()) {
-            LOG.warn("Failed to delete {}", markerFile);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         storagesWithoutRollingUpgradeMarker.add(bpRoot.toString());

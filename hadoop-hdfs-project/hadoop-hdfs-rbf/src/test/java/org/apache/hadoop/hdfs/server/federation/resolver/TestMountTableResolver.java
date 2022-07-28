@@ -546,7 +546,7 @@ public class TestMountTableResolver {
       MountTable record = MountTable.newInstance("/" + i, map);
       mountTable.addEntry(record);
       if (i % 10000 == 0) {
-        LOG.info("Adding flat mount record {}: {}", i, record);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

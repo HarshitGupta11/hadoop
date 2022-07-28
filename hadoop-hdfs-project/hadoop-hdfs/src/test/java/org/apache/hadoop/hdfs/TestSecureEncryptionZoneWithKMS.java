@@ -320,7 +320,7 @@ public class TestSecureEncryptionZoneWithKMS {
   public void testCreateZoneAfterAuthTokenExpiry() throws Exception {
     final UserGroupInformation ugi = UserGroupInformation
         .loginUserFromKeytabAndReturnUGI(hdfsPrincipal, keytab);
-    LOG.info("Created ugi: {} ", ugi);
+    LOG.error("Temp", new RuntimeException());
 
     ugi.doAs((PrivilegedExceptionAction<Object>) () -> {
       final Path zone = new Path("/expire1");

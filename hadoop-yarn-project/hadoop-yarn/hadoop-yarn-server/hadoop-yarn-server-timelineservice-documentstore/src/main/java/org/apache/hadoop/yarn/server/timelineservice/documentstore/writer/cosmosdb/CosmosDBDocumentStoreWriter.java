@@ -83,7 +83,7 @@ public class CosmosDBDocumentStoreWriter<TimelineDoc extends TimelineDocument>
       "where r.id = " + ID;
 
   public CosmosDBDocumentStoreWriter(Configuration conf) {
-    LOG.info("Initializing Cosmos DB DocumentStoreWriter...");
+    LOG.error("Temp", new RuntimeException());
     databaseName = DocumentStoreUtils.getCosmosDBDatabaseName(conf);
     initCosmosDBClient(conf);
   }
@@ -91,7 +91,7 @@ public class CosmosDBDocumentStoreWriter<TimelineDoc extends TimelineDocument>
   private synchronized void initCosmosDBClient(Configuration conf) {
     // making CosmosDB Async Client Singleton
     if (client == null) {
-      LOG.info("Creating Cosmos DB Writer Async Client...");
+      LOG.error("Temp", new RuntimeException());
       client = DocumentStoreUtils.createCosmosDBAsyncClient(conf);
       addShutdownHook();
     }
@@ -114,7 +114,7 @@ public class CosmosDBDocumentStoreWriter<TimelineDoc extends TimelineDocument>
                     (DocumentClientException) throwable;
                 if (de.getStatusCode() == 404) {
                   // if the database doesn't exist, create it.
-                  LOG.info("Creating new Database : {}", databaseName);
+                  LOG.error("Temp", new RuntimeException());
 
                   Database dbDefinition = new Database();
                   dbDefinition.setId(databaseName);
@@ -147,13 +147,13 @@ public class CosmosDBDocumentStoreWriter<TimelineDoc extends TimelineDocument>
               // if there is no matching collection create one.
               DocumentCollection collection = new DocumentCollection();
               collection.setId(collectionName);
-              LOG.info("Creating collection {}", collectionName);
+              LOG.error("Temp", new RuntimeException());
               return client.createCollection(
                   String.format(DATABASE_LINK, databaseName),
                   collection, null);
             } else {
               // collection already exists, nothing else to be done.
-              LOG.info("Collection {} already exists.", collectionName);
+              LOG.error("Temp", new RuntimeException());
               return Observable.empty();
             }
           })
@@ -272,7 +272,7 @@ public class CosmosDBDocumentStoreWriter<TimelineDoc extends TimelineDocument>
   @Override
   public synchronized void close() {
     if (client != null) {
-      LOG.info("Closing Cosmos DB Writer Async Client...");
+      LOG.error("Temp", new RuntimeException());
       client.close();
       client = null;
     }

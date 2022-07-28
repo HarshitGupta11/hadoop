@@ -71,7 +71,7 @@ public class MkdirOperation extends ExecutingStoreOperation<Boolean> {
   @Override
   @Retries.RetryTranslated
   public Boolean execute() throws IOException {
-    LOG.debug("Making directory: {}", dir);
+    LOG.error("Temp", new RuntimeException());
     if (dir.isRoot()) {
       // fast exit for root.
       return true;
@@ -110,7 +110,7 @@ public class MkdirOperation extends ExecutingStoreOperation<Boolean> {
       LOG.info("mkdirs({}}: Access denied when looking"
               + " for parent directory {}; skipping checks",
           dir, fPart);
-      LOG.debug("{}", e.toString(), e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // if we get here there is no directory at the destination.

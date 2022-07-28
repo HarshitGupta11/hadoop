@@ -159,7 +159,7 @@ class SwiftNativeOutputStream extends OutputStream {
         bytesUploaded += uploadFileAttempt(keypath, attempt);
         uploadSuccess = true;
       } catch (IOException e) {
-        LOG.info("Upload failed " + e, e);
+        LOG.error("Temp", new RuntimeException());
         if (attempt > ATTEMPT_LIMIT) {
           throw e;
         }
@@ -186,10 +186,10 @@ class SwiftNativeOutputStream extends OutputStream {
   @Override
   protected void finalize() throws Throwable {
     if(!closed) {
-      LOG.warn("stream not closed");
+      LOG.error("Temp", new RuntimeException());
     }
     if (backupFile != null) {
-      LOG.warn("Leaking backing file " + backupFile);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -197,7 +197,7 @@ class SwiftNativeOutputStream extends OutputStream {
     if (file != null) {
       SwiftUtils.debug(LOG, "deleting %s", file);
       if (!file.delete()) {
-        LOG.warn("Could not delete " + file);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -301,7 +301,7 @@ class SwiftNativeOutputStream extends OutputStream {
           bytesUploaded += uploadFilePartAttempt(attempt);
           uploadSuccess = true;
         } catch (IOException e) {
-          LOG.info("Upload failed " + e, e);
+          LOG.error("Temp", new RuntimeException());
           if (attempt > ATTEMPT_LIMIT) {
             throw e;
           }

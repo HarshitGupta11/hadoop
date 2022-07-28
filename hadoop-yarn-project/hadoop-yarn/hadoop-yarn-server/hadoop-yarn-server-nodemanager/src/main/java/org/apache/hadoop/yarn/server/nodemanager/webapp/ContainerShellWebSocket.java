@@ -120,7 +120,7 @@ public class ContainerShellWebSocket {
         session.close(1003, "Nonsecure mode is unsupported.");
         return;
       }
-      LOG.info(session.getRemoteAddress().getHostString() + " connected!");
+      LOG.error("Temp", new RuntimeException());
       LOG.info(
           "Making interactive connection to running docker container with ID: "
               + cId);
@@ -140,7 +140,7 @@ public class ContainerShellWebSocket {
   @OnWebSocketClose
   public void onClose(Session session, int status, String reason) {
     try {
-      LOG.info(session.getRemoteAddress().getHostString() + " closed!");
+      LOG.error("Temp", new RuntimeException());
       String exit = "exit\r\n";
       pair.out.write(exit.getBytes(Charset.forName("UTF-8")));
       pair.out.flush();

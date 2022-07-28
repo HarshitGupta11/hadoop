@@ -192,7 +192,7 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "luser");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     Set<String> allocatedHosts = new HashSet<>();
     for (Container c : containers) {
       allocatedHosts.add(c.getNodeHttpAddress());
@@ -266,7 +266,7 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "luser");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     // all 3 containers should be allocated.
     Assert.assertEquals(3, containers.size());
     // container with allocation id 2 and 3 should be allocated on node h1
@@ -319,7 +319,7 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "luser");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     Set<String> allocatedHosts = new HashSet<>();
     for (Container c : containers) {
       allocatedHosts.add(c.getNodeHttpAddress());
@@ -430,7 +430,7 @@ public class TestDistributedOpportunisticContainerAllocator {
     for (Container c : containers) {
       allocatedHosts.add(c.getNodeHttpAddress());
     }
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(allocatedHosts.contains("h2:1234"));
     Assert.assertTrue(allocatedHosts.contains("h5:1234"));
     Assert.assertFalse(allocatedHosts.contains("h3:1234"));
@@ -471,7 +471,7 @@ public class TestDistributedOpportunisticContainerAllocator {
     for (Container c : containers) {
       allocatedHosts.add(c.getNodeHttpAddress());
     }
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(allocatedHosts.contains("h2:1234"));
     Assert.assertTrue(allocatedHosts.contains("h5:1234"));
     Assert.assertFalse(allocatedHosts.contains("h3:1234"));
@@ -508,7 +508,7 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "luser");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(2, containers.size());
   }
 
@@ -666,13 +666,13 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "user1");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     // Although capacity is present, but only 2 containers should be allocated
     // as max allocation per AM heartbeat is set to 2.
     Assert.assertEquals(2, containers.size());
     containers = allocator.allocateContainers(
         blacklistRequest, new ArrayList<>(), appAttId, oppCntxt, 1L, "user1");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     // Remaining 1 container should be allocated.
     Assert.assertEquals(1, containers.size());
   }
@@ -715,18 +715,18 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "user1");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     // Although capacity is present, but only 2 containers should be allocated
     // as max allocation per AM heartbeat is set to 2.
     Assert.assertEquals(2, containers.size());
     containers = allocator.allocateContainers(
         blacklistRequest, new ArrayList<>(), appAttId, oppCntxt, 1L, "user1");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     // 2 more containers should be allocated from pending allocation requests.
     Assert.assertEquals(2, containers.size());
     containers = allocator.allocateContainers(
         blacklistRequest, new ArrayList<>(), appAttId, oppCntxt, 1L, "user1");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     // Remaining 1 container should be allocated.
     Assert.assertEquals(1, containers.size());
   }
@@ -844,7 +844,7 @@ public class TestDistributedOpportunisticContainerAllocator {
 
     List<Container> containers = allocator.allocateContainers(
         blacklistRequest, reqs, appAttId, oppCntxt, 1L, "luser");
-    LOG.info("Containers: {}", containers);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(2, containers.size());
     // for each allocated container, latency should be added.
     verify(metrics, times(2)).addAllocateOLatencyEntry(anyLong());

@@ -45,7 +45,7 @@ public class MemoryMappableBlockLoader extends MappableBlockLoader {
 
   @Override
   CacheStats initialize(DNConf dnConf) throws IOException {
-    LOG.info("Initializing cache loader: MemoryMappableBlockLoader.");
+    LOG.error("Temp", new RuntimeException());
     this.memCacheStats = new CacheStats(dnConf.getMaxLockedMemory());
     return memCacheStats;
   }

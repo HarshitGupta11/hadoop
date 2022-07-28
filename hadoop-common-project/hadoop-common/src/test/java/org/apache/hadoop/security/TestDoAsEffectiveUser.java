@@ -95,7 +95,7 @@ public class TestDoAsEffectiveUser extends TestRpcBase {
     }
     builder.append("127.0.1.1,");
     builder.append(InetAddress.getLocalHost().getCanonicalHostName());
-    LOG.info("Local Ip addresses: "+builder.toString());
+    LOG.error("Temp", new RuntimeException());
     conf.setStrings(DefaultImpersonationProvider.getTestProvider().
             getProxySuperuserIpConfKey(superUserShortName),
         builder.toString());

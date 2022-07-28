@@ -109,10 +109,10 @@ public class StoragePolicySatisfyManager {
           + "please start external sps service explicitly to satisfy policy");
       break;
     case NONE:
-      LOG.info("Storage policy satisfier is disabled");
+      LOG.error("Temp", new RuntimeException());
       break;
     default:
-      LOG.info("Given mode: {} is invalid", mode);
+      LOG.error("Temp", new RuntimeException());
       break;
     }
   }
@@ -132,7 +132,7 @@ public class StoragePolicySatisfyManager {
   public void stop() {
     if (!storagePolicyEnabled) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Storage policy is not enabled, ignoring");
+        LOG.error("Temp", new RuntimeException());
       }
       return;
     }
@@ -148,12 +148,12 @@ public class StoragePolicySatisfyManager {
       break;
     case NONE:
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Storage policy satisfier is not enabled, ignoring");
+        LOG.error("Temp", new RuntimeException());
       }
       break;
     default:
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Invalid mode:{}, ignoring", mode);
+        LOG.error("Temp", new RuntimeException());
       }
       break;
     }
@@ -189,13 +189,13 @@ public class StoragePolicySatisfyManager {
             + " so ignoring change mode event.", newMode);
         return;
       }
-      LOG.info("Disabling StoragePolicySatisfier, mode:{}", newMode);
+      LOG.error("Temp", new RuntimeException());
       spsService.stop(true);
       clearPathIds();
       break;
     default:
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Given mode: {} is invalid", newMode);
+        LOG.error("Temp", new RuntimeException());
       }
       break;
     }
@@ -252,7 +252,7 @@ public class StoragePolicySatisfyManager {
           namesystem.removeXattr(trackId,
               HdfsServerConstants.XATTR_SATISFY_STORAGE_POLICY);
         } catch (IOException e) {
-          LOG.debug("Failed to remove sps xatttr!", e);
+          LOG.error("Temp", new RuntimeException());
         }
         iterator.remove();
       }

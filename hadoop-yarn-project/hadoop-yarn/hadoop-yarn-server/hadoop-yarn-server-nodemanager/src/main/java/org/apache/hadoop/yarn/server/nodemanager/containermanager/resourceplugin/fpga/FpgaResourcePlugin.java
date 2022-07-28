@@ -49,7 +49,7 @@ public class FpgaResourcePlugin implements ResourcePlugin {
   private AbstractFpgaVendorPlugin createFpgaVendorPlugin(Configuration conf) {
     String vendorPluginClass = conf.get(YarnConfiguration.NM_FPGA_VENDOR_PLUGIN,
         YarnConfiguration.DEFAULT_NM_FPGA_VENDOR_PLUGIN);
-    LOG.info("Using FPGA vendor plugin: " + vendorPluginClass);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> schedulerClazz = Class.forName(vendorPluginClass);
       if (AbstractFpgaVendorPlugin.class.isAssignableFrom(schedulerClazz)) {

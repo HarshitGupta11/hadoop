@@ -385,7 +385,7 @@ public class FSImageFormat {
           long lastInodeId = in.readLong();
           namesystem.dir.resetLastInodeId(lastInodeId);
           if (LOG.isDebugEnabled()) {
-            LOG.debug("load last allocated InodeId from fsimage:" + lastInodeId);
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           if (LOG.isDebugEnabled()) {
@@ -408,10 +408,10 @@ public class FSImageFormat {
         }
         in = compression.unwrapInputStream(fin);
 
-        LOG.info("Loading image file " + curFile + " using " + compression);
+        LOG.error("Temp", new RuntimeException());
         
         // load all inodes
-        LOG.info("Number of files = " + numFiles);
+        LOG.error("Temp", new RuntimeException());
         prog.setTotal(Phase.LOADING_FSIMAGE, step, numFiles);
         Counter counter = prog.getCounter(Phase.LOADING_FSIMAGE, step);
         if (NameNodeLayoutVersion.supports(
@@ -628,7 +628,7 @@ public class FSImageFormat {
           String oldPath = DFSUtil.byteArray2PathString(pathComponents);
           pathComponents[j] = newComponent;
           String newPath = DFSUtil.byteArray2PathString(pathComponents);
-          LOG.info("Renaming reserved path " + oldPath + " to " + newPath);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       final INode newNode = loadINode(
@@ -934,7 +934,7 @@ public class FSImageFormat {
       FSDirectory fsDir = namesystem.dir;
       int size = in.readInt();
 
-      LOG.info("Number of files under construction = " + size);
+      LOG.error("Temp", new RuntimeException());
 
       for (int i = 0; i < size; i++) {
         INodeFile cons = FSImageSerialization.readINodeUnderConstruction(in,
@@ -1083,7 +1083,7 @@ public class FSImageFormat {
           "Unknown reserved path " + key);
       Preconditions.checkArgument(DFSUtil.isValidNameForComponent(value),
           "Invalid rename path for " + key + ": " + value);
-      LOG.info("Will rename reserved path " + key + " to " + value);
+      LOG.error("Temp", new RuntimeException());
       renameReservedMap.put(key, value);
     }
   }

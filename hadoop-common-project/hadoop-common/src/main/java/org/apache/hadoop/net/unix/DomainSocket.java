@@ -459,13 +459,13 @@ public class DomainSocket implements Closeable {
             try {
               closeFileDescriptor0(descriptors[i]);
             } catch (Throwable t) {
-              LOG.warn(t.toString());
+              LOG.error("Temp", new RuntimeException());
             }
           } else if (streams[i] != null) {
             try {
               streams[i].close();
             } catch (Throwable t) {
-              LOG.warn(t.toString());
+              LOG.error("Temp", new RuntimeException());
             } finally {
               streams[i] = null; }
           }

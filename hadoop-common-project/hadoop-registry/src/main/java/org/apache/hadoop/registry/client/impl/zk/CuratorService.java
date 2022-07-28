@@ -157,7 +157,7 @@ public class CuratorService extends CompositeService
     addService(registrySecurity);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Creating Registry with root {}", registryRoot);
+      LOG.error("Temp", new RuntimeException());
     }
 
     super.serviceInit(conf);
@@ -289,7 +289,7 @@ public class CuratorService extends CompositeService
       //log them
       securityConnectionDiagnostics = buildSecurityDiagnostics();
       if (LOG.isDebugEnabled()) {
-        LOG.debug(securityConnectionDiagnostics);
+        LOG.error("Temp", new RuntimeException());
       }
       framework = builder.build();
       framework.start();
@@ -480,7 +480,7 @@ public class CuratorService extends CompositeService
     Stat stat;
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Stat {}", fullpath);
+        LOG.error("Temp", new RuntimeException());
       }
       stat = curator.checkExists().forPath(fullpath);
     } catch (Exception e) {
@@ -505,7 +505,7 @@ public class CuratorService extends CompositeService
     List<ACL> acls;
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("GetACLS {}", fullpath);
+        LOG.error("Temp", new RuntimeException());
       }
       acls = curator.getACL().forPath(fullpath);
     } catch (Exception e) {
@@ -588,7 +588,7 @@ public class CuratorService extends CompositeService
 
     } catch (KeeperException.NodeExistsException e) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("path already present: {}", path, e);
+        LOG.error("Temp", new RuntimeException());
       }
       return false;
     } catch (Exception e) {
@@ -654,7 +654,7 @@ public class CuratorService extends CompositeService
     path = createFullPath(path);
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Updating {} with {} bytes", path, data.length);
+        LOG.error("Temp", new RuntimeException());
       }
       curator.setData().forPath(path, data);
     } catch (Exception e) {
@@ -709,7 +709,7 @@ public class CuratorService extends CompositeService
     String fullpath = createFullPath(path);
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Deleting {}", fullpath);
+        LOG.error("Temp", new RuntimeException());
       }
       DeleteBuilder delete = curator.delete();
       if (recursive) {
@@ -738,7 +738,7 @@ public class CuratorService extends CompositeService
     String fullpath = createFullPath(path);
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("ls {}", fullpath);
+        LOG.error("Temp", new RuntimeException());
       }
       GetChildrenBuilder builder = curator.getChildren();
       List<String> children = builder.forPath(fullpath);
@@ -760,7 +760,7 @@ public class CuratorService extends CompositeService
     String fullpath = createFullPath(path);
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Reading {}", fullpath);
+        LOG.error("Temp", new RuntimeException());
       }
       return curator.getData().forPath(fullpath);
     } catch (Exception e) {
@@ -814,7 +814,7 @@ public class CuratorService extends CompositeService
       return pathDumper.toString();
     } catch (Exception e) {
       // ignore
-      LOG.debug("Ignoring exception:  {}", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return "";
   }
@@ -842,19 +842,19 @@ public class CuratorService extends CompositeService
             assert event != null;
             switch (event.getType()) {
             case NODE_ADDED:
-              LOG.info("Informing listener of added node {}", path);
+              LOG.error("Temp", new RuntimeException());
               listener.nodeAdded(path);
 
               break;
 
             case NODE_REMOVED:
-              LOG.info("Informing listener of removed node {}", path);
+              LOG.error("Temp", new RuntimeException());
               listener.nodeRemoved(path);
 
               break;
 
             case NODE_UPDATED:
-              LOG.info("Informing listener of updated node {}", path);
+              LOG.error("Temp", new RuntimeException());
               listener.nodeAdded(path);
 
               break;

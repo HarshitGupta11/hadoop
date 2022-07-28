@@ -350,10 +350,10 @@ public abstract class ChangeDetectionPolicy {
     public void applyRevisionConstraint(GetObjectRequest request,
         String revisionId) {
       if (revisionId != null) {
-        LOG.debug("Restricting get request to etag {}", revisionId);
+        LOG.error("Temp", new RuntimeException());
         request.withMatchingETagConstraint(revisionId);
       } else {
-        LOG.debug("No etag revision ID to use as a constraint");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -361,17 +361,17 @@ public abstract class ChangeDetectionPolicy {
     public void applyRevisionConstraint(CopyObjectRequest request,
         String revisionId) {
       if (revisionId != null) {
-        LOG.debug("Restricting copy request to etag {}", revisionId);
+        LOG.error("Temp", new RuntimeException());
         request.withMatchingETagConstraint(revisionId);
       } else {
-        LOG.debug("No etag revision ID to use as a constraint");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
     @Override
     public void applyRevisionConstraint(GetObjectMetadataRequest request,
         String revisionId) {
-      LOG.debug("Unable to restrict HEAD request to etag; will check later");
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
@@ -427,10 +427,10 @@ public abstract class ChangeDetectionPolicy {
     public void applyRevisionConstraint(GetObjectRequest request,
         String revisionId) {
       if (revisionId != null) {
-        LOG.debug("Restricting get request to version {}", revisionId);
+        LOG.error("Temp", new RuntimeException());
         request.withVersionId(revisionId);
       } else {
-        LOG.debug("No version ID to use as a constraint");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -438,10 +438,10 @@ public abstract class ChangeDetectionPolicy {
     public void applyRevisionConstraint(CopyObjectRequest request,
         String revisionId) {
       if (revisionId != null) {
-        LOG.debug("Restricting copy request to version {}", revisionId);
+        LOG.error("Temp", new RuntimeException());
         request.withSourceVersionId(revisionId);
       } else {
-        LOG.debug("No version ID to use as a constraint");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -449,10 +449,10 @@ public abstract class ChangeDetectionPolicy {
     public void applyRevisionConstraint(GetObjectMetadataRequest request,
         String revisionId) {
       if (revisionId != null) {
-        LOG.debug("Restricting metadata request to version {}", revisionId);
+        LOG.error("Temp", new RuntimeException());
         request.withVersionId(revisionId);
       } else {
-        LOG.debug("No version ID to use as a constraint");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

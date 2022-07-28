@@ -216,7 +216,7 @@ public class StripedFileTestUtil {
     final StripedDataStreamer s = out.getStripedDataStreamer(dnIndex);
     final DatanodeInfo datanode = getDatanodes(s);
     assert datanode != null;
-    LOG.info("killDatanode " + dnIndex + ": " + datanode + ", pos=" + pos);
+    LOG.error("Temp", new RuntimeException());
     cluster.stopDataNode(datanode.getXferAddr());
   }
 
@@ -382,7 +382,7 @@ public class StripedFileTestUtil {
       final long gs = firstBlock.getBlock().getGenerationStamp();
       final long oldGS = oldGSList != null ? oldGSList.get(index++) : -1L;
       final String s = "gs=" + gs + ", oldGS=" + oldGS;
-      LOG.info(s);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(s, gs >= oldGS);
 
       LocatedBlock[] blocks = StripedBlockUtil.parseStripedBlockGroup(
@@ -443,7 +443,7 @@ public class StripedFileTestUtil {
           checkSet.add(i);
         }
       }
-      LOG.info("Internal blocks to check: " + checkSet);
+      LOG.error("Temp", new RuntimeException());
 
       // check data
       final int groupPosInFile = group * blkGroupSize;

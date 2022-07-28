@@ -326,7 +326,7 @@ public class ContainerTokenIdentifier extends TokenIdentifier {
 
   @Override
   public void write(DataOutput out) throws IOException {
-    LOG.debug("Writing ContainerTokenIdentifier to RPC layer: {}", this);
+    LOG.error("Temp", new RuntimeException());
     out.write(proto.toByteArray());
   }
 
@@ -336,7 +336,7 @@ public class ContainerTokenIdentifier extends TokenIdentifier {
     try {
       proto = ContainerTokenIdentifierProto.parseFrom(data);
     } catch (InvalidProtocolBufferException e) {
-      LOG.warn("Recovering old formatted token");
+      LOG.error("Temp", new RuntimeException());
       readFieldsInOldFormat(
           new DataInputStream(new ByteArrayInputStream(data)));
     }

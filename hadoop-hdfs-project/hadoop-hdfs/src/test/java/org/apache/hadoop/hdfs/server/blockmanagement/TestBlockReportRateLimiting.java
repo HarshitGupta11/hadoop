@@ -136,7 +136,7 @@ public class TestBlockReportRateLimiting {
         new MiniDFSCluster.Builder(conf).numDataNodes(NUM_DATANODES).build();
     cluster.waitActive();
     for (int n = 1; n <= NUM_DATANODES; n++) {
-      LOG.info("Waiting for " + n + " datanode(s) to report in.");
+      LOG.error("Temp", new RuntimeException());
       fbrSem.release();
       Uninterruptibles.sleepUninterruptibly(20, TimeUnit.MILLISECONDS);
       final int currentN = n;

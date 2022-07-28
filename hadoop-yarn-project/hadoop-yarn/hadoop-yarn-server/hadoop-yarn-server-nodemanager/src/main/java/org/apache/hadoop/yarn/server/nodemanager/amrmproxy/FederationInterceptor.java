@@ -276,7 +276,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
   @Override
   public void init(AMRMProxyApplicationContext appContext) {
     super.init(appContext);
-    LOG.info("Initializing Federation Interceptor");
+    LOG.error("Temp", new RuntimeException());
 
     // Update the conf if available
     Configuration conf = appContext.getConf();
@@ -369,7 +369,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
                 .parseFrom(recoveredDataMap.get(NMSS_REG_REQUEST_KEY));
         this.amRegistrationRequest =
             new RegisterApplicationMasterRequestPBImpl(pb);
-        LOG.info("amRegistrationRequest recovered for {}", this.attemptId);
+        LOG.error("Temp", new RuntimeException());
 
         // Give the register request to homeRMRelayer for future re-registration
         this.homeRMRelayer.setAMRegistrationRequest(this.amRegistrationRequest);
@@ -380,7 +380,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
                 .parseFrom(recoveredDataMap.get(NMSS_REG_RESPONSE_KEY));
         this.amRegistrationResponse =
             new RegisterApplicationMasterResponsePBImpl(pb);
-        LOG.info("amRegistrationResponse recovered for {}", this.attemptId);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Recover UAM amrmTokens from registry or NMSS
@@ -401,7 +401,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
             amrmToken.decodeFromUrlString(
                 new String(entry.getValue(), STRING_TO_BYTE_FORMAT));
             uamMap.put(scId, amrmToken);
-            LOG.debug("Recovered UAM in {} from NMSS", scId);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         LOG.info("Found {} existing UAMs for application {} in NMStateStore",
@@ -601,7 +601,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
           + YarnConfiguration.DEFAULT_QUEUE_NAME
           + " for getting AMRMProxyPolicy");
     } else {
-      LOG.info("Application " + appId + " belongs to queue " + queue);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Initialize the AMRMProxyPolicy
@@ -838,7 +838,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
    */
   @Override
   public void shutdown() {
-    LOG.info("Shutting down FederationInterceptor for {}", this.attemptId);
+    LOG.error("Temp", new RuntimeException());
 
     // Do not stop uamPool service and kill UAMs here because of possible second
     // app attempt
@@ -965,7 +965,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
 
     if (this.registryClient == null) {
       // Both AMRMProxy HA and NM work preserving restart is not enabled
-      LOG.warn("registryClient is null, skip attaching existing UAM if any");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -1022,7 +1022,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
                       response.getContainersFromPreviousAttempts(),
                       subClusterId);
                 }
-                LOG.info("UAM {} reattached for {}", subClusterId, appId);
+                LOG.error("Temp", new RuntimeException());
               } catch (Throwable e) {
                 LOG.error(
                     "Reattaching UAM " + subClusterId + " failed for " + appId,
@@ -1040,11 +1040,11 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
             completionService.take();
         RegisterApplicationMasterResponse registerResponse = future.get();
         if (registerResponse != null) {
-          LOG.info("Merging register response for {}", appId);
+          LOG.error("Temp", new RuntimeException());
           mergeRegisterResponse(homeResponse, registerResponse);
         }
       } catch (Exception e) {
-        LOG.warn("Reattaching UAM failed for ApplicationId: " + appId, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1357,7 +1357,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
   private void removeFinishedContainersFromCache(
       List<ContainerStatus> finishedContainers) {
     for (ContainerStatus container : finishedContainers) {
-      LOG.debug("Completed container {}", container);
+      LOG.error("Temp", new RuntimeException());
       if (containerIdToSubClusterIdMap
           .containsKey(container.getContainerId())) {
         containerIdToSubClusterIdMap.remove(container.getContainerId());
@@ -1518,7 +1518,7 @@ public class FederationInterceptor extends AbstractRequestInterceptor {
   private void cacheAllocatedContainers(List<Container> containers,
       SubClusterId subClusterId) {
     for (Container container : containers) {
-      LOG.debug("Adding container {}", container);
+      LOG.error("Temp", new RuntimeException());
 
       if (this.containerIdToSubClusterIdMap.containsKey(container.getId())) {
         SubClusterId existingSubClusterId =

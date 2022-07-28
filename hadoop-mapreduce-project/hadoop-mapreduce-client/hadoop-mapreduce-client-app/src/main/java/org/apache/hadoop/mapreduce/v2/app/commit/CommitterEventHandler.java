@@ -203,7 +203,7 @@ public class CommitterEventHandler extends AbstractService
   private synchronized void cancelJobCommit() {
     Thread threadCommitting = jobCommitThread;
     if (threadCommitting != null && threadCommitting.isAlive()) {
-      LOG.info("Cancelling commit");
+      LOG.error("Temp", new RuntimeException());
       threadCommitting.interrupt();
 
       // wait up to configured timeout for commit thread to finish
@@ -229,7 +229,7 @@ public class CommitterEventHandler extends AbstractService
 
     @Override
     public void run() {
-      LOG.info("Processing the event " + event.toString());
+      LOG.error("Temp", new RuntimeException());
       switch (event.getType()) {
       case JOB_SETUP:
         handleJobSetup((CommitterJobSetupEvent) event);
@@ -256,7 +256,7 @@ public class CommitterEventHandler extends AbstractService
         context.getEventHandler().handle(
             new JobSetupCompletedEvent(event.getJobID()));
       } catch (Exception e) {
-        LOG.warn("Job setup failed", e);
+        LOG.error("Temp", new RuntimeException());
         context.getEventHandler().handle(new JobSetupFailedEvent(
             event.getJobID(), StringUtils.stringifyException(e)));
       }
@@ -276,7 +276,7 @@ public class CommitterEventHandler extends AbstractService
         commitJobIsRepeatable = committer.isCommitJobRepeatable(
             event.getJobContext());
       } catch (IOException e) {
-        LOG.warn("Exception in committer.isCommitJobRepeatable():", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
       try {
@@ -309,7 +309,7 @@ public class CommitterEventHandler extends AbstractService
       try {
         committer.abortJob(event.getJobContext(), event.getFinalState());
       } catch (Exception e) {
-        LOG.warn("Could not abort job", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
       context.getEventHandler().handle(new JobAbortCompletedEvent(
@@ -321,7 +321,7 @@ public class CommitterEventHandler extends AbstractService
       try {
         committer.abortTask(event.getAttemptContext());
       } catch (Exception e) {
-        LOG.warn("Task cleanup failed for attempt " + event.getAttemptID(), e);
+        LOG.error("Temp", new RuntimeException());
       }
       context.getEventHandler().handle(
           new TaskAttemptEvent(event.getAttemptID(),

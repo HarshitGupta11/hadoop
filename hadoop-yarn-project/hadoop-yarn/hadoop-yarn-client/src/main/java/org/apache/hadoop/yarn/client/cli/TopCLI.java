@@ -546,7 +546,7 @@ public class TopCLI extends YarnCLI {
     if (cliParser.hasOption("delay")) {
       int delay = Integer.parseInt(cliParser.getOptionValue("delay"));
       if (delay < 1) {
-        LOG.warn("Delay set too low, using default");
+        LOG.error("Temp", new RuntimeException());
       } else {
         refreshPeriod = delay * 1000;
       }
@@ -605,7 +605,7 @@ public class TopCLI extends YarnCLI {
     try {
       terminalWidth = Integer.parseInt(op);
     } catch (NumberFormatException ne) {
-      LOG.warn("Couldn't determine terminal width, setting to 80", ne);
+      LOG.error("Temp", new RuntimeException());
       terminalWidth = 80;
     }
   }
@@ -619,7 +619,7 @@ public class TopCLI extends YarnCLI {
     try {
       terminalHeight = Integer.parseInt(op);
     } catch (NumberFormatException ne) {
-      LOG.warn("Couldn't determine terminal height, setting to 24", ne);
+      LOG.error("Temp", new RuntimeException());
       terminalHeight = 24;
     }
   }

@@ -203,10 +203,10 @@ public class ITestS3ADeleteCost extends AbstractS3ACostTest {
     int dirsCreated = 2;
     fs.delete(parent, true);
 
-    LOG.info("creating parent dir {}", parent);
+    LOG.error("Temp", new RuntimeException());
     fs.mkdirs(parent);
 
-    LOG.info("creating sub directory {}", subDir);
+    LOG.error("Temp", new RuntimeException());
     // one dir created, possibly a parent removed
     final int fakeDirectoriesToDelete = directoriesInPath(subDir) - 1;
     verifyMetrics(() -> {
@@ -223,7 +223,7 @@ public class ITestS3ADeleteCost extends AbstractS3ACostTest {
         withWhenDeleting(FAKE_DIRECTORIES_DELETED,
             fakeDirectoriesToDelete));
 
-    LOG.info("About to delete {}", parent);
+    LOG.error("Temp", new RuntimeException());
     // now delete the deep tree.
     verifyMetrics(() -> {
       fs.delete(parent, true);
@@ -273,7 +273,7 @@ public class ITestS3ADeleteCost extends AbstractS3ACostTest {
     final int directories = directoriesInPath(srcDir);
     verifyMetrics(() -> {
       file(new Path(srcDir, "source.txt"));
-      LOG.info("Metrics: {}\n{}", getMetricSummary(), getFileSystem());
+      LOG.error("Temp", new RuntimeException());
       return "after touch(fs, srcFilePath) " + getMetricSummary();
     },
         with(DIRECTORIES_CREATED, 0),

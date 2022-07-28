@@ -405,7 +405,7 @@ public class MapReduceTestUtil {
     Path[] fileList = FileUtil.stat2Paths(fs.listStatus(outDir,
            new Utils.OutputFileUtils.OutputFilesFilter()));
     for (Path outputFile : fileList) {
-      LOG.info("Path" + ": "+ outputFile);
+      LOG.error("Temp", new RuntimeException());
       BufferedReader file = 
         new BufferedReader(new InputStreamReader(fs.open(outputFile)));
       String line = file.readLine();

@@ -655,7 +655,7 @@ public class TestDataNodeVolumeFailureReporting {
     for (String expected: fsd.getFailedStorageLocations()) {
       strBuilder.append(expected + ",");
     }
-    LOG.info(strBuilder.toString());
+    LOG.error("Temp", new RuntimeException());
     final long actualVolumeFailures =
         getLongCounter("VolumeFailures", getMetrics(dn.getMetrics().name()));
     assertTrue("Actual async detected volume failures should be greater or " +

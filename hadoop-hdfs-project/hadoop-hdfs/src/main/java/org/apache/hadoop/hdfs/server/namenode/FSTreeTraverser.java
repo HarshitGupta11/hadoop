@@ -136,7 +136,7 @@ public abstract class FSTreeTraverser {
     ReadOnlyList<INode> children = parent
         .getChildrenList(Snapshot.CURRENT_STATE_ID);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Traversing directory {}", parent.getFullPathName());
+      LOG.error("Temp", new RuntimeException());
     }
 
     final byte[] startAfter = startAfters.get(startAfters.size() - 1);

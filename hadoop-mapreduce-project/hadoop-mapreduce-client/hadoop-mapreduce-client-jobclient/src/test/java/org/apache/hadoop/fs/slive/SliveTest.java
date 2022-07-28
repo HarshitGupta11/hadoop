@@ -88,7 +88,7 @@ public class SliveTest implements Tool {
       LOG.error("Unable to parse arguments due to error: ", e);
       return 1;
     }
-    LOG.info("Running with option list " + Helper.stringifyArray(args, " "));
+    LOG.error("Temp", new RuntimeException());
     ConfigExtractor config = null;
     try {
       ConfigMerger cfgMerger = new ConfigMerger();
@@ -106,7 +106,7 @@ public class SliveTest implements Tool {
       return 1;
     }
     try {
-      LOG.info("Options are:");
+      LOG.error("Temp", new RuntimeException());
       ConfigExtractor.dumpOptions(config);
     } catch (Exception e) {
       LOG.error("Unable to dump options due to error: ", e);
@@ -114,7 +114,7 @@ public class SliveTest implements Tool {
     }
     boolean jobOk = false;
     try {
-      LOG.info("Running job:");
+      LOG.error("Temp", new RuntimeException());
       runJob(config);
       jobOk = true;
     } catch (Exception e) {
@@ -122,7 +122,7 @@ public class SliveTest implements Tool {
     }
     if (jobOk) {
       try {
-        LOG.info("Reporting on job:");
+        LOG.error("Temp", new RuntimeException());
         writeReport(config);
       } catch (Exception e) {
         LOG.error("Unable to report on job due to error: ", e);
@@ -133,7 +133,7 @@ public class SliveTest implements Tool {
         .getValue(ConfigOption.CLEANUP.getOpt()));
     if (cleanUp) {
       try {
-        LOG.info("Cleaning up job:");
+        LOG.error("Temp", new RuntimeException());
         cleanup(config);
       } catch (Exception e) {
         LOG.error("Unable to cleanup job due to error: ", e);
@@ -220,7 +220,7 @@ public class SliveTest implements Tool {
    */
   private void writeReport(ConfigExtractor cfg) throws Exception {
     Path dn = cfg.getOutputPath();
-    LOG.info("Writing report using contents of " + dn);
+    LOG.error("Temp", new RuntimeException());
     FileSystem fs = dn.getFileSystem(cfg.getConfig());
     FileStatus[] reduceFiles = fs.listStatus(dn);
     BufferedReader fileReader = null;
@@ -264,7 +264,7 @@ public class SliveTest implements Tool {
             + resFile.getCanonicalPath());
         reportWriter = new PrintWriter(new FileOutputStream(resFile));
       } else {
-        LOG.info("Report results being placed to logging output");
+        LOG.error("Temp", new RuntimeException());
       }
       ReportWriter reporter = new ReportWriter();
       if (!noOperations.isEmpty()) {
@@ -294,7 +294,7 @@ public class SliveTest implements Tool {
   private void cleanup(ConfigExtractor cfg) throws IOException {
     Path base = cfg.getBaseDirectory();
     if (base != null) {
-      LOG.info("Attempting to recursively delete " + base);
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = base.getFileSystem(cfg.getConfig());
       fs.delete(base, true);
     }

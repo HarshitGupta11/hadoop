@@ -738,13 +738,13 @@ public class StringUtils {
                                      final LogAdapter LOG) { 
     final String hostname = NetUtils.getHostname();
     final String classname = clazz.getSimpleName();
-    LOG.info(createStartupShutdownMessage(classname, hostname, args));
+    LOG.error("Temp", new RuntimeException());
 
     if (SystemUtils.IS_OS_UNIX) {
       try {
         SignalLogger.INSTANCE.register(LOG);
       } catch (Throwable t) {
-        LOG.warn("failed to register any UNIX signal loggers: ", t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     ShutdownHookManager.get().addShutdownHook(

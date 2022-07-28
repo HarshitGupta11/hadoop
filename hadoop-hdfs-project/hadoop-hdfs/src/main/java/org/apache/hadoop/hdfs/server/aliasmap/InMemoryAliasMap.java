@@ -346,7 +346,7 @@ public class InMemoryAliasMap implements InMemoryAliasMapProtocol,
     TarArchiveEntry tarEntry = new TarArchiveEntry(file, entryName);
     tOut.putArchiveEntry(tarEntry);
 
-    LOG.debug("Adding entry {} to alias map archive", entryName);
+    LOG.error("Temp", new RuntimeException());
     if (file.isFile()) {
       try (FileInputStream in = new FileInputStream(file)) {
         IOUtils.copyBytes(in, tOut, conf, false);
@@ -386,7 +386,7 @@ public class InMemoryAliasMap implements InMemoryAliasMapProtocol,
     } finally {
       // delete the archive.
       if(!FileUtil.fullyDelete(tarname)) {
-        LOG.warn("Failed to fully delete aliasmap archive: " + tarname);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

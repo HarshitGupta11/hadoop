@@ -173,10 +173,10 @@ public class ClientServiceDelegate {
       }
       try {
         if (application.getHost() == null || "".equals(application.getHost())) {
-          LOG.debug("AM not assigned to Job. Waiting to get the AM ...");
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(2000);
 
-          LOG.debug("Application state is " + application.getYarnApplicationState());
+          LOG.error("Temp", new RuntimeException());
           application = rm.getApplicationReport(appId);
           continue;
         } else if (UNAVAILABLE.equals(application.getHost())) {
@@ -199,7 +199,7 @@ public class ClientServiceDelegate {
                 ConverterUtils.convertFromYarn(clientToAMToken, serviceAddr);
             newUgi.addToken(token);
           }
-          LOG.debug("Connecting to " + serviceAddr);
+          LOG.error("Temp", new RuntimeException());
           final InetSocketAddress finalServiceAddr = serviceAddr;
           realProxy = newUgi.doAs(new PrivilegedExceptionAction<MRClientProtocol>() {
             @Override
@@ -225,7 +225,7 @@ public class ClientServiceDelegate {
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e1) {
-          LOG.warn("getProxy() call interrupted", e1);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnRuntimeException(e1);
         }
         try {
@@ -239,7 +239,7 @@ public class ClientServiceDelegate {
           return checkAndGetHSProxy(null, JobState.RUNNING);
         }
       } catch (InterruptedException e) {
-        LOG.warn("getProxy() call interrupted", e);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(e);
       } catch (YarnException e) {
         throw new IOException(e);
@@ -287,7 +287,7 @@ public class ClientServiceDelegate {
   private MRClientProtocol checkAndGetHSProxy(
       ApplicationReport applicationReport, JobState state) {
     if (null == historyServerProxy) {
-      LOG.warn("Job History Server is not configured.");
+      LOG.error("Temp", new RuntimeException());
       return getNotRunningJob(applicationReport, state);
     }
     return historyServerProxy;
@@ -346,7 +346,7 @@ public class ClientServiceDelegate {
         try {
           Thread.sleep(100);
         } catch (InterruptedException ie) {
-          LOG.warn("ClientServiceDelegate invoke call interrupted", ie);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnRuntimeException(ie);
         }
       } catch (Exception e) {
@@ -360,7 +360,7 @@ public class ClientServiceDelegate {
         try {
           Thread.sleep(100);
         } catch (InterruptedException ie) {
-          LOG.warn("ClientServiceDelegate invoke call interrupted", ie);
+          LOG.error("Temp", new RuntimeException());
           throw new YarnRuntimeException(ie);
         }
       }

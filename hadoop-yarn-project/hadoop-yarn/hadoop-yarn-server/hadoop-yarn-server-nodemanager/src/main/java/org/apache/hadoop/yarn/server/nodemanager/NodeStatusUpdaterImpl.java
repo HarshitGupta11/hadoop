@@ -201,7 +201,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
     // Update configured resources via plugins.
     updateConfiguredResourcesViaPlugins(totalResource);
 
-    LOG.info("Nodemanager resources is set to: " + totalResource);
+    LOG.error("Temp", new RuntimeException());
 
     metrics.addResource(totalResource);
 
@@ -264,7 +264,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
 
     // NodeManager is the last service to start, so NodeId is available.
     this.nodeId = this.context.getNodeId();
-    LOG.info("Node ID assigned is : " + this.nodeId);
+    LOG.error("Temp", new RuntimeException());
     this.httpPort = this.context.getHttpPort();
     this.nodeManagerVersionId = YarnVersionInfo.getVersion();
     try {
@@ -315,7 +315,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
       LOG.info("Successfully Unregistered the Node " + this.nodeId
           + " with ResourceManager.");
     } catch (Exception e) {
-      LOG.warn("Unregistration of the Node " + this.nodeId + " failed.", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -323,7 +323,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
     // Interrupt the updater.
     synchronized(shutdownMonitor) {
       if(this.isStopped) {
-        LOG.info("Currently being shutdown. Aborting reboot");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       this.isStopped = true;
@@ -334,7 +334,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
         statusUpdater = new Thread(statusUpdaterRunnable, "Node Status Updater");
         this.isStopped = false;
         statusUpdater.start();
-        LOG.info("NodeStatusUpdater thread is reRegistered and restarted");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         String errorMessage = "Unexpected error rebooting NodeStatusUpdater";
         LOG.error(errorMessage, e);
@@ -399,7 +399,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
               nodeLabels, physicalResource, nodeAttributes, nodeStatus);
 
       if (containerReports != null && !containerReports.isEmpty()) {
-        LOG.info("Registering with RM using containers :" + containerReports);
+        LOG.error("Temp", new RuntimeException());
       }
       if (logAggregationEnabled) {
         // pull log aggregation status for application running in this NM
@@ -483,7 +483,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
     successfullRegistrationMsg.append(nodeAttributesHandler
         .verifyRMRegistrationResponseForNodeAttributes(regNMResponse));
 
-    LOG.info(successfullRegistrationMsg.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private List<ApplicationId> createKeepAliveApplicationList() {
@@ -1425,9 +1425,9 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
           Resource newResource = response.getResource();
           if (newResource != null) {
             updateNMResource(newResource);
-            LOG.debug("Node's resource is updated to {}", newResource);
+            LOG.error("Temp", new RuntimeException());
             if (!totalResource.equals(newResource)) {
-              LOG.info("Node's resource is updated to {}", newResource);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           if (timelineServiceV2Enabled) {
@@ -1469,7 +1469,7 @@ public class NodeStatusUpdaterImpl extends AbstractService implements
       Map<ApplicationId, AppCollectorData> incomingCollectorsMap =
           response.getAppCollectors();
       if (incomingCollectorsMap == null) {
-        LOG.debug("No collectors to update RM");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       Map<ApplicationId, AppCollectorData> knownCollectors =

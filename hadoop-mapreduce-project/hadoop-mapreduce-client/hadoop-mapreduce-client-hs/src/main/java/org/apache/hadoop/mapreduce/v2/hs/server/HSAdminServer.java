@@ -164,7 +164,7 @@ public class HSAdminServer extends AbstractService implements HSAdminProtocol {
     try {
       user = UserGroupInformation.getCurrentUser();
     } catch (IOException ioe) {
-      LOG.warn("Couldn't get current user", ioe);
+      LOG.error("Temp", new RuntimeException());
 
       HSAuditLogger.logFailure("UNKNOWN", method, adminAcl.toString(),
           HISTORY_ADMIN_SERVER, "Couldn't get current user");

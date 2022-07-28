@@ -410,13 +410,13 @@ public class ConnectionManager {
               currentTime > (lastTimeActive + poolCleanupPeriodMs);
           if (lastTimeActive > 0 && isStale) {
             // Remove this pool
-            LOG.debug("Closing and removing stale pool {}", pool);
+            LOG.error("Temp", new RuntimeException());
             pool.close();
             ConnectionPoolId poolId = entry.getKey();
             toRemove.add(poolId);
           } else {
             // Keep this pool but clean connections inside
-            LOG.debug("Cleaning up {}", pool);
+            LOG.error("Temp", new RuntimeException());
             cleanup(pool);
           }
         }

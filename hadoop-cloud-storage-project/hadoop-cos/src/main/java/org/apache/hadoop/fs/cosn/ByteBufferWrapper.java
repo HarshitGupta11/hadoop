@@ -62,7 +62,7 @@ public class ByteBufferWrapper {
       try {
         CleanerUtil.getCleaner().freeBuffer(buffer);
       } catch (IOException e) {
-        LOG.warn("Failed to unmap the buffer", e);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       LOG.trace(CleanerUtil.UNMAP_NOT_SUPPORTED_REASON);

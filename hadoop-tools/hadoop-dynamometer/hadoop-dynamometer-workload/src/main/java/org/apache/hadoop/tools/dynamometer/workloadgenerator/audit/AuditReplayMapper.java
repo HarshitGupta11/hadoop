@@ -223,7 +223,7 @@ public class AuditReplayMapper extends WorkloadMapper<LongWritable, Text,
     relativeToAbsoluteTimestamp =
         (input) -> startTimestampMs + Math.round(input / rateFactor);
 
-    LOG.info("Starting " + numThreads + " threads");
+    LOG.error("Temp", new RuntimeException());
 
     progressExecutor = new ScheduledThreadPoolExecutor(1);
     // half of the timeout or once per minute if none specified
@@ -288,7 +288,7 @@ public class AuditReplayMapper extends WorkloadMapper<LongWritable, Text,
       double percentageOfInvalidOps =
           context.getCounter(REPLAYCOUNTERS.TOTALINVALIDCOMMANDS).getValue()
               * 100.0 / totalCommands;
-      LOG.info("Percentage of invalid ops: " + percentageOfInvalidOps);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -50,7 +50,7 @@ public class AppendTestUtil {
   static {
     final long seed = RANDOM_NUMBER_GENERATOR_SEED == null?
         SEED.nextLong(): RANDOM_NUMBER_GENERATOR_SEED;
-    LOG.info("seed=" + seed);
+    LOG.error("Temp", new RuntimeException());
     SEED.setSeed(seed);
   }
 
@@ -61,7 +61,7 @@ public class AppendTestUtil {
       synchronized(SEED) { 
         final long seed = SEED.nextLong();
         r.setSeed(seed);
-        LOG.info(Thread.currentThread().getName() + ": seed=" + seed);
+        LOG.error("Temp", new RuntimeException());
       }
       return r;
     }
@@ -76,7 +76,7 @@ public class AppendTestUtil {
   static int nextLong() {return RANDOM.get().nextInt();}
 
   public static byte[] randomBytes(long seed, int size) {
-    LOG.info("seed=" + seed + ", size=" + size);
+    LOG.error("Temp", new RuntimeException());
     final byte[] b = new byte[size];
     final Random rand = new Random(seed);
     rand.nextBytes(b);
@@ -96,7 +96,7 @@ public class AppendTestUtil {
       }
     }
     
-    LOG.info("partition=" + Arrays.toString(p));
+    LOG.error("Temp", new RuntimeException());
     assertTrue("i=0", p[0] > 0 && p[0] < n);
     for(int i = 1; i < p.length; i++) {
       assertTrue("i=" + i, p[i] > p[i - 1] && p[i] < n);
@@ -108,7 +108,7 @@ public class AppendTestUtil {
     try {
       Thread.sleep(ms);
     } catch (InterruptedException e) {
-      LOG.info("ms=" + ms, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   

@@ -248,7 +248,7 @@ public abstract class RenameTracker extends AbstractStoreOperation {
    * @return an IOException to throw in an exception.
    */
   public IOException renameFailed(Exception ex) {
-    LOG.debug("Rename has failed", ex);
+    LOG.error("Temp", new RuntimeException());
     IOUtils.cleanupWithLogger(LOG, operationState);
     noteRenameFinished();
     return convertToIOException(ex);

@@ -124,7 +124,7 @@ class EditLogBackupOutputStream extends EditLogOutputStream {
     assert out.getLength() == 0 : "Output buffer is not empty";
     
     if (doubleBuf.isFlushed()) {
-      LOG.info("Nothing to flush");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 

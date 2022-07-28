@@ -121,7 +121,7 @@ public abstract class FileContextMainOperationsBaseTest  {
   public void tearDown() throws Exception {
     if (fc != null) {
       final Path testRoot = fileContextTestHelper.getAbsoluteTestRootPath(fc);
-      LOG.info("Deleting test root path {}", testRoot);
+      LOG.error("Temp", new RuntimeException());
       try {
         fc.delete(testRoot, true);
       } catch (Exception e) {
@@ -1471,7 +1471,7 @@ public abstract class FileContextMainOperationsBaseTest  {
    * @param text description
    */
   protected void describe(String text) {
-    LOG.info(text);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test

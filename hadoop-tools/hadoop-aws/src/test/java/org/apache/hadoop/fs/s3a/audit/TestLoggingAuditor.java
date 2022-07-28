@@ -69,8 +69,8 @@ public class TestLoggingAuditor extends AbstractAuditingTest {
   public void testToStringRobustness() throws Throwable {
     // force in the toString calls so if there are NPE problems
     // they will surface irrespective of log settings
-    LOG.info(getManager().toString());
-    LOG.info(auditor.toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

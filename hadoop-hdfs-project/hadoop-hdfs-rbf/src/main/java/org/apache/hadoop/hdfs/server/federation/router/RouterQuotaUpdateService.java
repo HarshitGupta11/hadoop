@@ -79,7 +79,7 @@ public class RouterQuotaUpdateService extends PeriodicService {
 
   @Override
   protected void periodicInvoke() {
-    LOG.debug("Start to update quota cache.");
+    LOG.error("Temp", new RuntimeException());
     try {
       List<MountTable> mountTables = getQuotaSetMountTables();
       Map<RemoteLocation, QuotaUsage> remoteQuotaUsage = new HashMap<>();

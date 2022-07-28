@@ -267,9 +267,9 @@ public class DelegationTokenAuthenticationFilter
                 HttpServletResponse.SC_FORBIDDEN, ex);
             requestCompleted = true;
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Authentication exception: " + ex.getMessage(), ex);
+              LOG.error("Temp", new RuntimeException());
             } else {
-              LOG.warn("Authentication exception: " + ex.getMessage());
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }

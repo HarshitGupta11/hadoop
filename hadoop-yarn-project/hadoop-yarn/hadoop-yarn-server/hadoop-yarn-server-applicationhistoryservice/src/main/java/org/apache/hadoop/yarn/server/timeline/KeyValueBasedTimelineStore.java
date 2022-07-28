@@ -98,7 +98,7 @@ abstract class KeyValueBasedTimelineStore
       NameValuePair primaryFilter, Collection<NameValuePair> secondaryFilters,
       EnumSet<Field> fields, CheckAcl checkAcl) throws IOException {
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     if (limit == null) {
@@ -190,7 +190,7 @@ abstract class KeyValueBasedTimelineStore
   public synchronized TimelineEntity getEntity(String entityId, String entityType,
       EnumSet<Field> fieldsToRetrieve) {
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     if (fieldsToRetrieve == null) {
@@ -212,7 +212,7 @@ abstract class KeyValueBasedTimelineStore
       Long windowEnd,
       Set<String> eventTypes) {
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     TimelineEvents allEvents = new TimelineEvents();
@@ -261,7 +261,7 @@ abstract class KeyValueBasedTimelineStore
   public TimelineDomain getDomain(String domainId)
       throws IOException {
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     TimelineDomain domain = domainById.get(domainId);
@@ -283,7 +283,7 @@ abstract class KeyValueBasedTimelineStore
   public TimelineDomains getDomains(String owner)
       throws IOException {
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     List<TimelineDomain> domains = new ArrayList<TimelineDomain>();
@@ -326,7 +326,7 @@ abstract class KeyValueBasedTimelineStore
   public synchronized TimelinePutResponse put(TimelineEntities data) {
     TimelinePutResponse response = new TimelinePutResponse();
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       TimelinePutError error = new TimelinePutError();
       error.setErrorCode(TimelinePutError.IO_EXCEPTION);
       response.addError(error);
@@ -463,7 +463,7 @@ abstract class KeyValueBasedTimelineStore
 
   public void put(TimelineDomain domain) throws IOException {
     if (getServiceStopped()) {
-      LOG.info("Service stopped, return null for the storage");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     TimelineDomain domainToReplace =

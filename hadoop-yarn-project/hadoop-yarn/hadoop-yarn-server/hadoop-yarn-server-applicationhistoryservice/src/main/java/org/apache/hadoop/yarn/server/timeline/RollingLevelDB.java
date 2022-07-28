@@ -189,7 +189,7 @@ class RollingLevelDB {
   }
 
   public void init(final Configuration config) throws Exception {
-    LOG.info("Initializing RollingLevelDB for " + getName());
+    LOG.error("Temp", new RuntimeException());
     this.conf = config;
     this.ttl = conf.getLong(YarnConfiguration.TIMELINE_SERVICE_TTL_MS,
         YarnConfiguration.DEFAULT_TIMELINE_SERVICE_TTL_MS);
@@ -264,7 +264,7 @@ class RollingLevelDB {
           new File(rollingInstanceDBPath.toUri().getPath()), options);
       rollingdbs.put(dbStartTime, db);
       String dbName = fdf.format(dbStartTime);
-      LOG.info("Added rolling leveldb instance " + dbName + " to " + getName());
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException ioe) {
       LOG.warn("Failed to open rolling leveldb instance :"
           + new File(rollingInstanceDBPath.toUri().getPath()), ioe);
@@ -309,7 +309,7 @@ class RollingLevelDB {
   }
 
   private void roll(long startTime) {
-    LOG.info("Rolling new DB instance for " + getName());
+    LOG.error("Temp", new RuntimeException());
     long currentStartTime = computeCurrentCheckMillis(startTime);
     setNextRollingTimeMillis(computeNextCheckMillis(currentStartTime));
     String currentRollingDBInstance = fdf.format(currentStartTime);
@@ -342,7 +342,7 @@ class RollingLevelDB {
   }
 
   public synchronized void evictOldDBs() {
-    LOG.info("Evicting " + getName() + " DBs scheduled for eviction");
+    LOG.error("Temp", new RuntimeException());
     Iterator<Entry<Long, DB>> iterator = rollingdbsToEvict.entrySet()
         .iterator();
     while (iterator.hasNext()) {
@@ -351,10 +351,10 @@ class RollingLevelDB {
       String dbName = fdf.format(entry.getKey());
       Path path = new Path(rollingDBPath, getName() + "." + dbName);
       try {
-        LOG.info("Removing old db directory contents in " + path);
+        LOG.error("Temp", new RuntimeException());
         lfs.delete(path, true);
       } catch (IOException ioe) {
-        LOG.warn("Failed to evict old db " + path, ioe);
+        LOG.error("Temp", new RuntimeException());
       }
       iterator.remove();
     }

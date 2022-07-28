@@ -270,7 +270,7 @@ public class RouterClientProtocol implements ClientProtocol {
     if (createParent && rpcServer.isPathAll(src)) {
       int index = src.lastIndexOf(Path.SEPARATOR);
       String parent = src.substring(0, index);
-      LOG.debug("Creating {} requires creating parent {}", src, parent);
+      LOG.error("Temp", new RuntimeException());
       FsPermission parentPermissions = getParentPermission(masked);
       boolean success = mkdirs(parent, parentPermissions, createParent);
       if (!success) {
@@ -346,7 +346,7 @@ public class RouterClientProtocol implements ClientProtocol {
       throw ioe;
     }
     if (!rpcServer.isPathFaultTolerant(src)) {
-      LOG.debug("{} does not allow retrying a failed subcluster", src);
+      LOG.error("Temp", new RuntimeException());
       throw ioe;
     }
 
@@ -364,7 +364,7 @@ public class RouterClientProtocol implements ClientProtocol {
         }
       }
     }
-    LOG.info("{} allows retrying failed subclusters in {}", src, newLocations);
+    LOG.error("Temp", new RuntimeException());
     return newLocations;
   }
 
@@ -789,7 +789,7 @@ public class RouterClientProtocol implements ClientProtocol {
           IOException ioe = result.getException();
           if (ioe instanceof FileNotFoundException) {
             RemoteLocation location = result.getLocation();
-            LOG.debug("Cannot get listing from {}", location);
+            LOG.error("Temp", new RuntimeException());
           } else if (!allowPartialList) {
             throw ioe;
           }
@@ -1011,7 +1011,7 @@ public class RouterClientProtocol implements ClientProtocol {
             dnInfo.getLastUpdate() > oldDn.getDatanodeInfo().getLastUpdate()) {
           datanodesMap.put(nodeId, dn);
         } else {
-          LOG.debug("{} is in multiple subclusters", nodeId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -2032,7 +2032,7 @@ public class RouterClientProtocol implements ClientProtocol {
         if (UserGroupInformation.isSecurityEnabled()) {
           LOG.error(msg);
         } else {
-          LOG.debug(msg);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -2140,7 +2140,7 @@ public class RouterClientProtocol implements ClientProtocol {
               DirectoryListing.class);
       return listings;
     } catch (RouterResolveException e) {
-      LOG.debug("Cannot get locations for {}, {}.", src, e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       return new ArrayList<>();
     }
   }
@@ -2196,11 +2196,11 @@ public class RouterClientProtocol implements ClientProtocol {
         if (fileStatus != null) {
           return fileStatus.isDirectory();
         } else {
-          LOG.debug("The destination {} doesn't exist.", src);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (UnresolvedPathException e) {
-      LOG.debug("The destination {} is a symlink.", src);
+      LOG.error("Temp", new RuntimeException());
     }
     return false;
   }

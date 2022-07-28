@@ -720,7 +720,7 @@ public class ITestRestrictedReadAccess extends AbstractS3ATestBase {
       boolean expectAuthFailure,
       final int expectedCount)
       throws IOException {
-    LOG.info("Glob {}", path);
+    LOG.error("Temp", new RuntimeException());
     S3ATestUtils.MetricDiff getMetric = new S3ATestUtils.MetricDiff(fs,
         Statistic.OBJECT_METADATA_REQUESTS);
     S3ATestUtils.MetricDiff listMetric = new S3ATestUtils.MetricDiff(fs,
@@ -730,7 +730,7 @@ public class ITestRestrictedReadAccess extends AbstractS3ATestBase {
       st = filter == null
           ? fs.globStatus(path)
           : fs.globStatus(path, filter);
-      LOG.info("Metrics:\n {},\n {}", getMetric, listMetric);
+      LOG.error("Temp", new RuntimeException());
       if (expectAuthFailure) {
         // should have failed here
         String resultStr;
@@ -743,7 +743,7 @@ public class ITestRestrictedReadAccess extends AbstractS3ATestBase {
             + " an exception, but returned %s", path, resultStr));
       }
     } catch (AccessDeniedException e) {
-      LOG.info("Metrics:\n {},\n {}", getMetric, listMetric);
+      LOG.error("Temp", new RuntimeException());
       failif(!expectAuthFailure, "Access denied in glob of " + path,
           e);
       return null;

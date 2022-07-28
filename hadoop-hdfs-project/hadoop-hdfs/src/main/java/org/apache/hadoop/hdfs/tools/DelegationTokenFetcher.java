@@ -172,7 +172,7 @@ public class DelegationTokenFetcher {
       if (token.isManaged()) {
         token.cancel(conf);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Cancelled token for " + token.getService());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

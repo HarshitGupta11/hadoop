@@ -135,7 +135,7 @@ public class ITestBlockBlobInputStream extends AbstractAzureScaleTest {
     if (fs.exists(TEST_FILE_PATH)) {
       testFileStatus = fs.getFileStatus(TEST_FILE_PATH);
       testFileLength = testFileStatus.getLen();
-      LOG.info("Reusing test file: {}", testFileStatus);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -157,7 +157,7 @@ public class ITestBlockBlobInputStream extends AbstractAzureScaleTest {
         outputStream.write(buffer);
         bytesWritten += buffer.length;
       }
-      LOG.info("Closing stream {}", outputStream);
+      LOG.error("Temp", new RuntimeException());
       ContractTestUtils.NanoTimer closeTimer
           = new ContractTestUtils.NanoTimer();
       outputStream.close();

@@ -155,9 +155,9 @@ public class AbstractServiceLauncherTestBase extends Assert implements
       String... args) {
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Launching service with expected outcome {}", expected);
+        LOG.error("Temp", new RuntimeException());
         for (String arg : args) {
-          LOG.debug(arg);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       ServiceLauncher.serviceMain(args);

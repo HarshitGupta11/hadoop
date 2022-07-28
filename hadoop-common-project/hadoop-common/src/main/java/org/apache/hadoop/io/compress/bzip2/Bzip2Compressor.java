@@ -116,7 +116,7 @@ public class Bzip2Compressor implements Compressor {
     workFactor = Bzip2Factory.getWorkFactor(conf);
     stream = init(blockSize, workFactor);
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Reinit compressor with new compression configuration");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

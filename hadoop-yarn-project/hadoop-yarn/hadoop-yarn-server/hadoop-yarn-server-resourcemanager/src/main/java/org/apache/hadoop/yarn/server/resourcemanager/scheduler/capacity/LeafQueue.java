@@ -163,7 +163,7 @@ public class LeafQueue extends AbstractCSQueue {
     // One time initialization is enough since it is static ordering policy
     this.pendingOrderingPolicy = new FifoOrderingPolicyForPendingApps();
 
-    LOG.debug("LeafQueue: name={}, fullname={}", queueName, getQueuePath());
+    LOG.error("Temp", new RuntimeException());
 
     setupQueueConfigs(cs.getClusterResource(), configuration);
 
@@ -640,7 +640,7 @@ public class LeafQueue extends AbstractCSQueue {
         String msg = "Queue " + getQueuePath()
             + " is STOPPED. Cannot accept submission of application: "
             + applicationId;
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new AccessControlException(msg);
       }
 
@@ -651,7 +651,7 @@ public class LeafQueue extends AbstractCSQueue {
             "Queue " + getQueuePath() + " already has " + getNumApplications()
                 + " applications,"
                 + " cannot accept submission of application: " + applicationId;
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new AccessControlException(msg);
       }
 
@@ -662,7 +662,7 @@ public class LeafQueue extends AbstractCSQueue {
         String msg = "Queue " + getQueuePath() + " already has " + user
             .getTotalApplications() + " applications from user " + userName
             + " cannot accept submission of application: " + applicationId;
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new AccessControlException(msg);
       }
     } finally {
@@ -1340,7 +1340,7 @@ public class LeafQueue extends AbstractCSQueue {
         // Deduct resources that we can release
         User user = getUser(username);
         if (user == null) {
-          LOG.debug("User {} has been removed!", username);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         Resource usedResource = Resources.clone(user.getUsed(p));
@@ -1547,7 +1547,7 @@ public class LeafQueue extends AbstractCSQueue {
     String user = application.getUser();
     User queueUser = getUser(user);
     if (queueUser == null) {
-      LOG.debug("User {} has been removed!", user);
+      LOG.error("Temp", new RuntimeException());
       return Resources.none();
     }
 
@@ -1646,7 +1646,7 @@ public class LeafQueue extends AbstractCSQueue {
     try {
       User user = getUser(userName);
       if (user == null) {
-        LOG.debug("User {} has been removed!", userName);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
 

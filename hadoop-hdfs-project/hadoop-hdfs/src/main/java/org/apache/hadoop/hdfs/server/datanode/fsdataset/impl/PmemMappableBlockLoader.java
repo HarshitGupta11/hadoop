@@ -45,7 +45,7 @@ public class PmemMappableBlockLoader extends MappableBlockLoader {
 
   @Override
   CacheStats initialize(DNConf dnConf) throws IOException {
-    LOG.info("Initializing cache loader: " + this.getClass().getName());
+    LOG.error("Temp", new RuntimeException());
     PmemVolumeManager.init(dnConf.getPmemVolumes(),
         dnConf.getPmemCacheRecoveryEnabled());
     pmemVolumeManager = PmemVolumeManager.getInstance();
@@ -108,7 +108,7 @@ public class PmemMappableBlockLoader extends MappableBlockLoader {
       IOUtils.closeQuietly(blockChannel);
       IOUtils.closeQuietly(cacheFile);
       if (mappableBlock == null) {
-        LOG.debug("Delete {} due to unsuccessful mapping.", cachePath);
+        LOG.error("Temp", new RuntimeException());
         FsDatasetUtil.deleteMappedFile(cachePath);
       }
     }
@@ -169,7 +169,7 @@ public class PmemMappableBlockLoader extends MappableBlockLoader {
   @Override
   void shutdown() {
     if (!cacheRecoveryEnabled) {
-      LOG.info("Clean up cache on persistent memory during shutdown.");
+      LOG.error("Temp", new RuntimeException());
       PmemVolumeManager.getInstance().cleanup();
     }
   }

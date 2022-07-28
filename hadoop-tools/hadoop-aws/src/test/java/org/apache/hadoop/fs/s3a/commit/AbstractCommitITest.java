@@ -215,7 +215,7 @@ public abstract class AbstractCommitITest extends AbstractS3ATestBase {
   @Override
   public void teardown() throws Exception {
     Thread.currentThread().setName("teardown");
-    LOG.info("AbstractCommitITest::teardown");
+    LOG.error("Temp", new RuntimeException());
     waitForConsistency();
     // make sure there are no failures any more
     resetFailures();

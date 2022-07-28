@@ -212,7 +212,7 @@ public class TestPermission {
         assertTrue(false);
       }
       catch(java.io.FileNotFoundException e) {
-        LOG.info("GOOD: got " + e);
+        LOG.error("Temp", new RuntimeException());
       }
       
       // make sure nn can take user specified permission (with default fs

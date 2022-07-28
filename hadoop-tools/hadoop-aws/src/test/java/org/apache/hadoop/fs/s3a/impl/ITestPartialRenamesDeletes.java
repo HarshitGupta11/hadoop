@@ -502,7 +502,7 @@ public class ITestPartialRenamesDeletes extends AbstractS3ATestBase {
         readOnlyDir, expectedFileCount);
 
     // try to rename the directory
-    LOG.info("Renaming readonly files {} to {}", readOnlyDir, writableDir);
+    LOG.error("Temp", new RuntimeException());
 
     AccessDeniedException deniedException = expectRenameForbidden(readOnlyDir,
         writableDir);
@@ -538,7 +538,7 @@ public class ITestPartialRenamesDeletes extends AbstractS3ATestBase {
         writableDir, expectedFileCount);
     // all directories in the source tree must still exist,
     // which for S3Guard means no tombstone markers were added
-    LOG.info("Verifying all directories still exist");
+    LOG.error("Temp", new RuntimeException());
     for (Path dir : dirs) {
       assertIsDirectory(dir);
     }

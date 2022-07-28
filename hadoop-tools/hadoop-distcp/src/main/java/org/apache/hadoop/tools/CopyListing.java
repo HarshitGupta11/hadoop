@@ -91,7 +91,7 @@ public abstract class CopyListing extends Configured {
     config.setLong(DistCpConstants.CONF_LABEL_TOTAL_NUMBER_OF_RECORDS, getNumberOfPaths());
 
     validateFinalListing(pathToListFile, distCpContext);
-    LOG.info("Number of paths in the copy list: " + this.getNumberOfPaths());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
