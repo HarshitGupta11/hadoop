@@ -228,7 +228,7 @@ public class TestRenameWithSnapshots {
     
     // Query the diff report and make sure it looks as expected.
     diffReport = hdfs.getSnapshotDiffReport(sub1, snap1, snap2);
-    LOG.info("DiffList is " + diffReport.toString());
+    LOG.error("Temp", new RuntimeException());
     List<DiffReportEntry> entries = diffReport.getDiffList();
     assertTrue(entries.size() == 2);
     assertTrue(existsInDiffReport(entries, DiffType.MODIFY, "", null));
@@ -236,7 +236,7 @@ public class TestRenameWithSnapshots {
         file2.getName()));
     
     diffReport = hdfs.getSnapshotDiffReport(sub1, snap2, "");
-    LOG.info("DiffList is " + diffReport.toString());
+    LOG.error("Temp", new RuntimeException());
     entries = diffReport.getDiffList();
     assertTrue(entries.size() == 2);
     assertTrue(existsInDiffReport(entries, DiffType.MODIFY, "", null));
@@ -244,7 +244,7 @@ public class TestRenameWithSnapshots {
         file3.getName()));
     
     diffReport = hdfs.getSnapshotDiffReport(sub1, snap1, "");
-    LOG.info("DiffList is " + diffReport.toString());
+    LOG.error("Temp", new RuntimeException());
     entries = diffReport.getDiffList();
     assertTrue(entries.size() == 2);
     assertTrue(existsInDiffReport(entries, DiffType.MODIFY, "", null));
@@ -270,7 +270,7 @@ public class TestRenameWithSnapshots {
     // Query the diff report and make sure it looks as expected.
     SnapshotDiffReport diffReport = hdfs.getSnapshotDiffReport(sub1, sub1snap1,
         "");
-    LOG.info("DiffList is \n\"" + diffReport.toString() + "\"");
+    LOG.error("Temp", new RuntimeException());
     List<DiffReportEntry> entries = diffReport.getDiffList();
     assertTrue(existsInDiffReport(entries, DiffType.MODIFY, sub2.getName(),
         null));
@@ -296,7 +296,7 @@ public class TestRenameWithSnapshots {
     // Query the diff report and make sure it looks as expected.
     SnapshotDiffReport diffReport = hdfs.getSnapshotDiffReport(sub1, sub1snap1,
         "");
-    LOG.info("DiffList is \n\"" + diffReport.toString() + "\"");
+    LOG.error("Temp", new RuntimeException());
     List<DiffReportEntry> entries = diffReport.getDiffList();
     assertEquals(2, entries.size());
     assertTrue(existsInDiffReport(entries, DiffType.MODIFY, "", null));
@@ -2373,7 +2373,7 @@ public class TestRenameWithSnapshots {
     SnapshotTestHelper.createSnapshot(hdfs, root, "s1");
 
     SnapshotDiffReport report = hdfs.getSnapshotDiffReport(root, "s0", "s1");
-    LOG.info("DiffList is \n\"" + report.toString() + "\"");
+    LOG.error("Temp", new RuntimeException());
     List<DiffReportEntry> entries = report.getDiffList();
     assertEquals(7, entries.size());
     assertTrue(existsInDiffReport(entries, DiffType.MODIFY, "", null));

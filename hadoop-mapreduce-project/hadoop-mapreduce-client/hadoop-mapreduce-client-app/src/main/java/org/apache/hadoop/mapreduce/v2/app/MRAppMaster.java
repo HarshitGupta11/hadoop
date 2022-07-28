@@ -267,7 +267,7 @@ public class MRAppMaster extends CompositeService {
     this.nmHttpPort = nmHttpPort;
     this.metrics = MRAppMetrics.create();
     logSyncer = TaskLog.createLogSyncer();
-    LOG.info("Created MRAppMaster for application " + applicationAttemptId);
+    LOG.error("Temp", new RuntimeException());
   }
   protected TaskAttemptFinishingMonitor createTaskAttemptFinishingMonitor(
       EventHandler eventHandler) {
@@ -304,7 +304,7 @@ public class MRAppMaster extends CompositeService {
           (numReduceTasks == 0 && 
            conf.getBoolean("mapred.mapper.new-api", false)))  {
       newApiCommitter = true;
-      LOG.info("Using mapred newApiCommitter.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     boolean copyHistory = false;
@@ -558,7 +558,7 @@ public class MRAppMaster extends CompositeService {
               "mapred.output.committer.class", FileOutputCommitter.class,
               org.apache.hadoop.mapred.OutputCommitter.class), conf);
         }
-        LOG.info("OutputCommitter is " + committer.getClass().getName());
+        LOG.error("Temp", new RuntimeException());
         return committer;
       }
     });
@@ -620,7 +620,7 @@ public class MRAppMaster extends CompositeService {
     try {
       if (!keepJobFiles(new JobConf(getConfig()), jobTempDir)) {
         if (jobTempDir == null) {
-          LOG.warn("Job Staging directory is null");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
         Path jobTempDirPath = new Path(jobTempDir);
@@ -657,14 +657,14 @@ public class MRAppMaster extends CompositeService {
       //if isLastAMRetry comes as true, should never set it to false
       if ( !isLastAMRetry){
         if (((JobImpl)job).getInternalState() != JobStateInternal.REBOOT) {
-          LOG.info("Job finished cleanly, recording last MRAppMaster retry");
+          LOG.error("Temp", new RuntimeException());
           isLastAMRetry = true;
         }
       }
       notifyIsLastAMRetry(isLastAMRetry);
       // Stop all services
       // This will also send the final report to the ResourceManager
-      LOG.info("Calling stop for all the services");
+      LOG.error("Temp", new RuntimeException());
       MRAppMaster.this.stop();
 
       if (isLastAMRetry && notifier != null) {
@@ -681,7 +681,7 @@ public class MRAppMaster extends CompositeService {
       }
       clientService.stop();
     } catch (Throwable t) {
-      LOG.warn("Graceful stop failed. Exiting.. ", t);
+      LOG.error("Temp", new RuntimeException());
       exitMRAppMaster(1, t);
     } finally {
       if (isLastAMRetry && notifier != null) {
@@ -1328,11 +1328,11 @@ public class MRAppMaster extends CompositeService {
     boolean attemptRecovery = shouldAttemptRecovery();
     boolean recoverySucceeded = true;
     if (attemptRecovery) {
-      LOG.info("Attempting to recover.");
+      LOG.error("Temp", new RuntimeException());
       try {
         parsePreviousJobHistory();
       } catch (IOException e) {
-        LOG.warn("Unable to parse prior job history, aborting recovery", e);
+        LOG.error("Temp", new RuntimeException());
         recoverySucceeded = false;
       }
     }
@@ -1403,9 +1403,9 @@ public class MRAppMaster extends CompositeService {
     if (!isFirstAttempt() && !recovered()) {
       JobContext jobContext = getJobContextFromConf(getConfig());
       try {
-        LOG.info("Starting to clean up previous job's temporary files");
+        LOG.error("Temp", new RuntimeException());
         this.committer.abortJob(jobContext, State.FAILED);
-        LOG.info("Finished cleaning up previous job temporary files");
+        LOG.error("Temp", new RuntimeException());
       } catch (FileNotFoundException e) {
         LOG.info("Previous job temporary files do not exist, " +
             "no clean up was necessary.");
@@ -1423,7 +1423,7 @@ public class MRAppMaster extends CompositeService {
       throws IOException {
     Path historyFile = JobHistoryUtils.getPreviousJobHistoryPath(conf,
         appAttemptId);
-    LOG.info("Previous history file is at " + historyFile);
+    LOG.error("Temp", new RuntimeException());
     return historyFile.getFileSystem(conf).open(historyFile);
   }
 
@@ -1682,7 +1682,7 @@ public class MRAppMaster extends CompositeService {
       // log the system properties
       String systemPropsToLog = MRApps.getSystemPropertiesToLog(conf);
       if (systemPropsToLog != null) {
-        LOG.info(systemPropsToLog);
+        LOG.error("Temp", new RuntimeException());
       }
 
       String jobUserName = System
@@ -1719,12 +1719,12 @@ public class MRAppMaster extends CompositeService {
 
   public void notifyIsLastAMRetry(boolean isLastAMRetry){
     if(containerAllocator instanceof ContainerAllocatorRouter) {
-      LOG.info("Notify RMCommunicator isAMLastRetry: " + isLastAMRetry);
+      LOG.error("Temp", new RuntimeException());
       ((ContainerAllocatorRouter) containerAllocator)
         .setShouldUnregister(isLastAMRetry);
     }
     if(jobHistoryEventHandler != null) {
-      LOG.info("Notify JHEH isAMLastRetry: " + isLastAMRetry);
+      LOG.error("Temp", new RuntimeException());
       jobHistoryEventHandler.setForcejobCompletion(isLastAMRetry);
     }
   }
@@ -1739,7 +1739,7 @@ public class MRAppMaster extends CompositeService {
     // them
     Credentials credentials =
         UserGroupInformation.getCurrentUser().getCredentials();
-    LOG.info("Executing with tokens: {}", credentials.getAllTokens());
+    LOG.error("Temp", new RuntimeException());
     
     UserGroupInformation appMasterUgi = UserGroupInformation
         .createRemoteUser(jobUserName);

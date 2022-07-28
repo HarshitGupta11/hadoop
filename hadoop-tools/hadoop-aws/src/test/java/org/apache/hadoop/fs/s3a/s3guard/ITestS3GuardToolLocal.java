@@ -257,7 +257,7 @@ public class ITestS3GuardToolLocal extends AbstractS3GuardToolTestBase {
     String output = exec(cmd, cmd.getName(),
         "-" + S3GuardTool.BucketInfo.GUARDED_FLAG,
         getFileSystem().getUri().toString());
-    LOG.info("Exec output=\n{}", output);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -268,7 +268,7 @@ public class ITestS3GuardToolLocal extends AbstractS3GuardToolTestBase {
         "-" + READ_FLAG, "100",
         "-" + WRITE_FLAG, "100",
         getFileSystem().getUri().toString());
-    LOG.info("Exec output=\n{}", output);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private final static String UPLOAD_PREFIX = "test-upload-prefix";
@@ -438,12 +438,12 @@ public class ITestS3GuardToolLocal extends AbstractS3GuardToolTestBase {
         String[] fields = line.split("\\s");
         if (fields.length == 4 && fields[0].equals(Uploads.TOTAL)) {
           int parsedUploads = Integer.valueOf(fields[1]);
-          LOG.debug("Matched CLI output: {} {} {} {}", fields);
+          LOG.error("Temp", new RuntimeException());
           assertEquals("Unexpected number of uploads", numUploads,
               parsedUploads);
           return;
         }
-        LOG.debug("Not matched: {}", line);
+        LOG.error("Temp", new RuntimeException());
         output.add(line);
       }
     }

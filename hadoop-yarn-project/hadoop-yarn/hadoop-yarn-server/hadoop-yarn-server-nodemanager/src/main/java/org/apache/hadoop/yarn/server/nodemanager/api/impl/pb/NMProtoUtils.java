@@ -53,20 +53,20 @@ public final class NMProtoUtils {
     if (proto.hasTaskType() && proto.getTaskType() != null) {
       if (proto.getTaskType().equals(DeletionTaskType.FILE.name())) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Converting recovered FileDeletionTask");
+          LOG.error("Temp", new RuntimeException());
         }
         return convertProtoToFileDeletionTask(proto, deletionService, taskId);
       } else if (proto.getTaskType().equals(
           DeletionTaskType.DOCKER_CONTAINER.name())) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Converting recovered DockerContainerDeletionTask");
+          LOG.error("Temp", new RuntimeException());
         }
         return convertProtoToDockerContainerDeletionTask(proto, deletionService,
             taskId);
       }
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Unable to get task type, trying FileDeletionTask");
+      LOG.error("Temp", new RuntimeException());
     }
     return convertProtoToFileDeletionTask(proto, deletionService, taskId);
   }

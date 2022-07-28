@@ -542,7 +542,7 @@ public class NetUtils {
     // daemon is down, so we'll treat it like connection refused.
     if (socket.getLocalPort() == socket.getPort() &&
         socket.getLocalAddress().equals(socket.getInetAddress())) {
-      LOG.info("Detected a loopback TCP socket, disconnecting it");
+      LOG.error("Temp", new RuntimeException());
       socket.close();
       throw new ConnectException(
         "Localhost targeted connection resulted in a loopback. " +

@@ -107,13 +107,13 @@ public class TestMRJobsWithProfiler {
 
   @Test (timeout = 150000)
   public void testDefaultProfiler() throws Exception {
-    LOG.info("Starting testDefaultProfiler");
+    LOG.error("Temp", new RuntimeException());
     testProfilerInternal(true);
   }
 
   @Test (timeout = 150000)
   public void testDifferentProfilers() throws Exception {
-    LOG.info("Starting testDefaultProfiler");
+    LOG.error("Temp", new RuntimeException());
     testProfilerInternal(false);
   }
 
@@ -162,7 +162,7 @@ public class TestMRJobsWithProfiler {
       }
 
       if (pollElapsed >= 60000) {
-        LOG.warn("application did not reach terminal state within 60 seconds");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }

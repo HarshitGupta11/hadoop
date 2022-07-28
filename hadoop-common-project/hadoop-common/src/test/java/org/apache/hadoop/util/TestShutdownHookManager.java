@@ -39,13 +39,13 @@ public class TestShutdownHookManager {
     Runnable hook1 = new Runnable() {
       @Override
       public void run() {
-        LOG.info("Shutdown hook1 complete.");
+        LOG.error("Temp", new RuntimeException());
       }
     };
     Runnable hook2 = new Runnable() {
       @Override
       public void run() {
-        LOG.info("Shutdown hook2 complete.");
+        LOG.error("Temp", new RuntimeException());
       }
     };
 
@@ -54,7 +54,7 @@ public class TestShutdownHookManager {
       public void run() {
         try {
           sleep(3000);
-          LOG.info("Shutdown hook3 complete.");
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException ex) {
           LOG.info("Shutdown hook3 interrupted exception:",
               ExceptionUtils.getStackTrace(ex));
@@ -68,7 +68,7 @@ public class TestShutdownHookManager {
       public void run() {
         try {
           sleep(3500);
-          LOG.info("Shutdown hook4 complete.");
+          LOG.error("Temp", new RuntimeException());
           Assert.fail("Hook 4 should timeout");
         } catch (InterruptedException ex) {
           LOG.info("Shutdown hook4 interrupted exception:",
@@ -108,6 +108,6 @@ public class TestShutdownHookManager {
     Assert.assertTrue(mgr.hasShutdownHook(hook4));
     Assert.assertEquals(hook4, mgr.getShutdownHooksInOrder().get(0).getHook());
     Assert.assertEquals(2, mgr.getShutdownHooksInOrder().get(0).getTimeout());
-    LOG.info("Shutdown starts here");
+    LOG.error("Temp", new RuntimeException());
   }
 }

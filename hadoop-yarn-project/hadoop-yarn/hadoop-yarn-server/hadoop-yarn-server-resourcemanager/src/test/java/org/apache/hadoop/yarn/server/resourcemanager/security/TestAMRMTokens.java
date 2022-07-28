@@ -134,7 +134,7 @@ public class TestAMRMTokens {
 
       int waitCount = 0;
       while (containerManager.containerTokens == null && waitCount++ < 20) {
-        LOG.info("Waiting for AM Launch to happen..");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(1000);
       }
       Assert.assertNotNull(containerManager.containerTokens);
@@ -203,7 +203,7 @@ public class TestAMRMTokens {
         Assert.fail("You got to be kidding me! "
             + "Using App tokens after app-finish should fail!");
       } catch (Throwable t) {
-        LOG.info("Exception found is ", t);
+        LOG.error("Temp", new RuntimeException());
         // The exception will still have the earlier appAttemptId as it picks it
         // up from the token.
         Assert.assertTrue(t.getCause().getMessage().contains(
@@ -255,7 +255,7 @@ public class TestAMRMTokens {
 
       int waitCount = 0;
       while (containerManager.containerTokens == null && waitCount++ < maxWaitAttempts) {
-        LOG.info("Waiting for AM Launch to happen..");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(1000);
       }
       Assert.assertNotNull(containerManager.containerTokens);

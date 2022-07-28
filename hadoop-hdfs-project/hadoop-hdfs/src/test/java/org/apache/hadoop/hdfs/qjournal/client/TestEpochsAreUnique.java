@@ -94,7 +94,7 @@ public class TestEpochsAreUnique {
             qjm.close();
           }
         }
-        LOG.info("Created epoch " + newEpoch);
+        LOG.error("Temp", new RuntimeException());
         assertTrue("New epoch " + newEpoch + " should be greater than previous " +
             prevEpoch, newEpoch > prevEpoch);
         prevEpoch = newEpoch;

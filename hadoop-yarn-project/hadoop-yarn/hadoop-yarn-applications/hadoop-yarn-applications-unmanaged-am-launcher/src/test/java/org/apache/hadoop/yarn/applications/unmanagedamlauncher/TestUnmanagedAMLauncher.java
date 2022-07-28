@@ -57,7 +57,7 @@ public class TestUnmanagedAMLauncher {
 
   @BeforeClass
   public static void setup() throws InterruptedException, IOException {
-    LOG.info("Starting up YARN cluster");
+    LOG.error("Temp", new RuntimeException());
     conf.setInt(YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB, 128);
     if (yarnCluster == null) {
       yarnCluster = new MiniYARNCluster(
@@ -73,7 +73,7 @@ public class TestUnmanagedAMLauncher {
       String webapp = yarnClusterConfig.get(YarnConfiguration.RM_WEBAPP_ADDRESS);
       assertTrue("Web app address still unbound to a host at " + webapp,
         !webapp.startsWith("0.0.0.0"));
-      LOG.info("Yarn webapp is at "+ webapp);
+      LOG.error("Temp", new RuntimeException());
       URL url = Thread.currentThread().getContextClassLoader()
           .getResource("yarn-site.xml");
       if (url == null) {
@@ -93,7 +93,7 @@ public class TestUnmanagedAMLauncher {
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      LOG.info("setup thread sleep interrupted. message=" + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -109,7 +109,7 @@ public class TestUnmanagedAMLauncher {
   }
 
   private static String getTestRuntimeClasspath() {
-    LOG.info("Trying to generate classpath for app master from current thread's classpath");
+    LOG.error("Temp", new RuntimeException());
     String envClassPath = "";
     String cp = System.getProperty("java.class.path");
     if (cp != null) {
@@ -142,7 +142,7 @@ public class TestUnmanagedAMLauncher {
             + TestUnmanagedAMLauncher.class.getCanonicalName()
             + " success" };
 
-    LOG.info("Initializing Launcher");
+    LOG.error("Temp", new RuntimeException());
     UnmanagedAMLauncher launcher =
         new UnmanagedAMLauncher(new Configuration(yarnCluster.getConfig())) {
           public void launchAM(ApplicationAttemptId attemptId)
@@ -157,10 +157,10 @@ public class TestUnmanagedAMLauncher {
         };
     boolean initSuccess = launcher.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running Launcher");
+    LOG.error("Temp", new RuntimeException());
     boolean result = launcher.run();
 
-    LOG.info("Launcher run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(result);
 
   }
@@ -184,12 +184,12 @@ public class TestUnmanagedAMLauncher {
             + TestUnmanagedAMLauncher.class.getCanonicalName()
             + " failure" };
 
-    LOG.info("Initializing Launcher");
+    LOG.error("Temp", new RuntimeException());
     UnmanagedAMLauncher launcher = new UnmanagedAMLauncher(new Configuration(
         yarnCluster.getConfig()));
     boolean initSuccess = launcher.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running Launcher");
+    LOG.error("Temp", new RuntimeException());
 
     try {
       launcher.run();

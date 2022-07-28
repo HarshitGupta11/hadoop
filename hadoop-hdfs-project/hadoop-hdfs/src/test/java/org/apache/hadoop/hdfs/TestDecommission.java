@@ -184,7 +184,7 @@ public class TestDecommission extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testDecommission2() throws IOException {
-    LOG.info("Starting test testDecommission");
+    LOG.error("Temp", new RuntimeException());
     int numNamenodes = 1;
     int numDatanodes = 4;
     getConf().setInt(DFSConfigKeys.DFS_REPLICATION_KEY, 3);
@@ -358,7 +358,7 @@ public class TestDecommission extends AdminStatesBaseTest {
 
   private void testDecommission(int numNamenodes, int numDatanodes)
       throws IOException {
-    LOG.info("Starting test testDecommission");
+    LOG.error("Temp", new RuntimeException());
     startCluster(numNamenodes, numDatanodes);
     
     ArrayList<ArrayList<DatanodeInfo>> namenodeDecomList = 
@@ -423,7 +423,7 @@ public class TestDecommission extends AdminStatesBaseTest {
   public void testRecommission() throws Exception {
     final int numDatanodes = 6;
     try {
-      LOG.info("Starting test testRecommission");
+      LOG.error("Temp", new RuntimeException());
 
       startCluster(1, numDatanodes);
 
@@ -479,8 +479,8 @@ public class TestDecommission extends AdminStatesBaseTest {
               count++;
             }
           }
-          LOG.info(sb.toString());
-          LOG.info("Count: " + count);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           return count == replicas;
         }
       }, 500, 30000);
@@ -516,7 +516,7 @@ public class TestDecommission extends AdminStatesBaseTest {
   
   public void testClusterStats(int numNameNodes) throws IOException,
       InterruptedException {
-    LOG.info("Starting test testClusterStats");
+    LOG.error("Temp", new RuntimeException());
     int numDatanodes = 1;
     startCluster(numNameNodes, numDatanodes);
     
@@ -592,7 +592,7 @@ public class TestDecommission extends AdminStatesBaseTest {
       DFSClient client = getDfsClient(j);
       DatanodeInfo[] info = client.datanodeReport(DatanodeReportType.LIVE);
       for (int i = 0 ; i < 5 && info.length != 0; i++) {
-        LOG.info("Waiting for datanode to be marked dead");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(HEARTBEAT_INTERVAL * 1000);
         info = client.datanodeReport(DatanodeReportType.LIVE);
       }
@@ -611,7 +611,7 @@ public class TestDecommission extends AdminStatesBaseTest {
   @Test(timeout=120000)
   public void testDecommissionWithOpenfile()
       throws IOException, InterruptedException {
-    LOG.info("Starting test testDecommissionWithOpenfile");
+    LOG.error("Temp", new RuntimeException());
     
     //At most 4 nodes will be decommissioned
     startCluster(1, 7);
@@ -675,7 +675,7 @@ public class TestDecommission extends AdminStatesBaseTest {
       HashMap<Path, FSDataOutputStream> openFilesMap,
       ByteArrayOutputStream out, int expOpenFilesListSize) {
     final String outStr = scanIntoString(out);
-    LOG.info(message + " - stdout: \n" + outStr);
+    LOG.error("Temp", new RuntimeException());
     for (Path closedFilePath : closedFileSet) {
       if(outStr.contains(closedFilePath.toString())) {
         return false;
@@ -692,7 +692,7 @@ public class TestDecommission extends AdminStatesBaseTest {
     if (actualOpenFilesListedSize >= expOpenFilesListSize) {
       return true;
     } else {
-      LOG.info("Open files that are not listed yet: " + openFilesNotListed);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -754,7 +754,7 @@ public class TestDecommission extends AdminStatesBaseTest {
 
             return result1 && result2;
           } catch (Exception e) {
-            LOG.warn("Unexpected exception: " + e);
+            LOG.error("Temp", new RuntimeException());
           }
           return false;
         }
@@ -767,7 +767,7 @@ public class TestDecommission extends AdminStatesBaseTest {
   @Test(timeout=180000)
   public void testDecommissionWithOpenfileReporting()
       throws Exception {
-    LOG.info("Starting test testDecommissionWithOpenfileReporting");
+    LOG.error("Temp", new RuntimeException());
 
     // Disable redundancy monitor check so that open files blocking
     // decommission can be listed and verified.
@@ -846,7 +846,7 @@ public class TestDecommission extends AdminStatesBaseTest {
                 getCluster().getNamesystem().getBlockManager());
             Thread.sleep(1000);
           } catch (Exception e) {
-            LOG.warn("Encountered exception during redundancy monitor: " + e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -914,7 +914,7 @@ public class TestDecommission extends AdminStatesBaseTest {
   @Test(timeout=120000)
   public void testCloseWhileDecommission() throws IOException,
       ExecutionException, InterruptedException {
-    LOG.info("Starting test testCloseWhileDecommission");
+    LOG.error("Temp", new RuntimeException());
 
     // min replication = 2
     getConf().setInt(DFSConfigKeys.DFS_NAMENODE_REPLICATION_MIN_KEY, 2);
@@ -967,7 +967,7 @@ public class TestDecommission extends AdminStatesBaseTest {
   @Test(timeout=360000)
   public void testDecommissionWithNamenodeRestart()
       throws IOException, InterruptedException {
-    LOG.info("Starting test testDecommissionWithNamenodeRestart");
+    LOG.error("Temp", new RuntimeException());
     int numNamenodes = 1;
     int numDatanodes = 1;
     int replicas = 1;
@@ -1018,7 +1018,7 @@ public class TestDecommission extends AdminStatesBaseTest {
    **/
   @Test(timeout=360000)
   public void testDeadNodeCountAfterNamenodeRestart()throws Exception {
-    LOG.info("Starting test testDeadNodeCountAfterNamenodeRestart");
+    LOG.error("Temp", new RuntimeException());
     int numNamenodes = 1;
     int numDatanodes = 2;
 
@@ -1081,7 +1081,7 @@ public class TestDecommission extends AdminStatesBaseTest {
     refreshNodes(0);
 
     // Wait for the DN to be marked dead.
-    LOG.info("Waiting for DN to be marked as dead.");
+    LOG.error("Temp", new RuntimeException());
     final DFSClient client = getDfsClient(0);
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
@@ -1092,7 +1092,7 @@ public class TestDecommission extends AdminStatesBaseTest {
           DatanodeInfo info[] = client.datanodeReport(DatanodeReportType.DEAD);
           return info.length == 1;
         } catch (IOException e) {
-          LOG.warn("Failed to check dead DNs", e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -1107,7 +1107,7 @@ public class TestDecommission extends AdminStatesBaseTest {
     getCluster().triggerHeartbeats();
 
     // Wait for the DN to come back.
-    LOG.info("Waiting for DN to come back.");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
@@ -1122,7 +1122,7 @@ public class TestDecommission extends AdminStatesBaseTest {
             return true;
           }
         } catch (IOException e) {
-          LOG.warn("Failed to check dead DNs", e);
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }
@@ -1426,11 +1426,11 @@ public class TestDecommission extends AdminStatesBaseTest {
           String errMsg = checkFile(fileSys, file, repl,
               decomDataNodes.get(0).getXferAddr(), 5);
           if (errMsg != null) {
-            LOG.warn("Check file: " + errMsg);
+            LOG.error("Temp", new RuntimeException());
           }
           return true;
         } catch (IOException e) {
-          LOG.warn("Check file: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }

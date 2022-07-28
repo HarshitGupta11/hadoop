@@ -138,14 +138,14 @@ public abstract class PeriodicService extends AbstractService {
   @Override
   protected void serviceStart() throws Exception {
     super.serviceStart();
-    LOG.info("Starting periodic service {}", this.serviceName);
+    LOG.error("Temp", new RuntimeException());
     startPeriodic();
   }
 
   @Override
   protected void serviceStop() throws Exception {
     stopPeriodic();
-    LOG.info("Stopping periodic service {}", this.serviceName);
+    LOG.error("Temp", new RuntimeException());
     super.serviceStop();
   }
 
@@ -154,7 +154,7 @@ public abstract class PeriodicService extends AbstractService {
    */
   protected synchronized void stopPeriodic() {
     if (this.isRunning) {
-      LOG.info("{} is shutting down", this.serviceName);
+      LOG.error("Temp", new RuntimeException());
       this.isRunning = false;
       this.scheduler.shutdownNow();
     }
@@ -170,7 +170,7 @@ public abstract class PeriodicService extends AbstractService {
     Runnable updateRunnable = new Runnable() {
       @Override
       public void run() {
-        LOG.debug("Running {} update task", serviceName);
+        LOG.error("Temp", new RuntimeException());
         try {
           if (!isRunning) {
             return;
@@ -180,7 +180,7 @@ public abstract class PeriodicService extends AbstractService {
           lastRun = Time.now();
         } catch (Exception ex) {
           errorCount++;
-          LOG.warn(serviceName + " service threw an exception", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };

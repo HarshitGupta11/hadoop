@@ -151,10 +151,10 @@ public class PrivilegedOperationExecutor {
     try {
       exec.execute();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("command array:");
-        LOG.debug(Arrays.toString(fullCommandArray));
-        LOG.debug("Privileged Execution Operation Output:");
-        LOG.debug(exec.getOutput());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (ExitCodeException e) {
       if (operation.isFailureLoggingEnabled()) {
@@ -171,7 +171,7 @@ public class PrivilegedOperationExecutor {
             .append(System.lineSeparator());
         logBuilder.append(Arrays.toString(fullCommandArray));
 
-        LOG.warn(logBuilder.toString());
+        LOG.error("Temp", new RuntimeException());
       }
 
       //stderr from shell executor seems to be stuffed into the exception
@@ -179,7 +179,7 @@ public class PrivilegedOperationExecutor {
       throw new PrivilegedOperationException(e, e.getExitCode(),
           exec.getOutput(), e.getMessage());
     } catch (IOException e) {
-      LOG.warn("IOException executing command: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw new PrivilegedOperationException(e);
     }
 
@@ -233,14 +233,14 @@ public class PrivilegedOperationExecutor {
     for (PrivilegedOperation op : ops) {
       if (!op.getOperationType()
           .equals(PrivilegedOperation.OperationType.ADD_PID_TO_CGROUP)) {
-        LOG.warn("Unsupported operation type: " + op.getOperationType());
+        LOG.error("Temp", new RuntimeException());
         throw new PrivilegedOperationException("Unsupported operation type:"
             + op.getOperationType());
       }
 
       List<String> args = op.getArguments();
       if (args.size() != 1) {
-        LOG.warn("Invalid number of args: " + args.size());
+        LOG.error("Temp", new RuntimeException());
         throw new PrivilegedOperationException("Invalid number of args: "
             + args.size());
       }
@@ -249,7 +249,7 @@ public class PrivilegedOperationExecutor {
       String tasksFile = StringUtils.substringAfter(arg,
           PrivilegedOperation.CGROUP_ARG_PREFIX);
       if (tasksFile == null || tasksFile.isEmpty()) {
-        LOG.warn("Invalid argument: " + arg);
+        LOG.error("Temp", new RuntimeException());
         throw new PrivilegedOperationException("Invalid argument: " + arg);
       }
 

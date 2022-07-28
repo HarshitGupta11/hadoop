@@ -467,13 +467,13 @@ abstract class PBImageTextWriter implements Closeable {
                 fin, section.getLength())));
         switch (SectionName.fromString(section.getName())) {
         case STRING_TABLE:
-          LOG.info("Loading string table");
+          LOG.error("Temp", new RuntimeException());
           stringTable = FSImageLoader.loadStringTable(is);
           break;
         case INODE_REFERENCE:
           // Load INodeReference so that all INodes can be processed.
           // Snapshots are not handled and will just be ignored for now.
-          LOG.info("Loading inode references");
+          LOG.error("Temp", new RuntimeException());
           refIdList = FSImageLoader.loadINodeReferenceSection(is);
           break;
         default:
@@ -504,7 +504,7 @@ abstract class PBImageTextWriter implements Closeable {
       }
     }
     long timeTaken = Time.monotonicNow() - startTime;
-    LOG.debug("Time to output inodes: {}ms", timeTaken);
+    LOG.error("Temp", new RuntimeException());
   }
 
   protected PermissionStatus getPermission(long perm) {
@@ -516,7 +516,7 @@ abstract class PBImageTextWriter implements Closeable {
       FileInputStream fin, List<FileSummary.Section> sections,
       FileSummary summary, Configuration conf)
       throws IOException {
-    LOG.info("Loading directories");
+    LOG.error("Temp", new RuntimeException());
     long startTime = Time.monotonicNow();
     for (FileSummary.Section section : sections) {
       if (SectionName.fromString(section.getName())
@@ -529,14 +529,14 @@ abstract class PBImageTextWriter implements Closeable {
       }
     }
     long timeTaken = Time.monotonicNow() - startTime;
-    LOG.info("Finished loading directories in {}ms", timeTaken);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void loadINodeDirSection(
       FileInputStream fin, List<FileSummary.Section> sections,
       FileSummary summary, Configuration conf, List<Long> refIdList)
       throws IOException {
-    LOG.info("Loading INode directory section.");
+    LOG.error("Temp", new RuntimeException());
     long startTime = Time.monotonicNow();
     for (FileSummary.Section section : sections) {
       if (SectionName.fromString(section.getName())
@@ -549,7 +549,7 @@ abstract class PBImageTextWriter implements Closeable {
       }
     }
     long timeTaken = Time.monotonicNow() - startTime;
-    LOG.info("Finished loading INode directory section in {}ms", timeTaken);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -557,19 +557,19 @@ abstract class PBImageTextWriter implements Closeable {
    */
   private void loadDirectoriesInINodeSection(InputStream in) throws IOException {
     INodeSection s = INodeSection.parseDelimitedFrom(in);
-    LOG.info("Loading directories in INode section.");
+    LOG.error("Temp", new RuntimeException());
     int numDirs = 0;
     for (int i = 0; i < s.getNumInodes(); ++i) {
       INode p = INode.parseDelimitedFrom(in);
       if (LOG.isDebugEnabled() && i % 10000 == 0) {
-        LOG.debug("Scanned {} inodes.", i);
+        LOG.error("Temp", new RuntimeException());
       }
       if (p.hasDirectory()) {
         metadataMap.putDir(p);
         numDirs++;
       }
     }
-    LOG.info("Found {} directories in INode section.", numDirs);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -586,7 +586,7 @@ abstract class PBImageTextWriter implements Closeable {
       }
       count++;
       if (LOG.isDebugEnabled() && count % 10000 == 0) {
-        LOG.debug("Scanned {} directories.", count);
+        LOG.error("Temp", new RuntimeException());
       }
       long parentId = e.getParent();
       for (int i = 0; i < e.getChildrenCount(); i++) {
@@ -599,12 +599,12 @@ abstract class PBImageTextWriter implements Closeable {
         metadataMap.putDirChild(parentId, refIdList.get(refId));
       }
     }
-    LOG.info("Scanned {} INode directories to build namespace.", count);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void outputINodes(InputStream in) throws IOException {
     INodeSection s = INodeSection.parseDelimitedFrom(in);
-    LOG.info("Found {} INodes in the INode section", s.getNumInodes());
+    LOG.error("Temp", new RuntimeException());
     long ignored = 0;
     long ignoredSnapshots = 0;
     for (int i = 0; i < s.getNumInodes(); ++i) {
@@ -615,30 +615,30 @@ abstract class PBImageTextWriter implements Closeable {
       } catch (IOException ioe) {
         ignored++;
         if (!(ioe instanceof IgnoreSnapshotException)) {
-          LOG.warn("Exception caught, ignoring node:{}", p.getId(), ioe);
+          LOG.error("Temp", new RuntimeException());
         } else {
           ignoredSnapshots++;
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Exception caught, ignoring node:{}.", p.getId(), ioe);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
 
       if (LOG.isDebugEnabled() && i % 100000 == 0) {
-        LOG.debug("Outputted {} INodes.", i);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (ignored > 0) {
       LOG.warn("Ignored {} nodes, including {} in snapshots. Please turn on"
               + " debug log for details", ignored, ignoredSnapshots);
     }
-    LOG.info("Outputted {} INodes.", s.getNumInodes());
+    LOG.error("Temp", new RuntimeException());
   }
 
   static void ignoreSnapshotName(long inode) throws IOException {
     // Ignore snapshots - we want the output similar to -ls -R.
     if (LOG.isDebugEnabled()) {
-      LOG.debug("No snapshot name found for inode {}", inode);
+      LOG.error("Temp", new RuntimeException());
     }
     throw new IgnoreSnapshotException();
   }

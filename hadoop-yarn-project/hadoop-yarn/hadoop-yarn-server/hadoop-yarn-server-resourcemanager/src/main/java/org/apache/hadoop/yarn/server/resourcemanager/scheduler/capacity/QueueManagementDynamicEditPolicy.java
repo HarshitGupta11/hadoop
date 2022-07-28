@@ -150,7 +150,7 @@ public class QueueManagementDynamicEditPolicy implements SchedulingEditPolicy {
     manageAutoCreatedLeafQueues();
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Total time used=" + (clock.getTime() - startTs) + " ms.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

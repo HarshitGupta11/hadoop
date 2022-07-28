@@ -53,7 +53,7 @@ public class TestServiceCLI {
   private String basedirProp;
 
   private void runCLI(String[] args) throws Exception {
-    LOG.info("running CLI: yarn {}", Arrays.asList(args));
+    LOG.error("Temp", new RuntimeException());
     ApplicationCLI cli = new ApplicationCLI();
     cli.setSysOutPrintStream(System.out);
     cli.setSysErrPrintStream(System.err);

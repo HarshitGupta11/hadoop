@@ -51,7 +51,7 @@ public class DisabledPlacementProcessor extends AbstractPlacementProcessor {
           + YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_HANDLER
           + " cannot handle placement constraints. Rejecting this "
           + "registerApplicationMaster operation";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(message);
     }
     nextAMSProcessor.registerApplicationMaster(applicationAttemptId, request,
@@ -69,7 +69,7 @@ public class DisabledPlacementProcessor extends AbstractPlacementProcessor {
           + YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_HANDLER
           + " cannot handle placement constraints. Rejecting this "
           + "allocate operation";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(message);
     }
     nextAMSProcessor.allocate(appAttemptId, request, response);

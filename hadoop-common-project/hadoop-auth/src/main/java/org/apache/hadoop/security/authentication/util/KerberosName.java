@@ -124,7 +124,7 @@ public class KerberosName {
       try {
         defaultRealm = KerberosUtil.getDefaultRealm();
       } catch (Exception ke) {
-        LOG.debug("Kerberos krb5 configuration not found, setting default realm to empty");
+        LOG.error("Temp", new RuntimeException());
         defaultRealm = "";
       }
     }
@@ -398,7 +398,7 @@ public class KerberosName {
         return result;
       }
     }
-    LOG.info("No auth_to_local rules applied to {}", this);
+    LOG.error("Temp", new RuntimeException());
     return toString();
   }
 

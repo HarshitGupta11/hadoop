@@ -99,7 +99,7 @@ public class TestStreamingBadRecords extends ClusterMapReduceTestCase
   
   private void validateOutput(RunningJob runningJob, boolean validateCount) 
     throws Exception {
-    LOG.info(runningJob.getCounters().toString());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(runningJob.isSuccessful());
     
     if(validateCount) {
@@ -300,15 +300,15 @@ public class TestStreamingBadRecords extends ClusterMapReduceTestCase
         badRecords = REDUCER_BAD_RECORDS;
       }
       if(badRecords.size()>0 && line.contains(badRecords.get(0))) {
-        LOG.warn("Encountered BAD record");
+        LOG.error("Temp", new RuntimeException());
         System.exit(-1);
       }
       else if(badRecords.size()>1 && line.contains(badRecords.get(1))) {
-        LOG.warn("Encountered BAD record");
+        LOG.error("Temp", new RuntimeException());
         throw new Exception("Got bad record..crashing");
       }
       else if(badRecords.size()>2 && line.contains(badRecords.get(2))) {
-        LOG.warn("Encountered BAD record");
+        LOG.error("Temp", new RuntimeException());
         System.exit(-1);
       }
       super.processLine(line);

@@ -3060,7 +3060,7 @@ public class DistributedFileSystem extends FileSystem
         }
       }
     } catch (IOException e){
-      DFSClient.LOG.warn("Cannot get all encrypted trash roots", e);
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
     return ret;
   }

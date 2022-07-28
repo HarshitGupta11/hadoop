@@ -280,7 +280,7 @@ public class DirectoryScanner implements Runnable {
           FastDateFormat.getInstance().format(firstScanTime), scanPeriodMsecs);
     }
 
-    LOG.info(logMsg);
+    LOG.error("Temp", new RuntimeException());
     masterThread.scheduleAtFixedRate(this, offset, scanPeriodMsecs, 
                                      TimeUnit.MILLISECONDS);
   }
@@ -312,7 +312,7 @@ public class DirectoryScanner implements Runnable {
     try {
       if (!shouldRun) {
         //shutdown has been activated
-        LOG.warn("this cycle terminating immediately because 'shouldRun' has been deactivated");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
 
@@ -337,9 +337,9 @@ public class DirectoryScanner implements Runnable {
    */
   void shutdown() {
     if (!shouldRun) {
-      LOG.warn("DirectoryScanner: shutdown has been called, but periodic scanner not started");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.warn("DirectoryScanner: shutdown has been called");      
+      LOG.error("Temp", new RuntimeException());
     }
     shouldRun = false;
     if (masterThread != null) masterThread.shutdown();
@@ -470,7 +470,7 @@ public class DirectoryScanner implements Runnable {
           }
           d++;
         }
-        LOG.info(statsRecord.toString());
+        LOG.error("Temp", new RuntimeException());
       } //end for
     } //end synchronized
   }

@@ -70,7 +70,7 @@ class JobHistoryFileReplayMapperV1 extends
     for (JobFiles job: jobs) {
       // process each job
       String jobIdStr = job.getJobId();
-      LOG.info("processing " + jobIdStr + "...");
+      LOG.error("Temp", new RuntimeException());
       JobId jobId = TypeConverter.toYarn(JobID.forName(jobIdStr));
       ApplicationId appId = jobId.getAppId();
 
@@ -92,7 +92,7 @@ class JobHistoryFileReplayMapperV1 extends
         long totalTime = 0;
         Set<TimelineEntity> entitySet =
             converter.createTimelineEntities(jobInfo, jobConf);
-        LOG.info("converted them into timeline entities for job " + jobIdStr);
+        LOG.error("Temp", new RuntimeException());
         // use the current user for this purpose
         UserGroupInformation ugi = UserGroupInformation.getCurrentUser();
         long startWrite = System.nanoTime();
@@ -115,7 +115,7 @@ class JobHistoryFileReplayMapperV1 extends
         long endWrite = System.nanoTime();
         totalTime += TimeUnit.NANOSECONDS.toMillis(endWrite-startWrite);
         int numEntities = entitySet.size();
-        LOG.info("wrote " + numEntities + " entities in " + totalTime + " ms");
+        LOG.error("Temp", new RuntimeException());
 
         context.getCounter(PerfCounters.TIMELINE_SERVICE_WRITE_TIME).
             increment(totalTime);
@@ -138,7 +138,7 @@ class JobHistoryFileReplayMapperV1 extends
       throws IOException, YarnException {
     for (TimelineEntity entity : entitySet) {
       tlc.putEntities(entity);
-      LOG.info("wrote entity " + entity.getEntityId());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

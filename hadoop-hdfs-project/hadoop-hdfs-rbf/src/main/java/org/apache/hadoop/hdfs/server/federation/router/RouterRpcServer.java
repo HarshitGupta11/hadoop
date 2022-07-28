@@ -311,7 +311,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol {
   protected void serviceStart() throws Exception {
     if (this.rpcServer != null) {
       this.rpcServer.start();
-      LOG.info("Router RPC up at: {}", this.getRpcAddress());
+      LOG.error("Temp", new RuntimeException());
     }
     super.serviceStart();
   }
@@ -408,7 +408,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol {
     // Log the function we are currently calling.
     if (LOG.isDebugEnabled()) {
       String methodName = getMethodName();
-      LOG.debug("Proxying operation: {}", methodName);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Store the category of the operation category for this thread
@@ -513,7 +513,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol {
     if (createParent && isPathAll(src)) {
       int index = src.lastIndexOf(Path.SEPARATOR);
       String parent = src.substring(0, index);
-      LOG.debug("Creating {} requires creating parent {}", src, parent);
+      LOG.error("Temp", new RuntimeException());
       FsPermission parentPermissions = getParentPermission(masked);
       boolean success = mkdirs(parent, parentPermissions, createParent);
       if (!success) {
@@ -1047,7 +1047,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol {
         RemoteLocation location = entry.getKey();
         DirectoryListing listing = entry.getValue();
         if (listing == null) {
-          LOG.debug("Cannot get listing from {}", location);
+          LOG.error("Temp", new RuntimeException());
         } else {
           totalRemainingEntries += listing.getRemainingEntries();
           HdfsFileStatus[] partialListing = listing.getPartialListing();
@@ -1274,7 +1274,7 @@ public class RouterRpcServer extends AbstractService implements ClientProtocol {
               node.getNetworkLocation());
           datanodesMap.put(nodeId, node);
         } else {
-          LOG.debug("{} is in multiple subclusters", nodeId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

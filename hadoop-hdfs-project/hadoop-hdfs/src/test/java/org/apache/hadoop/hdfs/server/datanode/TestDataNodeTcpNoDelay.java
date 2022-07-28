@@ -78,7 +78,7 @@ public class TestDataNodeTcpNoDelay {
         SocketFactoryWrapper.class.getName());
 
     SocketFactory defaultFactory = NetUtils.getDefaultSocketFactory(testConf);
-    LOG.info("Socket factory is " + defaultFactory.getClass().getName());
+    LOG.error("Temp", new RuntimeException());
     MiniDFSCluster dfsCluster =
         new MiniDFSCluster.Builder(testConf).numDataNodes(3).build();
     dfsCluster.waitActive();
@@ -106,7 +106,7 @@ public class TestDataNodeTcpNoDelay {
         SocketFactoryWrapper.class.getName());
 
     SocketFactory defaultFactory = NetUtils.getDefaultSocketFactory(testConf);
-    LOG.info("Socket factory is " + defaultFactory.getClass().getName());
+    LOG.error("Temp", new RuntimeException());
     MiniDFSCluster dfsCluster =
         new MiniDFSCluster.Builder(testConf).numDataNodes(3).build();
     dfsCluster.waitActive();
@@ -168,7 +168,7 @@ public class TestDataNodeTcpNoDelay {
     private static List<SocketWrapper> sockets = new ArrayList<SocketWrapper>();
 
     public static boolean wasTcpNoDelayActive() {
-      LOG.info("Checking " + sockets.size() + " sockets for TCP_NODELAY");
+      LOG.error("Temp", new RuntimeException());
       for (SocketWrapper sw : sockets) {
         if (!sw.getLastTcpNoDelay()) {
           return false;
@@ -183,7 +183,7 @@ public class TestDataNodeTcpNoDelay {
 
     @Override
     public Socket createSocket() throws IOException {
-      LOG.info("Creating new socket");
+      LOG.error("Temp", new RuntimeException());
       SocketWrapper wrapper = new SocketWrapper(super.createSocket());
       sockets.add(wrapper);
       return wrapper;
@@ -192,7 +192,7 @@ public class TestDataNodeTcpNoDelay {
     @Override
     public Socket createSocket(String host, int port)
         throws IOException, UnknownHostException {
-      LOG.info("Creating socket for " + host);
+      LOG.error("Temp", new RuntimeException());
       SocketWrapper wrapper =
           new SocketWrapper(super.createSocket(host, port));
       sockets.add(wrapper);
@@ -203,7 +203,7 @@ public class TestDataNodeTcpNoDelay {
     public Socket createSocket(String host, int port,
                                InetAddress localHostAddr, int localPort)
         throws IOException, UnknownHostException {
-      LOG.info("Creating socket for " + host);
+      LOG.error("Temp", new RuntimeException());
       SocketWrapper wrapper = new SocketWrapper(
           super.createSocket(host, port, localHostAddr, localPort));
       sockets.add(wrapper);
@@ -212,7 +212,7 @@ public class TestDataNodeTcpNoDelay {
 
     @Override
     public Socket createSocket(InetAddress addr, int port) throws IOException {
-      LOG.info("Creating socket for " + addr);
+      LOG.error("Temp", new RuntimeException());
       SocketWrapper wrapper =
           new SocketWrapper(super.createSocket(addr, port));
       sockets.add(wrapper);
@@ -223,7 +223,7 @@ public class TestDataNodeTcpNoDelay {
     public Socket createSocket(InetAddress addr, int port,
                                InetAddress localHostAddr, int localPort)
         throws IOException {
-      LOG.info("Creating socket for " + addr);
+      LOG.error("Temp", new RuntimeException());
       SocketWrapper wrapper = new SocketWrapper(
           super.createSocket(addr, port, localHostAddr, localPort));
       sockets.add(wrapper);

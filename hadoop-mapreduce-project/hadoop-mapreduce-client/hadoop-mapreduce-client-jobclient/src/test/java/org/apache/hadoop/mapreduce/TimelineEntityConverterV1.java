@@ -86,7 +86,7 @@ class TimelineEntityConverterV1 {
     job.addOtherInfo("UBERIZED", jobInfo.getUberized());
     job.addOtherInfo("ERROR_INFO", jobInfo.getErrorInfo());
 
-    LOG.info("converted job " + jobInfo.getJobId() + " to a timeline entity");
+    LOG.error("Temp", new RuntimeException());
     return job;
   }
 

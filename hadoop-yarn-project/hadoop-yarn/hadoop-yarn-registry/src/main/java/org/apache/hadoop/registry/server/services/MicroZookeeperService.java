@@ -144,7 +144,7 @@ public class MicroZookeeperService
       instanceDir = new File(instancedirname);
       FileUtil.fullyDelete(instanceDir);
     }
-    LOG.debug("Instance directory is {}", instanceDir);
+    LOG.error("Temp", new RuntimeException());
     mkdirStrict(instanceDir);
     dataDir = new File(instanceDir, "data");
     confDir = new File(instanceDir, "conf");
@@ -232,20 +232,20 @@ public class MicroZookeeperService
     zkServer.setTxnLogFactory(ftxn);
     zkServer.setTickTime(tickTime);
 
-    LOG.info("Starting Local Zookeeper service");
+    LOG.error("Temp", new RuntimeException());
     factory = ServerCnxnFactory.createFactory();
     factory.configure(getAddress(port), -1);
     factory.startup(zkServer);
 
     String connectString = getConnectionString();
-    LOG.info("In memory ZK started at {}\n", connectString);
+    LOG.error("Temp", new RuntimeException());
 
     if (LOG.isDebugEnabled()) {
       StringWriter sw = new StringWriter();
       PrintWriter pw = new PrintWriter(sw);
       zkServer.dumpConf(pw);
       pw.flush();
-      LOG.debug(sw.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     binding = new BindingInformation();
     binding.ensembleProvider = new FixedEnsembleProvider(connectString);

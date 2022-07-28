@@ -65,7 +65,7 @@ public class CachingAuthorizer<K, V> {
     isEnabled = conf.getBoolean(KEY_AUTH_SERVICE_CACHING_ENABLE, KEY_AUTH_SERVICE_CACHING_ENABLE_DEFAULT);
 
     if (isEnabled) {
-      LOG.debug("{} : Initializing CachingAuthorizer instance", label);
+      LOG.error("Temp", new RuntimeException());
       cache = CacheBuilder.newBuilder()
           .maximumSize(
               conf.getInt(
@@ -89,17 +89,17 @@ public class CachingAuthorizer<K, V> {
 
     V result = cache.getIfPresent(key);
     if (result == null) {
-      LOG.debug("{}: CACHE MISS: {}", label, key.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     else {
-      LOG.debug("{}: CACHE HIT: {}, {}", label, key.toString(), result.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     return result;
   }
 
   public void put(K key, V value) {
     if (isEnabled) {
-      LOG.debug("{}: CACHE PUT: {}, {}", label, key.toString(), value.toString());
+      LOG.error("Temp", new RuntimeException());
       cache.put(key, value);
     }
   }

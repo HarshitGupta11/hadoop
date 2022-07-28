@@ -207,14 +207,14 @@ public class NetworkTopologyWithNodeGroup extends NetworkTopology {
             + " at an illegal network location");
       }
       if (clusterMap.add(node)) {
-        LOG.info("Adding a new node: " + NodeBase.getPath(node));
+        LOG.error("Temp", new RuntimeException());
         if (rack == null) {
           // We only track rack number here
           incrementRacks();
         }
       }
       if(LOG.isDebugEnabled()) {
-        LOG.debug("NetworkTopology became:\n" + this.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       netlock.writeLock().unlock();
@@ -232,7 +232,7 @@ public class NetworkTopologyWithNodeGroup extends NetworkTopology {
       throw new IllegalArgumentException(
           "Not allow to remove an inner node: "+NodeBase.getPath(node));
     }
-    LOG.info("Removing a node: "+NodeBase.getPath(node));
+    LOG.error("Temp", new RuntimeException());
     netlock.writeLock().lock();
     try {
       if (clusterMap.remove(node)) {
@@ -246,7 +246,7 @@ public class NetworkTopologyWithNodeGroup extends NetworkTopology {
         }
       }
       if(LOG.isDebugEnabled()) {
-        LOG.debug("NetworkTopology became:\n" + this.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       netlock.writeLock().unlock();

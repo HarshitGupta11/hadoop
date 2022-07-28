@@ -213,7 +213,7 @@ public class MembershipNamenodeResolver
       throws IOException {
 
     if (this.routerId == null) {
-      LOG.warn("Cannot register namenode, router ID is not known {}", report);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -306,7 +306,7 @@ public class MembershipNamenodeResolver
     priorityList.addAll(memberships);
     Collections.sort(priorityList, new NamenodePriorityComparator());
 
-    LOG.debug("Selected most recent NN {} for query", priorityList);
+    LOG.error("Temp", new RuntimeException());
     return priorityList;
   }
 

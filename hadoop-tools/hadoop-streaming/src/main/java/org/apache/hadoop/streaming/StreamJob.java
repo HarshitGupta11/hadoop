@@ -127,7 +127,7 @@ public class StreamJob implements Tool {
     } catch (IllegalArgumentException ex) {
       //ignore, since log will already be printed
       // print the log in debug mode.
-      LOG.debug("Error in streaming job", ex);
+      LOG.error("Temp", new RuntimeException());
       return 1;
     }
     return submitAndMonitorJob();
@@ -318,7 +318,7 @@ public class StreamJob implements Tool {
 
       String fsName = cmdLine.getOptionValue("dfs");
       if (null != fsName){
-        LOG.warn("-dfs option is deprecated, please use -fs instead.");
+        LOG.error("Temp", new RuntimeException());
         config_.set("fs.default.name", fsName);
       }
 
@@ -334,7 +334,7 @@ public class StreamJob implements Tool {
 
       String[] car = cmdLine.getOptionValues("cacheArchive");
       if (null != car && car.length > 0){
-        LOG.warn("-cacheArchive option is deprecated, please use -archives instead.");
+        LOG.error("Temp", new RuntimeException());
         for(String s : car){
           cacheArchives = (cacheArchives == null)?s :cacheArchives + "," + s;
         }
@@ -342,7 +342,7 @@ public class StreamJob implements Tool {
 
       String[] caf = cmdLine.getOptionValues("cacheFile");
       if (null != caf && caf.length > 0){
-        LOG.warn("-cacheFile option is deprecated, please use -files instead.");
+        LOG.error("Temp", new RuntimeException());
         for(String s : caf){
           cacheFiles = (cacheFiles == null)?s :cacheFiles + "," + s;
         }
@@ -350,7 +350,7 @@ public class StreamJob implements Tool {
 
       String[] jobconf = cmdLine.getOptionValues("jobconf");
       if (null != jobconf && jobconf.length > 0){
-        LOG.warn("-jobconf option is deprecated, please use -D instead.");
+        LOG.error("Temp", new RuntimeException());
         for(String s : jobconf){
           String[] parts = s.split("=", 2);
           config_.set(parts[0], parts[1]);
@@ -730,7 +730,7 @@ public class StreamJob implements Tool {
 
   protected void setJobConf() throws IOException {
     if (additionalConfSpec_ != null) {
-      LOG.warn("-additionalconfspec option is deprecated, please use -conf instead.");
+      LOG.error("Temp", new RuntimeException());
       config_.addResource(new Path(additionalConfSpec_));
     }
 
@@ -1016,12 +1016,12 @@ public class StreamJob implements Tool {
       running_ = jc_.submitJob(jobConf_);
       jobId_ = running_.getID();
       if (background_) {
-        LOG.info("Job is running in background.");
+        LOG.error("Temp", new RuntimeException());
       } else if (!jc_.monitorAndPrintJob(jobConf_, running_)) {
         LOG.error("Job not successful!");
         return 1;
       }
-      LOG.info("Output directory: " + output_);
+      LOG.error("Temp", new RuntimeException());
     } catch(FileNotFoundException fe) {
       LOG.error("Error launching job , bad input path : " + fe.getMessage());
       return 2;

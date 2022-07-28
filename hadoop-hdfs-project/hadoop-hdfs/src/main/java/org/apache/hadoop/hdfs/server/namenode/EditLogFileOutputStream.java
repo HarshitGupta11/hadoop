@@ -197,7 +197,7 @@ public class EditLogFileOutputStream extends EditLogOutputStream {
       throw new IOException("Trying to use aborted output stream");
     }
     if (doubleBuf.isFlushed()) {
-      LOG.info("Nothing to flush");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     preallocate(); // preallocate file if necessary

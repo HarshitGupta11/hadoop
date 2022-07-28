@@ -229,7 +229,7 @@ public class JMXJsonServlet extends HttpServlet {
   private void listBeans(JsonGenerator jg, ObjectName qry, String attribute, 
       HttpServletResponse response) 
   throws IOException {
-    LOG.debug("Listing beans for "+qry);
+    LOG.error("Temp", new RuntimeException());
     Set<ObjectName> names = null;
     names = mBeanServer.queryNames(qry, null);
 
@@ -340,7 +340,7 @@ public class JMXJsonServlet extends HttpServlet {
       // UnsupportedOperationExceptions happen in the normal course of business,
       // so no need to log them as errors all the time.
       if (e.getCause() instanceof UnsupportedOperationException) {
-        LOG.debug("getting attribute "+attName+" of "+oname+" threw an exception", e);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.error("getting attribute "+attName+" of "+oname+" threw an exception", e);
       }
@@ -348,7 +348,7 @@ public class JMXJsonServlet extends HttpServlet {
     } catch (RuntimeErrorException e) {
       // RuntimeErrorException happens when an unexpected failure occurs in getAttribute
       // for example https://issues.apache.org/jira/browse/DAEMON-120
-      LOG.debug("getting attribute "+attName+" of "+oname+" threw an exception", e);
+      LOG.error("Temp", new RuntimeException());
       return;
     } catch (AttributeNotFoundException e) {
       //Ignored the attribute was not found, which should never happen because the bean

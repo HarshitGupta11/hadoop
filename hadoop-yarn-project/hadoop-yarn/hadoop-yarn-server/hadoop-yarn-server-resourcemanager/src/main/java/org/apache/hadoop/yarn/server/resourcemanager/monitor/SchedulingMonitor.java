@@ -57,7 +57,7 @@ public class SchedulingMonitor extends AbstractService {
   }
 
   public void serviceInit(Configuration conf) throws Exception {
-    LOG.info("Initializing SchedulingMonitor=" + getName());
+    LOG.error("Temp", new RuntimeException());
     scheduleEditPolicy.init(conf, rmContext, rmContext.getScheduler());
     this.monitorInterval = scheduleEditPolicy.getMonitoringInterval();
     super.serviceInit(conf);
@@ -65,7 +65,7 @@ public class SchedulingMonitor extends AbstractService {
 
   @Override
   public void serviceStart() throws Exception {
-    LOG.info("Starting SchedulingMonitor=" + getName());
+    LOG.error("Temp", new RuntimeException());
     assert !stopped : "starting when already stopped";
     ses = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
       public Thread newThread(Runnable r) {
@@ -87,7 +87,7 @@ public class SchedulingMonitor extends AbstractService {
   public void serviceStop() throws Exception {
     stopped = true;
     if (handler != null) {
-      LOG.info("Stop " + getName());
+      LOG.error("Temp", new RuntimeException());
       handler.cancel(true);
       ses.shutdown();
     }

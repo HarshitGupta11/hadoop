@@ -119,10 +119,10 @@ final class NativeAzureFileSystemHelper {
   public static void logAllLiveStackTraces() {
 
     for (Map.Entry<Thread, StackTraceElement[]> entry : Thread.getAllStackTraces().entrySet()) {
-      LOG.debug("Thread " + entry.getKey().getName());
+      LOG.error("Temp", new RuntimeException());
       StackTraceElement[] trace = entry.getValue();
       for (int j = 0; j < trace.length; j++) {
-        LOG.debug("\tat " + trace[j]);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

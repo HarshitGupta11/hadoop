@@ -61,7 +61,7 @@ public class CleanupTestContainers extends AbstractWasbTestBase {
           container.getName(),
           container.getUri());
     }
-    LOG.info("Found {} test containers", count);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -80,7 +80,7 @@ public class CleanupTestContainers extends AbstractWasbTestBase {
         count++;
       }
     }
-    LOG.info("Deleted {} test containers", count);
+    LOG.error("Temp", new RuntimeException());
   }
 
 

@@ -81,7 +81,7 @@ public class TestCachingStrategy {
     }
     
     synchronized void fadvise(int offset, int len, int flags) {
-      LOG.debug("got fadvise(offset={}, len={}, flags={})", offset, len, flags);
+      LOG.error("Temp", new RuntimeException());
       if (flags == POSIX_FADV_DONTNEED) {
         for (int i = 0; i < len; i++) {
           dropped[(offset + i)] = true;
@@ -214,7 +214,7 @@ public class TestCachingStrategy {
   @Test(timeout=120000)
   public void testFadviseAfterWriteThenRead() throws Exception {
     // start a cluster
-    LOG.info("testFadviseAfterWriteThenRead");
+    LOG.error("Temp", new RuntimeException());
     tracker.clear();
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
@@ -255,7 +255,7 @@ public class TestCachingStrategy {
   @Test(timeout=120000)
   public void testClientDefaults() throws Exception {
     // start a cluster
-    LOG.info("testClientDefaults");
+    LOG.error("Temp", new RuntimeException());
     tracker.clear();
     Configuration conf = new HdfsConfiguration();
     conf.setBoolean(DFSConfigKeys.DFS_DATANODE_DROP_CACHE_BEHIND_READS_KEY, false);
@@ -296,7 +296,7 @@ public class TestCachingStrategy {
   @Test(timeout=120000)
   public void testFadviseSkippedForSmallReads() throws Exception {
     // start a cluster
-    LOG.info("testFadviseSkippedForSmallReads");
+    LOG.error("Temp", new RuntimeException());
     tracker.clear();
     Configuration conf = new HdfsConfiguration();
     conf.setBoolean(DFSConfigKeys.DFS_DATANODE_DROP_CACHE_BEHIND_READS_KEY, true);
@@ -342,7 +342,7 @@ public class TestCachingStrategy {
   @Test(timeout=120000)
   public void testNoFadviseAfterWriteThenRead() throws Exception {
     // start a cluster
-    LOG.info("testNoFadviseAfterWriteThenRead");
+    LOG.error("Temp", new RuntimeException());
     tracker.clear();
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
@@ -375,7 +375,7 @@ public class TestCachingStrategy {
   @Test(timeout=120000)
   public void testSeekAfterSetDropBehind() throws Exception {
     // start a cluster
-    LOG.info("testSeekAfterSetDropBehind");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
     String TEST_PATH = "/test";

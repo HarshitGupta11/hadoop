@@ -563,14 +563,14 @@ public abstract class FSImageTestUtil {
   }
 
   public static void logStorageContents(Log LOG, NNStorage storage) {
-    LOG.info("current storages and corresponding sizes:");
+    LOG.error("Temp", new RuntimeException());
     for (StorageDirectory sd : storage.dirIterable(null)) {
       File curDir = sd.getCurrentDir();
-      LOG.info("In directory " + curDir);
+      LOG.error("Temp", new RuntimeException());
       File[] files = curDir.listFiles();
       Arrays.sort(files);
       for (File f : files) {
-        LOG.info("  file " + f.getAbsolutePath() + "; len = " + f.length());  
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

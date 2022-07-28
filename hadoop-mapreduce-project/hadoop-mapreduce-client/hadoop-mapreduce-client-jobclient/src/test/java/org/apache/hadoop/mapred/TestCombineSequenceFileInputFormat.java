@@ -65,7 +65,7 @@ public class TestCombineSequenceFileInputFormat {
 
     Random random = new Random();
     long seed = random.nextLong();
-    LOG.info("seed = "+seed);
+    LOG.error("Temp", new RuntimeException());
     random.setSeed(seed);
 
     localFs.delete(workDir, true);
@@ -86,9 +86,9 @@ public class TestCombineSequenceFileInputFormat {
     for (int i = 0; i < 3; i++) {
       int numSplits =
         random.nextInt(length/(SequenceFile.SYNC_INTERVAL/20))+1;
-      LOG.info("splitting: requesting = " + numSplits);
+      LOG.error("Temp", new RuntimeException());
       InputSplit[] splits = format.getSplits(job, numSplits);
-      LOG.info("splitting: got =        " + splits.length);
+      LOG.error("Temp", new RuntimeException());
 
       // we should have a single split as the length is comfortably smaller than
       // the block size

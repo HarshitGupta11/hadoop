@@ -89,11 +89,11 @@ public class SshFenceByTcpPort extends Configured
     try {
       session = createSession(serviceAddr.getHostName(), args);
     } catch (JSchException e) {
-      LOG.warn("Unable to create SSH session", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
-    LOG.info("Connecting to " + host + "...");
+    LOG.error("Temp", new RuntimeException());
     
     try {
       session.connect(getSshConnectTimeout());
@@ -102,12 +102,12 @@ public class SshFenceByTcpPort extends Configured
           + " as user " + args.user, e);
       return false;
     }
-    LOG.info("Connected to " + host);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       return doFence(session, serviceAddr);
     } catch (JSchException e) {
-      LOG.warn("Unable to achieve fencing on remote host", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } finally {
       session.disconnect();
@@ -131,7 +131,7 @@ public class SshFenceByTcpPort extends Configured
       throws JSchException {
     int port = serviceAddr.getPort();
     try {
-      LOG.info("Looking for process running on port " + port);
+      LOG.error("Temp", new RuntimeException());
       int rc = execCommand(session,
           "PATH=$PATH:/sbin:/usr/sbin fuser -v -k -n tcp " + port);
       if (rc == 0) {
@@ -150,22 +150,22 @@ public class SshFenceByTcpPort extends Configured
             " " + serviceAddr.getPort());
         if (rc == 0) {
           // the service is still listening - we are unable to fence
-          LOG.warn("Unable to fence - it is running but we cannot kill it");
+          LOG.error("Temp", new RuntimeException());
           return false;
         } else {
-          LOG.info("Verified that the service is down.");
+          LOG.error("Temp", new RuntimeException());
           return true;          
         }
       } else {
         // other 
       }
-      LOG.info("rc: " + rc);
+      LOG.error("Temp", new RuntimeException());
       return rc == 0;
     } catch (InterruptedException e) {
-      LOG.warn("Interrupted while trying to fence via ssh", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } catch (IOException e) {
-      LOG.warn("Unknown failure while trying to fence via ssh", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -176,7 +176,7 @@ public class SshFenceByTcpPort extends Configured
    */
   private int execCommand(Session session, String cmd)
       throws JSchException, InterruptedException, IOException {
-    LOG.debug("Running cmd: " + cmd);
+    LOG.error("Temp", new RuntimeException());
     ChannelExec exec = null;
     try {
       exec = (ChannelExec)session.openChannel("exec");
@@ -207,7 +207,7 @@ public class SshFenceByTcpPort extends Configured
       try {
         exec.disconnect();
       } catch (Throwable t) {
-        LOG.warn("Couldn't disconnect ssh channel", t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -294,13 +294,13 @@ public class SshFenceByTcpPort extends Configured
     public void log(int level, String message) {
       switch (level) {
       case com.jcraft.jsch.Logger.DEBUG:
-        LOG.debug(message);
+        LOG.error("Temp", new RuntimeException());
         break;
       case com.jcraft.jsch.Logger.INFO:
-        LOG.info(message);
+        LOG.error("Temp", new RuntimeException());
         break;
       case com.jcraft.jsch.Logger.WARN:
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         break;
       case com.jcraft.jsch.Logger.ERROR:
       case com.jcraft.jsch.Logger.FATAL:

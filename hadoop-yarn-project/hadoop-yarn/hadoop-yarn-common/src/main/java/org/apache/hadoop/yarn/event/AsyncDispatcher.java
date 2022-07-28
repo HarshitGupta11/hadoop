@@ -118,7 +118,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
             event = eventQueue.take();
           } catch(InterruptedException ie) {
             if (!stopped) {
-              LOG.warn("AsyncDispatcher thread interrupted", ie);
+              LOG.error("Temp", new RuntimeException());
             }
             return;
           }
@@ -152,7 +152,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
   protected void serviceStop() throws Exception {
     if (drainEventsOnStop) {
       blockNewEvents = true;
-      LOG.info("AsyncDispatcher is draining to stop, ignoring any new events.");
+      LOG.error("Temp", new RuntimeException());
       long endTime = System.currentTimeMillis() + getConfig()
           .getLong(YarnConfiguration.DISPATCHER_DRAIN_EVENTS_TIMEOUT,
               YarnConfiguration.DEFAULT_DISPATCHER_DRAIN_EVENTS_TIMEOUT);
@@ -173,7 +173,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
       try {
         eventHandlingThread.join();
       } catch (InterruptedException ie) {
-        LOG.warn("Interrupted Exception while stopping", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -220,7 +220,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
     /* check to see if we have a listener registered */
     EventHandler<Event> registeredHandler = (EventHandler<Event>)
     eventDispatchers.get(eventType);
-    LOG.info("Registering " + eventType + " for " + handler.getClass());
+    LOG.error("Temp", new RuntimeException());
     if (registeredHandler == null) {
       eventDispatchers.put(eventType, handler);
     } else if (!(registeredHandler instanceof MultiListenerHandler)){
@@ -254,7 +254,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
       if (qSize != 0 && qSize % 1000 == 0
           && lastEventQueueSizeLogged != qSize) {
         lastEventQueueSizeLogged = qSize;
-        LOG.info("Size of event-queue is " + qSize);
+        LOG.error("Temp", new RuntimeException());
       }
       int remCapacity = eventQueue.remainingCapacity();
       if (remCapacity < 1000) {
@@ -265,7 +265,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
         eventQueue.put(event);
       } catch (InterruptedException e) {
         if (!stopped) {
-          LOG.warn("AsyncDispatcher thread interrupted", e);
+          LOG.error("Temp", new RuntimeException());
         }
         // Need to reset drained flag to true if event queue is empty,
         // otherwise dispatcher will hang on stop.
@@ -304,7 +304,7 @@ public class AsyncDispatcher extends AbstractService implements Dispatcher {
     return new Runnable() {
       @Override
       public void run() {
-        LOG.info("Exiting, bbye..");
+        LOG.error("Temp", new RuntimeException());
         System.exit(-1);
       }
     };

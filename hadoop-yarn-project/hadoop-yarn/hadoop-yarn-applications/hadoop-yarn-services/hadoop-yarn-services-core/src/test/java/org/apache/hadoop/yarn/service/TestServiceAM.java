@@ -73,7 +73,7 @@ public class TestServiceAM extends ServiceTestUtils{
     zkCluster = new TestingCluster(1);
     zkCluster.start();
     conf.set(KEY_REGISTRY_ZK_QUORUM, zkCluster.getConnectString());
-    LOG.info("ZK cluster: {}", zkCluster.getConnectString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @After
@@ -110,7 +110,7 @@ public class TestServiceAM extends ServiceTestUtils{
     am.feedContainerToComp(exampleApp, 1, "compa");
     am.waitForCompInstanceState(compa0, ComponentInstanceState.STARTED);
 
-    LOG.info("Fail the container 1");
+    LOG.error("Temp", new RuntimeException());
     // fail the container
     am.feedFailedContainerToComp(exampleApp, 1, "compa");
 

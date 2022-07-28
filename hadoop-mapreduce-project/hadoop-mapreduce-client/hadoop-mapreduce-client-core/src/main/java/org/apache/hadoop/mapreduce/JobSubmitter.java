@@ -199,10 +199,10 @@ class JobSubmitter {
       Path submitJobFile = JobSubmissionFiles.getJobConfPath(submitJobDir);
       
       // Create the splits for the job
-      LOG.debug("Creating splits at " + jtFs.makeQualified(submitJobDir));
+      LOG.error("Temp", new RuntimeException());
       int maps = writeSplits(job, submitJobDir);
       conf.setInt(MRJobConfig.NUM_MAPS, maps);
-      LOG.info("number of splits:" + maps);
+      LOG.error("Temp", new RuntimeException());
 
       int maxMaps = conf.getInt(MRJobConfig.JOB_MAX_MAP,
           MRJobConfig.DEFAULT_JOB_MAX_MAP);
@@ -260,7 +260,7 @@ class JobSubmitter {
       }
     } finally {
       if (status == null) {
-        LOG.info("Cleaning up the staging area " + submitJobDir);
+        LOG.error("Temp", new RuntimeException());
         if (jtFs != null && submitJobDir != null)
           jtFs.delete(submitJobDir, true);
 
@@ -298,8 +298,8 @@ class JobSubmitter {
   
   private void printTokens(JobID jobId,
       Credentials credentials) throws IOException {
-    LOG.info("Submitting tokens for job: " + jobId);
-    LOG.info("Executing with tokens: {}", credentials.getAllTokens());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @SuppressWarnings("unchecked")
@@ -401,7 +401,7 @@ class JobSubmitter {
     // add secret keys coming from a json file
     String tokensFileName = conf.get("mapreduce.job.credentials.json");
     if(tokensFileName != null) {
-      LOG.info("loading user's secret keys from " + tokensFileName);
+      LOG.error("Temp", new RuntimeException());
       String localFileName = new Path(tokensFileName).toUri().getPath();
 
       try {
@@ -413,7 +413,7 @@ class JobSubmitter {
               .getBytes(Charsets.UTF_8));
         }
       } catch (JsonMappingException | JsonParseException e) {
-        LOG.warn("couldn't parse Token Cache JSON file with user secret keys");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

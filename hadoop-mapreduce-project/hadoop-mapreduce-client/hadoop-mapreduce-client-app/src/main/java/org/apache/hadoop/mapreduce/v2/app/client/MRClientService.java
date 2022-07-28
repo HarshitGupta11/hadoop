@@ -134,7 +134,7 @@ public class MRClientService extends AbstractService implements ClientService {
     server.start();
     this.bindAddress = NetUtils.createSocketAddrForHost(appContext.getNMHostname(),
         server.getListenerAddress().getPort());
-    LOG.info("Instantiated MRClientService at " + this.bindAddress);
+    LOG.error("Temp", new RuntimeException());
     try {
       // Explicitly disabling SSL for map reduce task as we can't allow MR users
       // to gain access to keystore file for opening SSL listener. We can trust
@@ -296,7 +296,7 @@ public class MRClientService extends AbstractService implements ClientService {
       UserGroupInformation callerUGI = UserGroupInformation.getCurrentUser();
       String message = "Kill job " + jobId + " received from " + callerUGI
           + " at " + Server.getRemoteAddress();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       verifyAndGetJob(jobId, JobACL.MODIFY_JOB, false);
       appContext.getEventHandler().handle(
           new JobDiagnosticsUpdateEvent(jobId, message));
@@ -315,7 +315,7 @@ public class MRClientService extends AbstractService implements ClientService {
       UserGroupInformation callerUGI = UserGroupInformation.getCurrentUser();
       String message = "Kill task " + taskId + " received from " + callerUGI
           + " at " + Server.getRemoteAddress();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       verifyAndGetTask(taskId, JobACL.MODIFY_JOB);
       appContext.getEventHandler().handle(
           new TaskEvent(taskId, TaskEventType.T_KILL));
@@ -333,7 +333,7 @@ public class MRClientService extends AbstractService implements ClientService {
       String message = "Kill task attempt " + taskAttemptId
           + " received from " + callerUGI + " at "
           + Server.getRemoteAddress();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       verifyAndGetAttempt(taskAttemptId, JobACL.MODIFY_JOB);
       appContext.getEventHandler().handle(
           new TaskAttemptDiagnosticsUpdateEvent(taskAttemptId, message));
@@ -366,7 +366,7 @@ public class MRClientService extends AbstractService implements ClientService {
       String message = "Fail task attempt " + taskAttemptId
           + " received from " + callerUGI + " at "
           + Server.getRemoteAddress();
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       verifyAndGetAttempt(taskAttemptId, JobACL.MODIFY_JOB);
       appContext.getEventHandler().handle(
           new TaskAttemptDiagnosticsUpdateEvent(taskAttemptId, message));

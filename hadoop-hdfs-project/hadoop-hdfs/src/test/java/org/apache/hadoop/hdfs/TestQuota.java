@@ -1548,7 +1548,7 @@ public class TestQuota {
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
-        LOG.info("LeaseRenewer: {}", leaseRenewer);
+        LOG.error("Temp", new RuntimeException());
         return leaseRenewer.isEmpty();
       }
     }, 100, 10000);

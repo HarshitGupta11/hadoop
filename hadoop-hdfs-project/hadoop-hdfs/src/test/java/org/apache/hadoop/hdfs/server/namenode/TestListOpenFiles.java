@@ -147,7 +147,7 @@ public class TestListOpenFiles {
       for (int i = 0; i < batchedEntries.size(); i++) {
         lastEntry = batchedEntries.get(i);
         String filePath = lastEntry.getFilePath();
-        LOG.info("OpenFile: " + filePath);
+        LOG.error("Temp", new RuntimeException());
         assertTrue("Unexpected open file: " + filePath,
             remainingFiles.remove(new Path(filePath)));
       }
@@ -223,7 +223,7 @@ public class TestListOpenFiles {
               Thread.sleep(listingIntervalMsec);
             } catch (Exception e) {
               listOpenFilesError.set(true);
-              LOG.info("Error listing open files: ", e);
+              LOG.error("Temp", new RuntimeException());
               break;
             }
           }
@@ -235,9 +235,9 @@ public class TestListOpenFiles {
       // times before the NN failover.
       Thread.sleep(listingIntervalMsec * 2);
 
-      LOG.info("Shutting down Active NN0!");
+      LOG.error("Temp", new RuntimeException());
       haCluster.shutdownNameNode(0);
-      LOG.info("Transitioning NN1 to Active!");
+      LOG.error("Temp", new RuntimeException());
       haCluster.transitionToActive(1);
       failoverCompleted.set(true);
 

@@ -112,7 +112,7 @@ public class TestStagingCommitter extends StagingTestBase.MiniDFSTest {
    * @param args arguments to format in the printing
    */
   protected void describe(String text, Object... args) {
-    LOG.info("\n\n: {}\n", String.format(text, args));
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

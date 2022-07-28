@@ -501,7 +501,7 @@ public final class HttpServer2 implements FilterContainer {
       if(null != excludeCiphers && !excludeCiphers.isEmpty()) {
         sslContextFactory.setExcludeCipherSuites(
             StringUtils.getTrimmedStrings(excludeCiphers));
-        LOG.info("Excluded Cipher List:" + excludeCiphers);
+        LOG.error("Temp", new RuntimeException());
       }
 
       conn.addFirstConnectionFactory(new SslConnectionFactory(sslContextFactory,
@@ -592,7 +592,7 @@ public final class HttpServer2 implements FilterContainer {
 
     if (pathSpecs != null) {
       for (String path : pathSpecs) {
-        LOG.info("adding path spec: " + path);
+        LOG.error("Temp", new RuntimeException());
         addFilterPathMapping(path, webAppContext);
       }
     }
@@ -861,7 +861,7 @@ public final class HttpServer2 implements FilterContainer {
     webAppContext.addServlet(holder, pathSpec);
 
     if(requireAuth && UserGroupInformation.isSecurityEnabled()) {
-      LOG.info("Adding Kerberos (SPNEGO) filter to " + name);
+      LOG.error("Temp", new RuntimeException());
       ServletHandler handler = webAppContext.getServletHandler();
       FilterMapping fmap = new FilterMapping();
       fmap.setPathSpec(pathSpec);
@@ -965,7 +965,7 @@ public final class HttpServer2 implements FilterContainer {
     for (ServletContextHandler ctx : defaultContexts.keySet()) {
       defineFilter(ctx, filterHolder, fmap);
     }
-    LOG.info("Added global filter '" + name + "' (class=" + classname + ")");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -1133,10 +1133,10 @@ public final class HttpServer2 implements FilterContainer {
         openListeners();
         webServer.start();
       } catch (IOException ex) {
-        LOG.info("HttpServer.start() threw a non Bind IOException", ex);
+        LOG.error("Temp", new RuntimeException());
         throw ex;
       } catch (MultiException ex) {
-        LOG.info("HttpServer.start() threw a MultiException", ex);
+        LOG.error("Temp", new RuntimeException());
         throw ex;
       }
       // Make sure there is no handler failures.
@@ -1182,7 +1182,7 @@ public final class HttpServer2 implements FilterContainer {
     // failed to open w/o issuing a close first, even if the port is changed
     listener.close();
     listener.open();
-    LOG.info("Jetty bound to port " + listener.getLocalPort());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -1264,7 +1264,7 @@ public final class HttpServer2 implements FilterContainer {
    * @throws Exception
    */
   void openListeners() throws Exception {
-    LOG.debug("opening listeners: {}", listeners);
+    LOG.error("Temp", new RuntimeException());
     for (ServerConnector listener : listeners) {
       if (listener.getLocalPort() != -1 && listener.getLocalPort() != -2) {
         // This listener is either started externally or has been bound or was

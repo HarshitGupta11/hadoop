@@ -70,7 +70,7 @@ public class PlacementSpec {
    */
   public static Map<String, PlacementSpec> parse(String specs)
       throws IllegalArgumentException {
-    LOG.info("Parsing Placement Specs: [{}]", specs);
+    LOG.error("Temp", new RuntimeException());
     Map<String, PlacementSpec> pSpecs = new HashMap<>();
     Map<SourceTags, PlacementConstraint> parsed;
     try {

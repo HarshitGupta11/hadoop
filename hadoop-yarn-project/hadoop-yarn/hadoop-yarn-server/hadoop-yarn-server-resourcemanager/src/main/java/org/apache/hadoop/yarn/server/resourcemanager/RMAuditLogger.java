@@ -239,7 +239,7 @@ public class RMAuditLogger {
   public static void logSuccess(String user, String operation, String target,
       InetAddress ip, ArgsBuilder args) {
     if (LOG.isInfoEnabled()) {
-      LOG.info(createSuccessLog(user, operation, target, ip, args));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -315,7 +315,7 @@ public class RMAuditLogger {
   public static void logSuccess(String user, String operation, String target,
       ApplicationId appId) {
     if (LOG.isInfoEnabled()) {
-      LOG.info(createSuccessLog(user, operation, target, appId, null, null, null));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -332,7 +332,7 @@ public class RMAuditLogger {
    */
   public static void logSuccess(String user, String operation, String target) {
     if (LOG.isInfoEnabled()) {
-      LOG.info(createSuccessLog(user, operation, target, null, null, null, null));
+      LOG.error("Temp", new RuntimeException());
     }
   }
   

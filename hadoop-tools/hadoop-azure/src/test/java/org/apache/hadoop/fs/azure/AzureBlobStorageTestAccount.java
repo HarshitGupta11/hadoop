@@ -527,7 +527,7 @@ public final class AzureBlobStorageTestAccount implements AutoCloseable,
       throws URISyntaxException, KeyProviderException {
     String testAccountName = conf.get(TEST_ACCOUNT_NAME_PROPERTY_NAME);
     if (testAccountName == null) {
-      LOG.warn("Skipping live Azure test because of missing test account");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return createStorageAccount(testAccountName, conf, false);

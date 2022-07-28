@@ -131,7 +131,7 @@ public class ProvidedStorageMap {
         if (providedStorageInfo.getState() == State.FAILED
             && s.getState() == State.NORMAL) {
           providedStorageInfo.setState(State.NORMAL);
-          LOG.info("Provided storage transitioning to state " + State.NORMAL);
+          LOG.error("Temp", new RuntimeException());
         }
         if (dn.getStorageInfo(s.getStorageID()) == null) {
           dn.injectStorage(providedStorageInfo);
@@ -139,7 +139,7 @@ public class ProvidedStorageMap {
         processProvidedStorageReport();
         return providedDescriptor.getProvidedStorage(dn, s);
       }
-      LOG.warn("Reserved storage {} reported as non-provided from {}", s, dn);
+      LOG.error("Temp", new RuntimeException());
     }
     return dn.getStorageInfo(s.getStorageID());
   }

@@ -131,7 +131,7 @@ public class DynamoDBLocalClientFactory extends Configured
       dynamoDBLocalServer = ServerRunner.createServerFromCommandLineArgs(
           new String[]{"-inMemory", "-port", port});
       dynamoDBLocalServer.start();
-      LOG.info("DynamoDBLocal singleton server was started at {}", ddbEndpoint);
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception t) {
       String msg = "Error starting DynamoDBLocal server at " + ddbEndpoint
           + " " + t;
@@ -146,7 +146,7 @@ public class DynamoDBLocalClientFactory extends Configured
    */
   public synchronized static void stopSingletonServer() throws IOException {
     if (dynamoDBLocalServer != null) {
-      LOG.info("Shutting down the in-memory DynamoDBLocal server");
+      LOG.error("Temp", new RuntimeException());
       try {
         dynamoDBLocalServer.stop();
       } catch (Throwable t) {

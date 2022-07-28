@@ -156,7 +156,7 @@ public class JWTRedirectAuthenticationHandler extends
     serializedJWT = getJWTFromCookie(req);
     if (serializedJWT == null) {
       String loginURL = constructLoginURL(request);
-      LOG.info("sending redirect to: " + loginURL);
+      LOG.error("Temp", new RuntimeException());
       ((HttpServletResponse) response).sendRedirect(loginURL);
     } else {
       String userName = null;
@@ -167,20 +167,20 @@ public class JWTRedirectAuthenticationHandler extends
         valid = validateToken(jwtToken);
         if (valid) {
           userName = jwtToken.getJWTClaimsSet().getSubject();
-          LOG.info("USERNAME: " + userName);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.warn("jwtToken failed validation: " + jwtToken.serialize());
+          LOG.error("Temp", new RuntimeException());
         }
       } catch(ParseException pe) {
         // unable to parse the token let's try and get another one
-        LOG.warn("Unable to parse the JWT token", pe);
+        LOG.error("Temp", new RuntimeException());
       }
       if (valid) {
-        LOG.debug("Issuing AuthenticationToken for user.");
+        LOG.error("Temp", new RuntimeException());
         token = new AuthenticationToken(userName, userName, getType());
       } else {
         String loginURL = constructLoginURL(request);
-        LOG.info("token validation failed - sending redirect to: " + loginURL);
+        LOG.error("Temp", new RuntimeException());
         ((HttpServletResponse) response).sendRedirect(loginURL);
       }
     }
@@ -246,15 +246,15 @@ public class JWTRedirectAuthenticationHandler extends
   protected boolean validateToken(SignedJWT jwtToken) {
     boolean sigValid = validateSignature(jwtToken);
     if (!sigValid) {
-      LOG.warn("Signature could not be verified");
+      LOG.error("Temp", new RuntimeException());
     }
     boolean audValid = validateAudiences(jwtToken);
     if (!audValid) {
-      LOG.warn("Audience validation failed.");
+      LOG.error("Temp", new RuntimeException());
     }
     boolean expValid = validateExpiration(jwtToken);
     if (!expValid) {
-      LOG.info("Expiration validation failed.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     return sigValid && audValid && expValid;
@@ -272,19 +272,19 @@ public class JWTRedirectAuthenticationHandler extends
   protected boolean validateSignature(SignedJWT jwtToken) {
     boolean valid = false;
     if (JWSObject.State.SIGNED == jwtToken.getState()) {
-      LOG.debug("JWT token is in a SIGNED state");
+      LOG.error("Temp", new RuntimeException());
       if (jwtToken.getSignature() != null) {
-        LOG.debug("JWT token signature is not null");
+        LOG.error("Temp", new RuntimeException());
         try {
           JWSVerifier verifier = new RSASSAVerifier(publicKey);
           if (jwtToken.verify(verifier)) {
             valid = true;
-            LOG.debug("JWT token has been successfully verified");
+            LOG.error("Temp", new RuntimeException());
           } else {
-            LOG.warn("JWT signature verification failed.");
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (JOSEException je) {
-          LOG.warn("Error while validating signature", je);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -315,17 +315,17 @@ public class JWTRedirectAuthenticationHandler extends
         boolean found = false;
         for (String aud : tokenAudienceList) {
           if (audiences.contains(aud)) {
-            LOG.debug("JWT token audience has been successfully validated");
+            LOG.error("Temp", new RuntimeException());
             valid = true;
             break;
           }
         }
         if (!valid) {
-          LOG.warn("JWT audience validation failed.");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (ParseException pe) {
-      LOG.warn("Unable to parse the JWT token.", pe);
+      LOG.error("Temp", new RuntimeException());
     }
     return valid;
   }
@@ -347,10 +347,10 @@ public class JWTRedirectAuthenticationHandler extends
             + "successfully validated");
         valid = true;
       } else {
-        LOG.warn("JWT expiration date validation failed.");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (ParseException pe) {
-      LOG.warn("JWT expiration date validation failed.", pe);
+      LOG.error("Temp", new RuntimeException());
     }
     return valid;
   }

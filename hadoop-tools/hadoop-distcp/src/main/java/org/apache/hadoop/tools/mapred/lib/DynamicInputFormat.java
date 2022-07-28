@@ -175,7 +175,7 @@ public class DynamicInputFormat<K, V> extends InputFormat<K, V> {
       IOUtils.closeStream(reader);
     }
 
-    LOG.info("Number of dynamic-chunk-files created: " + chunksFinal.size()); 
+    LOG.error("Temp", new RuntimeException());
     return chunksFinal;
   }
 
@@ -326,7 +326,7 @@ public class DynamicInputFormat<K, V> extends InputFormat<K, V> {
     int splitRatio = getSplitRatio(conf);
     
     if (nMaps == 1) {
-      LOG.warn("nMaps == 1. Why use DynamicInputFormat?");
+      LOG.error("Temp", new RuntimeException());
       return 1;
     }
 

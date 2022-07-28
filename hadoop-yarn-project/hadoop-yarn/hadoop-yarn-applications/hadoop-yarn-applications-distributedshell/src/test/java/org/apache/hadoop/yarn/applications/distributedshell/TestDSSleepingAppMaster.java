@@ -50,10 +50,10 @@ public class TestDSSleepingAppMaster extends ApplicationMaster{
       System.exit(1);
     }
     if (result) {
-      LOG.info("Application Master completed successfully. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(0);
     } else {
-      LOG.info("Application Master failed. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(2);
     }
   }

@@ -92,7 +92,7 @@ public class TestGetGroups extends GetGroupsTestBase {
   @AfterClass
   public static void tearDownResourceManager() throws InterruptedException {
     if (resourceManager != null) {
-      LOG.info("Stopping ResourceManager...");
+      LOG.error("Temp", new RuntimeException());
       resourceManager.stop();
     }
   }

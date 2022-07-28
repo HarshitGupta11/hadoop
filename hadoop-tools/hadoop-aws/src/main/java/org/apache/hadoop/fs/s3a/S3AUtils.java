@@ -625,7 +625,7 @@ public final class S3AUtils {
     if (Modifier.isAbstract(credClass.getModifiers())) {
       throw new IOException("Class " + credClass + " " + ABSTRACT_PROVIDER);
     }
-    LOG.debug("Credential provider class is {}", className);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       // new X(uri, conf)
@@ -841,7 +841,7 @@ public final class S3AUtils {
     Preconditions.checkArgument(v >= min,
         String.format("Value of %s: %d is below the minimum value %d",
             key, v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -862,7 +862,7 @@ public final class S3AUtils {
     Preconditions.checkArgument(v >= min,
         String.format("Value of %s: %d is below the minimum value %d",
             key, v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -884,7 +884,7 @@ public final class S3AUtils {
     Preconditions.checkArgument(v >= min,
             String.format("Value of %s: %d is below the minimum value %d",
                     key, v, min));
-    LOG.debug("Value of {} is {}", key, v);
+    LOG.error("Temp", new RuntimeException());
     return v;
   }
 
@@ -998,7 +998,7 @@ public final class S3AUtils {
 
     Preconditions.checkArgument(StringUtils.isNotEmpty(bucket), "bucket");
     final String bucketPrefix = FS_S3A_BUCKET_PREFIX + bucket +'.';
-    LOG.debug("Propagating entries under {}", bucketPrefix);
+    LOG.error("Temp", new RuntimeException());
     final Configuration dest = new Configuration(source);
     for (Map.Entry<String, String> entry : source) {
       final String key = entry.getKey();
@@ -1011,7 +1011,7 @@ public final class S3AUtils {
       final String stripped = key.substring(bucketPrefix.length());
       if (stripped.startsWith("bucket.") || "impl".equals(stripped)) {
         //tell user off
-        LOG.debug("Ignoring bucket option {}", key);
+        LOG.error("Temp", new RuntimeException());
       }  else {
         // propagate the value, building a new origin field.
         // to track overwrites, the generic key is overwritten even if
@@ -1019,7 +1019,7 @@ public final class S3AUtils {
         String origin = "[" + StringUtils.join(
             source.getPropertySources(key), ", ") +"]";
         final String generic = FS_S3A_PREFIX + stripped;
-        LOG.debug("Updating {} from {}", generic, origin);
+        LOG.error("Temp", new RuntimeException());
         dest.set(generic, value, key + " via " + origin);
       }
     }
@@ -1039,7 +1039,7 @@ public final class S3AUtils {
     try {
       fs.delete(path, recursive);
     } catch (IOException e) {
-      LOG.debug("Failed to delete {}", path, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1055,7 +1055,7 @@ public final class S3AUtils {
     try {
       fs.delete(path, recursive);
     } catch (IOException e) {
-      LOG.warn("Failed to delete {}", path, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1250,10 +1250,10 @@ public final class S3AUtils {
 
     case NONE:
     default:
-      LOG.debug("Data is unencrypted");
+      LOG.error("Temp", new RuntimeException());
       break;
     }
-    LOG.debug("Using SSE-C with {}", diagnostics);
+    LOG.error("Temp", new RuntimeException());
     return sse;
   }
 
@@ -1339,7 +1339,7 @@ public final class S3AUtils {
         genericKey.substring(FS_S3A_PREFIX.length())
         : genericKey;
     String k = FS_S3A_BUCKET_PREFIX + bucket + '.' + baseKey;
-    LOG.debug("Unset {}", k);
+    LOG.error("Temp", new RuntimeException());
     conf.unset(k);
   }
 

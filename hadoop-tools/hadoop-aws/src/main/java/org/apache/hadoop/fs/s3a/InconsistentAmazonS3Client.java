@@ -161,7 +161,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
    * keys are matched for delay, e.g. via putObject(), deleteObject().
    */
   public void clearInconsistency() {
-    LOG.info("clearing all delayed puts / deletes");
+    LOG.error("Temp", new RuntimeException());
     delayedDeletes.clear();
     delayedPutKeys.clear();
   }
@@ -200,7 +200,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
   public void deleteObject(DeleteObjectRequest deleteObjectRequest)
       throws AmazonClientException, AmazonServiceException {
     String key = deleteObjectRequest.getKey();
-    LOG.debug("key {}", key);
+    LOG.error("Temp", new RuntimeException());
     maybeFail();
     registerDeleteObject(key, deleteObjectRequest.getBucketName());
     super.deleteObject(deleteObjectRequest);
@@ -210,7 +210,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
   @Override
   public PutObjectResult putObject(PutObjectRequest putObjectRequest)
       throws AmazonClientException, AmazonServiceException {
-    LOG.debug("key {}", putObjectRequest.getKey());
+    LOG.error("Temp", new RuntimeException());
     maybeFail();
     registerPutObject(putObjectRequest);
     return super.putObject(putObjectRequest);
@@ -234,7 +234,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
    */
   private ObjectListing innerlistObjects(ListObjectsRequest listObjectsRequest)
       throws AmazonClientException, AmazonServiceException {
-    LOG.debug("prefix {}", listObjectsRequest.getPrefix());
+    LOG.error("Temp", new RuntimeException());
     ObjectListing listing = super.listObjects(listObjectsRequest);
     listing = filterListObjects(listing);
     listing = restoreListObjects(listObjectsRequest, listing);
@@ -255,7 +255,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
    * @return result.
    */
   private ListObjectsV2Result innerListObjectsV2(ListObjectsV2Request request) {
-    LOG.debug("prefix {}", request.getPrefix());
+    LOG.error("Temp", new RuntimeException());
     ListObjectsV2Result listing = super.listObjectsV2(request);
     listing = filterListObjectsV2(listing);
     listing = restoreListObjectsV2(request, listing);
@@ -439,17 +439,17 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
 
   private boolean isKeyDelayed(Long enqueueTime, String key) {
     if (enqueueTime == null) {
-      LOG.debug("no delay for key {}", key);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     long currentTime = System.currentTimeMillis();
     long deadline = enqueueTime + policy.getDelayKeyMsec();
     if (currentTime >= deadline) {
       delayedDeletes.remove(key);
-      LOG.debug("no longer delaying {}", key);
+      LOG.error("Temp", new RuntimeException());
       return false;
     } else {
-      LOG.info("delaying {}", key);
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
   }
@@ -482,7 +482,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
    * @param key key to delay visibility of
    */
   private void enqueueDelayedPut(String key) {
-    LOG.debug("delaying put of {}", key);
+    LOG.error("Temp", new RuntimeException());
     delayedPutKeys.put(key, System.currentTimeMillis());
   }
 
@@ -576,7 +576,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
       AmazonServiceException {
     maybeFail("file not found", 404);
     S3Object o = super.getObject(var1);
-    LOG.debug("Wrapping in InconsistentS3Object for key {}", var1.getKey());
+    LOG.error("Temp", new RuntimeException());
     return new InconsistentS3Object(o, policy);
   }
 
@@ -584,7 +584,7 @@ public class InconsistentAmazonS3Client extends AmazonS3Client {
   public S3Object getObject(String bucketName, String key)
       throws SdkClientException, AmazonServiceException {
     S3Object o = super.getObject(bucketName, key);
-    LOG.debug("Wrapping in InconsistentS3Object for key {}", key);
+    LOG.error("Temp", new RuntimeException());
     return new InconsistentS3Object(o, policy);
   }
 

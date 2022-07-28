@@ -412,7 +412,7 @@ public class DirectoryCollection {
           errorDirs.add(entry.getKey());
           break;
         default:
-          LOG.warn(entry.getValue().cause + " is unknown for disk error.");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
         directoryErrorInfo.put(entry.getKey(), errorInformation);

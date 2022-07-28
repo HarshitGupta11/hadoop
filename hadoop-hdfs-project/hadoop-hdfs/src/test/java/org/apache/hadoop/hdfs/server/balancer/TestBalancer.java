@@ -816,11 +816,11 @@ public class TestBalancer {
       String[] racks, long newCapacity, String newRack, NewNodeInfo nodes,
       boolean useTool, boolean useFile,
       boolean useNamesystemSpy) throws Exception {
-    LOG.info("capacities = " +  long2String(capacities));
-    LOG.info("racks      = " +  Arrays.asList(racks));
-    LOG.info("newCapacity= " +  newCapacity);
-    LOG.info("newRack    = " +  newRack);
-    LOG.info("useTool    = " +  useTool);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(capacities.length, racks.length);
     int numOfDatanodes = capacities.length;
 
@@ -833,7 +833,7 @@ public class TestBalancer {
       conf.setInt(DFSConfigKeys.DFS_REPLICATION_KEY,
           DFSConfigKeys.DFS_REPLICATION_DEFAULT);
       if(useNamesystemSpy) {
-        LOG.info("Using Spy Namesystem");
+        LOG.error("Temp", new RuntimeException());
         spyFSNamesystem(cluster.getNameNode());
       }
       cluster.startDataNodes(conf, numOfDatanodes, true,
@@ -953,7 +953,7 @@ public class TestBalancer {
         assertEquals(ExitStatus.SUCCESS.getExitCode(), run);
       }
       waitForHeartBeat(totalUsedSpace, totalCapacity, client, cluster);
-      LOG.info("  .");
+      LOG.error("Temp", new RuntimeException());
       try {
         waitForBalancer(totalUsedSpace, totalCapacity, client, cluster, p,
             excludedNodes);
@@ -964,7 +964,7 @@ public class TestBalancer {
         if (retry == 0) {
           throw e;
         }
-        LOG.warn("The cluster has not balanced yet, retry...");
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       break;
@@ -981,9 +981,9 @@ public class TestBalancer {
             DFSConfigKeys.DFS_NAMENODE_REDUNDANCY_INTERVAL_SECONDS_KEY,
             DFSConfigKeys.DFS_NAMENODE_REDUNDANCY_INTERVAL_SECONDS_DEFAULT)
             * 1000;
-    LOG.info("namenodes  = " + namenodes);
-    LOG.info("parameters = " + p);
-    LOG.info("Print stack trace", new Throwable());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     System.out.println("Time Stamp               Iteration#  Bytes Already Moved  Bytes Left To Move  Bytes Being Moved");
 
@@ -1076,7 +1076,7 @@ public class TestBalancer {
 
     assertEquals("Tools should exit 0 on success", 0, r);
     waitForHeartBeat(totalUsedSpace, totalCapacity, client, cluster);
-    LOG.info("Rebalancing with default ctor.");
+    LOG.error("Temp", new RuntimeException());
     waitForBalancer(totalUsedSpace, totalCapacity, client, cluster, p, expectedExcludedNodes);
 
     if (excludeHostsFile != null && excludeHostsFile.exists()) {
@@ -1789,11 +1789,11 @@ public class TestBalancer {
     String[] racks = new String[] { RACK0 };
     long newCapacity = 2 * CAPACITY;
     String newRack = RACK0;
-    LOG.info("capacities = " + long2String(capacities));
-    LOG.info("racks      = " + Arrays.asList(racks));
-    LOG.info("newCapacity= " + newCapacity);
-    LOG.info("newRack    = " + newRack);
-    LOG.info("useTool    = " + false);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(capacities.length, racks.length);
     int numOfDatanodes = capacities.length;
     cluster = new MiniDFSCluster.Builder(conf).numDataNodes(capacities.length)
@@ -1874,9 +1874,9 @@ public class TestBalancer {
 
     // start up an empty node with the same capacity
     cluster.startDataNodes(conf, capacities.length, true, null, null, capacities);
-    LOG.info("capacities    = " + Arrays.toString(capacities));
-    LOG.info("totalUsedSpace= " + totalUsed);
-    LOG.info("lengths       = " + Arrays.toString(lengths) + ", #=" + lengths.length);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     waitForHeartBeat(totalUsed, 2*capacities[0]*capacities.length, client, cluster);
 
     final Collection<URI> namenodes = DFSUtil.getInternalNsRpcUris(conf);

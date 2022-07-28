@@ -100,7 +100,7 @@ public class DataNodeDiskMetrics {
           }
           if (metadataOpStats.isEmpty() && readIoStats.isEmpty() &&
               writeIoStats.isEmpty()) {
-            LOG.debug("No disk stats available for detecting outliers.");
+            LOG.error("Temp", new RuntimeException());
             return;
           }
 
@@ -145,7 +145,7 @@ public class DataNodeDiskMetrics {
     }
 
     diskOutliersStats = diskStats;
-    LOG.debug("Updated disk outliers.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void addDiskStat(Map<String, Map<DiskOp, Double>> diskStats,

@@ -59,7 +59,7 @@ public class AccumulatingReducer extends MapReduceBase
     } catch(Exception e) {
       hostName = "localhost";
     }
-    LOG.info("Starting AccumulatingReducer on " + hostName);
+    LOG.error("Temp", new RuntimeException());
   }
   
   public void reduce(Text key, 

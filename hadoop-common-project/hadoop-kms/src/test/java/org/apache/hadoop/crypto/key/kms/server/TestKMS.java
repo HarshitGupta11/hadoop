@@ -362,7 +362,7 @@ public class TestKMS {
       b.addParameter("user.name", "dr.who");
     }
     URL url = b.build().toURL();
-    LOG.info("JMX URL " + url);
+    LOG.error("Temp", new RuntimeException());
     URLConnection conn = url.openConnection();
     if (sslFactory != null) {
       HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
@@ -377,7 +377,7 @@ public class TestKMS {
   }
 
   private void testJMXQuery(URL baseUrl, boolean kerberos) throws Exception {
-    LOG.info("Testing JMX");
+    LOG.error("Temp", new RuntimeException());
     assertReFind("\"name\"\\s*:\\s*\"java.lang:type=Memory\"",
         readOutput(openJMXConnection(baseUrl, kerberos)));
   }
@@ -549,7 +549,7 @@ public class TestKMS {
         options.setCipher("AES/CTR/NoPadding");
         options.setBitLength(128);
         options.setDescription("l1");
-        LOG.info("Creating key with name '{}'", specialKey);
+        LOG.error("Temp", new RuntimeException());
 
         KeyProvider.KeyVersion kv0 = kp.createKey(specialKey, options);
         Assert.assertNotNull(kv0);
@@ -1679,7 +1679,7 @@ public class TestKMS {
               // This isn't an AuthorizationException because generate goes
               // through the ValueQueue. See KMSCP#generateEncryptedKey.
               if (ex.getCause().getCause() instanceof AuthorizationException) {
-                LOG.info("Caught expected exception.", ex);
+                LOG.error("Temp", new RuntimeException());
               } else {
                 throw ex;
               }
@@ -1698,7 +1698,7 @@ public class TestKMS {
               kpCE.reencryptEncryptedKey(encKv);
               fail("Should not have been able to reencryptEncryptedKey");
             } catch (AuthorizationException ex) {
-              LOG.info("reencryptEncryptedKey caught expected exception.", ex);
+              LOG.error("Temp", new RuntimeException());
             }
             return null;
           }
@@ -1716,7 +1716,7 @@ public class TestKMS {
               kpCE.reencryptEncryptedKeys(ekvs);
               fail("Should not have been able to reencryptEncryptedKeys");
             } catch (AuthorizationException ex) {
-              LOG.info("reencryptEncryptedKeys caught expected exception.", ex);
+              LOG.error("Temp", new RuntimeException());
             }
             return null;
           }
@@ -2096,10 +2096,10 @@ public class TestKMS {
             // Test non-renewer user cannot renew.
             for (Token<?> token : tokens) {
               if (!(token.getKind().equals(KMSDelegationToken.TOKEN_KIND))) {
-                LOG.info("Skipping token {}", token);
+                LOG.error("Temp", new RuntimeException());
                 continue;
               }
-              LOG.info("Got dt for " + uri + "; " + token);
+              LOG.error("Temp", new RuntimeException());
               try {
                 token.renew(clientConf);
                 Assert.fail("client should not be allowed to renew token with"
@@ -2132,10 +2132,10 @@ public class TestKMS {
                   for (Token<?> token : tokens) {
                     if (!(token.getKind()
                         .equals(KMSDelegationToken.TOKEN_KIND))) {
-                      LOG.info("Skipping token {}", token);
+                      LOG.error("Temp", new RuntimeException());
                       continue;
                     }
-                    LOG.info("Got dt for " + uri + "; " + token);
+                    LOG.error("Temp", new RuntimeException());
                     long tokenLife = token.renew(clientConf);
                     LOG.info("Renewed token of kind {}, new lifetime:{}",
                         token.getKind(), tokenLife);
@@ -2152,18 +2152,18 @@ public class TestKMS {
                   for (Token<?> token : tokens) {
                     if (!(token.getKind()
                         .equals(KMSDelegationToken.TOKEN_KIND))) {
-                      LOG.info("Skipping token {}", token);
+                      LOG.error("Temp", new RuntimeException());
                       continue;
                     }
-                    LOG.info("Got dt for " + uri + "; " + token);
+                    LOG.error("Temp", new RuntimeException());
                     token.cancel(clientConf);
-                    LOG.info("Cancelled token of kind {}", token.getKind());
+                    LOG.error("Temp", new RuntimeException());
                     try {
                       token.renew(clientConf);
                       Assert
                           .fail("should not be able to renew a canceled token");
                     } catch (Exception e) {
-                      LOG.info("Expected exception when renewing token", e);
+                      LOG.error("Temp", new RuntimeException());
                     }
                   }
                   return null;
@@ -2263,7 +2263,7 @@ public class TestKMS {
               kp.getKeys();
               Assert.fail("Operation should fail since dt is expired.");
             } catch (Exception e) {
-              LOG.info("Expected error.", e);
+              LOG.error("Temp", new RuntimeException());
             }
             return null;
           }
@@ -2297,7 +2297,7 @@ public class TestKMS {
               kp.getKeys();
               Assert.fail("Operation should fail since dt is expired.");
             } catch (Exception e) {
-              LOG.info("Expected error.", e);
+              LOG.error("Temp", new RuntimeException());
             }
 
             // Using the new DT should succeed.
@@ -2719,7 +2719,7 @@ public class TestKMS {
         final URL jmxUrl = new URL(
             getKMSUrl() + "/jmx?user.name=whatever&qry=Hadoop:service="
                 + processName + ",name=JvmMetrics");
-        LOG.info("Requesting jmx from " + jmxUrl);
+        LOG.error("Temp", new RuntimeException());
         final StringBuilder sb = new StringBuilder();
         final InputStream in = jmxUrl.openConnection().getInputStream();
         final byte[] buffer = new byte[64 * 1024];
@@ -2727,7 +2727,7 @@ public class TestKMS {
         while ((len = in.read(buffer)) > 0) {
           sb.append(new String(buffer, 0, len));
         }
-        LOG.info("jmx returned: " + sb.toString());
+        LOG.error("Temp", new RuntimeException());
         assertTrue(sb.toString().contains("JvmMetrics"));
         return null;
       }

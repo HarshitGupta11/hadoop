@@ -173,7 +173,7 @@ public class DataStorage extends Storage {
   public void enableTrash(String bpid) {
     if (trashEnabledBpids.add(bpid)) {
       getBPStorage(bpid).stopTrashCleaner();
-      LOG.info("Enabled trash for bpid {}",  bpid);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -181,7 +181,7 @@ public class DataStorage extends Storage {
     if (trashEnabledBpids.contains(bpid)) {
       getBPStorage(bpid).clearTrash();
       trashEnabledBpids.remove(bpid);
-      LOG.info("Cleared trash for bpid {}", bpid);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -275,7 +275,7 @@ public class DataStorage extends Storage {
       case NORMAL:
         break;
       case NON_EXISTENT:
-        LOG.info("Storage directory with location {} does not exist", location);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException("Storage directory with location " + location
             + " does not exist");
       case NOT_FORMATTED: // format
@@ -324,7 +324,7 @@ public class DataStorage extends Storage {
           throws IOException {
     if (containsStorageDir(location)) {
       final String errorMessage = "Storage directory is in use.";
-      LOG.warn(errorMessage);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(errorMessage);
     }
 
@@ -415,22 +415,22 @@ public class DataStorage extends Storage {
             }
           }
         } catch (IOException e) {
-          LOG.warn("Failed to add storage directory {}", dataDir, e);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
-        LOG.info("Storage directory {} has already been used.", dataDir);
+        LOG.error("Temp", new RuntimeException());
         success.add(dataDir);
       }
     }
 
     if (!tasks.isEmpty()) {
-      LOG.info("loadDataStorage: {} upgrade tasks", tasks.size());
+      LOG.error("Temp", new RuntimeException());
       for(UpgradeTask t : tasks) {
         try {
           addStorageDir(t.future.get());
           success.add(t.dataDir);
         } catch (ExecutionException e) {
-          LOG.warn("Failed to upgrade storage directory {}", t.dataDir, e);
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException e) {
           throw DFSUtilClient.toInterruptedIOException("Task interrupted", e);
         }
@@ -469,7 +469,7 @@ public class DataStorage extends Storage {
     }
 
     if (!tasks.isEmpty()) {
-      LOG.info("loadBlockPoolSliceStorage: {} upgrade tasks", tasks.size());
+      LOG.error("Temp", new RuntimeException());
       for(UpgradeTask t : tasks) {
         try {
           success.add(t.future.get());
@@ -846,7 +846,7 @@ public class DataStorage extends Storage {
     
     // 5. Rename <SD>/previous.tmp to <SD>/previous
     rename(tmpDir, prevDir);
-    LOG.info("Upgrade of {} is complete", sd.getRoot());
+    LOG.error("Temp", new RuntimeException());
   }
 
   void upgradeProperties(StorageDirectory sd, Configuration conf)
@@ -941,7 +941,7 @@ public class DataStorage extends Storage {
     rename(prevDir, curDir);
     // delete tmp dir
     deleteDir(tmpDir);
-    LOG.info("Rollback of {} is complete", sd.getRoot());
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**
@@ -982,7 +982,7 @@ public class DataStorage extends Storage {
           } catch(IOException ex) {
             LOG.error("Finalize upgrade for " + dataDirPath + " failed", ex);
           }
-          LOG.info("Finalize upgrade for " + dataDirPath + " is complete");
+          LOG.error("Temp", new RuntimeException());
         }
         @Override
         public String toString() { return "Finalize " + dataDirPath; }
@@ -1071,7 +1071,7 @@ public class DataStorage extends Storage {
 
   private static void linkBlocks(File from, File to, int oldLV,
       HardLink hl, Configuration conf) throws IOException {
-    LOG.info("Start linking block files from {} to {}", from, to);
+    LOG.error("Temp", new RuntimeException());
     boolean upgradeToIdBasedLayout = false;
     // If we are upgrading from a version older than the one where we introduced
     // block ID-based layout (32x32) AND we're working with the finalized
@@ -1280,7 +1280,7 @@ public class DataStorage extends Storage {
         continue; // file has no duplicates
       }
       if (!bestDuplicate.src.getParent().equals(args.src.getParent())) {
-        LOG.warn("Discarding {}.", args.src.getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
         iter.remove();
       }
     }

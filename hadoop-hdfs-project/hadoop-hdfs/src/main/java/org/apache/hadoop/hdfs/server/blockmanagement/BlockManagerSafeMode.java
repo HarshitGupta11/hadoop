@@ -158,10 +158,10 @@ class BlockManagerSafeMode {
 
     this.inRollBack = isInRollBackMode(NameNode.getStartupOption(conf));
 
-    LOG.info("{} = {}", DFS_NAMENODE_SAFEMODE_THRESHOLD_PCT_KEY, threshold);
+    LOG.error("Temp", new RuntimeException());
     LOG.info("{} = {}", DFS_NAMENODE_SAFEMODE_MIN_DATANODES_KEY,
         datanodeThreshold);
-    LOG.info("{} = {}", DFS_NAMENODE_SAFEMODE_EXTENSION_KEY, extension);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -635,7 +635,7 @@ class BlockManagerSafeMode {
       }
 
       if (!namesystem.isRunning()) {
-        LOG.info("NameNode is being shutdown, exit SafeModeMonitor thread");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

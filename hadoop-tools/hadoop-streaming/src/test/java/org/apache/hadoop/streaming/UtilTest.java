@@ -131,10 +131,10 @@ class UtilTest {
         hasPerl = true;
       }
       else {
-        LOG.warn("Perl is installed, but isn't behaving as expected.");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception e) {
-      LOG.warn("Could not run perl: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
     return hasPerl;
   }

@@ -136,7 +136,7 @@ public final class LambdaTestUtils {
           | VirtualMachineError e) {
         throw e;
       } catch (Throwable e) {
-        LOG.debug("eventually() iteration {}", iterations, e);
+        LOG.error("Temp", new RuntimeException());
         ex = e;
       }
       running = Time.now() < endTime;
@@ -249,7 +249,7 @@ public final class LambdaTestUtils {
         // these two exceptions trigger an immediate exit
         throw e;
       } catch (Throwable e) {
-        LOG.debug("evaluate() iteration {}", iterations, e);
+        LOG.error("Temp", new RuntimeException());
         ex = e;
       }
       running = Time.now() < endTime;
@@ -571,7 +571,7 @@ public final class LambdaTestUtils {
       try {
         return o.toString();
       } catch (Exception e) {
-        LOG.info("Exception calling toString()", e);
+        LOG.error("Temp", new RuntimeException());
         return o.getClass().toString();
       }
     }

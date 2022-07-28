@@ -813,7 +813,7 @@ public class TestRuntimeEstimators {
           clock = SystemClock.getInstance();
         }
       this.clock = clock;
-      LOG.info("Created MyAppMaster");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

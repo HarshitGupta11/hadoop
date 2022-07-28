@@ -57,7 +57,7 @@ public class TestMarshalling extends RegistryTestHelper {
     record.set("customkey", "customvalue");
     record.set("customkey2", "customvalue2");
     RegistryTypeUtils.validateServiceRecord("", record);
-    LOG.info(marshal.toJson(record));
+    LOG.error("Temp", new RuntimeException());
     byte[] bytes = marshal.toBytes(record);
     ServiceRecord r2 = marshal.fromBytes("", bytes);
     assertMatches(record, r2);

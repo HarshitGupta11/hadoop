@@ -474,7 +474,7 @@ public class InMemoryPlan implements Plan {
   @Override
   public void archiveCompletedReservations(long tick) {
     // Since we are looking for old reservations, read lock is optimal
-    LOG.debug("Running archival at time: {}", tick);
+    LOG.error("Temp", new RuntimeException());
     List<InMemoryReservationAllocation> expiredReservations =
         new ArrayList<InMemoryReservationAllocation>();
     readLock.lock();

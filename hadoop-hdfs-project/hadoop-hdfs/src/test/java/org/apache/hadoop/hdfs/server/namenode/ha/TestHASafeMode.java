@@ -132,19 +132,19 @@ public class TestHASafeMode {
     BlockManagerTestUtil.setStartupSafeModeForTest(nn0.getNamesystem()
         .getBlockManager());
     assertTrue(nn0.getNamesystem().isInStartupSafeMode());
-    LOG.info("enter safemode");
+    LOG.error("Temp", new RuntimeException());
     new Thread() {
       @Override
       public void run() {
         try {
           boolean mkdir = fs.mkdirs(test);
-          LOG.info("mkdir finished, result is " + mkdir);
+          LOG.error("Temp", new RuntimeException());
           synchronized (TestHASafeMode.this) {
             results.put(test, mkdir);
             TestHASafeMode.this.notifyAll();
           }
         } catch (Exception e) {
-          LOG.info("Got Exception while calling mkdir", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }.start();
@@ -156,7 +156,7 @@ public class TestHASafeMode {
     Thread.sleep(1000);
     // let nn0 leave safemode
     NameNodeAdapter.leaveSafeMode(nn0);
-    LOG.info("leave safemode");
+    LOG.error("Temp", new RuntimeException());
     
     synchronized (this) {
       while (!results.containsKey(test)) {

@@ -51,7 +51,7 @@ public class Bzip2Factory {
       nativeBzip2Loaded = false;
       bzip2LibraryName = libname;
       if (libname.equals("java-builtin")) {
-        LOG.info("Using pure-Java version of bzip2 library");
+        LOG.error("Temp", new RuntimeException());
       } else if (NativeCodeLoader.isNativeCodeLoaded()) {
         try {
           // Initialize the native library.

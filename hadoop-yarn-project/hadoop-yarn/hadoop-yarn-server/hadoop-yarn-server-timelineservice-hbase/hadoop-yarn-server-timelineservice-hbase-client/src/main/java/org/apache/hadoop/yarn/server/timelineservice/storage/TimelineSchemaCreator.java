@@ -75,7 +75,7 @@ public final class TimelineSchemaCreator {
 
   public static void main(String[] args) throws Exception {
 
-    LOG.info("Starting the schema creation");
+    LOG.error("Temp", new RuntimeException());
     Configuration hbaseConf =
         HBaseTimelineStorageUtils.getTimelineServiceHBaseConf(
             new YarnConfiguration());
@@ -275,20 +275,20 @@ public final class TimelineSchemaCreator {
             + "exceptions!");
       }
       createAllTables(hbaseConf, skipExisting);
-      LOG.info("Successfully created HBase schema. ");
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       LOG.error("Error in creating hbase tables: ", e);
       exceptions.add(e);
     }
 
     if (exceptions.size() > 0) {
-      LOG.warn("Schema creation finished with the following exceptions");
+      LOG.error("Temp", new RuntimeException());
       for (Exception e : exceptions) {
-        LOG.warn(e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
       System.exit(-1);
     } else {
-      LOG.info("Schema creation finished successfully");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -307,7 +307,7 @@ public final class TimelineSchemaCreator {
         new EntityTableRW().createTable(admin, hbaseConf);
       } catch (IOException e) {
         if (skipExisting) {
-          LOG.warn("Skip and continue on: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }
@@ -316,7 +316,7 @@ public final class TimelineSchemaCreator {
         new AppToFlowTableRW().createTable(admin, hbaseConf);
       } catch (IOException e) {
         if (skipExisting) {
-          LOG.warn("Skip and continue on: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }
@@ -325,7 +325,7 @@ public final class TimelineSchemaCreator {
         new ApplicationTableRW().createTable(admin, hbaseConf);
       } catch (IOException e) {
         if (skipExisting) {
-          LOG.warn("Skip and continue on: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }
@@ -334,7 +334,7 @@ public final class TimelineSchemaCreator {
         new FlowRunTableRW().createTable(admin, hbaseConf);
       } catch (IOException e) {
         if (skipExisting) {
-          LOG.warn("Skip and continue on: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }
@@ -343,7 +343,7 @@ public final class TimelineSchemaCreator {
         new FlowActivityTableRW().createTable(admin, hbaseConf);
       } catch (IOException e) {
         if (skipExisting) {
-          LOG.warn("Skip and continue on: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }
@@ -352,7 +352,7 @@ public final class TimelineSchemaCreator {
         new SubApplicationTableRW().createTable(admin, hbaseConf);
       } catch (IOException e) {
         if (skipExisting) {
-          LOG.warn("Skip and continue on: " + e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw e;
         }

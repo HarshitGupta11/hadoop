@@ -262,7 +262,7 @@ public class LoadGenerator extends Configured implements Tool {
       int i = currentIndex;
       
       if(LOG.isDebugEnabled())
-        LOG.debug("Thread " + this.id + " moving to index " + i);
+        LOG.error("Temp", new RuntimeException());
       
       if (rn < readProbs[i]) {
         read();
@@ -376,7 +376,7 @@ public class LoadGenerator extends Configured implements Tool {
     } catch (IOException e) {
       LOG.error("Got error when checking if file exists:" + flagFile, e);
     }
-    LOG.info("Flag file was created. Stopping the test.");
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
   
@@ -444,7 +444,7 @@ public class LoadGenerator extends Configured implements Tool {
     }
     
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Done with testing.  Waiting for threads to finish.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     boolean failed = false;
@@ -550,7 +550,7 @@ public class LoadGenerator extends Configured implements Tool {
           seed = Long.parseLong(args[++i]);
           r = new Random(seed);
         }  else if (args[i].equals("-flagFile")) {
-          LOG.info("got flagFile:" + flagFile);
+          LOG.error("Temp", new RuntimeException());
           flagFile = new Path(args[++i]);
         }else { 
           System.err.println(USAGE);

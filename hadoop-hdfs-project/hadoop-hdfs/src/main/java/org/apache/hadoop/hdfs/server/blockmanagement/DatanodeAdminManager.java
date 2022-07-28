@@ -329,12 +329,12 @@ public class DatanodeAdminManager {
 
   private void setDecommissioned(DatanodeDescriptor dn) {
     dn.setDecommissioned();
-    LOG.info("Decommissioning complete for node {}", dn);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void setInMaintenance(DatanodeDescriptor dn) {
     dn.setInMaintenance();
-    LOG.info("Node {} has entered maintenance mode.", dn);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -551,7 +551,7 @@ public class DatanodeAdminManager {
           // This is a known datanode, check if its # of insufficiently
           // replicated blocks has dropped to zero and if it can move
           // to the next state.
-          LOG.debug("Processing {} node {}", dn.getAdminState(), dn);
+          LOG.error("Temp", new RuntimeException());
           pruneReliableBlocks(dn, blocks);
         }
         if (blocks.size() == 0) {
@@ -673,7 +673,7 @@ public class DatanodeAdminManager {
           // configured per-iteration-limit.
           namesystem.writeUnlock();
           try {
-            LOG.debug("Yielded lock during decommission/maintenance check");
+            LOG.error("Temp", new RuntimeException());
             Thread.sleep(0, 500);
           } catch (InterruptedException ignored) {
             return;

@@ -59,7 +59,7 @@ public class ClientCache {
       try {
         hsProxy = instantiateHistoryProxy();
       } catch (IOException e) {
-        LOG.warn("Could not connect to History server.", e);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException("Could not connect to History server.", e);
       }
     }
@@ -85,9 +85,9 @@ public class ClientCache {
     if (StringUtils.isEmpty(serviceAddr)) {
       return null;
     }
-    LOG.debug("Connecting to HistoryServer at: " + serviceAddr);
+    LOG.error("Temp", new RuntimeException());
     final YarnRPC rpc = YarnRPC.create(conf);
-    LOG.debug("Connected to HistoryServer at: " + serviceAddr);
+    LOG.error("Temp", new RuntimeException());
     UserGroupInformation currentUser = UserGroupInformation.getCurrentUser();
     return currentUser.doAs(new PrivilegedAction<MRClientProtocol>() {
       @Override

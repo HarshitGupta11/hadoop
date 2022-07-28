@@ -58,9 +58,9 @@ public abstract class AbstractLaunchableService extends AbstractService
   public Configuration bindArgs(Configuration config, List<String> args) throws
       Exception {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Service {} passed in {} arguments:", getName(), args.size());
+      LOG.error("Temp", new RuntimeException());
       for (String arg : args) {
-        LOG.debug(arg);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return config;

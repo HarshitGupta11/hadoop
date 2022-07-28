@@ -36,7 +36,7 @@ public class TestRecordFactory {
     final Configuration conf = new Configuration();
     final GridmixKey key = new GridmixKey();
     final GridmixRecord val = new GridmixRecord();
-    LOG.info("Target bytes/records: " + targetBytes + "/" + targetRecs);
+    LOG.error("Temp", new RuntimeException());
     final RecordFactory f = new AvgRecordFactory(targetBytes, targetRecs, conf);
     targetRecs = targetRecs <= 0 && targetBytes >= 0
       ? Math.max(1,

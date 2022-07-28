@@ -231,7 +231,7 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
     public static String send4LetterWord(String host, int port, String cmd)
         throws IOException
     {
-        LOG.info("connecting to " + host + " " + port);
+        LOG.error("Temp", new RuntimeException());
         Socket sock = new Socket(host, port);
         BufferedReader reader = null;
         try {
@@ -271,7 +271,7 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
                 }
             } catch (IOException e) {
                 // ignore as this is expected
-                LOG.info("server " + hp + " not up " + e);
+                LOG.error("Temp", new RuntimeException());
             }
 
             if (Time.now() > start + timeout) {
@@ -362,7 +362,7 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
             try {
                 zkDb.close();
             } catch (IOException ie) {
-                LOG.warn("Error closing logs ", ie);
+                LOG.error("Temp", new RuntimeException());
             }
             final int PORT = getPort(hostPort);
 
@@ -401,7 +401,7 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
 
         startServer();
 
-        LOG.info("Client test setup finished");
+        LOG.error("Temp", new RuntimeException());
     }
 
     private String initHostPort() {
@@ -416,12 +416,12 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
     }
 
     protected void startServer() throws Exception {
-        LOG.info("STARTING server");
+        LOG.error("Temp", new RuntimeException());
         serverFactory = createNewServerInstance(tmpDir, serverFactory, hostPort, maxCnxns);
     }
 
     protected void stopServer() throws Exception {
-        LOG.info("STOPPING server");
+        LOG.error("Temp", new RuntimeException());
         shutdownServerInstance(serverFactory, hostPort);
         serverFactory = null;
     }
@@ -440,7 +440,7 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
                     if (zk != null)
                         zk.close();
                 } catch (InterruptedException e) {
-                    LOG.warn("ignoring interrupt", e);
+                    LOG.error("Temp", new RuntimeException());
                 }
             }
             allClients = null;
@@ -449,7 +449,7 @@ public abstract class ClientBaseWithFixes extends ZKTestCase {
 
     @After
     public void tearDown() throws Exception {
-        LOG.info("tearDown starting");
+        LOG.error("Temp", new RuntimeException());
 
         tearDownAll();
 

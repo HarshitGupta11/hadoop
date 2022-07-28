@@ -113,11 +113,11 @@ public class HamletGen {
          "  }");
     initLut(specClass);
     genImpl(specClass, implClassName, 1);
-    LOG.info("Generating {} methods", hamlet);
+    LOG.error("Temp", new RuntimeException());
     genMethods(hamlet, top, 1);
     puts(0, "}");
     out.close();
-    LOG.info("Wrote {} bytes to {}.java", bytes, outputName);
+    LOG.error("Temp", new RuntimeException());
   }
 
   String basename(String path) {
@@ -156,7 +156,7 @@ public class HamletGen {
         genFactoryMethods(cls, indent);
       }
       if (isElement(className)) {
-        LOG.info("Generating class {}<T>", className);
+        LOG.error("Temp", new RuntimeException());
         puts(indent, "\n",
              "public class ", className, "<T extends _>",
              " extends EImp<T> implements ", specName, ".", className, " {\n",

@@ -86,7 +86,7 @@ public class TestSinkQueue {
           });
         }
         catch (InterruptedException e) {
-          LOG.warn("Interrupted", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };
@@ -236,7 +236,7 @@ public class TestSinkQueue {
       callback.run();
     }
     catch (ConcurrentModificationException e) {
-      LOG.info(e.toString());
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     LOG.error("should've thrown CME");
@@ -257,14 +257,14 @@ public class TestSinkQueue {
           q.consume(new Consumer<Integer>() {
             @Override
             public void consume(Integer e) throws InterruptedException {
-              LOG.info("sleeping");
+              LOG.error("Temp", new RuntimeException());
               barrier.countDown();
               Thread.sleep(1000 * 86400); // a long time
             }
           });
         }
         catch (InterruptedException ex) {
-          LOG.warn("Interrupted", ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };
@@ -272,7 +272,7 @@ public class TestSinkQueue {
     t.setDaemon(true);  // so jvm can exit
     t.start();
     barrier.await();
-    LOG.debug("Returning new sleeping consumer queue");
+    LOG.error("Temp", new RuntimeException());
     return q;
   }
 

@@ -86,13 +86,13 @@ public class FsUrlStreamHandlerFactory implements
 
   @Override
   public java.net.URLStreamHandler createURLStreamHandler(String protocol) {
-    LOG.debug("Creating handler for protocol {}", protocol);
+    LOG.error("Temp", new RuntimeException());
     if (!protocols.containsKey(protocol)) {
       boolean known = true;
       try {
         Class<? extends FileSystem> impl
             = FileSystem.getFileSystemClass(protocol, conf);
-        LOG.debug("Found implementation of {}: {}", protocol, impl);
+        LOG.error("Temp", new RuntimeException());
       }
       catch (IOException ex) {
         known = false;
@@ -100,7 +100,7 @@ public class FsUrlStreamHandlerFactory implements
       protocols.put(protocol, known);
     }
     if (protocols.get(protocol)) {
-      LOG.debug("Using handler for protocol {}", protocol);
+      LOG.error("Temp", new RuntimeException());
       return handler;
     } else {
       // FileSystem does not know the protocol, let the VM handle this

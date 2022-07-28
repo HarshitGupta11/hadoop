@@ -121,12 +121,12 @@ public class TestLeaseRecovery {
 
     //verify Block Info
     ExtendedBlock lastblock = locatedblock.getBlock();
-    DataNode.LOG.info("newblocks=" + lastblock);
+    DataNode.LOG.error("Temp", new RuntimeException());
     for(int i = 0; i < REPLICATION_NUM; i++) {
       checkMetaInfo(lastblock, datanodes[i]);
     }
 
-    DataNode.LOG.info("dfs.dfs.clientName=" + dfs.dfs.clientName);
+    DataNode.LOG.error("Temp", new RuntimeException());
     cluster.getNameNodeRpc().append(filestr, dfs.dfs.clientName,
         new EnumSetWritable<>(EnumSet.of(CreateFlag.APPEND)));
 

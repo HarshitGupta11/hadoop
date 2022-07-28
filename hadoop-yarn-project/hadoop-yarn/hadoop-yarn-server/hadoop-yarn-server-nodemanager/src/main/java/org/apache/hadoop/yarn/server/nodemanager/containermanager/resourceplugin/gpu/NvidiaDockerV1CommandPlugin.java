@@ -122,7 +122,7 @@ public class NvidiaDockerV1CommandPlugin implements DockerCommandPlugin {
         } else if (str.startsWith(VOLUME_DRIVER_OPTION)) {
           volumeDriver = getValue(str);
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Found volume-driver:" + volumeDriver);
+            LOG.error("Temp", new RuntimeException());
           }
         } else if (str.startsWith(MOUNT_RO_OPTION)) {
           String mount = getValue(str);
@@ -287,7 +287,7 @@ public class NvidiaDockerV1CommandPlugin implements DockerCommandPlugin {
           // This is a valid named volume
           newVolumeName = mountSource;
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Found volume name for GPU:" + newVolumeName);
+            LOG.error("Temp", new RuntimeException());
           }
           break;
         } else{

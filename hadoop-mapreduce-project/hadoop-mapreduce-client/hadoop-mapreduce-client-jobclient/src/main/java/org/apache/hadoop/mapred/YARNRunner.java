@@ -609,7 +609,7 @@ public class YARNRunner implements ClientProtocol {
       String errMsg =
           "Invalid reservationId: " + jobConf.get(JobContext.RESERVATION_ID)
               + " specified for the app: " + applicationId;
-      LOG.warn(errMsg);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(errMsg);
     }
     if (reservationID != null) {
@@ -736,7 +736,7 @@ public class YARNRunner implements ClientProtocol {
       );
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("AppMaster capability = " + capability);
+      LOG.error("Temp", new RuntimeException());
     }
 
     List<ResourceRequest> amResourceRequests = new ArrayList<>();
@@ -774,7 +774,7 @@ public class YARNRunner implements ClientProtocol {
       } else {
         String errMsg =
             "Invalid resource name: " + amStrictResource + " specified.";
-        LOG.warn(errMsg);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(errMsg);
       }
     }
@@ -823,7 +823,7 @@ public class YARNRunner implements ClientProtocol {
       for (Iterator<Map.Entry<String, String>> itor = copy.iterator(); itor
           .hasNext(); ) {
         Map.Entry<String, String> entry = itor.next();
-        LOG.info(entry.getKey() + " ===> " + entry.getValue());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     context.setTokensConf(appConf);
@@ -961,7 +961,7 @@ public class YARNRunner implements ClientProtocol {
         }
       }
     } catch(IOException io) {
-      LOG.debug("Error when checking for application status", io);
+      LOG.error("Temp", new RuntimeException());
     }
     if (status != null && !isJobInTerminalState(status)) {
       killApplication(appId);

@@ -88,7 +88,7 @@ public class TestAddBlockRetry {
         true, (short)3, 1024, null, null);
 
     // start first addBlock()
-    LOG.info("Starting first addBlock for " + src);
+    LOG.error("Temp", new RuntimeException());
     LocatedBlock[] onRetryBlock = new LocatedBlock[1];
     ns.readLock();
     FSDirWriteFileOp.ValidateAddBlockResult r;
@@ -105,7 +105,7 @@ public class TestAddBlockRetry {
     assertNotNull("Targets must be generated", targets);
 
     // run second addBlock()
-    LOG.info("Starting second addBlock for " + src);
+    LOG.error("Temp", new RuntimeException());
     nn.addBlock(src, "clientName", null, null,
                 HdfsConstants.GRANDFATHER_INODE_ID, null, null);
     assertTrue("Penultimate block must be complete",
@@ -159,7 +159,7 @@ public class TestAddBlockRetry {
         new EnumSetWritable<CreateFlag>(EnumSet.of(CreateFlag.CREATE)), true,
         (short) 3, 1024, null, null);
     // start first addBlock()
-    LOG.info("Starting first addBlock for " + src);
+    LOG.error("Temp", new RuntimeException());
     LocatedBlock lb1 = nameNodeRpc.addBlock(src, "clientName", null, null,
         HdfsConstants.GRANDFATHER_INODE_ID, null, null);
     assertTrue("Block locations should be present",

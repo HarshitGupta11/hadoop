@@ -38,17 +38,17 @@ public class LocalizerTokenSelector implements
   public Token<LocalizerTokenIdentifier> selectToken(Text service,
       Collection<Token<? extends TokenIdentifier>> tokens) {
 
-    LOG.debug("Using localizerTokenSelector.");
+    LOG.error("Temp", new RuntimeException());
 
     for (Token<? extends TokenIdentifier> token : tokens) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Token of kind " + token.getKind() + " is found");
+        LOG.error("Temp", new RuntimeException());
       }
       if (LocalizerTokenIdentifier.KIND.equals(token.getKind())) {
         return (Token<LocalizerTokenIdentifier>) token;
       }
     }
-    LOG.debug("Returning null.");
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 }

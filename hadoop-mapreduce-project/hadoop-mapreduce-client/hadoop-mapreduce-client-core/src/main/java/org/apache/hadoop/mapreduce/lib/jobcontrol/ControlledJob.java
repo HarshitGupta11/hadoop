@@ -336,7 +336,7 @@ public class ControlledJob {
       job.submit();
       this.state = State.RUNNING;
     } catch (Exception ioe) {
-      LOG.info(getJobName()+" got an error while submitting ",ioe);
+      LOG.error("Temp", new RuntimeException());
       this.state = State.FAILED;
       this.message = StringUtils.stringifyException(ioe);
     }

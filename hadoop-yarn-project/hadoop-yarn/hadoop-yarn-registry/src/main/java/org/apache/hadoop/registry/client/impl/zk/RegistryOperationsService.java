@@ -109,7 +109,7 @@ public class RegistryOperationsService extends CuratorService
     RegistryTypeUtils.validateServiceRecord(path, record);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Bound at {} : ServiceRecord = {}", path, record);
+      LOG.error("Temp", new RuntimeException());
     }
     CreateMode mode = CreateMode.PERSISTENT;
     byte[] bytes = serviceRecordMarshal.toBytes(record);
@@ -145,7 +145,7 @@ public class RegistryOperationsService extends CuratorService
         stat.getDataLength(),
         stat.getNumChildren());
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Stat {} => {}", path, status);
+      LOG.error("Temp", new RuntimeException());
     }
     return status;
   }

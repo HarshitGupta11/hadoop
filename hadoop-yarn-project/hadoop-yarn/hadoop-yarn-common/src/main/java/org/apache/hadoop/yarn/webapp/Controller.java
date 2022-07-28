@@ -217,7 +217,7 @@ public abstract class Controller implements Params {
    * @param object - the object as the response (in JSON)
    */
   protected void renderJSON(Object object) {
-    LOG.debug("{}: {}", MimeType.JSON, object);
+    LOG.error("Temp", new RuntimeException());
     context().rendered = true;
     context().response.setContentType(MimeType.JSON);
     try {
@@ -238,7 +238,7 @@ public abstract class Controller implements Params {
    * @param s - the content to render as plain text
    */
   protected void renderText(String s) {
-    LOG.debug("{}: {}", MimeType.TEXT, s);
+    LOG.error("Temp", new RuntimeException());
     context().rendered = true;
     response().setContentType(MimeType.TEXT);
     writer().print(s);

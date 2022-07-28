@@ -350,7 +350,7 @@ public class TestReconstructStripedFile {
           lastBlock.getBlockSize(), cellSize, dataBlkNum, indices[dead[i]]));
       assertTrue(metadatas[i].getName().
           endsWith(blocks[i].getGenerationStamp() + ".meta"));
-      LOG.info("replica " + i + " locates in file: " + replicas[i]);
+      LOG.error("Temp", new RuntimeException());
       replicaContents[i] = DFSTestUtil.readFileAsBytes(replicas[i]);
     }
 
@@ -383,11 +383,11 @@ public class TestReconstructStripedFile {
     // Check the replica on the new target node.
     for (int i = 0; i < toRecoverBlockNum; i++) {
       File replicaAfterReconstruction = cluster.getBlockFile(targetDNs[i], blocks[i]);
-      LOG.info("replica after reconstruction " + replicaAfterReconstruction);
+      LOG.error("Temp", new RuntimeException());
       File metadataAfterReconstruction =
           cluster.getBlockMetadataFile(targetDNs[i], blocks[i]);
       assertEquals(replicaLengths[i], replicaAfterReconstruction.length());
-      LOG.info("replica before " + replicas[i]);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(metadataAfterReconstruction.getName().
           endsWith(blocks[i].getGenerationStamp() + ".meta"));
       byte[] replicaContentAfterReconstruction =

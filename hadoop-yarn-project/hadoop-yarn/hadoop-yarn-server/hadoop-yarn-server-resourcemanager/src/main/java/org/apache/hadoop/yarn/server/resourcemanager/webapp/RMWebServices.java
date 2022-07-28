@@ -1611,7 +1611,7 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
       if (ue.getCause() instanceof YarnException) {
         throw new BadRequestException(ue.getCause().getMessage());
       }
-      LOG.info("Submit app request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     }
 
@@ -1734,7 +1734,7 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
             }
           });
     } catch (Exception e) {
-      LOG.info("Create delegation token request failed", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
 
@@ -1785,13 +1785,13 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
           return Response.status(Status.FORBIDDEN)
               .entity(ue.getCause().getCause().getMessage()).build();
         }
-        LOG.info("Renew delegation token request failed", ue);
+        LOG.error("Temp", new RuntimeException());
         throw ue;
       }
-      LOG.info("Renew delegation token request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     } catch (Exception e) {
-      LOG.info("Renew delegation token request failed", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
     long renewTime = resp.getNextExpirationTime();
@@ -1851,13 +1851,13 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
           return Response.status(Status.FORBIDDEN)
               .entity(ue.getCause().getCause().getMessage()).build();
         }
-        LOG.info("Renew delegation token request failed", ue);
+        LOG.error("Temp", new RuntimeException());
         throw ue;
       }
-      LOG.info("Renew delegation token request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     } catch (Exception e) {
-      LOG.info("Renew delegation token request failed", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
 
@@ -1970,7 +1970,7 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
       if (ue.getCause() instanceof YarnException) {
         throw new BadRequestException(ue.getCause().getMessage());
       }
-      LOG.info("Submit reservation request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     }
 
@@ -2070,7 +2070,7 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
       if (ue.getCause() instanceof YarnException) {
         throw new BadRequestException(ue.getCause().getMessage());
       }
-      LOG.info("Update reservation request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     }
 
@@ -2169,7 +2169,7 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
       if (ue.getCause() instanceof YarnException) {
         throw new BadRequestException(ue.getCause().getMessage());
       }
-      LOG.info("Update reservation request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     }
 
@@ -2226,7 +2226,7 @@ public class RMWebServices extends WebServices implements RMWebServiceProtocol {
       if (ue.getCause() instanceof YarnException) {
         throw new BadRequestException(ue.getCause().getMessage());
       }
-      LOG.info("List reservation request failed", ue);
+      LOG.error("Temp", new RuntimeException());
       throw ue;
     }
 

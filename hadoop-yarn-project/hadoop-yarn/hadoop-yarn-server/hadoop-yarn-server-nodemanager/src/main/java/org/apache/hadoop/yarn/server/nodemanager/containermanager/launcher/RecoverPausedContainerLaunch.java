@@ -82,11 +82,11 @@ public class RecoverPausedContainerLaunch extends ContainerLaunch {
                 .setContainerId(containerId)
                 .build());
       } else {
-        LOG.warn("Unable to locate pid file for container " + containerIdStr);
+        LOG.error("Temp", new RuntimeException());
       }
 
     } catch (InterruptedException | InterruptedIOException e) {
-      LOG.warn("Interrupted while waiting for exit code from " + containerId);
+      LOG.error("Temp", new RuntimeException());
       notInterrupted = false;
     } catch (IOException e) {
       LOG.error("Unable to kill the paused container " + containerIdStr, e);
@@ -113,7 +113,7 @@ public class RecoverPausedContainerLaunch extends ContainerLaunch {
       return retCode;
     }
 
-    LOG.info("Recovered container " + containerId + " succeeded");
+    LOG.error("Temp", new RuntimeException());
     dispatcher.getEventHandler().handle(
         new ContainerEvent(containerId,
             ContainerEventType.CONTAINER_EXITED_WITH_SUCCESS));

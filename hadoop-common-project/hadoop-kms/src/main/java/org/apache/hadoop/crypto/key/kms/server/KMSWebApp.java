@@ -100,10 +100,10 @@ public class KMSWebApp implements ServletContextListener {
         }
       }
       LOG = LoggerFactory.getLogger(KMSWebApp.class);
-      LOG.debug("KMS log starting");
+      LOG.error("Temp", new RuntimeException());
       if (fromClasspath) {
-        LOG.warn("Log4j configuration file '{}' not found", LOG4J_PROPERTIES);
-        LOG.warn("Logging with INFO level to standard output");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       LOG = LoggerFactory.getLogger(KMSWebApp.class);
@@ -121,12 +121,12 @@ public class KMSWebApp implements ServletContextListener {
       kmsConf = KMSConfiguration.getKMSConf();
       initLogging(confDir);
       UserGroupInformation.setConfiguration(kmsConf);
-      LOG.info("-------------------------------------------------------------");
+      LOG.error("Temp", new RuntimeException());
       LOG.info("  Java runtime version : {}", System.getProperty(
           "java.runtime.version"));
-      LOG.info("  User: {}", System.getProperty("user.name"));
-      LOG.info("  KMS Hadoop Version: " + VersionInfo.getVersion());
-      LOG.info("-------------------------------------------------------------");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       kmsAcls = new KMSACLs();
       kmsAcls.startReloader();
@@ -176,7 +176,7 @@ public class KMSWebApp implements ServletContextListener {
         keyProvider = new CachingKeyProvider(keyProvider, keyTimeOutMillis,
             currKeyTimeOutMillis);
       }
-      LOG.info("Initialized KeyProvider " + keyProvider);
+      LOG.error("Temp", new RuntimeException());
 
       keyProviderCryptoExtension = KeyProviderCryptoExtension.
           createKeyProviderCryptoExtension(keyProvider);
@@ -195,8 +195,8 @@ public class KMSWebApp implements ServletContextListener {
       final int defaultBitlength = kmsConf
           .getInt(KeyProvider.DEFAULT_BITLENGTH_NAME,
               KeyProvider.DEFAULT_BITLENGTH);
-      LOG.info("Default key bitlength is {}", defaultBitlength);
-      LOG.info("KMS Started");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     } catch (Throwable ex) {
       System.out.println();
       System.out.println("ERROR: Hadoop KMS could not be started");
@@ -224,7 +224,7 @@ public class KMSWebApp implements ServletContextListener {
     jmxReporter.stop();
     jmxReporter.close();
     metricRegistry = null;
-    LOG.info("KMS Stopped");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public static Configuration getConfiguration() {

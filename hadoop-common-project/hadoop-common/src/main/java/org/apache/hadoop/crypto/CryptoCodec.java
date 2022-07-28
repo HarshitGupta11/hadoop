@@ -126,9 +126,9 @@ public abstract class CryptoCodec implements Configurable, Closeable {
         Class<?> cls = conf.getClassByName(c);
         result.add(cls.asSubclass(CryptoCodec.class));
       } catch (ClassCastException e) {
-        PerformanceAdvisory.LOG.debug("Class {} is not a CryptoCodec.", c);
+        PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
       } catch (ClassNotFoundException e) {
-        PerformanceAdvisory.LOG.debug("Crypto codec {} not found.", c);
+        PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
       }
     }
     

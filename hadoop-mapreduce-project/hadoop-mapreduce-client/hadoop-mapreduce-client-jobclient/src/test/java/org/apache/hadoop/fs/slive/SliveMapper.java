@@ -99,7 +99,7 @@ public class SliveMapper extends MapReduceBase implements
    */
   private void logAndSetStatus(Reporter r, String msg) {
     r.setStatus(msg);
-    LOG.info(msg);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

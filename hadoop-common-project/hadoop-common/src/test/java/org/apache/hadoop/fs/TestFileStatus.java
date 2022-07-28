@@ -67,7 +67,7 @@ public class TestFileStatus {
         new FileStatus(1,false,5,3,4,5,null,"","",new Path("/a/b"))
       };
 
-    LOG.info("Writing FileStatuses to a ByteArrayOutputStream");
+    LOG.error("Temp", new RuntimeException());
     // Writing input list to ByteArrayOutputStream
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutput out = new DataOutputStream(baos);
@@ -75,12 +75,12 @@ public class TestFileStatus {
       fs.write(out);
     }
 
-    LOG.info("Creating ByteArrayInputStream object");
+    LOG.error("Temp", new RuntimeException());
     DataInput in =
       new DataInputStream(new ByteArrayInputStream(baos.toByteArray()));
 
 
-    LOG.info("Testing if read objects are equal to written ones");
+    LOG.error("Temp", new RuntimeException());
     FileStatus dest = new FileStatus();
     int iterator = 0;
     for (FileStatus fs : tests) {

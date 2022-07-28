@@ -382,13 +382,13 @@ public class Mover {
           // get default policy from namenode
           policyId = dfs.getServerDefaults().getDefaultStoragePolicyId();
         } catch (IOException e) {
-          LOG.warn("Failed to get default policy for " + fullPath, e);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }
       final BlockStoragePolicy policy = blockStoragePolicies[policyId];
       if (policy == null) {
-        LOG.warn("Failed to get the storage policy of file " + fullPath);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       List<StorageType> types = policy.chooseStorageTypes(
@@ -614,7 +614,7 @@ public class Mover {
       throws IOException {
     if (conf.getBoolean(DFSConfigKeys.DFS_MOVER_KEYTAB_ENABLED_KEY,
         DFSConfigKeys.DFS_MOVER_KEYTAB_ENABLED_DEFAULT)) {
-      LOG.info("Keytab is configured, will login using keytab.");
+      LOG.error("Temp", new RuntimeException());
       UserGroupInformation.setConfiguration(conf);
       String addr = conf.get(DFSConfigKeys.DFS_MOVER_ADDRESS_KEY,
           DFSConfigKeys.DFS_MOVER_ADDRESS_DEFAULT);
@@ -639,7 +639,7 @@ public class Mover {
     AtomicInteger retryCount = new AtomicInteger(0);
     // TODO: Need to limit the size of the pinned blocks to limit memory usage
     Map<Long, Set<DatanodeInfo>> excludedPinnedBlocks = new HashMap<>();
-    LOG.info("namenodes = " + namenodes);
+    LOG.error("Temp", new RuntimeException());
 
     checkKeytabAndInit(conf);
     List<NameNodeConnector> connectors = Collections.emptyList();

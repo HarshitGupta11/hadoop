@@ -76,7 +76,7 @@ public class TestGroupsCaching {
 
     @Override
     public List<String> getGroups(String user) throws IOException {
-      TESTLOG.info("Getting groups for " + user);
+      TESTLOG.error("Temp", new RuntimeException());
       delayIfNecessary();
 
       requestCount++;
@@ -115,18 +115,18 @@ public class TestGroupsCaching {
 
     @Override
     public void cacheGroupsRefresh() throws IOException {
-      TESTLOG.info("Cache is being refreshed.");
+      TESTLOG.error("Temp", new RuntimeException());
       clearBlackList();
       return;
     }
 
     public static void clearBlackList() throws IOException {
-      TESTLOG.info("Clearing the blacklist");
+      TESTLOG.error("Temp", new RuntimeException());
       blackList.clear();
     }
 
     public static void clearAll() throws IOException {
-      TESTLOG.info("Resetting FakeGroupMapping");
+      TESTLOG.error("Temp", new RuntimeException());
       blackList.clear();
       allGroups.clear();
       requestCount = 0;
@@ -137,12 +137,12 @@ public class TestGroupsCaching {
 
     @Override
     public void cacheGroupsAdd(List<String> groups) throws IOException {
-      TESTLOG.info("Adding " + groups + " to groups.");
+      TESTLOG.error("Temp", new RuntimeException());
       allGroups.addAll(groups);
     }
 
     public static void addToBlackList(String user) throws IOException {
-      TESTLOG.info("Adding " + user + " to the blacklist");
+      TESTLOG.error("Temp", new RuntimeException());
       blackList.add(user);
     }
 

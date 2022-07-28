@@ -157,7 +157,7 @@ public class LocalMetadataStore implements MetadataStore {
       }
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("get({}) -> {}", path, m == null ? "null" : m.prettyPrint());
+        LOG.error("Temp", new RuntimeException());
       }
       return m;
     }
@@ -201,13 +201,13 @@ public class LocalMetadataStore implements MetadataStore {
 
       // 1. Delete pathsToDelete
       for (Path meta : pathsToDelete) {
-        LOG.debug("move: deleting metadata {}", meta);
+        LOG.error("Temp", new RuntimeException());
         delete(meta);
       }
 
       // 2. Create new destination path metadata
       for (PathMetadata meta : pathsToCreate) {
-        LOG.debug("move: adding metadata {}", meta);
+        LOG.error("Temp", new RuntimeException());
         put(meta);
       }
 
@@ -235,7 +235,7 @@ public class LocalMetadataStore implements MetadataStore {
 
       /* Add entry for this file. */
       if (LOG.isDebugEnabled()) {
-        LOG.debug("put {} -> {}", path, meta.prettyPrint());
+        LOG.error("Temp", new RuntimeException());
       }
       fileHash.put(path, meta);
 
@@ -278,7 +278,7 @@ public class LocalMetadataStore implements MetadataStore {
   @Override
   public synchronized void put(DirListingMetadata meta) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("put dirMeta {}", meta.prettyPrint());
+      LOG.error("Temp", new RuntimeException());
     }
     dirHash.put(standardize(meta.getPath()), meta);
   }
@@ -389,7 +389,7 @@ public class LocalMetadataStore implements MetadataStore {
   private void deleteHashEntries(Path path, boolean tombstone) {
 
     // Remove target file/dir
-    LOG.debug("delete file entry for {}", path);
+    LOG.error("Temp", new RuntimeException());
     if (tombstone) {
       fileHash.put(path, PathMetadata.tombstone(path));
     } else {
@@ -399,7 +399,7 @@ public class LocalMetadataStore implements MetadataStore {
     // Update this and parent dir listing, if any
 
     /* If this path is a dir, remove its listing */
-    LOG.debug("removing listing of {}", path);
+    LOG.error("Temp", new RuntimeException());
 
     dirHash.remove(path);
 
@@ -408,7 +408,7 @@ public class LocalMetadataStore implements MetadataStore {
     if (parent != null) {
       DirListingMetadata dir = dirHash.get(parent);
       if (dir != null) {
-        LOG.debug("removing parent's entry for {} ", path);
+        LOG.error("Temp", new RuntimeException());
         if (tombstone) {
           dir.markDeleted(path);
         } else {

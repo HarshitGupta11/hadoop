@@ -98,7 +98,7 @@ public class NMCollectorService extends CompositeService implements
         server.getListenerAddress());
     // start remaining services
     super.serviceStart();
-    LOG.info("NMCollectorService started at " + collectorServerAddress);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

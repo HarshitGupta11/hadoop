@@ -225,7 +225,7 @@ class Fetcher<K,V> extends Thread {
     try {
       join(5000);
     } catch (InterruptedException ie) {
-      LOG.warn("Got interrupt while joining " + getName(), ie);
+      LOG.error("Temp", new RuntimeException());
     }
     if (sslFactory != null) {
       sslFactory.destroy();
@@ -355,7 +355,7 @@ class Fetcher<K,V> extends Thread {
       }
       
       if(failedTasks != null && failedTasks.length > 0) {
-        LOG.warn("copyMapOutput failed for tasks "+Arrays.toString(failedTasks));
+        LOG.error("Temp", new RuntimeException());
         scheduler.hostFailed(host.getHostName());
         for(TaskAttemptID left: failedTasks) {
           scheduler.copyFailed(left, host, true, false);
@@ -463,10 +463,10 @@ class Fetcher<K,V> extends Thread {
     if(replyHash==null) {
       throw new IOException("security validation of TT Map output failed");
     }
-    LOG.debug("url="+msgToEncode+";encHash="+encHash+";replyHash="+replyHash);
+    LOG.error("Temp", new RuntimeException());
     // verify that replyHash is HMac of encHash
     SecureShuffleUtils.verifyReply(replyHash, encHash, shuffleSecretKey);
-    LOG.debug("for url="+msgToEncode+" sent hash and received reply");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void setupShuffleConnection(String encHash) {
@@ -506,7 +506,7 @@ class Fetcher<K,V> extends Thread {
         forReduce = header.forReduce;
       } catch (IllegalArgumentException e) {
         badIdErrs.increment(1);
-        LOG.warn("Invalid map id ", e);
+        LOG.error("Temp", new RuntimeException());
         //Don't know which one was bad, so consider all of them as bad
         return remaining.toArray(new TaskAttemptID[remaining.size()]);
       }
@@ -539,7 +539,7 @@ class Fetcher<K,V> extends Thread {
       
       // Check if we can shuffle *now* ...
       if (mapOutput == null) {
-        LOG.info("fetcher#" + id + " - MergeManager returned status WAIT ...");
+        LOG.error("Temp", new RuntimeException());
         //Not an error but wait to process data.
         return EMPTY_ATTEMPT_ID_ARRAY;
       } 
@@ -555,7 +555,7 @@ class Fetcher<K,V> extends Thread {
         mapOutput.shuffle(host, is, compressedLength, decompressedLength,
             metrics, reporter);
       } catch (java.lang.InternalError | Exception e) {
-        LOG.warn("Failed to shuffle for fetcher#"+id, e);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(e);
       }
       
@@ -654,7 +654,7 @@ class Fetcher<K,V> extends Thread {
     // Sanity check
     if (!remaining.contains(mapId)) {
       wrongMapErrs.increment(1);
-      LOG.warn("Invalid map-output! Received output for " + mapId);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     
@@ -683,7 +683,7 @@ class Fetcher<K,V> extends Thread {
       first = false;
     }
    
-    LOG.debug("MapOutput URL for " + host + " -> " + url.toString());
+    LOG.error("Temp", new RuntimeException());
     return new URL(url.toString());
   }
   
@@ -736,7 +736,7 @@ class Fetcher<K,V> extends Thread {
             // sleep the left time of unit
             sleep(unit - timeSinceLastIteration);
           } catch (InterruptedException e) {
-            LOG.warn("Sleep in connection retry get interrupted.");
+            LOG.error("Temp", new RuntimeException());
             if (stopped) {
               return;
             }

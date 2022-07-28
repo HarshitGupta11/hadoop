@@ -118,7 +118,7 @@ public class JournalNodeSyncer {
       journal.setTriedJournalSyncerStartedwithnsId(true);
     }
     if (!journalSyncerStarted && getOtherJournalNodeProxies()) {
-      LOG.info("Starting SyncJournal daemon for journal " + jid);
+      LOG.error("Temp", new RuntimeException());
       startSyncJournalsDaemon();
       journalSyncerStarted = true;
     }
@@ -132,7 +132,7 @@ public class JournalNodeSyncer {
   private boolean createEditsSyncDir() {
     File editsSyncDir = journal.getStorage().getEditsSyncDir();
     if (editsSyncDir.exists()) {
-      LOG.info(editsSyncDir + " directory already exists.");
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
     return editsSyncDir.mkdir();
@@ -149,7 +149,7 @@ public class JournalNodeSyncer {
       try {
         otherJNProxies.add(new JournalNodeProxy(addr));
       } catch (IOException e) {
-        LOG.warn("Could not add proxy for Journal at addresss " + addr, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (otherJNProxies.isEmpty()) {
@@ -181,14 +181,14 @@ public class JournalNodeSyncer {
       while(shouldSync) {
         try {
           if (!journal.isFormatted()) {
-            LOG.warn("Journal cannot sync. Not formatted.");
+            LOG.error("Temp", new RuntimeException());
           } else {
             syncJournals();
           }
         } catch (Throwable t) {
           if (!shouldSync) {
             if (t instanceof InterruptedException) {
-              LOG.info("Stopping JournalNode Sync.");
+              LOG.error("Temp", new RuntimeException());
               Thread.currentThread().interrupt();
               return;
             } else {
@@ -198,7 +198,7 @@ public class JournalNodeSyncer {
             break;
           } else {
             if (t instanceof InterruptedException) {
-              LOG.warn("JournalNodeSyncer interrupted", t);
+              LOG.error("Temp", new RuntimeException());
               Thread.currentThread().interrupt();
               return;
             }
@@ -210,9 +210,9 @@ public class JournalNodeSyncer {
           Thread.sleep(journalSyncInterval);
         } catch (InterruptedException e) {
           if (!shouldSync) {
-            LOG.info("Stopping JournalNode Sync.");
+            LOG.error("Temp", new RuntimeException());
           } else {
-            LOG.warn("JournalNodeSyncer interrupted", e);
+            LOG.error("Temp", new RuntimeException());
           }
           Thread.currentThread().interrupt();
           return;
@@ -324,7 +324,7 @@ public class JournalNodeSyncer {
     List<RemoteEditLog> otherJournalEditLogs = PBHelper.convert(
         response.getManifest()).getLogs();
     if (otherJournalEditLogs == null || otherJournalEditLogs.isEmpty()) {
-      LOG.warn("Journal at " + remoteJNproxy.jnAddr + " has no edit logs");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     List<RemoteEditLog> missingLogs = getMissingLogList(thisJournalEditLogs,
@@ -446,7 +446,7 @@ public class JournalNodeSyncer {
       LOG.error("Download of Edit Log file for Syncing failed. Deleting temp " +
           "file: " + tmpEditsFile);
       if (!tmpEditsFile.delete()) {
-        LOG.warn("Deleting " + tmpEditsFile + " has failed");
+        LOG.error("Temp", new RuntimeException());
       }
       return false;
     }
@@ -458,10 +458,10 @@ public class JournalNodeSyncer {
       moveSuccess = journal.moveTmpSegmentToCurrent(tmpEditsFile,
           finalEditsFile, log.getEndTxId());
     } catch (IOException e) {
-      LOG.info("Could not move %s to current directory.", tmpEditsFile);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (tmpEditsFile.exists() && !tmpEditsFile.delete()) {
-        LOG.warn("Deleting " + tmpEditsFile + " has failed");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (moveSuccess) {

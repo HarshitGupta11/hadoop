@@ -71,7 +71,7 @@ class QuorumOutputStream extends EditLogOutputStream {
 
   @Override
   public void abort() throws IOException {
-    QuorumJournalManager.LOG.warn("Aborting " + this);
+    QuorumJournalManager.LOG.error("Temp", new RuntimeException());
     buf = null;
     close();
   }

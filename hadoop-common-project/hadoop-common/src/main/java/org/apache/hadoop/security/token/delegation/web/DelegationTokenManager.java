@@ -191,7 +191,7 @@ public class DelegationTokenManager {
   public long renewToken(
       Token<? extends AbstractDelegationTokenIdentifier> token, String renewer)
           throws IOException {
-    LOG.debug("Renewing token:{} with renewer:{}.", token, renewer);
+    LOG.error("Temp", new RuntimeException());
     return secretManager.renewToken(token, renewer);
   }
 
@@ -199,7 +199,7 @@ public class DelegationTokenManager {
   public void cancelToken(
       Token<? extends AbstractDelegationTokenIdentifier> token,
       String canceler) throws IOException {
-    LOG.debug("Cancelling token:{} with canceler:{}.", token, canceler);
+    LOG.error("Temp", new RuntimeException());
     canceler = (canceler != null) ? canceler :
                verifyToken(token).getShortUserName();
     secretManager.cancelToken(token, canceler);

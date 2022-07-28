@@ -291,7 +291,7 @@ public class ContainerLocalizer {
     try {
       FileSystem.closeAllForUGI(ugi);
     } catch (IOException e) {
-      LOG.warn("Failed to close filesystems: ", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -461,7 +461,7 @@ public class ContainerLocalizer {
           UserGroupInformation.getCurrentUser().getShortUserName();
       if (!user.equals(uid)) {
         // TODO: fail localization
-        LOG.warn("Localization running as " + uid + " not " + user);
+        LOG.error("Temp", new RuntimeException());
       }
 
       ContainerLocalizer localizer =

@@ -151,7 +151,7 @@ public class TestClientRMTokens {
       org.apache.hadoop.yarn.api.records.Token token = getDelegationToken(loggedInUser, clientRMService,
           loggedInUser.getShortUserName());
       long tokenFetchTime = System.currentTimeMillis();
-      LOG.info("Got delegation token at: " + tokenFetchTime);
+      LOG.error("Temp", new RuntimeException());
  
       // Now try talking to RMService using the delegation token
       clientRMWithDT = getClientRMProtocolWithDT(token,
@@ -197,7 +197,7 @@ public class TestClientRMTokens {
         Thread.sleep(500l);
       }
       Thread.sleep(50l);
-      LOG.info("At time: " + System.currentTimeMillis() + ", token should be invalid");
+      LOG.error("Temp", new RuntimeException());
       // Token should have expired.      
       try {
         clientRMWithDT.getNewApplication(request);
@@ -216,7 +216,7 @@ public class TestClientRMTokens {
       token = getDelegationToken(loggedInUser, clientRMService,
           loggedInUser.getShortUserName());
       tokenFetchTime = System.currentTimeMillis();
-      LOG.info("Got delegation token at: " + tokenFetchTime);
+      LOG.error("Temp", new RuntimeException());
  
       // Now try talking to RMService using the delegation token
       clientRMWithDT = getClientRMProtocolWithDT(token,
@@ -240,7 +240,7 @@ public class TestClientRMTokens {
       // Creating a new connection.
       clientRMWithDT = getClientRMProtocolWithDT(token,
           clientRMService.getBindAddress(), "loginuser2", conf);
-      LOG.info("Cancelled delegation token at: " + System.currentTimeMillis());
+      LOG.error("Temp", new RuntimeException());
       // Verify cancellation worked.
       try {
         clientRMWithDT.getNewApplication(request);

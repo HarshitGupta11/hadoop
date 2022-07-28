@@ -569,7 +569,7 @@ public class HadoopArchives implements Tool {
     try {
       jobfs.delete(jobDirectory, true);
     } catch(IOException ie) {
-      LOG.info("Unable to clean tmp directory " + jobDirectory);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -926,7 +926,7 @@ public class HadoopArchives implements Tool {
     try{
       ret = ToolRunner.run(harchives, args);
     } catch(Exception e) {
-      LOG.debug("Exception in archives  ", e);
+      LOG.error("Temp", new RuntimeException());
       System.err.println(e.getClass().getSimpleName() + " in archives");
       final String s = e.getLocalizedMessage();
       if (s != null) {

@@ -119,7 +119,7 @@ public class ApplicationMasterLauncher extends AbstractService implements
           toLaunch = masterEvents.take();
           launcherPool.execute(toLaunch);
         } catch (InterruptedException e) {
-          LOG.warn(this.getClass().getName() + " interrupted. Returning.");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }

@@ -56,9 +56,9 @@ public class ZlibFactory {
         ZlibDecompressor.isNativeZlibLoaded();
       
       if (nativeZlibLoaded) {
-        LOG.info("Successfully loaded & initialized native-zlib library");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.warn("Failed to load/initialize native-zlib library");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

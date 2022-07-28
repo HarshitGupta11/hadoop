@@ -393,7 +393,7 @@ public class S3AInstrumentation implements Closeable, MetricsSource {
   public MutableGaugeLong lookupGauge(String name) {
     MutableMetric metric = lookupMetric(name);
     if (metric == null) {
-      LOG.debug("No gauge {}", name);
+      LOG.error("Temp", new RuntimeException());
     }
     return (MutableGaugeLong) metric;
   }
@@ -407,7 +407,7 @@ public class S3AInstrumentation implements Closeable, MetricsSource {
   public MutableQuantiles lookupQuantiles(String name) {
     MutableMetric metric = lookupMetric(name);
     if (metric == null) {
-      LOG.debug("No quantiles {}", name);
+      LOG.error("Temp", new RuntimeException());
     }
     return (MutableQuantiles) metric;
   }
@@ -527,7 +527,7 @@ public class S3AInstrumentation implements Closeable, MetricsSource {
     if (gauge != null) {
       gauge.incr(count);
     } else {
-      LOG.debug("No Gauge: "+ op);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -543,7 +543,7 @@ public class S3AInstrumentation implements Closeable, MetricsSource {
     if (gauge != null) {
       gauge.decr(count);
     } else {
-      LOG.debug("No Gauge: {}", op);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

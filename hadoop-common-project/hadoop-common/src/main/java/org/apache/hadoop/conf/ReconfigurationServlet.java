@@ -61,7 +61,7 @@ public class ReconfigurationServlet extends HttpServlet {
   }
 
   private Reconfigurable getReconfigurable(HttpServletRequest req) {
-    LOG.info("servlet path: " + req.getServletPath());
+    LOG.error("Temp", new RuntimeException());
     LOG.info("getting attribute: " + CONF_SERVLET_RECONFIGURABLE_PREFIX +
              req.getServletPath());
     return (Reconfigurable)
@@ -181,7 +181,7 @@ public class ReconfigurationServlet extends HttpServlet {
               }
               reconf.reconfigureProperty(param, value);
             } else {
-              LOG.info("property " + param + " unchanged");
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             // parameter value != newConf value
@@ -199,7 +199,7 @@ public class ReconfigurationServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException {
-    LOG.info("GET");
+    LOG.error("Temp", new RuntimeException());
     resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
     
@@ -214,7 +214,7 @@ public class ReconfigurationServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException {
-    LOG.info("POST");
+    LOG.error("Temp", new RuntimeException());
     resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
 

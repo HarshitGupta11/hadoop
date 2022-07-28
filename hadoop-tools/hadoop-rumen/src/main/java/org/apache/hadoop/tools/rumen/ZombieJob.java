@@ -165,12 +165,12 @@ public class ZombieJob implements JobStory {
           for (LoggedLocation location : locations) {
             List<NodeName> layers = location.getLayers();
             if (layers.size() == 0) {
-              LOG.warn("Bad location layer format for task "+mapTask.getTaskID());
+              LOG.error("Temp", new RuntimeException());
               continue;
             }
             String host = layers.get(layers.size() - 1).getValue();
             if (host == null) {
-              LOG.warn("Bad location layer format for task "+mapTask.getTaskID() + ": " + layers);
+              LOG.error("Temp", new RuntimeException());
               continue;
             }
             hostList.add(host);
@@ -180,7 +180,7 @@ public class ZombieJob implements JobStory {
         totalHosts += hosts.length;
         long mapInputBytes = getTaskInfo(mapTask).getInputBytes();
         if (mapInputBytes < 0) {
-          LOG.warn("InputBytes for task "+mapTask.getTaskID()+" is not defined.");
+          LOG.error("Temp", new RuntimeException());
           mapInputBytes = 0;
         }
        
@@ -243,7 +243,7 @@ public class ZombieJob implements JobStory {
 
   private int sanitizeValue(int oldVal, int defaultVal, String name, JobID id) {
     if (oldVal == -1) {
-      LOG.warn(name +" not defined for "+id);
+      LOG.error("Temp", new RuntimeException());
       return defaultVal;
     }
     return oldVal;
@@ -327,11 +327,11 @@ public class ZombieJob implements JobStory {
       return null;
     }
     if (task.getTaskType() == null) {
-      LOG.warn("Task " + task.getTaskID() + " has nulll TaskType");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     if (task.getTaskStatus() == null) {
-      LOG.warn("Task " + task.getTaskID() + " has nulll TaskStatus");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return task;
@@ -342,7 +342,7 @@ public class ZombieJob implements JobStory {
       return null;
     }
     if (attempt.getResult() == null) {
-      LOG.warn("TaskAttempt " + attempt.getResult() + " has nulll Result");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 
@@ -517,7 +517,7 @@ public class ZombieJob implements JobStory {
 
   private long sanitizeTaskRuntime(long time, ID id) {
     if (time < 0) {
-      LOG.warn("Negative running time for task "+id+": "+time);
+      LOG.error("Temp", new RuntimeException());
       return 100L; // set default to 100ms.
     }
     return time;

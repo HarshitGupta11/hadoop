@@ -87,7 +87,7 @@ public class LightWeightGSet<K, E extends K> implements GSet<K, E> {
   public LightWeightGSet(final int recommended_length) {
     final int actual = actualArrayLength(recommended_length);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("recommended=" + recommended_length + ", actual=" + actual);
+      LOG.error("Temp", new RuntimeException());
     }
     entries = new LinkedElement[actual];
     hash_mask = entries.length - 1;
@@ -392,14 +392,14 @@ public class LightWeightGSet<K, E extends K> implements GSet<K, E> {
     final int exponent = e2 < 0? 0: e2 > 30? 30: e2;
     final int c = 1 << exponent;
 
-    LOG.info("Computing capacity for map " + mapName);
-    LOG.info("VM type       = " + vmBit + "-bit");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     LOG.info(percentage + "% max memory "
         + StringUtils.TraditionalBinaryPrefix.long2String(maxMemory, "B", 1)
         + " = "
         + StringUtils.TraditionalBinaryPrefix.long2String((long) percentMemory,
             "B", 1));
-    LOG.info("capacity      = 2^" + exponent + " = " + c + " entries");
+    LOG.error("Temp", new RuntimeException());
     return c;
   }
   

@@ -130,7 +130,7 @@ public class TestErasureCodingMultipleRacks {
     byte[] contents = new byte[filesize];
 
     final Path path = new Path("/testfile");
-    LOG.info("Writing file " + path);
+    LOG.error("Temp", new RuntimeException());
     DFSTestUtil.writeFile(dfs, path, contents);
     BlockLocation[] blocks = dfs.getFileBlockLocations(path, 0, Long.MAX_VALUE);
     assertEquals(ecPolicy.getNumDataUnits() + ecPolicy.getNumParityUnits(),
@@ -148,7 +148,7 @@ public class TestErasureCodingMultipleRacks {
     byte[] contents = new byte[filesize];
 
     final Path path = new Path("/testfile");
-    LOG.info("Writing file " + path);
+    LOG.error("Temp", new RuntimeException());
     DFSTestUtil.writeFile(dfs, path, contents);
     BlockLocation[] blocks = dfs.getFileBlockLocations(path, 0, Long.MAX_VALUE);
     assertEquals(ecPolicy.getNumDataUnits() + ecPolicy.getNumParityUnits(),
@@ -173,7 +173,7 @@ public class TestErasureCodingMultipleRacks {
 
     for (int i = 0; i < 10; ++i) {
       final Path path = new Path("/testfile" + i);
-      LOG.info("Writing file " + path);
+      LOG.error("Temp", new RuntimeException());
       DFSTestUtil.writeFile(dfs, path, contents);
       ExtendedBlock extendedBlock = DFSTestUtil.getFirstBlock(dfs, path);
       // Wait for replication to finish before testing
@@ -198,7 +198,7 @@ public class TestErasureCodingMultipleRacks {
         racksCount.put(getRackName(t), count + 1);
       }
     }
-    LOG.info("Rack count map is: {}", racksCount);
+    LOG.error("Temp", new RuntimeException());
 
     for (Integer count : racksCount.values()) {
       assertTrue(count <= ecPolicy.getNumParityUnits());

@@ -92,7 +92,7 @@ public class FileAppendTest4 {
           // create the initial file of oldFileLen
           final Path p = 
             new Path("foo"+ oldFileLen +"_"+ flushedBytes1 +"_"+ flushedBytes2);
-          LOG.info("Creating file " + p);
+          LOG.error("Temp", new RuntimeException());
           FSDataOutputStream out = fs.create(p, false, 
               conf.getInt(CommonConfigurationKeys.IO_FILE_BUFFER_SIZE_KEY, 4096), 
               REPLICATION, BLOCK_SIZE);

@@ -109,14 +109,14 @@ public class TestDistributedShellWithNodeLabels {
         "x"
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     final Client client =
         new Client(new Configuration(distShellTest.yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = client.run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     
     t.interrupt();
     

@@ -267,7 +267,7 @@ public class TestMapReduceChildJVM {
             ContainerLaunchContext launchContext =
                 launchEvent.getContainerLaunchContext();
             String cmdString = launchContext.getCommands().toString();
-            LOG.info("launchContext " + cmdString);
+            LOG.error("Temp", new RuntimeException());
             launchCmdList.add(cmdString);
             cmdEnvironment = launchContext.getEnvironment();
           }

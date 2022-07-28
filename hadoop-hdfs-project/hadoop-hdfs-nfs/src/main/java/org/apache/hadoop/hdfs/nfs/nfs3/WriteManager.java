@@ -89,7 +89,7 @@ public class WriteManager {
     this.aixCompatMode = aixCompatMode;
     streamTimeout = config.getLong(NfsConfigKeys.DFS_NFS_STREAM_TIMEOUT_KEY,
         NfsConfigKeys.DFS_NFS_STREAM_TIMEOUT_DEFAULT);
-    LOG.info("Stream timeout is " + streamTimeout + "ms.");
+    LOG.error("Temp", new RuntimeException());
     if (streamTimeout < NfsConfigKeys.DFS_NFS_STREAM_TIMEOUT_MIN_DEFAULT) {
       LOG.info("Reset stream timeout to minimum value "
           + NfsConfigKeys.DFS_NFS_STREAM_TIMEOUT_MIN_DEFAULT + "ms.");
@@ -97,7 +97,7 @@ public class WriteManager {
     }
     maxStreams = config.getInt(NfsConfigKeys.DFS_NFS_MAX_OPEN_FILES_KEY,
         NfsConfigKeys.DFS_NFS_MAX_OPEN_FILES_DEFAULT);
-    LOG.info("Maximum open streams is "+ maxStreams);
+    LOG.error("Temp", new RuntimeException());
     this.fileContextCache = new OpenFileCtxCache(config, streamTimeout);
   }
 
@@ -132,7 +132,7 @@ public class WriteManager {
 
     FileHandle handle = request.getHandle();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("handleWrite " + request);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Check if there is a stream to write
@@ -185,7 +185,7 @@ public class WriteManager {
           + fileHandle.getFileId(), dfsClient, iug, aixCompatMode, config);
 
       if (!addOpenFileStream(fileHandle, openFileCtx)) {
-        LOG.info("Can't add new stream. Close it. Tell client to retry.");
+        LOG.error("Temp", new RuntimeException());
         try {
           fos.close();
         } catch (IOException e) {
@@ -312,7 +312,7 @@ public class WriteManager {
           getFileAttr(dfsClient, new FileHandle(preOpAttr.getFileId(),
               namenodeId), iug);
     } catch (IOException e1) {
-      LOG.info("Can't get postOpAttr for fileId: " + preOpAttr.getFileId(), e1);
+      LOG.error("Temp", new RuntimeException());
     }
     WccData fileWcc = new WccData(Nfs3Utils.getWccAttr(preOpAttr), postOpAttr);
     COMMIT3Response response = new COMMIT3Response(status, fileWcc,

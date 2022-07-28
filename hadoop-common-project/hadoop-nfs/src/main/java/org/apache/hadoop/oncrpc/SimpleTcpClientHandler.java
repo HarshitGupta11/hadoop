@@ -42,7 +42,7 @@ public class SimpleTcpClientHandler extends SimpleChannelHandler {
   public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
     // Send the request
     if (LOG.isDebugEnabled()) {
-      LOG.debug("sending PRC request");
+      LOG.error("Temp", new RuntimeException());
     }
     ChannelBuffer outBuf = XDR.writeMessageTcp(request, true);
     e.getChannel().write(outBuf);
@@ -59,7 +59,7 @@ public class SimpleTcpClientHandler extends SimpleChannelHandler {
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-    LOG.warn("Unexpected exception from downstream: ", e.getCause());
+    LOG.error("Temp", new RuntimeException());
     e.getChannel().close();
   }
 }

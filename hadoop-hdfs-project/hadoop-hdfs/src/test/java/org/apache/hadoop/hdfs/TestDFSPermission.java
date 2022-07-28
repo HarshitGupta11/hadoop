@@ -88,8 +88,8 @@ public class TestDFSPermission {
       // Initiate the random number generator and logging the seed
       long seed = Time.now();
       r = new Random(seed);
-      LOG.info("Random number generator uses seed " + seed);
-      LOG.info("NUM_TEST_PERMISSIONS=" + NUM_TEST_PERMISSIONS);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       // explicitly turn on permission checking
       conf.setBoolean(DFSConfigKeys.DFS_PERMISSIONS_ENABLED_KEY, true);
@@ -792,10 +792,10 @@ public class TestDFSPermission {
           + Integer.toOctalString(ancestorPermission));
       LOG.info("required parent permission:"
           + Integer.toOctalString(requiredParentPermission));
-      LOG.info("parent permission: " + Integer.toOctalString(parentPermission));
+      LOG.error("Temp", new RuntimeException());
       LOG.info("required permission:"
           + Integer.toOctalString(requiredPermission));
-      LOG.info("permission: " + Integer.toOctalString(permission));
+      LOG.error("Temp", new RuntimeException());
     }
 
     /* Return true if an AccessControlException is expected */

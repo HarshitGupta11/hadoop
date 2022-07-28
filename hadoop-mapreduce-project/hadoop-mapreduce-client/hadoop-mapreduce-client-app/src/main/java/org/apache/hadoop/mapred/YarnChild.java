@@ -72,7 +72,7 @@ class YarnChild {
 
   public static void main(String[] args) throws Throwable {
     Thread.setDefaultUncaughtExceptionHandler(new YarnUncaughtExceptionHandler());
-    LOG.debug("Child starting");
+    LOG.error("Temp", new RuntimeException());
 
     final JobConf job = new JobConf(MRJobConfig.JOB_CONF_FILE);
     // Initing with our JobConf allows us to avoid loading confs twice
@@ -100,7 +100,7 @@ class YarnChild {
     // Security framework already loaded the tokens into current ugi
     Credentials credentials =
         UserGroupInformation.getCurrentUser().getCredentials();
-    LOG.info("Executing with tokens: {}", credentials.getAllTokens());
+    LOG.error("Temp", new RuntimeException());
 
     // Create TaskUmbilicalProtocol as actual task owner.
     UserGroupInformation taskOwner =
@@ -119,7 +119,7 @@ class YarnChild {
 
     // report non-pid to application master
     JvmContext context = new JvmContext(jvmId, "-1000");
-    LOG.debug("PID: " + System.getenv().get("JVM_PID"));
+    LOG.error("Temp", new RuntimeException());
     Task task = null;
     UserGroupInformation childUGI = null;
     ScheduledExecutorService logSyncer = null;
@@ -148,7 +148,7 @@ class YarnChild {
       // log the system properties
       String systemPropsToLog = MRApps.getSystemPropertiesToLog(job);
       if (systemPropsToLog != null) {
-        LOG.info(systemPropsToLog);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Initiate Java VM metrics
@@ -200,7 +200,7 @@ class YarnChild {
           }
         }
       } catch (Exception e) {
-        LOG.info("Exception cleaning up: " + StringUtils.stringifyException(e));
+        LOG.error("Temp", new RuntimeException());
       }
       // Report back any failures, for diagnostic purposes
       if (taskid != null) {
@@ -254,7 +254,7 @@ class YarnChild {
     String[] localSysDirs = StringUtils.getTrimmedStrings(
         System.getenv(Environment.LOCAL_DIRS.name()));
     job.setStrings(MRConfig.LOCAL_DIR, localSysDirs);
-    LOG.info(MRConfig.LOCAL_DIR + " for child: " + job.get(MRConfig.LOCAL_DIR));
+    LOG.error("Temp", new RuntimeException());
     LocalDirAllocator lDirAlloc = new LocalDirAllocator(MRConfig.LOCAL_DIR);
     Path workDir = null;
     // First, try to find the JOB_LOCAL_DIR on this host.
@@ -294,7 +294,7 @@ class YarnChild {
     ApplicationAttemptId appAttemptId = ContainerId.fromString(
         System.getenv(Environment.CONTAINER_ID.name()))
         .getApplicationAttemptId();
-    LOG.debug("APPLICATION_ATTEMPT_ID: " + appAttemptId);
+    LOG.error("Temp", new RuntimeException());
     // Set it in conf, so as to be able to be used the the OutputCommitter.
     job.setInt(MRJobConfig.APPLICATION_ATTEMPT_ID,
         appAttemptId.getAttemptId());

@@ -749,12 +749,12 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
   }
  
   private void handleDeprecation() {
-    LOG.debug("Handling deprecation for all properties in config...");
+    LOG.error("Temp", new RuntimeException());
     DeprecationContext deprecations = deprecationContext.get();
     Set<Object> keys = new HashSet<Object>();
     keys.addAll(getProps().keySet());
     for (Object item: keys) {
-      LOG.debug("Handling deprecation for " + (String)item);
+      LOG.error("Temp", new RuntimeException());
       handleDeprecation(deprecations, (String)item);
     }
   }
@@ -1141,7 +1141,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
             val = getProperty(var);
           }
         } catch (SecurityException se) {
-          LOG.warn("Unexpected SecurityException in Configuration", se);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       if (val == null) {
@@ -2694,7 +2694,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
              " in local directories from " + dirsProp);
     for(int i=0; i < dirs.length; i++) {
       int index = (hashCode+i & Integer.MAX_VALUE) % dirs.length;
-      LOG.warn(dirsProp + "[" + index + "]=" + dirs[index]);
+      LOG.error("Temp", new RuntimeException());
     }
     throw new IOException("No valid local directories in property: "+dirsProp);
   }
@@ -2746,10 +2746,10 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
       URL url= getResource(name);
 
       if (url == null) {
-        LOG.info(name + " not found");
+        LOG.error("Temp", new RuntimeException());
         return null;
       } else {
-        LOG.info("found resource " + name + " at " + url);
+        LOG.error("Temp", new RuntimeException());
       }
 
       return url.openStream();
@@ -2770,10 +2770,10 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
       URL url= getResource(name);
 
       if (url == null) {
-        LOG.info(name + " not found");
+        LOG.error("Temp", new RuntimeException());
         return null;
       } else {
-        LOG.info("found resource " + name + " at " + url);
+        LOG.error("Temp", new RuntimeException());
       }
 
       return new InputStreamReader(url.openStream(), Charsets.UTF_8);
@@ -2884,7 +2884,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
       throws IOException, XMLStreamException {
     if (!quietmode) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("parsing URL " + url);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (url == null) {
@@ -2903,7 +2903,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
   private XMLStreamReader parse(InputStream is, String systemIdStr,
       boolean restricted) throws IOException, XMLStreamException {
     if (!quietmode) {
-      LOG.debug("parsing input stream " + is);
+      LOG.error("Temp", new RuntimeException());
     }
     if (is == null) {
       return null;
@@ -2957,7 +2957,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
           .getAbsoluteFile();
         if (file.exists()) {
           if (!quiet) {
-            LOG.debug("parsing File " + file);
+            LOG.error("Temp", new RuntimeException());
           }
           reader = (XMLStreamReader2)parse(new BufferedInputStream(
               new FileInputStream(file)), ((Path)resource).toString(),
@@ -3201,7 +3201,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
 
     Set undeclaredTags = propertyTagsMap.keySet();
     if (undeclaredTags.retainAll(TAGS)) {
-      LOG.info("Removed undeclared tags:");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

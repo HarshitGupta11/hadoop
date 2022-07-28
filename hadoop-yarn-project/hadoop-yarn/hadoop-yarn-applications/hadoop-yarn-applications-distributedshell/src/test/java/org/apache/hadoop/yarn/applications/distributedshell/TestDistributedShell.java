@@ -142,7 +142,7 @@ public class TestDistributedShell {
 
   private void setupInternal(int numNodeManager, float timelineVersion)
       throws Exception {
-    LOG.info("Starting up YARN cluster");
+    LOG.error("Temp", new RuntimeException());
 
     conf = new YarnConfiguration();
     conf.setInt(YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB,
@@ -250,7 +250,7 @@ public class TestDistributedShell {
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      LOG.info("setup thread sleep interrupted. message=" + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -365,14 +365,14 @@ public class TestDistributedShell {
         };
         args = mergeArgs(args, flowArgs);
       }
-      LOG.info("Setup: Using timeline v2!");
+      LOG.error("Temp", new RuntimeException());
     }
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     final Client client = new Client(new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     final AtomicBoolean result = new AtomicBoolean(false);
     Thread t = new Thread() {
       public void run() {
@@ -422,7 +422,7 @@ public class TestDistributedShell {
     }
     Assert.assertTrue(errorMessage, verified);
     t.join();
-    LOG.info("Client run completed for testDSShell. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(result.get());
 
     if (timelineVersionWatcher.getTimelineVersion() == 1.5f) {
@@ -514,7 +514,7 @@ public class TestDistributedShell {
 
   private void checkTimelineV2(boolean haveDomain, ApplicationId appId,
       boolean defaultFlow, ApplicationReport appReport) throws Exception {
-    LOG.info("Started checkTimelineV2 ");
+    LOG.error("Temp", new RuntimeException());
     // For PoC check using the file-based timeline writer (YARN-3264)
     String tmpRoot = timelineV2StorageDir + File.separator + "entities" +
         File.separator;
@@ -533,7 +533,7 @@ public class TestDistributedShell {
                   "test_flow_version" + File.separator + "12345678" +
                   File.separator) +
           appId.toString();
-      LOG.info("basePath: " + basePath);
+      LOG.error("Temp", new RuntimeException());
       // for this test, we expect DS_APP_ATTEMPT AND DS_CONTAINER dirs
 
       // Verify DS_APP_ATTEMPT entities posted by the client
@@ -781,15 +781,15 @@ public class TestDistributedShell {
         "--keep_containers_across_application_attempts"
       };
 
-      LOG.info("Initializing DS Client");
+      LOG.error("Temp", new RuntimeException());
       Client client = new Client(TestDSFailedAppMaster.class.getName(),
         new Configuration(yarnCluster.getConfig()));
 
       client.init(args);
-      LOG.info("Running DS Client");
+      LOG.error("Temp", new RuntimeException());
       boolean result = client.run();
 
-      LOG.info("Client run completed. Result=" + result);
+      LOG.error("Temp", new RuntimeException());
       // application should succeed
       Assert.assertTrue(result);
     }
@@ -817,17 +817,17 @@ public class TestDistributedShell {
         "2500"
       };
 
-      LOG.info("Initializing DS Client");
+      LOG.error("Temp", new RuntimeException());
       Configuration conf = yarnCluster.getConfig();
       conf.setInt(YarnConfiguration.RM_AM_MAX_ATTEMPTS, 2);
       Client client = new Client(TestDSSleepingAppMaster.class.getName(),
         new Configuration(conf));
 
       client.init(args);
-      LOG.info("Running DS Client");
+      LOG.error("Temp", new RuntimeException());
       boolean result = client.run();
 
-      LOG.info("Client run completed. Result=" + result);
+      LOG.error("Temp", new RuntimeException());
       // application should succeed
       Assert.assertTrue(result);
     }
@@ -855,17 +855,17 @@ public class TestDistributedShell {
         "15000"
       };
 
-      LOG.info("Initializing DS Client");
+      LOG.error("Temp", new RuntimeException());
       Configuration conf = yarnCluster.getConfig();
       conf.setInt(YarnConfiguration.RM_AM_MAX_ATTEMPTS, 2);
       Client client = new Client(TestDSSleepingAppMaster.class.getName(),
         new Configuration(conf));
 
       client.init(args);
-      LOG.info("Running DS Client");
+      LOG.error("Temp", new RuntimeException());
       boolean result = client.run();
 
-      LOG.info("Client run completed. Result=" + result);
+      LOG.error("Temp", new RuntimeException());
       // application should be failed
       Assert.assertFalse(result);
     }
@@ -917,14 +917,14 @@ public class TestDistributedShell {
     Assert.assertTrue(LOG_AM.isInfoEnabled());
     Assert.assertFalse(LOG_AM.isDebugEnabled());
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     final Client client =
         new Client(new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = client.run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(verifyContainerLog(3, null, true, "DEBUG") > 10);
     //After DS is finished, the log level should be DEBUG
     Assert.assertTrue(LOG_Client.isInfoEnabled());
@@ -952,14 +952,14 @@ public class TestDistributedShell {
         "1"
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     final Client client =
         new Client(new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = client.run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     List<String> expectedContent = new ArrayList<String>();
     expectedContent.add("output_expected");
     verifyContainerLog(2, expectedContent, false, "");
@@ -986,14 +986,14 @@ public class TestDistributedShell {
         "1"
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     final Client client =
         new Client(new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = client.run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     List<String> expectedContent = new ArrayList<String>();
     expectedContent.add("HADOOP YARN MAPREDUCE HDFS");
     verifyContainerLog(4, expectedContent, false, "");
@@ -1034,14 +1034,14 @@ public class TestDistributedShell {
         "1"
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     final Client client =
         new Client(new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = client.run();
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     List<String> expectedContent = new ArrayList<String>();
     expectedContent.add("testDSShellWithShellScript");
     verifyContainerLog(1, expectedContent, false, "");
@@ -1051,7 +1051,7 @@ public class TestDistributedShell {
   public void testDSShellWithInvalidArgs() throws Exception {
     Client client = new Client(new Configuration(yarnCluster.getConfig()));
 
-    LOG.info("Initializing DS Client with no args");
+    LOG.error("Temp", new RuntimeException());
     try {
       client.init(new String[]{});
       Assert.fail("Exception is expected");
@@ -1060,7 +1060,7 @@ public class TestDistributedShell {
           e.getMessage().contains("No args"));
     }
 
-    LOG.info("Initializing DS Client with no jar file");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--num_containers",
@@ -1079,7 +1079,7 @@ public class TestDistributedShell {
           e.getMessage().contains("No jar"));
     }
 
-    LOG.info("Initializing DS Client with no shell command");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--jar",
@@ -1098,7 +1098,7 @@ public class TestDistributedShell {
           e.getMessage().contains("No shell command"));
     }
 
-    LOG.info("Initializing DS Client with invalid no. of containers");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--jar",
@@ -1119,7 +1119,7 @@ public class TestDistributedShell {
           e.getMessage().contains("Invalid no. of containers"));
     }
     
-    LOG.info("Initializing DS Client with invalid no. of vcores");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--jar",
@@ -1145,7 +1145,7 @@ public class TestDistributedShell {
           e.getMessage().contains("Invalid virtual cores specified"));
     }
 
-    LOG.info("Initializing DS Client with --shell_command and --shell_script");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--jar",
@@ -1173,7 +1173,7 @@ public class TestDistributedShell {
           "and shell_script option at the same time"));
     }
 
-    LOG.info("Initializing DS Client without --shell_command and --shell_script");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--jar",
@@ -1197,7 +1197,7 @@ public class TestDistributedShell {
           "to be executed by application master"));
     }
 
-    LOG.info("Initializing DS Client with invalid container_type argument");
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] args = {
           "--jar",
@@ -1283,15 +1283,15 @@ public class TestDistributedShell {
       "128"
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     Client client = new Client(ContainerLaunchFailAppMaster.class.getName(),
       new Configuration(yarnCluster.getConfig()));
     boolean initSuccess = client.init(args);
     Assert.assertTrue(initSuccess);
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     boolean result = client.run();
 
-    LOG.info("Client run completed. Result=" + result);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(result);
 
   }
@@ -1316,10 +1316,10 @@ public class TestDistributedShell {
         "--debug"
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     Client client = new Client(new Configuration(yarnCluster.getConfig()));
     Assert.assertTrue(client.init(args));
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(client.run());
   }
 
@@ -1409,10 +1409,10 @@ public class TestDistributedShell {
         };
 
     for (int i = 0; i < args.length; ++i) {
-      LOG.info("Initializing DS Client");
+      LOG.error("Temp", new RuntimeException());
       Client client = new Client(new Configuration(yarnCluster.getConfig()));
       Assert.assertTrue(client.init(args[i]));
-      LOG.info("Running DS Client");
+      LOG.error("Temp", new RuntimeException());
       try {
         client.run();
         Assert.fail("Client run should throw error");
@@ -1498,10 +1498,10 @@ public class TestDistributedShell {
         "memory=" + containerMemoryString + ",vcores=1",
     };
 
-    LOG.info("Initializing DS Client");
+    LOG.error("Temp", new RuntimeException());
     Client client = new Client(new Configuration(yarnCluster.getConfig()));
     Assert.assertTrue(client.init(args));
-    LOG.info("Running DS Client");
+    LOG.error("Temp", new RuntimeException());
     final AtomicBoolean result = new AtomicBoolean(false);
     Thread t = new Thread() {
       public void run() {

@@ -88,7 +88,7 @@ public class AmIpFilter implements Filter {
           URL url = new URL(proxyUriBase);
           proxyUriBases.put(url.getHost() + ":" + url.getPort(), proxyUriBase);
         } catch(MalformedURLException e) {
-          LOG.warn("{} does not appear to be a valid URL", proxyUriBase, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -107,13 +107,13 @@ public class AmIpFilter implements Filter {
           try {
               for(InetAddress add : InetAddress.getAllByName(proxyHost)) {
                 if (LOG.isDebugEnabled()) {
-                  LOG.debug("proxy address is: {}", add.getHostAddress());
+                  LOG.error("Temp", new RuntimeException());
                 }
                 proxyAddresses.add(add.getHostAddress());
               }
               lastUpdate = now;
             } catch (UnknownHostException e) {
-              LOG.warn("Could not locate {} - skipping", proxyHost, e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         if (proxyAddresses.isEmpty()) {
@@ -138,7 +138,7 @@ public class AmIpFilter implements Filter {
     HttpServletResponse httpResp = (HttpServletResponse)resp;
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Remote address for request is: {}", httpReq.getRemoteAddr());
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (!getProxyAddresses().contains(httpReq.getRemoteAddr())) {
@@ -222,7 +222,7 @@ public class AmIpFilter implements Filter {
       conn.connect();
       isValid = conn.getResponseCode() == HttpURLConnection.HTTP_OK;
     } catch (Exception e) {
-      LOG.debug("Failed to connect to " + url + ": " + e.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     return isValid;
   }

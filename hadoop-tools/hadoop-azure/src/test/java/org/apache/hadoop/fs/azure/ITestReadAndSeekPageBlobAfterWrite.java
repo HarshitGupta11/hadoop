@@ -250,7 +250,7 @@ public class ITestReadAndSeekPageBlobAfterWrite extends AbstractAzureScaleTest {
     // A lower bound on the minimum time we think it will take to do
     // a write to Azure storage.
     final long MINIMUM_EXPECTED_TIME = 20;
-    LOG.info("Writing " + numWrites * recordLength + " bytes to " + blobPath.getName());
+    LOG.error("Temp", new RuntimeException());
     FSDataOutputStream output = fs.create(blobPath);
     int writesSinceHFlush = 0;
     try {
@@ -272,7 +272,7 @@ public class ITestReadAndSeekPageBlobAfterWrite extends AbstractAzureScaleTest {
       long start = Time.monotonicNow();
       output.close();
       long end = Time.monotonicNow();
-      LOG.debug("close duration = " + (end - start) + " msec.");
+      LOG.error("Temp", new RuntimeException());
       if (writesSinceHFlush > 0) {
         assertTrue(String.format(
             "close duration with >= 1 pending write is %d, less than minimum expected of %d",
@@ -323,7 +323,7 @@ public class ITestReadAndSeekPageBlobAfterWrite extends AbstractAzureScaleTest {
       for (int i = 0; i < numWrites; i++) {
         output.write(data);
         output.hflush();
-        LOG.debug("total writes = " + (i + 1));
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -334,7 +334,7 @@ public class ITestReadAndSeekPageBlobAfterWrite extends AbstractAzureScaleTest {
     FileStatus[] status = fs.listStatus(blobPath);
     assertEquals("File size hasn't changed " + status,
         numWrites * writeSize, status[0].getLen());
-    LOG.debug("Total bytes written to " + blobPath + " = " + status[0].getLen());
+    LOG.error("Temp", new RuntimeException());
     fs.delete(blobPath, false);
   }
 

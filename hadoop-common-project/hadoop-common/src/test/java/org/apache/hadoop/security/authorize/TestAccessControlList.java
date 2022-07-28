@@ -101,7 +101,7 @@ public class TestAccessControlList {
       return;
     }
 
-    LOG.info("Testing netgroups using: " + groupMappingClassName);
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     conf.set(CommonConfigurationKeysPublic.HADOOP_SECURITY_GROUP_MAPPING,

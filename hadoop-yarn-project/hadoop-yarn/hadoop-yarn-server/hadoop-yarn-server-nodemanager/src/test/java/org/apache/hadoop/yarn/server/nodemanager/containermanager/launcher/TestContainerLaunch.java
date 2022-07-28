@@ -842,7 +842,7 @@ public class TestContainerLaunch extends BaseContainerManagerTest {
         ContainerExitEvent exitEvent = (ContainerExitEvent) event;
         Assert.assertEquals(ContainerEventType.CONTAINER_EXITED_WITH_FAILURE,
             exitEvent.getType());
-        LOG.info("Diagnostic Info : " + exitEvent.getDiagnosticInfo());
+        LOG.error("Temp", new RuntimeException());
         if (testForMultiFile) {
           Assert.assertTrue("Should contain the Multi file information",
               exitEvent.getDiagnosticInfo().contains("Error files: "));
@@ -1215,7 +1215,7 @@ public class TestContainerLaunch extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (!processStartFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertTrue("ProcessStartFile doesn't exist!",
         processStartFile.exists());
@@ -1555,7 +1555,7 @@ public class TestContainerLaunch extends BaseContainerManagerTest {
     int timeoutSecs = 0;
     while (!processStartFile.exists() && timeoutSecs++ < 20) {
       Thread.sleep(1000);
-      LOG.info("Waiting for process start-file to be created");
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertTrue("ProcessStartFile doesn't exist!",
         processStartFile.exists());
@@ -1576,7 +1576,7 @@ public class TestContainerLaunch extends BaseContainerManagerTest {
     Assert.assertEquals(null, reader.readLine());
     reader.close();
 
-    LOG.info("Manually killing pid " + pid + ", but not child pid " + child);
+    LOG.error("Temp", new RuntimeException());
     Shell.execCommand(new String[]{"kill", "-9", pid});
 
     BaseContainerManagerTest.waitForContainerState(containerManager, cId,
@@ -2242,7 +2242,7 @@ public class TestContainerLaunch extends BaseContainerManagerTest {
         combination.put(key, value);
         try {
           if (nbItems == 0) {
-            //LOG.info("Combo : " + combination);
+            //LOG.error("Temp", new RuntimeException());
             assertOrderEnvByDependencies(combination, sb);
             return;
           }

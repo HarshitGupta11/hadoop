@@ -171,7 +171,7 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
     yarnProcessors = NodeManagerHardwareUtils.getContainersCPUs(plugin, conf);
     int systemProcessors = NodeManagerHardwareUtils.getNodeCPUs(plugin, conf);
     if (systemProcessors != (int) yarnProcessors) {
-      LOG.info("YARN containers restricted to " + yarnProcessors + " cores");
+      LOG.error("Temp", new RuntimeException());
       int[] limits = getOverallLimits(yarnProcessors);
       updateCgroup(CONTROLLER_CPU, "", CPU_PERIOD_US,
           String.valueOf(limits[0]));
@@ -179,7 +179,7 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
           String.valueOf(limits[1]));
     } else if (CGroupsCpuResourceHandlerImpl.cpuLimitsExist(
         pathForCgroup(CONTROLLER_CPU, ""))) {
-      LOG.info("Removing CPU constraints for YARN containers.");
+      LOG.error("Temp", new RuntimeException());
       updateCgroup(CONTROLLER_CPU, "", CPU_QUOTA_US, String.valueOf(-1));
     }
   }
@@ -207,7 +207,7 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
     String path = pathForCgroup(controller, groupName);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("createCgroup: " + path);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (!new File(path).mkdir()) {
@@ -221,7 +221,7 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
     param = controller + "." + param;
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("updateCgroup: " + path + ": " + param + "=" + value);
+      LOG.error("Temp", new RuntimeException());
     }
 
     PrintWriter pw = null;
@@ -259,10 +259,10 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
               + "/tasks"), "UTF-8"))) {
         str = inl.readLine();
         if (str != null) {
-          LOG.debug("First line in cgroup tasks file: " + cgf + " " + str);
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (IOException e) {
-        LOG.warn("Failed to read cgroup tasks file. ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -287,13 +287,13 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
         Thread.sleep(deleteCgroupDelay);
         deleted = cgf.delete();
         if (!deleted) {
-          LOG.warn("Failed attempt to delete cgroup: " + cgf);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         logLineFromTasksFile(cgf);
       }
     } catch (IOException e) {
-      LOG.warn("Failed to read cgroup tasks file. ", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return deleted;
   }
@@ -303,7 +303,7 @@ public class CgroupsLCEResourcesHandler implements LCEResourcesHandler {
     boolean deleted = false;
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("deleteCgroup: " + cgroupPath);
+      LOG.error("Temp", new RuntimeException());
     }
     long start = clock.getTime();
     do {

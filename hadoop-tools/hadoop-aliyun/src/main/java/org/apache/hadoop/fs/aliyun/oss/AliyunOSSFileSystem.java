@@ -120,7 +120,7 @@ public class AliyunOSSFileSystem extends FileSystem {
         // path references a file and overwrite is disabled
         throw new FileAlreadyExistsException(path + " already exists");
       }
-      LOG.debug("Overwriting file {}", path);
+      LOG.error("Temp", new RuntimeException());
     } catch (FileNotFoundException e) {
       // this means the file is not found
     }
@@ -159,7 +159,7 @@ public class AliyunOSSFileSystem extends FileSystem {
     try {
       return innerDelete(getFileStatus(path), recursive);
     } catch (FileNotFoundException e) {
-      LOG.debug("Couldn't delete {} - does not exist", path);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -223,7 +223,7 @@ public class AliyunOSSFileSystem extends FileSystem {
    */
   private boolean rejectRootDirectoryDelete(boolean isEmptyDir,
       boolean recursive) throws IOException {
-    LOG.info("oss delete the {} root directory of {}", bucket, recursive);
+    LOG.error("Temp", new RuntimeException());
     if (isEmptyDir) {
       return true;
     }
@@ -238,7 +238,7 @@ public class AliyunOSSFileSystem extends FileSystem {
   private void createFakeDirectoryIfNecessary(Path f) throws IOException {
     String key = pathToKey(f);
     if (StringUtils.isNotEmpty(key) && !exists(f)) {
-      LOG.debug("Creating new fake directory at {}", f);
+      LOG.error("Temp", new RuntimeException());
       mkdir(pathToKey(f.getParent()));
     }
   }
@@ -378,7 +378,7 @@ public class AliyunOSSFileSystem extends FileSystem {
   public FileStatus[] listStatus(Path path) throws IOException {
     String key = pathToKey(path);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("List status for path: " + path);
+      LOG.error("Temp", new RuntimeException());
     }
 
     final List<FileStatus> result = new ArrayList<FileStatus>();
@@ -386,7 +386,7 @@ public class AliyunOSSFileSystem extends FileSystem {
 
     if (fileStatus.isDirectory()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("listStatus: doing listObjects for directory " + key);
+        LOG.error("Temp", new RuntimeException());
       }
 
       ObjectListing objects = store.listObjects(key, maxKeys, null, false);
@@ -396,14 +396,14 @@ public class AliyunOSSFileSystem extends FileSystem {
           String objKey = objectSummary.getKey();
           if (objKey.equals(key + "/")) {
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Ignoring: " + objKey);
+              LOG.error("Temp", new RuntimeException());
             }
             continue;
           } else {
             Path keyPath = keyToPath(objectSummary.getKey())
                 .makeQualified(uri, workingDir);
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Adding: fi: " + keyPath);
+              LOG.error("Temp", new RuntimeException());
             }
             result.add(new FileStatus(objectSummary.getSize(), false, 1,
                 getDefaultBlockSize(keyPath),
@@ -414,13 +414,13 @@ public class AliyunOSSFileSystem extends FileSystem {
         for (String prefix : objects.getCommonPrefixes()) {
           if (prefix.equals(key + "/")) {
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Ignoring: " + prefix);
+              LOG.error("Temp", new RuntimeException());
             }
             continue;
           } else {
             Path keyPath = keyToPath(prefix).makeQualified(uri, workingDir);
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Adding: rd: " + keyPath);
+              LOG.error("Temp", new RuntimeException());
             }
             result.add(getFileStatus(keyPath));
           }
@@ -428,7 +428,7 @@ public class AliyunOSSFileSystem extends FileSystem {
 
         if (objects.isTruncated()) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("listStatus: list truncated - getting next batch");
+            LOG.error("Temp", new RuntimeException());
           }
           String nextMarker = objects.getNextMarker();
           objects = store.listObjects(key, maxKeys, nextMarker, false);
@@ -439,7 +439,7 @@ public class AliyunOSSFileSystem extends FileSystem {
       }
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Adding: rd (not a dir): " + path);
+        LOG.error("Temp", new RuntimeException());
       }
       result.add(fileStatus);
     }
@@ -488,7 +488,7 @@ public class AliyunOSSFileSystem extends FileSystem {
     String key = pathToKey(qualifiedPath);
 
     if (status.isFile()) {
-      LOG.debug("{} is a File", qualifiedPath);
+      LOG.error("Temp", new RuntimeException());
       final BlockLocation[] locations = getFileBlockLocations(status,
         0, status.getLen());
       return store.singleStatusRemoteIterator(filter.accept(f) ? status : null,
@@ -579,7 +579,7 @@ public class AliyunOSSFileSystem extends FileSystem {
     if (srcPath.isRoot()) {
       // Cannot rename root of file system
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Cannot rename the root of a filesystem");
+        LOG.error("Temp", new RuntimeException());
       }
       return false;
     }
@@ -669,7 +669,7 @@ public class AliyunOSSFileSystem extends FileSystem {
 
     if (dstKey.startsWith(srcKey)) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Cannot rename a directory to a subdirectory of self");
+        LOG.error("Temp", new RuntimeException());
       }
       return false;
     }
@@ -713,7 +713,7 @@ public class AliyunOSSFileSystem extends FileSystem {
     try {
       copyFileContext.awaitAllFinish(copiesToFinish);
     } catch (InterruptedException e) {
-      LOG.warn("interrupted when wait copies to finish");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       copyFileContext.unlock();
     }

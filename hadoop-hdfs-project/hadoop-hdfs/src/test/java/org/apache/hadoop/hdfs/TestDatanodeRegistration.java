@@ -257,7 +257,7 @@ public class TestDatanodeRegistration {
       } catch (IncorrectVersionException ive) {
         GenericTestUtils.assertExceptionContains(
             "The reported DataNode version is too low", ive);
-        LOG.info("Got expected exception", ive);
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       if (cluster != null) {
@@ -310,7 +310,7 @@ public class TestDatanodeRegistration {
       } catch (IncorrectVersionException ive) {
         GenericTestUtils.assertExceptionContains(
             "does not match CTime of NN", ive);
-        LOG.info("Got expected exception", ive);
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       if (cluster != null) {

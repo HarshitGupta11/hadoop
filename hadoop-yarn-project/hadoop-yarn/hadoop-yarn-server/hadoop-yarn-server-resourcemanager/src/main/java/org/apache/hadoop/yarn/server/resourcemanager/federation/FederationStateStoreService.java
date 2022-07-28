@@ -90,7 +90,7 @@ public class FederationStateStoreService extends AbstractService
 
   public FederationStateStoreService(RMContext rmContext) {
     super(FederationStateStoreService.class.getName());
-    LOG.info("FederationStateStoreService initialized");
+    LOG.error("Temp", new RuntimeException());
     this.rmContext = rmContext;
   }
 
@@ -108,7 +108,7 @@ public class FederationStateStoreService extends AbstractService
             YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_CLIENT_CLASS,
             FederationStateStore.class, retryPolicy);
     this.stateStoreClient.init(conf);
-    LOG.info("Initialized state store client class");
+    LOG.error("Temp", new RuntimeException());
 
     this.subClusterId =
         SubClusterId.newInstance(YarnConfiguration.getClusterId(conf));
@@ -120,7 +120,7 @@ public class FederationStateStoreService extends AbstractService
       heartbeatInterval =
           YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_HEARTBEAT_INTERVAL_SECS;
     }
-    LOG.info("Initialized federation membership service.");
+    LOG.error("Temp", new RuntimeException());
 
     super.serviceInit(conf);
   }
@@ -140,7 +140,7 @@ public class FederationStateStoreService extends AbstractService
       if (this.scheduledExecutorService != null
           && !this.scheduledExecutorService.isShutdown()) {
         this.scheduledExecutorService.shutdown();
-        LOG.info("Stopped federation membership heartbeat");
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (Exception e) {
       LOG.error("Failed to shutdown ScheduledExecutorService", e);

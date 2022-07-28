@@ -442,7 +442,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     }
     final int idx = r.nextInt(localInterfaceAddrs.length);
     final SocketAddress addr = localInterfaceAddrs[idx];
-    LOG.debug("Using local interface {}", addr);
+    LOG.error("Temp", new RuntimeException());
     return addr;
   }
 
@@ -650,7 +650,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     try (TraceScope ignored = newPathTraceScope("getBlockSize", f)) {
       return namenode.getPreferredBlockSize(f);
     } catch (IOException ie) {
-      LOG.warn("Problem getting block size", ie);
+      LOG.error("Temp", new RuntimeException());
       throw ie;
     }
   }
@@ -692,9 +692,9 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
           namenode.getDelegationToken(renewer);
       if (token != null) {
         token.setService(this.dtService);
-        LOG.info("Created " + DelegationTokenIdentifier.stringifyToken(token));
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info("Cannot get delegation token from " + renewer);
+        LOG.error("Temp", new RuntimeException());
       }
       return token;
     }
@@ -710,7 +710,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
   @Deprecated
   public long renewDelegationToken(Token<DelegationTokenIdentifier> token)
       throws IOException {
-    LOG.info("Renewing " + DelegationTokenIdentifier.stringifyToken(token));
+    LOG.error("Temp", new RuntimeException());
     try {
       return token.renew(conf);
     } catch (InterruptedException ie) {
@@ -730,7 +730,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
   @Deprecated
   public void cancelDelegationToken(Token<DelegationTokenIdentifier> token)
       throws IOException {
-    LOG.info("Cancelling " + DelegationTokenIdentifier.stringifyToken(token));
+    LOG.error("Temp", new RuntimeException());
     try {
       token.cancel(conf);
     } catch (InterruptedException ie) {
@@ -1199,7 +1199,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
       String ecPolicyName) throws IOException {
     checkOpen();
     final FsPermission masked = applyUMask(permission);
-    LOG.debug("{}: masked={}", src, masked);
+    LOG.error("Temp", new RuntimeException());
     final DFSOutputStream result = DFSOutputStream.newStreamForCreate(this,
         src, masked, flag, createParent, replication, blockSize, progress,
         dfsClientConf.createChecksum(checksumOpt),
@@ -1716,7 +1716,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
 
   @InterfaceAudience.Private
   public void clearDataEncryptionKey() {
-    LOG.debug("Clearing encryption key");
+    LOG.error("Temp", new RuntimeException());
     synchronized (this) {
       encryptionKey = null;
     }
@@ -1738,7 +1738,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
       synchronized (this) {
         if (encryptionKey == null ||
             encryptionKey.expiryDate < Time.now()) {
-          LOG.debug("Getting new encryption token from NN");
+          LOG.error("Temp", new RuntimeException());
           encryptionKey = namenode.getDataEncryptionKey();
         }
         return encryptionKey;
@@ -2366,7 +2366,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     if (absPermission == null) {
       absPermission = applyUMaskDir(null);
     }
-    LOG.debug("{}: masked={}", src, absPermission);
+    LOG.error("Temp", new RuntimeException());
     try (TraceScope ignored = tracer.newScope("mkdir")) {
       return namenode.mkdirs(src, absPermission, createParent);
     } catch (RemoteException re) {
@@ -2927,14 +2927,14 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
           @Override
           public void rejectedExecution(Runnable runnable,
               ThreadPoolExecutor e) {
-            LOG.info("Execution rejected, Executing in current thread");
+            LOG.error("Temp", new RuntimeException());
             HEDGED_READ_METRIC.incHedgedReadOpsInCurThread();
             // will run in the current thread
             super.rejectedExecution(runnable, e);
           }
         });
     HEDGED_READ_THREAD_POOL.allowCoreThreadTimeOut(true);
-    LOG.debug("Using hedged reads; pool threads={}", num);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

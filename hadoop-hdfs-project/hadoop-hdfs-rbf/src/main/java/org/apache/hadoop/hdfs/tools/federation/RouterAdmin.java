@@ -221,7 +221,7 @@ public class RouterAdmin extends Configured implements Tool {
       e.printStackTrace();
     }
     if (debugException != null) {
-      LOG.debug("Exception encountered", debugException);
+      LOG.error("Temp", new RuntimeException());
     }
     return exitCode;
   }

@@ -199,14 +199,14 @@ public class Gridmix extends Configured implements Tool {
     
       FsShell shell = new FsShell(conf);
       try {
-        LOG.info("Changing the permissions for inputPath {}", inputDir);
+        LOG.error("Temp", new RuntimeException());
         shell.run(new String[] {"-chmod","-R","777", inputDir.toString()});
       } catch (Exception e) {
         LOG.error("Couldnt change the file permissions " , e);
         throw new IOException(e);
       }
 
-      LOG.info("Input data generation successful.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     return 0;
@@ -295,7 +295,7 @@ public class Gridmix extends Configured implements Tool {
     try {
       Path inputDir = getGridmixInputDataPath(ioPath);
       GridmixJobSubmissionPolicy policy = getJobSubmissionPolicy(conf);
-      LOG.info(" Submission policy is " + policy.name());
+      LOG.error("Temp", new RuntimeException());
       statistics = new Statistics(conf, policy.getPollingInterval(), startFlag);
       monitor = createJobMonitor(statistics, conf);
       int noOfSubmitterThreads = 
@@ -421,7 +421,7 @@ public class Gridmix extends Configured implements Tool {
       if (userResolver.needsTargetUsersList()) {
         if (userRsrc != null) {
           if (!userResolver.setTargetUsers(userRsrc, conf)) {
-            LOG.warn("Ignoring the user resource '" + userRsrc + "'.");
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           LOG.error(userResolver.getClass()
@@ -430,7 +430,7 @@ public class Gridmix extends Configured implements Tool {
           return ARGS_ERROR;
         }
       } else if (userRsrc != null) {
-        LOG.warn("Ignoring the user resource '" + userRsrc + "'.");
+        LOG.error("Temp", new RuntimeException());
       }
 
       ioPath = new Path(argv[argv.length - 2]);
@@ -528,7 +528,7 @@ public class Gridmix extends Configured implements Tool {
         statistics.start();
       } catch (Throwable e) {
         LOG.error("Startup failed. " + e.toString() + "\n");
-        LOG.debug("Startup failed", e);
+        LOG.error("Temp", new RuntimeException());
         if (factory != null) factory.abort(); // abort pipeline
         exitCode = STARTUP_FAILED_ERROR;
       } finally {
@@ -641,14 +641,14 @@ public class Gridmix extends Configured implements Tool {
       try {
         component.join(maxwait);
       } catch (InterruptedException e) {
-        LOG.warn("Interrupted waiting for " + component);
+        LOG.error("Temp", new RuntimeException());
       }
 
     }
 
     @Override
     public void run() {
-      LOG.info("Exiting...");
+      LOG.error("Temp", new RuntimeException());
       try {
         killComponent(factory, FAC_SLEEP);   // read no more tasks
         killComponent(submitter, SUB_SLEEP); // submit no more tasks
@@ -662,13 +662,13 @@ public class Gridmix extends Configured implements Tool {
         if (remainingJobs.isEmpty()) {
           return;
         }
-        LOG.info("Killing running jobs...");
+        LOG.error("Temp", new RuntimeException());
         for (JobStats stats : remainingJobs) {
           Job job = stats.getJob();
           try {
             if (!job.isComplete()) {
               job.killJob();
-              LOG.info("Killed " + job.getJobName() + " (" + job.getJobID() + ")");
+              LOG.error("Temp", new RuntimeException());
             } else {
               if (job.isSuccessful()) {
                 monitor.onSuccess(job);
@@ -677,12 +677,12 @@ public class Gridmix extends Configured implements Tool {
               }
             }
           } catch (IOException e) {
-            LOG.warn("Failure killing " + job.getJobName(), e);
+            LOG.error("Temp", new RuntimeException());
           } catch (Exception e) {
             LOG.error("Unexpected exception", e);
           }
         }
-        LOG.info("Done.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

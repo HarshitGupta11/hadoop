@@ -184,7 +184,7 @@ public class BlockScanner {
       LOG.info("Initialized block scanner with targetBytesPerSec {}",
           this.conf.targetBytesPerSec);
     } else {
-      LOG.info("Disabled block scanner.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -361,7 +361,7 @@ public class BlockScanner {
 
       StringBuilder buffer = new StringBuilder(8 * 1024);
       if (!blockScanner.isEnabled()) {
-        LOG.warn("Periodic block scanner is not running");
+        LOG.error("Temp", new RuntimeException());
         buffer.append("Periodic block scanner is not running. " +
             "Please check the datanode log if this is unexpected.");
       } else {

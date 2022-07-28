@@ -112,7 +112,7 @@ public class TestDelegationToken {
     identifier.readFields(new DataInputStream(
              new ByteArrayInputStream(tokenId)));
     Assert.assertTrue(null != dtSecretManager.retrievePassword(identifier));
-    LOG.info("Sleep to expire the token");
+    LOG.error("Temp", new RuntimeException());
 	  Thread.sleep(6000);
 	  //Token should be expired
 	  try {
@@ -123,7 +123,7 @@ public class TestDelegationToken {
 	    //Success
 	  }
 	  dtSecretManager.renewToken(token, "JobTracker");
-	  LOG.info("Sleep beyond the max lifetime");
+	  LOG.error("Temp", new RuntimeException());
 	  Thread.sleep(5000);
 	  try {
   	  dtSecretManager.renewToken(token, "JobTracker");
@@ -298,7 +298,7 @@ public class TestDelegationToken {
     assertTrue("Secret manager should start when safe mode is exited",
         sm.isRunning());
     
-    LOG.info("========= entering safemode again");
+    LOG.error("Temp", new RuntimeException());
     
     NameNodeAdapter.enterSafeMode(nn, false);
     assertFalse("Secret manager should stop again when safe mode " +
@@ -331,7 +331,7 @@ public class TestDelegationToken {
       in.close();
     }
     Assert.assertNotNull(identifier);
-    LOG.info("A valid token should have non-null password, and should be renewed successfully");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(null != dtSecretManager.retrievePassword(identifier));
     dtSecretManager.renewToken((Token<DelegationTokenIdentifier>) token, "JobTracker");
     ugi.doAs(

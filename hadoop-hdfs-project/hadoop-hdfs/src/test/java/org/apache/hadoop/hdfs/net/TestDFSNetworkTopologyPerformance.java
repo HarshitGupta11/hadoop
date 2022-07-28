@@ -193,7 +193,7 @@ public class TestDFSNetworkTopologyPerformance {
     }
     totalEnd = System.nanoTime();
     totalMs = (totalEnd - totalStart)/NS_TO_MS;
-    LOG.info("total time: {} avg time: {}", totalMs, totalMs / OP_NUM);
+    LOG.error("Temp", new RuntimeException());
 
     printMemUsage("after test2");
   }
@@ -264,7 +264,7 @@ public class TestDFSNetworkTopologyPerformance {
     }
     totalEnd = System.nanoTime();
     totalMs = (totalEnd - totalStart)/NS_TO_MS;
-    LOG.info("total time: {} avg time: {}", totalMs, totalMs/OP_NUM);
+    LOG.error("Temp", new RuntimeException());
 
     printMemUsage("after test2");
   }
@@ -325,7 +325,7 @@ public class TestDFSNetworkTopologyPerformance {
     }
     totalEnd = System.nanoTime();
     totalMs = (totalEnd - totalStart) / NS_TO_MS;
-    LOG.info("total time: {} avg time: {}", totalMs, totalMs / OP_NUM);
+    LOG.error("Temp", new RuntimeException());
 
     printMemUsage("after test2");
   }
@@ -403,7 +403,7 @@ public class TestDFSNetworkTopologyPerformance {
     }
     totalEnd = System.nanoTime();
     totalMs = (totalEnd - totalStart) / NS_TO_MS;
-    LOG.info("total time: {} avg time: {}", totalMs, totalMs / OP_NUM);
+    LOG.error("Temp", new RuntimeException());
 
     printMemUsage("after test2");
   }
@@ -487,7 +487,7 @@ public class TestDFSNetworkTopologyPerformance {
     sb.append("\nmax memory: " + format.format(maxMemory / 1024));
     sb.append("\ntotal free memory: " + format.format(
         (freeMemory + (maxMemory - allocatedMemory)) / 1024));
-    LOG.info(sb.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void addNodeByTypes(StorageType[] allTypes) {

@@ -271,7 +271,7 @@ class OpenFileCtx {
   // Check if need to dump the new writes
   private void waitForDump() {
     if (!enabledDump) {
-      LOG.debug("Do nothing, dump is disabled.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -282,7 +282,7 @@ class OpenFileCtx {
     // wake up the dumper thread to dump the data
     synchronized (this) {
       if (nonSequentialWriteInMemory.get() >= DUMP_WRITE_WATER_MARK) {
-        LOG.debug("Asking dumper to dump...");
+        LOG.error("Temp", new RuntimeException());
         if (dumpThread == null) {
           dumpThread = new Daemon(new Dumper());
           dumpThread.start();
@@ -306,7 +306,7 @@ class OpenFileCtx {
     private void dump() {
       // Create dump outputstream for the first time
       if (dumpOut == null) {
-        LOG.info("Create dump file: {}", dumpFilePath);
+        LOG.error("Temp", new RuntimeException());
         File dumpFile = new File(dumpFilePath);
         try {
           synchronized (this) {
@@ -384,7 +384,7 @@ class OpenFileCtx {
               OpenFileCtx.this.notifyAll();
               try {
                 OpenFileCtx.this.wait();
-                LOG.debug("Dumper woke up");
+                LOG.error("Temp", new RuntimeException());
               } catch (InterruptedException e) {
                 LOG.info("Dumper is interrupted, dumpFilePath = {}",
                     OpenFileCtx.this.dumpFilePath);
@@ -544,7 +544,7 @@ class OpenFileCtx {
           cachedOffset, offset, cachedOffset, cachedOffset, (offset
               + count)));
       
-      LOG.warn("Modify this write to write only the appended data");
+      LOG.error("Temp", new RuntimeException());
       alterWriteRequest(request, cachedOffset);
 
       // Update local variable
@@ -596,11 +596,11 @@ class OpenFileCtx {
     WRITE3Response response;
     long cachedOffset = nextOffset.get();
     if (offset + count > cachedOffset) {
-      LOG.warn("Treat this jumbo write as a real random write, no support.");
+      LOG.error("Temp", new RuntimeException());
       response = new WRITE3Response(Nfs3Status.NFS3ERR_INVAL, wccData, 0,
           WriteStableHow.UNSTABLE, Nfs3Constant.WRITE_COMMIT_VERF);
     } else {
-      LOG.debug("Process perfectOverWrite");
+      LOG.error("Temp", new RuntimeException());
       // TODO: let executor handle perfect overwrite
       response = processPerfectOverWrite(dfsClient, offset, count, stableHow,
           request.getData().array(),
@@ -631,7 +631,7 @@ class OpenFileCtx {
         asyncWriteBackStartOffset = writeCtx.getOffset();
         asyncDataService.execute(new AsyncDataService.WriteBackTask(this));
       } else {
-        LOG.debug("The write back thread is working.");
+        LOG.error("Temp", new RuntimeException());
       }
       return true;
     } else {
@@ -732,7 +732,7 @@ class OpenFileCtx {
     // Compare with the request
     Comparator comparator = new Comparator();
     if (comparator.compare(readbuffer, 0, readCount, data, 0, count) != 0) {
-      LOG.info("Perfect overwrite has different content");
+      LOG.error("Temp", new RuntimeException());
       response = new WRITE3Response(Nfs3Status.NFS3ERR_INVAL, wccData, 0,
           stableHow, Nfs3Constant.WRITE_COMMIT_VERF);
     } else {
@@ -777,7 +777,7 @@ class OpenFileCtx {
 
     COMMIT_STATUS ret = checkCommitInternal(commitOffset, channel, xid,
         preOpAttr, fromRead);
-    LOG.debug("Got commit status: {}", ret.name());
+    LOG.error("Temp", new RuntimeException());
     // Do the sync outside the lock
     if (ret == COMMIT_STATUS.COMMIT_DO_SYNC
         || ret == COMMIT_STATUS.COMMIT_FINISHED) {
@@ -832,7 +832,7 @@ class OpenFileCtx {
       CommitCtx commitCtx = new CommitCtx(commitOffset, channel, xid, preOpAttr);
       pendingCommits.put(commitOffset, commitCtx);
     }
-    LOG.debug("return COMMIT_SPECIAL_WAIT");
+    LOG.error("Temp", new RuntimeException());
     return COMMIT_STATUS.COMMIT_SPECIAL_WAIT;
   }
   
@@ -879,14 +879,14 @@ class OpenFileCtx {
       if (co <= flushed) {
         return COMMIT_STATUS.COMMIT_DO_SYNC;
       } else if (co < nextOffset.get()) {
-        LOG.debug("get commit while still writing to the requested offset");
+        LOG.error("Temp", new RuntimeException());
         return handleSpecialWait(fromRead, co, channel, xid, preOpAttr);
       } else {
         // co >= nextOffset
         if (checkSequential(co, nextOffset.get())) {
           return handleSpecialWait(fromRead, co, channel, xid, preOpAttr);
         } else {
-          LOG.debug("return COMMIT_SPECIAL_SUCCESS");
+          LOG.error("Temp", new RuntimeException());
           return COMMIT_STATUS.COMMIT_SPECIAL_SUCCESS;
         }
       }
@@ -987,7 +987,7 @@ class OpenFileCtx {
 
     long offset = nextOffset.get();
     if (range.getMin() > offset) {
-      LOG.debug("The next sequential write has not arrived yet");
+      LOG.error("Temp", new RuntimeException());
       processCommits(nextOffset.get()); // handle race
       this.asyncStatus = false;
     } else if (range.getMax() <= offset) {
@@ -1002,15 +1002,15 @@ class OpenFileCtx {
       trimWriteRequest(toWrite, offset);
       // update nextOffset
       nextOffset.addAndGet(toWrite.getCount());
-      LOG.debug("Change nextOffset (after trim) to {}", nextOffset.get());
+      LOG.error("Temp", new RuntimeException());
       return toWrite;
     } else {
-      LOG.debug("Remove write {} from the list", range);
+      LOG.error("Temp", new RuntimeException());
       // after writing, remove the WriteCtx from cache
       pendingWrites.remove(range);
       // update nextOffset
       nextOffset.addAndGet(toWrite.getCount());
-      LOG.debug("Change nextOffset to {}", nextOffset.get());
+      LOG.error("Temp", new RuntimeException());
       return toWrite;
     }
     return null;
@@ -1166,7 +1166,7 @@ class OpenFileCtx {
       
       if (!writeCtx.getReplied()) {
         if (stableHow != WriteStableHow.UNSTABLE) {
-          LOG.info("Do sync for stable write: {}", writeCtx);
+          LOG.error("Temp", new RuntimeException());
           try {
             if (stableHow == WriteStableHow.DATA_SYNC) {
               fos.hsync();
@@ -1217,7 +1217,7 @@ class OpenFileCtx {
 
   synchronized void cleanup() {
     if (!activeState) {
-      LOG.info("Current OpenFileCtx is already inactive, no need to cleanup.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     activeState = false;
@@ -1242,11 +1242,11 @@ class OpenFileCtx {
     }
     
     // Reply error for pending writes
-    LOG.info("There are {} pending writes.", pendingWrites.size());
+    LOG.error("Temp", new RuntimeException());
     WccAttr preOpAttr = latestAttr.getWccAttr();
     while (!pendingWrites.isEmpty()) {
       OffsetRange key = pendingWrites.firstKey();
-      LOG.info("Fail pending write: {}, nextOffset={}", key, nextOffset.get());
+      LOG.error("Temp", new RuntimeException());
       
       WriteCtx writeCtx = pendingWrites.remove(key);
       if (!writeCtx.getReplied()) {

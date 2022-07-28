@@ -314,7 +314,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
             != null));
       }
       if (resourceHandlerChain != null) {
-        LOG.debug("Bootstrapping resource handler chain");
+        LOG.error("Temp", new RuntimeException());
         resourceHandlerChain.bootstrap(conf);
       }
     } catch (ResourceHandlerException e) {
@@ -550,7 +550,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
       }
     } catch (ContainerExecutionException e) {
       int exitCode = e.getExitCode();
-      LOG.warn("Exit code from container " + containerId + " is : " + exitCode);
+      LOG.error("Temp", new RuntimeException());
       // 143 (SIGTERM) and 137 (SIGKILL) exit codes means the container was
       // terminated/killed forcefully. In all other cases, log the
       // output
@@ -798,12 +798,12 @@ public class LinuxContainerExecutor extends ContainerExecutor {
 
     List<String> pathsToDelete = new ArrayList<String>();
     if (baseDirs == null || baseDirs.size() == 0) {
-      LOG.info("Deleting absolute path : " + dir);
+      LOG.error("Temp", new RuntimeException());
       pathsToDelete.add(dirString);
     } else {
       for (Path baseDir : baseDirs) {
         Path del = dir == null ? baseDir : new Path(baseDir, dir);
-        LOG.info("Deleting path : " + del);
+        LOG.error("Temp", new RuntimeException());
         pathsToDelete.add(del.toString());
         deleteAsUserOp.appendArgs(baseDir.toUri().getPath());
       }
@@ -907,7 +907,7 @@ public class LinuxContainerExecutor extends ContainerExecutor {
           false);
     } catch (PrivilegedOperationException e) {
       int exitCode = e.getExitCode();
-      LOG.warn("Exception in LinuxContainerExecutor mountCgroups ", e);
+      LOG.error("Temp", new RuntimeException());
 
       throw new IOException("Problem mounting cgroups " + cgroupKVs +
           "; exit code = " + exitCode + " and output: " + e.getOutput(),
@@ -932,13 +932,13 @@ public class LinuxContainerExecutor extends ContainerExecutor {
       if (DockerCommandExecutor.isRemovable(
           DockerCommandExecutor.getContainerStatus(containerId,
               super.getConf(), privOpExecutor))) {
-        LOG.info("Removing Docker container : " + containerId);
+        LOG.error("Temp", new RuntimeException());
         DockerRmCommand dockerRmCommand = new DockerRmCommand(containerId);
         DockerCommandExecutor.executeDockerCommand(dockerRmCommand, containerId,
             null, super.getConf(), privOpExecutor, false);
       }
     } catch (ContainerExecutionException e) {
-      LOG.warn("Unable to remove docker container: " + containerId);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

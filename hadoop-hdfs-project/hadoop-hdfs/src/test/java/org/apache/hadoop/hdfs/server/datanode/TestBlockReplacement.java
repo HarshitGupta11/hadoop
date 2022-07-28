@@ -189,7 +189,7 @@ public class TestBlockReplacement {
           DEFAULT_BLOCK_SIZE, REPLICATION_FACTOR, client);
       // case 4: proxies.get(0) is not a valid del hint
       // expect either source or newNode replica to be deleted instead
-      LOG.info("Testcase 4: invalid del hint " + proxies.get(0) );
+      LOG.error("Temp", new RuntimeException());
       assertTrue(replaceBlock(b, proxies.get(0), proxies.get(1), source));
       // after cluster has time to resolve the over-replication,
       // block locations should contain any 3 of the blocks, since after the
@@ -251,7 +251,7 @@ public class TestBlockReplacement {
       // Mock FsDatasetSpi#getPinning to show that the block is pinned.
       for (int i = 0; i < cluster.getDataNodes().size(); i++) {
         DataNode dn = cluster.getDataNodes().get(i);
-        LOG.info("Simulate block pinning in datanode " + dn);
+        LOG.error("Temp", new RuntimeException());
         InternalDataNodeTestUtils.mockDatanodeBlkPinning(dn, true);
       }
 
@@ -336,7 +336,7 @@ public class TestBlockReplacement {
         for (DatanodeInfo node : includeNodes) {
           if (!nodeLocations.contains(node) ) {
             notDone=true; 
-            LOG.info("Block is not located at " + node );
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }
@@ -348,8 +348,8 @@ public class TestBlockReplacement {
           expectedNodesList += dn + ", ";
         for (DatanodeInfo dn : nodes) 
           currentNodesList += dn + ", ";
-        LOG.info("Expected replica nodes are: " + expectedNodesList);
-        LOG.info("Current actual replica nodes are: " + currentNodesList);
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         throw new TimeoutException(
             "Did not achieve expected replication to expected nodes "
             + "after more than " + TIMEOUT + " msec.  See logs for details.");

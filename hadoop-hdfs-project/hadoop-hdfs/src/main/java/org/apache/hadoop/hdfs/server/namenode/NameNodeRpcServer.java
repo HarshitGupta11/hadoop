@@ -443,7 +443,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
     if (bindHost == null) {
       bindHost = rpcAddr.getHostName();
     }
-    LOG.info("RPC server is binding to " + bindHost + ":" + rpcAddr.getPort());
+    LOG.error("Temp", new RuntimeException());
 
     clientRpcServer = new RPC.Builder(conf)
         .setProtocol(
@@ -649,7 +649,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
     namesystem.checkOperation(OperationCategory.UNCHECKED);
     namesystem.checkSuperuserPrivilege();
     verifyRequest(registration);
-    LOG.info("Error report from " + registration + ": " + msg);
+    LOG.error("Temp", new RuntimeException());
     if (errorCode == FATAL) {
       namesystem.releaseBackupNode(registration);
     }
@@ -1324,7 +1324,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
   @Override // ClientProtocol
   public RollingUpgradeInfo rollingUpgrade(RollingUpgradeAction action) throws IOException {
     checkNNStartup();
-    LOG.info("rollingUpgrade " + action);
+    LOG.error("Temp", new RuntimeException());
     switch(action) {
     case QUERY:
       return namesystem.queryRollingUpgrade();
@@ -1596,18 +1596,18 @@ public class NameNodeRpcServer implements NamenodeProtocols {
        (nodeReg == null) ? "Unknown DataNode" : nodeReg.toString();
 
     if (errorCode == DatanodeProtocol.NOTIFY) {
-      LOG.info("Error report from " + dnName + ": " + msg);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     verifyRequest(nodeReg);
 
     if (errorCode == DatanodeProtocol.DISK_ERROR) {
-      LOG.warn("Disk error on " + dnName + ": " + msg);
+      LOG.error("Temp", new RuntimeException());
     } else if (errorCode == DatanodeProtocol.FATAL_DISK_ERROR) {
-      LOG.warn("Fatal disk error on " + dnName + ": " + msg);
+      LOG.error("Temp", new RuntimeException());
       namesystem.getBlockManager().getDatanodeManager().removeDatanode(nodeReg);            
     } else {
-      LOG.info("Error report from " + dnName + ": " + msg);
+      LOG.error("Temp", new RuntimeException());
     }
   }
     
@@ -1670,7 +1670,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
 
   @Override // RefreshAuthorizationPolicyProtocol
   public void refreshSuperUserGroupsConfiguration() throws IOException {
-    LOG.info("Refreshing SuperUser proxy group mapping list ");
+    LOG.error("Temp", new RuntimeException());
 
     ProxyUsers.refreshSuperUserGroupsConfiguration();
     namesystem.logAuditEvent(true, "refreshSuperUserGroupsConfiguration", null);
@@ -1678,7 +1678,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
 
   @Override // RefreshCallQueueProtocol
   public void refreshCallQueue() throws IOException {
-    LOG.info("Refreshing call queue.");
+    LOG.error("Temp", new RuntimeException());
 
     Configuration conf = new Configuration();
     clientRpcServer.refreshCallQueue(conf);
@@ -1697,7 +1697,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
   @Override // GetUserMappingsProtocol
   public String[] getGroupsForUser(String user) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Getting groups for user " + user);
+      LOG.error("Temp", new RuntimeException());
     }
     return UserGroupInformation.createRemoteUser(user).getGroupNames();
   }
@@ -1749,7 +1749,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
     if (VersionUtil.compareVersions(dnVersion, minimumDataNodeVersion) < 0) {
       IncorrectVersionException ive = new IncorrectVersionException(
           minimumDataNodeVersion, dnVersion, "DataNode", "NameNode");
-      LOG.warn(ive.getMessage() + " DN: " + dnReg);
+      LOG.error("Temp", new RuntimeException());
       throw ive;
     }
     String nnVersion = VersionInfo.getVersion();
@@ -1763,7 +1763,7 @@ public class NameNodeRpcServer implements NamenodeProtocols {
         IncorrectVersionException ive = new IncorrectVersionException(
             messagePrefix + " and CTime of DN ('" + dnCTime +
             "') does not match CTime of NN ('" + nnCTime + "')");
-        LOG.warn(ive.toString(), ive);
+        LOG.error("Temp", new RuntimeException());
         throw ive;
       } else {
         LOG.info(messagePrefix +
@@ -2232,10 +2232,10 @@ public class NameNodeRpcServer implements NamenodeProtocols {
       // no-QJM case only) if a in-progress segment is finalized under us ...
       // no need to throw an exception back to the client in this case
     } catch (FileNotFoundException e) {
-      LOG.debug("Tried to read from deleted or moved edit log segment", e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     } catch (HttpGetFailedException e) {
-      LOG.debug("Tried to read from deleted edit log segment", e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

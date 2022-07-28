@@ -89,7 +89,7 @@ public class TestFileCorruption {
       assertTrue("Blocks do not exist on data-dir", !blockReports.isEmpty());
       for (BlockListAsLongs report : blockReports.values()) {
         for (BlockReportReplica brr : report) {
-          LOG.info("Deliberately removing block {}", brr.getBlockName());
+          LOG.error("Temp", new RuntimeException());
           cluster.getFsDatasetTestUtils(2).getMaterializedReplica(
               new ExtendedBlock(bpid, brr)).deleteData();
         }
@@ -118,7 +118,7 @@ public class TestFileCorruption {
     // Now attempt to read the file
     DataInputStream dis = fs.open(file, 512);
     try {
-      LOG.info("A ChecksumException is expected to be logged.");
+      LOG.error("Temp", new RuntimeException());
       dis.readByte();
     } catch (ChecksumException ignore) {
       //expect this exception but let any NPE get thrown

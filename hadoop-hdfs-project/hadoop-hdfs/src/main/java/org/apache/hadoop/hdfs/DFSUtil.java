@@ -1177,7 +1177,7 @@ public class DFSUtil {
         try {
           s = NetUtils.createSocketAddr(addr);
         } catch (Exception e) {
-          LOG.warn("Exception in creating socket address " + addr, e);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         if (!s.isUnresolved() && matcher.match(s)) {
@@ -1602,7 +1602,7 @@ public class DFSUtil {
 
       URI uri = URI.create("http://" + NetUtils.getHostPortString(httpAddr));
       builder.addEndpoint(uri);
-      LOG.info("Starting Web-server for " + name + " at: " + uri);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (policy.isHttpsEnabled() && httpsAddr != null) {
@@ -1615,7 +1615,7 @@ public class DFSUtil {
 
       URI uri = URI.create("https://" + NetUtils.getHostPortString(httpsAddr));
       builder.addEndpoint(uri);
-      LOG.info("Starting Web-server for " + name + " at: " + uri);
+      LOG.error("Temp", new RuntimeException());
     }
     return builder;
   }

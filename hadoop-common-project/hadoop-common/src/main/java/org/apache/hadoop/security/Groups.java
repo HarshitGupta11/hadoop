@@ -398,11 +398,11 @@ public class Groups {
    * Refresh all user-to-groups mappings.
    */
   public void refresh() {
-    LOG.info("clearing userToGroupsMap cache");
+    LOG.error("Temp", new RuntimeException());
     try {
       impl.cacheGroupsRefresh();
     } catch (IOException e) {
-      LOG.warn("Error refreshing groups cache", e);
+      LOG.error("Temp", new RuntimeException());
     }
     cache.invalidateAll();
     if(isNegativeCacheEnabled()) {
@@ -419,7 +419,7 @@ public class Groups {
     try {
       impl.cacheGroupsAdd(groups);
     } catch (IOException e) {
-      LOG.warn("Error caching groups", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -443,7 +443,7 @@ public class Groups {
 
     if(GROUPS == null) {
       if(LOG.isDebugEnabled()) {
-        LOG.debug(" Creating new Groups object");
+        LOG.error("Temp", new RuntimeException());
       }
       GROUPS = new Groups(conf);
     }

@@ -582,9 +582,9 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
       String nodeId = token.getNodeId().toString();
       if (LOG.isDebugEnabled()) {
         if (getNMTokenCache().containsToken(nodeId)) {
-          LOG.debug("Replacing token for : " + nodeId);
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.debug("Received new token for : " + nodeId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       getNMTokenCache().setToken(nodeId, token.getToken());
@@ -607,7 +607,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
         if (response.getIsUnregistered()) {
           break;
         }
-        LOG.info("Waiting for application to be successfully unregistered.");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(100);
       }
     } catch (InterruptedException e) {
@@ -856,7 +856,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
         // corresponding rack
         String rack = RackResolver.resolve(node).getNetworkLocation();
         if (rack == null) {
-          LOG.warn("Failed to resolve rack for node " + node + ".");
+          LOG.error("Temp", new RuntimeException());
         } else {
           racks.add(rack);
         }
@@ -1028,7 +1028,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
     addResourceRequestToAsk(resourceRequestInfo.remoteRequest);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Adding request to ask " + resourceRequestInfo.remoteRequest);
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("addResourceRequest:" + " applicationId="
           + " priority=" + priority.getPriority()
           + " resourceName=" + resourceName + " numContainers="
@@ -1111,7 +1111,7 @@ public class AMRMClientImpl<T extends ContainerRequest> extends AMRMClient<T> {
     // to ensure we replace the previous token setup by the RM.
     // Afterwards we can update the service address for the RPC layer.
     UserGroupInformation currentUGI = UserGroupInformation.getCurrentUser();
-    LOG.info("Updating with new AMRMToken");
+    LOG.error("Temp", new RuntimeException());
     currentUGI.addToken(amrmToken);
     amrmToken.setService(ClientRMProxy.getAMRMTokenService(getConfig()));
   }

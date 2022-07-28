@@ -228,7 +228,7 @@ public class CombinedHostFileManager extends HostConfigManager {
       final int port) {
     InetSocketAddress addr = new InetSocketAddress(hostName, port);
     if (addr.isUnresolved()) {
-      LOG.warn("Failed to resolve {} in {}. ", hostName, fn);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return addr;

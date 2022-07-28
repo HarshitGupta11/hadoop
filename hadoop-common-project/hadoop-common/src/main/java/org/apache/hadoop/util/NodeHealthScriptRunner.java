@@ -114,7 +114,7 @@ public class NodeHealthScriptRunner extends AbstractService {
           status = HealthCheckerExitStatus.TIMED_OUT;
         }
       } catch (Exception e) {
-        LOG.warn("Caught exception : " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         if (!shexec.isTimedOut()) {
           status = HealthCheckerExitStatus.FAILED_WITH_EXCEPTION;
         } else {
@@ -316,14 +316,14 @@ public class NodeHealthScriptRunner extends AbstractService {
   }
 
   private synchronized void setHealthStatus(boolean isHealthy, String output) {
-		LOG.info("health status being set as " + output);
+		LOG.error("Temp", new RuntimeException());
     this.setHealthy(isHealthy);
     this.setHealthReport(output);
   }
   
   private synchronized void setHealthStatus(boolean isHealthy, String output,
       long time) {
-	LOG.info("health status being set as " + output);
+	LOG.error("Temp", new RuntimeException());
     this.setHealthStatus(isHealthy, output);
     this.setLastReportedTime(time);
   }

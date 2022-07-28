@@ -142,7 +142,7 @@ public class HBaseTimelineWriterImpl extends AbstractService implements
     UserGroupInformation ugi = UserGroupInformation.isSecurityEnabled() ?
         UserGroupInformation.getLoginUser() :
         UserGroupInformation.getCurrentUser();
-    LOG.info("Initialized HBaseTimelineWriterImpl UGI to " + ugi);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -435,7 +435,7 @@ public class HBaseTimelineWriterImpl extends AbstractService implements
           SubApplicationColumnPrefix.RELATES_TO, subApplicationTable);
       break;
     default:
-      LOG.info("Invalid table name provided.");
+      LOG.error("Temp", new RuntimeException());
       break;
     }
   }
@@ -576,26 +576,26 @@ public class HBaseTimelineWriterImpl extends AbstractService implements
   @Override
   protected void serviceStop() throws Exception {
     if (entityTable != null) {
-      LOG.info("closing the entity table");
+      LOG.error("Temp", new RuntimeException());
       // The close API performs flushing and releases any resources held
       entityTable.close();
     }
     if (appToFlowTable != null) {
-      LOG.info("closing the app_flow table");
+      LOG.error("Temp", new RuntimeException());
       // The close API performs flushing and releases any resources held
       appToFlowTable.close();
     }
     if (applicationTable != null) {
-      LOG.info("closing the application table");
+      LOG.error("Temp", new RuntimeException());
       applicationTable.close();
     }
     if (flowRunTable != null) {
-      LOG.info("closing the flow run table");
+      LOG.error("Temp", new RuntimeException());
       // The close API performs flushing and releases any resources held
       flowRunTable.close();
     }
     if (flowActivityTable != null) {
-      LOG.info("closing the flowActivityTable table");
+      LOG.error("Temp", new RuntimeException());
       // The close API performs flushing and releases any resources held
       flowActivityTable.close();
     }
@@ -603,7 +603,7 @@ public class HBaseTimelineWriterImpl extends AbstractService implements
       subApplicationTable.close();
     }
     if (conn != null) {
-      LOG.info("closing the hbase Connection");
+      LOG.error("Temp", new RuntimeException());
       conn.close();
     }
     super.serviceStop();

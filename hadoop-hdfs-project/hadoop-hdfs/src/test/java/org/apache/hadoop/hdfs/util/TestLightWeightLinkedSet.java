@@ -57,7 +57,7 @@ public class TestLightWeightLinkedSet {
 
   @Test
   public void testEmptyBasic() {
-    LOG.info("Test empty basic");
+    LOG.error("Temp", new RuntimeException());
     Iterator<Integer> iter = set.iterator();
     // iterator should not have next
     assertFalse(iter.hasNext());
@@ -69,12 +69,12 @@ public class TestLightWeightLinkedSet {
     assertEquals(0, set.pollAll().size());
     assertEquals(0, set.pollN(10).size());
 
-    LOG.info("Test empty - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testOneElementBasic() {
-    LOG.info("Test one element basic");
+    LOG.error("Temp", new RuntimeException());
     set.add(list.get(0));
     // set should be non-empty
     assertEquals(1, set.size());
@@ -87,12 +87,12 @@ public class TestLightWeightLinkedSet {
     // iterator should not have next
     assertEquals(list.get(0), iter.next());
     assertFalse(iter.hasNext());
-    LOG.info("Test one element basic - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testMultiBasic() {
-    LOG.info("Test multi element basic");
+    LOG.error("Temp", new RuntimeException());
     // add once
     for (Integer i : list) {
       assertTrue(set.add(i));
@@ -121,12 +121,12 @@ public class TestLightWeightLinkedSet {
     }
     // check the number of element from the iterator
     assertEquals(list.size(), num);
-    LOG.info("Test multi element basic - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveOne() {
-    LOG.info("Test remove one");
+    LOG.error("Temp", new RuntimeException());
     assertTrue(set.add(list.get(0)));
     assertEquals(1, set.size());
 
@@ -149,12 +149,12 @@ public class TestLightWeightLinkedSet {
 
     iter = set.iterator();
     assertTrue(iter.hasNext());
-    LOG.info("Test remove one - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveMulti() {
-    LOG.info("Test remove multi");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -179,12 +179,12 @@ public class TestLightWeightLinkedSet {
       assertEquals(list.get(num++), iter.next());
     }
     assertEquals(num, NUM);
-    LOG.info("Test remove multi - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testRemoveAll() {
-    LOG.info("Test remove all");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -200,21 +200,21 @@ public class TestLightWeightLinkedSet {
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
     assertTrue(set.isEmpty());
-    LOG.info("Test remove all - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollOneElement() {
-    LOG.info("Test poll one element");
+    LOG.error("Temp", new RuntimeException());
     set.add(list.get(0));
     assertEquals(list.get(0), set.pollFirst());
     assertNull(set.pollFirst());
-    LOG.info("Test poll one element - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollMulti() {
-    LOG.info("Test poll multi");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -253,12 +253,12 @@ public class TestLightWeightLinkedSet {
     }
     assertEquals(0, set.size());
     assertTrue(set.isEmpty());
-    LOG.info("Test poll multi - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollAll() {
-    LOG.info("Test poll all");
+    LOG.error("Temp", new RuntimeException());
     for (Integer i : list) {
       assertTrue(set.add(i));
     }
@@ -274,22 +274,22 @@ public class TestLightWeightLinkedSet {
 
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
-    LOG.info("Test poll all - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollNOne() {
-    LOG.info("Test pollN one");
+    LOG.error("Temp", new RuntimeException());
     set.add(list.get(0));
     List<Integer> l = set.pollN(10);
     assertEquals(1, l.size());
     assertEquals(list.get(0), l.get(0));
-    LOG.info("Test pollN one - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testPollNMulti() {
-    LOG.info("Test pollN multi");
+    LOG.error("Temp", new RuntimeException());
 
     // use addAll
     set.addAll(list);
@@ -314,12 +314,12 @@ public class TestLightWeightLinkedSet {
     assertTrue(set.isEmpty());
     assertEquals(0, set.size());
 
-    LOG.info("Test pollN multi - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testClear() {
-    LOG.info("Test clear");
+    LOG.error("Temp", new RuntimeException());
     // use addAll
     set.addAll(list);
     assertEquals(NUM, set.size());
@@ -348,12 +348,12 @@ public class TestLightWeightLinkedSet {
     Iterator<Integer> iter = set.iterator();
     assertFalse(iter.hasNext());
 
-    LOG.info("Test clear - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testOther() {
-    LOG.info("Test other");
+    LOG.error("Temp", new RuntimeException());
     assertTrue(set.addAll(list));
     // to array
     Integer[] array = set.toArray(new Integer[0]);
@@ -369,12 +369,12 @@ public class TestLightWeightLinkedSet {
     for (int i = 0; i < array2.length; i++) {
       assertTrue(list.contains(array2[i]));
     }
-    LOG.info("Test capacity - DONE");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(timeout=60000)
   public void testGetBookmarkReturnsBookmarkIterator() {
-    LOG.info("Test getBookmark returns proper iterator");
+    LOG.error("Temp", new RuntimeException());
     assertTrue(set.addAll(list));
 
     Iterator<Integer> bookmark = set.getBookmark();
@@ -391,7 +391,7 @@ public class TestLightWeightLinkedSet {
 
   @Test(timeout=60000)
   public void testBookmarkAdvancesOnRemoveOfSameElement() {
-    LOG.info("Test that the bookmark advances if we remove its element.");
+    LOG.error("Temp", new RuntimeException());
     assertTrue(set.add(list.get(0)));
     assertTrue(set.add(list.get(1)));
     assertTrue(set.add(list.get(2)));
@@ -405,7 +405,7 @@ public class TestLightWeightLinkedSet {
 
   @Test(timeout=60000)
   public void testBookmarkSetToHeadOnAddToEmpty() {
-    LOG.info("Test bookmark is set after adding to previously empty set.");
+    LOG.error("Temp", new RuntimeException());
     Iterator<Integer> it = set.getBookmark();
     assertFalse(it.hasNext());
     set.add(list.get(0));

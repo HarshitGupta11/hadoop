@@ -173,7 +173,7 @@ public class TestFileTruncate {
     for(int n = data.length; n > 0; ) {
       final int newLength = ThreadLocalRandom.current().nextInt(n);
       final boolean isReady = fs.truncate(p, newLength);
-      LOG.info("newLength=" + newLength + ", isReady=" + isReady);
+      LOG.error("Temp", new RuntimeException());
       assertEquals("File must be closed for truncating at the block boundary",
           isReady, newLength % BLOCK_SIZE == 0);
       assertEquals("Truncate is not idempotent",
@@ -206,7 +206,7 @@ public class TestFileTruncate {
     assert newLength % BLOCK_SIZE != 0 :
         " newLength must not be multiple of BLOCK_SIZE";
     final boolean isReady = fs.truncate(p, newLength);
-    LOG.info("newLength=" + newLength + ", isReady=" + isReady);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("File must be closed for truncating at the block boundary",
         isReady, newLength % BLOCK_SIZE == 0);
     fs.deleteSnapshot(dir, snapshot);

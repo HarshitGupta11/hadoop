@@ -86,7 +86,7 @@ public class NumaResourceAllocator {
   public void init(Configuration conf) throws YarnException {
     if (conf.getBoolean(YarnConfiguration.NM_NUMA_AWARENESS_READ_TOPOLOGY,
         YarnConfiguration.DEFAULT_NM_NUMA_AWARENESS_READ_TOPOLOGY)) {
-      LOG.info("Reading NUMA topology using 'numactl --hardware' command.");
+      LOG.error("Temp", new RuntimeException());
       String cmdOutput = executeNGetCmdOutput(conf);
       String[] outputLines = cmdOutput.split("\\n");
       Pattern pattern = Pattern.compile(NUMA_NODEIDS_REGEX);
@@ -120,7 +120,7 @@ public class NumaResourceAllocator {
         }
       }
     } else {
-      LOG.info("Reading NUMA topology using configurations.");
+      LOG.error("Temp", new RuntimeException());
       Collection<String> nodeIds = conf
           .getStringCollection(YarnConfiguration.NM_NUMA_AWARENESS_NODE_IDS);
       for (String nodeId : nodeIds) {
@@ -137,7 +137,7 @@ public class NumaResourceAllocator {
       throw new YarnException("There are no available NUMA nodes"
           + " for making containers NUMA aware.");
     }
-    LOG.info("Available numa nodes with capacities : " + numaNodesList.size());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @VisibleForTesting
@@ -299,7 +299,7 @@ public class NumaResourceAllocator {
    * @param containerId the container ID
    */
   public synchronized void releaseNumaResource(ContainerId containerId) {
-    LOG.info("Releasing the assigned NUMA resources for " + containerId);
+    LOG.error("Temp", new RuntimeException());
     for (NumaNodeResource numaNode : numaNodesList) {
       numaNode.releaseResources(containerId);
     }

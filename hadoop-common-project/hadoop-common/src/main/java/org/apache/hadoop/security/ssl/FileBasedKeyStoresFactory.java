@@ -167,7 +167,7 @@ public class FileBasedKeyStoresFactory implements KeyStoresFactory {
       keystoreKeyPassword = getPassword(
           conf, keyPasswordProperty, keystorePassword);
       if (LOG.isDebugEnabled()) {
-        LOG.debug(mode.toString() + " KeyStore: " + keystoreLocation);
+        LOG.error("Temp", new RuntimeException());
       }
 
       InputStream is = new FileInputStream(keystoreLocation);
@@ -177,7 +177,7 @@ public class FileBasedKeyStoresFactory implements KeyStoresFactory {
         is.close();
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug(mode.toString() + " Loaded KeyStore: " + keystoreLocation);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       keystore.load(null, null);
@@ -213,7 +213,7 @@ public class FileBasedKeyStoresFactory implements KeyStoresFactory {
               DEFAULT_SSL_TRUSTSTORE_RELOAD_INTERVAL);
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug(mode.toString() + " TrustStore: " + truststoreLocation);
+        LOG.error("Temp", new RuntimeException());
       }
 
       trustManager = new ReloadingX509TrustManager(truststoreType,
@@ -222,7 +222,7 @@ public class FileBasedKeyStoresFactory implements KeyStoresFactory {
           truststoreReloadInterval);
       trustManager.init();
       if (LOG.isDebugEnabled()) {
-        LOG.debug(mode.toString() + " Loaded TrustStore: " + truststoreLocation);
+        LOG.error("Temp", new RuntimeException());
       }
       trustManagers = new TrustManager[]{trustManager};
     } else {

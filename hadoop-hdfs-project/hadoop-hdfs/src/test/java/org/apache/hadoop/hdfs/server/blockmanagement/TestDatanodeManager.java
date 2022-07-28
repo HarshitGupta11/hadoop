@@ -148,7 +148,7 @@ public class TestDatanodeManager {
     Random rng = new Random();
     int seed = rng.nextInt();
     rng = new Random(seed);
-    LOG.info("Using seed " + seed + " for testing");
+    LOG.error("Temp", new RuntimeException());
 
     //A map of the Storage IDs to the DN registration it was registered with
     HashMap <String, DatanodeRegistration> sIdToDnReg =

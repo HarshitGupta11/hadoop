@@ -143,38 +143,38 @@ public class TestDataNodeVolumeMetrics {
 
     LOG.info("TotalMetadataOperations : " +
         metrics.getTotalMetadataOperations());
-    LOG.info("TotalDataFileIos : " + metrics.getTotalDataFileIos());
-    LOG.info("TotalFileIoErrors : " + metrics.getTotalFileIoErrors());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     LOG.info("MetadataOperationSampleCount : " +
         metrics.getMetadataOperationSampleCount());
-    LOG.info("MetadataOperationMean : " + metrics.getMetadataOperationMean());
+    LOG.error("Temp", new RuntimeException());
     LOG.info("MetadataFileIoStdDev : " +
         metrics.getMetadataOperationStdDev());
 
-    LOG.info("DataFileIoSampleCount : " + metrics.getDataFileIoSampleCount());
-    LOG.info("DataFileIoMean : " + metrics.getDataFileIoMean());
-    LOG.info("DataFileIoStdDev : " + metrics.getDataFileIoStdDev());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("flushIoSampleCount : " + metrics.getFlushIoSampleCount());
-    LOG.info("flushIoMean : " + metrics.getFlushIoMean());
-    LOG.info("flushIoStdDev : " + metrics.getFlushIoStdDev());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("syncIoSampleCount : " + metrics.getSyncIoSampleCount());
-    LOG.info("syncIoMean : " + metrics.getSyncIoMean());
-    LOG.info("syncIoStdDev : " + metrics.getSyncIoStdDev());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("readIoSampleCount : " + metrics.getReadIoMean());
-    LOG.info("readIoMean : " + metrics.getReadIoMean());
-    LOG.info("readIoStdDev : " + metrics.getReadIoStdDev());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("writeIoSampleCount : " + metrics.getWriteIoSampleCount());
-    LOG.info("writeIoMean : " + metrics.getWriteIoMean());
-    LOG.info("writeIoStdDev : " + metrics.getWriteIoStdDev());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     LOG.info("fileIoErrorSampleCount : "
         + metrics.getFileIoErrorSampleCount());
-    LOG.info("fileIoErrorMean : " + metrics.getFileIoErrorMean());
-    LOG.info("fileIoErrorStdDev : " + metrics.getFileIoErrorStdDev());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 }

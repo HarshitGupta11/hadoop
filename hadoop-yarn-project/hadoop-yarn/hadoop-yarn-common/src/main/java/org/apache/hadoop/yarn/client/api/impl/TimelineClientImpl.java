@@ -104,7 +104,7 @@ public class TimelineClientImpl extends TimelineClient {
           + "Either timeline service is not enabled or version is not set to"
           + " 1.x");
     }
-    LOG.info("Timeline service address: " + getTimelineServiceAddress());
+    LOG.error("Temp", new RuntimeException());
     UserGroupInformation ugi = UserGroupInformation.getCurrentUser();
     UserGroupInformation realUgi = ugi.getRealUser();
     if (realUgi != null) {
@@ -358,7 +358,7 @@ public class TimelineClientImpl extends TimelineClient {
             entities.getEntities().toArray(
                 new TimelineEntity[entities.getEntities().size()]));
         if (response.getErrors().size() == 0) {
-          LOG.info("Timeline entities are successfully put");
+          LOG.error("Temp", new RuntimeException());
         } else {
           for (TimelinePutResponse.TimelinePutError error : response.getErrors()) {
             LOG.error("TimelineEntity [" + error.getEntityType() + ":" +
@@ -377,7 +377,7 @@ public class TimelineClientImpl extends TimelineClient {
           }
         }
         if (!hasError) {
-          LOG.info("Timeline domains are successfully put");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch(RuntimeException e) {

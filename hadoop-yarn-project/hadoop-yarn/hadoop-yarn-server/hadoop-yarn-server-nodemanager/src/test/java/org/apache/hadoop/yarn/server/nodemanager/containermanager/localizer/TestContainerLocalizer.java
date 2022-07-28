@@ -300,7 +300,7 @@ public class TestContainerLocalizer {
         try {
           localizerA.runLocalization(nmAddr);
         } catch (Exception e) {
-          LOG.warn(e.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };
@@ -310,7 +310,7 @@ public class TestContainerLocalizer {
         try {
           localizerB.runLocalization(nmAddr);
         } catch (Exception e) {
-          LOG.warn(e.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     };

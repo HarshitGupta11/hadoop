@@ -72,7 +72,7 @@ public class RunningService extends AbstractService implements Runnable {
       }
     } catch (InterruptedException e) {
       interrupted = true;
-      LOG.info("Interrupted");
+      LOG.error("Temp", new RuntimeException());
     }
     stop();
   }

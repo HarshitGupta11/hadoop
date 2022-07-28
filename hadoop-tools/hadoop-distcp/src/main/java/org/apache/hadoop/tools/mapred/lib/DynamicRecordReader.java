@@ -102,7 +102,7 @@ public class DynamicRecordReader<K, V> extends RecordReader<K, V> {
 
     if (chunk == null) {
       if (LOG.isDebugEnabled())
-        LOG.debug(taskId + ": RecordReader is null. No records to be read.");
+        LOG.error("Temp", new RuntimeException());
       return false;
     }
 

@@ -212,13 +212,13 @@ public class URLConnectionFactory {
   public URLConnection openConnection(URL url, boolean isSpnego)
       throws IOException, AuthenticationException {
     if (isSpnego) {
-      LOG.debug("open AuthenticatedURL connection {}", url);
+      LOG.error("Temp", new RuntimeException());
       UserGroupInformation.getCurrentUser().checkTGTAndReloginFromKeytab();
       final AuthenticatedURL.Token authToken = new AuthenticatedURL.Token();
       return new AuthenticatedURL(new KerberosUgiAuthenticator(),
           connConfigurator).openConnection(url, authToken);
     } else {
-      LOG.debug("open URL connection");
+      LOG.error("Temp", new RuntimeException());
       URLConnection connection = url.openConnection();
       if (connection instanceof HttpURLConnection) {
         connConfigurator.configure((HttpURLConnection) connection);

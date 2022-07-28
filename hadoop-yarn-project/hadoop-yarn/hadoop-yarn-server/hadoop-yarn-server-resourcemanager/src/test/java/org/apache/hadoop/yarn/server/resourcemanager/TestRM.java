@@ -173,7 +173,7 @@ public class TestRM extends ParameterizedSchedulerTestBase {
       conts.addAll(am.allocate(new ArrayList<ResourceRequest>(),
           new ArrayList<ContainerId>()).getAllocatedContainers());
       contReceived = conts.size();
-      LOG.info("Got " + contReceived + " containers. Waiting to get " + 3);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(WAIT_SLEEP_MS);
     }
     Assert.assertEquals(3, conts.size());
@@ -187,7 +187,7 @@ public class TestRM extends ParameterizedSchedulerTestBase {
       conts.addAll(am.allocate(new ArrayList<ResourceRequest>(),
           new ArrayList<ContainerId>()).getAllocatedContainers());
       contReceived = conts.size();
-      LOG.info("Got " + contReceived + " containers. Waiting to get " + 10);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(WAIT_SLEEP_MS);
     }
     Assert.assertEquals(10, conts.size());
@@ -330,7 +330,7 @@ public class TestRM extends ParameterizedSchedulerTestBase {
       while (nmTokenSecretManager
           .isApplicationAttemptNMTokenPresent(attempt.getAppAttemptId(),
               nm2.getNodeId()) && interval-- > 0) {
-        LOG.info("waiting for nmToken to be cleared for : " + nm2.getNodeId());
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(WAIT_SLEEP_MS);
       }
       Assert.assertTrue(nmTokenSecretManager
@@ -417,7 +417,7 @@ public class TestRM extends ParameterizedSchedulerTestBase {
         new ArrayList<ResourceRequest>();      
     while (containersReceived.size() < totalContainerRequested) {
       nm.nodeHeartbeat(true);
-      LOG.info("requesting containers..");
+      LOG.error("Temp", new RuntimeException());
       response =
           am.allocate(resourceRequest, releaseContainerList);
       containersReceived.addAll(response.getAllocatedContainers());

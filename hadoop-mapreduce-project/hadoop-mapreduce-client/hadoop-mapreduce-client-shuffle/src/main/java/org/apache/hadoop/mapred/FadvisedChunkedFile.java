@@ -78,7 +78,7 @@ public class FadvisedChunkedFile extends ChunkedFile {
             getStartOffset(), getEndOffset() - getStartOffset(),
             POSIX_FADV_DONTNEED);
       } catch (Throwable t) {
-        LOG.warn("Failed to manage OS cache for " + identifier, t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     super.close();

@@ -54,11 +54,11 @@ public class RequestLoggerFilter implements Filter {
       XHttpServletRequest xRequest = new XHttpServletRequest((HttpServletRequest) request);
       XHttpServletResponse xResponse = new XHttpServletResponse((HttpServletResponse) response);
       try {
-        LOG.debug(xRequest.getResquestInfo().toString());
+        LOG.error("Temp", new RuntimeException());
         filterChain.doFilter(xRequest, xResponse);
       }
       finally {
-        LOG.debug(xResponse.getResponseInfo().toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

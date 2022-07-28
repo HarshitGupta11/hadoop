@@ -58,7 +58,7 @@ public class ApplicationHistoryManagerImpl extends AbstractService implements
 
   @Override
   protected void serviceInit(Configuration conf) throws Exception {
-    LOG.info("ApplicationHistory Init");
+    LOG.error("Temp", new RuntimeException());
     historyStore = createApplicationHistoryStore(conf);
     historyStore.init(conf);
     serverHttpAddress = WebAppUtils.getHttpSchemePrefix(conf) +
@@ -68,14 +68,14 @@ public class ApplicationHistoryManagerImpl extends AbstractService implements
 
   @Override
   protected void serviceStart() throws Exception {
-    LOG.info("Starting ApplicationHistory");
+    LOG.error("Temp", new RuntimeException());
     historyStore.start();
     super.serviceStart();
   }
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping ApplicationHistory");
+    LOG.error("Temp", new RuntimeException());
     historyStore.stop();
     super.serviceStop();
   }

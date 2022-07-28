@@ -228,7 +228,7 @@ final class S3ADataBlocks {
         DestState next)
         throws IllegalStateException {
       verifyState(current);
-      LOG.debug("{}: entering state {}", this, next);
+      LOG.error("Temp", new RuntimeException());
       state = next;
     }
 
@@ -321,7 +321,7 @@ final class S3ADataBlocks {
      * @throws IOException trouble
      */
     BlockUploadData startUpload() throws IOException {
-      LOG.debug("Start datablock[{}] upload", index);
+      LOG.error("Temp", new RuntimeException());
       enterState(Writing, Upload);
       return null;
     }
@@ -343,7 +343,7 @@ final class S3ADataBlocks {
     @Override
     public void close() throws IOException {
       if (enterClosedState()) {
-        LOG.debug("Closed {}", this);
+        LOG.error("Temp", new RuntimeException());
         innerClose();
       }
     }
@@ -516,13 +516,13 @@ final class S3ADataBlocks {
     }
 
     private ByteBuffer requestBuffer(int limit) {
-      LOG.debug("Requesting buffer of size {}", limit);
+      LOG.error("Temp", new RuntimeException());
       buffersOutstanding.incrementAndGet();
       return bufferPool.getBuffer(limit);
     }
 
     private void releaseBuffer(ByteBuffer buffer) {
-      LOG.debug("Releasing buffer");
+      LOG.error("Temp", new RuntimeException());
       bufferPool.returnBuffer(buffer);
       buffersOutstanding.decrementAndGet();
     }
@@ -644,7 +644,7 @@ final class S3ADataBlocks {
 
         ByteBufferInputStream(int size,
             ByteBuffer byteBuffer) {
-          LOG.debug("Creating ByteBufferInputStream of size {}", size);
+          LOG.error("Temp", new RuntimeException());
           this.size = size;
           this.byteBuffer = byteBuffer;
         }
@@ -718,13 +718,13 @@ final class S3ADataBlocks {
 
         @Override
         public synchronized void mark(int readlimit) {
-          LOG.debug("mark at {}", position());
+          LOG.error("Temp", new RuntimeException());
           byteBuffer.mark();
         }
 
         @Override
         public synchronized void reset() throws IOException {
-          LOG.debug("reset");
+          LOG.error("Temp", new RuntimeException());
           byteBuffer.reset();
         }
 
@@ -883,7 +883,7 @@ final class S3ADataBlocks {
     @Override
     protected void innerClose() throws IOException {
       final DestState state = getState();
-      LOG.debug("Closing {}", this);
+      LOG.error("Temp", new RuntimeException());
       switch (state) {
       case Writing:
         if (bufferFile.exists()) {
@@ -937,7 +937,7 @@ final class S3ADataBlocks {
      * not previously been closed.
      */
     void closeBlock() {
-      LOG.debug("block[{}]: closeBlock()", index);
+      LOG.error("Temp", new RuntimeException());
       if (!closed.getAndSet(true)) {
         blockReleased();
         if (!bufferFile.delete() && bufferFile.exists()) {
@@ -945,7 +945,7 @@ final class S3ADataBlocks {
               bufferFile.getAbsoluteFile());
         }
       } else {
-        LOG.debug("block[{}]: skipping re-entrant closeBlock()", index);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

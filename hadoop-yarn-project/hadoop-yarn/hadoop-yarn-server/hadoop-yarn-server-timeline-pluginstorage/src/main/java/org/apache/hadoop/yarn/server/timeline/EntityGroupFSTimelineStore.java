@@ -157,7 +157,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
         YarnConfiguration
             .TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_RETAIN_SECONDS_DEFAULT);
     logRetainMillis = logRetainSecs * 1000;
-    LOG.info("Cleaner set to delete logs older than {} seconds", logRetainSecs);
+    LOG.error("Temp", new RuntimeException());
     long unknownActiveSecs = conf.getLong(
         YarnConfiguration
             .TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_UNKNOWN_ACTIVE_SECONDS,
@@ -171,7 +171,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
         YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_APP_CACHE_SIZE,
         YarnConfiguration
             .TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_APP_CACHE_SIZE_DEFAULT);
-    LOG.info("Application cache size is {}", appCacheMaxSize);
+    LOG.error("Temp", new RuntimeException());
     cachedLogs = Collections.synchronizedMap(
       new LinkedHashMap<TimelineEntityGroupId, EntityCacheItem>(
           appCacheMaxSize + 1, 0.75f, true) {
@@ -180,9 +180,9 @@ public class EntityGroupFSTimelineStore extends CompositeService
               Map.Entry<TimelineEntityGroupId, EntityCacheItem> eldest) {
             if (super.size() > appCacheMaxSize) {
               TimelineEntityGroupId groupId = eldest.getKey();
-              LOG.debug("Evicting {} due to space limitations", groupId);
+              LOG.error("Temp", new RuntimeException());
               EntityCacheItem cacheItem = eldest.getValue();
-              LOG.debug("Force release cache {}.", groupId);
+              LOG.error("Temp", new RuntimeException());
               cacheItem.forceRelease();
               if (cacheItem.getAppLogs().isDone()) {
                 appIdLogMap.remove(groupId.getApplicationId());
@@ -230,33 +230,33 @@ public class EntityGroupFSTimelineStore extends CompositeService
         customClassLoader = createPluginClassLoader(pluginClasspath,
             systemClasses);
       } catch (IOException ioe) {
-        LOG.warn("Error loading classloader", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     for (final String name : pluginNames) {
-      LOG.debug("Trying to load plugin class {}", name);
+      LOG.error("Temp", new RuntimeException());
       TimelineEntityGroupPlugin cacheIdPlugin = null;
 
       try {
         if (customClassLoader != null) {
-          LOG.debug("Load plugin {} with classpath: {}", name, pluginClasspath);
+          LOG.error("Temp", new RuntimeException());
           Class<?> clazz = Class.forName(name, true, customClassLoader);
           Class<? extends TimelineEntityGroupPlugin> sClass = clazz.asSubclass(
               TimelineEntityGroupPlugin.class);
           cacheIdPlugin = ReflectionUtils.newInstance(sClass, conf);
         } else {
-          LOG.debug("Load plugin class with system classpath");
+          LOG.error("Temp", new RuntimeException());
           Class<?> clazz = conf.getClassByName(name);
           cacheIdPlugin =
               (TimelineEntityGroupPlugin) ReflectionUtils.newInstance(
                   clazz, conf);
         }
       } catch (Exception e) {
-        LOG.warn("Error loading plugin " + name, e);
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("No class defined for " + name, e);
       }
 
-      LOG.info("Load plugin class {}", cacheIdPlugin.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
       pluginList.add(cacheIdPlugin);
     }
     return pluginList;
@@ -272,7 +272,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
   protected void serviceStart() throws Exception {
 
     super.serviceStart();
-    LOG.info("Starting {}", getName());
+    LOG.error("Temp", new RuntimeException());
     summaryStore.start();
 
     Configuration conf = getConfig();
@@ -315,7 +315,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
             .TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_THREADS_DEFAULT);
     LOG.info("Scanning active directory {} every {} seconds", activeRootPath,
         scanIntervalSecs);
-    LOG.info("Cleaning logs every {} seconds", cleanerIntervalSecs);
+    LOG.error("Temp", new RuntimeException());
 
     executor = new ScheduledThreadPoolExecutor(numThreads,
         new ThreadFactoryBuilder().setNameFormat("EntityLogPluginWorker #%d")
@@ -328,17 +328,17 @@ public class EntityGroupFSTimelineStore extends CompositeService
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping {}", getName());
+    LOG.error("Temp", new RuntimeException());
     stopExecutors.set(true);
     if (executor != null) {
       executor.shutdown();
       if (executor.isTerminating()) {
-        LOG.info("Waiting for executor to terminate");
+        LOG.error("Temp", new RuntimeException());
         boolean terminated = executor.awaitTermination(10, TimeUnit.SECONDS);
         if (terminated) {
-          LOG.info("Executor terminated");
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.warn("Executor did not terminate");
+          LOG.error("Temp", new RuntimeException());
           executor.shutdownNow();
         }
       }
@@ -369,7 +369,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
       String name = stat.getPath().getName();
       ApplicationId appId = parseApplicationId(name);
       if (appId != null) {
-        LOG.debug("scan logs for {} in {}", appId, stat.getPath());
+        LOG.error("Temp", new RuntimeException());
         logsToScanCount++;
         AppLogs logs = getAndSetActiveLog(appId, stat.getPath());
         executor.execute(new ActiveLogParser(logs));
@@ -412,7 +412,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
   // searches for the app logs and returns it if found else null
   private AppLogs getAndSetAppLogs(ApplicationId applicationId)
       throws IOException {
-    LOG.debug("Looking for app logs mapped for app id {}", applicationId);
+    LOG.error("Temp", new RuntimeException());
     AppLogs appLogs = appIdLogMap.get(applicationId);
     if (appLogs == null) {
       AppState appState = AppState.UNKNOWN;
@@ -477,7 +477,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
         if (appId != null) { // Application log dir
           if (shouldCleanAppLogDir(dirpath, now, fs, retainMillis)) {
             try {
-              LOG.info("Deleting {}", dirpath);
+              LOG.error("Temp", new RuntimeException());
               if (!fs.delete(dirpath, true)) {
                 LOG.error("Unable to remove " + dirpath);
               }
@@ -501,7 +501,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
       if (now - stat.getModificationTime() <= logRetainMillis) {
         // found a dir entry that is fresh enough to prevent
         // cleaning this directory.
-        LOG.debug("{} not being cleaned due to {}", appLogPath, stat.getPath());
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
       // Otherwise, keep searching files inside for directories.
@@ -717,12 +717,12 @@ public class EntityGroupFSTimelineStore extends CompositeService
     @InterfaceAudience.Private
     @VisibleForTesting
     long scanForLogs() throws IOException {
-      LOG.debug("scanForLogs on {}", appDirPath);
+      LOG.error("Temp", new RuntimeException());
       long newestModTime = 0;
       RemoteIterator<FileStatus> iterAttempt = list(appDirPath);
       while (iterAttempt.hasNext()) {
         FileStatus statAttempt = iterAttempt.next();
-        LOG.debug("scanForLogs on {}", statAttempt.getPath().getName());
+        LOG.error("Temp", new RuntimeException());
         if (!statAttempt.isDirectory()
             || !statAttempt.getPath().getName()
             .startsWith(ApplicationAttemptId.appAttemptIdStrPrefix)) {
@@ -740,7 +740,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
           String filename = statCache.getPath().getName();
           // We should only update time for log files.
           boolean shouldSetTime = true;
-          LOG.debug("scan for log file: {}", filename);
+          LOG.error("Temp", new RuntimeException());
           if (filename.startsWith(DOMAIN_LOG_PREFIX)) {
             addSummaryLog(attemptDirName, filename, statCache.getOwner(), true);
           } else if (filename.startsWith(SUMMARY_LOG_PREFIX)) {
@@ -801,12 +801,12 @@ public class EntityGroupFSTimelineStore extends CompositeService
         TimelineEntityGroupId groupId) throws IOException {
       List<LogInfo> removeList = new ArrayList<>();
       for (LogInfo log : detailLogs) {
-        LOG.debug("Try refresh logs for {}", log.getFilename());
+        LOG.error("Temp", new RuntimeException());
         // Only refresh the log that matches the cache id
         if (log.matchesGroupId(groupId)) {
           Path dirPath = getAppDirPath();
           if (fs.exists(log.getPath(dirPath))) {
-            LOG.debug("Refresh logs for cache id {}", groupId);
+            LOG.error("Temp", new RuntimeException());
             log.parseForStore(tdm, dirPath, isDone(),
                 jsonFactory, objMapper, fs);
           } else {
@@ -834,7 +834,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
           throw new IOException("Rename " + appDirPath + " to " + doneAppPath
               + " failed");
         } else {
-          LOG.info("Moved {} to {}", appDirPath, doneAppPath);
+          LOG.error("Temp", new RuntimeException());
         }
         appDirPath = doneAppPath;
       }
@@ -858,19 +858,19 @@ public class EntityGroupFSTimelineStore extends CompositeService
   private class EntityLogScanner implements Runnable {
     @Override
     public void run() {
-      LOG.debug("Active scan starting");
+      LOG.error("Temp", new RuntimeException());
       try {
         int scanned = scanActiveLogs();
-        LOG.debug("Scanned {} active applications", scanned);
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         Throwable t = extract(e);
         if (t instanceof InterruptedException) {
-          LOG.info("File scanner interrupted");
+          LOG.error("Temp", new RuntimeException());
         } else {
           LOG.error("Error scanning active files", t);
         }
       }
-      LOG.debug("Active scan complete");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -884,17 +884,17 @@ public class EntityGroupFSTimelineStore extends CompositeService
     @Override
     public void run() {
       try {
-        LOG.debug("Begin parsing summary logs. ");
+        LOG.error("Temp", new RuntimeException());
         appLogs.parseSummaryLogs();
         if (appLogs.isDone()) {
           appLogs.moveToDone();
           appIdLogMap.remove(appLogs.getAppId());
         }
-        LOG.debug("End parsing summary logs. ");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         Throwable t = extract(e);
         if (t instanceof InterruptedException) {
-          LOG.info("Log parser interrupted");
+          LOG.error("Temp", new RuntimeException());
         } else {
           LOG.error("Error processing logs for " + appLogs.getAppId(), t);
         }
@@ -905,21 +905,21 @@ public class EntityGroupFSTimelineStore extends CompositeService
   private class EntityLogCleaner implements Runnable {
     @Override
     public void run() {
-      LOG.debug("Cleaner starting");
+      LOG.error("Temp", new RuntimeException());
       long startTime = Time.monotonicNow();
       try {
         cleanLogs(doneRootPath, fs, logRetainMillis);
       } catch (Exception e) {
         Throwable t = extract(e);
         if (t instanceof InterruptedException) {
-          LOG.info("Cleaner interrupted");
+          LOG.error("Temp", new RuntimeException());
         } else {
           LOG.error("Error cleaning files", e);
         }
       } finally {
         metrics.addLogCleanTime(Time.monotonicNow() - startTime);
       }
-      LOG.debug("Cleaner finished");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -945,13 +945,13 @@ public class EntityGroupFSTimelineStore extends CompositeService
     for (TimelineEntityGroupId groupId : groupIds) {
       TimelineStore storeForId = getCachedStore(groupId, cacheItems);
       if (storeForId != null) {
-        LOG.debug("Adding {} as a store for the query", storeForId.getName());
+        LOG.error("Temp", new RuntimeException());
         stores.add(storeForId);
         metrics.incrGetEntityToDetailOps();
       }
     }
     if (stores.size() == 0) {
-      LOG.debug("Using summary store for {}", entityType);
+      LOG.error("Temp", new RuntimeException());
       stores.add(this.summaryStore);
       metrics.incrGetEntityToSummaryOps();
     }
@@ -968,9 +968,9 @@ public class EntityGroupFSTimelineStore extends CompositeService
       Set<TimelineEntityGroupId> idsFromPlugin
           = cacheIdPlugin.getTimelineEntityGroupId(entityId, entityType);
       if (idsFromPlugin == null) {
-        LOG.debug("Plugin returned null " + cacheIdPlugin.getClass().getName());
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.debug("Plugin returned ids: " + idsFromPlugin);
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (idsFromPlugin != null) {
@@ -1007,26 +1007,26 @@ public class EntityGroupFSTimelineStore extends CompositeService
       // Note that the content in the cache log storage may be stale.
       cacheItem = this.cachedLogs.get(groupId);
       if (cacheItem == null) {
-        LOG.debug("Set up new cache item for id {}", groupId);
+        LOG.error("Temp", new RuntimeException());
         cacheItem = new EntityCacheItem(groupId, getConfig());
         AppLogs appLogs = getAndSetAppLogs(groupId.getApplicationId());
         if (appLogs != null) {
-          LOG.debug("Set applogs {} for group id {}", appLogs, groupId);
+          LOG.error("Temp", new RuntimeException());
           cacheItem.setAppLogs(appLogs);
           this.cachedLogs.put(groupId, cacheItem);
         } else {
-          LOG.warn("AppLogs for groupId {} is set to null!", groupId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
     TimelineStore store = null;
     if (cacheItem.getAppLogs() != null) {
       AppLogs appLogs = cacheItem.getAppLogs();
-      LOG.debug("try refresh cache {} {}", groupId, appLogs.getAppId());
+      LOG.error("Temp", new RuntimeException());
       cacheItems.add(cacheItem);
       store = cacheItem.refreshCache(aclManager, metrics);
     } else {
-      LOG.warn("AppLogs for group id {} is null", groupId);
+      LOG.error("Temp", new RuntimeException());
     }
     return store;
   }
@@ -1036,13 +1036,13 @@ public class EntityGroupFSTimelineStore extends CompositeService
       Long windowStart, Long windowEnd, String fromId, Long fromTs,
       NameValuePair primaryFilter, Collection<NameValuePair> secondaryFilters,
       EnumSet<Field> fieldsToRetrieve, CheckAcl checkAcl) throws IOException {
-    LOG.debug("getEntities type={} primary={}", entityType, primaryFilter);
+    LOG.error("Temp", new RuntimeException());
     List<EntityCacheItem> relatedCacheItems = new ArrayList<>();
     List<TimelineStore> stores = getTimelineStoresForRead(entityType,
         primaryFilter, secondaryFilters, relatedCacheItems);
     TimelineEntities returnEntities = new TimelineEntities();
     for (TimelineStore store : stores) {
-      LOG.debug("Try timeline store {} for the request", store.getName());
+      LOG.error("Temp", new RuntimeException());
       TimelineEntities entities = store.getEntities(entityType, limit,
           windowStart, windowEnd, fromId, fromTs, primaryFilter,
           secondaryFilters, fieldsToRetrieve, checkAcl);
@@ -1056,7 +1056,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
   @Override
   public TimelineEntity getEntity(String entityId, String entityType,
       EnumSet<Field> fieldsToRetrieve) throws IOException {
-    LOG.debug("getEntity type={} id={}", entityType, entityId);
+    LOG.error("Temp", new RuntimeException());
     List<EntityCacheItem> relatedCacheItems = new ArrayList<>();
     List<TimelineStore> stores = getTimelineStoresForRead(entityId, entityType,
         relatedCacheItems);
@@ -1069,7 +1069,7 @@ public class EntityGroupFSTimelineStore extends CompositeService
         return e;
       }
     }
-    LOG.debug("getEntity: Found nothing");
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 
@@ -1077,11 +1077,11 @@ public class EntityGroupFSTimelineStore extends CompositeService
   public TimelineEvents getEntityTimelines(String entityType,
       SortedSet<String> entityIds, Long limit, Long windowStart,
       Long windowEnd, Set<String> eventTypes) throws IOException {
-    LOG.debug("getEntityTimelines type={} ids={}", entityType, entityIds);
+    LOG.error("Temp", new RuntimeException());
     TimelineEvents returnEvents = new TimelineEvents();
     List<EntityCacheItem> relatedCacheItems = new ArrayList<>();
     for (String entityId : entityIds) {
-      LOG.debug("getEntityTimeline type={} id={}", entityType, entityId);
+      LOG.error("Temp", new RuntimeException());
       List<TimelineStore> stores
           = getTimelineStoresForRead(entityId, entityType, relatedCacheItems);
       for (TimelineStore store : stores) {

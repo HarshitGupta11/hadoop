@@ -112,7 +112,7 @@ public class DistributedFSCheck extends TestCase {
     } finally {
       writer.close();
     }
-    LOG.info("Created map input files.");
+    LOG.error("Temp", new RuntimeException());
   }
   
   private void listSubtree(Path rootFile,
@@ -179,7 +179,7 @@ public class DistributedFSCheck extends TestCase {
           curSize = in.read(buffer, 0, bufferSize);
         }
       } catch(IOException e) {
-        LOG.info("Corrupted block detected in \"" + name + "\" at " + offset);
+        LOG.error("Temp", new RuntimeException());
         return name + "@" + offset;
       } finally {
         in.close();
@@ -202,9 +202,9 @@ public class DistributedFSCheck extends TestCase {
       }
       long totalSize = ((Long)corruptedBlock).longValue();
       float ioRateMbSec = (float)totalSize * 1000 / (execTime * 0x100000);
-      LOG.info("Number of bytes processed = " + totalSize);
-      LOG.info("Exec time = " + execTime);
-      LOG.info("IO rate = " + ioRateMbSec);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       output.collect(new Text(AccumulatingReducer.VALUE_TYPE_LONG + "size"),
           new Text(String.valueOf(totalSize)));
@@ -258,8 +258,8 @@ public class DistributedFSCheck extends TestCase {
       }
     }
 
-    LOG.info("root = " + rootName);
-    LOG.info("bufferSize = " + bufferSize);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   
     Configuration conf = new Configuration();  
     conf.setInt("test.io.file.buffer.size", bufferSize);
@@ -349,13 +349,13 @@ public class DistributedFSCheck extends TestCase {
                                                            new File(resFileName), true)); 
     for(int i = 0; i < resultLines.size(); i++) {
       String cur = resultLines.get(i);
-      LOG.info(cur);
+      LOG.error("Temp", new RuntimeException());
       res.println(cur);
     }
   }
 
   private void cleanup() throws IOException {
-    LOG.info("Cleaning up test files");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(TEST_ROOT_DIR, true);
   }
 }

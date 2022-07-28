@@ -83,7 +83,7 @@ public class JobHistory extends AbstractService implements HistoryContext {
   
   @Override
   protected void serviceInit(Configuration conf) throws Exception {
-    LOG.info("JobHistory Init");
+    LOG.error("Temp", new RuntimeException());
     this.conf = conf;
     this.appID = ApplicationId.newInstance(0, 0);
     this.appAttemptID = RecordFactoryProvider.getRecordFactory(conf)
@@ -146,9 +146,9 @@ public class JobHistory extends AbstractService implements HistoryContext {
   
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping JobHistory");
+    LOG.error("Temp", new RuntimeException());
     if (scheduledExecutor != null) {
-      LOG.info("Stopping History Cleaner/Move To Done");
+      LOG.error("Temp", new RuntimeException());
       scheduledExecutor.shutdown();
       boolean interrupted = false;
       long currentTime = System.currentTimeMillis();
@@ -188,7 +188,7 @@ public class JobHistory extends AbstractService implements HistoryContext {
     @Override
     public void run() {
       try {
-        LOG.info("Starting scan to move intermediate done files");
+        LOG.error("Temp", new RuntimeException());
         hsManager.scanIntermediateDirectory();
       } catch (IOException e) {
         LOG.error("Error while scanning intermediate done dir ", e);
@@ -198,13 +198,13 @@ public class JobHistory extends AbstractService implements HistoryContext {
   
   private class HistoryCleaner implements Runnable {
     public void run() {
-      LOG.info("History Cleaner started");
+      LOG.error("Temp", new RuntimeException());
       try {
         hsManager.clean();
       } catch (IOException e) {
-        LOG.warn("Error trying to clean up ", e);
+        LOG.error("Temp", new RuntimeException());
       }
-      LOG.info("History Cleaner complete");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -223,7 +223,7 @@ public class JobHistory extends AbstractService implements HistoryContext {
   @Override
   public Map<JobId, Job> getAllJobs(ApplicationId appID) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Called getAllJobs(AppId): " + appID);
+      LOG.error("Temp", new RuntimeException());
     }
     // currently there is 1 to 1 mapping between app and job id
     org.apache.hadoop.mapreduce.JobID oldJobID = TypeConverter.fromYarn(appID);
@@ -248,7 +248,7 @@ public class JobHistory extends AbstractService implements HistoryContext {
             + CachedHistoryStorage.class.getName());
       }
     } else {
-      LOG.warn("Failed to execute refreshLoadedJobCache: JobHistory service is not started");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -300,7 +300,7 @@ public class JobHistory extends AbstractService implements HistoryContext {
       futureHistoryCleaner = null;
       scheduleHistoryCleaner();
     } else {
-      LOG.warn("Failed to execute refreshJobRetentionSettings : Job History service is not started");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

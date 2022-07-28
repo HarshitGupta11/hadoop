@@ -156,7 +156,7 @@ public class TestQueueParsing {
     conf.setCapacity(C, 70);
     conf.setMaximumCapacity(C, 70);
 
-    LOG.info("Setup top-level queues");
+    LOG.error("Temp", new RuntimeException());
     
     // Define 2nd-level queues
     final String A1 = A + ".a1";
@@ -192,7 +192,7 @@ public class TestQueueParsing {
     conf.setCapacity(C4, 5);
     conf.setMaximumCapacity(C4, 5);
     
-    LOG.info("Setup 2nd-level queues");
+    LOG.error("Temp", new RuntimeException());
     
     // Define 3rd-level queues
     final String C11 = C1 + ".c11";
@@ -206,7 +206,7 @@ public class TestQueueParsing {
     conf.setCapacity(C13, 40);
     conf.setMaximumCapacity(C13, 40);
     
-    LOG.info("Setup 3rd-level queues");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test (expected=java.lang.IllegalArgumentException.class)
@@ -284,7 +284,7 @@ public class TestQueueParsing {
     final String B = CapacitySchedulerConfiguration.ROOT + ".b";
     conf.setCapacity(B, 90);
 
-    LOG.info("Setup top-level queues");
+    LOG.error("Temp", new RuntimeException());
     
     // Define 2nd-level queues
     final String A1 = A + ".a1";
@@ -320,7 +320,7 @@ public class TestQueueParsing {
     final String B = CapacitySchedulerConfiguration.ROOT + ".b";
     conf.setCapacity(B, 90);
 
-    LOG.info("Setup top-level queues");
+    LOG.error("Temp", new RuntimeException());
     
     // Define 2nd-level queues
     final String A1 = A + ".a1";
@@ -382,7 +382,7 @@ public class TestQueueParsing {
     conf.setCapacity(B, 50);
     conf.setMaximumCapacity(B, 100);
 
-    LOG.info("Setup top-level queues");
+    LOG.error("Temp", new RuntimeException());
 
     // Define 2nd-level queues
     final String A1 = A + ".a1";

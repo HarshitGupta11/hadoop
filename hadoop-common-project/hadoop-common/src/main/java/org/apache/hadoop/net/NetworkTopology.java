@@ -142,7 +142,7 @@ public class NetworkTopology {
                                            + " at an illegal network location");
       }
       if (clusterMap.add(node)) {
-        LOG.info("Adding a new node: "+NodeBase.getPath(node));
+        LOG.error("Temp", new RuntimeException());
         if (rack == null) {
           incrementRacks();
         }
@@ -152,7 +152,7 @@ public class NetworkTopology {
           }
         }
       }
-      LOG.debug("NetworkTopology became:\n{}", this);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       netlock.writeLock().unlock();
     }
@@ -216,7 +216,7 @@ public class NetworkTopology {
       throw new IllegalArgumentException(
         "Not allow to remove an inner node: "+NodeBase.getPath(node));
     }
-    LOG.info("Removing a node: "+NodeBase.getPath(node));
+    LOG.error("Temp", new RuntimeException());
     netlock.writeLock().lock();
     try {
       if (clusterMap.remove(node)) {
@@ -225,7 +225,7 @@ public class NetworkTopology {
           numOfRacks--;
         }
       }
-      LOG.debug("NetworkTopology became:\n{}", this);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       netlock.writeLock().unlock();
     }
@@ -328,7 +328,7 @@ public class NetworkTopology {
       return 0;
     }
     if (node1 == null || node2 == null) {
-      LOG.warn("One of the nodes is a null pointer");
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     Node n1=node1, n2=node2;
@@ -355,11 +355,11 @@ public class NetworkTopology {
       netlock.readLock().unlock();
     }
     if (n1==null) {
-      LOG.warn("The cluster does not contain node: "+NodeBase.getPath(node1));
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     if (n2==null) {
-      LOG.warn("The cluster does not contain node: "+NodeBase.getPath(node2));
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     return dis+2;
@@ -379,7 +379,7 @@ public class NetworkTopology {
       return 0;
     }
     if (node1 == null || node2 == null) {
-      LOG.warn("One of the nodes is a null pointer");
+      LOG.error("Temp", new RuntimeException());
       return Integer.MAX_VALUE;
     }
     String[] paths1 = NodeBase.getPathComponents(node1);
@@ -545,13 +545,13 @@ public class NetworkTopology {
         if (excludedNodes == null || !excludedNodes.contains(ret)) {
           break;
         } else {
-          LOG.debug("Node {} is excluded, continuing.", ret);
+          LOG.error("Temp", new RuntimeException());
         }
         // We've counted numOfAvailableNodes inside the lock, so there must be
         // at least 1 satisfying node. Keep trying until we found it.
       } while (true);
     }
-    LOG.debug("chooseRandom returning {}", ret);
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 

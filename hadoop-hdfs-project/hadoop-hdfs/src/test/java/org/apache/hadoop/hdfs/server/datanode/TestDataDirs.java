@@ -77,7 +77,7 @@ public class TestDataDirs {
       locations = DataNode.getStorageLocations(conf);
       fail();
     } catch (IllegalArgumentException iae) {
-      DataNode.LOG.info("The exception is expected.", iae);
+      DataNode.LOG.error("Temp", new RuntimeException());
     }
 
     // Assert that a string with no storage type specified is

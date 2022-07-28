@@ -302,7 +302,7 @@ public abstract class AbstractS3GuardToolTestBase extends AbstractS3ATestBase {
    */
   protected void exec(S3GuardTool cmd, ByteArrayOutputStream buf, String...args)
       throws Exception {
-    LOG.info("exec {}", (Object) args);
+    LOG.error("Temp", new RuntimeException());
     int r = 0;
     try(PrintStream out =new PrintStream(buf)) {
       r = cmd.run(args, out);

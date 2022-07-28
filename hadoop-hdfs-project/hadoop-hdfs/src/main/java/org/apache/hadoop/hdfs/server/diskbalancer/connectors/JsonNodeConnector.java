@@ -59,11 +59,11 @@ public class JsonNodeConnector implements ClusterConnector {
   public List<DiskBalancerDataNode> getNodes() throws Exception {
     Preconditions.checkNotNull(this.clusterURI);
     String dataFilePath = this.clusterURI.getPath();
-    LOG.info("Reading cluster info from file : " + dataFilePath);
+    LOG.error("Temp", new RuntimeException());
     DiskBalancerCluster cluster = READER.readValue(new File(dataFilePath));
     String message = String.format("Found %d node(s)",
         cluster.getNodes().size());
-    LOG.info(message);
+    LOG.error("Temp", new RuntimeException());
     return cluster.getNodes();
   }
 

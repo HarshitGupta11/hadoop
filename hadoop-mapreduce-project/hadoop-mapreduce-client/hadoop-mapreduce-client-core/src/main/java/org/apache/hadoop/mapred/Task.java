@@ -599,7 +599,7 @@ abstract public class Task implements Writable, Configurable {
     }
     if (useNewApi) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("using new api for output committer");
+        LOG.error("Temp", new RuntimeException());
       }
       outputFormat =
         ReflectionUtils.newInstance(taskContext.getOutputFormatClass(), job);
@@ -622,7 +622,7 @@ abstract public class Task implements Writable, Configurable {
             null, ResourceCalculatorProcessTree.class);
     pTree = ResourceCalculatorProcessTree
             .getResourceCalculatorProcessTree(System.getenv().get("JVM_PID"), clazz, conf);
-    LOG.info(" Using ResourceCalculatorProcessTree : " + pTree);
+    LOG.error("Temp", new RuntimeException());
     if (pTree != null) {
       pTree.updateProcessTree();
       initCpuCumulativeTime = pTree.getCumulativeCpuTime();
@@ -799,7 +799,7 @@ abstract public class Task implements Writable, Configurable {
                 LOG.error(localStatus);
                 diskLimitCheckStatus = localStatus;
               } else {
-                LOG.warn(localStatus);
+                LOG.error("Temp", new RuntimeException());
               }
               break;
             }
@@ -827,7 +827,7 @@ abstract public class Task implements Writable, Configurable {
           localWritesCounter = counters.findCounter(localFS.getScheme(),
                   FileSystemCounter.BYTES_WRITTEN);
         } catch (IOException e) {
-          LOG.warn("Could not get LocalFileSystem BYTES_WRITTEN counter");
+          LOG.error("Temp", new RuntimeException());
         }
         if (localWritesCounter != null
                 && localWritesCounter.getCounter() > limit) {
@@ -898,7 +898,7 @@ abstract public class Task implements Writable, Configurable {
               taskDone.set(true);
               break;
             } else {
-              LOG.warn("Parent died.  Exiting "+taskId);
+              LOG.error("Temp", new RuntimeException());
               resetDoneFlag();
               System.exit(66);
             }
@@ -930,11 +930,11 @@ abstract public class Task implements Writable, Configurable {
           resetDoneFlag();
           ExitUtil.terminate(69);
         } catch (Throwable t) {
-          LOG.info("Communication exception: " + StringUtils.stringifyException(t));
+          LOG.error("Temp", new RuntimeException());
           remainingRetries -=1;
           if (remainingRetries == 0) {
             ReflectionUtils.logThreadInfo(LOG, "Communication exception", 0);
-            LOG.warn("Last retry, killing "+taskId);
+            LOG.error("Temp", new RuntimeException());
             resetDoneFlag();
             System.exit(65);
           }
@@ -1008,7 +1008,7 @@ abstract public class Task implements Writable, Configurable {
       new SortedRanges.Range(currentRecStartIndex, len);
     taskStatus.setNextRecordRange(range);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("sending reportNextRecordRange " + range);
+      LOG.error("Temp", new RuntimeException());
     }
     umbilical.reportNextRecordRange(taskId, range);
   }
@@ -1304,10 +1304,10 @@ abstract public class Task implements Writable, Configurable {
       try {
         if (!umbilical.statusUpdate(getTaskID(), taskStatus).getTaskFound()) {
           if (uberized) {
-            LOG.warn("Task no longer available: " + taskId);
+            LOG.error("Temp", new RuntimeException());
             break;
           } else {
-            LOG.warn("Parent died.  Exiting " + taskId);
+            LOG.error("Temp", new RuntimeException());
             ExitUtil.terminate(66);
           }
         }
@@ -1365,7 +1365,7 @@ abstract public class Task implements Writable, Configurable {
     while (true) {
       try {
         umbilical.done(getTaskID());
-        LOG.info("Task '" + taskId + "' done.");
+        LOG.error("Temp", new RuntimeException());
         return;
       } catch (IOException ie) {
         LOG.warn("Failure signalling completion: " + 
@@ -1406,7 +1406,7 @@ abstract public class Task implements Writable, Configurable {
     
     // task can Commit now  
     try {
-      LOG.info("Task " + taskId + " is allowed to commit now");
+      LOG.error("Temp", new RuntimeException());
       committer.commitTask(taskContext);
       return;
     } catch (IOException iee) {
@@ -1441,7 +1441,7 @@ abstract public class Task implements Writable, Configurable {
     setPhase(TaskStatus.Phase.CLEANUP);
     getProgress().setStatus("cleanup");
     statusUpdate(umbilical);
-    LOG.info("Running cleanup for the task");
+    LOG.error("Temp", new RuntimeException());
     // do the cleanup
     committer.abortTask(taskContext);
   }
@@ -1454,10 +1454,10 @@ abstract public class Task implements Writable, Configurable {
     getProgress().setStatus("cleanup");
     statusUpdate(umbilical);
     // do the cleanup
-    LOG.info("Cleaning up job");
+    LOG.error("Temp", new RuntimeException());
     if (jobRunStateForCleanup == JobStatus.State.FAILED 
         || jobRunStateForCleanup == JobStatus.State.KILLED) {
-      LOG.info("Aborting job with runstate : " + jobRunStateForCleanup.name());
+      LOG.error("Temp", new RuntimeException());
       if (conf.getUseNewMapper()) {
         committer.abortJob(jobContext, jobRunStateForCleanup);
       } else {
@@ -1466,7 +1466,7 @@ abstract public class Task implements Writable, Configurable {
         oldCommitter.abortJob(jobContext, jobRunStateForCleanup);
       }
     } else if (jobRunStateForCleanup == JobStatus.State.SUCCEEDED){
-      LOG.info("Committing job");
+      LOG.error("Temp", new RuntimeException());
       committer.commitJob(jobContext);
     } else {
       throw new IOException("Invalid state of the job for cleanup. State found "

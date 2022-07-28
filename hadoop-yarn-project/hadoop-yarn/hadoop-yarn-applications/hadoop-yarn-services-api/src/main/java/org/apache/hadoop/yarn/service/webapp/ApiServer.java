@@ -97,7 +97,7 @@ public class ApiServer {
   @Produces({ MediaType.APPLICATION_JSON + ";charset=utf-8" })
   public Response getVersion() {
     String version = VersionInfo.getBuildVersion();
-    LOG.info(version);
+    LOG.error("Temp", new RuntimeException());
     return Response.ok("{ \"hadoop_version\": \"" + version + "\"}").build();
   }
 
@@ -110,7 +110,7 @@ public class ApiServer {
     ServiceStatus serviceStatus = new ServiceStatus();
     try {
       UserGroupInformation ugi = getProxyUser(request);
-      LOG.info("POST: createService = {} user = {}", service, ugi);
+      LOG.error("Temp", new RuntimeException());
       if(service.getState()==ServiceState.STOPPED) {
         ugi.doAs(new PrivilegedExceptionAction<Void>() {
           @Override
@@ -176,7 +176,7 @@ public class ApiServer {
         throw new IllegalArgumentException("Service name can not be null.");
       }
       UserGroupInformation ugi = getProxyUser(request);
-      LOG.info("GET: getService for appName = {} user = {}", appName, ugi);
+      LOG.error("Temp", new RuntimeException());
       Service app = ugi.doAs(new PrivilegedExceptionAction<Service>() {
         @Override
         public Service run() throws IOException, YarnException {
@@ -250,11 +250,11 @@ public class ApiServer {
         sc.start();
         result = sc.actionStop(appName, destroy);
         if (result == EXIT_SUCCESS) {
-          LOG.info("Successfully stopped service {}", appName);
+          LOG.error("Temp", new RuntimeException());
         }
         if (destroy) {
           result = sc.actionDestroy(appName);
-          LOG.info("Successfully deleted service {}", appName);
+          LOG.error("Temp", new RuntimeException());
         }
         sc.close();
         return result;
@@ -423,7 +423,7 @@ public class ApiServer {
     });
     if (result == EXIT_SUCCESS) {
       String message = "Service " + appName + " is successfully flexed.";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       ServiceStatus status = new ServiceStatus();
       status.setDiagnostics(message);
       status.setState(ServiceState.ACCEPTED);
@@ -468,7 +468,7 @@ public class ApiServer {
         return null;
       }
     });
-    LOG.info("Successfully started service " + appName);
+    LOG.error("Temp", new RuntimeException());
     ServiceStatus status = new ServiceStatus();
     status.setDiagnostics("Service " + appName + " is successfully started.");
     status.setState(ServiceState.ACCEPTED);

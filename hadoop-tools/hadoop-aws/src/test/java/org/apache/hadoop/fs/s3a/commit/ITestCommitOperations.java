@@ -174,7 +174,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
     CommitOperations actions = newCommitOperations();
     // abort,; rethrow on failure
     fullThrottle();
-    LOG.info("Abort call");
+    LOG.error("Temp", new RuntimeException());
     actions.abortAllSinglePendingCommits(pendingDataPath.getParent(), true)
         .maybeRethrow();
     resetFailures();
@@ -365,7 +365,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
     // this will force an existence check
     Path path = getFileSystem().keyToQualifiedPath(commit.getDestinationKey());
     FileStatus status = getFileSystem().getFileStatus(path);
-    LOG.debug("Destination entry: {}", status);
+    LOG.error("Temp", new RuntimeException());
     if (!status.isFile()) {
       throw new PathCommitException(path, "Not a file: " + status);
     }
@@ -388,7 +388,7 @@ public class ITestCommitOperations extends AbstractCommitITest {
         pendingDataPath);
     assertTrue("No data in " + fileStatus, fileStatus.getLen() > 0);
     String data = read(fs, pendingDataPath);
-    LOG.info("Contents of {}: \n{}", pendingDataPath, data);
+    LOG.error("Temp", new RuntimeException());
     // really read it in and parse
     SinglePendingCommit persisted = SinglePendingCommit.serializer()
         .load(fs, pendingDataPath);
@@ -513,9 +513,9 @@ public class ITestCommitOperations extends AbstractCommitITest {
     Path path = path("testFailuresInAbort");
     getFileSystem().mkdirs(path);
     setThrottling(HIGH_THROTTLE);
-    LOG.info("Aborting");
+    LOG.error("Temp", new RuntimeException());
     actions.abortPendingUploadsUnderPath(path);
-    LOG.info("Abort completed");
+    LOG.error("Temp", new RuntimeException());
     resetFailures();
   }
 

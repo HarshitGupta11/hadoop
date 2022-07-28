@@ -458,7 +458,7 @@ public class CapacityScheduler extends
       this.conf = csConfProvider.loadConfiguration(configuration);
       validateConf(this.conf);
       try {
-        LOG.info("Re-initializing queues...");
+        LOG.error("Temp", new RuntimeException());
         refreshMaximumAllocation(
             ResourceUtils.fetchMaximumAllocationFromConfig(this.conf));
         reinitializeQueues(this.conf);
@@ -582,7 +582,7 @@ public class CapacityScheduler extends
           Thread.currentThread().interrupt();
         }
       }
-      LOG.info("AsyncScheduleThread[" + getName() + "] exited!");
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void beginSchedule() {
@@ -624,7 +624,7 @@ public class CapacityScheduler extends
           Thread.currentThread().interrupt();
         }
       }
-      LOG.info("ResourceCommitterService exited!");
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void addNewCommitRequest(
@@ -993,7 +993,7 @@ public class CapacityScheduler extends
       if (application == null) {
         // The AppRemovedSchedulerEvent maybe sent on recovery for completed
         // apps, ignore it.
-        LOG.warn("Couldn't find application " + applicationId);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       CSQueue queue = (CSQueue) application.getQueue();
@@ -1034,7 +1034,7 @@ public class CapacityScheduler extends
             RMContainerState.RUNNING)) {
           // do not kill the running container in the case of work-preserving AM
           // restart.
-          LOG.info("Skip killing " + rmContainer.getContainerId());
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         super.completedContainer(rmContainer, SchedulerUtils
@@ -1149,7 +1149,7 @@ public class CapacityScheduler extends
         }
 
         if (LOG.isDebugEnabled()) {
-          LOG.debug("allocate: post-update");
+          LOG.error("Temp", new RuntimeException());
           application.showRequests();
         }
       }
@@ -2142,7 +2142,7 @@ public class CapacityScheduler extends
       throws SchedulerDynamicEditException {
     try {
       writeLock.lock();
-      LOG.info("Removing queue: " + queueName);
+      LOG.error("Temp", new RuntimeException());
       CSQueue q = this.getQueue(queueName);
       if (!(AbstractAutoCreatedLeafQueue.class.isAssignableFrom(
           q.getClass()))) {
@@ -2203,7 +2203,7 @@ public class CapacityScheduler extends
       parent.addChildQueue(newQueue);
       this.queueManager.addQueue(queuename, newQueue);
 
-      LOG.info("Creation of AutoCreatedLeafQueue " + newQueue + " succeeded");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       writeLock.unlock();
     }
@@ -2624,7 +2624,7 @@ public class CapacityScheduler extends
             return false;
           }
         } catch (InvalidAllocationTagsQueryException e) {
-          LOG.warn("Unable to allocate container", e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return tryCommit(getClusterResource(), resourceCommitRequest, false);
@@ -2779,7 +2779,7 @@ public class CapacityScheduler extends
     }
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Try to commit allocation proposal=" + request);
+      LOG.error("Temp", new RuntimeException());
     }
 
     boolean isSuccess = false;
@@ -2791,10 +2791,10 @@ public class CapacityScheduler extends
       if (app != null && attemptId.equals(app.getApplicationAttemptId())) {
         if (app.accept(cluster, request, updatePending)
             && app.apply(cluster, request, updatePending)) {
-          LOG.info("Allocation proposal accepted");
+          LOG.error("Temp", new RuntimeException());
           isSuccess = true;
         } else{
-          LOG.info("Failed to accept allocation proposal");
+          LOG.error("Temp", new RuntimeException());
         }
 
         // Update unconfirmed allocated resource.

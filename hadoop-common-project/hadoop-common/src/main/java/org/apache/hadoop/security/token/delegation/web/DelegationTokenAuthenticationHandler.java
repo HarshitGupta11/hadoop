@@ -389,7 +389,7 @@ public abstract class DelegationTokenAuthenticationHandler
     AuthenticationToken token;
     String delegationParam = getDelegationToken(request);
     if (delegationParam != null) {
-      LOG.debug("Authenticating with dt param: {}", delegationParam);
+      LOG.error("Temp", new RuntimeException());
       try {
         Token<AbstractDelegationTokenIdentifier> dt = new Token();
         dt.decodeFromUrlString(delegationParam);
@@ -407,7 +407,7 @@ public abstract class DelegationTokenAuthenticationHandler
             HttpServletResponse.SC_FORBIDDEN, new AuthenticationException(ex));
       }
     } else {
-      LOG.debug("Falling back to {} (req={})", authHandler.getClass(), request);
+      LOG.error("Temp", new RuntimeException());
       token = authHandler.authenticate(request, response);
     }
     return token;

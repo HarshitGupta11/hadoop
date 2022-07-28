@@ -288,7 +288,7 @@ public class TestCapacitySchedulerDynamicBehavior {
     conf.setReservationWindow(A, 86400 * 1000);
     conf.setAverageCapacity(A, 1.0f);
 
-    LOG.info("Setup a as a plan queue");
+    LOG.error("Temp", new RuntimeException());
   }
 
 }

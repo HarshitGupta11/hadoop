@@ -107,7 +107,7 @@ public abstract class WebApp extends ServletModule {
     try {
       checkNotNull(httpServer, "httpServer").join();
     } catch (InterruptedException e) {
-      LOG.info("interrupted", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

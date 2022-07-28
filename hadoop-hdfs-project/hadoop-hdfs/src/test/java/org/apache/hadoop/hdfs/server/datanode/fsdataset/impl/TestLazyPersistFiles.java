@@ -59,7 +59,7 @@ public class TestLazyPersistFiles extends LazyPersistTestCase {
           EnumSet.of(CreateFlag.APPEND), null, null).close();
       fail("Append to LazyPersist file did not fail as expected");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -79,7 +79,7 @@ public class TestLazyPersistFiles extends LazyPersistTestCase {
       client.truncate(path.toString(), BLOCK_SIZE/2);
       fail("Truncate to LazyPersist file did not fail as expected");
     } catch (Throwable t) {
-      LOG.info("Got expected exception ", t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -238,7 +238,7 @@ public class TestDFSStripedOutputStreamWithFailureBase {
     final HdfsConfiguration conf = newHdfsConfiguration();
     for (int dn = 0; dn < dataBlocks + parityBlocks; dn++) {
       try {
-        LOG.info("runTest: dn=" + dn + ", length=" + length);
+        LOG.error("Temp", new RuntimeException());
         setup(conf);
         runTest(length, new int[]{length / 2}, new int[]{dn}, false);
       } catch (Throwable e) {
@@ -296,7 +296,7 @@ public class TestDFSStripedOutputStreamWithFailureBase {
     final Path p = new Path(dir, "dn" + Arrays.toString(dnIndex)
         + "len" + length + "kill" +  Arrays.toString(killPos));
     final String fullPath = p.toString();
-    LOG.info("fullPath=" + fullPath);
+    LOG.error("Temp", new RuntimeException());
 
     if (tokenExpire) {
       final NameNode nn = cluster.getNameNode();
@@ -373,7 +373,7 @@ public class TestDFSStripedOutputStreamWithFailureBase {
   static long getGenerationStamp(DFSStripedOutputStream out)
       throws IOException {
     final long gs = out.getBlock().getGenerationStamp();
-    LOG.info("getGenerationStamp returns " + gs);
+    LOG.error("Temp", new RuntimeException());
     return gs;
   }
 
@@ -407,7 +407,7 @@ public class TestDFSStripedOutputStreamWithFailureBase {
       DFSStripedOutputStream out, final int dnIndex, final AtomicInteger pos) {
     final StripedDataStreamer s = out.getStripedDataStreamer(dnIndex);
     final DatanodeInfo datanode = getDatanodes(s);
-    LOG.info("killDatanode " + dnIndex + ": " + datanode + ", pos=" + pos);
+    LOG.error("Temp", new RuntimeException());
     if (datanode != null) {
       cluster.stopDataNode(datanode.getXferAddr());
     }

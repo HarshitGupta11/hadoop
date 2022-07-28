@@ -124,7 +124,7 @@ public class DFSCIOTest {
                                         int fileSize, // in MB 
                                         int nrFiles
                                         ) throws IOException {
-    LOG.info("creating control file: "+fileSize+" mega bytes, "+nrFiles+" files");
+    LOG.error("Temp", new RuntimeException());
 
     fs.delete(CONTROL_DIR, true);
 
@@ -145,7 +145,7 @@ public class DFSCIOTest {
     	writer = null;
       }
     }
-    LOG.info("created control files for: "+nrFiles+" files");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static String getFileName(int fIdx) {
@@ -174,9 +174,9 @@ public class DFSCIOTest {
                       Long objSize) throws IOException {
       long totalSize = objSize.longValue();
       float ioRateMbSec = (float)totalSize * 1000 / (execTime * MEGA);
-      LOG.info("Number of bytes processed = " + totalSize);
-      LOG.info("Exec time = " + execTime);
-      LOG.info("IO rate = " + ioRateMbSec);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       output.collect(new Text(AccumulatingReducer.VALUE_TYPE_LONG + "tasks"),
           new Text(String.valueOf(1)));
@@ -434,9 +434,9 @@ public class DFSCIOTest {
       }
     }
 
-    LOG.info("nrFiles = " + nrFiles);
-    LOG.info("fileSize (MB) = " + fileSize);
-    LOG.info("bufferSize = " + bufferSize);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   
     try {
       fsConfig.setInt("test.io.file.buffer.size", bufferSize);
@@ -462,7 +462,7 @@ public class DFSCIOTest {
         sequentialTest(fs, testType, fileSize, nrFiles);
         long execTime = System.currentTimeMillis() - tStart;
         String resultLine = "Seq Test exec time sec: " + (float)execTime / 1000;
-        LOG.info(resultLine);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       if (testType == TEST_TYPE_CLEANUP) {
@@ -539,13 +539,13 @@ public class DFSCIOTest {
                                       new FileOutputStream(
                                                            new File(resFileName), true)); 
     for(int i = 0; i < resultLines.length; i++) {
-      LOG.info(resultLines[i]);
+      LOG.error("Temp", new RuntimeException());
       res.println(resultLines[i]);
     }
   }
 
   private static void cleanup(FileSystem fs) throws Exception {
-    LOG.info("Cleaning up test files");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(new Path(TEST_ROOT_DIR), true);
     fs.delete(HDFS_TEST_DIR, true);
   }

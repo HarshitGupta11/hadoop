@@ -53,7 +53,7 @@ public final class Parser {
 
   /** Parse a line */
   private static void parseLine(final String line, Map<Parameter, List<TaskResult>> m) {
-//      LOG.info("line = " + line);
+//      LOG.error("Temp", new RuntimeException());
     final Map.Entry<String, TaskResult> e = DistSum.string2TaskResult(line);
     if (e != null) {
       final List<TaskResult> sums = m.get(Parameter.get(e.getKey()));
@@ -112,7 +112,7 @@ public final class Parser {
       m.put(p, new ArrayList<TaskResult>());
     parse(new File(f), m);
 
-    //LOG.info("m=" + m.toString().replace(", ", ",\n  "));
+    //LOG.error("Temp", new RuntimeException());
     for(Parameter p : Parameter.values())
       m.put(p, m.get(p));
     return m;

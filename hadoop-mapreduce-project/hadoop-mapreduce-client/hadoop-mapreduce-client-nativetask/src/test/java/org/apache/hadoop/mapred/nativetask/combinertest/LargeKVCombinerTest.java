@@ -74,7 +74,7 @@ public class LargeKVCombinerTest {
       int max = i;
       int min = Math.max(i / 4, max - 10);
 
-      LOG.info("===KV Size Test: min size: " + min + ", max size: " + max);
+      LOG.error("Temp", new RuntimeException());
 
       normalConf.set(TestConstants.NATIVETASK_KVSIZE_MIN, String.valueOf(min));
       normalConf.set(TestConstants.NATIVETASK_KVSIZE_MAX, String.valueOf(max));

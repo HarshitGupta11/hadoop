@@ -145,7 +145,7 @@ public class BlockPlacementPolicyRackFaultTolerant extends BlockPlacementPolicyD
               + "remaining racks. This may not guarantee rack-level fault "
               + "tolerance. Please check if the racks are configured properly.",
           results.size(), totalReplicaExpected, maxNodesPerRack, numOfReplicas);
-      LOG.debug("Caught exception was:", e);
+      LOG.error("Temp", new RuntimeException());
       chooseEvenlyFromRemainingRacks(writer, excludedNodes, blocksize,
           maxNodesPerRack, results, avoidStaleNodes, storageTypes,
           totalReplicaExpected, e);

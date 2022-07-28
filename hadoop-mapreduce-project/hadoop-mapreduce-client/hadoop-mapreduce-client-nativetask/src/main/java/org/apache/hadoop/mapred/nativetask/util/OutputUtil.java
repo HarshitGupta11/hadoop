@@ -34,7 +34,7 @@ public class OutputUtil {
   public static NativeTaskOutput createNativeTaskOutput(Configuration conf, String id) {
     Class<?> clazz = conf.getClass(OutputUtil.NATIVE_TASK_OUTPUT_MANAGER,
         NativeTaskOutputFiles.class);
-    LOG.info(OutputUtil.NATIVE_TASK_OUTPUT_MANAGER + " = " + clazz.getName());
+    LOG.error("Temp", new RuntimeException());
     try {
       Constructor<?> ctor = clazz.getConstructor(Configuration.class, String.class);
       ctor.setAccessible(true);

@@ -98,7 +98,7 @@ public class GraphiteSink implements MetricsSink, Closeable {
         try {
           graphite.write(lines.toString());
         } catch (Exception e) {
-          LOG.warn("Error sending metrics to Graphite", e);
+          LOG.error("Temp", new RuntimeException());
           try {
             graphite.close();
           } catch (Exception e1) {
@@ -112,7 +112,7 @@ public class GraphiteSink implements MetricsSink, Closeable {
       try {
         graphite.flush();
       } catch (Exception e) {
-        LOG.warn("Error flushing metrics to Graphite", e);
+        LOG.error("Temp", new RuntimeException());
         try {
           graphite.close();
         } catch (Exception e1) {

@@ -250,7 +250,7 @@ public abstract class ContainerExecutor implements Configurable {
     Path pidPath = getPidFilePath(containerId);
 
     if (pidPath == null) {
-      LOG.warn(containerId + " is not active, returning terminated error");
+      LOG.error("Temp", new RuntimeException());
 
       return ExitCode.TERMINATED.getExitCode();
     }
@@ -261,7 +261,7 @@ public abstract class ContainerExecutor implements Configurable {
       throw new IOException("Unable to determine pid for " + containerId);
     }
 
-    LOG.info("Reacquiring " + containerId + " with pid " + pid);
+    LOG.error("Temp", new RuntimeException());
 
     ContainerLivenessContext livenessContext = new ContainerLivenessContext
         .Builder()
@@ -282,7 +282,7 @@ public abstract class ContainerExecutor implements Configurable {
 
     while (!file.exists() && msecLeft >= 0) {
       if (!isContainerActive(containerId)) {
-        LOG.info(containerId + " was deactivated");
+        LOG.error("Temp", new RuntimeException());
 
         return ExitCode.TERMINATED.getExitCode();
       }
@@ -527,7 +527,7 @@ public abstract class ContainerExecutor implements Configurable {
 
     if (shExecOutput != null) {
       for (String str : shExecOutput.split("\n")) {
-        LOG.info(str);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -763,7 +763,7 @@ public abstract class ContainerExecutor implements Configurable {
    *          the Container
    */
   public void pauseContainer(Container container) {
-    LOG.warn(container.getContainerId() + " doesn't support pausing.");
+    LOG.error("Temp", new RuntimeException());
     throw new UnsupportedOperationException();
   }
 
@@ -774,7 +774,7 @@ public abstract class ContainerExecutor implements Configurable {
    *          the Container
    */
   public void resumeContainer(Container container) {
-    LOG.warn(container.getContainerId() + " doesn't support resume.");
+    LOG.error("Temp", new RuntimeException());
     throw new UnsupportedOperationException();
   }
 
@@ -851,7 +851,7 @@ public abstract class ContainerExecutor implements Configurable {
       } catch (IOException e) {
         String message = "Exception when user " + user + " killing task " + pid
             + " in DelayedProcessKiller: " + StringUtils.stringifyException(e);
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         container.handle(new ContainerDiagnosticsUpdateEvent(
             container.getContainerId(), message));
       }

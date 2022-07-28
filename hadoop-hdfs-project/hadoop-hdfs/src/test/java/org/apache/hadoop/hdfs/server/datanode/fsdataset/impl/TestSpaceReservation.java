@@ -723,7 +723,7 @@ public class TestSpaceReservation {
     } catch (IOException e) {
       // Append will fail due to not able to replace datanodes in 3 nodes
       // cluster.
-      LOG.info("", e);
+      LOG.error("Temp", new RuntimeException());
     }
     DFSTestUtil.abortStream((DFSOutputStream) os.getWrappedStream());
     /*

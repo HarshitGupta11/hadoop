@@ -96,8 +96,8 @@ public class TestWebAppTests {
 
   private void logInstances(HttpServletRequest req, HttpServletResponse res,
                             PrintWriter out) {
-    LOG.info("request: {}", req);
-    LOG.info("response: {}", res);
-    LOG.info("writer: {}", out);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 }

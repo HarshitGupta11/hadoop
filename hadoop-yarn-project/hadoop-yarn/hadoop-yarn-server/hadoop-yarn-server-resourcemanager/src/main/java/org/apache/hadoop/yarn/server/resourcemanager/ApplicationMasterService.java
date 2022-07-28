@@ -265,7 +265,7 @@ public class ApplicationMasterService extends AbstractService implements
             && appContext.getKeepContainersAcrossApplicationAttempts())) {
           String message =
               AMRMClientUtils.APP_ALREADY_REGISTERED_MESSAGE + appID;
-          LOG.warn(message);
+          LOG.error("Temp", new RuntimeException());
           RMAuditLogger.logFailure(
               this.rmContext.getRMApps().get(appID).getUser(),
               AuditConstants.REGISTER_AM, "", "ApplicationMasterService",
@@ -310,7 +310,7 @@ public class ApplicationMasterService extends AbstractService implements
     // ApplicationDoesNotExistInCacheException before and after
     // RM work-preserving restart.
     if (rmApp.isAppFinalStateStored()) {
-      LOG.info(rmApp.getApplicationId() + " unregistered successfully. ");
+      LOG.error("Temp", new RuntimeException());
       return FinishApplicationMasterResponse.newInstance(true);
     }
 
@@ -476,7 +476,7 @@ public class ApplicationMasterService extends AbstractService implements
     // set response id to -1 before application master for the following
     // attemptID get registered
     response.setResponseId(PRE_REGISTER_RESPONSE_ID);
-    LOG.info("Registering app attempt : " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     responseMap.put(attemptId, new AllocateResponseLock(response));
     rmContext.getNMTokenSecretManager().registerApplicationAttempt(attemptId);
   }
@@ -493,7 +493,7 @@ public class ApplicationMasterService extends AbstractService implements
   }
 
   public void unregisterAttempt(ApplicationAttemptId attemptId) {
-    LOG.info("Unregistering app attempt : " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     responseMap.remove(attemptId);
     rmContext.getNMTokenSecretManager().unregisterApplicationAttempt(attemptId);
   }

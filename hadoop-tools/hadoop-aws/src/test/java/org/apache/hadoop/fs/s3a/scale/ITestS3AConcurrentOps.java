@@ -77,18 +77,18 @@ public class ITestS3AConcurrentOps extends S3AScaleTestBase {
       target[i] = new Path(testRoot, "target" + i);
     }
 
-    LOG.info("Generating data...");
+    LOG.error("Temp", new RuntimeException());
     auxFs.mkdirs(testRoot);
     byte[] zeroes = ContractTestUtils.dataset(1024*1024, 0, Integer.MAX_VALUE);
     for (Path aSource : source) {
       try(FSDataOutputStream out = auxFs.create(aSource)) {
         for (int mb = 0; mb < 20; mb++) {
-          LOG.debug("{}: Block {}...", aSource, mb);
+          LOG.error("Temp", new RuntimeException());
           out.write(zeroes);
         }
       }
     }
-    LOG.info("Data generated...");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private S3AFileSystem getRestrictedFileSystem() throws Exception {
@@ -155,7 +155,7 @@ public class ITestS3AConcurrentOps extends S3AScaleTestBase {
         }
       });
     }
-    LOG.info("Waiting for tasks to complete...");
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Deadlock may have occurred if nothing else is logged" +
         " or the test times out");
     for (int i = 0; i < concurrentRenames; i++) {
@@ -163,6 +163,6 @@ public class ITestS3AConcurrentOps extends S3AScaleTestBase {
       assertPathExists("target path", target[i]);
       assertPathDoesNotExist("source path", source[i]);
     }
-    LOG.info("All tasks have completed successfully");
+    LOG.error("Temp", new RuntimeException());
   }
 }

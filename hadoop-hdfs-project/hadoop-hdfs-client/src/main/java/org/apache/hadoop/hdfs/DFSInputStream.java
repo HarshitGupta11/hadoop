@@ -239,7 +239,7 @@ public class DFSInputStream extends FSInputStream
     if (locatedBlocks == null || refresh) {
       newInfo = dfsClient.getLocatedBlocks(src, 0);
     }
-    DFSClient.LOG.debug("newInfo = {}", newInfo);
+    DFSClient.LOG.error("Temp", new RuntimeException());
     if (newInfo == null) {
       throw new IOException("Cannot open filename " + src);
     }
@@ -607,7 +607,7 @@ public class DFSInputStream extends FSInputStream
     if (Thread.currentThread().isInterrupted() &&
         (e instanceof ClosedByInterruptException ||
             e instanceof InterruptedIOException)) {
-      DFSClient.LOG.debug("The reading thread has been interrupted.", e);
+      DFSClient.LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -650,7 +650,7 @@ public class DFSInputStream extends FSInputStream
   @Override
   public synchronized void close() throws IOException {
     if (!closed.compareAndSet(false, true)) {
-      DFSClient.LOG.debug("DFSInputStream has been closed already");
+      DFSClient.LOG.error("Temp", new RuntimeException());
       return;
     }
     dfsClient.checkOpen();
@@ -777,7 +777,7 @@ public class DFSInputStream extends FSInputStream
         } catch (IOException e) {
           checkInterrupted(e);
           if (retries == 1) {
-            DFSClient.LOG.warn("DFS Read", e);
+            DFSClient.LOG.error("Temp", new RuntimeException());
           }
           blockEnd = -1;
           if (currentNode != null) {
@@ -881,7 +881,7 @@ public class DFSInputStream extends FSInputStream
 
     DatanodeInfo[] nodes = block.getLocations();
     if (nodes == null || nodes.length == 0) {
-      DFSClient.LOG.info("No node available for " + blockInfo);
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
     DFSClient.LOG.info("Could not obtain " + block.getBlock()
         + " from any node: " + errMsg
@@ -949,7 +949,7 @@ public class DFSInputStream extends FSInputStream
     }
     final String dnAddr =
         chosenNode.getXferAddr(dfsClient.getConf().isConnectToDnViaHostname());
-    DFSClient.LOG.debug("Connecting to datanode {}", dnAddr);
+    DFSClient.LOG.error("Temp", new RuntimeException());
     InetSocketAddress targetAddr = NetUtils.createSocketAddr(dnAddr);
     return new DNAddrPair(chosenNode, targetAddr, storageType, block);
   }
@@ -1081,7 +1081,7 @@ public class DFSInputStream extends FSInputStream
         String msg = "fetchBlockByteRange(). Got a checksum exception for "
             + src + " at " + block.getBlock() + ":" + e.getPos() + " from "
             + datanode.info;
-        DFSClient.LOG.warn(msg);
+        DFSClient.LOG.error("Temp", new RuntimeException());
         // we want to remember what we have tried
         corruptedBlocks.addCorruptedBlock(block.getBlock(), datanode.info);
         addToDeadNodes(datanode.info);
@@ -1105,7 +1105,7 @@ public class DFSInputStream extends FSInputStream
         } else {
           String msg = "Failed to connect to " + datanode.addr + " for file "
               + src + " for block " + block.getBlock() + ":" + e;
-          DFSClient.LOG.warn("Connection failure: " + msg, e);
+          DFSClient.LOG.error("Temp", new RuntimeException());
           addToDeadNodes(datanode.info);
           throw new IOException(msg);
         }
@@ -1480,7 +1480,7 @@ public class DFSInputStream extends FSInputStream
             // most likely a bug.
             String errMsg = "BlockReader failed to seek to " +
                 targetPos + ". Instead, it seeked to " + pos + ".";
-            DFSClient.LOG.warn(errMsg);
+            DFSClient.LOG.error("Temp", new RuntimeException());
             throw new IOException(errMsg);
           }
         } catch (IOException e) {//make following read to retry

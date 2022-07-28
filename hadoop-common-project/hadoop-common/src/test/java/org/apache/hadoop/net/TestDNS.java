@@ -167,12 +167,12 @@ public class TestDNS {
     InetAddress localhost = getLocalIPAddr();
     try {
       String s = DNS.reverseDns(localhost, null);
-      LOG.info("Local reverse DNS hostname is " + s);
+      LOG.error("Temp", new RuntimeException());
     } catch (NameNotFoundException | CommunicationException e) {
       if (!localhost.isLinkLocalAddress() || localhost.isLoopbackAddress()) {
         //these addresses probably won't work with rDNS anyway, unless someone
         //has unusual entries in their DNS server mapping 1.0.0.127 to localhost
-        LOG.info("Reverse DNS failing as due to incomplete networking", e);
+        LOG.error("Temp", new RuntimeException());
         LOG.info("Address is " + localhost
                 + " Loopback=" + localhost.isLoopbackAddress()
                 + " Linklocal=" + localhost.isLinkLocalAddress());
@@ -264,6 +264,6 @@ public class TestDNS {
   public void testLocalhostResolves() throws Exception {
     InetAddress localhost = InetAddress.getByName("localhost");
     assertNotNull("localhost is null", localhost);
-    LOG.info("Localhost IPAddr is " + localhost.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 }

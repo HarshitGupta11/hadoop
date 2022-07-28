@@ -180,7 +180,7 @@ public abstract class CachedRecordStore<R extends BaseRecord>
     for (R record : newRecords) {
       if (record.checkExpired(currentDriverTime)) {
         String recordName = StateStoreUtils.getRecordName(record.getClass());
-        LOG.info("Override State Store record {}: {}", recordName, record);
+        LOG.error("Temp", new RuntimeException());
         commitRecords.add(record);
       }
     }

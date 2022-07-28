@@ -141,7 +141,7 @@ public abstract class AbstractReservationSystem extends AbstractService
   }
 
   private void initialize(Configuration conf) throws YarnException {
-    LOG.info("Initializing Reservation system");
+    LOG.error("Temp", new RuntimeException());
     this.conf = conf;
     scheduler = rmContext.getScheduler();
     // Get the plan step size
@@ -190,12 +190,12 @@ public abstract class AbstractReservationSystem extends AbstractService
           minAllocation, rescCalculator), true);
       resQMap.put(currentReservation.getKey(), planName);
     }
-    LOG.info("Recovered reservations for Plan: {}", planName);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
   public void recover(RMState state) throws Exception {
-    LOG.info("Recovering Reservation system");
+    LOG.error("Temp", new RuntimeException());
     writeLock.lock();
     try {
       Map<String, Map<ReservationId, ReservationAllocationStateProto>> reservationSystemState =
@@ -218,7 +218,7 @@ public abstract class AbstractReservationSystem extends AbstractService
   }
 
   private void initializeNewPlans(Configuration conf) {
-    LOG.info("Refreshing Reservation system");
+    LOG.error("Temp", new RuntimeException());
     writeLock.lock();
     try {
       // Create a plan corresponding to every new reservable queue
@@ -237,7 +237,7 @@ public abstract class AbstractReservationSystem extends AbstractService
         planFollower.setPlans(plans.values());
       }
     } catch (YarnException e) {
-      LOG.warn("Exception while trying to refresh reservable queues", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       writeLock.unlock();
     }
@@ -250,7 +250,7 @@ public abstract class AbstractReservationSystem extends AbstractService
     if (planFollowerPolicyClassName == null) {
       return null;
     }
-    LOG.info("Using PlanFollowerPolicy: " + planFollowerPolicyClassName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> planFollowerPolicyClazz =
           conf.getClassByName(planFollowerPolicyClassName);
@@ -381,7 +381,7 @@ public abstract class AbstractReservationSystem extends AbstractService
     try {
       ReservationId resId = ReservationId.newInstance(
           ResourceManager.getClusterTimeStamp(), resCounter.incrementAndGet());
-      LOG.info("Allocated new reservationId: " + resId);
+      LOG.error("Temp", new RuntimeException());
       return resId;
     } finally {
       writeLock.unlock();
@@ -456,7 +456,7 @@ public abstract class AbstractReservationSystem extends AbstractService
     ReservationSchedulerConfiguration reservationConfig =
         getReservationSchedulerConfiguration();
     String agentClassName = reservationConfig.getReservationAgent(queueName);
-    LOG.info("Using Agent: " + agentClassName + " for queue: " + queueName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> agentClazz = conf.getClassByName(agentClassName);
       if (ReservationAgent.class.isAssignableFrom(agentClazz)) {

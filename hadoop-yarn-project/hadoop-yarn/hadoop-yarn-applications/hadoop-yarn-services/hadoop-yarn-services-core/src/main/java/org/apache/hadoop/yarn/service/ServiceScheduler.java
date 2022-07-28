@@ -166,7 +166,7 @@ public class ServiceScheduler extends CompositeService {
       // for acl validations.
       String username = new HadoopKerberosName(context.principal.trim())
           .getServiceName();
-      LOG.info("Set registry user accounts: sasl:" + username);
+      LOG.error("Temp", new RuntimeException());
       conf.set(KEY_REGISTRY_USER_ACCOUNTS, "sasl:" + username);
       registryClient = RegistryOperationsFactory
           .createKerberosInstance(conf,
@@ -211,7 +211,7 @@ public class ServiceScheduler extends CompositeService {
       DefaultMetricsSystem.instance().register("ServiceMetricsSink",
           "For processing metrics to ATS",
           new ServiceMetricsSink(serviceTimelinePublisher));
-      LOG.info("Timeline v2 is enabled.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     initGlobalTokensForSubstitute(context);
@@ -253,7 +253,7 @@ public class ServiceScheduler extends CompositeService {
 
   @Override
   public void serviceStop() throws Exception {
-    LOG.info("Stopping service scheduler");
+    LOG.error("Temp", new RuntimeException());
 
     // Mark component-instances/containers as STOPPED
     if (YarnConfiguration.timelineServiceV2Enabled(getConfig())) {
@@ -328,7 +328,7 @@ public class ServiceScheduler extends CompositeService {
       LOG.info("Found {} containers from ZK registry: {}", existingComps.size(),
           existingComps);
     } catch (Exception e) {
-      LOG.info("Could not read component paths: {}", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     if (existingComps != null) {
       for (String existingComp : existingComps) {
@@ -343,7 +343,7 @@ public class ServiceScheduler extends CompositeService {
       }
     }
     for (Container container : containersFromPrevAttempt) {
-      LOG.info("Handling {} from previous attempt", container.getId());
+      LOG.error("Temp", new RuntimeException());
       ServiceRecord record = existingRecords.remove(RegistryPathUtils
           .encodeYarnID(container.getId().toString()));
       if (record != null) {
@@ -553,7 +553,7 @@ public class ServiceScheduler extends CompositeService {
 
     @Override
     public void onContainersAllocated(List<Container> containers) {
-      LOG.info(containers.size() + " containers allocated. ");
+      LOG.error("Temp", new RuntimeException());
       for (Container container : containers) {
         Component comp = componentsById.get(container.getAllocationRequestId());
         ComponentEvent event =
@@ -642,7 +642,7 @@ public class ServiceScheduler extends CompositeService {
             .append(report.getNodeState()).append(", healthDiagnostics = ")
             .append(report.getHealthReport()).append(System.lineSeparator());
       }
-      LOG.warn(str.toString());
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override public float getProgress() {

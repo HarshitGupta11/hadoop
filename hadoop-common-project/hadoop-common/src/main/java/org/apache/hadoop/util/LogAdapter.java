@@ -46,7 +46,7 @@ class LogAdapter {
 
   public void info(String msg) {
     if (LOG != null) {
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
     } else if (LOGGER != null) {
       LOGGER.info(msg);
     }
@@ -54,7 +54,7 @@ class LogAdapter {
 
   public void warn(String msg, Throwable t) {
     if (LOG != null) {
-      LOG.warn(msg, t);
+      LOG.error("Temp", new RuntimeException());
     } else if (LOGGER != null) {
       LOGGER.warn(msg, t);
     }
@@ -62,7 +62,7 @@ class LogAdapter {
 
   public void debug(Throwable t) {
     if (LOG != null) {
-      LOG.debug(t);
+      LOG.error("Temp", new RuntimeException());
     } else if (LOGGER != null) {
       LOGGER.debug("", t);
     }

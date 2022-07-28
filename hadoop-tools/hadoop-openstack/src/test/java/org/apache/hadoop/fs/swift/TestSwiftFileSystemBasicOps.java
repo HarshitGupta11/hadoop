@@ -119,20 +119,20 @@ public class TestSwiftFileSystemBasicOps extends SwiftFileSystemBaseTest {
   private void delete(SwiftNativeFileSystem fs, Path path) {
     try {
       if (!fs.delete(path, false)) {
-        LOG.warn("Failed to delete " + path);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (IOException e) {
-      LOG.warn("deleting " + path, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
   private void deleteR(SwiftNativeFileSystem fs, Path path) {
     try {
       if (!fs.delete(path, true)) {
-        LOG.warn("Failed to delete " + path);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (IOException e) {
-      LOG.warn("deleting " + path, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -247,7 +247,7 @@ public class TestSwiftFileSystemBasicOps extends SwiftFileSystemBaseTest {
       try {
         fs.mkdirs(child);
       } catch (ParentNotDirectoryException expected) {
-        LOG.debug("Expected Exception", expected);
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       fs.delete(path, true);
@@ -271,7 +271,7 @@ public class TestSwiftFileSystemBasicOps extends SwiftFileSystemBaseTest {
               + pathString.length());
     } catch (SwiftBadRequestException e) {
       //expected
-      //LOG.debug("Caught exception " + e, e);
+      //LOG.error("Temp", new RuntimeException());
     }
   }
 

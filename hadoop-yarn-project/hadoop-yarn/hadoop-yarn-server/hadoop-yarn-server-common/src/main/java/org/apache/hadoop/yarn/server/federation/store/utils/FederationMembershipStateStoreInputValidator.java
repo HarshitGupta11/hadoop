@@ -61,7 +61,7 @@ public final class FederationMembershipStateStoreInputValidator {
       String message = "Missing SubClusterRegister Request."
           + " Please try again by specifying a"
           + " SubCluster Register Information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
 
     }
@@ -86,7 +86,7 @@ public final class FederationMembershipStateStoreInputValidator {
       String message = "Missing SubClusterDeregister Request."
           + " Please try again by specifying a"
           + " SubCluster Deregister Information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -96,7 +96,7 @@ public final class FederationMembershipStateStoreInputValidator {
     checkSubClusterState(request.getState());
     if (!request.getState().isFinal()) {
       String message = "Invalid non-final state: " + request.getState();
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }
@@ -117,7 +117,7 @@ public final class FederationMembershipStateStoreInputValidator {
       String message = "Missing SubClusterHeartbeat Request."
           + " Please try again by specifying a"
           + " SubCluster Heartbeat Information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -147,7 +147,7 @@ public final class FederationMembershipStateStoreInputValidator {
     if (request == null) {
       String message = "Missing GetSubClusterInfo Request."
           + " Please try again by specifying a Get SubCluster information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -170,7 +170,7 @@ public final class FederationMembershipStateStoreInputValidator {
     if (subClusterInfo == null) {
       String message = "Missing SubCluster Information."
           + " Please try again by specifying SubCluster Information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -208,7 +208,7 @@ public final class FederationMembershipStateStoreInputValidator {
     if (timestamp < 0) {
       String message = "Invalid timestamp information."
           + " Please try again by specifying valid Timestamp Information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }
@@ -225,7 +225,7 @@ public final class FederationMembershipStateStoreInputValidator {
     if (capability == null || capability.isEmpty()) {
       String message = "Invalid capability information."
           + " Please try again by specifying valid Capability Information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }
@@ -243,14 +243,14 @@ public final class FederationMembershipStateStoreInputValidator {
     if (subClusterId == null) {
       String message = "Missing SubCluster Id information."
           + " Please try again by specifying Subcluster Id information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
     // check if cluster id is valid
     if (subClusterId.getId().isEmpty()) {
       String message = "Invalid SubCluster Id information."
           + " Please try again by specifying valid Subcluster Id.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }
@@ -267,7 +267,7 @@ public final class FederationMembershipStateStoreInputValidator {
     if (address == null || address.isEmpty()) {
       String message = "Missing SubCluster Endpoint information."
           + " Please try again by specifying SubCluster Endpoint information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
     // Validate url is well formed
@@ -279,7 +279,7 @@ public final class FederationMembershipStateStoreInputValidator {
     } catch (IllegalArgumentException e) {
       String message = "The provided SubCluster Endpoint does not contain a"
           + " valid host:port authority: " + address;
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
     String host = uri.getHost();
@@ -289,7 +289,7 @@ public final class FederationMembershipStateStoreInputValidator {
         || (!hasScheme && path != null && !path.isEmpty())) {
       String message = "The provided SubCluster Endpoint does not contain a"
           + " valid host:port authority: " + address;
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }
@@ -307,7 +307,7 @@ public final class FederationMembershipStateStoreInputValidator {
     if (state == null) {
       String message = "Missing SubCluster State information."
           + " Please try again by specifying SubCluster State information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }

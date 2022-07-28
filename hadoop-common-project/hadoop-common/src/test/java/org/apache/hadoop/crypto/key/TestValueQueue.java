@@ -159,7 +159,7 @@ public class TestValueQueue {
       public Boolean get() {
           int size = vq.getSize("k1");
           if (size != 10) {
-            LOG.info("Current ValueQueue size is " + size);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
           return true;

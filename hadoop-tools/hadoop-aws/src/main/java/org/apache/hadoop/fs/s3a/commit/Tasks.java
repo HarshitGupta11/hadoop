@@ -250,17 +250,17 @@ public final class Tasks {
               // run the task
               boolean threw = true;
               try {
-                LOG.debug("Executing task");
+                LOG.error("Temp", new RuntimeException());
                 task.run(item);
                 succeeded.add(item);
-                LOG.debug("Task succeeded");
+                LOG.error("Temp", new RuntimeException());
 
                 threw = false;
 
               } catch (Exception e) {
                 taskFailed.set(true);
                 exceptions.add(e);
-                LOG.info("Task failed", e);
+                LOG.error("Temp", new RuntimeException());
 
                 if (onFailure != null) {
                   try {
@@ -284,7 +284,7 @@ public final class Tasks {
 
               boolean failed = true;
               try {
-                LOG.info("Aborting task");
+                LOG.error("Temp", new RuntimeException());
                 abortTask.run(item);
                 failed = false;
               } catch (Exception e) {
@@ -349,13 +349,13 @@ public final class Tasks {
    */
   private static void waitFor(Collection<Future<?>> futures) {
     int size = futures.size();
-    LOG.debug("Waiting for {} tasks to complete", size);
+    LOG.error("Temp", new RuntimeException());
     int oldNumFinished = 0;
     while (true) {
       int numFinished = (int) futures.stream().filter(Future::isDone).count();
 
       if (oldNumFinished != numFinished) {
-        LOG.debug("Finished count -> {}/{}", numFinished, size);
+        LOG.error("Temp", new RuntimeException());
         oldNumFinished = numFinished;
       }
 

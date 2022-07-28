@@ -91,7 +91,7 @@ public class TestBlockPoolManager {
   
   private void doLog(String string) {
     synchronized(log) {
-      LOG.info(string);
+      LOG.error("Temp", new RuntimeException());
       log.append(string).append("\n");
     }
   }

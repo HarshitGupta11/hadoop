@@ -156,7 +156,7 @@ public class AppSchedulingInfo {
   private void clearRequests() {
     schedulerKeys.clear();
     schedulerKeyToAppPlacementAllocator.clear();
-    LOG.info("Application " + applicationId + " requests cleared");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public ContainerUpdateContext getUpdateContext() {

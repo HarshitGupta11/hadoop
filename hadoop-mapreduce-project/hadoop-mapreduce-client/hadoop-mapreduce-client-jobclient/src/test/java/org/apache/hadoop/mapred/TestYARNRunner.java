@@ -321,7 +321,7 @@ public class TestYARNRunner {
     try {
       yarnRunner.submitJob(jobId, testWorkDir.getAbsolutePath().toString(), credentials);
     } catch(IOException io) {
-      LOG.info("Logging exception:", io);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(io.getLocalizedMessage().contains(failString));
     }
   }

@@ -262,11 +262,11 @@ public class StripedBlockUtil {
         return new StripingChunkReadResult(StripingChunkReadResult.TIMEOUT);
       }
     } catch (ExecutionException e) {
-      LOG.debug("Exception during striped read task", e);
+      LOG.error("Temp", new RuntimeException());
       return new StripingChunkReadResult(futures.remove(future),
           StripingChunkReadResult.FAILED);
     } catch (CancellationException e) {
-      LOG.debug("Exception during striped read task", e);
+      LOG.error("Temp", new RuntimeException());
       return new StripingChunkReadResult(futures.remove(future),
           StripingChunkReadResult.CANCELLED);
     }

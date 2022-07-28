@@ -47,7 +47,7 @@ public class CuratorEventCatcher implements BackgroundCallback {
   public void processResult(CuratorFramework client,
       CuratorEvent event) throws
       Exception {
-    LOG.info("received {}", event);
+    LOG.error("Temp", new RuntimeException());
     eventCounter.incrementAndGet();
     events.put(event);
   }

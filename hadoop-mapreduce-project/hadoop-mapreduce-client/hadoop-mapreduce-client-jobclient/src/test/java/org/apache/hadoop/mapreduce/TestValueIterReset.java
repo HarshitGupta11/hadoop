@@ -137,25 +137,25 @@ public class TestValueIterReset {
     ArrayList<IntWritable> expectedValues = new ArrayList<IntWritable>();
     
 
-    LOG.info("Executing TEST:0 for Key:"+ key.toString());
+    LOG.error("Temp", new RuntimeException());
 
     values.mark();
-    LOG.info("TEST:0. Marking");
+    LOG.error("Temp", new RuntimeException());
 
     while (values.hasNext()) {
       i = values.next();
       expectedValues.add(i);
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
     }
 
     values.reset();
-    LOG.info("TEST:0. Reset");
+    LOG.error("Temp", new RuntimeException());
 
     int count = 0;
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
       if (i != expectedValues.get(count)) {
         LOG.info("TEST:0. Check:1 Expected: " + expectedValues.get(count) +
             ", Got: " + i);
@@ -165,7 +165,7 @@ public class TestValueIterReset {
       count ++;
     }
 
-    LOG.info("TEST:0 Done");
+    LOG.error("Temp", new RuntimeException());
     return errors;
   }
 
@@ -188,14 +188,14 @@ public class TestValueIterReset {
     ArrayList<IntWritable> expectedValues = new ArrayList<IntWritable>();
     ArrayList<IntWritable> expectedValues1 = new ArrayList<IntWritable>();
 
-    LOG.info("Executing TEST:1 for Key:" + key);
+    LOG.error("Temp", new RuntimeException());
 
     values.mark();
-    LOG.info("TEST:1. Marking");
+    LOG.error("Temp", new RuntimeException());
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
       expectedValues.add(i);
       if (count == 2) {
         break;
@@ -204,12 +204,12 @@ public class TestValueIterReset {
     }
 
     values.reset();
-    LOG.info("TEST:1. Reset");
+    LOG.error("Temp", new RuntimeException());
     count = 0;
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
 
       if (count < expectedValues.size()) {
         if (i != expectedValues.get(count)) {
@@ -223,7 +223,7 @@ public class TestValueIterReset {
       // We have moved passed the first mark, but still in the memory cache
       if (count == 3) {
         values.mark();
-        LOG.info("TEST:1. Marking -- " + key + ": " + i);
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (count >= 3) {
@@ -237,19 +237,19 @@ public class TestValueIterReset {
     }
 
     if (count < expectedValues.size()) {
-      LOG.info(("TEST:1 Check:2. Iterator returned lesser values"));
+      LOG.error("Temp", new RuntimeException());
       errors ++;
       return errors;
     }
     
     values.reset();
     count = 0;
-    LOG.info("TEST:1. Reset");
+    LOG.error("Temp", new RuntimeException());
     expectedValues.clear();
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
 
       if (count < expectedValues1.size()) {
         if (i != expectedValues1.get(count)) {
@@ -264,7 +264,7 @@ public class TestValueIterReset {
       // cache
       if (count == 25) {
         values.mark();
-        LOG.info("TEST:1. Marking -- " + key + ":" + i);
+        LOG.error("Temp", new RuntimeException());
       }
       
       if (count >= 25) {
@@ -274,18 +274,18 @@ public class TestValueIterReset {
     }
 
     if (count < expectedValues1.size()) {
-      LOG.info(("TEST:1 Check:4. Iterator returned fewer values"));
+      LOG.error("Temp", new RuntimeException());
       errors ++;
       return errors;
     }
 
     values.reset();
-    LOG.info("TEST:1. Reset");
+    LOG.error("Temp", new RuntimeException());
     count = 0;
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
 
       if (i != expectedValues.get(count)) {
         errors ++;
@@ -295,7 +295,7 @@ public class TestValueIterReset {
       }
     }
 
-    LOG.info("TEST:1 Done");
+    LOG.error("Temp", new RuntimeException());
     return errors;
   }
 
@@ -318,14 +318,14 @@ public class TestValueIterReset {
     ArrayList<IntWritable> expectedValues = new ArrayList<IntWritable>();
     ArrayList<IntWritable> expectedValues1 = new ArrayList<IntWritable>();
 
-    LOG.info("Executing TEST:2 for Key:" + key);
+    LOG.error("Temp", new RuntimeException());
 
     values.mark();
-    LOG.info("TEST:2 Marking");
+    LOG.error("Temp", new RuntimeException());
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
       expectedValues.add(i);
       if (count == 8) {
         break;
@@ -335,11 +335,11 @@ public class TestValueIterReset {
 
     values.reset();
     count = 0;
-    LOG.info("TEST:2 reset");
+    LOG.error("Temp", new RuntimeException());
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
       
       if (count < expectedValues.size()) {
         if (i != expectedValues.get(count)) {
@@ -354,7 +354,7 @@ public class TestValueIterReset {
       // memory cache
       if (count == 3) {
         values.mark();
-        LOG.info("TEST:2. Marking -- " + key + ":" + i);
+        LOG.error("Temp", new RuntimeException());
       }
       
       if (count >= 3) {
@@ -364,13 +364,13 @@ public class TestValueIterReset {
     }
 
     values.reset();
-    LOG.info("TEST:2. Reset");
+    LOG.error("Temp", new RuntimeException());
     expectedValues.clear();
     count = 0;
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
 
       if (count < expectedValues1.size()) {
         if (i != expectedValues1.get(count)) {
@@ -385,7 +385,7 @@ public class TestValueIterReset {
       // cache
       if (count == 20) {
         values.mark();
-        LOG.info("TEST:2. Marking -- " + key + ":" + i);
+        LOG.error("Temp", new RuntimeException());
       }
       
       if (count >= 20) {
@@ -396,11 +396,11 @@ public class TestValueIterReset {
 
     values.reset();
     count = 0;
-    LOG.info("TEST:2. Reset");
+    LOG.error("Temp", new RuntimeException());
 
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
 
       if (i != expectedValues.get(count)) {
         errors ++;
@@ -410,7 +410,7 @@ public class TestValueIterReset {
       }
     }
 
-    LOG.info("TEST:2 Done");
+    LOG.error("Temp", new RuntimeException());
     return errors;
   }
 
@@ -430,23 +430,23 @@ public class TestValueIterReset {
 
     ArrayList<IntWritable> expectedValues = new ArrayList<IntWritable>();
 
-    LOG.info("Executing TEST:3 for Key:" + key);
+    LOG.error("Temp", new RuntimeException());
 
     values.mark();
-    LOG.info("TEST:3. Marking");
+    LOG.error("Temp", new RuntimeException());
     int count = 0;
 
     while (values.hasNext()) {
       i = values.next();;
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
       
       if (count == 5) {
-        LOG.info("TEST:3. Clearing Mark");
+        LOG.error("Temp", new RuntimeException());
         values.clearMark();
       }
 
       if (count == 8) {
-        LOG.info("TEST:3. Marking -- " + key + ":" + i);
+        LOG.error("Temp", new RuntimeException());
         values.mark();
       }
       
@@ -457,11 +457,11 @@ public class TestValueIterReset {
     }
 
     values.reset();
-    LOG.info("TEST:3. After reset");
+    LOG.error("Temp", new RuntimeException());
 
     if (!values.hasNext()) {
       errors ++;
-      LOG.info("TEST:3, Check:1. HasNext returned false");
+      LOG.error("Temp", new RuntimeException());
       return errors;
     }
 
@@ -469,7 +469,7 @@ public class TestValueIterReset {
     
     while (values.hasNext()) {
       i = values.next();
-      LOG.info(key + ":" + i);
+      LOG.error("Temp", new RuntimeException());
       
       if (count < expectedValues.size()) {
         if (i != expectedValues.get(count)) {
@@ -482,26 +482,26 @@ public class TestValueIterReset {
 
       if (count == 10) {
         values.clearMark();
-        LOG.info("TEST:3. After clear mark");
+        LOG.error("Temp", new RuntimeException());
       }
       count ++;
     }
 
     boolean successfulClearMark = false;
     try {
-      LOG.info("TEST:3. Before Reset");
+      LOG.error("Temp", new RuntimeException());
       values.reset();
     } catch (IOException e) {
       successfulClearMark = true;
     }
     
     if (!successfulClearMark) {
-      LOG.info("TEST:3 Check:4 reset was successfule even after clearMark");
+      LOG.error("Temp", new RuntimeException());
       errors ++;
       return errors;
     }
     
-    LOG.info("TEST:3 Done.");
+    LOG.error("Temp", new RuntimeException());
     return errors;
   }
 
@@ -562,7 +562,7 @@ public class TestValueIterReset {
         StringTokenizer tokeniz = new StringTokenizer(line, "\t");
         String key = tokeniz.nextToken();
         String value = tokeniz.nextToken();
-        LOG.info("Output: key: "+ key + " value: "+ value);
+        LOG.error("Temp", new RuntimeException());
         int errors = Integer.parseInt(value);
         assertTrue(errors == 0);
         line = reader.readLine();

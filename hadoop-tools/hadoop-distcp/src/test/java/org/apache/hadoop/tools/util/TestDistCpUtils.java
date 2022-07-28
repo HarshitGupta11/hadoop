@@ -1164,7 +1164,7 @@ public class TestDistCpUtils {
         }
       }
     } catch (IOException e) {
-      LOG.warn("Exception encountered ", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -1184,7 +1184,7 @@ public class TestDistCpUtils {
     fs.delete(dirPath, true);
     boolean created = fs.mkdirs(dirPath);
     if (!created) {
-      LOG.warn("Could not create directory " + dirPath + " this might cause test failures.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -761,7 +761,7 @@ public final class S3ATestUtils {
    */
   public static void assume(String message, boolean condition) {
     if (!condition) {
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
     }
     Assume.assumeTrue(message, condition);
   }
@@ -808,11 +808,11 @@ public final class S3ATestUtils {
     if (path == null) {
       // surfaces when someone calls getParent() on something at the top
       // of the path
-      LOG.info("Empty path");
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     return S3AUtils.applyLocatedFiles(fileSystem.listFiles(path, recursive),
-        (status) -> LOG.info("{}", status));
+        (status) -> LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -825,7 +825,7 @@ public final class S3ATestUtils {
    */
   public static void enableInconsistentS3Client(Configuration conf,
       long delay) {
-    LOG.info("Enabling inconsistent S3 client");
+    LOG.error("Temp", new RuntimeException());
     conf.setClass(S3_CLIENT_FACTORY_IMPL, InconsistentS3ClientFactory.class,
         S3ClientFactory.class);
     conf.set(FAIL_INJECT_INCONSISTENCY_KEY, DEFAULT_DELAY_KEY_SUBSTRING);

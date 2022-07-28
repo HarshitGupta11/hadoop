@@ -41,7 +41,7 @@ public class TestDefaultStringifier {
 
     conf.set("io.serializations", "org.apache.hadoop.io.serializer.WritableSerialization");
 
-    LOG.info("Testing DefaultStringifier with Text");
+    LOG.error("Temp", new RuntimeException());
 
     Random random = new Random();
 
@@ -58,8 +58,8 @@ public class TestDefaultStringifier {
 
       String str = stringifier.toString(text);
       Text claimedText = stringifier.fromString(str);
-      LOG.info("Object: " + text);
-      LOG.info("String representation of the object: " + str);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       assertEquals(text, claimedText);
     }
   }
@@ -68,7 +68,7 @@ public class TestDefaultStringifier {
   public void testWithJavaSerialization() throws Exception {
     conf.set("io.serializations", "org.apache.hadoop.io.serializer.JavaSerialization");
 
-    LOG.info("Testing DefaultStringifier with Serializable Integer");
+    LOG.error("Temp", new RuntimeException());
 
     //Integer implements Serializable
     Integer testInt = Integer.valueOf(42);
@@ -76,7 +76,7 @@ public class TestDefaultStringifier {
 
     String str = stringifier.toString(testInt);
     Integer claimedInt = stringifier.fromString(str);
-    LOG.info("String representation of the object: " + str);
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals(testInt, claimedInt);
   }
@@ -84,7 +84,7 @@ public class TestDefaultStringifier {
   @Test
   public void testStoreLoad() throws IOException {
 
-    LOG.info("Testing DefaultStringifier#store() and #load()");
+    LOG.error("Temp", new RuntimeException());
     conf.set("io.serializations", "org.apache.hadoop.io.serializer.WritableSerialization");
     Text text = new Text("uninteresting test string");
     String keyName = "test.defaultstringifier.key1";
@@ -99,7 +99,7 @@ public class TestDefaultStringifier {
 
   @Test
   public void testStoreLoadArray() throws IOException {
-    LOG.info("Testing DefaultStringifier#storeArray() and #loadArray()");
+    LOG.error("Temp", new RuntimeException());
     conf.set("io.serializations", "org.apache.hadoop.io.serializer.JavaSerialization");
 
     String keyName = "test.defaultstringifier.key2";

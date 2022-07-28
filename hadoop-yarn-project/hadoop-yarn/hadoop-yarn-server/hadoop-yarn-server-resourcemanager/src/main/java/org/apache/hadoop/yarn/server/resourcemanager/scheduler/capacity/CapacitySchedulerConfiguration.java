@@ -805,7 +805,7 @@ public class CapacitySchedulerConfiguration extends ReservationSchedulerConfigur
   }
 
   public String[] getQueues(String queue) {
-    LOG.debug("CSConf - getQueues called for: queuePrefix=" + getQueuePrefix(queue));
+    LOG.error("Temp", new RuntimeException());
     String[] queues = getStrings(getQueuePrefix(queue) + QUEUES);
     List<String> trimmedQueueNames = new ArrayList<String>();
     if (null != queues) {
@@ -874,11 +874,11 @@ public class CapacitySchedulerConfiguration extends ReservationSchedulerConfigur
     }
     Resource clusterMax = ResourceUtils.fetchMaximumAllocationFromConfig(this);
     if (maxAllocationMbPerQueue == (int)UNDEFINED) {
-      LOG.info("max alloc mb per queue for " + queue + " is undefined");
+      LOG.error("Temp", new RuntimeException());
       maxAllocationMbPerQueue = clusterMax.getMemorySize();
     }
     if (maxAllocationVcoresPerQueue == (int)UNDEFINED) {
-       LOG.info("max alloc vcore per queue for " + queue + " is undefined");
+       LOG.error("Temp", new RuntimeException());
       maxAllocationVcoresPerQueue = clusterMax.getVirtualCores();
     }
     // Copy from clusterMax and overwrite per-queue's maximum memory/vcore
@@ -905,7 +905,7 @@ public class CapacitySchedulerConfiguration extends ReservationSchedulerConfigur
     int limit = getInt(OFFSWITCH_PER_HEARTBEAT_LIMIT,
         DEFAULT_OFFSWITCH_PER_HEARTBEAT_LIMIT);
     if (limit < 1) {
-      LOG.warn(OFFSWITCH_PER_HEARTBEAT_LIMIT + "(" + limit + ") < 1. Using 1.");
+      LOG.error("Temp", new RuntimeException());
       limit = 1;
     }
     return limit;

@@ -62,7 +62,7 @@ public class TestTransferRbw {
     final Collection<ReplicaInfo> replicas = FsDatasetTestUtil.getReplicas(
         datanode.getFSDataset(), bpid);
     for(int i = 0; i < 5 && replicas.size() == 0; i++) {
-      LOG.info("wait since replicas.size() == 0; i=" + i);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertEquals(1, replicas.size());
@@ -83,7 +83,7 @@ public class TestTransferRbw {
       //create a file, write some data and leave it open. 
       final Path p = new Path("/foo");
       final int size = (1 << 16) + RAN.nextInt(1 << 16);
-      LOG.info("size = " + size);
+      LOG.error("Temp", new RuntimeException());
       final FSDataOutputStream out = fs.create(p, REPLICATION);
       final byte[] bytes = new byte[1024];
       for(int remaining = size; remaining > 0; ) {
@@ -102,7 +102,7 @@ public class TestTransferRbw {
       {
         final DataNode oldnode = cluster.getDataNodes().get(0);
         oldrbw = getRbw(oldnode, bpid);
-        LOG.info("oldrbw = " + oldrbw);
+        LOG.error("Temp", new RuntimeException());
         
         //add a datanode
         cluster.startDataNodes(conf, 1, true, null, null);
@@ -131,12 +131,12 @@ public class TestTransferRbw {
 
       //check new rbw
       final ReplicaBeingWritten newrbw = getRbw(newnode, bpid);
-      LOG.info("newrbw = " + newrbw);
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(oldrbw.getBlockId(), newrbw.getBlockId());
       Assert.assertEquals(oldrbw.getGenerationStamp(), newrbw.getGenerationStamp());
       Assert.assertEquals(oldrbw.getVisibleLength(), newrbw.getVisibleLength());
 
-      LOG.info("DONE");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       cluster.shutdown();
     }

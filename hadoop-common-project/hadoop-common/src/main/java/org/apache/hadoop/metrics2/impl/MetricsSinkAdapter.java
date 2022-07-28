@@ -95,7 +95,7 @@ class MetricsSinkAdapter implements SinkQueue.Consumer<MetricsBuffer> {
 
   boolean putMetrics(MetricsBuffer buffer, long logicalTimeMs) {
     if (logicalTimeMs % periodMs == 0) {
-      LOG.debug("enqueue, logicalTime="+ logicalTimeMs);
+      LOG.error("Temp", new RuntimeException());
       if (queue.enqueue(buffer)) {
         refreshQueueSizeGauge();
         return true;
@@ -112,7 +112,7 @@ class MetricsSinkAdapter implements SinkQueue.Consumer<MetricsBuffer> {
     if (queue.enqueue(waitableBuffer)) {
       refreshQueueSizeGauge();
     } else {
-      LOG.warn(name + " has a full queue and can't consume the given metrics.");
+      LOG.error("Temp", new RuntimeException());
       dropped.incr();
       return false;
     }
@@ -138,7 +138,7 @@ class MetricsSinkAdapter implements SinkQueue.Consumer<MetricsBuffer> {
         n = retryCount;
         inError = false;
       } catch (InterruptedException e) {
-        LOG.info(name +" thread interrupted.");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         if (n > 0) {
           int retryWindow = Math.max(0, 1000 / 2 * retryDelay - minDelay);
@@ -149,7 +149,7 @@ class MetricsSinkAdapter implements SinkQueue.Consumer<MetricsBuffer> {
           retryDelay *= retryBackoff;
           try { Thread.sleep(awhile); }
           catch (InterruptedException e2) {
-            LOG.info(name +" thread interrupted while waiting for retry", e2);
+            LOG.error("Temp", new RuntimeException());
           }
           --n;
         } else {
@@ -196,12 +196,12 @@ class MetricsSinkAdapter implements SinkQueue.Consumer<MetricsBuffer> {
     if (buffer instanceof WaitableMetricsBuffer) {
       ((WaitableMetricsBuffer)buffer).notifyAnyWaiters();
     }
-    LOG.debug("Done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   void start() {
     sinkThread.start();
-    LOG.info("Sink "+ name +" started");
+    LOG.error("Temp", new RuntimeException());
   }
 
   void stop() {
@@ -213,7 +213,7 @@ class MetricsSinkAdapter implements SinkQueue.Consumer<MetricsBuffer> {
     try {
       sinkThread.join();
     } catch (InterruptedException e) {
-      LOG.warn("Stop interrupted", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

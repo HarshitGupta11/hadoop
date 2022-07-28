@@ -311,9 +311,9 @@ public class TestEncryptedTransfer {
     // valid. It needs to be a few multiples of the block token lifetime,
     // since several block tokens are valid at any given time (the current
     // and the last two, by default.)
-    LOG.info("Sleeping so that encryption keys expire...");
+    LOG.error("Temp", new RuntimeException());
     Thread.sleep(15 * 1000);
-    LOG.info("Done sleeping.");
+    LOG.error("Temp", new RuntimeException());
 
     assertEquals(PLAIN_TEXT, DFSTestUtil.readFile(fs, TEST_PATH));
     assertEquals(checksum, fs.getFileChecksum(TEST_PATH));
@@ -344,7 +344,7 @@ public class TestEncryptedTransfer {
     btsm.clearAllKeysForTesting();
 
     // Wait until the encryption key becomes invalid.
-    LOG.info("Wait until encryption keys become invalid...");
+    LOG.error("Temp", new RuntimeException());
 
     DataEncryptionKey encryptionKey = spyClient.getEncryptionKey();
     List<DataNode> dataNodes = cluster.getDataNodes();
@@ -360,7 +360,7 @@ public class TestEncryptedTransfer {
           }, 100, 30*1000
       );
     }
-    LOG.info("The encryption key is invalid on all nodes now.");
+    LOG.error("Temp", new RuntimeException());
     fs.getFileChecksum(TEST_PATH);
     // verify that InvalidEncryptionKeyException is handled properly
     Assert.assertTrue(client.getEncryptionKey() == null);
@@ -403,7 +403,7 @@ public class TestEncryptedTransfer {
     btsm.clearAllKeysForTesting();
 
     // Wait until the encryption key becomes invalid.
-    LOG.info("Wait until encryption keys become invalid...");
+    LOG.error("Temp", new RuntimeException());
 
     DataEncryptionKey encryptionKey = spyClient.getEncryptionKey();
     List<DataNode> dataNodes = cluster.getDataNodes();
@@ -419,7 +419,7 @@ public class TestEncryptedTransfer {
           }, 100, 30*1000
       );
     }
-    LOG.info("The encryption key is invalid on all nodes now.");
+    LOG.error("Temp", new RuntimeException());
     try(FSDataOutputStream out = fs.append(TEST_PATH)) {
       DFSOutputStream dfstream = (DFSOutputStream) out.getWrappedStream();
       // shut down the first datanode in the pipeline.

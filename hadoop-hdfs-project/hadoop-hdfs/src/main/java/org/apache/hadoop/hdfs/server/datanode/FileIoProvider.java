@@ -248,7 +248,7 @@ public class FileIoProvider {
       boolean deleted = !f.exists() || f.delete();
       profilingEventHook.afterMetadataOp(volume, DELETE, begin);
       if (!deleted) {
-        LOG.warn("Failed to delete file {}", f);
+        LOG.error("Temp", new RuntimeException());
       }
       return deleted;
     } catch (Exception e) {

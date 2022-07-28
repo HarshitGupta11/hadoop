@@ -66,7 +66,7 @@ public class TestAppJsonResolve extends Assert {
     assertEquals(0, master.getFiles().size());
 
     Configuration worker = orig.getComponent("worker").getConfiguration();
-    LOG.info("worker = {}", worker);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(3, worker.getProperties().size());
     assertEquals(0, worker.getFiles().size());
 
@@ -81,7 +81,7 @@ public class TestAppJsonResolve extends Assert {
         YarnConfiguration());
 
     global = orig.getConfiguration();
-    LOG.info("global = {}", global);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("a", global.getProperty("g1"));
     assertEquals("b", global.getProperty("g2"));
     assertEquals(2, global.getFiles().size());
@@ -104,7 +104,7 @@ public class TestAppJsonResolve extends Assert {
     assertTrue(files.contains(simple.getFiles().get(1)));
 
     master = orig.getComponent("master").getConfiguration();
-    LOG.info("master = {}", master);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(3, master.getProperties().size());
     assertEquals("m", master.getProperty("name"));
     assertEquals("overridden", master.getProperty("g1"));
@@ -122,7 +122,7 @@ public class TestAppJsonResolve extends Assert {
     assertTrue(files.contains(master.getFiles().get(1)));
 
     worker = orig.getComponent("worker").getConfiguration();
-    LOG.info("worker = {}", worker);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(4, worker.getProperties().size());
 
     assertEquals("worker", worker.getProperty("name"));
@@ -187,7 +187,7 @@ public class TestAppJsonResolve extends Assert {
         simple.getProperty("yarn.service.failure-count-reset.window"));
 
     Configuration worker = orig.getComponent("worker").getConfiguration();
-    LOG.info("worker = {}", worker);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(4, worker.getProperties().size());
     assertEquals("512M", worker.getProperty("jvm.heapsize"));
     assertEquals("overridden-by-worker", worker.getProperty("g1"));

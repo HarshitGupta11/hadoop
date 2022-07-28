@@ -179,11 +179,11 @@ public class StateStoreService extends CompositeService {
       StandardMBean bean = new StandardMBean(metrics, StateStoreMBean.class);
       ObjectName registeredObject =
           MBeans.register("Router", "StateStore", bean);
-      LOG.info("Registered StateStoreMBean: {}", registeredObject);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad StateStoreMBean setup", e);
     } catch (MetricsException e) {
-      LOG.info("Failed to register State Store bean {}", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
 
     super.serviceInit(this.conf);
@@ -398,7 +398,7 @@ public class StateStoreService extends CompositeService {
       }
     } else {
       success = false;
-      LOG.info("Skipping State Store cache update, driver is not ready.");
+      LOG.error("Temp", new RuntimeException());
     }
     if (success) {
       // Uses local time, not driver time.

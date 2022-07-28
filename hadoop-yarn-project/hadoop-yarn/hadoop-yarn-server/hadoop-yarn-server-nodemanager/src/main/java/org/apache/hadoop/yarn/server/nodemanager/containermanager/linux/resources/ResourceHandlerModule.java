@@ -134,7 +134,7 @@ public class ResourceHandlerModule {
       if (cGroupsCpuResourceHandler == null) {
         synchronized (CpuResourceHandler.class) {
           if (cGroupsCpuResourceHandler == null) {
-            LOG.debug("Creating new cgroups cpu handler");
+            LOG.error("Temp", new RuntimeException());
             cGroupsCpuResourceHandler =
                 new CGroupsCpuResourceHandlerImpl(
                     getInitializedCGroupsHandler(conf));
@@ -154,7 +154,7 @@ public class ResourceHandlerModule {
       if (trafficControlBandwidthHandler == null) {
         synchronized (OutboundBandwidthResourceHandler.class) {
           if (trafficControlBandwidthHandler == null) {
-            LOG.info("Creating new traffic control bandwidth handler.");
+            LOG.error("Temp", new RuntimeException());
             trafficControlBandwidthHandler = new
                 TrafficControlBandwidthHandlerImpl(PrivilegedOperationExecutor
                 .getInstance(conf), getInitializedCGroupsHandler(conf),
@@ -176,10 +176,10 @@ public class ResourceHandlerModule {
         YarnConfiguration.NM_NETWORK_TAG_HANDLER_ENABLED,
         YarnConfiguration.DEFAULT_NM_NETWORK_TAG_HANDLER_ENABLED);
     if (useNetworkTagHandler) {
-      LOG.info("Using network-tagging-handler.");
+      LOG.error("Temp", new RuntimeException());
       return getNetworkTaggingHandler(conf);
     } else {
-      LOG.info("Using traffic control bandwidth handler");
+      LOG.error("Temp", new RuntimeException());
       return getTrafficControlBandwidthHandler(conf);
     }
   }
@@ -189,7 +189,7 @@ public class ResourceHandlerModule {
     if (networkPacketTaggingHandlerImpl == null) {
       synchronized (OutboundBandwidthResourceHandler.class) {
         if (networkPacketTaggingHandlerImpl == null) {
-          LOG.info("Creating new network-tagging-handler.");
+          LOG.error("Temp", new RuntimeException());
           networkPacketTaggingHandlerImpl =
               new NetworkPacketTaggingHandlerImpl(
                   PrivilegedOperationExecutor.getInstance(conf),
@@ -220,7 +220,7 @@ public class ResourceHandlerModule {
     if (cGroupsBlkioResourceHandler == null) {
       synchronized (DiskResourceHandler.class) {
         if (cGroupsBlkioResourceHandler == null) {
-          LOG.debug("Creating new cgroups blkio handler");
+          LOG.error("Temp", new RuntimeException());
           cGroupsBlkioResourceHandler =
               new CGroupsBlkioResourceHandlerImpl(
                   getInitializedCGroupsHandler(conf));

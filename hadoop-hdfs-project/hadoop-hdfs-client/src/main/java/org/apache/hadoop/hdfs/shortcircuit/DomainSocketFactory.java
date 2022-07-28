@@ -116,7 +116,7 @@ public class DomainSocketFactory {
         LOG.warn(feature + " cannot be used because "
             + DomainSocket.getLoadingFailureReason());
       } else {
-        LOG.debug(feature + " is enabled.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -169,7 +169,7 @@ public class DomainSocketFactory {
       sock.setAttribute(DomainSocket.RECEIVE_TIMEOUT, socketTimeout);
       success = true;
     } catch (IOException e) {
-      LOG.warn("error creating DomainSocket", e);
+      LOG.error("Temp", new RuntimeException());
       // fall through
     } finally {
       if (!success) {

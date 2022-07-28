@@ -80,19 +80,19 @@ public class TestMapProgress {
     }
 
     public void done(TaskAttemptID taskid) throws IOException {
-      LOG.info("Task " + taskid + " reporting done.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void fsError(TaskAttemptID taskId, String message) throws IOException {
-      LOG.info("Task " + taskId + " reporting file system error: " + message);
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void shuffleError(TaskAttemptID taskId, String message) throws IOException {
-      LOG.info("Task " + taskId + " reporting shuffle error: " + message);
+      LOG.error("Temp", new RuntimeException());
     }
 
     public void fatalError(TaskAttemptID taskId, String msg, boolean fastFail) throws IOException {
-      LOG.info("Task " + taskId + " reporting fatal error: " + msg + " fast fail: " + fastFail);
+      LOG.error("Temp", new RuntimeException());
     }
 
     public JvmTask getTask(JvmContext context) throws IOException {
@@ -130,7 +130,7 @@ public class TestMapProgress {
           buf.append(state);
         }
       }
-      LOG.info(buf.toString());
+      LOG.error("Temp", new RuntimeException());
       // ignore phase
       // ignore counters
       AMFeedback a = new AMFeedback();
@@ -139,7 +139,7 @@ public class TestMapProgress {
     }
 
     public void reportDiagnosticInfo(TaskAttemptID taskid, String trace) throws IOException {
-      LOG.info("Task " + taskid + " has problem " + trace);
+      LOG.error("Temp", new RuntimeException());
     }
     
     public MapTaskCompletionEventsUpdate getMapCompletionEvents(JobID jobId, 
@@ -150,7 +150,7 @@ public class TestMapProgress {
 
     public void reportNextRecordRange(TaskAttemptID taskid, 
         SortedRanges.Range range) throws IOException {
-      LOG.info("Task " + taskid + " reportedNextRecordRange " + range);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
@@ -184,7 +184,7 @@ public class TestMapProgress {
     public void setProgress(float progress) {
       super.setProgress(progress);
       float mapTaskProgress = map.getProgress().getProgress();
-      LOG.info("Map task progress is " + mapTaskProgress);
+      LOG.error("Temp", new RuntimeException());
       if (recordNum < 3) {
         // only 3 records are there; Ignore validating progress after 3 times
         recordNum++;

@@ -109,8 +109,8 @@ public class RetriableFileCopyCommand extends RetriableCommand {
 
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Copying " + source.getPath() + " to " + target);
-        LOG.debug("Target file path: " + targetPath);
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
       final Path sourcePath = source.getPath();
       final FileSystem sourceFS = sourcePath.getFileSystem(configuration);

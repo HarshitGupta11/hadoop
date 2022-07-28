@@ -276,7 +276,7 @@ public abstract class AbstractContractDistCpTest
       throws Exception {
     describe("Now do an incremental update with deletion of missing files");
     Path srcDir = inputDir;
-    LOG.info("Source directory = {}, dest={}", srcDir, destDir);
+    LOG.error("Temp", new RuntimeException());
 
     ContractTestUtils.assertPathsExist(localFS,
         "Paths for test are wrong",
@@ -407,13 +407,13 @@ public abstract class AbstractContractDistCpTest
       while(sourceReader.next(name, copyStatus)) {
         String key = name.toString();
         Path path = copyStatus.getPath();
-        LOG.info("{}: {}", key, path);
+        LOG.error("Temp", new RuntimeException());
         sourceFiles.put(key, path);
       }
       while(targetReader.next(name, copyStatus)) {
         String key = name.toString();
         Path path = copyStatus.getPath();
-        LOG.info("{}: {}", key, path);
+        LOG.error("Temp", new RuntimeException());
         targetFiles.put(name.toString(), copyStatus.getPath());
       }
     }
@@ -434,7 +434,7 @@ public abstract class AbstractContractDistCpTest
       final FileSystem fs,
       final Path dir) throws IOException {
     RemoteIterator<LocatedFileStatus> files = fs.listFiles(dir, true);
-    LOG.info("{}: {}:", description, dir);
+    LOG.error("Temp", new RuntimeException());
     StringBuilder sb = new StringBuilder();
     while(files.hasNext()) {
       LocatedFileStatus status = files.next();
@@ -443,7 +443,7 @@ public abstract class AbstractContractDistCpTest
           status.isDirectory()? "dir" : "file",
           status.getLen()));
     }
-    LOG.info("{}", sb);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test

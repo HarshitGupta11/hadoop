@@ -58,8 +58,8 @@ public class TestAdHocLogDumper {
 
     AdHocLogDumper dumper = new AdHocLogDumper(logHierarchy, logFilename);
     dumper.dumpLogs("DEBUG", 1000);
-    LOG.debug("test message 1");
-    LOG.info("test message 2");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     File logFile = new File(logFilename);
     Assert.assertTrue(logFile.exists());
     Thread.sleep(2000);
@@ -80,7 +80,7 @@ public class TestAdHocLogDumper {
     }
     boolean del = logFile.delete();
     if(!del) {
-      LOG.info("Couldn't clean up after test");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

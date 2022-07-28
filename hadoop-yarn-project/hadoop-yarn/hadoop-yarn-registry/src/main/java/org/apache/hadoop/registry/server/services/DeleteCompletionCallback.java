@@ -42,7 +42,7 @@ public class DeleteCompletionCallback implements BackgroundCallback {
       CuratorEvent event) throws
       Exception {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Delete event {}", event);
+      LOG.error("Temp", new RuntimeException());
     }
     events.incrementAndGet();
   }

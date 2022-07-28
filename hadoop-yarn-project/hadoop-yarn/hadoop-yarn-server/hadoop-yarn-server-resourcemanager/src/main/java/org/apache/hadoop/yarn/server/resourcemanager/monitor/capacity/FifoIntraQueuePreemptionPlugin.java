@@ -180,9 +180,9 @@ public class FifoIntraQueuePreemptionPlugin
         context.getIntraQueuePreemptionOrderPolicy());
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Queue Name:" + tq.queueName + ", partition:" + tq.partition);
+      LOG.error("Temp", new RuntimeException());
       for (TempAppPerPartition tmpApp : tq.getApps()) {
-        LOG.debug(tmpApp);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -426,7 +426,7 @@ public class FifoIntraQueuePreemptionPlugin
         tmpUser.setUserLimit(userLimitResource);
 
         if (LOG.isDebugEnabled()) {
-          LOG.debug("TempUser:" + tmpUser);
+          LOG.error("Temp", new RuntimeException());
         }
 
         tmpUser.idealAssigned = Resources.createResource(0, 0);

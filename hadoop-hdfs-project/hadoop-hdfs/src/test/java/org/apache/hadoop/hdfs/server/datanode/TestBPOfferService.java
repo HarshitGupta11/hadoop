@@ -490,7 +490,7 @@ public class TestBPOfferService {
               Mockito.<BlockReportContext>anyObject());
           return true;
         } catch (Throwable t) {
-          LOG.info("waiting on block report: " + t.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -516,7 +516,7 @@ public class TestBPOfferService {
                   Mockito.<BlockReportContext>anyObject());
           return true;
         } catch (Throwable t) {
-          LOG.info("waiting on block report: " + t.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }

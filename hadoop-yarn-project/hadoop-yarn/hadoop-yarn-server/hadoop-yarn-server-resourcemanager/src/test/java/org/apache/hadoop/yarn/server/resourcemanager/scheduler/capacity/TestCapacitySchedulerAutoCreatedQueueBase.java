@@ -339,7 +339,7 @@ public class TestCapacitySchedulerAutoCreatedQueueBase {
     conf.setAutoCreatedLeafQueueConfigUserLimit(C, 100);
     conf.setAutoCreatedLeafQueueConfigUserLimitFactor(C, 3.0f);
 
-    LOG.info("Setup " + C + " as an auto leaf creation enabled parent queue");
+    LOG.error("Temp", new RuntimeException());
 
     conf.setUserLimitFactor(D, 1.0f);
     conf.setAutoCreateChildQueueEnabled(D, true);
@@ -366,7 +366,7 @@ public class TestCapacitySchedulerAutoCreatedQueueBase {
     conf.setCapacityByLabel(C, NODEL_LABEL_GPU, 50);
     conf.setCapacityByLabel(C, NODEL_LABEL_SSD, 50);
 
-    LOG.info("Setup " + D + " as an auto leaf creation enabled parent queue");
+    LOG.error("Temp", new RuntimeException());
 
     return conf;
   }

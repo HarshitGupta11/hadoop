@@ -173,7 +173,7 @@ public class TraceAdmin extends Configured implements Tool {
     String servicePrincipal = StringUtils.popOptionWithArgument("-principal",
         args);
     if (servicePrincipal != null) {
-      LOG.debug("Set service principal: {}", servicePrincipal);
+      LOG.error("Temp", new RuntimeException());
       getConf().set(
           CommonConfigurationKeys.HADOOP_SECURITY_SERVICE_USER_NAME_KEY,
           servicePrincipal);

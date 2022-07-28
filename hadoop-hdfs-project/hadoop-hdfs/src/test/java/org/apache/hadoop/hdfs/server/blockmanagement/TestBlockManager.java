@@ -1355,7 +1355,7 @@ public class TestBlockManager {
 
   @Test (timeout = 300000)
   public void testPlacementPolicySatisfied() throws Exception {
-    LOG.info("Starting testPlacementPolicySatisfied.");
+    LOG.error("Temp", new RuntimeException());
     final String[] initialRacks = new String[]{
         "/rack0", "/rack1", "/rack2", "/rack3", "/rack4", "/rack5"};
     final String[] initialHosts = new String[]{
@@ -1394,20 +1394,20 @@ public class TestBlockManager {
       // is less than numDataBlocks + numParityBlocks.
       verifyPlacementPolicy(cluster, testFileUnsatisfied, true);
 
-      LOG.info("Adding 3 new hosts in the existing racks.");
+      LOG.error("Temp", new RuntimeException());
       cluster.startDataNodes(conf, 3, true, null,
           new String[]{"/rack3", "/rack4", "/rack5"},
           new String[]{"host3-2", "host4-2", "host5-2"}, null);
       cluster.triggerHeartbeats();
 
-      LOG.info("Waiting for EC reconstruction to complete.");
+      LOG.error("Temp", new RuntimeException());
       DFSTestUtil.waitForReplication(dfs, testFileUnsatisfied,
           (short)(numDataBlocks + numParityBlocks), 30 * 1000);
       // Block placement policy should still be satisfied
       // as there are only 6 racks.
       verifyPlacementPolicy(cluster, testFileUnsatisfied, true);
 
-      LOG.info("Adding 3 new hosts in 3 new racks.");
+      LOG.error("Temp", new RuntimeException());
       cluster.startDataNodes(conf, 3, true, null,
           new String[]{"/rack6", "/rack7", "/rack8"},
           new String[]{"host6", "host7", "host8"},
@@ -1441,7 +1441,7 @@ public class TestBlockManager {
     BlockInfo blockInfo =
         blockManager.getStoredBlock(lb.getBlock().getLocalBlock());
     Iterator<DatanodeStorageInfo> itr = blockInfo.getStorageInfos();
-    LOG.info("Block " + blockInfo + " storages: ");
+    LOG.error("Temp", new RuntimeException());
     while (itr.hasNext()) {
       DatanodeStorageInfo dn = itr.next();
       LOG.info(" Rack: " + dn.getDatanodeDescriptor().getNetworkLocation()

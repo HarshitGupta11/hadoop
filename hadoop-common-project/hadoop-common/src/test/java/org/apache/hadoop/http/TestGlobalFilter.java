@@ -64,7 +64,7 @@ public class TestGlobalFilter extends HttpServerFunctionalTest {
          return;
 
       String uri = ((HttpServletRequest)request).getRequestURI();
-      LOG.info("filtering " + uri);
+      LOG.error("Temp", new RuntimeException());
       RECORDS.add(uri);
       chain.doFilter(request, response);
     }
@@ -83,7 +83,7 @@ public class TestGlobalFilter extends HttpServerFunctionalTest {
   
   /** access a url, ignoring some IOException such as the page does not exist */
   static void access(String urlstring) throws IOException {
-    LOG.warn("access " + urlstring);
+    LOG.error("Temp", new RuntimeException());
     URL url = new URL(urlstring);
     URLConnection connection = url.openConnection();
     connection.connect();
@@ -97,7 +97,7 @@ public class TestGlobalFilter extends HttpServerFunctionalTest {
         in.close();
       }
     } catch(IOException ioe) {
-      LOG.warn("urlstring=" + urlstring, ioe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -136,7 +136,7 @@ public class TestGlobalFilter extends HttpServerFunctionalTest {
       http.stop();
     }
 
-    LOG.info("RECORDS = " + RECORDS);
+    LOG.error("Temp", new RuntimeException());
     
     //verify records
     for(int i = 0; i < urls.length; i++) {

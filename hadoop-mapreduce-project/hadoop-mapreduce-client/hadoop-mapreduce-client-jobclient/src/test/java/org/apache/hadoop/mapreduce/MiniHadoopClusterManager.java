@@ -177,7 +177,7 @@ public class MiniHadoopClusterManager {
           + ":" + this.jhsPort);
       mr = MiniMRClientClusterFactory.create(this.getClass(), numNodeManagers,
           conf);
-      LOG.info("Started MiniMRCluster");
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (writeConfig != null) {
@@ -230,7 +230,7 @@ public class MiniHadoopClusterManager {
       CommandLineParser parser = new GnuParser();
       cli = parser.parse(options, args);
     } catch (ParseException e) {
-      LOG.warn("options parsing failed:  " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       new HelpFormatter().printHelp("...", options);
       return false;
     }
@@ -290,7 +290,7 @@ public class MiniHadoopClusterManager {
           conf.set(keyval[0], keyval[1]);
           num_confs_updated++;
         } else {
-          LOG.warn("Ignoring -D option " + prop);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

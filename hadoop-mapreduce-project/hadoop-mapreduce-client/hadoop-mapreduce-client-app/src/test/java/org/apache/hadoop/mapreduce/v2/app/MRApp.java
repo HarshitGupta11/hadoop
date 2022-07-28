@@ -236,13 +236,13 @@ public class MRApp extends MRAppMaster {
         System.currentTimeMillis());
     this.testWorkDir = new File("target", testName);
     testAbsPath = new Path(testWorkDir.getAbsolutePath());
-    LOG.info("PathUsed: " + testAbsPath);
+    LOG.error("Temp", new RuntimeException());
     if (cleanOnStart) {
       testAbsPath = new Path(testWorkDir.getAbsolutePath());
       try {
         FileContext.getLocalFSFileContext().delete(testAbsPath, true);
       } catch (Exception e) {
-        LOG.warn("COULD NOT CLEANUP: " + testAbsPath, e);
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException("could not cleanup test dir", e);
       }
     }
@@ -308,7 +308,7 @@ public class MRApp extends MRAppMaster {
     // Write job.xml
     String jobFile = MRApps.getJobFile(conf, user,
         TypeConverter.fromYarn(job.getID()));
-    LOG.info("Writing job conf to " + jobFile);
+    LOG.error("Temp", new RuntimeException());
     new File(jobFile).getParentFile().mkdirs();
     conf.writeXml(new FileOutputStream(jobFile));
 

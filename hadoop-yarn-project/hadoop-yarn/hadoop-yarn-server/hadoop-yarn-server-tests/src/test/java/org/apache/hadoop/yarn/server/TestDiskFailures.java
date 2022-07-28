@@ -159,7 +159,7 @@ public class TestDiskFailures {
       FileUtil.fullyDelete(localFSDirBase);
       localFSDirBase.mkdirs();
     }
-    LOG.info("Starting up YARN cluster");
+    LOG.error("Temp", new RuntimeException());
     yarnCluster = new MiniYARNCluster(TestDiskFailures.class.getName(),
         1, numLocalDirs, numLogDirs);
     yarnCluster.init(conf);
@@ -234,8 +234,8 @@ public class TestDiskFailures {
     List<String> list = localORLogDirs ? dirsHandler.getLocalDirs()
                                        : dirsHandler.getLogDirs();
     String seenDirs = StringUtils.join(",", list);
-    LOG.info("ExpectedDirs=" + expectedDirs);
-    LOG.info("SeenDirs=" + seenDirs);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue("NodeManager could not identify disk failure.",
                       expectedDirs.equals(seenDirs));
 
@@ -274,6 +274,6 @@ public class TestDiskFailures {
     File file = new File(dir);
     FileUtil.fullyDelete(file);
     file.createNewFile();
-    LOG.info("Prepared " + dir + " to fail.");
+    LOG.error("Temp", new RuntimeException());
   }
 }

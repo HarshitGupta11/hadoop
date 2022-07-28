@@ -230,7 +230,7 @@ public class Balancer {
 
   static long getLong(Configuration conf, String key, long defaultValue) {
     final long v = conf.getLong(key, defaultValue);
-    LOG.info(key + " = " + v + " (default=" + defaultValue + ")");
+    LOG.error("Temp", new RuntimeException());
     if (v <= 0) {
       throw new HadoopIllegalArgumentException(key + " = " + v  + " <= " + 0);
     }
@@ -239,7 +239,7 @@ public class Balancer {
 
   static long getLongBytes(Configuration conf, String key, long defaultValue) {
     final long v = conf.getLongBytes(key, defaultValue);
-    LOG.info(key + " = " + v + " (default=" + defaultValue + ")");
+    LOG.error("Temp", new RuntimeException());
     if (v <= 0) {
       throw new HadoopIllegalArgumentException(key + " = " + v  + " <= " + 0);
     }
@@ -248,7 +248,7 @@ public class Balancer {
 
   static int getInt(Configuration conf, String key, int defaultValue) {
     final int v = conf.getInt(key, defaultValue);
-    LOG.info(key + " = " + v + " (default=" + defaultValue + ")");
+    LOG.error("Temp", new RuntimeException());
     if (v <= 0) {
       throw new HadoopIllegalArgumentException(key + " = " + v  + " <= " + 0);
     }
@@ -435,7 +435,7 @@ public class Balancer {
 
   private static <T extends StorageGroup>
       void logUtilizationCollection(String name, Collection<T> items) {
-    LOG.info(items.size() + " " + name + ": " + items);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -464,7 +464,7 @@ public class Balancer {
     /* first step: match each overUtilized datanode (source) to
      * one or more underUtilized datanodes (targets).
      */
-    LOG.info("chooseStorageGroups for " + matcher + ": overUtilized => underUtilized");
+    LOG.error("Temp", new RuntimeException());
     chooseStorageGroups(overUtilized, underUtilized, matcher);
     
     /* match each remaining overutilized datanode (source) to 
@@ -472,7 +472,7 @@ public class Balancer {
      * Note only overutilized datanodes that haven't had that max bytes to move
      * satisfied in step 1 are selected
      */
-    LOG.info("chooseStorageGroups for " + matcher + ": overUtilized => belowAvgUtilized");
+    LOG.error("Temp", new RuntimeException());
     chooseStorageGroups(overUtilized, belowAvgUtilized, matcher);
 
     /* match each remaining underutilized datanode (target) to 
@@ -480,7 +480,7 @@ public class Balancer {
      * Note only underutilized datanodes that have not had that max bytes to
      * move satisfied in step 1 are selected.
      */
-    LOG.info("chooseStorageGroups for " + matcher + ": underUtilized => aboveAvgUtilized");
+    LOG.error("Temp", new RuntimeException());
     chooseStorageGroups(underUtilized, aboveAvgUtilized, matcher);
   }
 
@@ -677,11 +677,11 @@ public class Balancer {
             DFSConfigKeys.DFS_NAMENODE_REDUNDANCY_INTERVAL_SECONDS_KEY,
             DFSConfigKeys.DFS_NAMENODE_REDUNDANCY_INTERVAL_SECONDS_DEFAULT,
             TimeUnit.SECONDS) * 1000;
-    LOG.info("namenodes  = " + namenodes);
-    LOG.info("parameters = " + p);
-    LOG.info("included nodes = " + p.getIncludedNodes());
-    LOG.info("excluded nodes = " + p.getExcludedNodes());
-    LOG.info("source nodes = " + p.getSourceNodes());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     checkKeytabAndInit(conf);
     System.out.println("Time Stamp               Iteration#  Bytes Already Moved  Bytes Left To Move  Bytes Being Moved");
     
@@ -711,7 +711,7 @@ public class Balancer {
               return r.exitStatus.getExitCode();
             }
           } else {
-            LOG.info("Skipping blockpool " + nnc.getBlockpoolID());
+            LOG.error("Temp", new RuntimeException());
           }
         }
         if (!done) {
@@ -730,7 +730,7 @@ public class Balancer {
       throws IOException {
     if (conf.getBoolean(DFSConfigKeys.DFS_BALANCER_KEYTAB_ENABLED_KEY,
         DFSConfigKeys.DFS_BALANCER_KEYTAB_ENABLED_DEFAULT)) {
-      LOG.info("Keytab is configured, will login using keytab.");
+      LOG.error("Temp", new RuntimeException());
       UserGroupInformation.setConfiguration(conf);
       String addr = conf.get(DFSConfigKeys.DFS_BALANCER_ADDRESS_KEY,
           DFSConfigKeys.DFS_BALANCER_ADDRESS_DEFAULT);
@@ -811,7 +811,7 @@ public class Balancer {
                   throw new IllegalArgumentException(
                       "Number out of range: threshold = " + threshold);
                 }
-                LOG.info( "Using a threshold of " + threshold );
+                LOG.error("Temp", new RuntimeException());
                 b.setThreshold(threshold);
               } catch(IllegalArgumentException e) {
                 System.err.println(
@@ -854,7 +854,7 @@ public class Balancer {
                   "idleiterations value is missing: args = " + Arrays
                       .toString(args));
               int maxIdleIteration = Integer.parseInt(args[i]);
-              LOG.info("Using a idleiterations of " + maxIdleIteration);
+              LOG.error("Temp", new RuntimeException());
               b.setMaxIdleIteration(maxIdleIteration);
             } else if ("-runDuringUpgrade".equalsIgnoreCase(args[i])) {
               b.setRunDuringUpgrade(true);

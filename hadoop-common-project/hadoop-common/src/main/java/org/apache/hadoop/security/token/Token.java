@@ -153,7 +153,7 @@ public class Token<T extends TokenIdentifier> implements Writable {
       cls = tokenKindMap.get(kind);
     }
     if (cls == null) {
-      LOG.debug("Cannot find class for token kind " + kind);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return cls;
@@ -262,7 +262,7 @@ public class Token<T extends TokenIdentifier> implements Writable {
       assert !publicToken.isPrivate();
       publicService = publicToken.service;
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Cloned private token " + this + " from " + publicToken);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -467,7 +467,7 @@ public class Token<T extends TokenIdentifier> implements Writable {
         }
       }
     }
-    LOG.warn("No TokenRenewer defined for token kind " + this.kind);
+    LOG.error("Temp", new RuntimeException());
     return renewer;
   }
 

@@ -108,7 +108,7 @@ public class TestApplicationMasterLauncher {
         startContainers(StartContainersRequest requests)
             throws YarnException {
       StartContainerRequest request = requests.getStartContainerRequests().get(0);
-      LOG.info("Container started by MyContainerManager: " + request);
+      LOG.error("Temp", new RuntimeException());
       launched = true;
       Map<String, String> env =
           request.getContainerLaunchContext().getEnvironment();
@@ -138,7 +138,7 @@ public class TestApplicationMasterLauncher {
     @Override
     public StopContainersResponse stopContainers(StopContainersRequest request)
         throws YarnException {
-      LOG.info("Container cleaned up by MyContainerManager");
+      LOG.error("Temp", new RuntimeException());
       cleanedup = true;
       return null;
     }
@@ -218,7 +218,7 @@ public class TestApplicationMasterLauncher {
 
     int waitCount = 0;
     while (containerManager.launched == false && waitCount++ < 20) {
-      LOG.info("Waiting for AM Launch to happen..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertTrue(containerManager.launched);
@@ -248,7 +248,7 @@ public class TestApplicationMasterLauncher {
 
     waitCount = 0;
     while (containerManager.cleanedup == false && waitCount++ < 20) {
-      LOG.info("Waiting for AM Cleanup to happen..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertTrue(containerManager.cleanedup);

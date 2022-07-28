@@ -152,7 +152,7 @@ public class ContainerLogsPage extends NMView {
               }
             } catch (Exception ex) {
               if (LOG.isDebugEnabled()) {
-                LOG.debug(ex.getMessage());
+                LOG.error("Temp", new RuntimeException());
               }
             }
           }

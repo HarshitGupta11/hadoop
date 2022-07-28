@@ -57,7 +57,7 @@ public class Lz4Compressor implements Compressor {
         initIDs();
       } catch (Throwable t) {
         // Ignore failure to load/initialize lz4
-        LOG.warn(t.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       LOG.error("Cannot load " + Lz4Compressor.class.getName() +

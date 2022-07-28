@@ -140,7 +140,7 @@ public class FileJournalManager implements JournalManager {
 
     File dstFile = NNStorage.getFinalizedEditsFile(
         sd, firstTxId, lastTxId);
-    LOG.info("Finalizing edits file " + inprogressFile + " -> " + dstFile);
+    LOG.error("Temp", new RuntimeException());
     
     Preconditions.checkState(!dstFile.exists(),
         "Can't finalize edits file " + inprogressFile + " since finalized file " +
@@ -180,7 +180,7 @@ public class FileJournalManager implements JournalManager {
   @Override
   public void purgeLogsOlderThan(long minTxIdToKeep)
       throws IOException {
-    LOG.info("Purging logs older than " + minTxIdToKeep);
+    LOG.error("Temp", new RuntimeException());
     File[] files = FileUtil.listFiles(sd.getCurrentDir());
     List<EditLogFile> editLogs = matchEditLogs(files, true);
     for (EditLogFile log : editLogs) {
@@ -242,7 +242,7 @@ public class FileJournalManager implements JournalManager {
     File currentDir = sd.getCurrentDir();
     List<EditLogFile> allLogFiles = matchEditLogs(currentDir);
     List<EditLogFile> toTrash = Lists.newArrayList();
-    LOG.info("Discard the EditLog files, the given start txid is " + startTxId);
+    LOG.error("Temp", new RuntimeException());
     // go through the editlog files to make sure the startTxId is right at the
     // segment boundary
     for (EditLogFile elf : allLogFiles) {
@@ -256,7 +256,7 @@ public class FileJournalManager implements JournalManager {
     for (EditLogFile elf : toTrash) {
       // rename these editlog file as .trash
       elf.moveAsideTrashFile(startTxId);
-      LOG.info("Trash the EditLog file " + elf);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -385,7 +385,7 @@ public class FileJournalManager implements JournalManager {
       }
       EditLogFileInputStream elfis = new EditLogFileInputStream(elf.getFile(),
             elf.getFirstTxId(), elf.getLastTxId(), elf.isInProgress());
-      LOG.debug("selecting edit log stream " + elf);
+      LOG.error("Temp", new RuntimeException());
       streams.add(elfis);
     }
   }
@@ -393,7 +393,7 @@ public class FileJournalManager implements JournalManager {
   @Override
   synchronized public void recoverUnfinalizedSegments() throws IOException {
     File currentDir = sd.getCurrentDir();
-    LOG.info("Recovering unfinalized segments in " + currentDir);
+    LOG.error("Temp", new RuntimeException());
     List<EditLogFile> allLogFiles = matchEditLogs(currentDir);
 
     for (EditLogFile elf : allLogFiles) {
@@ -404,7 +404,7 @@ public class FileJournalManager implements JournalManager {
         // If the file is zero-length, we likely just crashed after opening the
         // file, but before writing anything to it. Safe to delete it.
         if (elf.getFile().length() == 0) {
-          LOG.info("Deleting zero-length edit log file " + elf);
+          LOG.error("Temp", new RuntimeException());
           if (!elf.getFile().delete()) {
             throw new IOException("Unable to delete file " + elf.getFile());
           }
@@ -625,7 +625,7 @@ public class FileJournalManager implements JournalManager {
   
   @Override
   public void doPreUpgrade() throws IOException {
-    LOG.info("Starting upgrade of edits directory " + sd.getRoot());
+    LOG.error("Temp", new RuntimeException());
     try {
      NNUpgradeUtil.doPreUpgrade(conf, sd);
     } catch (IOException ioe) {

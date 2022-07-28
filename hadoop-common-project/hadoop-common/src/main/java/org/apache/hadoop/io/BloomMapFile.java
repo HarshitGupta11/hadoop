@@ -246,7 +246,7 @@ public class BloomMapFile {
         in.close();
         in = null;
       } catch (IOException ioe) {
-        LOG.warn("Can't open BloomFilter: " + ioe + " - fallback to MapFile.");
+        LOG.error("Temp", new RuntimeException());
         bloomFilter = null;
       } finally {
         IOUtils.closeStream(in);

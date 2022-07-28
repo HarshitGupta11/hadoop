@@ -85,13 +85,13 @@ class DynamicInputChunkContext<K, V> {
     Path acquiredFilePath = new Path(getChunkRootPath(), taskId);
 
     if (fs.exists(acquiredFilePath)) {
-      LOG.info("Acquiring pre-assigned chunk: " + acquiredFilePath);
+      LOG.error("Temp", new RuntimeException());
       return new DynamicInputChunk(acquiredFilePath, taskAttemptContext, this);
     }
 
     for (FileStatus chunkFile : getListOfChunkFiles()) {
       if (fs.rename(chunkFile.getPath(), acquiredFilePath)) {
-        LOG.info(taskId + " acquired " + chunkFile.getPath());
+        LOG.error("Temp", new RuntimeException());
         return new DynamicInputChunk(acquiredFilePath, taskAttemptContext,
             this);
       }

@@ -52,9 +52,9 @@ public class TestSequenceFile {
   /** Unit tests for SequenceFile. */
   @Test
   public void testZlibSequenceFile() throws Exception {
-    LOG.info("Testing SequenceFile with DefaultCodec");
+    LOG.error("Temp", new RuntimeException());
     compressedSeqFileTest(new DefaultCodec());
-    LOG.info("Successfully tested SequenceFile with DefaultCodec");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @SuppressWarnings("deprecation")
@@ -133,7 +133,7 @@ public class TestSequenceFile {
         "test.bc.seq"));
  
     int seed = new Random().nextInt();
-    LOG.info("Seed = " + seed);
+    LOG.error("Temp", new RuntimeException());
 
     FileSystem fs = FileSystem.getLocal(conf);
     try {
@@ -222,7 +222,7 @@ public class TestSequenceFile {
   @SuppressWarnings("deprecation")
   private void readTest(FileSystem fs, int count, int seed, Path file)
     throws IOException {
-    LOG.debug("reading " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     SequenceFile.Reader reader = new SequenceFile.Reader(fs, file, conf);
     RandomDatum.Generator generator = new RandomDatum.Generator(seed);
 
@@ -257,17 +257,17 @@ public class TestSequenceFile {
             throw new RuntimeException("wrong value at " + i);
         }
       } catch (IOException ioe) {
-        LOG.info("Problem on row " + i);
-        LOG.info("Expected key = " + key);
-        LOG.info("Expected len = " + key.getLength());
-        LOG.info("Actual key = " + k);
-        LOG.info("Actual len = " + k.getLength());
-        LOG.info("Expected value = " + value);
-        LOG.info("Expected len = " + value.getLength());
-        LOG.info("Actual value = " + v);
-        LOG.info("Actual len = " + v.getLength());
-        LOG.info("Key equals: " + k.equals(key));
-        LOG.info("value equals: " + v.equals(value));
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         throw ioe;
       }
 
@@ -281,15 +281,15 @@ public class TestSequenceFile {
     throws IOException {
     fs.delete(new Path(file+".sorted"), true);
     SequenceFile.Sorter sorter = newSorter(fs, fast, megabytes, factor);
-    LOG.debug("sorting " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     sorter.sort(file, file.suffix(".sorted"));
-    LOG.info("done sorting " + count + " debug");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @SuppressWarnings("deprecation")
   private void checkSort(FileSystem fs, int count, int seed, Path file)
     throws IOException {
-    LOG.info("sorting " + count + " records in memory for debug");
+    LOG.error("Temp", new RuntimeException());
     RandomDatum.Generator generator = new RandomDatum.Generator(seed);
     SortedMap<RandomDatum, RandomDatum> map =
       new TreeMap<RandomDatum, RandomDatum>();
@@ -300,7 +300,7 @@ public class TestSequenceFile {
       map.put(key, value);
     }
 
-    LOG.debug("checking order of " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     RandomDatum k = new RandomDatum();
     RandomDatum v = new RandomDatum();
     Iterator<Map.Entry<RandomDatum, RandomDatum>> iterator =
@@ -321,7 +321,7 @@ public class TestSequenceFile {
     }
 
     reader.close();
-    LOG.debug("sucessfully checked " + count + " records");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @SuppressWarnings("deprecation")
@@ -330,7 +330,7 @@ public class TestSequenceFile {
                                 boolean fast, int factor, int megabytes)
     throws IOException {
 
-    LOG.debug("creating "+factor+" files with "+count/factor+" records");
+    LOG.error("Temp", new RuntimeException());
 
     SequenceFile.Writer[] writers = new SequenceFile.Writer[factor];
     Path[] names = new Path[factor];
@@ -359,11 +359,11 @@ public class TestSequenceFile {
       writers[i].close();
 
     for (int i = 0; i < factor; i++) {
-      LOG.debug("sorting file " + i + " with " + count/factor + " records");
+      LOG.error("Temp", new RuntimeException());
       newSorter(fs, fast, megabytes, factor).sort(names[i], sortedNames[i]);
     }
 
-    LOG.info("merging " + factor + " files with " + count/factor + " debug");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(new Path(file+".sorted"), true);
     newSorter(fs, fast, megabytes, factor)
       .merge(sortedNames, file.suffix(".sorted"));
@@ -385,7 +385,7 @@ public class TestSequenceFile {
   /** Unit tests for SequenceFile metadata. */
   @Test
   public void testSequenceFileMetadata() throws Exception {
-    LOG.info("Testing SequenceFile with metadata");
+    LOG.error("Temp", new RuntimeException());
     int count = 1024 * 10;
     CompressionCodec codec = new DefaultCodec();
     Path file = new Path(GenericTestUtils.getTempPath("test.seq.metadata"));
@@ -410,8 +410,8 @@ public class TestSequenceFile {
       writeMetadataTest(fs, count, seed, file, CompressionType.NONE, null, theMetadata);
       SequenceFile.Metadata aMetadata = readMetadata(fs, file);
       if (!theMetadata.equals(aMetadata)) {
-        LOG.info("The original metadata:\n" + theMetadata.toString());
-        LOG.info("The retrieved metadata:\n" + aMetadata.toString());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("metadata not match:  " + 1);
       }
       // SequenceFile.RecordCompressWriter
@@ -419,8 +419,8 @@ public class TestSequenceFile {
                         codec, theMetadata);
       aMetadata = readMetadata(fs, recordCompressedFile);
       if (!theMetadata.equals(aMetadata)) {
-        LOG.info("The original metadata:\n" + theMetadata.toString());
-        LOG.info("The retrieved metadata:\n" + aMetadata.toString());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("metadata not match:  " + 2);
       }
       // SequenceFile.BlockCompressWriter
@@ -428,29 +428,29 @@ public class TestSequenceFile {
                         codec, theMetadata);
       aMetadata =readMetadata(fs, blockCompressedFile);
       if (!theMetadata.equals(aMetadata)) {
-        LOG.info("The original metadata:\n" + theMetadata.toString());
-        LOG.info("The retrieved metadata:\n" + aMetadata.toString());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("metadata not match:  " + 3);
       }
       // SequenceFile.Sorter
       sortMetadataTest(fs, file, sortedFile, theMetadata);
       aMetadata = readMetadata(fs, recordCompressedFile);
       if (!theMetadata.equals(aMetadata)) {
-        LOG.info("The original metadata:\n" + theMetadata.toString());
-        LOG.info("The retrieved metadata:\n" + aMetadata.toString());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         throw new RuntimeException("metadata not match:  " + 4);
       }
     } finally {
       fs.close();
     }
-    LOG.info("Successfully tested SequenceFile with metadata");
+    LOG.error("Temp", new RuntimeException());
   }
   
   
   @SuppressWarnings("deprecation")
   private SequenceFile.Metadata readMetadata(FileSystem fs, Path file)
     throws IOException {
-    LOG.info("reading file: " + file.toString());
+    LOG.error("Temp", new RuntimeException());
     SequenceFile.Reader reader = new SequenceFile.Reader(fs, file, conf);
     SequenceFile.Metadata meta = reader.getMetadata(); 
     reader.close();
@@ -481,7 +481,7 @@ public class TestSequenceFile {
   private void sortMetadataTest(FileSystem fs, Path unsortedFile, Path sortedFile, SequenceFile.Metadata metadata)
     throws IOException {
     fs.delete(sortedFile, true);
-    LOG.info("sorting: " + unsortedFile + " to: " + sortedFile);
+    LOG.error("Temp", new RuntimeException());
     final WritableComparator comparator = WritableComparator.get(RandomDatum.class);
     SequenceFile.Sorter sorter = new SequenceFile.Sorter(fs, comparator, RandomDatum.class, RandomDatum.class, conf, metadata);
     sorter.sort(new Path[] { unsortedFile }, sortedFile, false);
@@ -787,18 +787,18 @@ public class TestSequenceFile {
       
       fs = file.getFileSystem(test.conf);
 
-      LOG.info("count = " + count);
-      LOG.info("megabytes = " + megabytes);
-      LOG.info("factor = " + factor);
-      LOG.info("create = " + create);
-      LOG.info("seed = " + seed);
-      LOG.info("rwonly = " + rwonly);
-      LOG.info("check = " + check);
-      LOG.info("fast = " + fast);
-      LOG.info("merge = " + merge);
-      LOG.info("compressType = " + compressType);
-      LOG.info("compressionCodec = " + compressionCodec);
-      LOG.info("file = " + file);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       if (rwonly && (!create || merge || fast)) {
         System.err.println(usage);

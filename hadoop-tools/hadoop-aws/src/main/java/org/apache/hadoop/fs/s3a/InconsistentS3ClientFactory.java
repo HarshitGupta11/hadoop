@@ -34,7 +34,7 @@ public class InconsistentS3ClientFactory extends DefaultS3ClientFactory {
   @Override
   protected AmazonS3 newAmazonS3Client(AWSCredentialsProvider credentials,
       ClientConfiguration awsConf) {
-    LOG.warn("** FAILURE INJECTION ENABLED.  Do not run in production! **");
+    LOG.error("Temp", new RuntimeException());
     return new InconsistentAmazonS3Client(credentials, awsConf, getConf());
   }
 }

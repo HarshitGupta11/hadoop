@@ -68,7 +68,7 @@ public class NMTokenIdentifierNewForTest extends NMTokenIdentifier {
   
   @Override
   public void write(DataOutput out) throws IOException {
-    LOG.debug("Writing NMTokenIdentifierNewForTest to RPC layer: " + this);
+    LOG.error("Temp", new RuntimeException());
     out.write(proto.toByteArray());
   }
 

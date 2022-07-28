@@ -55,7 +55,7 @@ public abstract class YarnAuthorizationProvider {
             (YarnAuthorizationProvider) ReflectionUtils.newInstance(
               authorizerClass, conf);
         authorizer.init(conf);
-        LOG.info(authorizerClass.getName() + " is instantiated.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return authorizer;
@@ -69,7 +69,7 @@ public abstract class YarnAuthorizationProvider {
   public static void destroy() {
     synchronized (YarnAuthorizationProvider.class) {
       if (authorizer != null) {
-        LOG.debug(authorizer.getClass().getName() + " is destroyed.");
+        LOG.error("Temp", new RuntimeException());
         authorizer = null;
       }
     }

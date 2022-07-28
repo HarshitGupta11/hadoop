@@ -262,7 +262,7 @@ public class ContainerManagerImpl extends CompositeService implements
     Configuration conf = context.getConf();
     if (YarnConfiguration.timelineServiceV2Enabled(conf) &&
         YarnConfiguration.systemMetricsPublisherEnabled(conf)) {
-      LOG.info("YARN system metrics publishing service is enabled");
+      LOG.error("Temp", new RuntimeException());
       nmMetricsPublisher = createNMTimelinePublisher(context);
       context.setNMTimelinePublisher(nmMetricsPublisher);
     }
@@ -330,7 +330,7 @@ public class ContainerManagerImpl extends CompositeService implements
           new AMRMProxyService(this.context, this.dispatcher));
       addService(this.getAMRMProxyService());
     } else {
-      LOG.info("AMRMProxyService is disabled");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -357,14 +357,14 @@ public class ContainerManagerImpl extends CompositeService implements
       for (ContainerManagerApplicationProto proto :
            appsState.getApplications()) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Recovering application with state: " + proto.toString());
+          LOG.error("Temp", new RuntimeException());
         }
         recoverApplication(proto);
       }
 
       for (RecoveredContainerState rcs : stateStore.loadContainersState()) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Recovering container with state: " + rcs);
+          LOG.error("Temp", new RuntimeException());
         }
         recoverContainer(rcs);
       }
@@ -381,7 +381,7 @@ public class ContainerManagerImpl extends CompositeService implements
           new ContainerSchedulerEvent(null,
               ContainerSchedulerEventType.RECOVERY_COMPLETED));
     } else {
-      LOG.info("Not a recoverable state store. Nothing to recover.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -427,7 +427,7 @@ public class ContainerManagerImpl extends CompositeService implements
       }
     }
 
-    LOG.info("Recovering application " + appId);
+    LOG.error("Temp", new RuntimeException());
     ApplicationImpl app = new ApplicationImpl(dispatcher, p.getUser(), fc,
         appId, creds, context, p.getAppLogAggregationInitedTime());
     context.getApplications().put(appId, app);
@@ -476,9 +476,9 @@ public class ContainerManagerImpl extends CompositeService implements
       }
     } else {
       if (rcs.getStatus() != RecoveredContainerStatus.COMPLETED) {
-        LOG.warn(containerId + " has no corresponding application!");
+        LOG.error("Temp", new RuntimeException());
       }
-      LOG.info("Adding " + containerId + " to recently stopped containers");
+      LOG.error("Temp", new RuntimeException());
       nodeStatusUpdater.addCompletedContainer(containerId);
     }
   }
@@ -513,11 +513,11 @@ public class ContainerManagerImpl extends CompositeService implements
       if (newContainers.isEmpty()) {
         break;
       }
-      LOG.info("Waiting for containers: " + newContainers);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(sleepMsec);
     }
     if (waitIterations < 0) {
-      LOG.warn("Timeout waiting for recovered containers");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -653,8 +653,8 @@ public class ContainerManagerImpl extends CompositeService implements
       }
     }
 
-    LOG.info("ContainerManager started at " + connectAddress);
-    LOG.info("ContainerManager bound to " + initialAddress);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private NodeId buildNodeId(InetSocketAddress connectAddress,
@@ -699,7 +699,7 @@ public class ContainerManagerImpl extends CompositeService implements
     if (applications.isEmpty()) {
       return;
     }
-    LOG.info("Applications still running : " + applications.keySet());
+    LOG.error("Temp", new RuntimeException());
 
     if (this.context.getNMStateStore().canRecover()
         && !this.context.getDecommissioned()) {
@@ -715,7 +715,7 @@ public class ContainerManagerImpl extends CompositeService implements
     this.handle(new CMgrCompletedAppsEvent(appIds,
             CMgrCompletedAppsEvent.Reason.ON_SHUTDOWN));
 
-    LOG.info("Waiting for Applications to be Finished");
+    LOG.error("Temp", new RuntimeException());
 
     long waitStartTime = System.currentTimeMillis();
     while (!applications.isEmpty()
@@ -730,7 +730,7 @@ public class ContainerManagerImpl extends CompositeService implements
 
     // All applications Finished
     if (applications.isEmpty()) {
-      LOG.info("All applications in FINISHED state");
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.info("Done waiting for Applications to be Finished. Still alive: "
           + applications.keySet());
@@ -749,7 +749,7 @@ public class ContainerManagerImpl extends CompositeService implements
     List<ContainerId> containerIds =
       new ArrayList<ContainerId>(containers.keySet());
 
-    LOG.info("Waiting for containers to be killed");
+    LOG.error("Temp", new RuntimeException());
 
     this.handle(new CMgrCompletedContainersEvent(containerIds,
       CMgrCompletedContainersEvent.Reason.ON_NODEMANAGER_RESYNC));
@@ -778,7 +778,7 @@ public class ContainerManagerImpl extends CompositeService implements
     }
     // All containers killed
     if (allContainersCompleted) {
-      LOG.info("All containers in DONE state");
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.info("Done waiting for containers to be killed. Still alive: " +
         containers.keySet());
@@ -794,7 +794,7 @@ public class ContainerManagerImpl extends CompositeService implements
     } catch (IOException e) {
       String msg = "Cannot obtain the user-name. Got exception: "
           + StringUtils.stringifyException(e);
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(msg);
     }
     return remoteUgi;
@@ -1057,7 +1057,7 @@ public class ContainerManagerImpl extends CompositeService implements
     String containerIdStr = containerId.toString();
     String user = containerTokenIdentifier.getApplicationSubmitter();
 
-    LOG.info("Start request for " + containerIdStr + " by user " + user);
+    LOG.error("Temp", new RuntimeException());
 
     ContainerLaunchContext launchContext = request.getContainerLaunchContext();
 
@@ -1363,7 +1363,7 @@ public class ContainerManagerImpl extends CompositeService implements
       throws YarnException, IOException {
     String containerIDStr = containerID.toString();
     Container container = this.context.getContainers().get(containerID);
-    LOG.info("Stopping container with container Id: " + containerIDStr);
+    LOG.error("Temp", new RuntimeException());
 
     if (container == null) {
       if (!nodeStatusUpdater.isContainerRecentlyStopped(containerID)) {
@@ -1417,7 +1417,7 @@ public class ContainerManagerImpl extends CompositeService implements
     String containerIDStr = containerID.toString();
     Container container = this.context.getContainers().get(containerID);
 
-    LOG.info("Getting container-status for " + containerIDStr);
+    LOG.error("Temp", new RuntimeException());
     authorizeGetAndStopContainerRequest(containerID, container, false,
       nmTokenIdentifier);
 
@@ -1431,7 +1431,7 @@ public class ContainerManagerImpl extends CompositeService implements
       }
     }
     ContainerStatus containerStatus = container.cloneAndGetContainerStatus();
-    LOG.info("Returning " + containerStatus);
+    LOG.error("Temp", new RuntimeException());
     return containerStatus;
   }
 
@@ -1468,7 +1468,7 @@ public class ContainerManagerImpl extends CompositeService implements
             + " attempted to get status for non-application container : "
             + containerId;
       }
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(msg);
     }
   }
@@ -1727,7 +1727,7 @@ public class ContainerManagerImpl extends CompositeService implements
             .handle(new ContainerLocalizationRequestEvent(container, req));
       }
     } catch (URISyntaxException e) {
-      LOG.info("Error when parsing local resource URI for " + containerId, e);
+      LOG.error("Temp", new RuntimeException());
       throw new YarnException(e);
     }
 
@@ -1862,7 +1862,7 @@ public class ContainerManagerImpl extends CompositeService implements
           new SignalContainersLauncherEvent(container,
               request.getCommand()));
     } else {
-      LOG.info("Container " + containerId + " no longer exists");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

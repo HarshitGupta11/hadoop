@@ -116,7 +116,7 @@ public class TestUnbuffer {
 
       for (int i = 0; i < NUM_OPENS; i++) {
         streams[i] = dfs.open(TEST_PATH);
-        LOG.info("opening file " + i + "...");
+        LOG.error("Temp", new RuntimeException());
         Assert.assertTrue(-1 != streams[i].read());
         streams[i].unbuffer();
       }

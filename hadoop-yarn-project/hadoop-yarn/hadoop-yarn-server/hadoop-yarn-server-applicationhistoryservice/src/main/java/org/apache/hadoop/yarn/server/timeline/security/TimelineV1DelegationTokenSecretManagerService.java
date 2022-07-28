@@ -140,7 +140,7 @@ public class TimelineV1DelegationTokenSecretManagerService extends
     @Override
     protected void storeNewMasterKey(DelegationKey key) throws IOException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Storing master key " + key.getKeyId());
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         if (stateStore != null) {
@@ -154,7 +154,7 @@ public class TimelineV1DelegationTokenSecretManagerService extends
     @Override
     protected void removeStoredMasterKey(DelegationKey key) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Removing master key " + key.getKeyId());
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         if (stateStore != null) {
@@ -169,7 +169,7 @@ public class TimelineV1DelegationTokenSecretManagerService extends
     protected void storeNewToken(TimelineDelegationTokenIdentifier tokenId,
         long renewDate) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Storing token " + tokenId.getSequenceNumber());
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         if (stateStore != null) {
@@ -184,7 +184,7 @@ public class TimelineV1DelegationTokenSecretManagerService extends
     protected void removeStoredToken(TimelineDelegationTokenIdentifier tokenId)
         throws IOException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Storing token " + tokenId.getSequenceNumber());
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         if (stateStore != null) {
@@ -199,7 +199,7 @@ public class TimelineV1DelegationTokenSecretManagerService extends
     protected void updateStoredToken(TimelineDelegationTokenIdentifier tokenId,
         long renewDate) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Updating token " + tokenId.getSequenceNumber());
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         if (stateStore != null) {
@@ -211,7 +211,7 @@ public class TimelineV1DelegationTokenSecretManagerService extends
     }
 
     public void recover(TimelineServiceState state) throws IOException {
-      LOG.info("Recovering " + getClass().getSimpleName());
+      LOG.error("Temp", new RuntimeException());
       for (DelegationKey key : state.getTokenMasterKeyState()) {
         addKey(key);
       }

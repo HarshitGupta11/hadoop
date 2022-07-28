@@ -88,7 +88,7 @@ public class TestSequenceFileAsBinaryOutputFormat {
     IntWritable iwritable = new IntWritable();
     DoubleWritable dwritable = new DoubleWritable();
     DataOutputBuffer outbuf = new DataOutputBuffer();
-    LOG.info("Creating data by SequenceFileAsBinaryOutputFormat");
+    LOG.error("Temp", new RuntimeException());
     try {
       for (int i = 0; i < RECORDS; ++i) {
         iwritable = new IntWritable(r.nextInt());
@@ -112,7 +112,7 @@ public class TestSequenceFileAsBinaryOutputFormat {
     DataInputBuffer buf = new DataInputBuffer();
     final int NUM_SPLITS = 3;
     SequenceFileInputFormat.addInputPath(job, file);
-    LOG.info("Reading data by SequenceFileInputFormat");
+    LOG.error("Temp", new RuntimeException());
     for (InputSplit split : iformat.getSplits(job, NUM_SPLITS)) {
       RecordReader<IntWritable,DoubleWritable> reader =
         iformat.getRecordReader(split, job, Reporter.NULL);

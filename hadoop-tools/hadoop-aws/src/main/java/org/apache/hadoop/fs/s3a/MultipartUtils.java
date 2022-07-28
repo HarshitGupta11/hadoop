@@ -162,7 +162,7 @@ public final class MultipartUtils {
 
       listing = invoker.retry("listMultipartUploads", prefix, true,
           () -> s3.listMultipartUploads(req));
-      LOG.debug("New listing state: {}", this);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

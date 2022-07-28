@@ -522,7 +522,7 @@ public class AuthenticationFilter implements Filter {
         }
       }
       catch (AuthenticationException ex) {
-        LOG.warn("AuthenticationToken ignored: " + ex.getMessage());
+        LOG.error("Temp", new RuntimeException());
         // will be sent back in a 401 unless filter authenticates
         authenticationEx = ex;
         token = null;
@@ -603,9 +603,9 @@ public class AuthenticationFilter implements Filter {
       errCode = HttpServletResponse.SC_FORBIDDEN;
       authenticationEx = ex;
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Authentication exception: " + ex.getMessage(), ex);
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.warn("Authentication exception: " + ex.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (unauthorizedResponse) {

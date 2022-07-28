@@ -124,7 +124,7 @@ public class TestEditsDoubleBuffer {
       GenericTestUtils.assertExceptionContains(
           "bytes still to be flushed and cannot be closed.",
           ioe);
-      EditsDoubleBuffer.LOG.info("Exception expected: ", ioe);
+      EditsDoubleBuffer.LOG.error("Temp", new RuntimeException());
     }
     logs.stopCapturing();
     // Make sure ops are dumped into log in human readable format.

@@ -283,7 +283,7 @@ public class TestMiniMRChildTask {
         mr = null;
       }
     } catch (IOException ioe) {
-      LOG.info("IO exception in closing file system)" );
+      LOG.error("Temp", new RuntimeException());
       ioe.printStackTrace();           
     }
   }

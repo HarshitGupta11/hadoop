@@ -110,7 +110,7 @@ public class AsyncDiskService {
    */
   public synchronized void shutdown() {
     
-    LOG.info("Shutting down all AsyncDiskService threads...");
+    LOG.error("Temp", new RuntimeException());
     
     for (Map.Entry<String, ThreadPoolExecutor> e
         : executors.entrySet()) {
@@ -135,11 +135,11 @@ public class AsyncDiskService {
       if (!executor.awaitTermination(
           Math.max(end - Time.now(), 0),
           TimeUnit.MILLISECONDS)) {
-        LOG.warn("AsyncDiskService awaitTermination timeout.");
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }
-    LOG.info("All AsyncDiskService threads are terminated.");
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
   
@@ -148,7 +148,7 @@ public class AsyncDiskService {
    */
   public synchronized List<Runnable> shutdownNow() {
     
-    LOG.info("Shutting down all AsyncDiskService threads immediately...");
+    LOG.error("Temp", new RuntimeException());
     
     List<Runnable> list = new ArrayList<Runnable>();
     for (Map.Entry<String, ThreadPoolExecutor> e

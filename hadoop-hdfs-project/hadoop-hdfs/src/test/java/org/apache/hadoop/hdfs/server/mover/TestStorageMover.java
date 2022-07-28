@@ -458,7 +458,7 @@ public class TestStorageMover {
           if (!srcDir.equals(dstDir)) {
             final Path src = new Path(srcDir, "file" + i++);
             final Path dst = new Path(dstDir, srcDir.getName() + "2" + dstDir.getName());
-            LOG.info("rename " + src + " to " + dst);
+            LOG.error("Temp", new RuntimeException());
             dfs.rename(src, dst);
           }
         }
@@ -471,7 +471,7 @@ public class TestStorageMover {
    */
   @Test
   public void testMigrateFileToArchival() throws Exception {
-    LOG.info("testMigrateFileToArchival");
+    LOG.error("Temp", new RuntimeException());
     final Path foo = new Path("/foo");
     Map<Path, BlockStoragePolicy> policyMap = Maps.newHashMap();
     policyMap.put(foo, COLD);
@@ -496,7 +496,7 @@ public class TestStorageMover {
    */
   @Test
   public void testMoveSpecificPaths() throws Exception {
-    LOG.info("testMoveSpecificPaths");
+    LOG.error("Temp", new RuntimeException());
     final Path foo = new Path("/foo");
     final Path barFile = new Path(foo, "bar");
     final Path foo2 = new Path("/foo2");
@@ -532,7 +532,7 @@ public class TestStorageMover {
    */
   @Test
   public void testMigrateOpenFileToArchival() throws Exception {
-    LOG.info("testMigrateOpenFileToArchival");
+    LOG.error("Temp", new RuntimeException());
     final Path fooDir = new Path("/foo");
     Map<Path, BlockStoragePolicy> policyMap = Maps.newHashMap();
     policyMap.put(fooDir, COLD);
@@ -559,7 +559,7 @@ public class TestStorageMover {
       // make sure the under construction block has not been migrated
       LocatedBlocks lbs = test.dfs.getClient().getLocatedBlocks(
           barFile.toString(), BLOCK_SIZE);
-      LOG.info("Locations: " + lbs);
+      LOG.error("Temp", new RuntimeException());
       List<LocatedBlock> blks = lbs.getLocatedBlocks();
       Assert.assertEquals(1, blks.size());
       Assert.assertEquals(1, blks.get(0).getLocations().length);
@@ -572,7 +572,7 @@ public class TestStorageMover {
 
       lbs = test.dfs.getClient().getLocatedBlocks(
           barFile.toString(), BLOCK_SIZE);
-      LOG.info("Locations: " + lbs);
+      LOG.error("Temp", new RuntimeException());
       blks = lbs.getLocatedBlocks();
       Assert.assertEquals(1, blks.size());
       Assert.assertEquals(1, blks.get(0).getLocations().length);
@@ -595,7 +595,7 @@ public class TestStorageMover {
    */
   @Test
   public void testHotWarmColdDirs() throws Exception {
-    LOG.info("testHotWarmColdDirs");
+    LOG.error("Temp", new RuntimeException());
     PathPolicyMap pathPolicyMap = new PathPolicyMap(3);
     NamespaceScheme nsScheme = pathPolicyMap.newNamespaceScheme();
     ClusterScheme clusterScheme = new ClusterScheme();
@@ -649,7 +649,7 @@ public class TestStorageMover {
    */
   @Test
   public void testNoSpaceDisk() throws Exception {
-    LOG.info("testNoSpaceDisk");
+    LOG.error("Temp", new RuntimeException());
     final PathPolicyMap pathPolicyMap = new PathPolicyMap(0);
     final NamespaceScheme nsScheme = pathPolicyMap.newNamespaceScheme();
 
@@ -709,7 +709,7 @@ public class TestStorageMover {
    */
   @Test
   public void testNoSpaceArchive() throws Exception {
-    LOG.info("testNoSpaceArchive");
+    LOG.error("Temp", new RuntimeException());
     final PathPolicyMap pathPolicyMap = new PathPolicyMap(0);
     final NamespaceScheme nsScheme = pathPolicyMap.newNamespaceScheme();
 

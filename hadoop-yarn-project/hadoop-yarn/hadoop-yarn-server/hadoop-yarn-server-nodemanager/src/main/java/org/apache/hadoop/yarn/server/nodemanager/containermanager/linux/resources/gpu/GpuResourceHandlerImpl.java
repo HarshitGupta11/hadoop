@@ -137,7 +137,7 @@ public class GpuResourceHandlerImpl implements ResourceHandler {
       } catch (PrivilegedOperationException e) {
         cGroupsHandler.deleteCGroup(CGroupsHandler.CGroupController.DEVICES,
             containerIdStr);
-        LOG.warn("Could not update cgroup for container", e);
+        LOG.error("Temp", new RuntimeException());
         throw new ResourceHandlerException(e);
       }
 

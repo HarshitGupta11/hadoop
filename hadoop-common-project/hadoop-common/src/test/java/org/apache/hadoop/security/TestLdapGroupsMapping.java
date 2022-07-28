@@ -360,7 +360,7 @@ public class TestLdapGroupsMapping extends TestLdapGroupsMappingBase {
         mapping.doGetGroups("hadoop", 1);
         fail("The LDAP query should have timed out!");
       } catch (NamingException ne) {
-        LOG.debug("Got the exception while LDAP querying: ", ne);
+        LOG.error("Temp", new RuntimeException());
         assertExceptionContains("LDAP response read timed out, timeout used:" +
             connectionTimeoutMs + "ms", ne);
         assertFalse(ne.getMessage().contains("remaining name"));
@@ -416,7 +416,7 @@ public class TestLdapGroupsMapping extends TestLdapGroupsMappingBase {
         mapping.doGetGroups("hadoop", 1);
         fail("The LDAP query should have timed out!");
       } catch (NamingException ne) {
-        LOG.debug("Got the exception while LDAP querying: ", ne);
+        LOG.error("Temp", new RuntimeException());
         assertExceptionContains("LDAP response read timed out, timeout used:" +
             readTimeoutMs + "ms", ne);
         assertExceptionContains("remaining name", ne);

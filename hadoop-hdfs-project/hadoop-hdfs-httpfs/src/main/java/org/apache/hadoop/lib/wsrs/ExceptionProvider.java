@@ -48,7 +48,7 @@ public class ExceptionProvider implements ExceptionMapper<Throwable> {
   }
 
   protected void log(Response.Status status, Throwable throwable) {
-    LOG.debug("{}", throwable.getMessage(), throwable);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

@@ -187,7 +187,7 @@ public class DfsClientShmManager implements Closeable {
           try {
             fis[0].close();
           } catch (Throwable e) {
-            LOG.debug("Exception in closing " + fis[0], e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       case ERROR_UNSUPPORTED:
@@ -483,7 +483,7 @@ public class DfsClientShmManager implements Closeable {
     try {
       domainSocketWatcher.close();
     } catch (Throwable e) {
-      LOG.debug("Exception in closing " + domainSocketWatcher, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

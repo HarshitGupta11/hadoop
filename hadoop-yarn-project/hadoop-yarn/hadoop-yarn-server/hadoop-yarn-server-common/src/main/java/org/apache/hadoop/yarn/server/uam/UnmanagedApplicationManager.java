@@ -300,7 +300,7 @@ public class UnmanagedApplicationManager {
       this.requestQueue.put(new AsyncAllocateRequestInfo(request, callback));
     } catch (InterruptedException ex) {
       // Should not happen as we have MAX_INT queue length
-      LOG.debug("Interrupted while waiting to put on response queue", ex);
+      LOG.error("Temp", new RuntimeException());
     }
     // Two possible cases why the UAM is not successfully registered yet:
     // 1. launchUAM is not called at all. Should throw here.
@@ -408,7 +408,7 @@ public class UnmanagedApplicationManager {
     context.setKeepContainersAcrossApplicationAttempts(
         this.keepContainersAcrossApplicationAttempts);
 
-    LOG.info("Submitting unmanaged application {}", appId);
+    LOG.error("Temp", new RuntimeException());
     this.rmClient.submitApplication(submitRequest);
   }
 
@@ -603,7 +603,7 @@ public class UnmanagedApplicationManager {
           lastResponseId = response.getResponseId();
           // update token if RM has reissued/renewed
           if (response.getAMRMToken() != null) {
-            LOG.debug("Received new AMRMToken");
+            LOG.error("Temp", new RuntimeException());
             YarnServerSecurityUtils.updateAMRMToken(response.getAMRMToken(),
                 userUgi, conf);
           }
@@ -620,7 +620,7 @@ public class UnmanagedApplicationManager {
           requestInfo.getCallback().callback(response);
         } catch (InterruptedException ex) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Interrupted while waiting for queue", ex);
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (IOException ex) {
           LOG.warn("IO Error occurred while processing heart beat for "

@@ -242,7 +242,7 @@ public class TestProtectedDirectories {
           testMatrixEntry.getUnprotectedPaths());
 
       try {
-        LOG.info("Running {}", testMatrixEntry);
+        LOG.error("Temp", new RuntimeException());
         FileSystem fs = cluster.getFileSystem();
         for (Path path : testMatrixEntry.getAllPathsToBeDeleted()) {
           final long countBefore = cluster.getNamesystem().getFilesTotal();

@@ -258,7 +258,7 @@ class HeartbeatManager implements DatanodeStatistics {
 
   synchronized void startDecommission(final DatanodeDescriptor node) {
     if (!node.isAlive()) {
-      LOG.info("Dead node {} is decommissioned immediately.", node);
+      LOG.error("Temp", new RuntimeException());
       node.setDecommissioned();
     } else {
       stats.subtract(node);
@@ -269,7 +269,7 @@ class HeartbeatManager implements DatanodeStatistics {
 
   synchronized void startMaintenance(final DatanodeDescriptor node) {
     if (!node.isAlive()) {
-      LOG.info("Dead node {} is put in maintenance state immediately.", node);
+      LOG.error("Temp", new RuntimeException());
       node.setInMaintenance();
     } else {
       stats.subtract(node);
@@ -459,7 +459,7 @@ class HeartbeatManager implements DatanodeStatistics {
         // avoid declaring nodes dead for another cycle if a GC pause lasts
         // longer than the node recheck interval
         if (shouldAbortHeartbeatCheck(-5000)) {
-          LOG.warn("Skipping next heartbeat scan due to excessive pause");
+          LOG.error("Temp", new RuntimeException());
           lastHeartbeatCheck = Time.monotonicNow();
         }
       }

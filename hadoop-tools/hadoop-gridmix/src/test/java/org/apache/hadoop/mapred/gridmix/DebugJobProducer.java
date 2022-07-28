@@ -147,7 +147,7 @@ public class DebugJobProducer implements JobStoryProducer {
       name = String.format("MOCKJOB%06d", id);
 
       this.conf = conf;
-      LOG.info(name + " (" + seed + ")");
+      LOG.error("Temp", new RuntimeException());
       submitTime = timestamp.addAndGet(
         TimeUnit.MILLISECONDS.convert(
           r.nextInt(10), TimeUnit.SECONDS));

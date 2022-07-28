@@ -142,7 +142,7 @@ public class WebHdfsHandler extends SimpleChannelInboundHandler<HttpRequest> {
             host = ((InetSocketAddress)ctx.channel().remoteAddress()).
                 getAddress().getHostAddress();
           } catch (Exception e) {
-            LOG.warn("Error retrieving hostname: ", e);
+            LOG.error("Temp", new RuntimeException());
             host = "unknown";
           }
           REQLOG.info(host + " " + req.getMethod() + " "  + req.getUri() + " " +
@@ -184,7 +184,7 @@ public class WebHdfsHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-    LOG.debug("Error ", cause);
+    LOG.error("Temp", new RuntimeException());
     resp = ExceptionHandler.exceptionCaught(cause);
     resp.headers().set(CONNECTION, CLOSE);
     ctx.writeAndFlush(resp).addListener(ChannelFutureListener.CLOSE);

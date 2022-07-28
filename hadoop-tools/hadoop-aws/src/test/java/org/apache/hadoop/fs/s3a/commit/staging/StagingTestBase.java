@@ -529,7 +529,7 @@ public class StagingTestBase {
     when(mockClient
         .initiateMultipartUpload(any(InitiateMultipartUploadRequest.class)))
         .thenAnswer(invocation -> {
-          LOG.debug("initiateMultipartUpload for {}", mockClient);
+          LOG.error("Temp", new RuntimeException());
           synchronized (lock) {
             if (results.requests.size() == errors.failOnInit) {
               if (errors.recover) {
@@ -551,13 +551,13 @@ public class StagingTestBase {
     // uploadPart
     when(mockClient.uploadPart(any(UploadPartRequest.class)))
         .thenAnswer(invocation -> {
-          LOG.debug("uploadPart for {}", mockClient);
+          LOG.error("Temp", new RuntimeException());
           synchronized (lock) {
             if (results.parts.size() == errors.failOnUpload) {
               if (errors.recover) {
                 errors.failOnUpload(-1);
               }
-              LOG.info("Triggering upload failure");
+              LOG.error("Temp", new RuntimeException());
               throw new AmazonClientException(
                   "Mock Fail on upload " + results.parts.size());
             }
@@ -579,7 +579,7 @@ public class StagingTestBase {
     when(mockClient
         .completeMultipartUpload(any(CompleteMultipartUploadRequest.class)))
         .thenAnswer(invocation -> {
-          LOG.debug("completeMultipartUpload for {}", mockClient);
+          LOG.error("Temp", new RuntimeException());
           synchronized (lock) {
             if (results.commits.size() == errors.failOnCommit) {
               if (errors.recover) {
@@ -599,7 +599,7 @@ public class StagingTestBase {
 
     // abortMultipartUpload mocking
     doAnswer(invocation -> {
-      LOG.debug("abortMultipartUpload for {}", mockClient);
+      LOG.error("Temp", new RuntimeException());
       synchronized (lock) {
         if (results.aborts.size() == errors.failOnAbort) {
           if (errors.recover) {
@@ -628,7 +628,7 @@ public class StagingTestBase {
 
     // deleteObject mocking
     doAnswer(invocation -> {
-      LOG.debug("deleteObject for {}", mockClient);
+      LOG.error("Temp", new RuntimeException());
       synchronized (lock) {
         results.deletes.add(invocation.getArgumentAt(
             0, DeleteObjectRequest.class));
@@ -640,7 +640,7 @@ public class StagingTestBase {
 
     // deleteObject mocking
     doAnswer(invocation -> {
-      LOG.debug("deleteObject for {}", mockClient);
+      LOG.error("Temp", new RuntimeException());
       synchronized (lock) {
         results.deletes.add(new DeleteObjectRequest(
             invocation.getArgumentAt(0, String.class),

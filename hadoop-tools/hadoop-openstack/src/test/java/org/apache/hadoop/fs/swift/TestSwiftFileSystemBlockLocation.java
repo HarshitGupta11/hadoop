@@ -49,7 +49,7 @@ public class TestSwiftFileSystemBlockLocation extends SwiftFileSystemBaseTest {
 
   private void assertLocationValid(BlockLocation location) throws
                                                            IOException {
-    LOG.info("{}", location);
+    LOG.error("Temp", new RuntimeException());
     String[] hosts = location.getHosts();
     String[] names = location.getNames();
     assertNotEqual("No hosts supplied for " + location, 0, hosts.length);
@@ -141,7 +141,7 @@ public class TestSwiftFileSystemBlockLocation extends SwiftFileSystemBaseTest {
     describe("verify that locating a directory is an error");
     createFile(path("/test/filename"));
     FileStatus status = fs.getFileStatus(path("/test"));
-    LOG.info("Filesystem is " + fs + "; target is " + status);
+    LOG.error("Temp", new RuntimeException());
     SwiftTestUtils.assertIsDirectory(status);
     BlockLocation[] locations;
     locations = getFs().getFileBlockLocations(status,

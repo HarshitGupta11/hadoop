@@ -58,7 +58,7 @@ public class DeSelectFields {
           if (literals != null && !literals.trim().isEmpty()) {
             DeSelectType type = DeSelectType.obtainType(literals);
             if (type == null) {
-              LOG.warn("Invalid deSelects string " + literals.trim());
+              LOG.error("Temp", new RuntimeException());
               DeSelectType[] typeArray = DeSelectType.values();
               String allSuppportLiterals = Arrays.toString(typeArray);
               throw new BadRequestException("Invalid deSelects string "

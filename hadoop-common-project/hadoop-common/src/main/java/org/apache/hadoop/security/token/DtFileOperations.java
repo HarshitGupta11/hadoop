@@ -197,7 +197,7 @@ public final class DtFileOperations {
       Token<?> aliasedToken = token.copyToken();
       aliasedToken.setService(alias);
       creds.addToken(alias, aliasedToken);
-      LOG.info("Add token with service " + alias);
+      LOG.error("Temp", new RuntimeException());
     }
     doFormattedWrite(tokenFile, fileFormat, creds, conf);
   }
@@ -264,7 +264,7 @@ public final class DtFileOperations {
       if (matchAlias(token, alias)) {
         if (token.isManaged() && cancel) {
           token.cancel(conf);
-          LOG.info("Canceled " + token.getKind() + ":" + token.getService());
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         newCreds.addToken(token.getService(), token);

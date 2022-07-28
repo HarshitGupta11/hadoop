@@ -60,7 +60,7 @@ public class TestKeyValueTextInputFormat {
     Reporter reporter = Reporter.NULL;
     
     int seed = new Random().nextInt();
-    LOG.info("seed = "+seed);
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
 
     localFs.delete(workDir, true);
@@ -70,7 +70,7 @@ public class TestKeyValueTextInputFormat {
     for (int length = 0; length < MAX_LENGTH;
          length+= random.nextInt(MAX_LENGTH/10)+1) {
 
-      LOG.debug("creating; entries = " + length);
+      LOG.error("Temp", new RuntimeException());
 
       // create a file with length entries
       Writer writer = new OutputStreamWriter(localFs.create(file));
@@ -90,14 +90,14 @@ public class TestKeyValueTextInputFormat {
       format.configure(job);
       for (int i = 0; i < 3; i++) {
         int numSplits = random.nextInt(MAX_LENGTH/20)+1;
-        LOG.debug("splitting: requesting = " + numSplits);
+        LOG.error("Temp", new RuntimeException());
         InputSplit[] splits = format.getSplits(job, numSplits);
-        LOG.debug("splitting: got =        " + splits.length);
+        LOG.error("Temp", new RuntimeException());
 
         // check each split
         BitSet bits = new BitSet(length);
         for (int j = 0; j < splits.length; j++) {
-          LOG.debug("split["+j+"]= " + splits[j]);
+          LOG.error("Temp", new RuntimeException());
           RecordReader<Text, Text> reader =
             format.getRecordReader(splits[j], job, reporter);
           Class readerClass = reader.getClass();
@@ -113,7 +113,7 @@ public class TestKeyValueTextInputFormat {
             int count = 0;
             while (reader.next(key, value)) {
               int v = Integer.parseInt(value.toString());
-              LOG.debug("read " + v);
+              LOG.error("Temp", new RuntimeException());
               if (bits.get(v)) {
                 LOG.warn("conflict with " + v + 
                          " in split " + j +
@@ -123,7 +123,7 @@ public class TestKeyValueTextInputFormat {
               bits.set(v);
               count++;
             }
-            LOG.debug("splits["+j+"]="+splits[j]+" count=" + count);
+            LOG.error("Temp", new RuntimeException());
           } finally {
             reader.close();
           }

@@ -164,7 +164,7 @@ public class WriteOperationHelper {
    * @param ex Any exception raised which triggered the failure.
    */
   public void writeFailed(Exception ex) {
-    LOG.debug("Write to {} failed", this, ex);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -187,7 +187,7 @@ public class WriteOperationHelper {
    */
   @Retries.RetryTranslated
   public String initiateMultiPartUpload(String destKey) throws IOException {
-    LOG.debug("Initiating Multipart upload to {}", destKey);
+    LOG.error("Temp", new RuntimeException());
     final InitiateMultipartUploadRequest initiateMPURequest =
         new InitiateMultipartUploadRequest(owner.getBucket(),
             destKey,
@@ -313,16 +313,16 @@ public class WriteOperationHelper {
   @Retries.RetryTranslated
   public int abortMultipartUploadsUnderPath(String prefix)
       throws IOException {
-    LOG.debug("Aborting multipart uploads under {}", prefix);
+    LOG.error("Temp", new RuntimeException());
     int count = 0;
     List<MultipartUpload> multipartUploads = owner.listMultipartUploads(prefix);
-    LOG.debug("Number of outstanding uploads: {}", multipartUploads.size());
+    LOG.error("Temp", new RuntimeException());
     for (MultipartUpload upload: multipartUploads) {
       try {
         abortMultipartUpload(upload);
         count++;
       } catch (FileNotFoundException e) {
-        LOG.debug("Already aborted: {}", upload.getKey(), e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return count;

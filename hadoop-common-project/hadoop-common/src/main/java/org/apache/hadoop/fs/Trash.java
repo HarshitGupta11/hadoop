@@ -89,7 +89,7 @@ public class Trash extends Configured {
     } catch (Exception e) {
       // If we can not determine that trash is enabled server side then
       // bail rather than potentially deleting a file when trash is enabled.
-      LOG.warn("Failed to get server trash configuration", e);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException("Failed to get server trash configuration", e);
     }
     Trash trash = new Trash(fullyResolvedFs, conf);

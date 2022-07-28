@@ -133,7 +133,7 @@ public class WindowsBasedProcessTree extends ResourceCalculatorProcessTree {
             pInfo.cpuTimeMs = Long.parseLong(procInfo[3]);
             allProcs.put(pInfo.pid, pInfo);
           } catch (NumberFormatException nfe) {
-            LOG.debug("Error parsing procInfo." + nfe);
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           LOG.debug("Expected split length of proc info to be "

@@ -282,10 +282,10 @@ public class ShortCircuitReplica {
       LOG.trace("{}: created mmap of size {}", this, channel.size());
       return mmap;
     } catch (IOException e) {
-      LOG.warn(this + ": mmap error", e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     } catch (RuntimeException e) {
-      LOG.warn(this + ": mmap error", e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

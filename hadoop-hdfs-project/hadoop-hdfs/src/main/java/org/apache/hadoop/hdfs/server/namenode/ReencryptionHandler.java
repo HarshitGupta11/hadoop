@@ -153,14 +153,14 @@ public class ReencryptionHandler implements Runnable {
   @VisibleForTesting
   synchronized void pauseForTesting() {
     shouldPauseForTesting = true;
-    LOG.info("Pausing re-encrypt handler for testing.");
+    LOG.error("Temp", new RuntimeException());
     notify();
   }
 
   @VisibleForTesting
   synchronized void resumeForTesting() {
     shouldPauseForTesting = false;
-    LOG.info("Resuming re-encrypt handler for testing.");
+    LOG.error("Temp", new RuntimeException());
     notify();
   }
 
@@ -189,9 +189,9 @@ public class ReencryptionHandler implements Runnable {
     assert !dir.hasReadLock();
     assert !dir.getFSNamesystem().hasReadLock();
     while (shouldPauseForTesting) {
-      LOG.info("Sleeping in the re-encrypt handler for unit test.");
+      LOG.error("Temp", new RuntimeException());
       wait();
-      LOG.info("Continuing re-encrypt handler after pausing.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -245,7 +245,7 @@ public class ReencryptionHandler implements Runnable {
               @Override
               public void rejectedExecution(Runnable runnable,
                   ThreadPoolExecutor e) {
-                LOG.info("Execution rejected, executing in current thread");
+                LOG.error("Temp", new RuntimeException());
                 super.rejectedExecution(runnable, e);
               }
             });
@@ -274,7 +274,7 @@ public class ReencryptionHandler implements Runnable {
 
   void removeZone(final long zoneId) {
     assert dir.hasWriteLock();
-    LOG.info("Removing zone {} from re-encryption.", zoneId);
+    LOG.error("Temp", new RuntimeException());
     removeZoneTrackerStopTasks(zoneId);
     getReencryptionStatus().removeZone(zoneId);
   }
@@ -340,7 +340,7 @@ public class ReencryptionHandler implements Runnable {
         }
         checkPauseForTesting();
       } catch (InterruptedException ie) {
-        LOG.info("Re-encrypt handler interrupted. Exiting");
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
         return;
       }
@@ -364,12 +364,12 @@ public class ReencryptionHandler implements Runnable {
       try {
         reencryptEncryptionZone(zoneId);
       } catch (RetriableException | SafeModeException re) {
-        LOG.info("Re-encryption caught exception, will retry", re);
+        LOG.error("Temp", new RuntimeException());
         getReencryptionStatus().markZoneForRetry(zoneId);
       } catch (IOException ioe) {
-        LOG.warn("IOException caught when re-encrypting zone {}", zoneId, ioe);
+        LOG.error("Temp", new RuntimeException());
       } catch (InterruptedException ie) {
-        LOG.info("Re-encrypt handler interrupted. Exiting.");
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
         return;
       } catch (Throwable t) {
@@ -426,7 +426,7 @@ public class ReencryptionHandler implements Runnable {
       }
       // save the last batch and mark complete
       submitCurrentBatch(zoneId);
-      LOG.info("Submission completed of zone {} for re-encryption.", zoneId);
+      LOG.error("Temp", new RuntimeException());
       reencryptionUpdater.markZoneSubmissionDone(zoneId);
     } finally {
       readUnlock();
@@ -736,7 +736,7 @@ public class ReencryptionHandler implements Runnable {
     ReadOnlyList<INode> children =
         parent.getChildrenList(Snapshot.CURRENT_STATE_ID);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Re-encrypting directory {}", parent.getFullPathName());
+      LOG.error("Temp", new RuntimeException());
     }
 
     final byte[] startAfter = startAfters.get(startAfters.size() - 1);
@@ -874,7 +874,7 @@ public class ReencryptionHandler implements Runnable {
       final long sleepMs =
           (long) (actual / throttleLimitHandlerRatio) - throttleTimerAll
               .now(TimeUnit.MILLISECONDS);
-      LOG.debug("Throttling re-encryption, sleeping for {} ms", sleepMs);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(sleepMs);
     }
     throttleTimerAll.reset().start();
@@ -959,7 +959,7 @@ public class ReencryptionHandler implements Runnable {
    * DFS_NAMENODE_REENCRYPT_SLEEP_INTERVAL_KEY.
    */
   synchronized void notifyNewSubmission() {
-    LOG.debug("Notifying handler for new re-encryption command.");
+    LOG.error("Temp", new RuntimeException());
     this.notify();
   }
 }

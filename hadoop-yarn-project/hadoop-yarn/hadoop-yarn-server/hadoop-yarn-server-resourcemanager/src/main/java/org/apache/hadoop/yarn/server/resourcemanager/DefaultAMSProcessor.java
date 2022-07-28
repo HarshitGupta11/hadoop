@@ -124,7 +124,7 @@ final class DefaultAMSProcessor implements ApplicationMasterServiceProcessor {
 
     RMApp app = getRmContext().getRMApps().get(
         applicationAttemptId.getApplicationId());
-    LOG.info("AM registration " + applicationAttemptId);
+    LOG.error("Temp", new RuntimeException());
     getRmContext().getDispatcher().getEventHandler()
         .handle(
             new RMAppAttemptRegistrationEvent(applicationAttemptId, request
@@ -139,7 +139,7 @@ final class DefaultAMSProcessor implements ApplicationMasterServiceProcessor {
         .getSubmissionContext().getAMContainerSpec().getApplicationACLs());
     response.setQueue(app.getQueue());
     if (UserGroupInformation.isSecurityEnabled()) {
-      LOG.info("Setting client token master key");
+      LOG.error("Temp", new RuntimeException());
       response.setClientToAMTokenMasterKey(java.nio.ByteBuffer.wrap(
           getRmContext().getClientToAMTokenSecretManager()
           .getMasterKey(applicationAttemptId).getEncoded()));
@@ -231,14 +231,14 @@ final class DefaultAMSProcessor implements ApplicationMasterServiceProcessor {
           maximumCapacity, app.getQueue(),
           getScheduler(), getRmContext());
     } catch (InvalidResourceRequestException e) {
-      LOG.warn("Invalid resource ask by application " + appAttemptId, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
 
     try {
       RMServerUtils.validateBlacklistRequest(blacklistRequest);
     }  catch (InvalidResourceBlacklistRequestException e) {
-      LOG.warn("Invalid blacklist request by application " + appAttemptId, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
 
@@ -279,7 +279,7 @@ final class DefaultAMSProcessor implements ApplicationMasterServiceProcessor {
             request.getSchedulingRequests(), release,
             blacklistAdditions, blacklistRemovals, containerUpdateRequests);
       } catch (SchedulerInvalidResoureRequestException e) {
-        LOG.warn("Exceptions caught when scheduler handling requests");
+        LOG.error("Temp", new RuntimeException());
         throw new YarnException(e);
       }
     }

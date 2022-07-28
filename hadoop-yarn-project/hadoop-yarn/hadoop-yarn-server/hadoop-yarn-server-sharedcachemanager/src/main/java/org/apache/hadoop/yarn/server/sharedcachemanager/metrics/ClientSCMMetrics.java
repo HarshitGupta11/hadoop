@@ -44,7 +44,7 @@ public class ClientSCMMetrics {
 
   private ClientSCMMetrics() {
     registry = new MetricsRegistry("clientRequests");
-    LOG.debug("Initialized " + registry);
+    LOG.error("Temp", new RuntimeException());
   }
   
   public static ClientSCMMetrics getInstance() {

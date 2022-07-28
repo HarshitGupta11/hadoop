@@ -266,7 +266,7 @@ public class TestAMAuthorization {
 
     int waitCount = 0;
     while (containerManager.containerTokens == null && waitCount++ < 20) {
-      LOG.info("Waiting for AM Launch to happen..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertNotNull(containerManager.containerTokens);
@@ -324,7 +324,7 @@ public class TestAMAuthorization {
 
     int waitCount = 0;
     while (containerManager.containerTokens == null && waitCount++ < 40) {
-      LOG.info("Waiting for AM Launch to happen..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertNotNull(containerManager.containerTokens);

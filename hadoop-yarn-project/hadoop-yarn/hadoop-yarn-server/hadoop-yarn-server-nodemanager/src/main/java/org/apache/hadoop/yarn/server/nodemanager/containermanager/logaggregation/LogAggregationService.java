@@ -145,7 +145,7 @@ public class LogAggregationService extends AbstractService implements
   
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info(this.getName() + " waiting for pending aggregation during exit");
+    LOG.error("Temp", new RuntimeException());
     stopAggregators();
     super.serviceStop();
   }
@@ -169,19 +169,19 @@ public class LogAggregationService extends AbstractService implements
     }
     while (!threadPool.isTerminated()) { // wait for all threads to finish
       for (ApplicationId appId : appLogAggregators.keySet()) {
-        LOG.info("Waiting for aggregation to complete for " + appId);
+        LOG.error("Temp", new RuntimeException());
       }
       try {
         if (!threadPool.awaitTermination(30, TimeUnit.SECONDS)) {
           threadPool.shutdownNow(); // send interrupt to hurry them along
         }
       } catch (InterruptedException e) {
-        LOG.warn("Aggregation stop interrupted!");
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }
     for (ApplicationId appId : appLogAggregators.keySet()) {
-      LOG.warn("Some logs may not have been aggregated for " + appId);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -197,7 +197,7 @@ public class LogAggregationService extends AbstractService implements
       eventResponse = new ApplicationEvent(appId,
           ApplicationEventType.APPLICATION_LOG_HANDLING_INITED);
     } catch (YarnRuntimeException e) {
-      LOG.warn("Application failed to init aggregation", e);
+      LOG.error("Temp", new RuntimeException());
       eventResponse = new ApplicationEvent(appId,
           ApplicationEventType.APPLICATION_LOG_HANDLING_FAILED);
     }
@@ -276,7 +276,7 @@ public class LogAggregationService extends AbstractService implements
     try {
       FileSystem.closeAllForUGI(userUgi);
     } catch (IOException e) {
-      LOG.warn("Failed to close filesystems: ", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

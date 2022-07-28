@@ -33,7 +33,7 @@ public class CredentialsSys extends Credentials {
       String s = InetAddress.getLocalHost().getHostName();
       HOSTNAME = s;
       if(LOG.isDebugEnabled()) {
-        LOG.debug("HOSTNAME = " + HOSTNAME);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (UnknownHostException e) {
       LOG.error("Error setting HOSTNAME", e);

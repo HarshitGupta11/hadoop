@@ -157,7 +157,7 @@ public class TestReadStripedFileWithMissingBlocks {
           if (name.contains(Integer.toString(port))) {
             dn.shutdown();
             cluster.setDataNodeDead(dn.getDatanodeId());
-            LOG.info("stop datanode " + failedDNIdx);
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }

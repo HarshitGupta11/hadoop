@@ -179,7 +179,7 @@ public class DNS {
         netIf = getSubinterface(strInterface);
       }
     } catch (SocketException e) {
-      LOG.warn("I/O error finding interface {}", strInterface, e);
+      LOG.error("Temp", new RuntimeException());
       return new String[] { cachedHostAddress };
     }
     if (netIf == null) {

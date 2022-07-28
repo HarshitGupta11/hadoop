@@ -115,7 +115,7 @@ public abstract class RouterResolver<K, V> implements OrderedResolver {
       // Wait until initialized
       if (subclusterMapping == null) {
         try {
-          LOG.debug("Wait to get the mapping for the first time");
+          LOG.error("Temp", new RuntimeException());
           updater.join();
         } catch (InterruptedException e) {
           LOG.error("Cannot wait for the updater to finish");

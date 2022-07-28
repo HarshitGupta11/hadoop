@@ -173,7 +173,7 @@ public class SynthJob implements JobStory {
     id = sequence.getAndIncrement();
 
     name = String.format(jobDef.class_name + "_%06d", id);
-    LOG.debug(name + " (" + seed + ")");
+    LOG.error("Temp", new RuntimeException());
 
     LOG.info("JOB TIMING`: job: " + name + " submission:" + submitTime
         + " deadline:" + deadline + " duration:" + duration

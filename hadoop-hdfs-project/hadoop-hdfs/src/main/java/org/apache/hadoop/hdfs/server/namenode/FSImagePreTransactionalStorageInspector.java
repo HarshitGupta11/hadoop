@@ -231,7 +231,7 @@ class FSImagePreTransactionalStorageInspector extends FSImageStorageInspector {
         //
         if (!ckptFile.renameTo(curFile)) {
           if (!curFile.delete())
-            LOG.warn("Unable to delete dir " + curFile + " before rename");
+            LOG.error("Temp", new RuntimeException());
           if (!ckptFile.renameTo(curFile)) {
             throw new IOException("Unable to rename " + ckptFile +
                                   " to " + curFile);

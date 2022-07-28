@@ -53,7 +53,7 @@ public abstract class ActiveStandbyElectorTestUtil {
           return;
         }
         if (Time.now() > lastPrint + LOG_INTERVAL_MS) {
-          LOG.info("Cur data: " + StringUtils.byteToHexString(data));
+          LOG.error("Temp", new RuntimeException());
           lastPrint = Time.now();
         }
       } catch (NoNodeException nne) {
@@ -61,7 +61,7 @@ public abstract class ActiveStandbyElectorTestUtil {
           return;
         }
         if (Time.now() > lastPrint + LOG_INTERVAL_MS) {
-          LOG.info("Cur data: no node");
+          LOG.error("Temp", new RuntimeException());
           lastPrint = Time.now();
         }
       }

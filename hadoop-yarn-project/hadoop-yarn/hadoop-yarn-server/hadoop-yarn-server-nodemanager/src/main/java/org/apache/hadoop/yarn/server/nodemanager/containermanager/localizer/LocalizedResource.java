@@ -192,14 +192,14 @@ public class LocalizedResource implements EventHandler<ResourceEvent> {
 
       Path resourcePath = event.getLocalResourceRequest().getPath();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Processing " + resourcePath + " of type " + event.getType());
+        LOG.error("Temp", new RuntimeException());
       }
       ResourceState oldState = this.stateMachine.getCurrentState();
       ResourceState newState = null;
       try {
         newState = this.stateMachine.doTransition(event.getType(), event);
       } catch (InvalidStateTransitionException e) {
-        LOG.warn("Can't handle this event at current state", e);
+        LOG.error("Temp", new RuntimeException());
       }
       if (newState != null && oldState != newState) {
         if (LOG.isDebugEnabled()) {

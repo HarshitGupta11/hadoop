@@ -290,7 +290,7 @@ public abstract class FSQueue implements Queue, Schedulable {
     this.fairShare = fairShare;
     metrics.setFairShare(fairShare);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("The updated fairShare for " + getName() + " is " + fairShare);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

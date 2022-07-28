@@ -245,7 +245,7 @@ public class Resources {
                 lhsValue.getUnits(), rhsValue.getValue());
         lhs.setResourceValue(i, lhsValue.getValue() + convertedRhs);
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -269,7 +269,7 @@ public class Resources {
                 lhsValue.getUnits(), rhsValue.getValue());
         lhs.setResourceValue(i, lhsValue.getValue() - convertedRhs);
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -309,7 +309,7 @@ public class Resources {
         ResourceInformation lhsValue = lhs.getResourceInformation(i);
         lhs.setResourceValue(i, (long) (lhsValue.getValue() * by));
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -340,7 +340,7 @@ public class Resources {
             * by);
         lhs.setResourceValue(i, lhsValue.getValue() + convertedRhs);
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -370,7 +370,7 @@ public class Resources {
         ResourceInformation lhsValue = lhs.getResourceInformation(i);
         out.setResourceValue(i, (long) (lhsValue.getValue() * by));
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -487,7 +487,7 @@ public class Resources {
           return false;
         }
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -516,7 +516,7 @@ public class Resources {
             : rhsValue;
         ret.setResourceInformation(i, outInfo);
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }
@@ -540,7 +540,7 @@ public class Resources {
             : rhsValue;
         ret.setResourceInformation(i, outInfo);
       } catch (ResourceNotFoundException ye) {
-        LOG.warn("Resource is missing:" + ye.getMessage());
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }

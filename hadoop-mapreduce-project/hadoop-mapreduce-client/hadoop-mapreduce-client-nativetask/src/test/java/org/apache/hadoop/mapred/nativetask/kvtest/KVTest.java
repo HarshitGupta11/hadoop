@@ -79,12 +79,12 @@ public class KVTest {
     // Parse the config.
     final String valueClassesStr = nativekvtestconf
         .get(TestConstants.NATIVETASK_KVTEST_VALUECLASSES);
-    LOG.info("Parameterizing with value classes: " + valueClassesStr);
+    LOG.error("Temp", new RuntimeException());
     List<Class<?>> valueClasses = parseClassNames(valueClassesStr);
     
     final String keyClassesStr = nativekvtestconf.get(
         TestConstants.NATIVETASK_KVTEST_KEYCLASSES);
-    LOG.info("Parameterizing with key classes: " + keyClassesStr);
+    LOG.error("Temp", new RuntimeException());
     List<Class<?>> keyClasses = parseClassNames(keyClassesStr);
 
     // Generate an entry for each key type.

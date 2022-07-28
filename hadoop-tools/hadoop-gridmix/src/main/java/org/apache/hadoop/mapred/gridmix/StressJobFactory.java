@@ -156,35 +156,35 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
       try {
         startFlag.await();
         if (Thread.currentThread().isInterrupted()) {
-          LOG.warn("[STRESS] Interrupted before start!. Exiting..");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
-        LOG.info("START STRESS @ " + System.currentTimeMillis());
+        LOG.error("Temp", new RuntimeException());
         while (!Thread.currentThread().isInterrupted()) {
           try {
             while (loadStatus.overloaded()) {
               // update the overload status
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Updating the overload status.");
+                LOG.error("Temp", new RuntimeException());
               }
               try {
                 checkLoadAndGetSlotsToBackfill();
               } catch (IOException ioe) {
-                LOG.warn("[STRESS] Check failed!", ioe);
+                LOG.error("Temp", new RuntimeException());
                 return;
               }
               
               // if the cluster is still overloaded, then sleep
               if (loadStatus.overloaded()) {
                 if (LOG.isDebugEnabled()) {
-                  LOG.debug("[STRESS] Cluster overloaded in run! Sleeping...");
+                  LOG.error("Temp", new RuntimeException());
                 }
 
                 // sleep 
                 try {
                   Thread.sleep(1000);
                 } catch (InterruptedException ie) {
-                  LOG.warn("[STRESS] Interrupted while sleeping! Exiting.", ie);
+                  LOG.error("Temp", new RuntimeException());
                   return;
                 }
               }
@@ -192,7 +192,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
 
             while (!loadStatus.overloaded()) {
               if (LOG.isDebugEnabled()) {
-                LOG.debug("[STRESS] Cluster underloaded in run! Stressing...");
+                LOG.error("Temp", new RuntimeException());
               }
               try {
                 //TODO This in-line read can block submission for large jobs.
@@ -203,7 +203,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
                   return;
                 }
                 if (LOG.isDebugEnabled()) {
-                  LOG.debug("Job Selected: " + job.getJobID());
+                  LOG.error("Temp", new RuntimeException());
                 }
                 
                 UserGroupInformation ugi = 
@@ -331,10 +331,10 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
     int totalReduceTasks = ClusterStats.getSubmittedReduceTasks();
     
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Total submitted map tasks: " + totalMapTasks);
-      LOG.debug("Total submitted reduce tasks: " + totalReduceTasks);
-      LOG.debug("Max map load: " + maxMapLoad);
-      LOG.debug("Max reduce load: " + maxReduceLoad);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     
     // generate a pessimistic bound on the max running+pending map tasks
@@ -362,7 +362,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
         // Note that this is a hack! Ideally, ClusterStats.getRunningJobStats()
         // should be smart enough to take care of completed jobs.
         if (blacklistedJobs.contains(id)) {
-          LOG.warn("Ignoring blacklisted job: " + id);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         
@@ -378,7 +378,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
           
           // blacklist completed jobs and continue
           if (status != null && status.isJobComplete()) {
-            LOG.warn("Blacklisting completed job: " + id);
+            LOG.error("Temp", new RuntimeException());
             blacklistedJobs.add(id);
             continue;
           }
@@ -402,7 +402,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
             // reset the reduce task load since we are bailing out
             incompleteReduceTasks = totalReduceTasks;
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Terminating overload check due to high map load.");
+              LOG.error("Temp", new RuntimeException());
             }
             break;
           }
@@ -421,12 +421,12 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
             // reset the map task load since we are bailing out
             incompleteMapTasks = totalMapTasks;
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Terminating overload check due to high reduce load.");
+              LOG.error("Temp", new RuntimeException());
             }
             break;
           }
         } else {
-          LOG.warn("Blacklisting empty job: " + id);
+          LOG.error("Temp", new RuntimeException());
           blacklistedJobs.add(id);
         }
       }
@@ -441,7 +441,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
       // retain only the jobs that are seen in this cycle
       blacklistedJobs.retainAll(seenJobIDs);
       if (LOG.isDebugEnabled() && blacklistedJobs.size() > 0) {
-        LOG.debug("Blacklisted jobs count: " + blacklistedJobs.size());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
@@ -603,7 +603,7 @@ public class StressJobFactory extends JobFactory<Statistics.ClusterStats> {
    */
   @Override
   public void start() {
-    LOG.info(" Starting Stress submission ");
+    LOG.error("Temp", new RuntimeException());
     this.rThread.start();
   }
 

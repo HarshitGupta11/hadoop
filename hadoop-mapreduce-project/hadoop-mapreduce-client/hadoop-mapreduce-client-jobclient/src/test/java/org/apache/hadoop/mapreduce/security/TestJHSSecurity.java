@@ -124,7 +124,7 @@ public class TestJHSSecurity {
       Token token = getDelegationToken(loggedInUser, hsService,
           loggedInUser.getShortUserName());
       tokenFetchTime = System.currentTimeMillis();
-      LOG.info("Got delegation token at: " + tokenFetchTime);
+      LOG.error("Temp", new RuntimeException());
 
       // Now try talking to JHS using the delegation token
       clientUsingDT = getMRClientProtocol(token, jobHistoryServer
@@ -167,7 +167,7 @@ public class TestJHSSecurity {
         Thread.sleep(500l);
       }
       Thread.sleep(50l);
-      LOG.info("At time: " + System.currentTimeMillis() + ", token should be invalid");
+      LOG.error("Temp", new RuntimeException());
       // Token should have expired.      
       try {
         clientUsingDT.getJobReport(jobReportRequest);
@@ -185,7 +185,7 @@ public class TestJHSSecurity {
       token = getDelegationToken(loggedInUser, hsService,
           loggedInUser.getShortUserName());
       tokenFetchTime = System.currentTimeMillis();
-      LOG.info("Got delegation token at: " + tokenFetchTime);
+      LOG.error("Temp", new RuntimeException());
  
       // Now try talking to HSService using the delegation token
       clientUsingDT = getMRClientProtocol(token, jobHistoryServer
@@ -211,7 +211,7 @@ public class TestJHSSecurity {
       // Creating a new connection.
       clientUsingDT = getMRClientProtocol(token, jobHistoryServer
           .getClientService().getBindAddress(), "loginuser2", conf);
-      LOG.info("Cancelled delegation token at: " + System.currentTimeMillis());
+      LOG.error("Temp", new RuntimeException());
       // Verify cancellation worked.
       try {
         clientUsingDT.getJobReport(jobReportRequest);

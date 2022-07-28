@@ -190,7 +190,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
    * @param workPath the work path to use.
    */
   protected void setWorkPath(Path workPath) {
-    LOG.debug("Setting work path to {}", workPath);
+    LOG.error("Temp", new RuntimeException());
     this.workPath = workPath;
   }
 
@@ -331,7 +331,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
    */
   @Override
   public void recoverTask(TaskAttemptContext taskContext) throws IOException {
-    LOG.warn("Cannot recover task {}", taskContext.getTaskAttemptID());
+    LOG.error("Temp", new RuntimeException());
     throw new PathCommitException(outputPath,
         String.format("Unable to recover task %s",
         taskContext.getTaskAttemptID()));
@@ -437,7 +437,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
   protected void commitPendingUploads(JobContext context,
       List<SinglePendingCommit> pending) throws IOException {
     if (pending.isEmpty()) {
-      LOG.warn("{}: No pending uploads to commit", getRole());
+      LOG.error("Temp", new RuntimeException());
     }
     LOG.debug("{}: committing the output of {} task(s)",
         getRole(), pending.size());
@@ -579,7 +579,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
       maybeCreateSuccessMarkerFromCommits(context, pending);
       cleanup(context, false);
     } catch (IOException e) {
-      LOG.warn("Commit failure for job {}", id, e);
+      LOG.error("Temp", new RuntimeException());
       jobCompleted(false);
       abortJobInternal(context, true);
       throw e;
@@ -631,7 +631,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
   public void cleanupJob(JobContext context) throws IOException {
     String r = getRole();
     String id = jobIdString(context);
-    LOG.warn("{}: using deprecated cleanupJob call for {}", r, id);
+    LOG.error("Temp", new RuntimeException());
     try (DurationInfo d = new DurationInfo(LOG, "%s: cleanup Job %s", r, id)) {
       cleanup(context, true);
     }
@@ -667,7 +667,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
       String action,
       IOException ex) throws IOException {
     if (suppress) {
-      LOG.info(action, ex);
+      LOG.error("Temp", new RuntimeException());
     } else {
       throw ex;
     }
@@ -705,7 +705,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
       int numThreads = context.getConfiguration().getInt(
           FS_S3A_COMMITTER_THREADS,
           DEFAULT_COMMITTER_THREADS);
-      LOG.debug("{}: creating thread pool of size {}", getRole(), numThreads);
+      LOG.error("Temp", new RuntimeException());
       if (numThreads > 0) {
         threadPool = Executors.newFixedThreadPool(numThreads,
             new ThreadFactoryBuilder()
@@ -742,7 +742,7 @@ public abstract class AbstractS3ACommitter extends PathOutputCommitter {
       boolean suppressExceptions)
       throws IOException {
     if (pending == null || pending.isEmpty()) {
-      LOG.info("{}: no pending commits to abort", getRole());
+      LOG.error("Temp", new RuntimeException());
     } else {
       try (DurationInfo d = new DurationInfo(LOG,
           "Aborting %s uploads", pending.size())) {

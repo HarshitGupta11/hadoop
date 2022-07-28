@@ -95,7 +95,7 @@ public class TestDatasetVolumeChecker {
    */
   @Test(timeout = 10000)
   public void testCheckOneVolume() throws Exception {
-    LOG.info("Executing {}", testName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
     final FsVolumeSpi volume = makeVolumes(1, expectedVolumeHealth).get(0);
     final DatasetVolumeChecker checker =
         new DatasetVolumeChecker(new HdfsConfiguration(), new FakeTimer());
@@ -137,7 +137,7 @@ public class TestDatasetVolumeChecker {
    */
   @Test(timeout = 10000)
   public void testCheckAllVolumes() throws Exception {
-    LOG.info("Executing {}", testName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
 
     final List<FsVolumeSpi> volumes = makeVolumes(
         NUM_VOLUMES, expectedVolumeHealth);
@@ -147,7 +147,7 @@ public class TestDatasetVolumeChecker {
     checker.setDelegateChecker(new DummyChecker());
 
     Set<FsVolumeSpi> failedVolumes = checker.checkAllVolumes(dataset);
-    LOG.info("Got back {} failed volumes", failedVolumes.size());
+    LOG.error("Temp", new RuntimeException());
 
     if (expectedVolumeHealth == null || expectedVolumeHealth == FAILED) {
       assertThat(failedVolumes.size(), is(NUM_VOLUMES));
@@ -176,7 +176,7 @@ public class TestDatasetVolumeChecker {
         return Optional.of(
             Futures.immediateFuture(target.check(context)));
       } catch (Exception e) {
-        LOG.info("check routine threw exception " + e);
+        LOG.error("Temp", new RuntimeException());
         return Optional.of(Futures.immediateFailedFuture(e));
       }
     }

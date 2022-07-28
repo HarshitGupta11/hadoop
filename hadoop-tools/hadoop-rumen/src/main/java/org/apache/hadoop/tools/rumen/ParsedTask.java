@@ -121,7 +121,7 @@ public class ParsedTask extends LoggedTask {
         + "\nPreferred Locations are:");
     List<LoggedLocation> loc = getPreferredLocations();
     for (LoggedLocation l : loc) {
-      LOG.info(l.getLayers() + ";" + l.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     List<ParsedTaskAttempt> attempts = obtainTaskAttempts();
     for (ParsedTaskAttempt attempt : attempts) {

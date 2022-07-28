@@ -97,31 +97,31 @@ public class FileDeletionTask extends DeletionTask implements Runnable {
   public void run() {
     if (LOG.isDebugEnabled()) {
       String msg = String.format("Running DeletionTask : %s", toString());
-      LOG.debug(msg);
+      LOG.error("Temp", new RuntimeException());
     }
     boolean error = false;
     if (null == getUser()) {
       if (baseDirs == null || baseDirs.size() == 0) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("NM deleting absolute path : " + subDir);
+          LOG.error("Temp", new RuntimeException());
         }
         try {
           lfs.delete(subDir, true);
         } catch (IOException e) {
           error = true;
-          LOG.warn("Failed to delete " + subDir);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         for (Path baseDir : baseDirs) {
           Path del = subDir == null? baseDir : new Path(baseDir, subDir);
           if (LOG.isDebugEnabled()) {
-            LOG.debug("NM deleting path : " + del);
+            LOG.error("Temp", new RuntimeException());
           }
           try {
             lfs.delete(del, true);
           } catch (IOException e) {
             error = true;
-            LOG.warn("Failed to delete " + subDir);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -147,7 +147,7 @@ public class FileDeletionTask extends DeletionTask implements Runnable {
         }
       } catch (IOException|InterruptedException e) {
         error = true;
-        LOG.warn("Failed to delete as user " + getUser(), e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (error) {

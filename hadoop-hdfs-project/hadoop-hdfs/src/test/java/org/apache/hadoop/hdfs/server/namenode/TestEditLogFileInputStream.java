@@ -89,7 +89,7 @@ public class TestEditLogFileInputStream {
     Configuration conf = new Configuration();
     File editLog = new File(GenericTestUtils.getTempPath("testCorruptEditLog"));
 
-    LOG.debug("Creating test edit log file: " + editLog);
+    LOG.error("Temp", new RuntimeException());
     EditLogFileOutputStream elos = new EditLogFileOutputStream(conf,
         editLog.getAbsoluteFile(), 8192);
     elos.create(NameNodeLayoutVersion.CURRENT_LAYOUT_VERSION);
@@ -131,7 +131,7 @@ public class TestEditLogFileInputStream {
     Assert.assertEquals(NameNodeLayoutVersion.CURRENT_LAYOUT_VERSION,
         elis.getVersion(true));
     Assert.assertEquals(1, elis.scanNextOp());
-    LOG.debug("Read transaction 1 from " + editLog);
+    LOG.error("Temp", new RuntimeException());
     try {
       elis.scanNextOp();
       Assert.fail("Expected scanNextOp to fail when op checksum was corrupt.");

@@ -57,7 +57,7 @@ public final class FederationApplicationHomeSubClusterStoreInputValidator {
       String message = "Missing AddApplicationHomeSubCluster Request."
           + " Please try again by specifying"
           + " an AddApplicationHomeSubCluster information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -80,7 +80,7 @@ public final class FederationApplicationHomeSubClusterStoreInputValidator {
       String message = "Missing UpdateApplicationHomeSubCluster Request."
           + " Please try again by specifying"
           + " an ApplicationHomeSubCluster information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -102,7 +102,7 @@ public final class FederationApplicationHomeSubClusterStoreInputValidator {
     if (request == null) {
       String message = "Missing GetApplicationHomeSubCluster Request."
           + " Please try again by specifying an Application Id information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -125,7 +125,7 @@ public final class FederationApplicationHomeSubClusterStoreInputValidator {
       String message = "Missing DeleteApplicationHomeSubCluster Request."
           + " Please try again by specifying"
           + " an ApplicationHomeSubCluster information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
 
@@ -149,7 +149,7 @@ public final class FederationApplicationHomeSubClusterStoreInputValidator {
       String message = "Missing ApplicationHomeSubCluster Info."
           + " Please try again by specifying"
           + " an ApplicationHomeSubCluster information.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
     // validate application Id
@@ -173,7 +173,7 @@ public final class FederationApplicationHomeSubClusterStoreInputValidator {
     if (appId == null) {
       String message = "Missing Application Id."
           + " Please try again by specifying an Application Id.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new FederationStateStoreInvalidInputException(message);
     }
   }

@@ -128,7 +128,7 @@ public class TestCodec {
         codecTest(conf, seed, count, 
                   "org.apache.hadoop.io.compress.BZip2Codec");
       } else {
-        LOG.warn("Native hadoop library available but native bzip2 is not");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -188,7 +188,7 @@ public class TestCodec {
     } catch (ClassNotFoundException cnfe) {
       throw new IOException("Illegal codec!");
     }
-    LOG.info("Created a Codec object of type: " + codecClass);
+    LOG.error("Temp", new RuntimeException());
 
     // Generate data
     DataOutputBuffer data = new DataOutputBuffer();
@@ -201,7 +201,7 @@ public class TestCodec {
       key.write(data);
       value.write(data);
     }
-    LOG.info("Generated " + count + " records");
+    LOG.error("Temp", new RuntimeException());
     
     // Compress data
     DataOutputBuffer compressedDataBuffer = new DataOutputBuffer();
@@ -219,7 +219,7 @@ public class TestCodec {
       assertEquals("leased compressor not returned to the codec pool",
           leasedCompressorsBefore, CodecPool.getLeasedCompressorsCount(codec));
     }
-    LOG.info("Finished compressing data");
+    LOG.error("Temp", new RuntimeException());
     
     // De-compress data
     DataInputBuffer deCompressedDataBuffer = new DataInputBuffer();
@@ -283,7 +283,7 @@ public class TestCodec {
       } while (expected != -1);
     }
 
-    LOG.info("SUCCESS! Completed checking " + count + " records");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -298,7 +298,7 @@ public class TestCodec {
     final Configuration conf = new Configuration();
     final Random rand = new Random();
     final long seed = rand.nextLong();
-    LOG.info("seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
     rand.setSeed(seed);
     SplittableCompressionCodec codec =
       ReflectionUtils.newInstance(codecClass, conf);
@@ -321,7 +321,7 @@ public class TestCodec {
         if (in.getAdjustedStart() >= flen) {
           break;
         }
-        LOG.info("SAMPLE " + in.getAdjustedStart() + "," + in.getAdjustedEnd());
+        LOG.error("Temp", new RuntimeException());
         final LineReader lreader = new LineReader(in);
         lreader.readLine(line); // ignore; likely partial
         if (in.getPos() >= flen) {
@@ -379,7 +379,7 @@ public class TestCodec {
         ++seq;
         infLen -= b64enc.length;
       }
-      LOG.info("Wrote " + seq + " records to " + file);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       CodecPool.returnCompressor(cmp);
     }
@@ -471,7 +471,7 @@ public class TestCodec {
   public void testCodecInitWithCompressionLevel() throws Exception {
     Configuration conf = new Configuration();
     if (ZlibFactory.isNativeZlibLoaded(conf)) {
-      LOG.info("testCodecInitWithCompressionLevel with native");
+      LOG.error("Temp", new RuntimeException());
       codecTestWithNOCompression(conf,
                             "org.apache.hadoop.io.compress.GzipCodec");
       codecTestWithNOCompression(conf,
@@ -494,7 +494,7 @@ public class TestCodec {
       GzipCodec gzc = ReflectionUtils.newInstance(GzipCodec.class, conf);
       gzipReinitTest(conf, gzc);
     } else {
-      LOG.warn("testCodecPoolCompressorReinit skipped: native libs not loaded");
+      LOG.error("Temp", new RuntimeException());
     }
     // don't use native libs
     ZlibFactory.setNativeZlibLoaded(false);
@@ -547,7 +547,7 @@ public class TestCodec {
                               "org.apache.hadoop.io.compress.BZip2Codec", 
                               1000000);
       } else {
-        LOG.warn("Native hadoop library available but native bzip2 is not");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -569,13 +569,13 @@ public class TestCodec {
     
     // Create the SequenceFile
     FileSystem fs = FileSystem.get(conf);
-    LOG.info("Creating SequenceFile with codec \"" + codecClass + "\"");
+    LOG.error("Temp", new RuntimeException());
     SequenceFile.Writer writer = SequenceFile.createWriter(fs, conf, filePath, 
         Text.class, Text.class, CompressionType.BLOCK, 
         (CompressionCodec)Class.forName(codecClass).newInstance());
     
     // Write some data
-    LOG.info("Writing to SequenceFile...");
+    LOG.error("Temp", new RuntimeException());
     for (int i=0; i<lines; i++) {
       Text key = new Text("key" + i);
       Text value = new Text("value" + i);
@@ -584,7 +584,7 @@ public class TestCodec {
     writer.close();
     
     // Read the data back and check
-    LOG.info("Reading from the SequenceFile...");
+    LOG.error("Temp", new RuntimeException());
     SequenceFile.Reader reader = new SequenceFile.Reader(fs, filePath, conf);
     
     Writable key = (Writable)reader.getKeyClass().newInstance();
@@ -605,7 +605,7 @@ public class TestCodec {
     // Delete temporary files
     fs.delete(filePath, false);
 
-    LOG.info("SUCCESS! Completed SequenceFileCodecTest with codec \"" + codecClass + "\"");
+    LOG.error("Temp", new RuntimeException());
   }
   
   /**
@@ -627,7 +627,7 @@ public class TestCodec {
     Path path = new Path(GenericTestUtils.getTempPath(
         clazz.getSimpleName() + "-" + type + "-" + records));
 
-    LOG.info("Writing " + path);
+    LOG.error("Temp", new RuntimeException());
     createMapFile(conf, fs, path, clazz.newInstance(), type, records);
     MapFile.Reader reader = new MapFile.Reader(path, conf);
     Text key1 = new Text("002");
@@ -682,7 +682,7 @@ public class TestCodec {
     Random r = new Random();
     long seed = r.nextLong();
     r.setSeed(seed);
-    LOG.info("seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
 
     DataOutputBuffer dflbuf = new DataOutputBuffer();
     GZIPOutputStream gzout = new GZIPOutputStream(dflbuf);
@@ -714,7 +714,7 @@ public class TestCodec {
     Random r = new Random();
     long seed = r.nextLong();
     r.setSeed(seed);
-    LOG.info(decomClass + " seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
 
     final int CONCAT = r.nextInt(4) + 3;
     final int BUFLEN = 128 * 1024;
@@ -812,7 +812,7 @@ public class TestCodec {
 
   @Test
   public void testGzipLongOverflow() throws IOException {
-    LOG.info("testGzipLongOverflow");
+    LOG.error("Temp", new RuntimeException());
 
     // Don't use native libs for this test.
     Configuration conf = new Configuration();

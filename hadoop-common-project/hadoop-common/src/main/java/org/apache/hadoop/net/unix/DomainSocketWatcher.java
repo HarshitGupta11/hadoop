@@ -269,7 +269,7 @@ public final class DomainSocketWatcher implements Closeable {
     try {
       if (closed) return;
       if (LOG.isDebugEnabled()) {
-        LOG.debug(this + ": closing");
+        LOG.error("Temp", new RuntimeException());
       }
       closed = true;
     } finally {
@@ -488,7 +488,7 @@ public final class DomainSocketWatcher implements Closeable {
             // needed to be.
             if (closed) {
               if (LOG.isDebugEnabled()) {
-                LOG.debug(toString() + " thread terminating.");
+                LOG.error("Temp", new RuntimeException());
               }
               return;
             }
@@ -503,7 +503,7 @@ public final class DomainSocketWatcher implements Closeable {
           doPoll0(interruptCheckPeriodMs, fdSet);
         }
       } catch (InterruptedException e) {
-        LOG.info(toString() + " terminating on InterruptedException");
+        LOG.error("Temp", new RuntimeException());
       } catch (Throwable e) {
         LOG.error(toString() + " terminating on exception", e);
       } finally {

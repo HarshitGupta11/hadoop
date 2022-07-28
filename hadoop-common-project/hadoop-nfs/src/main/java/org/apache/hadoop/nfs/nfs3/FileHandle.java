@@ -82,7 +82,7 @@ public class FileHandle {
       digest = MessageDigest.getInstance("MD5");
       handle = new byte[HANDLE_LEN];
     } catch (NoSuchAlgorithmException e) {
-      LOG.warn("MD5 MessageDigest unavailable.");
+      LOG.error("Temp", new RuntimeException());
       handle = null;
       return;
     }

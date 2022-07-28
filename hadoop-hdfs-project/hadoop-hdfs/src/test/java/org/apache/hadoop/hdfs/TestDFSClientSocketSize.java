@@ -82,7 +82,7 @@ public class TestDFSClientSocketSize {
     final Configuration conf = new Configuration();
     conf.setInt(DFS_CLIENT_SOCKET_SEND_BUFFER_SIZE_KEY, 0);
     final int sendBufferSize = getSendBufferSize(conf);
-    LOG.info("The auto tuned send buffer size is: {}", sendBufferSize);
+    LOG.error("Temp", new RuntimeException());
     assertTrue("Send buffer size should be non-negative value which is " +
         "determined by system (kernel).", sendBufferSize > 0);
   }
@@ -93,7 +93,7 @@ public class TestDFSClientSocketSize {
         .build();
     try {
       cluster.waitActive();
-      LOG.info("MiniDFSCluster started.");
+      LOG.error("Temp", new RuntimeException());
       try (Socket socket = DataStreamer.createSocketForPipeline(
           new DatanodeInfoBuilder()
               .setNodeID(cluster.dataNodes.get(0).datanode.getDatanodeId())

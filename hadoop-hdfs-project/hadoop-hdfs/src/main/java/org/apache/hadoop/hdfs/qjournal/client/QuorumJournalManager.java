@@ -307,7 +307,7 @@ public class QuorumJournalManager implements JournalManager {
           "starting at txid " + segmentTxId + ": " +
           bestEntry);
     } else if (bestResponse.hasSegmentState()) {
-      LOG.info("Using longest log: " + bestEntry);
+      LOG.error("Temp", new RuntimeException());
     } else {
       // None of the responses to prepareRecovery() had a segment at the given
       // txid. This can happen for example in the following situation:
@@ -424,7 +424,7 @@ public class QuorumJournalManager implements JournalManager {
   public void purgeLogsOlderThan(long minTxIdToKeep) throws IOException {
     // This purges asynchronously -- there's no need to wait for a quorum
     // here, because it's always OK to fail.
-    LOG.info("Purging remote journals older than txid " + minTxIdToKeep);
+    LOG.error("Temp", new RuntimeException());
     loggers.purgeLogsOlderThan(minTxIdToKeep);
   }
 
@@ -432,9 +432,9 @@ public class QuorumJournalManager implements JournalManager {
   public void recoverUnfinalizedSegments() throws IOException {
     Preconditions.checkState(!isActiveWriter, "already active writer");
     
-    LOG.info("Starting recovery process for unclosed journal segments...");
+    LOG.error("Temp", new RuntimeException());
     Map<AsyncLogger, NewEpochResponseProto> resps = createNewUniqueEpoch();
-    LOG.info("Successfully started new epoch " + loggers.getEpoch());
+    LOG.error("Temp", new RuntimeException());
 
     if (LOG.isDebugEnabled()) {
       LOG.debug("newEpoch(" + loggers.getEpoch() + ") responses:\n" +

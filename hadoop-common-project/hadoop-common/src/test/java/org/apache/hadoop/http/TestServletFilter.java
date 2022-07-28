@@ -64,7 +64,7 @@ public class TestServletFilter extends HttpServerFunctionalTest {
          return;
 
       uri = ((HttpServletRequest)request).getRequestURI();
-      LOG.info("filtering " + uri);
+      LOG.error("Temp", new RuntimeException());
       chain.doFilter(request, response);
     }
 
@@ -82,7 +82,7 @@ public class TestServletFilter extends HttpServerFunctionalTest {
   
   /** access a url, ignoring some IOException such as the page does not exist */
   static void access(String urlstring) throws IOException {
-    LOG.warn("access " + urlstring);
+    LOG.error("Temp", new RuntimeException());
     URL url = new URL(urlstring);
     URLConnection connection = url.openConnection();
     connection.connect();
@@ -96,7 +96,7 @@ public class TestServletFilter extends HttpServerFunctionalTest {
         in.close();
       }
     } catch(IOException ioe) {
-      LOG.warn("urlstring=" + urlstring, ioe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

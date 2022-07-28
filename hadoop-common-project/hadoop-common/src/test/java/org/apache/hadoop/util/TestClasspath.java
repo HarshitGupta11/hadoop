@@ -170,7 +170,7 @@ public class TestClasspath {
         try {
           jarFile.close();
         } catch (IOException e) {
-          LOG.warn("exception closing jarFile: " + jarFile, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

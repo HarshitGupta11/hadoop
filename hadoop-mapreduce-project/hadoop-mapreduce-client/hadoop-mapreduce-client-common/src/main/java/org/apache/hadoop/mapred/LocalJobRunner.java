@@ -249,7 +249,7 @@ public class LocalJobRunner implements ClientProtocol {
         try {
           TaskAttemptID mapId = new TaskAttemptID(new TaskID(
               jobId, TaskType.MAP, taskId), 0);
-          LOG.info("Starting task: " + mapId);
+          LOG.error("Temp", new RuntimeException());
           mapIds.add(mapId);
           MapTask map = new MapTask(systemJobFile.toString(), mapId, taskId,
             info.getSplitIndex(), 1);
@@ -274,7 +274,7 @@ public class LocalJobRunner implements ClientProtocol {
             map_tasks.getAndDecrement();
           }
 
-          LOG.info("Finishing task: " + mapId);
+          LOG.error("Temp", new RuntimeException());
         } catch (Throwable e) {
           this.storedException = e;
         }
@@ -327,7 +327,7 @@ public class LocalJobRunner implements ClientProtocol {
         try {
           TaskAttemptID reduceId = new TaskAttemptID(new TaskID(
               jobId, TaskType.REDUCE, taskId), 0);
-          LOG.info("Starting task: " + reduceId);
+          LOG.error("Temp", new RuntimeException());
 
           ReduceTask reduce = new ReduceTask(systemJobFile.toString(),
               reduceId, taskId, mapIds.size(), 1);
@@ -350,7 +350,7 @@ public class LocalJobRunner implements ClientProtocol {
               reduce_tasks.getAndDecrement();
             }
 
-            LOG.info("Finishing task: " + reduceId);
+            LOG.error("Temp", new RuntimeException());
           } else {
             throw new InterruptedException();
           }
@@ -420,9 +420,9 @@ public class LocalJobRunner implements ClientProtocol {
       maxMapThreads = Math.min(maxMapThreads, this.numMapTasks);
       maxMapThreads = Math.max(maxMapThreads, 1); // In case of no tasks.
 
-      LOG.debug("Starting mapper thread pool executor.");
-      LOG.debug("Max local threads: " + maxMapThreads);
-      LOG.debug("Map tasks to process: " + this.numMapTasks);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       // Create a new executor service to drain the work queue.
       ThreadFactory tf = new ThreadFactoryBuilder()
@@ -450,9 +450,9 @@ public class LocalJobRunner implements ClientProtocol {
       maxReduceThreads = Math.min(maxReduceThreads, this.numReduceTasks);
       maxReduceThreads = Math.max(maxReduceThreads, 1); // In case of no tasks.
 
-      LOG.debug("Starting reduce thread pool executor.");
-      LOG.debug("Max local threads: " + maxReduceThreads);
-      LOG.debug("Reduce tasks to process: " + this.numReduceTasks);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       // Create a new executor service to drain the work queue.
       ExecutorService executor = HadoopExecutors.newFixedThreadPool(
@@ -475,7 +475,7 @@ public class LocalJobRunner implements ClientProtocol {
 
         // Wait for tasks to finish; do not use a time-based timeout.
         // (See http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6179024)
-        LOG.info("Waiting for " + taskType + " tasks");
+        LOG.error("Temp", new RuntimeException());
         service.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
       } catch (InterruptedException ie) {
         // Cancel all threads.
@@ -483,7 +483,7 @@ public class LocalJobRunner implements ClientProtocol {
         throw ie;
       }
 
-      LOG.info(taskType + " task executor complete.");
+      LOG.error("Temp", new RuntimeException());
 
       // After waiting for the tasks to complete, if any of these
       // have thrown an exception, rethrow it now in the main thread context.
@@ -516,7 +516,7 @@ public class LocalJobRunner implements ClientProtocol {
             "mapred.output.committer.class", FileOutputCommitter.class,
             org.apache.hadoop.mapred.OutputCommitter.class), conf);
       }
-      LOG.info("OutputCommitter is " + committer.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
       return committer;
     }
 
@@ -529,7 +529,7 @@ public class LocalJobRunner implements ClientProtocol {
       try {
         outputCommitter = createOutputCommitter(conf.getUseNewMapper(), jobId, conf);
       } catch (Exception e) {
-        LOG.info("Failed to createOutputCommitter", e);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       
@@ -579,7 +579,7 @@ public class LocalJobRunner implements ClientProtocol {
           outputCommitter.abortJob(jContext, 
             org.apache.hadoop.mapreduce.JobStatus.State.FAILED);
         } catch (IOException ioe) {
-          LOG.info("Error cleaning up job:" + id);
+          LOG.error("Temp", new RuntimeException());
         }
         status.setCleanupProgress(1.0f);
         if (killed) {
@@ -587,7 +587,7 @@ public class LocalJobRunner implements ClientProtocol {
         } else {
           this.status.setRunState(JobStatus.FAILED);
         }
-        LOG.warn(id.toString(), t);
+        LOG.error("Temp", new RuntimeException());
 
         JobEndNotifier.localRunnerNotification(job, status);
 
@@ -598,7 +598,7 @@ public class LocalJobRunner implements ClientProtocol {
           // Cleanup distributed cache
           localDistributedCacheManager.close();
         } catch (IOException e) {
-          LOG.warn("Error cleaning up "+id+": "+e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -625,7 +625,7 @@ public class LocalJobRunner implements ClientProtocol {
       taskStatus.readFields(new DataInputStream(
           new ByteArrayInputStream(baos.toByteArray())));
       
-      LOG.info(taskStatus.getStateString());
+      LOG.error("Temp", new RuntimeException());
       int mapTaskIndex = mapIds.indexOf(taskId);
       if (mapTaskIndex >= 0) {
         // mapping
@@ -699,7 +699,7 @@ public class LocalJobRunner implements ClientProtocol {
     @Override
     public void reportNextRecordRange(TaskAttemptID taskid, 
         SortedRanges.Range range) throws IOException {
-      LOG.info("Task " + taskid + " reportedNextRecordRange " + range);
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
@@ -1028,7 +1028,7 @@ public class LocalJobRunner implements ClientProtocol {
       childMapredLocalDir.append("," + localDirs[i] + Path.SEPARATOR
           + getLocalTaskDir(user, jobId, taskId, isCleanup));
     }
-    LOG.debug(MRConfig.LOCAL_DIR + " for child : " + childMapredLocalDir);
+    LOG.error("Temp", new RuntimeException());
     conf.set(MRConfig.LOCAL_DIR, childMapredLocalDir.toString());
   }
   

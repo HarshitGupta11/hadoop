@@ -44,7 +44,7 @@ public class TimelineDelegationTokenSelector
       return null;
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Looking for a token with service " + service.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     for (Token<? extends TokenIdentifier> token : tokens) {
       if (LOG.isDebugEnabled()) {

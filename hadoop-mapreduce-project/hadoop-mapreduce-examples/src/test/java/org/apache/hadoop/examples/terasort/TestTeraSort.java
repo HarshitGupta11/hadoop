@@ -93,7 +93,7 @@ public class TestTeraSort extends HadoopTestCase {
       runTeraGen(createJobConf(), SORT_INPUT_PATH);
       fail("Teragen output overwritten!");
     } catch (FileAlreadyExistsException fae) {
-      LOG.info("Expected exception: ", fae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Run terasort
@@ -104,7 +104,7 @@ public class TestTeraSort extends HadoopTestCase {
       runTeraSort(createJobConf(), SORT_INPUT_PATH, SORT_OUTPUT_PATH);
       fail("Terasort output overwritten!");
     } catch (FileAlreadyExistsException fae) {
-      LOG.info("Expected exception: ", fae);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Run tera-validator to check if sort worked correctly

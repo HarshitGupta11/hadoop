@@ -217,7 +217,7 @@ public class FileUtil {
 
   private static boolean deleteImpl(final File f, final boolean doLog) {
     if (f == null) {
-      LOG.warn("null file argument.");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     final boolean wasDeleted = f.delete();
@@ -721,7 +721,7 @@ public class FileUtil {
                              Charset.forName("UTF-8")))) {
               String line;
               while((line = reader.readLine()) != null) {
-                LOG.debug(line);
+                LOG.error("Temp", new RuntimeException());
               }
             }
           } else {
@@ -730,7 +730,7 @@ public class FileUtil {
                 new IOUtils.NullOutputStream());
           }
         } catch (IOException e) {
-          LOG.debug(e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       });
       Future error = executor.submit(() -> {
@@ -744,7 +744,7 @@ public class FileUtil {
                              Charset.forName("UTF-8")))) {
               String line;
               while((line = reader.readLine()) != null) {
-                LOG.debug(line);
+                LOG.error("Temp", new RuntimeException());
               }
             }
           } else {
@@ -753,7 +753,7 @@ public class FileUtil {
                 new IOUtils.NullOutputStream());
           }
         } catch (IOException e) {
-          LOG.debug(e.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       });
 
@@ -1469,7 +1469,7 @@ public class FileUtil {
       // then this is acceptable.  If it returns false due to some other I/O
       // error, then this method will fail later with an IOException while saving
       // the jar.
-      LOG.debug("mkdirs false for " + workingDir + ", execution will continue");
+      LOG.error("Temp", new RuntimeException());
     }
 
     StringBuilder unexpandedWildcardClasspath = new StringBuilder();
@@ -1603,7 +1603,7 @@ public class FileUtil {
         dstHost = InetAddress.getByName(dstHost).getCanonicalHostName();
       } catch (UnknownHostException ue) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Could not compare file-systems. Unknown host: ", ue);
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }

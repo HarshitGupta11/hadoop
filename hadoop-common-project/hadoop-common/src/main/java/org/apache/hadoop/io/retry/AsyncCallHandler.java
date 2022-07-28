@@ -111,7 +111,7 @@ public class AsyncCallHandler {
 
     void addCall(AsyncCall call) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("add " + call);
+        LOG.error("Temp", new RuntimeException());
       }
       queue.offer(call);
       processor.tryStart();
@@ -171,7 +171,7 @@ public class AsyncCallHandler {
           final boolean set = running.compareAndSet(current, daemon);
           Preconditions.checkState(set);
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Starting AsyncCallQueue.Processor " + daemon);
+            LOG.error("Temp", new RuntimeException());
           }
           daemon.start();
         }
@@ -185,7 +185,7 @@ public class AsyncCallHandler {
 
       void kill(Daemon d) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Killing " + d);
+          LOG.error("Temp", new RuntimeException());
         }
         final boolean set = running.compareAndSet(d, null);
         Preconditions.checkState(set);
@@ -239,7 +239,7 @@ public class AsyncCallHandler {
     /** @return true if the call is done; otherwise, return false. */
     boolean isDone() {
       final CallReturn r = invokeOnce();
-      LOG.debug("#{}: {}", getCallId(), r.getState());
+      LOG.error("Temp", new RuntimeException());
       switch (r.getState()) {
         case RETURNED:
         case EXCEPTION:
@@ -272,7 +272,7 @@ public class AsyncCallHandler {
 
     @Override
     CallReturn invoke() throws Throwable {
-      LOG.debug("{}.invoke {}", getClass().getSimpleName(), this);
+      LOG.error("Temp", new RuntimeException());
       if (lowerLayerAsyncGet != null) {
         // async call was submitted early, check the lower level async call
         final boolean isDone = lowerLayerAsyncGet.isDone();

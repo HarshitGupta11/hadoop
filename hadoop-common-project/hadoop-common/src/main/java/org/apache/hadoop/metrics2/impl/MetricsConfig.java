@@ -118,10 +118,10 @@ class MetricsConfig extends SubsetConfiguration {
                 .setListDelimiterHandler(new DefaultListDelimiterHandler(',')))
               .getConfiguration()
               .interpolatedConfiguration();
-        LOG.info("loaded properties from "+ fname);
-        LOG.debug(toString(cf));
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         MetricsConfig mc = new MetricsConfig(cf, prefix);
-        LOG.debug(mc.toString());
+        LOG.error("Temp", new RuntimeException());
         return mc;
       } catch (ConfigurationException e) {
         // Commons Configuration defines the message text when file not found
@@ -193,7 +193,7 @@ class MetricsConfig extends SubsetConfiguration {
                                      : PREFIX_DEFAULT + key);
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("returning '"+ value +"' for key: "+ key);
+      LOG.error("Temp", new RuntimeException());
     }
     return value;
   }
@@ -215,7 +215,7 @@ class MetricsConfig extends SubsetConfiguration {
   String getClassName(String prefix) {
     String classKey = prefix.isEmpty() ? "class" : prefix +".class";
     String clsName = getString(classKey);
-    LOG.debug(clsName);
+    LOG.error("Temp", new RuntimeException());
     if (clsName == null || clsName.isEmpty()) {
       return null;
     }
@@ -234,14 +234,14 @@ class MetricsConfig extends SubsetConfiguration {
       try {
         int i = 0;
         for (String jar : jars) {
-          LOG.debug(jar);
+          LOG.error("Temp", new RuntimeException());
           urls[i++] = new URL(jar);
         }
       } catch (Exception e) {
         throw new MetricsConfigException(e);
       }
       if (LOG.isDebugEnabled()) {
-        LOG.debug("using plugin jars: "+ Iterables.toString(jars));
+        LOG.error("Temp", new RuntimeException());
       }
       pluginLoader = doPrivileged(new PrivilegedAction<ClassLoader>() {
         @Override public ClassLoader run() {

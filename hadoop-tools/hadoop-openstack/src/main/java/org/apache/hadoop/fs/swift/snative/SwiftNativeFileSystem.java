@@ -123,7 +123,7 @@ public class SwiftNativeFileSystem extends FileSystem {
               + " and working dir " + workingDir);
     }
     store.initialize(uri, conf);
-    LOG.debug("SwiftFileSystem initialized");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -157,7 +157,7 @@ public class SwiftNativeFileSystem extends FileSystem {
   public void setWorkingDirectory(Path dir) {
     workingDir = makeAbsolute(dir);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("SwiftFileSystem.setWorkingDirectory to " + dir);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -279,7 +279,7 @@ public class SwiftNativeFileSystem extends FileSystem {
     }
 
     if (locations.isEmpty()) {
-      LOG.debug("No locations returned for " + file.getPath());
+      LOG.error("Temp", new RuntimeException());
       //no locations were returned for the object
       //fall back to the superclass
 
@@ -324,7 +324,7 @@ public class SwiftNativeFileSystem extends FileSystem {
   @Override
   public boolean mkdirs(Path path, FsPermission permission) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("SwiftFileSystem.mkdirs: " + path);
+      LOG.error("Temp", new RuntimeException());
     }
     Path directory = makeAbsolute(path);
 
@@ -405,7 +405,7 @@ public class SwiftNativeFileSystem extends FileSystem {
       } else {
         //path exists, and it is a directory
         if (LOG.isDebugEnabled()) {
-          LOG.debug("skipping mkdir(" + directory + ") as it exists already");
+          LOG.error("Temp", new RuntimeException());
         }
         shouldCreate = false;
       }
@@ -425,7 +425,7 @@ public class SwiftNativeFileSystem extends FileSystem {
    */
   private void forceMkdir(Path absolutePath) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Making dir '" + absolutePath + "' in Swift");
+      LOG.error("Temp", new RuntimeException());
     }
     //file is not found: it must be created
     store.createDirectory(absolutePath);
@@ -442,7 +442,7 @@ public class SwiftNativeFileSystem extends FileSystem {
   @Override
   public FileStatus[] listStatus(Path path) throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("SwiftFileSystem.listStatus for: " + path);
+      LOG.error("Temp", new RuntimeException());
     }
     return store.listSubPaths(makeAbsolute(path), false, true);
   }
@@ -453,7 +453,7 @@ public class SwiftNativeFileSystem extends FileSystem {
   @Override
   public FSDataOutputStream append(Path f, int bufferSize, Progressable progress)
       throws IOException {
-    LOG.debug("SwiftFileSystem.append");
+    LOG.error("Temp", new RuntimeException());
     throw new SwiftUnsupportedFeatureException("Not supported: append()");
   }
 
@@ -466,7 +466,7 @@ public class SwiftNativeFileSystem extends FileSystem {
                                    short replication, long blockSize,
                                    Progressable progress)
           throws IOException {
-    LOG.debug("SwiftFileSystem.create");
+    LOG.error("Temp", new RuntimeException());
 
     FileStatus fileStatus = null;
     Path absolutePath = makeAbsolute(file);
@@ -492,7 +492,7 @@ public class SwiftNativeFileSystem extends FileSystem {
                                            + file);
  */
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Overwriting either an empty file or a directory");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       if (overwrite) {

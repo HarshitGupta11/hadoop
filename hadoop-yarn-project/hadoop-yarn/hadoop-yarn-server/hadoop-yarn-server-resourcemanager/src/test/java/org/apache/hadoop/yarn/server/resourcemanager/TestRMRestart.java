@@ -688,7 +688,7 @@ public class TestRMRestart extends ParameterizedSchedulerTestBase {
           ApplicationStateData appStateData) throws Exception {
         if (count == 0) {
           // do nothing; simulate app final state is not saved.
-          LOG.info(appId + " final state is not saved.");
+          LOG.error("Temp", new RuntimeException());
           count++;
         } else {
           super.updateApplicationStateInternal(appId, appStateData);
@@ -2456,7 +2456,7 @@ public class TestRMRestart extends ParameterizedSchedulerTestBase {
       rm2.start();
       Assert.assertTrue("RM start successfully", true);
     } catch (Exception e) {
-      LOG.debug("Exception on start", e);
+      LOG.error("Temp", new RuntimeException());
       Assert.fail("RM should start with out any issue");
     } finally {
       rm1.stop();
@@ -2599,7 +2599,7 @@ public class TestRMRestart extends ParameterizedSchedulerTestBase {
       Assert.assertTrue("RM start successfully", true);
       Assert.assertEquals(1, rm2.getRMContext().getRMApps().size());
     } catch (Exception e) {
-      LOG.debug("Exception on start", e);
+      LOG.error("Temp", new RuntimeException());
       Assert.fail("RM should start without any issue");
     } finally {
       rm1.stop();

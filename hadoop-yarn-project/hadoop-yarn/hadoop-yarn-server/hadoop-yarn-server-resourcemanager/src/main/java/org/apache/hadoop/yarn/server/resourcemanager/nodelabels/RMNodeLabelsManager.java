@@ -178,7 +178,7 @@ public class RMNodeLabelsManager extends CommonNodeLabelsManager {
           getModifiedNodeLabelsMappings(replaceLabelsToNode);
 
       if(effectiveModifiedLabelMappings.isEmpty()) {
-        LOG.info("No Modified Node label Mapping to replace");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
 

@@ -127,14 +127,14 @@ public class SysInfoWindows extends SysInfo {
                     * 100F / refreshInterval;
               }
             } catch (NumberFormatException nfe) {
-              LOG.warn("Error parsing sysInfo", nfe);
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             LOG.warn("Expected split length of sysInfo to be "
                 + sysInfoSplitCount + ". Got " + sysInfo.length);
           }
         } else {
-          LOG.warn("Wrong output from sysInfo: " + sysInfoStr);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

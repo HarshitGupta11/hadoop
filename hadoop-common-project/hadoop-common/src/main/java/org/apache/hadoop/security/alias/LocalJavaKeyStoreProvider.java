@@ -66,7 +66,7 @@ public final class LocalJavaKeyStoreProvider extends
   @Override
   protected OutputStream getOutputStreamForKeystore() throws IOException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("using '" + file + "' for output stream.");
+      LOG.error("Temp", new RuntimeException());
     }
     FileOutputStream out = new FileOutputStream(file);
     return out;
@@ -127,9 +127,9 @@ public final class LocalJavaKeyStoreProvider extends
     try {
       file = new File(new URI(getPath().toString()));
       if (LOG.isDebugEnabled()) {
-        LOG.debug("initialized local file as '" + file + "'.");
+        LOG.error("Temp", new RuntimeException());
         if (file.exists()) {
-          LOG.debug("the local file exists and is size " + file.length());
+          LOG.error("Temp", new RuntimeException());
           if (LOG.isTraceEnabled()) {
             if (file.canRead()) {
               LOG.trace("we can read the local file.");
@@ -139,7 +139,7 @@ public final class LocalJavaKeyStoreProvider extends
             }
           }
         } else {
-          LOG.debug("the local file does not exist.");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } catch (URISyntaxException e) {
@@ -151,7 +151,7 @@ public final class LocalJavaKeyStoreProvider extends
   public void flush() throws IOException {
     super.flush();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Resetting permissions to '" + permissions + "'");
+      LOG.error("Temp", new RuntimeException());
     }
     if (!Shell.WINDOWS) {
       Files.setPosixFilePermissions(Paths.get(file.getCanonicalPath()),

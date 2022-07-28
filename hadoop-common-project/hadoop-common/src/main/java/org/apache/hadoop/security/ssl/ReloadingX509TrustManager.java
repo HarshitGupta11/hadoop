@@ -170,7 +170,7 @@ public final class ReloadingX509TrustManager
     try {
       ks.load(in, (password == null) ? null : password.toCharArray());
       lastLoaded = file.lastModified();
-      LOG.debug("Loaded truststore '" + file + "'");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       in.close();
     }
@@ -200,7 +200,7 @@ public final class ReloadingX509TrustManager
         try {
           trustManagerRef.set(loadTrustManager());
         } catch (Exception ex) {
-          LOG.warn(RELOAD_ERROR_MESSAGE + ex.toString(), ex);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

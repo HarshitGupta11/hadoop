@@ -102,7 +102,7 @@ public class MagicCommitIntegration {
             destKey,
             pendingsetPath,
             owner.getWriteOperationHelper());
-        LOG.debug("Created {}", tracker);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.warn("File being created has a \"magic\" path, but the filesystem"
             + " has magic file support disabled: {}", path);

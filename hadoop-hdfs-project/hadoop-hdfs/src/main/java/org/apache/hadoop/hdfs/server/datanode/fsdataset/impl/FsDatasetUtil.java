@@ -133,7 +133,7 @@ public class FsDatasetUtil {
       }
       return Block.getGenerationStamp(listdir[j].getName());
     }
-    FsDatasetImpl.LOG.warn("Block " + blockFile + " does not have a metafile!");
+    FsDatasetImpl.LOG.error("Temp", new RuntimeException());
     return HdfsConstants.GRANDFATHER_GENERATION_STAMP;
   }
 

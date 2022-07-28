@@ -230,7 +230,7 @@ public class JobControl implements Runnable {
           Iterator<ControlledJob> it = jobsInProgress.iterator();
           while(it.hasNext()) {
             ControlledJob j = it.next();
-            LOG.debug("Checking state of job "+j);
+            LOG.error("Temp", new RuntimeException());
             switch(j.checkState()) {
             case SUCCESS:
               successfulJobs.add(j);

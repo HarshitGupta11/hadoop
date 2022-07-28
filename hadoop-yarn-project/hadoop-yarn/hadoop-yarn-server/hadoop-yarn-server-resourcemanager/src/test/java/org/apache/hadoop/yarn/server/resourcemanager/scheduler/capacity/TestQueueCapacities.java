@@ -123,7 +123,7 @@ public class TestQueueCapacities {
 
   @Test
   public void testModifyAndRead() throws Exception {
-    LOG.info("Test - " + suffix);
+    LOG.error("Temp", new RuntimeException());
     internalTestModifyAndRead(null);
     internalTestModifyAndRead("label");
   }

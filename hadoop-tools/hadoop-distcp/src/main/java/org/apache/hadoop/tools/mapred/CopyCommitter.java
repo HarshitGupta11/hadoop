@@ -149,7 +149,7 @@ public class CopyCommitter extends FileOutputCommitter {
       deleteAttemptTempFiles(targetWorkPath, targetFS, jobId);
       deleteAttemptTempFiles(targetWorkPath.getParent(), targetFS, jobId);
     } catch (Throwable t) {
-      LOG.warn("Unable to cleanup temp files", t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -165,7 +165,7 @@ public class CopyCommitter extends FileOutputCommitter {
 
     if (tempFiles != null && tempFiles.length > 0) {
       for (FileStatus file : tempFiles) {
-        LOG.info("Cleaning up " + file.getPath());
+        LOG.error("Temp", new RuntimeException());
         targetFS.delete(file.getPath(), false);
       }
     }
@@ -180,7 +180,7 @@ public class CopyCommitter extends FileOutputCommitter {
     Path metaFolder = new Path(conf.get(DistCpConstants.CONF_LABEL_META_FOLDER));
     try {
       FileSystem fs = metaFolder.getFileSystem(conf);
-      LOG.info("Cleaning up temporary work folder: " + metaFolder);
+      LOG.error("Temp", new RuntimeException());
       fs.delete(metaFolder, true);
     } catch (IOException ignore) {
       LOG.error("Exception encountered ", ignore);
@@ -207,7 +207,7 @@ public class CopyCommitter extends FileOutputCommitter {
    */
   private void concatFileChunks(Configuration conf) throws IOException {
 
-    LOG.info("concat file chunks ...");
+    LOG.error("Temp", new RuntimeException());
 
     String spath = conf.get(DistCpConstants.CONF_LABEL_LISTING_FILE_PATH);
     if (spath == null || spath.isEmpty()) {
@@ -234,7 +234,7 @@ public class CopyCommitter extends FileOutputCommitter {
         Path targetFileChunkPath =
             DistCpUtils.getSplitChunkPath(targetFile, srcFileStatus);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("  add " + targetFileChunkPath + " to concat.");
+          LOG.error("Temp", new RuntimeException());
         }
         allChunkPaths.add(targetFileChunkPath);
         if (srcFileStatus.getChunkOffset() + srcFileStatus.getChunkLength()
@@ -253,7 +253,7 @@ public class CopyCommitter extends FileOutputCommitter {
               if (!ignoreFailures) {
                 throw new IOException(emsg, e);
               } else {
-                LOG.warn(emsg, e);
+                LOG.error("Temp", new RuntimeException());
               }
             }
           }
@@ -275,7 +275,7 @@ public class CopyCommitter extends FileOutputCommitter {
               if (!ignoreFailures) {
                 throw new IOException(emsg);
               } else {
-                LOG.warn(emsg + ", skipping concat this set.");
+                LOG.error("Temp", new RuntimeException());
               }
             } else {
               lastFileStatus.setChunkOffset(srcFileStatus.getChunkOffset());
@@ -296,7 +296,7 @@ public class CopyCommitter extends FileOutputCommitter {
     String attrSymbols = conf.get(DistCpConstants.CONF_LABEL_PRESERVE_STATUS);
     final boolean syncOrOverwrite = syncFolder || overwrite;
 
-    LOG.info("About to preserve attributes: " + attrSymbols);
+    LOG.error("Temp", new RuntimeException());
 
     EnumSet<FileAttribute> attributes = DistCpUtils.unpackAttributes(attrSymbols);
     final boolean preserveRawXattrs =
@@ -338,7 +338,7 @@ public class CopyCommitter extends FileOutputCommitter {
     } finally {
       IOUtils.closeStream(sourceReader);
     }
-    LOG.info("Preserved status on " + preservedEntries + " dir entries on target");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -357,12 +357,12 @@ public class CopyCommitter extends FileOutputCommitter {
     // where is the existing source listing?
     Path sourceListing = new Path(
         conf.get(DistCpConstants.CONF_LABEL_LISTING_FILE_PATH));
-    LOG.info("Tracking file changes to directory {}", trackDir);
+    LOG.error("Temp", new RuntimeException());
 
     // the destination path is under the track directory
     Path sourceSortedListing = new Path(trackDir,
         DistCpConstants.SOURCE_SORTED_FILE);
-    LOG.info("Source listing {}", sourceSortedListing);
+    LOG.error("Temp", new RuntimeException());
 
     DistCpUtils.sortListing(conf, sourceListing, sourceSortedListing);
 
@@ -372,7 +372,7 @@ public class CopyCommitter extends FileOutputCommitter {
     Path sortedTargetListing = new Path(trackDir, TARGET_SORTED_FILE);
     // list the target
     listTargetFiles(conf, targetListing, sortedTargetListing);
-    LOG.info("Target listing {}", sortedTargetListing);
+    LOG.error("Temp", new RuntimeException());
 
     targetListing.getFileSystem(conf).delete(targetListing, false);
   }
@@ -446,7 +446,7 @@ public class CopyCommitter extends FileOutputCommitter {
           try {
             if (targetFS.delete(targetEntry, true)) {
               // the delete worked. Unless the file is actually missing, this is the
-              LOG.info("Deleted " + targetEntry + " - missing at source");
+              LOG.error("Temp", new RuntimeException());
               deletedEntries++;
               if (trgtFileStatus.isDirectory()) {
                 deletedDirectories++;
@@ -469,13 +469,13 @@ public class CopyCommitter extends FileOutputCommitter {
               // failed to delete, but ignoring errors. So continue
               LOG.info("Failed to delete {}, ignoring exception {}",
                   targetEntry, e.toString());
-              LOG.debug("Failed to delete {}", targetEntry, e);
+              LOG.error("Temp", new RuntimeException());
               // count and break out the loop
               failedDeletes++;
             }
           }
         } else {
-          LOG.debug("Skipping deletion of {}", targetEntry);
+          LOG.error("Temp", new RuntimeException());
           skippedDeletes++;
           showProgress = false;
         }
@@ -487,7 +487,7 @@ public class CopyCommitter extends FileOutputCommitter {
         }
       }
       // if the FS toString() call prints statistics, they get logged here
-      LOG.info("Completed deletion of files from {}", targetFS);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.closeStream(sourceReader);
       IOUtils.closeStream(targetReader);
@@ -499,7 +499,7 @@ public class CopyCommitter extends FileOutputCommitter {
             + " failed deletes {}",
         deletedFileCount, deletedDirectories, skippedDeletes,
         missingDeletes, failedDeletes);
-    LOG.info("Number of tracked deleted directories {}", tracker.size());
+    LOG.error("Temp", new RuntimeException());
     LOG.info("Duration of deletions: {}",
         formatDuration(deletionEnd - deletionStart));
     LOG.info("Total duration of deletion operation: {}",
@@ -563,7 +563,7 @@ public class CopyCommitter extends FileOutputCommitter {
     Path finalDir = new Path(conf.get(DistCpConstants.CONF_LABEL_TARGET_FINAL_PATH));
     FileSystem targetFS = workDir.getFileSystem(conf);
 
-    LOG.info("Atomic commit enabled. Moving " + workDir + " to " + finalDir);
+    LOG.error("Temp", new RuntimeException());
     if (targetFS.exists(finalDir) && targetFS.exists(workDir)) {
       LOG.error("Pre-existing final-path found at: " + finalDir);
       throw new IOException("Target-path can't be committed to because it " +
@@ -572,11 +572,11 @@ public class CopyCommitter extends FileOutputCommitter {
 
     boolean result = targetFS.rename(workDir, finalDir);
     if (!result) {
-      LOG.warn("Rename failed. Perhaps data already moved. Verifying...");
+      LOG.error("Temp", new RuntimeException());
       result = targetFS.exists(finalDir) && !targetFS.exists(workDir);
     }
     if (result) {
-      LOG.info("Data committed successfully to " + finalDir);
+      LOG.error("Temp", new RuntimeException());
       taskAttemptContext.setStatus("Data committed successfully to " + finalDir);
     } else {
       LOG.error("Unable to commit data to " + finalDir);
@@ -603,16 +603,16 @@ public class CopyCommitter extends FileOutputCommitter {
     Path[] restChunkFiles = new Path[allChunkPaths.size()];
     allChunkPaths.toArray(restChunkFiles);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("concat: firstchunk: " + dstfs.getFileStatus(firstChunkFile));
+      LOG.error("Temp", new RuntimeException());
       int i = 0;
       for (Path f : restChunkFiles) {
-        LOG.debug("concat: other chunk: " + i + ": " + dstfs.getFileStatus(f));
+        LOG.error("Temp", new RuntimeException());
         ++i;
       }
     }
     dstfs.concat(firstChunkFile, restChunkFiles);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("concat: result: " + dstfs.getFileStatus(firstChunkFile));
+      LOG.error("Temp", new RuntimeException());
     }
     rename(dstfs, firstChunkFile, targetFile);
   }

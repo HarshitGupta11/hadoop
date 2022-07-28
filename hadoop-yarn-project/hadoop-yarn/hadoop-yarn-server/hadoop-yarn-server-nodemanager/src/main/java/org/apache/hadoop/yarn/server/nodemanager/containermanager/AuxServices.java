@@ -221,7 +221,7 @@ public class AuxServices extends AbstractService
         + event.getApplicationID());
     switch (event.getType()) {
       case APPLICATION_INIT:
-        LOG.info("Got APPLICATION_INIT for service " + event.getServiceID());
+        LOG.error("Temp", new RuntimeException());
         AuxiliaryService service = null;
         try {
           service = serviceMap.get(event.getServiceID());

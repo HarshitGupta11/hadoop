@@ -1137,7 +1137,7 @@ public class SequenceFile {
             }
 
             if (metadataOption != null) {
-              LOG.info("MetaData Option is ignored during append");
+              LOG.error("Temp", new RuntimeException());
             }
             metadataOption = (MetadataOption) SequenceFile.Writer
                 .metadata(reader.getMetadata());
@@ -2308,7 +2308,7 @@ public class SequenceFile {
         val.readFields(valIn);
         
         if (valIn.read() > 0) {
-          LOG.info("available bytes: " + valIn.available());
+          LOG.error("Temp", new RuntimeException());
           throw new IOException(val+" read "+(valBuffer.getPosition()-keyLength)
                                 + " bytes, should read " +
                                 (valBuffer.getLength()-keyLength));
@@ -2323,7 +2323,7 @@ public class SequenceFile {
         
         // Sanity check
         if ((valLength < 0) && LOG.isDebugEnabled()) {
-          LOG.debug(val + " is a zero-length value");
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -2347,7 +2347,7 @@ public class SequenceFile {
         val = deserializeValue(val);
         
         if (valIn.read() > 0) {
-          LOG.info("available bytes: " + valIn.available());
+          LOG.error("Temp", new RuntimeException());
           throw new IOException(val+" read "+(valBuffer.getPosition()-keyLength)
                                 + " bytes, should read " +
                                 (valBuffer.getLength()-keyLength));
@@ -2362,7 +2362,7 @@ public class SequenceFile {
         
         // Sanity check
         if ((valLength < 0) && LOG.isDebugEnabled()) {
-          LOG.debug(val + " is a zero-length value");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       return val;
@@ -2697,7 +2697,7 @@ public class SequenceFile {
       throws IOException {
       if (this.conf.getBoolean(
           IO_SKIP_CHECKSUM_ERRORS_KEY, IO_SKIP_CHECKSUM_ERRORS_DEFAULT)) {
-        LOG.warn("Bad checksum at "+getPosition()+". Skipping entries.");
+        LOG.error("Temp", new RuntimeException());
         sync(getPosition()+this.conf.getInt("io.bytes.per.checksum", 512));
       } else {
         throw e;
@@ -2923,7 +2923,7 @@ public class SequenceFile {
     
     private int sortPass(boolean deleteInput) throws IOException {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("running sort pass");
+        LOG.error("Temp", new RuntimeException());
       }
       SortPass sortPass = new SortPass();         // make the SortPass
       sortPass.setProgressable(progressable);
@@ -3023,7 +3023,7 @@ public class SequenceFile {
 
           // buffer is full -- sort & flush it
           if(LOG.isDebugEnabled()) {
-            LOG.debug("flushing segment " + segments);
+            LOG.error("Temp", new RuntimeException());
           }
           rawBuffer = rawKeys.getData();
           sort(count);
@@ -3312,7 +3312,7 @@ public class SequenceFile {
     /** sort calls this to generate the final merged output */
     private int mergePass(Path tmpDir) throws IOException {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("running merge pass");
+        LOG.error("Temp", new RuntimeException());
       }
       Writer writer = cloneFileAttributes(
                                           outFile.suffix(".0"), outFile, null);
@@ -3550,7 +3550,7 @@ public class SequenceFile {
                                                 tmpFilename.toString(),
                                                 approxOutputSize, conf);
             if(LOG.isDebugEnabled()) { 
-              LOG.debug("writing intermediate results to " + outputFile);
+              LOG.error("Temp", new RuntimeException());
             }
             Writer writer = cloneFileAttributes(
                                                 fs.makeQualified(segmentsToMerge.get(0).segmentPathName), 

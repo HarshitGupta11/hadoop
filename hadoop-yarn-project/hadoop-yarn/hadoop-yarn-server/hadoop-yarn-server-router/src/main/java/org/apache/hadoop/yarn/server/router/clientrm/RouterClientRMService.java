@@ -138,7 +138,7 @@ public class RouterClientRMService extends AbstractService
 
   @Override
   protected void serviceStart() throws Exception {
-    LOG.info("Starting Router ClientRMService");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = getConfig();
     YarnRPC rpc = YarnRPC.create(conf);
     UserGroupInformation.setConfiguration(conf);
@@ -173,7 +173,7 @@ public class RouterClientRMService extends AbstractService
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping Router ClientRMService");
+    LOG.error("Temp", new RuntimeException());
     if (this.server != null) {
       this.server.stop();
     }

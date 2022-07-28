@@ -140,7 +140,7 @@ public class ServiceTestUtils {
 
   protected void setupInternal(int numNodeManager)
       throws Exception {
-    LOG.info("Starting up YARN cluster");
+    LOG.error("Temp", new RuntimeException());
     if (conf == null) {
       setConf(new YarnConfiguration());
     }
@@ -176,7 +176,7 @@ public class ServiceTestUtils {
     zkCluster.start();
     conf.set(YarnConfiguration.RM_ZK_ADDRESS, zkCluster.getConnectString());
     conf.set(KEY_REGISTRY_ZK_QUORUM, zkCluster.getConnectString());
-    LOG.info("ZK cluster: " +  zkCluster.getConnectString());
+    LOG.error("Temp", new RuntimeException());
 
     fs = FileSystem.get(conf);
     basedir = new File("target", "apps");
@@ -215,7 +215,7 @@ public class ServiceTestUtils {
       OutputStream os = new FileOutputStream(new File(url.getPath()));
       os.write(bytesOut.toByteArray());
       os.close();
-      LOG.info("Write yarn-site.xml configs to: " + url);
+      LOG.error("Temp", new RuntimeException());
     }
     if (hdfsCluster == null) {
       HdfsConfiguration hdfsConfig = new HdfsConfiguration();
@@ -226,7 +226,7 @@ public class ServiceTestUtils {
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      LOG.info("setup thread sleep interrupted. message=" + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

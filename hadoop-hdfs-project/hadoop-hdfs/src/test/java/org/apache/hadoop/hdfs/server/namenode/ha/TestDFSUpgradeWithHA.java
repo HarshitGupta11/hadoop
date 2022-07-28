@@ -532,7 +532,7 @@ public class TestDFSUpgradeWithHA {
       for (int i = 0; i < 2; i++) {
         for (URI uri : cluster.getNameDirs(i)) {
           File prevTmp = new File(new File(uri), Storage.STORAGE_TMP_PREVIOUS);
-          LOG.info("creating previous tmp dir: " + prevTmp);
+          LOG.error("Temp", new RuntimeException());
           assertTrue(prevTmp.mkdirs());
         }
       }

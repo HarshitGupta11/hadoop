@@ -150,11 +150,11 @@ public class CodecPool {
     Compressor compressor = borrow(compressorPool, codec.getCompressorType());
     if (compressor == null) {
       compressor = codec.createCompressor();
-      LOG.info("Got brand-new compressor ["+codec.getDefaultExtension()+"]");
+      LOG.error("Temp", new RuntimeException());
     } else {
       compressor.reinit(conf);
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Got recycled compressor");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (compressor != null &&
@@ -181,10 +181,10 @@ public class CodecPool {
     Decompressor decompressor = borrow(decompressorPool, codec.getDecompressorType());
     if (decompressor == null) {
       decompressor = codec.createDecompressor();
-      LOG.info("Got brand-new decompressor ["+codec.getDefaultExtension()+"]");
+      LOG.error("Temp", new RuntimeException());
     } else {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Got recycled decompressor");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (decompressor != null &&

@@ -83,7 +83,7 @@ public class ClientAMService extends AbstractService
     bindAddress = NetUtils.createSocketAddrForHost(nodeHostString,
         server.getListenerAddress().getPort());
 
-    LOG.info("Instantiated ClientAMService at " + bindAddress);
+    LOG.error("Temp", new RuntimeException());
     super.serviceStart();
   }
 
@@ -118,7 +118,7 @@ public class ClientAMService extends AbstractService
   @Override
   public StopResponseProto stop(StopRequestProto requestProto)
       throws IOException, YarnException {
-    LOG.info("Stop the service by {}", UserGroupInformation.getCurrentUser());
+    LOG.error("Temp", new RuntimeException());
     context.scheduler.getDiagnostics()
         .append("Stopped by user " + UserGroupInformation.getCurrentUser());
 

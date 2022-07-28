@@ -1110,7 +1110,7 @@ public class FiCaSchedulerApp extends SchedulerApplicationAttempt {
           reservedContainer.getReservedSchedulerKey());
       if (null == map) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Cannot find reserved container map.");
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }
@@ -1118,7 +1118,7 @@ public class FiCaSchedulerApp extends SchedulerApplicationAttempt {
       // Check if reserved container changed
       if (sourceNode.getReservedContainer() != reservedContainer) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("To-be-moved container already updated.");
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }
@@ -1128,7 +1128,7 @@ public class FiCaSchedulerApp extends SchedulerApplicationAttempt {
       synchronized (targetNode){
         if (targetNode.getReservedContainer() != null) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Target node is already occupied before moving");
+            LOG.error("Temp", new RuntimeException());
           }
         }
 
@@ -1137,7 +1137,7 @@ public class FiCaSchedulerApp extends SchedulerApplicationAttempt {
               reservedContainer.getReservedSchedulerKey(), reservedContainer);
         } catch (IllegalStateException e) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Reserve on target node failed, e=", e);
+            LOG.error("Temp", new RuntimeException());
           }
           return false;
         }

@@ -126,7 +126,7 @@ public final class IrqHandler implements SignalHandler {
   public void handle(Signal s) {
     signalCount.incrementAndGet();
     InterruptData data = new InterruptData(s.getName(), s.getNumber());
-    LOG.info("Interrupted: {}", data);
+    LOG.error("Temp", new RuntimeException());
     handler.interrupted(data);
   }
 

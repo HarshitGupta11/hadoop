@@ -500,7 +500,7 @@ public class ContainerScheduler extends AbstractService implements
   }
 
   private void startContainer(Container container) {
-    LOG.info("Starting container [" + container.getContainerId()+ "]");
+    LOG.error("Temp", new RuntimeException());
     runningContainers.put(container.getContainerId(), container);
     this.utilizationTracker.addContainerResources(container);
     if (container.getContainerTokenIdentifier().getExecutionType() ==

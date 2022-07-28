@@ -69,7 +69,7 @@ public class JceAesCtrCryptoCodec extends AesCtrCryptoCodec {
           SecureRandom.getInstance(secureRandomAlg, provider) : 
             SecureRandom.getInstance(secureRandomAlg);
     } catch (GeneralSecurityException e) {
-      LOG.warn(e.getMessage());
+      LOG.error("Temp", new RuntimeException());
       random = new SecureRandom();
     }
   }

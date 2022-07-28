@@ -55,7 +55,7 @@ public class MetricsCache {
                                                   Record> eldest) {
       boolean overflow = size() > maxRecsPerName;
       if (overflow && !gotOverflow) {
-        LOG.warn("Metrics cache overflow at "+ size() +" for "+ eldest);
+        LOG.error("Temp", new RuntimeException());
         gotOverflow = true;
       }
       return overflow;

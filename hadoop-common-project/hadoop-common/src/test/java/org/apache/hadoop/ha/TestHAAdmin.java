@@ -100,11 +100,11 @@ public class TestHAAdmin {
   private Object runTool(String ... args) throws Exception {
     errOutBytes.reset();
     outBytes.reset();
-    LOG.info("Running: HAAdmin " + Joiner.on(" ").join(args));
+    LOG.error("Temp", new RuntimeException());
     int ret = tool.run(args);
     errOutput = new String(errOutBytes.toByteArray(), Charsets.UTF_8);
     output = new String(outBytes.toByteArray(), Charsets.UTF_8);
-    LOG.info("Err_output:\n" + errOutput + "\nOutput:\n" + output);
+    LOG.error("Temp", new RuntimeException());
     return ret;
   }
 }

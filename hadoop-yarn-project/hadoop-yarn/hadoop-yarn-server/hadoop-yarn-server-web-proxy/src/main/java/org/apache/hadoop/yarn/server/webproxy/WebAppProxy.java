@@ -76,7 +76,7 @@ public class WebAppProxy extends AbstractService {
       throw new YarnRuntimeException(YarnConfiguration.PROXY_ADDRESS + 
           " is not set so the proxy will not run.");
     }
-    LOG.info("Instantiating Proxy at " + bindAddress);
+    LOG.error("Temp", new RuntimeException());
     String[] parts = StringUtils.split(bindAddress, ':');
     port = 0;
     if (parts.length == 2) {

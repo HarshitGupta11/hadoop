@@ -177,12 +177,12 @@ public class FileSystemApplicationHistoryStore extends AbstractService
         return null;
       }
       if (!readStartData) {
-        LOG.warn("Start information is missing for application " + appId);
+        LOG.error("Temp", new RuntimeException());
       }
       if (!readFinishData) {
-        LOG.warn("Finish information is missing for application " + appId);
+        LOG.error("Temp", new RuntimeException());
       }
-      LOG.info("Completed reading history information of application " + appId);
+      LOG.error("Temp", new RuntimeException());
       return historyData;
     } catch (IOException e) {
       LOG.error("Error when reading history file of application " + appId, e);
@@ -341,10 +341,10 @@ public class FileSystemApplicationHistoryStore extends AbstractService
         return null;
       }
       if (!readStartData) {
-        LOG.warn("Start information is missing for container " + containerId);
+        LOG.error("Temp", new RuntimeException());
       }
       if (!readFinishData) {
-        LOG.warn("Finish information is missing for container " + containerId);
+        LOG.error("Temp", new RuntimeException());
       }
       LOG.info("Completed reading history information of container "
           + containerId);

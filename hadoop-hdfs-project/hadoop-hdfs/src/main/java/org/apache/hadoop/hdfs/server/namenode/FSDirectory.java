@@ -280,15 +280,15 @@ public class FSDirectory implements Closeable {
     this.aclsEnabled = conf.getBoolean(
         DFSConfigKeys.DFS_NAMENODE_ACLS_ENABLED_KEY,
         DFSConfigKeys.DFS_NAMENODE_ACLS_ENABLED_DEFAULT);
-    LOG.info("ACLs enabled? " + aclsEnabled);
+    LOG.error("Temp", new RuntimeException());
     this.posixAclInheritanceEnabled = conf.getBoolean(
         DFSConfigKeys.DFS_NAMENODE_POSIX_ACL_INHERITANCE_ENABLED_KEY,
         DFSConfigKeys.DFS_NAMENODE_POSIX_ACL_INHERITANCE_ENABLED_DEFAULT);
-    LOG.info("POSIX ACL inheritance enabled? " + posixAclInheritanceEnabled);
+    LOG.error("Temp", new RuntimeException());
     this.xattrsEnabled = conf.getBoolean(
         DFSConfigKeys.DFS_NAMENODE_XATTRS_ENABLED_KEY,
         DFSConfigKeys.DFS_NAMENODE_XATTRS_ENABLED_DEFAULT);
-    LOG.info("XAttrs enabled? " + xattrsEnabled);
+    LOG.error("Temp", new RuntimeException());
     this.xattrMaxSize = conf.getInt(
         DFSConfigKeys.DFS_NAMENODE_MAX_XATTR_SIZE_KEY,
         DFSConfigKeys.DFS_NAMENODE_MAX_XATTR_SIZE_DEFAULT);
@@ -764,7 +764,7 @@ public class FSDirectory implements Closeable {
     writeLock();
     try {
       int threads = (initThreads < 1) ? 1 : initThreads;
-      LOG.info("Initializing quota with " + threads + " thread(s)");
+      LOG.error("Temp", new RuntimeException());
       long start = Time.monotonicNow();
       QuotaCounts counts = new QuotaCounts.Builder().build();
       ForkJoinPool p = new ForkJoinPool(threads);
@@ -859,7 +859,7 @@ public class FSDirectory implements Closeable {
           }
         }
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Setting quota for " + dir + "\n" + myCounts);
+          LOG.error("Temp", new RuntimeException());
         }
         dir.getDirectoryWithQuotaFeature().setSpaceConsumed(nsConsumed,
             ssConsumed, tsConsumed);
@@ -1050,7 +1050,7 @@ public class FSDirectory implements Closeable {
       try {
         updateSpaceConsumed(iip, 0, -diff, replicationFactor);
       } catch (IOException e) {
-        LOG.warn("Unexpected exception while updating disk space.", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1236,7 +1236,7 @@ public class FSDirectory implements Closeable {
       child.setPermission(modes.getUnmasked());
       if (!AclStorage.copyINodeDefaultAcl(child)) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("{}: no parent default ACL to inherit", child);
+          LOG.error("Temp", new RuntimeException());
         }
         child.setPermission(modes.getMasked());
       }
@@ -1312,7 +1312,7 @@ public class FSDirectory implements Closeable {
       // All callers do not have create modes to pass.
       return addLastINode(existing, i, null, false);
     } catch (QuotaExceededException e) {
-      NameNode.LOG.warn("FSDirectory.addChildNoQuotaCheck - unexpected", e);
+      NameNode.LOG.error("Temp", new RuntimeException());
     }
     return null;
   }

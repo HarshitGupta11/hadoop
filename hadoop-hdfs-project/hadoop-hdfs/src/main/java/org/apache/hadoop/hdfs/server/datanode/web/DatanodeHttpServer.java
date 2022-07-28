@@ -240,7 +240,7 @@ public class DatanodeHttpServer implements Closeable {
         }
       }
       httpAddress = (InetSocketAddress) f.channel().localAddress();
-      LOG.info("Listening HTTP traffic on " + httpAddress);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (httpsServer != null) {
@@ -261,7 +261,7 @@ public class DatanodeHttpServer implements Closeable {
         }
       }
       httpsAddress = (InetSocketAddress) f.channel().localAddress();
-      LOG.info("Listening HTTPS traffic on " + httpsAddress);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

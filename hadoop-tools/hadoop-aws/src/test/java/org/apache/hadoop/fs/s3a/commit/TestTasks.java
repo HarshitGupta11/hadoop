@@ -468,13 +468,13 @@ public class TestTasks extends HadoopTestBase {
       int count = counter.incrementAndGet();
       if (limit == count) {
         i.fail();
-        LOG.info("{}: Failed {}", this, i);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(String.format("%s: Limit %d reached for %s",
             this, limit, i));
       }
       String before = i.toString();
       action.map(a -> a.apply(i));
-      LOG.info("{}: {} -> {}", this, before, i);
+      LOG.error("Temp", new RuntimeException());
     }
 
     int getCount() {

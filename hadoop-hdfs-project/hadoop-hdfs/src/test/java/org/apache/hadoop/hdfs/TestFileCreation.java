@@ -690,7 +690,7 @@ public class TestFileCreation {
             null, null, HdfsConstants.GRANDFATHER_INODE_ID, null, null);
         fail();
       } catch(IOException ioe) {
-        FileSystem.LOG.info("GOOD!", ioe);
+        FileSystem.LOG.error("Temp", new RuntimeException());
       }
 
       System.out.println("testFileCreationError3 successful");
@@ -1306,7 +1306,7 @@ public class TestFileCreation {
             .complete(f.toString(), client.clientName, null, someOtherFileId);
         fail();
       } catch(FileNotFoundException e) {
-        FileSystem.LOG.info("Caught Expected FileNotFoundException: ", e);
+        FileSystem.LOG.error("Temp", new RuntimeException());
       }
     } finally {
       IOUtils.closeStream(dfs);

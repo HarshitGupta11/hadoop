@@ -61,7 +61,7 @@ public class NonAppendableFSNodeLabelStore extends FileSystemNodeLabelsStore {
       } catch (IOException e) {
         // do nothing
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Exception while removing old mirror", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       
@@ -69,7 +69,7 @@ public class NonAppendableFSNodeLabelStore extends FileSystemNodeLabelsStore {
       fs.rename(newMirrorPath, oldMirrorPath);
     }
 
-    LOG.info("Node label store recover is completed");
+    LOG.error("Temp", new RuntimeException());
   }
   
   @Override

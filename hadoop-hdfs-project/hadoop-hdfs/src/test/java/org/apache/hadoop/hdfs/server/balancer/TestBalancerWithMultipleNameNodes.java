@@ -158,7 +158,7 @@ public class TestBalancerWithMultipleNameNodes {
         if (!done) {
           sleep(100L);
           if (++i % 100 == 0) {
-            LOG.warn("WAIT i=" + i + ", s=[" + s[0] + ", " + s[1] + "]");
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -173,7 +173,7 @@ public class TestBalancerWithMultipleNameNodes {
         + ", totalCapacity=" + totalCapacity
         + ", avg=" + avg);
     wait(s.clients, totalUsed, totalCapacity);
-    LOG.info("BALANCER 1");
+    LOG.error("Temp", new RuntimeException());
 
     // get storage reports for relevant blockpools so that we can compare
     // blockpool usages after balancer has run
@@ -185,9 +185,9 @@ public class TestBalancerWithMultipleNameNodes {
     final int r = Balancer.run(namenodes, s.parameters, s.conf);
     Assert.assertEquals(ExitStatus.SUCCESS.getExitCode(), r);
 
-    LOG.info("BALANCER 2");
+    LOG.error("Temp", new RuntimeException());
     wait(s.clients, totalUsed, totalCapacity);
-    LOG.info("BALANCER 3");
+    LOG.error("Temp", new RuntimeException());
 
     int i = 0;
     for(boolean balanced = false; !balanced; i++) {
@@ -261,7 +261,7 @@ public class TestBalancerWithMultipleNameNodes {
       }
     }
 
-    LOG.info("BALANCER 6");
+    LOG.error("Temp", new RuntimeException());
     // cluster is balanced, verify that only selected blockpools were touched
     Map<Integer, DatanodeStorageReport[]> postBalancerPoolUsages =
         getStorageReports(s);
@@ -377,7 +377,7 @@ public class TestBalancerWithMultipleNameNodes {
   private void unevenDistribution(final int nNameNodes,
       final int nNameNodesToBalance, long distributionPerNN[],
       long capacities[], String[] racks, Configuration conf) throws Exception {
-    LOG.info("UNEVEN 0");
+    LOG.error("Temp", new RuntimeException());
     final int nDataNodes = distributionPerNN.length;
     if (capacities.length != nDataNodes || racks.length != nDataNodes) {
       throw new IllegalArgumentException("Array length is not the same");
@@ -394,7 +394,7 @@ public class TestBalancerWithMultipleNameNodes {
     // fill the cluster
     final ExtendedBlock[][] blocks;
     {
-      LOG.info("UNEVEN 1");
+      LOG.error("Temp", new RuntimeException());
       final MiniDFSCluster cluster = new MiniDFSCluster
           .Builder(new Configuration(conf))
               .nnTopology(MiniDFSNNTopology.simpleFederatedTopology(nNameNodes))
@@ -402,14 +402,14 @@ public class TestBalancerWithMultipleNameNodes {
           .racks(racks)
           .simulatedCapacities(capacities)
           .build();
-      LOG.info("UNEVEN 2");
+      LOG.error("Temp", new RuntimeException());
       try {
         cluster.waitActive();
         DFSTestUtil.setFederatedConfiguration(cluster, conf);
-        LOG.info("UNEVEN 3");
+        LOG.error("Temp", new RuntimeException());
         final Suite s = new Suite(cluster, nNameNodes, nDataNodes, null, conf);
         blocks = generateBlocks(s, usedSpacePerNN);
-        LOG.info("UNEVEN 4");
+        LOG.error("Temp", new RuntimeException());
       } finally {
         cluster.shutdown();
       }
@@ -423,7 +423,7 @@ public class TestBalancerWithMultipleNameNodes {
       newCapacities[i] = capacities[i] * nNameNodes;
     }
     {
-      LOG.info("UNEVEN 10");
+      LOG.error("Temp", new RuntimeException());
       final MiniDFSCluster cluster = new MiniDFSCluster.Builder(conf)
           .nnTopology(MiniDFSNNTopology.simpleFederatedTopology(nNameNodes))
           .numDataNodes(nDataNodes)
@@ -431,10 +431,10 @@ public class TestBalancerWithMultipleNameNodes {
           .simulatedCapacities(newCapacities)
           .format(false)
           .build();
-      LOG.info("UNEVEN 11");
+      LOG.error("Temp", new RuntimeException());
       try {
         cluster.waitActive();
-        LOG.info("UNEVEN 12");
+        LOG.error("Temp", new RuntimeException());
         Set<String> blockpools = new HashSet<String>();
         for (int i = 0; i < nNameNodesToBalance; i++) {
           blockpools.add(cluster.getNamesystem(i).getBlockPoolId());
@@ -453,18 +453,18 @@ public class TestBalancerWithMultipleNameNodes {
           for(int d = 0; d < blocksDN.length; d++)
             cluster.injectBlocks(n, d, Arrays.asList(blocksDN[d]));
 
-          LOG.info("UNEVEN 13: n=" + n);
+          LOG.error("Temp", new RuntimeException());
         }
     
         final long totalCapacity = TestBalancer.sum(newCapacities);
         final long totalUsed = nNameNodes*usedSpacePerNN;
-        LOG.info("UNEVEN 14");
+        LOG.error("Temp", new RuntimeException());
         runBalancer(s, totalUsed, totalCapacity);
-        LOG.info("UNEVEN 15");
+        LOG.error("Temp", new RuntimeException());
       } finally {
         cluster.shutdown();
       }
-      LOG.info("UNEVEN 16");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -488,7 +488,7 @@ public class TestBalancerWithMultipleNameNodes {
     final int nDataNodes = racks.length;
     final long[] capacities = new long[nDataNodes];
     Arrays.fill(capacities, CAPACITY);
-    LOG.info("nNameNodes=" + nNameNodes + ", nDataNodes=" + nDataNodes);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(nDataNodes, racks.length);
 
     LOG.info("RUN_TEST -1: start a cluster with nNameNodes=" + nNameNodes
@@ -501,12 +501,12 @@ public class TestBalancerWithMultipleNameNodes {
         .racks(racks)
         .simulatedCapacities(capacities)
         .build();
-    LOG.info("RUN_TEST 0");
+    LOG.error("Temp", new RuntimeException());
     DFSTestUtil.setFederatedConfiguration(cluster, conf);
 
     try {
       cluster.waitActive();
-      LOG.info("RUN_TEST 1");
+      LOG.error("Temp", new RuntimeException());
 
       Suite s;
 
@@ -528,7 +528,7 @@ public class TestBalancerWithMultipleNameNodes {
       }
       long totalCapacity = TestBalancer.sum(capacities);
 
-      LOG.info("RUN_TEST 2: create files");
+      LOG.error("Temp", new RuntimeException());
       // fill up the cluster to be 30% full
       final long totalUsed = (totalCapacity * s.replication)*3/10;
       final long size = (totalUsed/nNameNodes)/s.replication;
@@ -536,7 +536,7 @@ public class TestBalancerWithMultipleNameNodes {
         createFile(s, n, size);
       }
 
-      LOG.info("RUN_TEST 3: " + newRack.length + " new datanodes");
+      LOG.error("Temp", new RuntimeException());
       // start up an empty node with the same capacity and on the same rack
       final long[] newCapacity = new long[newRack.length];
       Arrays.fill(newCapacity, CAPACITY);
@@ -545,14 +545,14 @@ public class TestBalancerWithMultipleNameNodes {
 
       totalCapacity += TestBalancer.sum(newCapacity);
 
-      LOG.info("RUN_TEST 4: run Balancer");
+      LOG.error("Temp", new RuntimeException());
       // run RUN_TEST and validate results
       runBalancer(s, totalUsed, totalCapacity);
-      LOG.info("RUN_TEST 5");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       cluster.shutdown();
     }
-    LOG.info("RUN_TEST 6: done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   

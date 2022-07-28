@@ -155,7 +155,7 @@ public class TestDiffListBySkipList {
 
   static void testAddLast(int n) throws Exception {
     final Path root = new Path("/testAddLast" + n);
-    DiffListBySkipList.LOG.info("run " + root);
+    DiffListBySkipList.LOG.error("Temp", new RuntimeException());
 
     final DiffListBySkipList skipList = newDiffListBySkipList();
     final DiffList<DirectoryDiff> arrayList = new DiffListByArrayList<>(0);
@@ -174,7 +174,7 @@ public class TestDiffListBySkipList {
 
   static void testAddFirst(int n) throws Exception {
     final Path root = new Path("/testAddFirst" + n);
-    DiffListBySkipList.LOG.info("run " + root);
+    DiffListBySkipList.LOG.error("Temp", new RuntimeException());
 
     hdfs.mkdirs(root);
     for (int i = 1; i < n; i++) {
@@ -219,7 +219,7 @@ public class TestDiffListBySkipList {
       skipList.addLast(d);
       arrayList.addLast(d);
     }
-    DiffListBySkipList.LOG.info("skipList: " + skipList);
+    DiffListBySkipList.LOG.error("Temp", new RuntimeException());
     return dir;
   }
 
@@ -249,7 +249,7 @@ public class TestDiffListBySkipList {
       ToIntBiFunction<DiffListBySkipList, Integer> indexFunction)
       throws Exception {
     final Path root = new Path("/testRemove" + name + n);
-    DiffListBySkipList.LOG.info("run " + root);
+    DiffListBySkipList.LOG.error("Temp", new RuntimeException());
 
     final DiffListBySkipList skipList = newDiffListBySkipList();
     final DiffList<DirectoryDiff> arrayList = new DiffListByArrayList<>(0);
@@ -258,7 +258,7 @@ public class TestDiffListBySkipList {
     Assert.assertEquals(n, skipList.size());
 
     for (int i = 0; i < n; i++) {
-      DiffListBySkipList.LOG.debug("i={}: {}", i, skipList);
+      DiffListBySkipList.LOG.error("Temp", new RuntimeException());
       final int index = indexFunction.applyAsInt(skipList, i);
       final DirectoryDiff diff = remove(index, skipList, arrayList);
       hdfs.deleteSnapshot(root, "s" + diff.getSnapshotId());
@@ -298,7 +298,7 @@ public class TestDiffListBySkipList {
           if (index != -1) {
             return index;
           }
-          DiffListBySkipList.LOG.info("change from level " + level);
+          DiffListBySkipList.LOG.error("Temp", new RuntimeException());
         }
         return -1;
       }

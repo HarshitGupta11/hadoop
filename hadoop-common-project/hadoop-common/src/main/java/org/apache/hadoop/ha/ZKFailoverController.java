@@ -300,7 +300,7 @@ public abstract class ZKFailoverController {
     try {
       return ToolRunner.confirmPrompt("Proceed formatting " + parentZnode + "?");
     } catch (IOException e) {
-      LOG.debug("Failed to confirm", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -382,14 +382,14 @@ public abstract class ZKFailoverController {
   }
   
   private synchronized void becomeActive() throws ServiceFailedException {
-    LOG.info("Trying to make " + localTarget + " active...");
+    LOG.error("Temp", new RuntimeException());
     try {
       HAServiceProtocolHelper.transitionToActive(localTarget.getProxy(
           conf, FailoverController.getRpcTimeoutToNewActive(conf)),
           createReqInfo());
       String msg = "Successfully transitioned " + localTarget +
           " to active state";
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       serviceState = HAServiceState.ACTIVE;
       recordActiveAttempt(new ActiveAttemptRecord(true, msg));
 
@@ -515,7 +515,7 @@ public abstract class ZKFailoverController {
   }
   
   private void doFence(HAServiceTarget target) {
-    LOG.info("Should fence: " + target);
+    LOG.error("Temp", new RuntimeException());
     boolean gracefulWorked = new FailoverController(conf,
         RequestSource.REQUEST_BY_ZKFC).tryGracefulFence(target);
     if (gracefulWorked) {
@@ -579,7 +579,7 @@ public abstract class ZKFailoverController {
         boolean needFence = false;
         try {
           localTarget.getProxy(conf, timeout).transitionToStandby(createReqInfo());
-          LOG.info("Successfully ensured local node is in standby mode");
+          LOG.error("Temp", new RuntimeException());
         } catch (IOException ioe) {
           LOG.warn("Unable to transition local node to standby: " +
               ioe.getLocalizedMessage());
@@ -702,7 +702,7 @@ public abstract class ZKFailoverController {
     }
 
     if (attempt.succeeded) {
-      LOG.info("Successfully became active. " + attempt.status);
+      LOG.error("Temp", new RuntimeException());
     } else {
       // Propagate failure
       String msg = "Failed to become active. " + attempt.status;
@@ -851,7 +851,7 @@ public abstract class ZKFailoverController {
       synchronized (this) {
         if (serviceState == HAServiceState.INITIALIZING) {
           if (quitElectionOnBadState) {
-            LOG.debug("rechecking for electability from bad state");
+            LOG.error("Temp", new RuntimeException());
             recheckElectability();
           }
           return;

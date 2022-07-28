@@ -1658,14 +1658,14 @@ public abstract class NativeAzureFileSystemBaseTest
 
     @Override
     public void run() {
-      LOG.info("starting thread " + name);
+      LOG.error("Temp", new RuntimeException());
       SelfRenewingLease lease = null;
       NativeAzureFileSystem nfs = (NativeAzureFileSystem) fs;
 
       if (name.equals("first-thread")) {
         try {
           lease = nfs.getStore().acquireLease(key);
-          LOG.info(name + " acquired lease " + lease.getLeaseID());
+          LOG.error("Temp", new RuntimeException());
         } catch (AzureException e) {
           assertTrue("Unanticipated exception", false);
         }
@@ -1680,7 +1680,7 @@ public abstract class NativeAzureFileSystemBaseTest
         try {
           firstEndTime = System.currentTimeMillis();
           lease.free();
-          LOG.info(name + " freed lease " + lease.getLeaseID());
+          LOG.error("Temp", new RuntimeException());
         } catch (StorageException e) {
           fail("Unanticipated exception");
         }
@@ -1693,17 +1693,17 @@ public abstract class NativeAzureFileSystemBaseTest
           Thread.currentThread().interrupt();
         }
         try {
-          LOG.info(name + " before getting lease");
+          LOG.error("Temp", new RuntimeException());
           lease = nfs.getStore().acquireLease(key);
           secondStartTime = System.currentTimeMillis();
-          LOG.info(name + " acquired lease " + lease.getLeaseID());
+          LOG.error("Temp", new RuntimeException());
         } catch (AzureException e) {
           assertTrue("Unanticipated exception", false);
         }
         assertTrue(lease != null);
         try {
           lease.free();
-          LOG.info(name + " freed lease " + lease.getLeaseID());
+          LOG.error("Temp", new RuntimeException());
         } catch (StorageException e) {
           assertTrue("Unanticipated exception", false);
         }
@@ -1711,7 +1711,7 @@ public abstract class NativeAzureFileSystemBaseTest
         fail("Unknown thread name");
       }
 
-      LOG.info(name + " is exiting.");
+      LOG.error("Temp", new RuntimeException());
     }
 
   }

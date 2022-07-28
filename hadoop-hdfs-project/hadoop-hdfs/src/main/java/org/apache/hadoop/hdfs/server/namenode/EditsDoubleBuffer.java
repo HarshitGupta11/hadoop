@@ -182,7 +182,7 @@ public class EditsDoubleBuffer {
       int numTransactions = 0;
       try {
         while ((op = reader.readOp(false)) != null) {
-          LOG.warn("Unflushed op [" + numTransactions + "]: " + op);
+          LOG.error("Temp", new RuntimeException());
           numTransactions++;
         }
       } catch (IOException ioe) {

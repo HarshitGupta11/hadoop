@@ -189,7 +189,7 @@ public class SimulatedFSDataset implements FsDatasetSpi<FsVolumeSpi> {
       if (!getStorage(theBlock).alloc(bpid, theBlock.getNumBytes())) {
         // expected length - actual length may
         // be more - we find out at finalize
-        DataNode.LOG.warn("Lack of free storage on a block alloc");
+        DataNode.LOG.error("Temp", new RuntimeException());
         throw new IOException("Creating block, no free space available");
       }
 
@@ -262,7 +262,7 @@ public class SimulatedFSDataset implements FsDatasetSpi<FsVolumeSpi> {
       long extraLen = finalSize - theBlock.getNumBytes();
       if (extraLen > 0) {
         if (!getStorage(theBlock).alloc(bpid, extraLen)) {
-          DataNode.LOG.warn("Lack of free storage on a block alloc");
+          DataNode.LOG.error("Temp", new RuntimeException());
           throw new IOException("Creating block, no free space available");
         }
       } else {
@@ -963,7 +963,7 @@ public class SimulatedFSDataset implements FsDatasetSpi<FsVolumeSpi> {
       BInfo binfo = map.get(b);
       if (binfo == null) {
         error = true;
-        DataNode.LOG.warn("Invalidate: Missing block");
+        DataNode.LOG.error("Temp", new RuntimeException());
         continue;
       }
       getStorage(b).free(bpid, binfo.getNumBytes());
@@ -1344,10 +1344,10 @@ public class SimulatedFSDataset implements FsDatasetSpi<FsVolumeSpi> {
       mbeanName = MBeans.register("DataNode", "FSDatasetState-"+
                                   storageId, bean);
     } catch (NotCompliantMBeanException e) {
-      DataNode.LOG.warn("Error registering FSDatasetState MBean", e);
+      DataNode.LOG.error("Temp", new RuntimeException());
     }
  
-    DataNode.LOG.info("Registered FSDatasetState MBean");
+    DataNode.LOG.error("Temp", new RuntimeException());
   }
 
   @Override

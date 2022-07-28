@@ -226,7 +226,7 @@ public class TestReencryption {
       dfsAdmin.reencryptEncryptionZone(subdir, ReencryptAction.START);
       fail("Re-encrypting non-EZ should fail");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertExceptionContains("not the root of an encryption zone", expected);
     }
 
@@ -236,7 +236,7 @@ public class TestReencryption {
           ReencryptAction.START);
       fail("Re-encrypting non-existing dir should fail");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(
           expected.unwrapRemoteException() instanceof FileNotFoundException);
     }
@@ -246,7 +246,7 @@ public class TestReencryption {
       dfsAdmin.reencryptEncryptionZone(encFile1, ReencryptAction.START);
       fail("Re-encrypting on a file should fail");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertExceptionContains("not the root of an encryption zone", expected);
     }
 
@@ -257,7 +257,7 @@ public class TestReencryption {
     try {
       dfsAdmin.reencryptEncryptionZone(zone, ReencryptAction.START);
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertExceptionContains("already submitted", expected);
     }
     getEzManager().resumeReencryptForTesting();
@@ -1267,7 +1267,7 @@ public class TestReencryption {
       dfsAdmin.reencryptEncryptionZone(zoneSnap, ReencryptAction.START);
       fail("Reencrypt command on snapshot path should fail.");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception", expected);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(expected
           .unwrapRemoteException() instanceof SnapshotAccessControlException);
     }
@@ -1287,7 +1287,7 @@ public class TestReencryption {
 
   private void waitForReencryptedZones(final int expected)
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for re-encrypted zones to be {}", expected);
+    LOG.error("Temp", new RuntimeException());
     try {
       GenericTestUtils.waitFor(new Supplier<Boolean>() {
         @Override
@@ -1303,7 +1303,7 @@ public class TestReencryption {
 
   private void waitForQueuedZones(final int expected)
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for queued zones for re-encryption to be {}", expected);
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
@@ -1314,7 +1314,7 @@ public class TestReencryption {
 
   private void waitForTotalZones(final int expected)
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for queued zones for re-encryption to be {}", expected);
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
@@ -1325,7 +1325,7 @@ public class TestReencryption {
 
   private void waitForZoneCompletes(final String zone)
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for re-encryption zone {} to complete.", zone);
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
@@ -1355,7 +1355,7 @@ public class TestReencryption {
 
   private void waitForReencryptedFiles(final String zone, final int expected)
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for total re-encrypted file count to be {}", expected);
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
@@ -1439,7 +1439,7 @@ public class TestReencryption {
       dfsAdmin.reencryptEncryptionZone(subdir, ReencryptAction.CANCEL);
       fail("Re-encrypting non-EZ should fail");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertExceptionContains("not the root of an encryption zone", expected);
     }
 
@@ -1449,7 +1449,7 @@ public class TestReencryption {
           ReencryptAction.CANCEL);
       fail("Re-encrypting non-existing dir should fail");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(
           expected.unwrapRemoteException() instanceof FileNotFoundException);
     }
@@ -1460,7 +1460,7 @@ public class TestReencryption {
       dfsAdmin.reencryptEncryptionZone(encFile, ReencryptAction.CANCEL);
       fail("Re-encrypting on a file should fail");
     } catch (RemoteException expected) {
-      LOG.info("Expected exception caught.", expected);
+      LOG.error("Temp", new RuntimeException());
       assertExceptionContains("not the root of an encryption zone", expected);
     }
 
@@ -1486,7 +1486,7 @@ public class TestReencryption {
             callableRunning.set(true);
             Thread.sleep(Long.MAX_VALUE);
           } catch (InterruptedException ie) {
-            LOG.info("Fault injector interrupted", ie);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -1519,7 +1519,7 @@ public class TestReencryption {
     getEzManager().pauseReencryptUpdaterForTesting();
     getEzManager().resumeReencryptForTesting();
 
-    LOG.info("Waiting for re-encrypt callables to run");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {

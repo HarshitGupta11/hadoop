@@ -1337,7 +1337,7 @@ public class FsVolumeImpl implements FsVolumeSpi {
       fileNames = fileIoProvider.listDirectory(
           this, dir, BlockDirFilter.INSTANCE);
     } catch (IOException ioe) {
-      LOG.warn("Exception occurred while compiling report: ", ioe);
+      LOG.error("Temp", new RuntimeException());
       // Volume error check moved to FileIoProvider.
       // Ignore this directory and proceed.
       return report;
@@ -1453,7 +1453,7 @@ public class FsVolumeImpl implements FsVolumeSpi {
 
     File lazyPersistDir  = getLazyPersistDir(bpId);
     if (!lazyPersistDir.exists() && !lazyPersistDir.mkdirs()) {
-      FsDatasetImpl.LOG.warn("LazyWriter failed to create " + lazyPersistDir);
+      FsDatasetImpl.LOG.error("Temp", new RuntimeException());
       throw new IOException("LazyWriter fail to find or " +
           "create lazy persist dir: " + lazyPersistDir.toString());
     }

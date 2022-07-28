@@ -115,7 +115,7 @@ public class NodeResourceMonitorImpl extends AbstractService implements
       try {
         this.monitoringThread.join(10 * 1000);
       } catch (InterruptedException e) {
-        LOG.warn("Could not wait for the thread to join");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     super.serviceStop();

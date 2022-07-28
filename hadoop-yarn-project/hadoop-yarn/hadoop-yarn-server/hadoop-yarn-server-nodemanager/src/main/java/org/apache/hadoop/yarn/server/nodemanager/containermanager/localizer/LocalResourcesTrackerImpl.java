@@ -172,7 +172,7 @@ class LocalResourcesTrackerImpl implements LocalResourcesTracker {
       break;
     case RECOVERED:
       if (rsrc != null) {
-        LOG.warn("Ignoring attempt to recover existing resource " + rsrc);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       rsrc = recoverResource(req, (ResourceRecoveredEvent) event);
@@ -209,7 +209,7 @@ class LocalResourcesTrackerImpl implements LocalResourcesTracker {
           LOG.error("Error storing resource state for " + rsrc, ioe);
         }
       } else {
-        LOG.warn("Resource " + rsrc + " localized without a location");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -400,7 +400,7 @@ class LocalResourcesTrackerImpl implements LocalResourcesTracker {
         delService.delete(deletionTask);
       }
       removeResource(rem.getRequest());
-      LOG.info("Removed " + rsrc.getLocalPath() + " from localized cache");
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
   }

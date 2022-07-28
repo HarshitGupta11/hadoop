@@ -169,7 +169,7 @@ public class ITestAzureFileSystemInstrumentation extends AbstractWasbTestBase {
         " bytes plus a little overhead.",
         totalBytesWritten >= FILE_SIZE && totalBytesWritten < (FILE_SIZE * 2));
     long uploadRate = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(), WASB_UPLOAD_RATE);
-    LOG.info("Upload rate: " + uploadRate + " bytes/second.");
+    LOG.error("Temp", new RuntimeException());
     long expectedRate = (FILE_SIZE * 1000L) / uploadDurationMs;
     assertTrue("The upload rate " + uploadRate +
         " is below the expected range of around " + expectedRate +
@@ -179,7 +179,7 @@ public class ITestAzureFileSystemInstrumentation extends AbstractWasbTestBase {
         uploadRate >= expectedRate);
     long uploadLatency = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(),
         WASB_UPLOAD_LATENCY);
-    LOG.info("Upload latency: {}", uploadLatency);
+    LOG.error("Temp", new RuntimeException());
     long expectedLatency = uploadDurationMs; // We're uploading less than a block.
     assertTrue("The upload latency " + uploadLatency +
         " should be greater than zero now that I've just uploaded a file.",
@@ -216,7 +216,7 @@ public class ITestAzureFileSystemInstrumentation extends AbstractWasbTestBase {
         " bytes plus a little overhead.",
         bytesRead > (FILE_SIZE / 2) && bytesRead < (FILE_SIZE * 2));
     long downloadRate = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(), WASB_DOWNLOAD_RATE);
-    LOG.info("Download rate: " + downloadRate + " bytes/second.");
+    LOG.error("Temp", new RuntimeException());
     expectedRate = (FILE_SIZE * 1000L) / downloadDurationMs;
     assertTrue("The download rate " + downloadRate +
         " is below the expected range of around " + expectedRate +
@@ -226,7 +226,7 @@ public class ITestAzureFileSystemInstrumentation extends AbstractWasbTestBase {
         downloadRate >= expectedRate);
     long downloadLatency = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(),
         WASB_DOWNLOAD_LATENCY);
-    LOG.info("Download latency: " + downloadLatency);
+    LOG.error("Temp", new RuntimeException());
     expectedLatency = downloadDurationMs; // We're downloading less than a block.
     assertTrue("The download latency " + downloadLatency +
         " should be greater than zero now that I've just downloaded a file.",
@@ -274,10 +274,10 @@ public class ITestAzureFileSystemInstrumentation extends AbstractWasbTestBase {
         " bytes plus a little overhead.",
         totalBytesWritten >= FILE_SIZE && totalBytesWritten < (FILE_SIZE * 2));
     long uploadRate = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(), WASB_UPLOAD_RATE);
-    LOG.info("Upload rate: " + uploadRate + " bytes/second.");
+    LOG.error("Temp", new RuntimeException());
     long uploadLatency = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(),
         WASB_UPLOAD_LATENCY);
-    LOG.info("Upload latency: " + uploadLatency);
+    LOG.error("Temp", new RuntimeException());
     assertTrue("The upload latency " + uploadLatency +
         " should be greater than zero now that I've just uploaded a file.",
         uploadLatency > 0);
@@ -300,10 +300,10 @@ public class ITestAzureFileSystemInstrumentation extends AbstractWasbTestBase {
     long totalBytesRead = AzureMetricsTestUtil.getCurrentTotalBytesRead(getInstrumentation());
     assertEquals(FILE_SIZE, totalBytesRead);
     long downloadRate = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(), WASB_DOWNLOAD_RATE);
-    LOG.info("Download rate: " + downloadRate + " bytes/second.");
+    LOG.error("Temp", new RuntimeException());
     long downloadLatency = AzureMetricsTestUtil.getLongGaugeValue(getInstrumentation(),
         WASB_DOWNLOAD_LATENCY);
-    LOG.info("Download latency: " + downloadLatency);
+    LOG.error("Temp", new RuntimeException());
     assertTrue("The download latency " + downloadLatency +
         " should be greater than zero now that I've just downloaded a file.",
         downloadLatency > 0);

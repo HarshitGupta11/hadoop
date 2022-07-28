@@ -187,7 +187,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
       addr = InetAddress.getByName(bindAddress);
     }
 
-    LOG.info("Opening TCP and UDP channels on {} port {}", addr, port);
+    LOG.error("Temp", new RuntimeException());
     addNIOUDP(addr, port);
     addNIOTCP(addr, port);
   }
@@ -262,7 +262,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
           message.append(" ");
         }
       }
-      LOG.info(message.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
   /**
@@ -315,7 +315,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
     for (Map.Entry<Name, Zone> entry : zones.entrySet()) {
       builder.append(System.lineSeparator()).append(entry.getValue());
     }
-    LOG.info(builder.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -454,7 +454,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
     Name name = null;
     String zoneSubnet = getZoneSubnet(conf);
     if (zoneSubnet == null) {
-      LOG.warn("Zone subnet is not configured.  Reverse lookups disabled");
+      LOG.error("Temp", new RuntimeException());
     } else {
       // is there a netmask
       String mask = conf.get(KEY_DNS_ZONE_MASK);
@@ -530,7 +530,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
       try {
         reverseZoneName = Name.fromString(reverseLookupZoneName);
       } catch (TextParseException e) {
-        LOG.warn("Unable to convert {} to DNS name", reverseLookupZoneName);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return reverseZoneName;
@@ -639,7 +639,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
             DNSSEC.Algorithm.RSASHA256, key);
         dnsKeyRecs.putIfAbsent(zoneName, dnskeyRecord);
       }
-      LOG.info("Registering {}", dnskeyRecord);
+      LOG.error("Temp", new RuntimeException());
       try (CloseableLock lock = writeLock.lock()) {
         zone.addRecord(dnskeyRecord);
 
@@ -694,7 +694,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
     RRSIGRecord rrsigRecord =
         DNSSEC.sign(rrset, dnsKeyRecs.get(zone.getOrigin()),
             privateKey, inception, expiration);
-    LOG.info("Adding {}", record);
+    LOG.error("Temp", new RuntimeException());
     rrset.addRR(rrsigRecord);
   }
 
@@ -774,7 +774,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
       byte[] response;
       try {
         query = new Message(in);
-        LOG.info("received TCP query {}", query.getQuestion());
+        LOG.error("Temp", new RuntimeException());
         response = generateReply(query, ch.socket());
         if (response == null) {
           return;
@@ -952,7 +952,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
         try {
           remoteAddress = channel.receive(input);
         } catch (IOException e) {
-          LOG.debug("Error during message receipt", e);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         Message query;
@@ -976,7 +976,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
         output.put(response);
         output.flip();
 
-        LOG.debug("{}:  sending response", remoteAddress);
+        LOG.error("Temp", new RuntimeException());
         channel.send(output, remoteAddress);
       }
     } catch (Exception e) {
@@ -1064,7 +1064,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
 
     header = query.getHeader();
     if (header.getFlag(Flags.QR)) {
-      LOG.debug("returning null");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     if (header.getRcode() != Rcode.NOERROR) {
@@ -1100,7 +1100,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
       return errorMessage(query, Rcode.NOTIMP);
     }
 
-    LOG.debug("calling addAnswer");
+    LOG.error("Temp", new RuntimeException());
     byte rcode = addAnswer(response, name, type, dclass, 0, flags);
     if (rcode != Rcode.NOERROR) {
       rcode = remoteLookup(response, name, 0);
@@ -1183,7 +1183,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
       String queryName = name.getLabelString(0);
       Name qualifiedName = Name.concatenate(Name.fromString(queryName),
           Name.fromString(domainName));
-      LOG.info("Received query {}.  Forwarding query {}", name, qualifiedName);
+      LOG.error("Temp", new RuntimeException());
       Record question = Record.newRecord(qualifiedName,
           query.getQuestion().getType(),
           query.getQuestion().getDClass());
@@ -1327,7 +1327,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
 
     Zone zone = findBestZone(name);
 
-    LOG.debug("finding record");
+    LOG.error("Temp", new RuntimeException());
     try (CloseableLock lock = readLock.lock()) {
       if (zone != null) {
         sr = zone.findRecords(name, type);
@@ -1335,7 +1335,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
         rcode = Rcode.NOTAUTH;
       }
     }
-    LOG.info("found local record? {}", sr != null && sr.isSuccessful());
+    LOG.error("Temp", new RuntimeException());
 
     if (sr != null) {
       if (sr.isCNAME()) {
@@ -1354,7 +1354,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
           try {
             addNXT(response, flags);
           } catch (Exception e) {
-            LOG.warn("Unable to add NXTRecord to AUTHORITY Section", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         addSOA(response, zone, flags);
@@ -1363,14 +1363,14 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
         }
         rcode = Rcode.NXDOMAIN;
       } else if (sr.isNXRRSET()) {
-        LOG.info("No data found the given name {} and type {}", name, type);
+        LOG.error("Temp", new RuntimeException());
         addSOA(response, zone, flags);
         if (iterations == 0) {
           response.getHeader().setFlag(Flags.AA);
         }
       } else if (sr.isSuccessful()) {
         RRset[] rrsets = sr.answers();
-        LOG.info("found answers {}", rrsets);
+        LOG.error("Temp", new RuntimeException());
         for (int i = 0; i < rrsets.length; i++) {
           addRRset(name, response, rrsets[i],
               Section.ANSWER, flags);
@@ -1652,7 +1652,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
       if (zone != null) {
         try (CloseableLock lock = writeLock.lock()) {
           zone.addRecord(record);
-          LOG.info("Registered {}", record);
+          LOG.error("Temp", new RuntimeException());
           if (isDNSSECEnabled()) {
             Calendar cal = Calendar.getInstance();
             Date inception = cal.getTime();
@@ -1665,7 +1665,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
               RRSIGRecord rrsigRecord =
                   DNSSEC.sign(rRset, dnskeyRecord, privateKey,
                       inception, expiration);
-              LOG.info("Adding {}", rrsigRecord);
+              LOG.error("Temp", new RuntimeException());
               rRset.addRR(rrsigRecord);
 
               //addDSRecord(zone, record.getName(), record.getDClass(),
@@ -1677,7 +1677,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
           }
         }
       } else {
-        LOG.warn("Unable to find zone matching record {}", record);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -1703,7 +1703,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
           dsTtl, DSRecord.Digest.SHA1,
           dnskeyRecord);
       zone.addRecord(dsRecord);
-      LOG.info("Adding {}", dsRecord);
+      LOG.error("Temp", new RuntimeException());
       rRset = zone.findExactMatch(dsRecord.getName(), dsRecord.getType());
 
       rrsigRecord = DNSSEC.sign(rRset, dnskeyRecord, privateKey,
@@ -1728,7 +1728,7 @@ public class RegistryDNS extends AbstractService implements DNSOperations,
         return;
       }
       zone.removeRecord(record);
-      LOG.info("Removed {}", record);
+      LOG.error("Temp", new RuntimeException());
       if (isDNSSECEnabled()) {
         RRset rRset = zone.findExactMatch(record.getName(), Type.DS);
         if (rRset != null) {

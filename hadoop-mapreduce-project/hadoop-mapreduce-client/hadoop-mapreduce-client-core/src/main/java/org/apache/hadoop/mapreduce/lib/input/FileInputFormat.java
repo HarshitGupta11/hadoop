@@ -287,7 +287,7 @@ public abstract class FileInputFormat<K, V> extends InputFormat<K, V> {
       LOG.debug("Time taken to get FileStatuses: "
           + sw.now(TimeUnit.MILLISECONDS));
     }
-    LOG.info("Total input files to process : " + result.size());
+    LOG.error("Temp", new RuntimeException());
     return result;
   }
 

@@ -205,7 +205,7 @@ public class TestClientRMService {
     Configuration conf = new Configuration();
     YarnRPC rpc = YarnRPC.create(conf);
     InetSocketAddress rmAddress = rm.getClientRMService().getBindAddress();
-    LOG.info("Connecting to ResourceManager at " + rmAddress);
+    LOG.error("Temp", new RuntimeException());
     ApplicationClientProtocol client =
         (ApplicationClientProtocol) rpc
             .getProxy(ApplicationClientProtocol.class, rmAddress, conf);
@@ -256,7 +256,7 @@ public class TestClientRMService {
     Configuration conf = new Configuration();
     YarnRPC rpc = YarnRPC.create(conf);
     InetSocketAddress rmAddress = rm.getClientRMService().getBindAddress();
-    LOG.info("Connecting to ResourceManager at " + rmAddress);
+    LOG.error("Temp", new RuntimeException());
     ApplicationClientProtocol client =
         (ApplicationClientProtocol) rpc
           .getProxy(ApplicationClientProtocol.class, rmAddress, conf);
@@ -1247,9 +1247,9 @@ public class TestClientRMService {
               startBarrier.await();
               endBarrier.await();
             } catch (BrokenBarrierException e) {
-              LOG.warn("Broken Barrier", e);
+              LOG.error("Temp", new RuntimeException());
             } catch (InterruptedException e) {
-              LOG.warn("Interrupted while awaiting barriers", e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
@@ -1887,7 +1887,7 @@ public class TestClientRMService {
     Configuration conf = new Configuration();
     YarnRPC rpc = YarnRPC.create(conf);
     InetSocketAddress rmAddress = rm.getClientRMService().getBindAddress();
-    LOG.info("Connecting to ResourceManager at " + rmAddress);
+    LOG.error("Temp", new RuntimeException());
     ApplicationClientProtocol client = (ApplicationClientProtocol) rpc
         .getProxy(ApplicationClientProtocol.class, rmAddress, conf);
 
@@ -1950,7 +1950,7 @@ public class TestClientRMService {
     Configuration conf = new Configuration();
     YarnRPC rpc = YarnRPC.create(conf);
     InetSocketAddress rmAddress = rm.getClientRMService().getBindAddress();
-    LOG.info("Connecting to ResourceManager at " + rmAddress);
+    LOG.error("Temp", new RuntimeException());
     ApplicationClientProtocol client = (ApplicationClientProtocol) rpc
         .getProxy(ApplicationClientProtocol.class, rmAddress, conf);
 
@@ -2113,7 +2113,7 @@ public class TestClientRMService {
 
     YarnRPC rpc = YarnRPC.create(conf);
     InetSocketAddress rmAddress = rm.getClientRMService().getBindAddress();
-    LOG.info("Connecting to ResourceManager at " + rmAddress);
+    LOG.error("Temp", new RuntimeException());
     ApplicationClientProtocol client =
         (ApplicationClientProtocol) rpc
             .getProxy(ApplicationClientProtocol.class, rmAddress, conf);
@@ -2144,7 +2144,7 @@ public class TestClientRMService {
 
     YarnRPC rpc = YarnRPC.create(conf);
     InetSocketAddress rmAddress = rm.getClientRMService().getBindAddress();
-    LOG.info("Connecting to ResourceManager at " + rmAddress);
+    LOG.error("Temp", new RuntimeException());
     ApplicationClientProtocol client =
         (ApplicationClientProtocol) rpc
             .getProxy(ApplicationClientProtocol.class, rmAddress, conf);

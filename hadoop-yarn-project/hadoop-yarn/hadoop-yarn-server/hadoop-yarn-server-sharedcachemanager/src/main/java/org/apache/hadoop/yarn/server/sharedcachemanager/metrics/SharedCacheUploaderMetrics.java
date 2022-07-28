@@ -44,7 +44,7 @@ public class SharedCacheUploaderMetrics {
 
   private SharedCacheUploaderMetrics() {
     registry = new MetricsRegistry("SharedCacheUploaderRequests");
-    LOG.debug("Initialized "+ registry);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public static SharedCacheUploaderMetrics getInstance() {

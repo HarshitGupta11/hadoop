@@ -109,7 +109,7 @@ public class MachineList {
               subnet.setInclusiveHostCount(true);
               cidrs.add(subnet.getInfo());
             } catch (IllegalArgumentException e) {
-              LOG.warn("Invalid CIDR syntax : " + hostEntry);
+              LOG.error("Temp", new RuntimeException());
               throw e;
             }
           } else if (InetAddresses.isInetAddress(hostEntry)) { //ip address

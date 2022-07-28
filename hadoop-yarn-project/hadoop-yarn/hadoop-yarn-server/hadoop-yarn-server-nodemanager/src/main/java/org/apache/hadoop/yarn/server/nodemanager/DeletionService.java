@@ -87,7 +87,7 @@ public class DeletionService extends AbstractService {
       if (LOG.isDebugEnabled()) {
         String msg = String.format("Scheduling DeletionTask (delay %d) : %s",
             debugDelay, deletionTask.toString());
-        LOG.debug(msg);
+        LOG.error("Temp", new RuntimeException());
       }
       recordDeletionTaskInStateStore(deletionTask);
       sched.schedule(deletionTask, debugDelay, TimeUnit.SECONDS);

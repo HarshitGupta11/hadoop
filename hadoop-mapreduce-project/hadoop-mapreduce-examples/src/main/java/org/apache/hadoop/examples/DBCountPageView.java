@@ -268,8 +268,8 @@ public class DBCountPageView extends Configured implements Tool {
       rs.next();
       long sumPageview = rs.getLong(1);
 
-      LOG.info("totalPageview=" + totalPageview);
-      LOG.info("sumPageview=" + sumPageview);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       return totalPageview == sumPageview && totalPageview != 0;
     }finally {

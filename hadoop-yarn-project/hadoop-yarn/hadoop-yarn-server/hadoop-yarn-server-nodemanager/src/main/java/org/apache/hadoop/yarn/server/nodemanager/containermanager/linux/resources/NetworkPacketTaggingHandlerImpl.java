@@ -138,7 +138,7 @@ public class NetworkPacketTaggingHandlerImpl
   @Override
   public List<PrivilegedOperation> postComplete(ContainerId containerId)
       throws ResourceHandlerException {
-    LOG.info("postComplete for container: " + containerId.toString());
+    LOG.error("Temp", new RuntimeException());
     cGroupsHandler.deleteCGroup(CGroupsHandler.CGroupController.NET_CLS,
         containerId.toString());
     return null;
@@ -148,7 +148,7 @@ public class NetworkPacketTaggingHandlerImpl
   public List<PrivilegedOperation> teardown()
       throws ResourceHandlerException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("teardown(): Nothing to do");
+      LOG.error("Temp", new RuntimeException());
     }
 
     return null;

@@ -302,7 +302,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
         return -1;
       }
       int exitCode = shExec.getExitCode();
-      LOG.warn("Exit code from container " + containerId + " is : " + exitCode);
+      LOG.error("Temp", new RuntimeException());
       // 143 (SIGTERM) and 137 (SIGKILL) exit codes means the container was
       // terminated/killed forcefully. In all other cases, log the
       // container-executor's output
@@ -361,7 +361,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
     String[] command = getRunCommand(wrapperScriptPath,
         containerIdStr, user, pidFile, this.getConf(), resource);
 
-      LOG.info("launchContainer: " + Arrays.toString(command));
+      LOG.error("Temp", new RuntimeException());
       return new ShellCommandExecutor(
           command,
           workDir,
@@ -625,19 +625,19 @@ public class DefaultContainerExecutor extends ContainerExecutor {
     List<Path> baseDirs = ctx.getBasedirs();
 
     if (baseDirs == null || baseDirs.size() == 0) {
-      LOG.info("Deleting absolute path : " + subDir);
+      LOG.error("Temp", new RuntimeException());
       if (!lfs.delete(subDir, true)) {
         //Maybe retry
-        LOG.warn("delete returned false for path: [" + subDir + "]");
+        LOG.error("Temp", new RuntimeException());
       }
       return;
     }
     for (Path baseDir : baseDirs) {
       Path del = subDir == null ? baseDir : new Path(baseDir, subDir);
-      LOG.info("Deleting path : " + del);
+      LOG.error("Temp", new RuntimeException());
       try {
         if (!lfs.delete(del, true)) {
-          LOG.warn("delete returned false for path: [" + del + "]");
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (FileNotFoundException e) {
         continue;
@@ -720,7 +720,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
       try {
         space = getDiskFreeSpace(curBase);
       } catch (IOException e) {
-        LOG.warn("Unable to get Free Space for " + curBase.toString(), e);
+        LOG.error("Temp", new RuntimeException());
       }
       availableOnDisk[i++] = space;
       totalAvailable += space;
@@ -800,7 +800,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
         createDir(getUserCacheDir(new Path(localDir), user), userperms, true,
             user);
       } catch (IOException e) {
-        LOG.warn("Unable to create the user directory : " + localDir, e);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       userDirStatus = true;
@@ -827,7 +827,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
    */
   void createUserCacheDirs(List<String> localDirs, String user)
       throws IOException {
-    LOG.info("Initializing user " + user);
+    LOG.error("Temp", new RuntimeException());
 
     boolean appcacheDirStatus = false;
     boolean distributedCacheDirStatus = false;
@@ -842,7 +842,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
         createDir(appDir, appCachePerms, true, user);
         appcacheDirStatus = true;
       } catch (IOException e) {
-        LOG.warn("Unable to create app cache directory : " + appDir, e);
+        LOG.error("Temp", new RuntimeException());
       }
       // create $local.dir/usercache/$user/filecache
       final Path distDir = getFileCacheDir(localDirPath, user);
@@ -850,7 +850,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
         createDir(distDir, fileperms, true, user);
         distributedCacheDirStatus = true;
       } catch (IOException e) {
-        LOG.warn("Unable to create file cache directory : " + distDir, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (!appcacheDirStatus) {
@@ -888,7 +888,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
         createDir(fullAppDir, appperms, true, user);
         initAppDirStatus = true;
       } catch (IOException e) {
-        LOG.warn("Unable to create app directory " + fullAppDir.toString(), e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (!initAppDirStatus) {
@@ -919,7 +919,7 @@ public class DefaultContainerExecutor extends ContainerExecutor {
       try {
         createDir(appLogDir, appLogDirPerms, true, user);
       } catch (IOException e) {
-        LOG.warn("Unable to create the app-log directory : " + appLogDir, e);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       appLogDirStatus = true;

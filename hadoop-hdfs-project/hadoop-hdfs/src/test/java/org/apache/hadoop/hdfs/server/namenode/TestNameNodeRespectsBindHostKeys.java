@@ -79,7 +79,7 @@ public class TestNameNodeRespectsBindHostKeys {
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
     
-    LOG.info("Testing without " + DFS_NAMENODE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
     
     // NN should not bind the wildcard address by default.
     try {
@@ -95,7 +95,7 @@ public class TestNameNodeRespectsBindHostKeys {
       }
     }
 
-    LOG.info("Testing with " + DFS_NAMENODE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
     
     // Tell NN to bind the wildcard address.
     conf.set(DFS_NAMENODE_RPC_BIND_HOST_KEY, WILDCARD_ADDRESS);
@@ -119,7 +119,7 @@ public class TestNameNodeRespectsBindHostKeys {
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
 
-    LOG.info("Testing without " + DFS_NAMENODE_SERVICE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
     
     conf.set(DFS_NAMENODE_SERVICE_RPC_ADDRESS_KEY, LOCALHOST_SERVER_ADDRESS);
 
@@ -137,7 +137,7 @@ public class TestNameNodeRespectsBindHostKeys {
       }
     }
 
-    LOG.info("Testing with " + DFS_NAMENODE_SERVICE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_NAMENODE_SERVICE_RPC_BIND_HOST_KEY, WILDCARD_ADDRESS);
@@ -161,7 +161,7 @@ public class TestNameNodeRespectsBindHostKeys {
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
 
-    LOG.info("Testing without " + DFS_NAMENODE_LIFELINE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     conf.set(DFS_NAMENODE_LIFELINE_RPC_ADDRESS_KEY, LOCALHOST_SERVER_ADDRESS);
 
@@ -179,7 +179,7 @@ public class TestNameNodeRespectsBindHostKeys {
       }
     }
 
-    LOG.info("Testing with " + DFS_NAMENODE_LIFELINE_RPC_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_NAMENODE_LIFELINE_RPC_BIND_HOST_KEY, WILDCARD_ADDRESS);
@@ -203,7 +203,7 @@ public class TestNameNodeRespectsBindHostKeys {
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
 
-    LOG.info("Testing without " + DFS_NAMENODE_HTTP_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // NN should not bind the wildcard address by default.
     try {
@@ -220,7 +220,7 @@ public class TestNameNodeRespectsBindHostKeys {
       }
     }
 
-    LOG.info("Testing with " + DFS_NAMENODE_HTTP_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_NAMENODE_HTTP_BIND_HOST_KEY, WILDCARD_ADDRESS);
@@ -269,7 +269,7 @@ public class TestNameNodeRespectsBindHostKeys {
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = null;
 
-    LOG.info("Testing behavior without " + DFS_NAMENODE_HTTPS_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     setupSsl();
     conf.set(DFS_CLIENT_HTTPS_KEYSTORE_RESOURCE_KEY,
@@ -294,7 +294,7 @@ public class TestNameNodeRespectsBindHostKeys {
       }
     }
 
-    LOG.info("Testing behavior with " + DFS_NAMENODE_HTTPS_BIND_HOST_KEY);
+    LOG.error("Temp", new RuntimeException());
 
     // Tell NN to bind the wildcard address.
     conf.set(DFS_NAMENODE_HTTPS_BIND_HOST_KEY, WILDCARD_ADDRESS);

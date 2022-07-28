@@ -95,7 +95,7 @@ class Router {
   synchronized Dest addWithOptionalDefaultView(WebApp.HTTP httpMethod,
       String path, Class<? extends Controller> cls,
       String action, List<String> names, boolean defaultViewNeeded) {
-    LOG.debug("adding {}({})->{}#{}", new Object[]{path, names, cls, action});
+    LOG.error("Temp", new RuntimeException());
     Dest dest = addController(httpMethod, path, cls, action, names);
     if (defaultViewNeeded) {
       addDefaultView(dest);
@@ -163,10 +163,10 @@ class Router {
       Dest dest = routes.get(key);
       if (dest != null && methodAllowed(method, dest)) {
         if ((Object)key == path) { // shut up warnings
-          LOG.debug("exact match for {}: {}", key, dest.action);
+          LOG.error("Temp", new RuntimeException());
           return dest;
         } else if (isGoodMatch(dest, path)) {
-          LOG.debug("prefix match2 for {}: {}", key, dest.action);
+          LOG.error("Temp", new RuntimeException());
           return dest;
         }
         return resolveAction(method, dest, path);
@@ -179,7 +179,7 @@ class Router {
       if (prefixMatches(dest, path)) {
         if (methodAllowed(method, dest)) {
           if (isGoodMatch(dest, path)) {
-            LOG.debug("prefix match for {}: {}", lower.getKey(), dest.action);
+            LOG.error("Temp", new RuntimeException());
             return dest;
           }
           return resolveAction(method, dest, path);
@@ -279,14 +279,14 @@ class Router {
 
   @SuppressWarnings("unchecked")
   private <T> Class<? extends T> load(Class<T> cls, String className) {
-    LOG.debug("trying: {}", className);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> found = Class.forName(className);
       if (cls.isAssignableFrom(found)) {
-        LOG.debug("found {}", className);
+        LOG.error("Temp", new RuntimeException());
         return (Class<? extends T>) found;
       }
-      LOG.warn("found a {} but it's not a {}", className, cls.getName());
+      LOG.error("Temp", new RuntimeException());
     } catch (ClassNotFoundException e) {
       // OK in this case.
     }

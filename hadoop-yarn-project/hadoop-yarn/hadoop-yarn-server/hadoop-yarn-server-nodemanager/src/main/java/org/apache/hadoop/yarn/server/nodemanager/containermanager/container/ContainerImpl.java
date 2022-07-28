@@ -1181,7 +1181,7 @@ public class ContainerImpl implements Container {
               new ContainerLocalizationRequestEvent(container, req));
         } catch (URISyntaxException e) {
           // malformed resource; abort container launch
-          LOG.warn("Failed to parse resource-request", e);
+          LOG.error("Temp", new RuntimeException());
           container.cleanup();
           container.metrics.endInitingContainer();
           return ContainerState.LOCALIZATION_FAILED;
@@ -1401,7 +1401,7 @@ public class ContainerImpl implements Container {
         try {
           String linkFile = new Path(container.workDir, link).toString();
           if (new File(linkFile).exists()) {
-            LOG.info("Symlink file already exists: " + linkFile);
+            LOG.error("Temp", new RuntimeException());
           } else {
             container.context.getContainerExecutor()
                 .symLink(rsrcEvent.getLocation().toString(), linkFile);
@@ -2075,7 +2075,7 @@ public class ContainerImpl implements Container {
 
       ContainerId containerID = event.getContainerID();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Processing " + containerID + " of type " + event.getType());
+        LOG.error("Temp", new RuntimeException());
       }
       ContainerState oldState = stateMachine.getCurrentState();
       ContainerState newState = null;

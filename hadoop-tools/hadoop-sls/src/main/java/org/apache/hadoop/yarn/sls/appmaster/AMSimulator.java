@@ -153,7 +153,7 @@ public abstract class AMSimulator extends TaskRunner.Task {
     try {
       reservationId = submitReservationWhenSpecified();
     } catch (UndeclaredThrowableException y) {
-      LOG.warn("Unable to place reservation: " + y.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // submit application, waiting until ACCEPTED
@@ -211,7 +211,7 @@ public abstract class AMSimulator extends TaskRunner.Task {
 
   @Override
   public void lastStep() throws Exception {
-    LOG.info("Application {} is shutting down.", appId);
+    LOG.error("Temp", new RuntimeException());
     // unregister tracking
     if (isTracked) {
       untrackApp();
@@ -219,11 +219,11 @@ public abstract class AMSimulator extends TaskRunner.Task {
 
     // Finish AM container
     if (amContainer != null) {
-      LOG.info("AM container = {} reported to finish", amContainer.getId());
+      LOG.error("Temp", new RuntimeException());
       se.getNmMap().get(amContainer.getNodeId()).cleanupContainer(
           amContainer.getId());
     } else {
-      LOG.info("AM container is null");
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (null == appAttemptId) {
@@ -341,7 +341,7 @@ public abstract class AMSimulator extends TaskRunner.Task {
         return null;
       }
     });
-    LOG.info("Submit a new application {}", appId);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void registerAM()
@@ -368,7 +368,7 @@ public abstract class AMSimulator extends TaskRunner.Task {
       }
     });
 
-    LOG.info("Register the application master for application {}", appId);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void trackApp() {

@@ -71,7 +71,7 @@ public class TestAllowFormat {
     // Format should not really prompt us if one of the directories exist,
     // but is empty. So in case the test hangs on an input, it means something
     // could be wrong in the format prompting code. (HDFS-1636)
-    LOG.info("hdfsdir is " + DFS_BASE_DIR.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
     File nameDir1 = new File(DFS_BASE_DIR, "name1");
     File nameDir2 = new File(DFS_BASE_DIR, "name2");
 
@@ -94,7 +94,7 @@ public class TestAllowFormat {
   public static void tearDown() throws Exception {
     if (cluster!=null) {
       cluster.shutdown();
-      LOG.info("Stopping mini cluster");
+      LOG.error("Temp", new RuntimeException());
     }
     
     if ( DFS_BASE_DIR.exists() && !FileUtil.fullyDelete(DFS_BASE_DIR) ) {
@@ -110,7 +110,7 @@ public class TestAllowFormat {
    */
   @Test
   public void testAllowFormat() throws IOException {
-    LOG.info("--starting mini cluster");
+    LOG.error("Temp", new RuntimeException());
     // manage dirs parameter set to false 
 
     NameNode nn;
@@ -124,11 +124,11 @@ public class TestAllowFormat {
 
     nn = cluster.getNameNode();
     assertNotNull(nn);
-    LOG.info("Mini cluster created OK");
+    LOG.error("Temp", new RuntimeException());
     
     // 2. Try formatting DFS with allowformat false.
     // NOTE: the cluster must be shut down for format to work.
-    LOG.info("Verifying format will fail with allowformat false");
+    LOG.error("Temp", new RuntimeException());
     config.setBoolean(DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_KEY, false);
     try {
       cluster.shutdown();
@@ -139,14 +139,14 @@ public class TestAllowFormat {
       assertTrue("Exception was not about formatting Namenode", 
           e.getMessage().startsWith("The option " + 
                                     DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_KEY));
-      LOG.info("Expected failure: " + StringUtils.stringifyException(e));
-      LOG.info("Done verifying format will fail with allowformat false");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     // 3. Try formatting DFS with allowformat true
-    LOG.info("Verifying format will succeed with allowformat true");
+    LOG.error("Temp", new RuntimeException());
     config.setBoolean(DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_KEY, true);
     NameNode.format(config);
-    LOG.info("Done verifying format will succeed with allowformat true");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

@@ -91,7 +91,7 @@ public class PlanCommand extends Command {
   public void execute(CommandLine cmd) throws Exception {
     StrBuilder result = new StrBuilder();
     String outputLine = "";
-    LOG.debug("Processing Plan Command.");
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(cmd.hasOption(DiskBalancerCLI.PLAN));
     verifyCommandOptions(DiskBalancerCLI.PLAN, cmd);
 
@@ -134,7 +134,7 @@ public class PlanCommand extends Command {
 
     this.thresholdPercentage = getThresholdPercentage(cmd);
 
-    LOG.debug("threshold Percentage is {}", this.thresholdPercentage);
+    LOG.error("Temp", new RuntimeException());
     setNodesToProcess(node);
     populatePathNames(node);
 
@@ -259,11 +259,11 @@ public class PlanCommand extends Command {
     for (NodePlan plan : plans) {
       for (Step step : plan.getVolumeSetPlans()) {
         if (this.bandwidth > 0) {
-          LOG.debug("Setting bandwidth to {}", this.bandwidth);
+          LOG.error("Temp", new RuntimeException());
           step.setBandwidth(this.bandwidth);
         }
         if (this.maxError > 0) {
-          LOG.debug("Setting max error to {}", this.maxError);
+          LOG.error("Temp", new RuntimeException());
           step.setMaxDiskErrors(this.maxError);
         }
       }

@@ -381,7 +381,7 @@ public final class AzureTestUtils extends Assert {
    */
   public static void assume(String message, boolean condition) {
     if (!condition) {
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
     }
     Assume.assumeTrue(message, condition);
   }
@@ -423,7 +423,7 @@ public final class AzureTestUtils extends Assert {
       try {
         fs.delete(path, recursive);
       } catch (IOException e) {
-        LOG.warn("When deleting {}", path, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

@@ -122,7 +122,7 @@ public class TestNameNodeRecovery {
           if (op == null) {
             break;
           }
-          LOG.debug("read txid " + op.txid);
+          LOG.error("Temp", new RuntimeException());
           if (!validTxIds.contains(op.getTransactionId())) {
             fail("read txid " + op.getTransactionId() +
                 ", which we did not expect to find.");
@@ -587,14 +587,14 @@ public class TestNameNodeRecovery {
     assertTrue("Should exist: " + editFile, editFile.exists());
 
     // Corrupt the edit log
-    LOG.info("corrupting edit log file '" + editFile + "'");
+    LOG.error("Temp", new RuntimeException());
     corruptor.corrupt(editFile);
 
     // If needRecovery == true, make sure that we can't start the
     // cluster normally before recovery
     cluster = null;
     try {
-      LOG.debug("trying to start normally (this should fail)...");
+      LOG.error("Temp", new RuntimeException());
       cluster = new MiniDFSCluster.Builder(conf).numDataNodes(0)
           .enableManagedDfsDirsRedundancy(false).format(false).build();
       cluster.waitActive();
@@ -619,7 +619,7 @@ public class TestNameNodeRecovery {
     // this should still work fine.
     cluster = null;
     try {
-      LOG.debug("running recovery...");
+      LOG.error("Temp", new RuntimeException());
       cluster = new MiniDFSCluster.Builder(conf).numDataNodes(0)
           .enableManagedDfsDirsRedundancy(false).format(false)
           .startupOption(recoverStartOpt).build();
@@ -636,7 +636,7 @@ public class TestNameNodeRecovery {
     // Make sure that we can start the cluster normally after recovery
     cluster = null;
     try {
-      LOG.debug("starting cluster normally after recovery...");
+      LOG.error("Temp", new RuntimeException());
       cluster = new MiniDFSCluster.Builder(conf).numDataNodes(0)
           .enableManagedDfsDirsRedundancy(false).format(false).build();
       LOG.debug("successfully recovered the " + corruptor.getName() +

@@ -195,7 +195,7 @@ public abstract class PipeMapRed {
         }
         f = null;
       }
-      LOG.info("PipeMapRed exec " + Arrays.asList(argvSplit));
+      LOG.error("Temp", new RuntimeException());
       Environment childEnv = (Environment) StreamUtil.env().clone();
       addJobConfToEnvironment(job_, childEnv);
       addEnvironment(childEnv, job_.get("stream.addenvironment"));
@@ -275,7 +275,7 @@ public abstract class PipeMapRed {
     for (int i = 0; i < nv.length; i++) {
       String[] pair = nv[i].split("=", 2);
       if (pair.length != 2) {
-        LOG.info("Skip env entry:" + nv[i]);
+        LOG.error("Temp", new RuntimeException());
       } else {
         envPut(env, pair[0], pair[1]);
       }
@@ -284,7 +284,7 @@ public abstract class PipeMapRed {
 
   void envPut(Properties env, String name, String value) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Add  env entry:" + name + "=" + value);
+      LOG.error("Temp", new RuntimeException());
     }
     env.put(name, value);
   }
@@ -392,12 +392,12 @@ public abstract class PipeMapRed {
             } else {
               reporter.progress();
             }
-            LOG.info(hline);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       } catch (Throwable th) {
         outerrThreadsThrowable = th;
-        LOG.warn(th);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         try {
           if (clientIn_ != null) {
@@ -405,7 +405,7 @@ public abstract class PipeMapRed {
             clientIn_ = null;
           }
         } catch (IOException io) {
-          LOG.info(io);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -444,7 +444,7 @@ public abstract class PipeMapRed {
               processProvidedStatus_ = true;
               setStatus(lineStr);
             } else {
-              LOG.warn("Cannot parse reporter line: " + lineStr);
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             System.err.println(lineStr);
@@ -462,11 +462,11 @@ public abstract class PipeMapRed {
         if (clientErr_ != null) {
           clientErr_.close();
           clientErr_ = null;
-          LOG.info("MRErrorThread done");
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (Throwable th) {
         outerrThreadsThrowable = th;
-        LOG.warn(th);
+        LOG.error("Temp", new RuntimeException());
         try {
           if (lineReader != null) {
             lineReader.close();
@@ -476,7 +476,7 @@ public abstract class PipeMapRed {
             clientErr_ = null;
           }
         } catch (IOException io) {
-          LOG.info(io);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -505,7 +505,7 @@ public abstract class PipeMapRed {
               "' from line: " + line);
         }
       } else {
-        LOG.warn("Cannot parse counter line: " + line);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -523,7 +523,7 @@ public abstract class PipeMapRed {
   public void mapRedFinished() {
     try {
       if (!doPipe_) {
-        LOG.info("mapRedFinished");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       if (clientOut_ != null) {
@@ -531,18 +531,18 @@ public abstract class PipeMapRed {
           clientOut_.flush();
           clientOut_.close();
         } catch (IOException io) {
-          LOG.warn(io);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       try {
         waitOutputThreads();
       } catch (IOException io) {
-        LOG.warn(io);
+        LOG.error("Temp", new RuntimeException());
       }
       if (sim != null) sim.destroy();
-      LOG.info("mapRedFinished");
+      LOG.error("Temp", new RuntimeException());
     } catch (RuntimeException e) {
-      LOG.info("PipeMapRed failed!", e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
   }
@@ -550,7 +550,7 @@ public abstract class PipeMapRed {
   void maybeLogRecord() {
     if (numRecRead_ >= nextRecReadLog_) {
       String info = numRecInfo();
-      LOG.info(info);
+      LOG.error("Temp", new RuntimeException());
       if (nextRecReadLog_ < 100000) {
 	  nextRecReadLog_ *= 10;
       } else {

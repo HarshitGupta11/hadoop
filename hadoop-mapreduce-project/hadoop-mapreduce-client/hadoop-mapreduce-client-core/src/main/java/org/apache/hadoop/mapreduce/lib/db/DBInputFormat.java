@@ -368,7 +368,7 @@ public class DBInputFormat<T extends DBWritable>
         this.connection = null;
       }
     } catch (SQLException sqlE) {
-      LOG.debug("Exception on close", sqlE);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -482,7 +482,7 @@ public class GuaranteedOrZeroCapacityOverTimePolicy
 
     if (LOG.isDebugEnabled()) {
       if (deactivatedQueues.size() > 0) {
-        LOG.debug("Deactivated leaf queues : " + deactivatedQueues);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return deactivatedQueues;

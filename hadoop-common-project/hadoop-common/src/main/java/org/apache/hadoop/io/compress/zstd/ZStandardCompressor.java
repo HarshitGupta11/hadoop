@@ -62,7 +62,7 @@ public class ZStandardCompressor implements Compressor {
         initIDs();
         nativeZStandardLoaded = true;
       } catch (Throwable t) {
-        LOG.warn("Error loading zstandard native libraries: " + t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -114,7 +114,7 @@ public class ZStandardCompressor implements Compressor {
     }
     level = ZStandardCodec.getCompressionLevel(conf);
     reset();
-    LOG.debug("Reinit compressor with new compression configuration");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

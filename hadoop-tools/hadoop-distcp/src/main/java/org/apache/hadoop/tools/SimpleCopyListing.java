@@ -367,7 +367,7 @@ public class SimpleCopyListing extends CopyListing {
           ArrayList<FileStatus> sourceDirs = new ArrayList<FileStatus>();
           for (FileStatus sourceStatus: sourceFiles) {
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Recording source-path: " + sourceStatus.getPath() + " for copy.");
+              LOG.error("Temp", new RuntimeException());
             }
             LinkedList<CopyListingFileStatus> sourceCopyListingStatus =
                 DistCpUtils.toCopyListingFileStatus(sourceFS, sourceStatus,
@@ -385,7 +385,7 @@ public class SimpleCopyListing extends CopyListing {
             }
             if (sourceStatus.isDirectory()) {
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Adding source dir for traverse: " + sourceStatus.getPath());
+                LOG.error("Temp", new RuntimeException());
               }
               sourceDirs.add(sourceStatus);
             }
@@ -399,7 +399,7 @@ public class SimpleCopyListing extends CopyListing {
       }
       fileListWriter.close();
       printStats();
-      LOG.info("Build file listing completed.");
+      LOG.error("Temp", new RuntimeException());
       fileListWriter = null;
     } finally {
       IOUtils.cleanup(LOG, fileListWriter);
@@ -430,7 +430,7 @@ public class SimpleCopyListing extends CopyListing {
     Collections.shuffle(fileStatusInfoList, rnd);
     for (FileStatusInfo fileStatusInfo : fileStatusInfoList) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Adding " + fileStatusInfo.fileStatus.getPath());
+        LOG.error("Temp", new RuntimeException());
       }
       writeToFileListing(fileListWriter, fileStatusInfo.fileStatus,
           fileStatusInfo.sourceRootPath);
@@ -584,7 +584,7 @@ public class SimpleCopyListing extends CopyListing {
           try {
             Thread.sleep(1000 * sleepSeconds);
           } catch (InterruptedException ie) {
-            LOG.debug("Interrupted while sleeping in exponential backoff.");
+            LOG.error("Temp", new RuntimeException());
           }
         }
         result = new WorkReport<FileStatus[]>(getFileStatus(parent.getPath()),
@@ -650,7 +650,7 @@ public class SimpleCopyListing extends CopyListing {
         int retry = workResult.getRetry();
         for (FileStatus child: workResult.getItem()) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Recording source-path: " + child.getPath() + " for copy.");
+            LOG.error("Temp", new RuntimeException());
           }
           if (workResult.getSuccess()) {
             LinkedList<CopyListingFileStatus> childCopyListingStatus =
@@ -672,7 +672,7 @@ public class SimpleCopyListing extends CopyListing {
           if (retry < maxRetries) {
             if (child.isDirectory()) {
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Traversing into source dir: " + child.getPath());
+                LOG.error("Temp", new RuntimeException());
               }
               workers.put(new WorkRequest<FileStatus>(child, retry));
             }
@@ -698,7 +698,7 @@ public class SimpleCopyListing extends CopyListing {
           fs.isDirectory() && syncOrOverwrite) {
         // Skip the root-paths when syncOrOverwrite
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Skip " + fs.getPath());
+          LOG.error("Temp", new RuntimeException());
         }
         return;
       }

@@ -109,7 +109,7 @@ public class RackResolver {
     } else {
       rName = rNameList.get(0);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Resolved " + hostName + " to " + rName);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return new NodeBase(hostName, rName);

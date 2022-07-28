@@ -125,7 +125,7 @@ public class TestInterDatanodeProtocol {
     //get block info for the last block
     LocatedBlocks locations = namenode.getBlockLocations(src, 0, Long.MAX_VALUE);
     List<LocatedBlock> blocks = locations.getLocatedBlocks();
-    DataNode.LOG.info("blocks.size()=" + blocks.size());
+    DataNode.LOG.error("Temp", new RuntimeException());
     assertTrue(blocks.size() > 0);
 
     return blocks.get(blocks.size() - 1);
@@ -192,7 +192,7 @@ public class TestInterDatanodeProtocol {
 
       //verify BlockMetaDataInfo
       ExtendedBlock b = locatedblock.getBlock();
-      InterDatanodeProtocol.LOG.info("b=" + b + ", " + b.getClass());
+      InterDatanodeProtocol.LOG.error("Temp", new RuntimeException());
       checkMetaInfo(b, datanode);
       long recoveryId = b.getGenerationStamp() + 1;
       idp.initReplicaRecovery(

@@ -100,7 +100,7 @@ public class NMTimelinePublisher extends CompositeService {
     this.nmLoginUGI =  UserGroupInformation.isSecurityEnabled() ?
         UserGroupInformation.getLoginUser() :
         UserGroupInformation.getCurrentUser();
-    LOG.info("Initialized NMTimelinePublisher UGI to " + nmLoginUGI);
+    LOG.error("Temp", new RuntimeException());
     super.serviceInit(conf);
   }
 
@@ -423,7 +423,7 @@ public class NMTimelinePublisher extends CompositeService {
         appToClientMap.put(appId, timelineClient);
       } catch (IOException | InterruptedException | RuntimeException |
           Error e) {
-        LOG.warn("Unable to create timeline client for app " + appId, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

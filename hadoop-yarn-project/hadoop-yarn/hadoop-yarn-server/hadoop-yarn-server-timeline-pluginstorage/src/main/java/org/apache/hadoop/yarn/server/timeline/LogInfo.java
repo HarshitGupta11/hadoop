@@ -109,7 +109,7 @@ abstract class LogInfo {
     if (status != null) {
       long startTime = Time.monotonicNow();
       try {
-        LOG.debug("Parsing {} at offset {}", logPath, offset);
+        LOG.error("Temp", new RuntimeException());
         long count = parsePath(tdm, logPath, appCompleted, jsonFactory,
             objMapper, fs);
         LOG.info("Parsed {} entities from {} in {} msec",
@@ -121,11 +121,11 @@ abstract class LogInfo {
             (status.getLen() > 0 || offset > 0)) {
           // log on parse problems if the file as been read in the past or
           // is visibly non-empty
-          LOG.info("Log {} appears to be corrupted. Skip. ", logPath);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     } else {
-      LOG.warn("{} no longer exists. Skip for scanning. ", logPath);
+      LOG.error("Temp", new RuntimeException());
     }
     return numParsed;
   }
@@ -148,7 +148,7 @@ abstract class LogInfo {
         if (appCompleted) {
           throw e;
         } else {
-          LOG.debug("Exception in parse path: {}", e.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return 0;
         }
       }
@@ -198,7 +198,7 @@ class EntityLogInfo extends LogInfo {
         LOG.trace("Parser now at offset {}", bytesParsed);
 
         try {
-          LOG.debug("Adding {}({}) to store", eid, etype);
+          LOG.error("Temp", new RuntimeException());
           entityList.add(entity);
           entities.setEntities(entityList);
           TimelinePutResponse response = tdm.postEntities(entities, ugi);

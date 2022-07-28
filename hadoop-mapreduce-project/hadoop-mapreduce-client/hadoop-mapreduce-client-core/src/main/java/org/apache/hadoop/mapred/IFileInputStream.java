@@ -96,7 +96,7 @@ public class IFileInputStream extends InputStream {
         fd = ((FileInputStream)in).getFD();
       }
     } catch (IOException e) {
-      LOG.info("Unable to determine FileDescriptor", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return fd;
   }

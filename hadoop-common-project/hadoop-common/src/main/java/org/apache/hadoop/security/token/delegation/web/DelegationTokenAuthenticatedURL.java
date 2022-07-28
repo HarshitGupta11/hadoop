@@ -288,7 +288,7 @@ public class DelegationTokenAuthenticatedURL extends AuthenticatedURL {
     Map<String, String> extraParams = new HashMap<String, String>();
     org.apache.hadoop.security.token.Token<? extends TokenIdentifier> dToken
         = null;
-    LOG.debug("Connecting to url {} with token {} as {}", url, token, doAs);
+    LOG.error("Temp", new RuntimeException());
     // if we have valid auth token, it takes precedence over a delegation token
     // and we don't even look for one.
     if (!token.isSet()) {
@@ -304,7 +304,7 @@ public class DelegationTokenAuthenticatedURL extends AuthenticatedURL {
             url.getPort());
         Text service = SecurityUtil.buildTokenService(serviceAddr);
         dToken = creds.getToken(service);
-        LOG.debug("Using delegation token {} from service:{}", dToken, service);
+        LOG.error("Temp", new RuntimeException());
         if (dToken != null) {
           if (useQueryStringForDelegationToken()) {
             // delegation token will go in the query string, injecting it

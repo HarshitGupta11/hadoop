@@ -104,7 +104,7 @@ public class PendingSet extends PersistentCommitData {
    */
   public static PendingSet load(FileSystem fs, Path path)
       throws IOException {
-    LOG.debug("Reading pending commits in file {}", path);
+    LOG.error("Temp", new RuntimeException());
     PendingSet instance = serializer().load(fs, path);
     instance.validate();
     return instance;

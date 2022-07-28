@@ -178,7 +178,7 @@ public final class ProviderUtils {
           }
         }
       } catch (URISyntaxException e) {
-        LOG.warn("Credential Provider URI is invalid." + provider);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

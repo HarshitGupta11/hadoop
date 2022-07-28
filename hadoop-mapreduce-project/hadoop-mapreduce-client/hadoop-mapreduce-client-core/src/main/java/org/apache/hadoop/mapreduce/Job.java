@@ -1571,7 +1571,7 @@ public class Job extends JobContextImpl implements JobContext, AutoCloseable {
       }
     });
     state = JobState.RUNNING;
-    LOG.info("The url to track the job: " + getTrackingURL());
+    LOG.error("Temp", new RuntimeException());
    }
   
   /**
@@ -1616,7 +1616,7 @@ public class Job extends JobContextImpl implements JobContext, AutoCloseable {
     Configuration clientConf = getConfiguration();
     filter = Job.getTaskOutputFilter(clientConf);
     JobID jobId = getJobID();
-    LOG.info("Running job: " + jobId);
+    LOG.error("Temp", new RuntimeException());
     int eventCounter = 0;
     boolean profiling = getProfileEnabled();
     IntegerRanges mapRanges = getProfileTaskRange(true);
@@ -1637,14 +1637,14 @@ public class Job extends JobContextImpl implements JobContext, AutoCloseable {
       }      
       if (!reportedUberMode) {
         reportedUberMode = true;
-        LOG.info("Job " + jobId + " running in uber mode : " + isUber());
+        LOG.error("Temp", new RuntimeException());
       }      
       String report = 
         (" map " + StringUtils.formatPercent(mapProgress(), 0)+
             " reduce " + 
             StringUtils.formatPercent(reduceProgress(), 0));
       if (!report.equals(lastReport)) {
-        LOG.info(report);
+        LOG.error("Temp", new RuntimeException());
         lastReport = report;
       }
 
@@ -1655,14 +1655,14 @@ public class Job extends JobContextImpl implements JobContext, AutoCloseable {
     }
     boolean success = isSuccessful();
     if (success) {
-      LOG.info("Job " + jobId + " completed successfully");
+      LOG.error("Temp", new RuntimeException());
     } else {
       LOG.info("Job " + jobId + " failed with state " + status.getState() + 
           " due to: " + status.getFailureInfo());
     }
     Counters counters = getCounters();
     if (counters != null) {
-      LOG.info(counters.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     return success;
   }
@@ -1677,13 +1677,13 @@ public class Job extends JobContextImpl implements JobContext, AutoCloseable {
       case SUCCEEDED:
         if (event.getStatus() == 
           TaskCompletionEvent.Status.SUCCEEDED) {
-          LOG.info(event.toString());
+          LOG.error("Temp", new RuntimeException());
         }
         break; 
       case FAILED:
         if (event.getStatus() == 
           TaskCompletionEvent.Status.FAILED) {
-          LOG.info(event.toString());
+          LOG.error("Temp", new RuntimeException());
           // Displaying the task diagnostic information
           TaskAttemptID taskId = event.getTaskAttemptId();
           String[] taskDiagnostics = getTaskDiagnostics(taskId); 
@@ -1696,11 +1696,11 @@ public class Job extends JobContextImpl implements JobContext, AutoCloseable {
         break; 
       case KILLED:
         if (event.getStatus() == TaskCompletionEvent.Status.KILLED){
-          LOG.info(event.toString());
+          LOG.error("Temp", new RuntimeException());
         }
         break; 
       case ALL:
-        LOG.info(event.toString());
+        LOG.error("Temp", new RuntimeException());
         break;
       }
     }

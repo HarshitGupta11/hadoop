@@ -284,8 +284,8 @@ public class ServiceLauncher<S extends Service>
     }
     String argumentString = builder.toString();
     if (LOG.isDebugEnabled()) {
-      LOG.debug(startupShutdownMessage(serviceName, args));
-      LOG.debug(argumentString);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     registerFailureHandling();
     // set up the configs, using reflection to push in the -site.xml files
@@ -328,7 +328,7 @@ public class ServiceLauncher<S extends Service>
    * @param exitException exception
    */
   void noteException(ExitUtil.ExitException exitException) {
-    LOG.debug("Exception raised", exitException);
+    LOG.error("Temp", new RuntimeException());
     serviceExitCode = exitException.getExitCode();
     serviceException = exitException;
   }
@@ -432,7 +432,7 @@ public class ServiceLauncher<S extends Service>
         throw e;
       } catch (Exception e) {
         // any other exception
-        LOG.info("Failed to create {}", classname, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return loaded;
@@ -472,7 +472,7 @@ public class ServiceLauncher<S extends Service>
           if (failureState == Service.STATE.STOPPED) {
             // the failure occurred during shutdown, not important enough
             // to bother the user as it may just scare them
-            LOG.debug("Failure during shutdown: {} ", failure, failure);
+            LOG.error("Temp", new RuntimeException());
           } else {
             //throw it for the catch handlers to deal with
             throw failure;
@@ -544,12 +544,12 @@ public class ServiceLauncher<S extends Service>
       shutdownHook.register(SHUTDOWN_PRIORITY);
     }
     String name = getServiceName();
-    LOG.debug("Launched service {}", name);
+    LOG.error("Temp", new RuntimeException());
     LaunchableService launchableService = null;
 
     if (service instanceof LaunchableService) {
       // it's a LaunchableService, pass in the conf and arguments before init)
-      LOG.debug("Service {} implements LaunchableService", name);
+      LOG.error("Temp", new RuntimeException());
       launchableService = (LaunchableService) service;
       if (launchableService.isInState(Service.STATE.INITED)) {
         LOG.warn("LaunchableService {}" 
@@ -587,7 +587,7 @@ public class ServiceLauncher<S extends Service>
         } else {
           //run the service until it stops or an interrupt happens
           // on a different thread.
-          LOG.debug("waiting for service threads to terminate");
+          LOG.error("Temp", new RuntimeException());
           service.waitForServiceToStop(0);
         }
       }
@@ -719,7 +719,7 @@ public class ServiceLauncher<S extends Service>
       interruptEscalator.register(IrqHandler.SIGTERM);
     } catch (IllegalArgumentException e) {
       // downgrade interrupt registration to warnings
-      LOG.warn("{}", e, e);
+      LOG.error("Temp", new RuntimeException());
     }
     Thread.setDefaultUncaughtExceptionHandler(
         new HadoopUncaughtExceptionHandler(this));
@@ -768,7 +768,7 @@ public class ServiceLauncher<S extends Service>
    */
   protected void warn(String text) {
     if (LOG.isWarnEnabled()) {
-      LOG.warn(text);
+      LOG.error("Temp", new RuntimeException());
     } else {
       System.err.println(text);
     }
@@ -875,7 +875,7 @@ public class ServiceLauncher<S extends Service>
     for (String arg : args) {
       argString.append("\"").append(arg).append("\" ");
     }
-    LOG.debug("Command line: {}", argString);
+    LOG.error("Temp", new RuntimeException());
     try {
       String[] argArray = args.toArray(new String[args.size()]);
       // parse this the standard way. This will
@@ -888,7 +888,7 @@ public class ServiceLauncher<S extends Service>
       }
       CommandLine line = parser.getCommandLine();
       List<String> remainingArgs = Arrays.asList(parser.getRemainingArgs());
-      LOG.debug("Remaining arguments {}", remainingArgs);
+      LOG.error("Temp", new RuntimeException());
 
       // Scan the list of configuration files
       // and bail out if they don't exist
@@ -898,7 +898,7 @@ public class ServiceLauncher<S extends Service>
         // Add URLs of files as list of URLs to load
         for (String filename : filenames) {
           File file = new File(filename);
-          LOG.debug("Configuration files {}", file);
+          LOG.error("Temp", new RuntimeException());
           confResourceUrls.add(file.toURI().toURL());
         }
       }
@@ -906,7 +906,7 @@ public class ServiceLauncher<S extends Service>
         // new resources to instantiate as configurations
         List<String> classnameList = Arrays.asList(
             line.getOptionValues(ARG_CONFCLASS));
-        LOG.debug("Configuration classes {}", classnameList);
+        LOG.error("Temp", new RuntimeException());
         confClassnames.addAll(classnameList);
       }
       // return the remainder
@@ -945,7 +945,7 @@ public class ServiceLauncher<S extends Service>
     }
     for (String filename : filenames) {
       File file = new File(filename);
-      LOG.debug("Conf file {}", file.getAbsolutePath());
+      LOG.error("Temp", new RuntimeException());
       if (!file.exists()) {
         // no configuration file
         throw new ServiceLaunchException(EXIT_NOT_FOUND,

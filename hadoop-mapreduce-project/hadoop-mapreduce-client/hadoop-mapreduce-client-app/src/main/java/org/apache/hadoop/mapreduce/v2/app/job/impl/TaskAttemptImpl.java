@@ -1039,7 +1039,7 @@ public abstract class TaskAttemptImpl implements
     // Add shuffle secret key
     // The secret key is converted to a JobToken to preserve backwards
     // compatibility with an older ShuffleHandler running on an NM.
-    LOG.info("Putting shuffle token in serviceData");
+    LOG.error("Temp", new RuntimeException());
     byte[] shuffleSecret = TokenCache.getShuffleSecretKey(credentials);
     if (shuffleSecret == null) {
       LOG.warn("Cannot locate shuffle secret in credentials."
@@ -1464,10 +1464,10 @@ public abstract class TaskAttemptImpl implements
           TypeConverter.fromYarn(attemptId));
       try {
         committer.recoverTask(tac);
-        LOG.info("Recovered output from task attempt " + attemptId);
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         LOG.error("Unable to recover task attempt " + attemptId, e);
-        LOG.info("Task attempt " + attemptId + " will be recovered as KILLED");
+        LOG.error("Temp", new RuntimeException());
         recoveredState = TaskAttemptState.KILLED.toString();
         needToClean = true;
       }
@@ -1516,7 +1516,7 @@ public abstract class TaskAttemptImpl implements
       try {
         committer.abortTask(tac);
       } catch (Exception e) {
-        LOG.warn("Task cleanup failed for attempt " + attemptId, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -2325,7 +2325,7 @@ public abstract class TaskAttemptImpl implements
       String msg = "Task attempt " + taskAttempt.getID() + " is done from " +
           "TaskUmbilicalProtocol's point of view. However, it stays in " +
           "finishing state for too long";
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       taskAttempt.addDiagnosticInfo(msg);
       sendContainerCleanup(taskAttempt, event);
     }

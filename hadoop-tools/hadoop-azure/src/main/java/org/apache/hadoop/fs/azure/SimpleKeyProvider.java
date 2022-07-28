@@ -49,7 +49,7 @@ public class SimpleKeyProvider implements KeyProvider {
         key = new String(keyChars);
       }
     } catch(IOException ioe) {
-      LOG.warn("Unable to get key from credential providers.", ioe);
+      LOG.error("Temp", new RuntimeException());
     }
     return key;
   }

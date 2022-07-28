@@ -286,7 +286,7 @@ public class FileSystemNodeLabelsStore extends NodeLabelsStore {
     editlogOs = fs.create(editLogPath, true);
     editlogOs.close();
     
-    LOG.info("Finished write mirror at:" + mirrorPath.toString());
-    LOG.info("Finished create editlog file at:" + editLogPath.toString());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 }

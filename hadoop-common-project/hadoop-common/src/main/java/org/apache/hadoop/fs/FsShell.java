@@ -342,7 +342,7 @@ public class FsShell extends Configured implements Tool {
         }
       } catch (Exception e) {
         // instance.run catches IOE, so something is REALLY wrong if here
-        LOG.debug("Error", e);
+        LOG.error("Temp", new RuntimeException());
         displayError(cmd, "Fatal internal error");
         e.printStackTrace(System.err);
       }

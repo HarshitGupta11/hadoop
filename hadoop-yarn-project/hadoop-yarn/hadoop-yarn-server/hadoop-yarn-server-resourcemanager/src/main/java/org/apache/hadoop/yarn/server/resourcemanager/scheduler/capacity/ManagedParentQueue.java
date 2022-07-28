@@ -67,7 +67,7 @@ public class ManagedParentQueue extends AbstractManagedParentQueue {
         "]\nwith capacity: [").append(super.getCapacity()).append(
         "]\nwith max capacity: [").append(super.getMaximumCapacity()).append(
         "].");
-    LOG.info(queueInfo.toString());
+    LOG.error("Temp", new RuntimeException());
 
     initializeQueueManagementPolicy();
   }
@@ -122,7 +122,7 @@ public class ManagedParentQueue extends AbstractManagedParentQueue {
           .append("]\nwith capacity: [").append(super.getCapacity()).append(
           "]\nwith max capacity: [").append(super.getMaximumCapacity()).append(
           "].");
-      LOG.info(queueInfo.toString());
+      LOG.error("Temp", new RuntimeException());
     } catch (YarnException ye) {
       LOG.error("Exception while computing policy changes for leaf queue : "
           + getQueueName(), ye);

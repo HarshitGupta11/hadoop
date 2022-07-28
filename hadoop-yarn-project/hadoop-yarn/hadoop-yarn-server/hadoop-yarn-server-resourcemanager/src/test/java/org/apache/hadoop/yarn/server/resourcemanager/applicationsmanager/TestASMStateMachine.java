@@ -146,7 +146,7 @@ public class TestASMStateMachine {
 //    }
 //    @Override
 //    public void handle(ApplicationEvent event) {
-//      LOG.info("The event type is " + event.getType());
+//      LOG.error("Temp", new RuntimeException());
 //    }
 //  }
 //

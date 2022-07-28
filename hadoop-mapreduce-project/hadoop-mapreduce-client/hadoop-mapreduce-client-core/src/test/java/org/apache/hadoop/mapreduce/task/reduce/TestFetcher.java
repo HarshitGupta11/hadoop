@@ -92,7 +92,7 @@ public class TestFetcher {
   @Before
   @SuppressWarnings("unchecked") // mocked generics
   public void setup() {
-    LOG.info(">>>> " + name.getMethodName());
+    LOG.error("Temp", new RuntimeException());
     job = new JobConf();
     job.setBoolean(MRJobConfig.SHUFFLE_FETCH_RETRY_ENABLED, false);
     jobWithRetry = new JobConf();
@@ -117,7 +117,7 @@ public class TestFetcher {
 
   @After
   public void teardown() throws IllegalArgumentException, IOException {
-    LOG.info("<<<< " + name.getMethodName());
+    LOG.error("Temp", new RuntimeException());
     if (fs != null) {
       fs.delete(new Path(name.getMethodName()),true);
     }
@@ -125,7 +125,7 @@ public class TestFetcher {
   
   @Test
   public void testReduceOutOfDiskSpace() throws Throwable {
-    LOG.info("testReduceOutOfDiskSpace");
+    LOG.error("Temp", new RuntimeException());
     
     Fetcher<Text,Text> underTest = new FakeFetcher<Text,Text>(job, id, ss, mm,
         r, metrics, except, key, connection);
@@ -577,7 +577,7 @@ public class TestFetcher {
       odmo.shuffle(host, bin, dataSize, dataSize, metrics, Reporter.NULL);
       fail("OnDiskMapOutput.shuffle didn't detect the corrupted map partition file");
     } catch(ChecksumException e) {
-      LOG.info("The expected checksum exception was thrown.", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       bin.close();
     }

@@ -206,7 +206,7 @@ public class TestRandomOpsWithSnapshots {
           throws IOException, InterruptedException, TimeoutException {
     // Set
     long seed = System.currentTimeMillis();
-    LOG.info("testRandomOperationsWithSnapshots, seed to be used: " + seed);
+    LOG.error("Temp", new RuntimeException());
     generator = new Random(seed);
 
     int fileLen = generator.nextInt(MAX_NUM_FILE_LENGTH);
@@ -225,15 +225,15 @@ public class TestRandomOpsWithSnapshots {
     }
 
     int numberOfIterations = generator.nextInt(MAX_NUM_ITERATIONS);
-    LOG.info("Number of iterations: " + numberOfIterations);
+    LOG.error("Temp", new RuntimeException());
 
     int numberFileSystemOperations = generator.nextInt(
         MAX_NUM_FILESYSTEM_OPERATIONS-MIN_NUM_OPERATIONS+1)+MIN_NUM_OPERATIONS;
-    LOG.info("Number of FileSystem operations: "+ numberFileSystemOperations);
+    LOG.error("Temp", new RuntimeException());
 
     int numberSnapshotOperations = generator.nextInt(
         MAX_NUM_SNAPSHOT_OPERATIONS-MIN_NUM_OPERATIONS)+MIN_NUM_OPERATIONS;
-    LOG.info("Number of Snapshot operations: " + numberSnapshotOperations);
+    LOG.error("Temp", new RuntimeException());
 
     // Act && Verify
     randomOperationsWithSnapshots(numberOfIterations,
@@ -256,7 +256,7 @@ public class TestRandomOpsWithSnapshots {
       for (int j = 0; j < numberFileSystemOperations; j++) {
         Operations fsOperation =
             Operations.getRandomOperation(OperationType.FileSystem);
-        LOG.info("fsOperation: " + fsOperation);
+        LOG.error("Temp", new RuntimeException());
         switch (fsOperation) {
         case FileSystem_CreateDir:
           createTestDir();
@@ -292,7 +292,7 @@ public class TestRandomOpsWithSnapshots {
       for (int k = 0; k < numberSnapshotOperations; k++) {
         Operations snapshotOperation =
             Operations.getRandomOperation(OperationType.Snapshot);
-        LOG.info("snapshotOperation: " + snapshotOperation);
+        LOG.error("Temp", new RuntimeException());
 
         switch (snapshotOperation) {
         case Snapshot_CreateSnapshot:
@@ -332,7 +332,7 @@ public class TestRandomOpsWithSnapshots {
         }
         hdfs.mkdirs(newDir);
         assertTrue("Directory exists", hdfs.exists(newDir));
-        LOG.info("Directory created: " + newDir);
+        LOG.error("Temp", new RuntimeException());
         numberDirectoryCreated++;
       }
     }
@@ -357,7 +357,7 @@ public class TestRandomOpsWithSnapshots {
           if (!isWitnessDir) {
             snapshottableDirectories.remove(deleteDir);
           }
-          LOG.info("Directory removed: " + deleteDir);
+          LOG.error("Temp", new RuntimeException());
           numberDirectoryDeleted++;
         }
       }
@@ -388,7 +388,7 @@ public class TestRandomOpsWithSnapshots {
             snapshottableDirectories.remove(oldDir);
             snapshottableDirectories.add(newDir);
           }
-          LOG.info("Renamed directory:" + oldDir + " to directory: " + newDir);
+          LOG.error("Temp", new RuntimeException());
           numberDirectoryRenamed++;
         }
       }
@@ -483,7 +483,7 @@ public class TestRandomOpsWithSnapshots {
         }
         hdfs.createNewFile(newFile);
         assertTrue("File exists", hdfs.exists(newFile));
-        LOG.info("createTestFile, file created: " + newFile);
+        LOG.error("Temp", new RuntimeException());
         numberFileCreated++;
       }
     }
@@ -507,7 +507,7 @@ public class TestRandomOpsWithSnapshots {
             hdfs.delete(deleteFile, false);
             assertFalse("File does not exists",
                 hdfs.exists(deleteFile));
-            LOG.info("deleteTestFile, file deleted: " + deleteFile);
+            LOG.error("Temp", new RuntimeException());
             numberFileDeleted++;
           }
           break;
@@ -538,7 +538,7 @@ public class TestRandomOpsWithSnapshots {
             hdfs.rename(oldFile, newFile, Options.Rename.OVERWRITE);
             assertTrue("Target file exists", hdfs.exists(newFile));
             assertFalse("Source file does not exist", hdfs.exists(oldFile));
-            LOG.info("Renamed file: " + oldFile + " to file: " + newFile);
+            LOG.error("Temp", new RuntimeException());
             numberFileRenamed++;
           }
           break;
@@ -554,7 +554,7 @@ public class TestRandomOpsWithSnapshots {
     FileStatus[] testDirStatus = hdfs.listStatus(TESTDIR);
     FileStatus[] witnessDirStatus = hdfs.listStatus(WITNESSDIR);
     assertEquals(witnessDirStatus.length, testDirStatus.length);
-    LOG.info("checkClusterHealth, number of entries verified.");
+    LOG.error("Temp", new RuntimeException());
 
     Arrays.sort(testDirStatus);
     Arrays.sort(witnessDirStatus);
@@ -577,18 +577,18 @@ public class TestRandomOpsWithSnapshots {
           testDirStatus[i].isDirectory());
       assertEquals(witnessDirStatus[i].isFile(), testDirStatus[i].isFile());
     }
-    LOG.info("checkClusterHealth, metadata verified.");
+    LOG.error("Temp", new RuntimeException());
 
     // Randomly decide whether we want to do a check point
     if (generator.nextBoolean()) {
-      LOG.info("checkClusterHealth, doing a checkpoint on NN.");
+      LOG.error("Temp", new RuntimeException());
       hdfs.setSafeMode(HdfsConstants.SafeModeAction.SAFEMODE_ENTER);
       hdfs.saveNamespace();
       hdfs.setSafeMode(HdfsConstants.SafeModeAction.SAFEMODE_LEAVE);
     }
 
     /** Restart name node making sure loading from image successfully */
-    LOG.info("checkClusterHealth, restarting NN.");
+    LOG.error("Temp", new RuntimeException());
     cluster.restartNameNodes();
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
@@ -600,7 +600,7 @@ public class TestRandomOpsWithSnapshots {
     assertTrue("NameNode is up", cluster.getNameNode().isActiveState());
     assertTrue("DataNode is up and running", cluster.isDataNodeUp());
     assertTrue("Cluster is up and running", cluster.isClusterUp());
-    LOG.info("checkClusterHealth, cluster is healthy.");
+    LOG.error("Temp", new RuntimeException());
 
     printOperationStats();
   }
@@ -640,14 +640,14 @@ public class TestRandomOpsWithSnapshots {
       filename += "file" + i;
       createFile(filename, fileLength, true);
       assertTrue("Test file created", hdfs.exists(new Path(filename)));
-      LOG.info("createFiles, file: " + filename + "was created");
+      LOG.error("Temp", new RuntimeException());
 
       String witnessFile =
           filename.replaceAll(TESTDIRSTRING, WITNESSDIRSTRING);
       createFile(witnessFile, fileLength, false);
       assertTrue("Witness file exists",
           hdfs.exists(new Path(witnessFile)));
-      LOG.info("createFiles, file: " + witnessFile + "was created");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -656,25 +656,25 @@ public class TestRandomOpsWithSnapshots {
   private String getNewPathString(String originalString, String targetString,
                                   String replacementString) {
     String str =  originalString.replaceAll(targetString, replacementString);
-    LOG.info("Original string: " + originalString);
-    LOG.info("New string: " + str);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     return str;
   }
 
   private void printOperationStats() {
-    LOG.info("Operation statistics for this iteration: ");
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("Number of files created: " + numberFileCreated);
-    LOG.info("Number of files deleted: " + numberFileDeleted);
-    LOG.info("Number of files renamed: " + numberFileRenamed);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("Number of directories created: " + numberDirectoryCreated);
-    LOG.info("Number of directories deleted: " + numberDirectoryDeleted);
-    LOG.info("Number of directories renamed: " + numberDirectoryRenamed);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("Number of snapshots created: " + numberSnapshotCreated);
-    LOG.info("Number of snapshots deleted: " + numberSnapshotDeleted);
-    LOG.info("Number of snapshots renamed: " + numberSnapshotRenamed);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     numberFileCreated = 0;
     numberFileDeleted = 0;

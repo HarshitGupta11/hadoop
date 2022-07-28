@@ -269,7 +269,7 @@ public class TestDynamoDBMetadataStore extends MetadataStoreTestBase {
     final String root = S3URI + "/testBatchWrite_" + numDelete + '_' + numPut;
     final Path oldDir = new Path(root, "oldDir");
     final Path newDir = new Path(root, "newDir");
-    LOG.info("doTestBatchWrite: oldDir={}, newDir={}", oldDir, newDir);
+    LOG.error("Temp", new RuntimeException());
 
     DynamoDBMetadataStore ms = getDynamoMetadataStore();
     ms.put(new PathMetadata(basicFileStatus(oldDir, 0, true)));

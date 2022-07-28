@@ -73,7 +73,7 @@ public class TestWebHdfsCreatePermissions {
     for (String param : params) {
       uri.append(param).append("&");
     }
-    LOG.info(uri.toString());
+    LOG.error("Temp", new RuntimeException());
     try {
       URL url = new URL(uri.toString());
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();

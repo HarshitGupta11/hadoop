@@ -56,7 +56,7 @@ public class TestSortedRanges {
     sr.add(new Range(21,50));
     assertEquals(70, sr.getIndicesCount());
     
-    LOG.debug(sr.toString());
+    LOG.error("Temp", new RuntimeException());
     
     Iterator<Long> it = sr.skipRangeIterator();
     int i = 0;
@@ -96,7 +96,7 @@ public class TestSortedRanges {
     sr.remove(new SortedRanges.Range(5,1));
     assertEquals(3, sr.getIndicesCount());
     
-    LOG.debug(sr.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
 }

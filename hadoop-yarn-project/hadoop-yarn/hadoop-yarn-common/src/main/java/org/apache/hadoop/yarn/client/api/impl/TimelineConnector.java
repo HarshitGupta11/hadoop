@@ -351,7 +351,7 @@ public class TimelineConnector extends AbstractService {
           // sleep for the given time interval
           Thread.sleep(retryInterval);
         } catch (InterruptedException ie) {
-          LOG.warn("Client retry sleep interrupted! ");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       throw new RuntimeException("Failed to connect to timeline server. "

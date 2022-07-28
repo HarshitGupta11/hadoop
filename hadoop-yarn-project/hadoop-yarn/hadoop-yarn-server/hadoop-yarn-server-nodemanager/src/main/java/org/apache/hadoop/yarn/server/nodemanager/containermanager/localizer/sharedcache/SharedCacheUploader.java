@@ -137,7 +137,7 @@ class SharedCacheUploader implements Callable<Boolean> {
       // create the temporary file
       tempPath = new Path(directoryPath, getTemporaryFileName(actualPath));
       if (!uploadFile(actualPath, tempPath)) {
-        LOG.warn("Could not copy the file to the shared cache at " + tempPath);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
 
@@ -170,7 +170,7 @@ class SharedCacheUploader implements Callable<Boolean> {
           " was uploaded to the shared cache at " + finalPath);
       return true;
     } catch (IOException e) {
-      LOG.warn("Exception while uploading the file " + localPath.getName(), e);
+      LOG.error("Temp", new RuntimeException());
       // in case an exception is thrown, delete the temp file
       deleteTempFile(tempPath);
       throw e;
@@ -197,7 +197,7 @@ class SharedCacheUploader implements Callable<Boolean> {
         fs.delete(tempPath, false);
       }
     } catch (IOException ioe) {
-      LOG.debug("Exception received while deleting temp files", ioe);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

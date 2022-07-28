@@ -143,7 +143,7 @@ public class TestDatanodeProtocolRetryPolicy {
               Mockito.<BlockReportContext>anyObject());
           return true;
         } catch (Throwable t) {
-          LOG.info("waiting on block report: " + t.getMessage());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -172,14 +172,14 @@ public class TestDatanodeProtocolRetryPolicy {
           throws Throwable {
         i++;
         if ( i > 1 && i < 5) {
-          LOG.info("mockito exception " + i);
+          LOG.error("Temp", new RuntimeException());
           throw new EOFException("TestDatanodeProtocolRetryPolicy");
         } else {
           DatanodeRegistration dr =
               (DatanodeRegistration) invocation.getArguments()[0];
           datanodeRegistration =
               new DatanodeRegistration(dr.getDatanodeUuid(), dr);
-          LOG.info("mockito succeeded " + datanodeRegistration);
+          LOG.error("Temp", new RuntimeException());
           return datanodeRegistration;
         }
       }
@@ -197,13 +197,13 @@ public class TestDatanodeProtocolRetryPolicy {
         i++;
         HeartbeatResponse heartbeatResponse;
         if ( i == 1 ) {
-          LOG.info("mockito heartbeatResponse registration " + i);
+          LOG.error("Temp", new RuntimeException());
           heartbeatResponse = new HeartbeatResponse(
               new DatanodeCommand[]{RegisterCommand.REGISTER},
               new NNHAStatusHeartbeat(HAServiceState.ACTIVE, 1),
               null, ThreadLocalRandom.current().nextLong() | 1L);
         } else {
-          LOG.info("mockito heartbeatResponse " + i);
+          LOG.error("Temp", new RuntimeException());
           heartbeatResponse = new HeartbeatResponse(
               new DatanodeCommand[0],
               new NNHAStatusHeartbeat(HAServiceState.ACTIVE, 1),

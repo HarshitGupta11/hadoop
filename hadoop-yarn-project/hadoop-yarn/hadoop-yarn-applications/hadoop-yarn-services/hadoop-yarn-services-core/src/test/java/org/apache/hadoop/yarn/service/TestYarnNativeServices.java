@@ -116,7 +116,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     checkCompInstancesInOrder(client, exampleApp);
 
     // stop the service
-    LOG.info("Stop the service");
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(exampleApp.getName(), true);
     ApplicationReport report = client.getYarnClient()
         .getApplicationReport(ApplicationId.fromString(exampleApp.getId()));
@@ -125,7 +125,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Assert.assertEquals(FinalApplicationStatus.ENDED,
         report.getFinalApplicationStatus());
 
-    LOG.info("Destroy the service");
+    LOG.error("Temp", new RuntimeException());
     // destroy the service and check the app dir is deleted from fs.
     Assert.assertEquals(0, client.actionDestroy(exampleApp.getName()));
     // check the service dir on hdfs (in this case, local fs) are deleted.
@@ -296,7 +296,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Multimap<String, String> containersBeforeFailure =
         waitForAllCompToBeReady(client, exampleApp);
 
-    LOG.info("Restart the resource manager");
+    LOG.error("Temp", new RuntimeException());
     getYarnCluster().restartResourceManager(
         getYarnCluster().getActiveRMIndex());
     GenericTestUtils.waitFor(() ->
@@ -309,7 +309,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     ApplicationAttemptId applicationAttemptId = client.getYarnClient()
         .getApplicationReport(exampleAppId).getCurrentApplicationAttemptId();
 
-    LOG.info("Fail the application attempt {}", applicationAttemptId);
+    LOG.error("Temp", new RuntimeException());
     client.getYarnClient().failApplicationAttempt(applicationAttemptId);
     //wait until attempt 2 is running
     GenericTestUtils.waitFor(() -> {
@@ -328,7 +328,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     Assert.assertEquals("component container affected by restart",
         containersBeforeFailure, containersAfterFailure);
 
-    LOG.info("Stop/destroy service {}", exampleApp);
+    LOG.error("Temp", new RuntimeException());
     client.actionStop(exampleApp.getName(), true);
     client.actionDestroy(exampleApp.getName());
   }
@@ -348,7 +348,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
     // sort based on launchTime
     containerList
         .sort((o1, o2) -> o1.getLaunchTime().compareTo(o2.getLaunchTime()));
-    LOG.info("containerList: " + containerList);
+    LOG.error("Temp", new RuntimeException());
     // check the containers are in the dependency order.
     int index = 0;
     for (String comp : compOrder) {
@@ -423,10 +423,10 @@ public class TestYarnNativeServices extends ServiceTestUtils {
         Service retrievedApp = client.getStatus(exampleApp.getName());
         int totalReadyContainers = 0;
         allContainers.clear();
-        LOG.info("Num Components " + retrievedApp.getComponents().size());
+        LOG.error("Temp", new RuntimeException());
         for (Component component : retrievedApp.getComponents()) {
-          LOG.info("looking for  " + component.getName());
-          LOG.info(component.toString());
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           if (component.getContainers() != null) {
             if (component.getContainers().size() == exampleApp
                 .getComponent(component.getName()).getNumberOfContainers()) {
@@ -437,7 +437,7 @@ public class TestYarnNativeServices extends ServiceTestUtils {
                 if (container.getState() == ContainerState.READY) {
                   totalReadyContainers++;
                   allContainers.put(component.getName(), container.getId());
-                  LOG.info("Found 1 ready container " + container.getId());
+                  LOG.error("Temp", new RuntimeException());
                 }
               }
             } else {

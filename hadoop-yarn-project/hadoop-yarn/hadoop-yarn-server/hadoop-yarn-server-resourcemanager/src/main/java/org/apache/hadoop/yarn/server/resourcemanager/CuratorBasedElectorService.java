@@ -86,7 +86,7 @@ public class CuratorBasedElectorService extends AbstractService
       Thread.sleep(1000);
       initAndStartLeaderLatch();
     } catch (Exception e) {
-      LOG.info("Fail to re-join election.", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -98,7 +98,7 @@ public class CuratorBasedElectorService extends AbstractService
 
   @Override
   public void isLeader() {
-    LOG.info(rmId + "is elected leader, transitioning to active");
+    LOG.error("Temp", new RuntimeException());
     try {
       rm.getRMContext().getRMAdminService()
           .transitionToActive(
@@ -120,14 +120,14 @@ public class CuratorBasedElectorService extends AbstractService
 
   @Override
   public void notLeader() {
-    LOG.info(rmId + " relinquish leadership");
+    LOG.error("Temp", new RuntimeException());
     try {
       rm.getRMContext().getRMAdminService()
           .transitionToStandby(
           new HAServiceProtocol.StateChangeRequestInfo(
               HAServiceProtocol.RequestSource.REQUEST_BY_ZKFC));
     } catch (Exception e) {
-      LOG.info(rmId + " did not transition to standby successfully.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

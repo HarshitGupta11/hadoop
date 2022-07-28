@@ -160,7 +160,7 @@ public class TestDeleteRace {
     public void run() {
       try {
         Thread.sleep(1000);
-        LOG.info("Deleting" + path);
+        LOG.error("Temp", new RuntimeException());
         final FSDirectory fsdir = cluster.getNamesystem().dir;
         INode fileINode = fsdir.getINode4Write(path.toString());
         INodeMap inodeMap = (INodeMap) Whitebox.getInternalState(fsdir,
@@ -169,9 +169,9 @@ public class TestDeleteRace {
         fs.delete(path, false);
         // after deletion, add the inode back to the inodeMap
         inodeMap.put(fileINode);
-        LOG.info("Deleted" + path);
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
-        LOG.info(e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -191,12 +191,12 @@ public class TestDeleteRace {
     public void run() {
       try {
         Thread.sleep(1000);
-        LOG.info("Renaming " + from + " to " + to);
+        LOG.error("Temp", new RuntimeException());
 
         fs.rename(from, to);
-        LOG.info("Renamed " + from + " to " + to);
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
-        LOG.info(e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -240,7 +240,7 @@ public class TestDeleteRace {
    */
   private void testDeleteAndCommitBlockSynchronizationRace(boolean hasSnapshot)
       throws Exception {
-    LOG.info("Start testing, hasSnapshot: " + hasSnapshot);
+    LOG.error("Temp", new RuntimeException());
     ArrayList<AbstractMap.SimpleImmutableEntry<String, Boolean>> testList =
         new ArrayList<AbstractMap.SimpleImmutableEntry<String, Boolean>> ();
     testList.add(
@@ -283,7 +283,7 @@ public class TestDeleteRace {
           grandestNonRootParent = grandestNonRootParent.getParent();
         }
         stm = fs.create(fPath);
-        LOG.info("test on " + testPath + " created " + fPath);
+        LOG.error("Temp", new RuntimeException());
 
         // write a half block
         AppendTestUtil.write(stm, 0, BLOCK_SIZE / 2);
@@ -326,10 +326,10 @@ public class TestDeleteRace {
 
         fs.recoverLease(fPath);
 
-        LOG.info("Waiting for commitBlockSynchronization call from primary");
+        LOG.error("Temp", new RuntimeException());
         delayer.waitForCall();
 
-        LOG.info("Deleting recursively " + grandestNonRootParent);
+        LOG.error("Temp", new RuntimeException());
         fs.delete(grandestNonRootParent, true);
         if (mkSameDir && !grandestNonRootParent.toString().equals(testPath)) {
           LOG.info("Recreate dir " + grandestNonRootParent + " testpath: "
@@ -337,16 +337,16 @@ public class TestDeleteRace {
           fs.mkdirs(grandestNonRootParent);
         }
         delayer.proceed();
-        LOG.info("Now wait for result");
+        LOG.error("Temp", new RuntimeException());
         delayer.waitForResult();
         Throwable t = delayer.getThrown();
         if (t != null) {
-          LOG.info("Result exception (snapshot: " + hasSnapshot + "): " + t);
+          LOG.error("Temp", new RuntimeException());
         }
       } // end of loop each fPath
-      LOG.info("Now check we can restart");
+      LOG.error("Temp", new RuntimeException());
       cluster.restartNameNodes();
-      LOG.info("Restart finished");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (stm != null) {
         IOUtils.closeStream(stm);
@@ -389,7 +389,7 @@ public class TestDeleteRace {
       final DistributedFileSystem fs = cluster.getFileSystem();
       final Path testPath = new Path("/testfile");
       stm = fs.create(testPath);
-      LOG.info("test on " + testPath);
+      LOG.error("Temp", new RuntimeException());
 
       // write a half block
       AppendTestUtil.write(stm, 0, BLOCK_SIZE / 2);
@@ -430,9 +430,9 @@ public class TestDeleteRace {
       Thread.sleep(2 * conf.getLong(DFS_NAMENODE_LEASE_RECHECK_INTERVAL_MS_KEY,
           DFS_NAMENODE_LEASE_RECHECK_INTERVAL_MS_DEFAULT));
 
-      LOG.info("Now check we can restart");
+      LOG.error("Temp", new RuntimeException());
       cluster.restartNameNodes();
-      LOG.info("Restart finished");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (stm != null) {
         IOUtils.closeStream(stm);

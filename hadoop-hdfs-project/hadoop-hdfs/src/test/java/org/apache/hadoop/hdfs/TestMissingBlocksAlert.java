@@ -92,7 +92,7 @@ public class TestMissingBlocksAlert {
       }
       in.close();
 
-      LOG.info("Waiting for missing blocks count to increase...");
+      LOG.error("Temp", new RuntimeException());
 
       while (dfs.getMissingBlocksCount() <= 0) {
         Thread.sleep(100);
@@ -112,7 +112,7 @@ public class TestMissingBlocksAlert {
 
       dfs.delete(corruptFile, true);
 
-      LOG.info("Waiting for missing blocks count to be zero...");
+      LOG.error("Temp", new RuntimeException());
       while (dfs.getMissingBlocksCount() > 0) {
         Thread.sleep(100);
       }

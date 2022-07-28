@@ -222,7 +222,7 @@ public class NodeManager implements ContainerManagementProtocol {
   }
 
   synchronized public void checkResourceUsage() {
-    LOG.info("Checking resource usage for " + containerManagerAddress);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(available.getMemorySize(),
         resourceManager.getResourceScheduler().getNodeReport(
             this.nodeId).getAvailableResource().getMemorySize());

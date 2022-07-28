@@ -90,7 +90,7 @@ public class TestAMRMProxy extends BaseAMRMProxyE2ETest {
 
       client = createAMRMProtocol(rmClient, appId, cluster, yarnConf);
 
-      LOG.info("testAMRMProxyE2E - Register Application Master");
+      LOG.error("Temp", new RuntimeException());
 
       RegisterApplicationMasterResponse responseRegister =
           client.registerApplicationMaster(RegisterApplicationMasterRequest
@@ -109,7 +109,7 @@ public class TestAMRMProxy extends BaseAMRMProxyE2ETest {
           cluster.getResourceManager().getRMContext().getRMApps().get(appId);
       Assert.assertEquals(RMAppState.RUNNING, rmApp.getState());
 
-      LOG.info("testAMRMProxyE2E - Allocate Resources Application Master");
+      LOG.error("Temp", new RuntimeException());
 
       AllocateRequest request =
           createAllocateRequest(rmClient.getNodeReports(NodeState.RUNNING));
@@ -128,7 +128,7 @@ public class TestAMRMProxy extends BaseAMRMProxyE2ETest {
       Assert.assertNotNull(allocResponse);
       Assert.assertEquals(2, allocResponse.getAllocatedContainers().size());
 
-      LOG.info("testAMRMPRoxy - Finish Application Master");
+      LOG.error("Temp", new RuntimeException());
 
       FinishApplicationMasterResponse responseFinish =
           client.finishApplicationMaster(FinishApplicationMasterRequest
@@ -209,7 +209,7 @@ public class TestAMRMProxy extends BaseAMRMProxyE2ETest {
 
       Assert.assertFalse(response.getAMRMToken().equals(lastToken));
 
-      LOG.info("testAMRMPRoxy - Finish Application Master");
+      LOG.error("Temp", new RuntimeException());
 
       client.finishApplicationMaster(FinishApplicationMasterRequest
           .newInstance(FinalApplicationStatus.SUCCEEDED, "success", null));

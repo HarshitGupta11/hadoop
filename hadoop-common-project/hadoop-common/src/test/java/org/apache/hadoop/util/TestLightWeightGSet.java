@@ -95,7 +95,7 @@ public class TestLightWeightGSet {
       sum += iter.next().getVal();
     }
     long mode = sum / set.size();
-    LOG.info("Removing all elements above " + mode);
+    LOG.error("Temp", new RuntimeException());
     for (Iterator<TestElement> iter = set.iterator();
         iter.hasNext(); ) {
       int item = iter.next().getVal();

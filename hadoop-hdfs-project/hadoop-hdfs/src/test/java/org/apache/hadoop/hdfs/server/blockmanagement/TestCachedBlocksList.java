@@ -99,13 +99,13 @@ public class TestCachedBlocksList {
       i++;
     }
     if (r.nextBoolean()) {
-      LOG.info("Removing via iterator");
+      LOG.error("Temp", new RuntimeException());
       for (Iterator<CachedBlock> iter = list.iterator(); iter.hasNext() ;) {
         iter.next();
         iter.remove();
       }
     } else {
-      LOG.info("Removing in pseudo-random order");
+      LOG.error("Temp", new RuntimeException());
       CachedBlock[] remainingBlocks = Arrays.copyOf(blocks, blocks.length);
       for (int removed = 0; removed < remainingBlocks.length; ) {
         int toRemove = r.nextInt(remainingBlocks.length);

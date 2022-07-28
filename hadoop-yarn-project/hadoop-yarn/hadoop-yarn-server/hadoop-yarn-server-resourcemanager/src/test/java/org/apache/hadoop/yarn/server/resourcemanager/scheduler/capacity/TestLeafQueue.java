@@ -829,7 +829,7 @@ public class TestLeafQueue {
       assign =
           b.assignContainers(clusterResource, node0, new ResourceLimits(
               clusterResource), SchedulingMode.RESPECT_PARTITION_EXCLUSIVITY);
-      LOG.info(assign.toString());
+      LOG.error("Temp", new RuntimeException());
       applyCSAssignment(clusterResource, assign, b, nodes, apps);
     } while (assign.getResource().getMemorySize() > 0 &&
         assign.getAssignmentInformation().getNumReservations() == 0);

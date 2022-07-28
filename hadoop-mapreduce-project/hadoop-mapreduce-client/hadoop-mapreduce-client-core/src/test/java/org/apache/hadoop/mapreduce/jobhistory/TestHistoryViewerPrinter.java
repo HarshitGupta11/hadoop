@@ -865,7 +865,7 @@ public class TestHistoryViewerPrinter {
     printer.print(out);
     out.close();
     String outStr = boas.toString("UTF-8");
-    LOG.info("out = " + outStr);
+    LOG.error("Temp", new RuntimeException());
     return outStr;
   }
 

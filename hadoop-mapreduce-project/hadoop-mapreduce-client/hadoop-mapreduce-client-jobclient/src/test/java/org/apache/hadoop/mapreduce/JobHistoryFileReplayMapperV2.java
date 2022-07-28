@@ -75,7 +75,7 @@ class JobHistoryFileReplayMapperV2 extends EntityWriterV2 {
             "configuration file. Skipping.");
         continue;
       }
-      LOG.info("processing " + jobIdStr + "...");
+      LOG.error("Temp", new RuntimeException());
       JobId jobId = TypeConverter.toYarn(JobID.forName(jobIdStr));
       ApplicationId appId = jobId.getAppId();
 
@@ -104,7 +104,7 @@ class JobHistoryFileReplayMapperV2 extends EntityWriterV2 {
         long totalTime = 0;
         List<TimelineEntity> entitySet =
             converter.createTimelineEntities(jobInfo, jobConf);
-        LOG.info("converted them into timeline entities for job " + jobIdStr);
+        LOG.error("Temp", new RuntimeException());
         // use the current user for this purpose
         UserGroupInformation ugi = UserGroupInformation.getCurrentUser();
         long startWrite = System.nanoTime();
@@ -127,7 +127,7 @@ class JobHistoryFileReplayMapperV2 extends EntityWriterV2 {
         long endWrite = System.nanoTime();
         totalTime += TimeUnit.NANOSECONDS.toMillis(endWrite-startWrite);
         int numEntities = entitySet.size();
-        LOG.info("wrote " + numEntities + " entities in " + totalTime + " ms");
+        LOG.error("Temp", new RuntimeException());
 
         context.getCounter(PerfCounters.TIMELINE_SERVICE_WRITE_TIME).
             increment(totalTime);
@@ -155,7 +155,7 @@ class JobHistoryFileReplayMapperV2 extends EntityWriterV2 {
       TimelineEntities entities = new TimelineEntities();
       entities.addEntity(entity);
       collector.putEntities(entities, ugi);
-      LOG.info("wrote entity " + entity.getId());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

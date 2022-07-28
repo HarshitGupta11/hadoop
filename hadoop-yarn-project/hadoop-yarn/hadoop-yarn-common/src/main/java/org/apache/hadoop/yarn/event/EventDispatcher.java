@@ -69,14 +69,14 @@ public class EventDispatcher<T extends Event> extends
           // If it was an InterruptedException, the very act of
           // shutdown could have caused it and is probably harmless.
           if (stopped) {
-            LOG.warn("Exception during shutdown: ", t);
+            LOG.error("Temp", new RuntimeException());
             break;
           }
           LOG.fatal("Error in handling event type " + event.getType()
               + " to the Event Dispatcher", t);
           if (shouldExitOnError
               && !ShutdownHookManager.get().isShutdownInProgress()) {
-            LOG.info("Exiting, bbye..");
+            LOG.error("Temp", new RuntimeException());
             System.exit(-1);
           }
         }
@@ -114,7 +114,7 @@ public class EventDispatcher<T extends Event> extends
     try {
       int qSize = eventQueue.size();
       if (qSize !=0 && qSize %1000 == 0) {
-        LOG.info("Size of " + getName() + " event-queue is " + qSize);
+        LOG.error("Temp", new RuntimeException());
       }
       int remCapacity = eventQueue.remainingCapacity();
       if (remCapacity < 1000) {
@@ -123,7 +123,7 @@ public class EventDispatcher<T extends Event> extends
       }
       this.eventQueue.put(event);
     } catch (InterruptedException e) {
-      LOG.info("Interrupted. Trying to exit gracefully.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

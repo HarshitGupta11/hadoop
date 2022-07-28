@@ -80,19 +80,19 @@ public class RMTimelineCollectorManager extends TimelineCollectorManager {
       switch (parts[0].toUpperCase()) {
       case TimelineUtils.FLOW_NAME_TAG_PREFIX:
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Setting the flow name: " + parts[1]);
+          LOG.error("Temp", new RuntimeException());
         }
         context.setFlowName(parts[1]);
         break;
       case TimelineUtils.FLOW_VERSION_TAG_PREFIX:
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Setting the flow version: " + parts[1]);
+          LOG.error("Temp", new RuntimeException());
         }
         context.setFlowVersion(parts[1]);
         break;
       case TimelineUtils.FLOW_RUN_ID_TAG_PREFIX:
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Setting the flow run id: " + parts[1]);
+          LOG.error("Temp", new RuntimeException());
         }
         context.setFlowRunId(Long.parseLong(parts[1]));
         break;

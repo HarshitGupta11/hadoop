@@ -112,7 +112,7 @@ public abstract class ReconfigurableBase
 
     // See {@link ReconfigurationServlet#applyChanges}
     public void run() {
-      LOG.info("Starting reconfiguration task.");
+      LOG.error("Temp", new RuntimeException());
       final Configuration oldConf = parent.getConf();
       final Configuration newConf = parent.getNewConf();
       final Collection<PropertyChange> changes =
@@ -166,12 +166,12 @@ public abstract class ReconfigurableBase
     synchronized (reconfigLock) {
       if (!shouldRun) {
         String errorMessage = "The server is stopped.";
-        LOG.warn(errorMessage);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(errorMessage);
       }
       if (reconfigThread != null) {
         String errorMessage = "Another reconfiguration task is running.";
-        LOG.warn(errorMessage);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(errorMessage);
       }
       reconfigThread = new ReconfigurationThread(this);
@@ -220,7 +220,7 @@ public abstract class ReconfigurableBase
   public final void reconfigureProperty(String property, String newVal)
     throws ReconfigurationException {
     if (isPropertyReconfigurable(property)) {
-      LOG.info("changing property " + property + " to " + newVal);
+      LOG.error("Temp", new RuntimeException());
       synchronized(getConf()) {
         getConf().get(property);
         String effectiveValue = reconfigurePropertyImpl(property, newVal);

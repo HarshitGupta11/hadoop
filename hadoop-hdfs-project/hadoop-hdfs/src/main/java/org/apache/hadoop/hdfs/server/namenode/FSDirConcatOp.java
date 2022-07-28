@@ -53,7 +53,7 @@ class FSDirConcatOp {
     validatePath(target, srcs);
     assert srcs != null;
     if (FSDirectory.LOG.isDebugEnabled()) {
-      FSDirectory.LOG.debug("concat {} to {}", Arrays.toString(srcs), target);
+      FSDirectory.LOG.error("Temp", new RuntimeException());
     }
     final INodesInPath targetIIP = fsd.resolvePath(pc, target, DirOp.WRITE);
     // write permission for the target

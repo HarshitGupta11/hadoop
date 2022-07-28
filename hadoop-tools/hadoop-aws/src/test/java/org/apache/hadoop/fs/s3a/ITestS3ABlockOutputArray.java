@@ -98,13 +98,13 @@ public class ITestS3ABlockOutputArray extends AbstractS3ATestBase {
         = S3ATestUtils.getOutputStreamStatistics(stream);
     byte[] data = ContractTestUtils.dataset(16, 'a', 26);
     stream.write(data);
-    LOG.info("closing output stream");
+    LOG.error("Temp", new RuntimeException());
     stream.close();
     assertEquals("total allocated blocks in " + statistics,
         1, statistics.blocksAllocated());
     assertEquals("actively allocated blocks in " + statistics,
         0, statistics.blocksActivelyAllocated());
-    LOG.info("end of test case");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void verifyUpload(String name, int fileSize) throws IOException {

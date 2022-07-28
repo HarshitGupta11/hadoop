@@ -100,7 +100,7 @@ public class AliyunOSSInputStream extends FSInputStream {
 
     if (this.buffer != null) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Aborting old stream to open at pos " + pos);
+        LOG.error("Temp", new RuntimeException());
       }
       this.buffer = null;
     }
@@ -167,7 +167,7 @@ public class AliyunOSSInputStream extends FSInputStream {
         this.buffer = readBuffer.getBuffer();
       }
     } catch (InterruptedException e) {
-      LOG.warn("interrupted when wait a read buffer");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       readBuffer.unlock();
     }

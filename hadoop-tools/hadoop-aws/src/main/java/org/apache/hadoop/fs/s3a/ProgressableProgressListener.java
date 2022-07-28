@@ -85,7 +85,7 @@ public class ProgressableProgressListener implements ProgressListener {
     long delta = upload.getProgress().getBytesTransferred() -
         lastBytesTransferred;
     if (delta > 0) {
-      LOG.debug("S3A write delta changed after finished: {} bytes", delta);
+      LOG.error("Temp", new RuntimeException());
       fs.incrementPutProgressStatistics(key, delta);
     }
     return delta;

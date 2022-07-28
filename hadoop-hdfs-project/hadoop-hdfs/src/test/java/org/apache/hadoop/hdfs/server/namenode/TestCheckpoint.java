@@ -160,7 +160,7 @@ public class TestCheckpoint {
    */
   @Test
   public void testNameDirError() throws IOException {
-    LOG.info("Starting testNameDirError");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     MiniDFSCluster cluster = new MiniDFSCluster.Builder(conf).numDataNodes(0)
         .build();
@@ -196,7 +196,7 @@ public class TestCheckpoint {
    */
   @Test
   public void testWriteTransactionIdHandlesIOE() throws Exception {
-    LOG.info("Check IOException handled correctly by writeTransactionIdFile");
+    LOG.error("Temp", new RuntimeException());
     ArrayList<URI> fsImageDirs = new ArrayList<URI>();
     ArrayList<URI> editsDirs = new ArrayList<URI>();
     File filePath =
@@ -334,7 +334,7 @@ public class TestCheckpoint {
   @Test
   public void testSecondaryNamenodeError1()
     throws IOException {
-    LOG.info("Starting testSecondaryNamenodeError1");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     Path file1 = new Path("checkpointxx.dat");
     MiniDFSCluster cluster = null;
@@ -406,7 +406,7 @@ public class TestCheckpoint {
    */
   @Test
   public void testSecondaryNamenodeError2() throws IOException {
-    LOG.info("Starting testSecondaryNamenodeError2");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     Path file1 = new Path("checkpointyy.dat");
     MiniDFSCluster cluster = null;
@@ -478,7 +478,7 @@ public class TestCheckpoint {
    */
   @Test
   public void testSecondaryNamenodeError3() throws IOException {
-    LOG.info("Starting testSecondaryNamenodeError3");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     Path file1 = new Path("checkpointzz.dat");
     MiniDFSCluster cluster = null;
@@ -569,7 +569,7 @@ public class TestCheckpoint {
   }
 
   private void doSecondaryFailsToReturnImage() throws IOException {
-    LOG.info("Starting testSecondaryFailsToReturnImage");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     Path file1 = new Path("checkpointRI.dat");
     MiniDFSCluster cluster = null;
@@ -655,7 +655,7 @@ public class TestCheckpoint {
   @Test
   public void testNameNodeImageSendFailWrongSize()
       throws IOException {
-    LOG.info("Starting testNameNodeImageSendFailWrongSize");
+    LOG.error("Temp", new RuntimeException());
     
     Mockito.doReturn(true).when(faultInjector)
       .shouldSendShortFile(filePathContaining("fsimage"));
@@ -670,7 +670,7 @@ public class TestCheckpoint {
   @Test
   public void testNameNodeImageSendFailWrongDigest()
       throws IOException {
-    LOG.info("Starting testNameNodeImageSendFailWrongDigest");
+    LOG.error("Temp", new RuntimeException());
 
     Mockito.doReturn(true).when(faultInjector)
         .shouldCorruptAByte(Mockito.any(File.class));
@@ -827,13 +827,13 @@ public class TestCheckpoint {
         assertLockFails(sd);
         savedSd = sd;
       }
-      LOG.info("===> Shutting down first 2NN");
+      LOG.error("Temp", new RuntimeException());
       secondary.shutdown();
       secondary = null;
 
-      LOG.info("===> Locking a dir, starting second 2NN");
+      LOG.error("Temp", new RuntimeException());
       // Lock one of its dirs, make sure it fails to start
-      LOG.info("Trying to lock" + savedSd);
+      LOG.error("Temp", new RuntimeException());
       savedSd.lock();
       try {
         secondary = startSecondaryNameNode(conf);
@@ -978,14 +978,14 @@ public class TestCheckpoint {
       cluster = null;
     }
     
-    LOG.info("Removing NN storage contents");
+    LOG.error("Temp", new RuntimeException());
     for(URI uri : nameDirs) {
       File dir = new File(uri.getPath());
-      LOG.info("Cleaning " + dir);
+      LOG.error("Temp", new RuntimeException());
       removeAndRecreateDir(dir);
     }
     
-    LOG.info("Trying to import checkpoint");
+    LOG.error("Temp", new RuntimeException());
     try {
       cluster = new MiniDFSCluster.Builder(conf).format(false).numDataNodes(0)
           .startupOption(StartupOption.IMPORT).build();
@@ -1313,7 +1313,7 @@ public class TestCheckpoint {
         secondary.doCheckpoint();
         fail("Should have failed upload");
       } catch (IOException ioe) {
-        LOG.info("Got expected failure", ioe);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(ioe.toString().contains("Injecting failure"));
       }
 
@@ -1322,7 +1322,7 @@ public class TestCheckpoint {
         secondary.doCheckpoint();
         fail("Should have failed upload");
       } catch (IOException ioe) {
-        LOG.info("Got expected failure", ioe);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(ioe.toString().contains("Injecting failure"));
       } finally {
         Mockito.reset(faultInjector);
@@ -1413,7 +1413,7 @@ public class TestCheckpoint {
    */
   @Test
   public void testSecondaryImageDownload() throws IOException {
-    LOG.info("Starting testSecondaryImageDownload");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = new HdfsConfiguration();
     conf.set(DFSConfigKeys.DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_KEY, "0.0.0.0:0");
     Path dir = new Path("/checkpoint");
@@ -1956,7 +1956,7 @@ public class TestCheckpoint {
         secondary.doCheckpoint();
         fail("Should have failed checkpoint against a different namespace");
       } catch (IOException ioe) {
-        LOG.info("Got expected failure", ioe);
+        LOG.error("Temp", new RuntimeException());
         assertTrue(ioe.toString().contains("Inconsistent checkpoint"));
       }
     } finally {
@@ -2192,7 +2192,7 @@ public class TestCheckpoint {
       GenericTestUtils.waitFor(new Supplier<Boolean>() {
         @Override
         public Boolean get() {
-          LOG.info("Waiting for checkpoint txn id to go to 2");
+          LOG.error("Temp", new RuntimeException());
           return storage.getMostRecentCheckpointTxId() == 2;
         }
       }, 200, 15000);
@@ -2205,7 +2205,7 @@ public class TestCheckpoint {
       GenericTestUtils.waitFor(new Supplier<Boolean>() {
         @Override
         public Boolean get() {
-          LOG.info("Waiting for checkpoint txn id to go > 2");
+          LOG.error("Temp", new RuntimeException());
           return storage.getMostRecentCheckpointTxId() > 2;
         }
       }, 200, 15000);
@@ -2420,14 +2420,14 @@ public class TestCheckpoint {
       opts.parse("-geteditsize", "-checkpoint");
       fail("Should have failed bad parsing for two actions");
     } catch (ParseException e) {
-      LOG.warn("Encountered ", e);
+      LOG.error("Temp", new RuntimeException());
     }
     
     try {
       opts.parse("-checkpoint", "xx");
       fail("Should have failed for bad checkpoint arg");
     } catch (ParseException e) {
-      LOG.warn("Encountered ", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -2477,7 +2477,7 @@ public class TestCheckpoint {
       try {
         snn.shutdown();
       } catch (Exception e) {
-        LOG.warn("Could not shut down secondary namenode", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2487,7 +2487,7 @@ public class TestCheckpoint {
       try {
         cluster.shutdown();
       } catch (Exception e) {
-        LOG.warn("Could not shutdown MiniDFSCluster ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

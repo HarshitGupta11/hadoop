@@ -138,7 +138,7 @@ public class CopyMapper extends Mapper<Text, CopyListingFileStatus, Text, Text> 
     Path sourcePath = sourceFileStatus.getPath();
 
     if (LOG.isDebugEnabled())
-      LOG.debug("DistCpMapper::map(): Received " + sourcePath + ", " + relPath);
+      LOG.error("Temp", new RuntimeException());
 
     Path target = new Path(targetWorkPath.makeQualified(targetFS.getUri(),
                           targetFS.getWorkingDirectory()) + relPath.toString());
@@ -151,7 +151,7 @@ public class CopyMapper extends Mapper<Text, CopyListingFileStatus, Text, Text> 
     final String description = "Copying " + sourcePath + " to " + target;
     context.setStatus(description);
 
-    LOG.info(description);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       CopyListingFileStatus sourceCurrStatus;
@@ -176,7 +176,7 @@ public class CopyMapper extends Mapper<Text, CopyListingFileStatus, Text, Text> 
         targetStatus = targetFS.getFileStatus(target);
       } catch (FileNotFoundException ignore) {
         if (LOG.isDebugEnabled())
-          LOG.debug("Path could not be found: " + target, ignore);
+          LOG.error("Temp", new RuntimeException());
       }
 
       if (targetStatus != null &&
@@ -212,7 +212,7 @@ public class CopyMapper extends Mapper<Text, CopyListingFileStatus, Text, Text> 
           tmpTarget = DistCpUtils.getSplitChunkPath(target, sourceCurrStatus);
         }
         if (LOG.isDebugEnabled()) {
-          LOG.debug("copying " + sourceCurrStatus + " " + tmpTarget);
+          LOG.error("Temp", new RuntimeException());
         }
         copyFileWithRetry(description, sourceCurrStatus, tmpTarget,
             targetStatus, context, action, fileAttributes);

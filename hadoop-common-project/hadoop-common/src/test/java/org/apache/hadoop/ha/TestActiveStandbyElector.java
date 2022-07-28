@@ -75,7 +75,7 @@ public class TestActiveStandbyElector {
     protected void sleepFor(int ms) {
       // don't sleep in unit tests! Instead, just record the amount of
       // time slept
-      LOG.info("Would have slept for " + ms + "ms");
+      LOG.error("Temp", new RuntimeException());
       sleptFor += ms;
     }
   }

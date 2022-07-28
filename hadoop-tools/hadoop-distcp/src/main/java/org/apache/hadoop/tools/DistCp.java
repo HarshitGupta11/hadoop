@@ -141,7 +141,7 @@ public class DistCp extends Configured implements Tool {
       context = new DistCpContext(OptionsParser.parse(argv));
       checkSplitLargeFile();
       setTargetPathExists();
-      LOG.info("Input Options: " + context);
+      LOG.error("Temp", new RuntimeException());
     } catch (Throwable e) {
       LOG.error("Invalid arguments: ", e);
       System.err.println("Invalid arguments: " + e.getMessage());
@@ -214,7 +214,7 @@ public class DistCp extends Configured implements Tool {
     String jobID = job.getJobID().toString();
     job.getConfiguration().set(DistCpConstants.CONF_LABEL_DISTCP_JOB_ID,
         jobID);
-    LOG.info("DistCp job-id: " + jobID);
+    LOG.error("Temp", new RuntimeException());
 
     return job;
   }
@@ -347,7 +347,7 @@ public class DistCp extends Configured implements Tool {
     if (logPath == null) {
       logPath = new Path(metaFolder, "_logs");
     } else {
-      LOG.info("DistCp job log path: " + logPath);
+      LOG.error("Temp", new RuntimeException());
     }
     CopyOutputFormat.setOutputPath(job, logPath);
   }
@@ -411,7 +411,7 @@ public class DistCp extends Configured implements Tool {
             new Cluster(configuration), configuration);
     Path metaFolderPath = new Path(stagingDir, PREFIX + String.valueOf(rand.nextInt()));
     if (LOG.isDebugEnabled())
-      LOG.debug("Meta folder location: " + metaFolderPath);
+      LOG.error("Temp", new RuntimeException());
     configuration.set(DistCpConstants.CONF_LABEL_META_FOLDER, metaFolderPath.toString());    
     return metaFolderPath;
   }

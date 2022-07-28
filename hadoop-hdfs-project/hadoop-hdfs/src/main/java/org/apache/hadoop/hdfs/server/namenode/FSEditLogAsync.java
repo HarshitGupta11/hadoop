@@ -125,7 +125,7 @@ class FSEditLogAsync extends FSEditLog implements Runnable {
       // do NOT remove to avoid expunge & rehash penalties.
       threadEdit.set(null);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("logSync " + edit);
+        LOG.error("Temp", new RuntimeException());
       }
       edit.logSyncWait();
     }
@@ -147,7 +147,7 @@ class FSEditLogAsync extends FSEditLog implements Runnable {
 
   private void enqueueEdit(Edit edit) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("logEdit " + edit);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       if (!editPendingQ.offer(edit, 1, TimeUnit.SECONDS)) {
@@ -195,7 +195,7 @@ class FSEditLogAsync extends FSEditLog implements Runnable {
         }
       }
     } catch (InterruptedException ie) {
-      LOG.info(Thread.currentThread().getName() + " was interrupted, exiting");
+      LOG.error("Temp", new RuntimeException());
     } catch (Throwable t) {
       terminate(t);
     }

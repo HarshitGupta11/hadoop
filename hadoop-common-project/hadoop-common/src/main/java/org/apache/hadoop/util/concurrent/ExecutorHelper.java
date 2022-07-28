@@ -52,7 +52,7 @@ public final class ExecutorHelper {
                 .getName());
         t = ee.getCause();
       } catch (InterruptedException ie) {
-        LOG.warn("Thread (" + Thread.currentThread() + ") interrupted: ", ie);
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       } catch (Throwable throwable) {
         t = throwable;

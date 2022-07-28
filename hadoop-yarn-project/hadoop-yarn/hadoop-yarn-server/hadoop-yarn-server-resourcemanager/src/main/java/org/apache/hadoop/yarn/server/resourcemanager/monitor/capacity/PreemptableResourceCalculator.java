@@ -215,7 +215,7 @@ public class PreemptableResourceCalculator
         }
 
         if (LOG.isDebugEnabled()) {
-          LOG.debug(qT);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

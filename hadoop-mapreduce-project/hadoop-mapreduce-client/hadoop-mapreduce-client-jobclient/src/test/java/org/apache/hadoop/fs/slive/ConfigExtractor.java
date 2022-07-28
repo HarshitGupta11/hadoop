@@ -715,12 +715,12 @@ class ConfigExtractor {
     if (cfg == null) {
       return;
     }
-    LOG.info("Base directory = " + cfg.getBaseDirectory());
-    LOG.info("Data directory = " + cfg.getDataPath());
-    LOG.info("Output directory = " + cfg.getOutputPath());
-    LOG.info("Result file = " + cfg.getResultFile());
-    LOG.info("Grid queue = " + cfg.getQueueName());
-    LOG.info("Should exit on first error = " + cfg.shouldExitOnFirstError());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     {
       String duration = "Duration = ";
       if (cfg.getDurationMilliseconds() == Integer.MAX_VALUE) {
@@ -728,13 +728,13 @@ class ConfigExtractor {
       } else {
         duration += cfg.getDurationMilliseconds() + " milliseconds";
       }
-      LOG.info(duration);
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Map amount = " + cfg.getMapAmount());
-    LOG.info("Reducer amount = " + cfg.getReducerAmount());
-    LOG.info("Operation amount = " + cfg.getOpCount());
-    LOG.info("Total file limit = " + cfg.getTotalFiles());
-    LOG.info("Total dir file limit = " + cfg.getDirSize());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     {
       String read = "Read size = ";
       if (cfg.shouldReadFullFile()) {
@@ -742,7 +742,7 @@ class ConfigExtractor {
       } else {
         read += cfg.getReadSize() + " bytes";
       }
-      LOG.info(read);
+      LOG.error("Temp", new RuntimeException());
     }
     {
       String write = "Write size = ";
@@ -751,7 +751,7 @@ class ConfigExtractor {
       } else {
         write += cfg.getWriteSize() + " bytes";
       }
-      LOG.info(write);
+      LOG.error("Temp", new RuntimeException());
     }
     {
       String append = "Append size = ";
@@ -760,32 +760,32 @@ class ConfigExtractor {
       } else {
         append += cfg.getAppendSize() + " bytes";
       }
-      LOG.info(append);
+      LOG.error("Temp", new RuntimeException());
     }
     {
       String bsize = "Block size = ";
       bsize += cfg.getBlockSize() + " bytes";
-      LOG.info(bsize);
+      LOG.error("Temp", new RuntimeException());
     }
     if (cfg.getRandomSeed() != null) {
-      LOG.info("Random seed = " + cfg.getRandomSeed());
+      LOG.error("Temp", new RuntimeException());
     }
     if (cfg.getSleepRange() != null) {
-      LOG.info("Sleep range = " + cfg.getSleepRange() + " milliseconds");
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Replication amount = " + cfg.getReplication());
-    LOG.info("Operations are:");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     NumberFormat percFormatter = Formatter.getPercentFormatter();
     Map<OperationType, OperationData> operations = cfg.getOperations();
     for (OperationType type : operations.keySet()) {
       String name = type.name();
-      LOG.info(name);
+      LOG.error("Temp", new RuntimeException());
       OperationData opInfo = operations.get(type);
-      LOG.info(" " + opInfo.getDistribution().name());
+      LOG.error("Temp", new RuntimeException());
       if (opInfo.getPercent() != null) {
-        LOG.info(" " + percFormatter.format(opInfo.getPercent()));
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info(" ???");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

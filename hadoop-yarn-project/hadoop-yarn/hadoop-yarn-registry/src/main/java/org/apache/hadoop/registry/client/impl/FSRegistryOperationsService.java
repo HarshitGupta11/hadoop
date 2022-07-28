@@ -152,7 +152,7 @@ public class FSRegistryOperationsService extends CompositeService
       byte[] bytes = serviceRecordMarshal.toBytes(record);
       stream.write(bytes);
       stream.close();
-      LOG.info("Bound record to path " + dataPath);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

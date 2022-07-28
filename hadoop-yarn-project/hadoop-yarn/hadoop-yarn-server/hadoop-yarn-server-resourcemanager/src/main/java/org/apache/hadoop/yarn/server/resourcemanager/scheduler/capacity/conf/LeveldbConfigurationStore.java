@@ -135,13 +135,13 @@ public class LeveldbConfigurationStore extends YarnConfigurationStore {
       }
     });
 
-    LOG.info("Using conf database at " + storeRoot);
+    LOG.error("Temp", new RuntimeException());
     File dbfile = new File(storeRoot.toString());
     try {
       db = JniDBFactory.factory.open(dbfile, options);
     } catch (NativeDB.DBException e) {
       if (e.isNotFound() || e.getMessage().contains(" does not exist ")) {
-        LOG.info("Creating conf database at " + dbfile);
+        LOG.error("Temp", new RuntimeException());
         options.createIfMissing(true);
         try {
           db = JniDBFactory.factory.open(dbfile, options);
@@ -309,14 +309,14 @@ public class LeveldbConfigurationStore extends YarnConfigurationStore {
     @Override
     public void run() {
       long start = Time.monotonicNow();
-      LOG.info("Starting full compaction cycle");
+      LOG.error("Temp", new RuntimeException());
       try {
         db.compactRange(null, null);
       } catch (DBException e) {
         LOG.error("Error compacting database", e);
       }
       long duration = Time.monotonicNow() - start;
-      LOG.info("Full compaction cycle completed in " + duration + " msec");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -335,7 +335,7 @@ public class TestDFSClientRetries {
                           true);
         fail("Didn't get exception");
       } catch (IOException ioe) {
-        DFSClient.LOG.info("Got expected exception", ioe);
+        DFSClient.LOG.error("Temp", new RuntimeException());
       }
 
       // If we fail exactly that many times, then it should succeed.
@@ -344,7 +344,7 @@ public class TestDFSClientRetries {
       IOUtils.copyBytes(client.open(file.toString()), new IOUtils.NullOutputStream(), conf,
                         true);
 
-      DFSClient.LOG.info("Starting test case for failure reset");
+      DFSClient.LOG.error("Temp", new RuntimeException());
 
       // Now the tricky case - if we fail a few times on one read, then succeed,
       // then fail some more on another read, it shouldn't fail.
@@ -354,7 +354,7 @@ public class TestDFSClientRetries {
       byte buf[] = new byte[10];
       IOUtils.readFully(is, buf, 0, buf.length);
 
-      DFSClient.LOG.info("First read successful after some failures.");
+      DFSClient.LOG.error("Temp", new RuntimeException());
 
       // Further reads at this point will succeed since it has the good block locations.
       // So, force the block locations on this stream to be refreshed from bad info.
@@ -498,9 +498,9 @@ public class TestDFSClientRetries {
           // complete() may return false a few times before it returns
           // true. We want to wait until it returns true, and then
           // make it retry one more time after that.
-          LOG.info("Called complete:");
+          LOG.error("Temp", new RuntimeException());
           if (!(Boolean)invocation.callRealMethod()) {
-            LOG.info("Complete call returned false, not faking a retry RPC");
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
           // We got a successful close. Call it again to check idempotence.
@@ -565,10 +565,10 @@ public class TestDFSClientRetries {
         (Long)args[2]);
 
       if (failuresLeft-- > 0) {
-        NameNode.LOG.info("FailNTimesAnswer injecting failure.");
+        NameNode.LOG.error("Temp", new RuntimeException());
         return makeBadBlockList(realAnswer);
       }
-      NameNode.LOG.info("FailNTimesAnswer no longer failing.");
+      NameNode.LOG.error("Temp", new RuntimeException());
       return realAnswer;
     }
 
@@ -626,9 +626,9 @@ public class TestDFSClientRetries {
     boolean pass = busyTest(xcievers, threads, fileLen, timeWin, retries);
     long timestamp2 = Time.now();
     if ( pass ) {
-      LOG.info("Test 1 succeeded! Time spent: " + (timestamp2-timestamp)/1000.0 + " sec.");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.warn("Test 1 failed, but relax. Time spent: " + (timestamp2-timestamp)/1000.0 + " sec.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     //
@@ -639,7 +639,7 @@ public class TestDFSClientRetries {
     pass = busyTest(xcievers, threads, fileLen, timeWin, retries);
     timestamp2 = Time.now();
     assertTrue("Something wrong! Test 2 got Exception with maxmum retries!", pass);
-    LOG.info("Test 2 succeeded! Time spent: "  + (timestamp2-timestamp)/1000.0 + " sec.");
+    LOG.error("Temp", new RuntimeException());
     
     //
     // Test 3: might fail
@@ -650,9 +650,9 @@ public class TestDFSClientRetries {
     pass = busyTest(xcievers, threads, fileLen, timeWin, retries);
     timestamp2 = Time.now();
     if ( pass ) {
-      LOG.info("Test 3 succeeded! Time spent: " + (timestamp2-timestamp)/1000.0 + " sec.");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.warn("Test 3 failed, but relax. Time spent: " + (timestamp2-timestamp)/1000.0 + " sec.");
+      LOG.error("Temp", new RuntimeException());
     }
     
     //
@@ -664,7 +664,7 @@ public class TestDFSClientRetries {
     pass = busyTest(xcievers, threads, fileLen, timeWin, retries);
     timestamp2 = Time.now();
     assertTrue("Something wrong! Test 4 got Exception with maxmum retries!", pass);
-    LOG.info("Test 4 succeeded! Time spent: "  + (timestamp2-timestamp)/1000.0 + " sec.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private boolean busyTest(int xcievers, int threads, int fileLen, int timeWin, int retries)
@@ -703,7 +703,7 @@ public class TestDFSClientRetries {
       assertTrue(file1 + " should be a file", 
                   fs.getFileStatus(file1).isFile());
       System.out.println("Path : \"" + file1 + "\"");
-      LOG.info("Path : \"" + file1 + "\"");
+      LOG.error("Temp", new RuntimeException());
 
       // write 1 block to file
       byte[] buffer = AppendTestUtil.randomBytes(Time.now(), fileLen);
@@ -827,10 +827,10 @@ public class TestDFSClientRetries {
         
         counter.inc(); // count this thread as successful
         
-        LOG.info("Thread correctly read the block.");
+        LOG.error("Temp", new RuntimeException());
         
       } catch (BlockMissingException e) {
-        LOG.info("Bad - BlockMissingException is caught.");
+        LOG.error("Temp", new RuntimeException());
         e.printStackTrace();
       } catch (Exception e) {
         e.printStackTrace();
@@ -902,7 +902,7 @@ public class TestDFSClientRetries {
       proxy.getReplicaVisibleLength(new ExtendedBlock("bpid", 1));
       fail ("Did not get expected exception: SocketTimeoutException");
     } catch (SocketTimeoutException e) {
-      LOG.info("Got the expected Exception: SocketTimeoutException");
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (proxy != null) {
         RPC.stopProxy(proxy);
@@ -1156,12 +1156,12 @@ public class TestDFSClientRetries {
 
       //make sure it won't retry on exceptions like FileNotFoundException
       final Path nonExisting = new Path(dir, "nonExisting");
-      LOG.info("setPermission: " + nonExisting);
+      LOG.error("Temp", new RuntimeException());
       try {
         fs.setPermission(nonExisting, new FsPermission((short)0));
         fail();
       } catch(FileNotFoundException fnfe) {
-        LOG.info("GOOD!", fnfe);
+        LOG.error("Temp", new RuntimeException());
       }
 
       assertEmpty(exceptions);
@@ -1221,7 +1221,7 @@ public class TestDFSClientRetries {
   
   static void parseMultipleLinearRandomRetry(String expected, String s) {
     final MultipleLinearRandomRetry r = MultipleLinearRandomRetry.parseCommaSeparatedString(s);
-    LOG.info("input=" + s + ", parsed=" + r + ", expected=" + expected);
+    LOG.error("Temp", new RuntimeException());
     if (r == null) {
       assertEquals(expected, null);
     } else {

@@ -144,14 +144,14 @@ public class TestTimelineServiceRecords {
     entity.addRelatesToEntity("test type 3", "test id 3");
     entity.addIsRelatedToEntity("test type 4", "test id 4");
     entity.addIsRelatedToEntity("test type 5", "test id 5");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(entity, true));
+    LOG.error("Temp", new RuntimeException());
 
     TimelineEntities entities = new TimelineEntities();
     TimelineEntity entity1 = new TimelineEntity();
     entities.addEntity(entity1);
     TimelineEntity entity2 = new TimelineEntity();
     entities.addEntity(entity2);
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(entities, true));
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertFalse("entity 1 should not be valid without type and id",
         entity1.isValid());
@@ -235,13 +235,13 @@ public class TestTimelineServiceRecords {
     container.setParent(TimelineEntityType.YARN_APPLICATION_ATTEMPT.toString(),
         appAttempt.getId());
 
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(cluster, true));
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(flow1, true));
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(flow2, true));
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(app1, true));
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(app2, true));
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(appAttempt, true));
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(container, true));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
 
     // Check parent/children APIs
@@ -292,7 +292,7 @@ public class TestTimelineServiceRecords {
     user.setId("test user id");
     user.addInfo("test info key 1", "test info value 1");
     user.addInfo("test info key 2", "test info value 2");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(user, true));
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -307,6 +307,6 @@ public class TestTimelineServiceRecords {
         "test child queue id 1");
     queue.addChild(TimelineEntityType.YARN_QUEUE.toString(),
         "test child queue id 2");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(queue, true));
+    LOG.error("Temp", new RuntimeException());
   }
 }

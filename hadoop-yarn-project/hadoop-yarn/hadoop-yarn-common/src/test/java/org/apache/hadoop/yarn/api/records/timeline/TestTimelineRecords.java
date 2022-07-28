@@ -64,8 +64,8 @@ public class TestTimelineRecords {
       entity.setDomainId("domain id " + j);
       entities.addEntity(entity);
     }
-    LOG.info("Entities in JSON:");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(entities, true));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(2, entities.getEntities().size());
     TimelineEntity entity1 = entities.getEntities().get(0);
@@ -104,8 +104,8 @@ public class TestTimelineRecords {
       }
       events.addEvent(partEvents);
     }
-    LOG.info("Events in JSON:");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(events, true));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(2, events.getAllEvents().size());
     TimelineEvents.EventsOfOneEntity partEvents1 = events.getAllEvents().get(0);
@@ -146,8 +146,8 @@ public class TestTimelineRecords {
     error2.setErrorCode(TimelinePutError.IO_EXCEPTION);
     response.add(error2);
     TimelinePutErrors.addErrors(response);
-    LOG.info("Errors in JSON:");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(TimelinePutErrors, true));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(3, TimelinePutErrors.getErrors().size());
     TimelinePutError e = TimelinePutErrors.getErrors().get(0);
@@ -182,8 +182,8 @@ public class TestTimelineRecords {
       domain.setModifiedTime(1L);
       domains.addDomain(domain);
     }
-    LOG.info("Domain in JSON:");
-    LOG.info(TimelineUtils.dumpTimelineRecordtoJSON(domains, true));
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(2, domains.getDomains().size());
 

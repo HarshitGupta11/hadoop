@@ -54,7 +54,7 @@ public class DockerContainerDeletionTask extends DeletionTask
   public void run() {
     if (LOG.isDebugEnabled()) {
       String msg = String.format("Running DeletionTask : %s", toString());
-      LOG.debug(msg);
+      LOG.error("Temp", new RuntimeException());
     }
     LinuxContainerExecutor exec = ((LinuxContainerExecutor)
         getDeletionService().getContainerExecutor());

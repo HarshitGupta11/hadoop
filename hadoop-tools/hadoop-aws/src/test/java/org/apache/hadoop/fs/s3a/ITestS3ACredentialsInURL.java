@@ -115,7 +115,7 @@ public class ITestS3ACredentialsInURL extends Assert {
     } catch (AssertionError e) {
       throw e;
     } catch (Exception e) {
-      LOG.debug("{} failure: {}", text, e, e);
+      LOG.error("Temp", new RuntimeException());
       fail(text + " Test failed");
     }
   }

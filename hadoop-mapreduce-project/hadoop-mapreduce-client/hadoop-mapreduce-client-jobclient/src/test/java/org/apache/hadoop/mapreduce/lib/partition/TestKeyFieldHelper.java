@@ -380,20 +380,20 @@ public class TestKeyFieldHelper {
   
   private void testKeySpecs(String input, String expectedOutput, 
                             KeyFieldHelper helper, int s1, int e1) {
-    LOG.info("input : " + input);
+    LOG.error("Temp", new RuntimeException());
     String keySpecs = helper.keySpecs().get(0).toString();
-    LOG.info("keyspecs : " + keySpecs);
+    LOG.error("Temp", new RuntimeException());
     byte[] inputBytes = input.getBytes(); // get the input bytes
     if (e1 == -1) {
       e1 = inputBytes.length;
     }
-    LOG.info("length : " + e1);
+    LOG.error("Temp", new RuntimeException());
     // get the word lengths
     int[] indices = helper.getWordLengths(inputBytes, s1, e1);
     // get the start index
     int start = helper.getStartOffset(inputBytes, s1, e1, indices, 
                                       helper.keySpecs().get(0));
-    LOG.info("start : " + start);
+    LOG.error("Temp", new RuntimeException());
     if (expectedOutput == null) {
       assertEquals("Expected -1 when the start index is invalid", -1, start);
       return;
@@ -401,16 +401,16 @@ public class TestKeyFieldHelper {
     // get the end index
     int end = helper.getEndOffset(inputBytes, s1, e1, indices, 
                                   helper.keySpecs().get(0));
-    LOG.info("end : " + end);
+    LOG.error("Temp", new RuntimeException());
     //my fix
     end = (end >= inputBytes.length) ? inputBytes.length -1 : end;
     int length = end + 1 - start;
-    LOG.info("length : " + length);
+    LOG.error("Temp", new RuntimeException());
     byte[] outputBytes = new byte[length];
     System.arraycopy(inputBytes, start, outputBytes, 0, length);
     String output = new String(outputBytes);
-    LOG.info("output : " + output);
-    LOG.info("expected-output : " + expectedOutput);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     assertEquals(keySpecs + " failed on input '" + input + "'", 
                  expectedOutput, output);
   }

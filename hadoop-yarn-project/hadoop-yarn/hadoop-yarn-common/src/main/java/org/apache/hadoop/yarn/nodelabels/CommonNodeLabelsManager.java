@@ -332,7 +332,7 @@ public class CommonNodeLabelsManager extends AbstractService {
           new StoreNewClusterNodeLabels(newLabels));
     }
 
-    LOG.info("Add labels: [" + StringUtils.join(labels.iterator(), ",") + "]");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -661,7 +661,7 @@ public class CommonNodeLabelsManager extends AbstractService {
     }
 
     // shows node->labels we added
-    LOG.info(op.name() + " labels on nodes:");
+    LOG.error("Temp", new RuntimeException());
     for (Entry<NodeId, Set<String>> entry : newNMToLabels.entrySet()) {
       LOG.info("  NM=" + entry.getKey() + ", labels=["
           + StringUtils.join(entry.getValue().iterator(), ",") + "]");
@@ -911,7 +911,7 @@ public class CommonNodeLabelsManager extends AbstractService {
           }
         }
       } else {
-        LOG.warn("getLabelsToNodes : Label [" + label + "] cannot be found");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return labelsToNodes;

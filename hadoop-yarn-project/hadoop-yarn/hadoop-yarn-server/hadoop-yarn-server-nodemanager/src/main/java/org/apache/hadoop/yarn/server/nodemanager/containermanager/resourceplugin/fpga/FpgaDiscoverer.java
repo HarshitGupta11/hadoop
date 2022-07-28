@@ -82,9 +82,9 @@ public class FpgaDiscoverer {
     this.conf = conf;
     this.plugin.initPlugin(conf);
     // Try to diagnose FPGA
-    LOG.info("Trying to diagnose FPGA information ...");
+    LOG.error("Temp", new RuntimeException());
     if (!diagnose()) {
-      LOG.warn("Failed to pass FPGA devices diagnose");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

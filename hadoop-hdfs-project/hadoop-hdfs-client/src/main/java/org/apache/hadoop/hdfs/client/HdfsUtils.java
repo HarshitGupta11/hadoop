@@ -68,7 +68,7 @@ public class HdfsUtils {
       fs = (DistributedFileSystem)FileSystem.get(uri, conf);
       final boolean safemode = fs.setSafeMode(SafeModeAction.SAFEMODE_GET);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Is namenode in safemode? " + safemode + "; uri=" + uri);
+        LOG.error("Temp", new RuntimeException());
       }
 
       fs.close();
@@ -76,7 +76,7 @@ public class HdfsUtils {
       return !safemode;
     } catch(IOException e) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Got an exception for uri=" + uri, e);
+        LOG.error("Temp", new RuntimeException());
       }
       return false;
     } finally {

@@ -54,9 +54,9 @@ public class TestFilterFs {
       
       try {
         DontCheck.class.getMethod(m.getName(), m.getParameterTypes());
-        LOG.info("Skipping " + m);
+        LOG.error("Temp", new RuntimeException());
       } catch (NoSuchMethodException exc) {
-        LOG.info("Testing " + m);
+        LOG.error("Temp", new RuntimeException());
         try{
           FilterFs.class.getDeclaredMethod(m.getName(), m.getParameterTypes());
         }

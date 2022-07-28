@@ -217,9 +217,9 @@ public class ShuffleSchedulerImpl<K,V> implements ShuffleScheduler<K,V> {
       updateStatus(individualProgress);
       reduceShuffleBytes.increment(bytes);
       lastProgressTime = Time.monotonicNow();
-      LOG.debug("map " + mapId + " done " + status.getStateString());
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.warn("Aborting already-finished MapOutput for " + mapId);
+      LOG.error("Temp", new RuntimeException());
       output.abort();
     }
   }
@@ -346,7 +346,7 @@ public class ShuffleSchedulerImpl<K,V> implements ShuffleScheduler<K,V> {
       boolean connectExcpt, boolean hostFailed) {
     if (connectExcpt || (reportReadErrorImmediately && readError)
         || ((failures % maxFetchFailuresBeforeReporting) == 0) || hostFailed) {
-      LOG.info("Reporting fetch failure for " + mapId + " to MRAppMaster.");
+      LOG.error("Temp", new RuntimeException());
       status.addFetchFailedMap((org.apache.hadoop.mapred.TaskAttemptID) mapId);
     }
   }

@@ -78,11 +78,11 @@ public class ITestS3AInputStreamPerformance extends S3AScaleTestBase {
     String testFile =  conf.getTrimmed(KEY_CSVTEST_FILE, DEFAULT_CSVTEST_FILE);
     if (testFile.isEmpty()) {
       assumptionMessage = "Empty test property: " + KEY_CSVTEST_FILE;
-      LOG.warn(assumptionMessage);
+      LOG.error("Temp", new RuntimeException());
       testDataAvailable = false;
     } else {
       testData = new Path(testFile);
-      LOG.info("Using {} as input stream source", testData);
+      LOG.error("Temp", new RuntimeException());
       Path path = this.testData;
       bindS3aFS(path);
       try {
@@ -247,12 +247,12 @@ public class ITestS3AInputStreamPerformance extends S3AScaleTestBase {
               readTimer.nanosPerOperation(bytesRead),
               readTimer.bandwidthDescription(bytesRead));
         } else {
-          LOG.warn("0 bytes returned by read() operation #{}", reads);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       blockTimer.end("Reading block %d in %d reads", blockId, reads);
       String bw = blockTimer.bandwidthDescription(blockSize);
-      LOG.info("Bandwidth of block {}: {} MB/s: ", blockId, bw);
+      LOG.error("Temp", new RuntimeException());
       if (bandwidth(blockTimer, blockSize) < minimumBandwidth) {
         LOG.warn("Bandwidth {} too low on block {}: resetting connection",
             bw, blockId);
@@ -362,7 +362,7 @@ public class ITestS3AInputStreamPerformance extends S3AScaleTestBase {
   }
 
   private void logStreamStatistics() {
-    LOG.info(String.format("Stream Statistics%n{}"), streamStatistics);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -491,7 +491,7 @@ public class ITestS3AInputStreamPerformance extends S3AScaleTestBase {
     int halfReadahead = _4K;
     in = openDataFile(fs, dataFile, S3AInputPolicy.Random, readahead);
 
-    LOG.info("Starting initial reads");
+    LOG.error("Temp", new RuntimeException());
     S3AInputStream s3aStream = getS3aStream();
     assertEquals(readahead, s3aStream.getReadahead());
     byte[] oneByte = new byte[1];
@@ -557,9 +557,9 @@ public class ITestS3AInputStreamPerformance extends S3AScaleTestBase {
     describe("read() to EOF over \n%s", in);
     long readCount = 0;
     NanoTimer timer = new NanoTimer();
-    LOG.info("seeking");
+    LOG.error("Temp", new RuntimeException());
     in.seek(currentPos);
-    LOG.info("reading");
+    LOG.error("Temp", new RuntimeException());
     while(currentPos < datasetLen) {
       int r = in.read();
       assertTrue("Negative read() at position " + currentPos + " in\n" + in,

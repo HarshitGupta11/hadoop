@@ -105,7 +105,7 @@ public class DFSStripedInputStream extends DFSInputStream {
     decoder = CodecUtil.createRawDecoder(dfsClient.getConfiguration(),
         ecPolicy.getCodecName(), coderOptions);
     if (DFSClient.LOG.isDebugEnabled()) {
-      DFSClient.LOG.debug("Creating an striped input stream for file " + src);
+      DFSClient.LOG.error("Temp", new RuntimeException());
     }
   }
 

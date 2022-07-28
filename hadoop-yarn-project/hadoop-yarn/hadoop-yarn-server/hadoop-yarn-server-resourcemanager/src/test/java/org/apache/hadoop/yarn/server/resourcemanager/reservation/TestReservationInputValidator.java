@@ -124,7 +124,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertEquals("The queue is not specified. Please try again with a "
           + "valid reservable queue.", message);
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -145,7 +145,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .endsWith(" is not managed by reservation system. Please try again with a valid reservable queue."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -165,7 +165,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertEquals("Missing reservation definition. Please try again by "
           + "specifying a reservation definition.", message);
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -184,7 +184,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("The specified deadline: 0 is the past"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -203,7 +203,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("No resources have been specified to reserve"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -222,7 +222,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("No resources have been specified to reserve"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -243,7 +243,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .contains("must  be greater or equal to the minimum resource duration"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -266,7 +266,7 @@ public class TestReservationInputValidator {
           "The size of the largest gang in the reservation definition"));
       Assert.assertTrue(message.contains(
           "exceed the capacity available "));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -300,7 +300,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("Negative Period : "));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -320,7 +320,7 @@ public class TestReservationInputValidator {
       Assert.assertNull(plan);
       String message = e.getMessage();
       Assert.assertTrue(message.startsWith("The maximum periodicity:"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -340,7 +340,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("Invalid period "));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // now check duration
@@ -357,7 +357,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("Duration of the requested reservation:"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -387,7 +387,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .startsWith("Missing reservation id. Please try again by specifying a reservation id."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -409,7 +409,7 @@ public class TestReservationInputValidator {
               .format(
                   "The specified reservation with ID: {0} is unknown. Please try again with a valid reservation.",
                   rId)));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -428,7 +428,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .endsWith(" is not associated with any valid plan. Please try again with a valid reservation."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -446,7 +446,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .startsWith("Missing reservation definition. Please try again by specifying a reservation definition."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -463,7 +463,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("The specified deadline: 0 is the past"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -480,7 +480,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("No resources have been specified to reserve"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -497,7 +497,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("No resources have been specified to reserve"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -515,7 +515,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .contains("must  be greater or equal to the minimum resource duration"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -536,7 +536,7 @@ public class TestReservationInputValidator {
           "The size of the largest gang in the reservation definition"));
       Assert.assertTrue(message.contains(
           "exceed the capacity available "));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -568,7 +568,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("Negative Period : "));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -587,7 +587,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("Invalid period "));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // now check duration
@@ -603,7 +603,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message
           .startsWith("Duration of the requested reservation:"));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -637,7 +637,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .startsWith("Missing reservation id. Please try again by specifying a reservation id."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -659,7 +659,7 @@ public class TestReservationInputValidator {
               .format(
                   "The specified reservation with ID: {0} is unknown. Please try again with a valid reservation.",
                   rId)));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -680,7 +680,7 @@ public class TestReservationInputValidator {
       Assert
           .assertTrue(message
               .endsWith(" is not associated with any valid plan. Please try again with a valid reservation."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -737,7 +737,7 @@ public class TestReservationInputValidator {
       String message = e.getMessage();
       Assert.assertTrue(message.equals("The specified end time must be " +
               "greater than the specified start time."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -755,7 +755,7 @@ public class TestReservationInputValidator {
       Assert.assertTrue(message.equals(
           "The queue is not specified. Please try again with a valid " +
                                       "reservable queue."));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -777,7 +777,7 @@ public class TestReservationInputValidator {
             + " is not managed by reservation system."
             + " Please try again with a valid reservable queue."
       ));
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

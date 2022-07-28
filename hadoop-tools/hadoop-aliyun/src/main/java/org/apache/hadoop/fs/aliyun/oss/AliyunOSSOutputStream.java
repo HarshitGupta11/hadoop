@@ -90,7 +90,7 @@ public class AliyunOSSOutputStream extends OutputStream {
       }
     } finally {
       if (!tmpFile.delete()) {
-        LOG.warn("Can not delete file: " + tmpFile);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

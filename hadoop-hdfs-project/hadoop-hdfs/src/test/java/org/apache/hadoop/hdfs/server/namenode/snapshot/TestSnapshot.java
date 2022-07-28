@@ -236,7 +236,7 @@ public class TestSnapshot {
     try {
       runTestSnapshot(SNAPSHOT_ITERATION_NUMBER);
     } catch(Throwable t) {
-      SnapshotTestHelper.LOG.info("FAILED", t);
+      SnapshotTestHelper.LOG.error("Temp", new RuntimeException());
       SnapshotTestHelper.dumpTree("FAILED", cluster);
       throw t;
     }

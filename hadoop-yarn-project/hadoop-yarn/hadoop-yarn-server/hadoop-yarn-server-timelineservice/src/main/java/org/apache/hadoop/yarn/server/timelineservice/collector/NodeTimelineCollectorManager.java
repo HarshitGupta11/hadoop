@@ -225,7 +225,7 @@ public class NodeTimelineCollectorManager extends TimelineCollectorManager {
           renewalOrRegenerationFuture, tokenId.getMaxDate(),
           tokenId.getRenewer().toString());
     }
-    LOG.info("Generated a new token " + timelineToken + " for app " + appId);
+    LOG.error("Temp", new RuntimeException());
     return org.apache.hadoop.yarn.api.records.Token.newInstance(
         timelineToken.getIdentifier(), timelineToken.getKind().toString(),
         timelineToken.getPassword(), timelineToken.getService().toString());
@@ -337,34 +337,34 @@ public class NodeTimelineCollectorManager extends TimelineCollectorManager {
       throws YarnException, IOException {
     GetTimelineCollectorContextRequest request =
         GetTimelineCollectorContextRequest.newInstance(appId);
-    LOG.info("Get timeline collector context for " + appId);
+    LOG.error("Temp", new RuntimeException());
     GetTimelineCollectorContextResponse response =
         getNMCollectorService().getTimelineCollectorContext(request);
     String userId = response.getUserId();
     if (userId != null && !userId.isEmpty()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Setting the user in the context: " + userId);
+        LOG.error("Temp", new RuntimeException());
       }
       collector.getTimelineEntityContext().setUserId(userId);
     }
     String flowName = response.getFlowName();
     if (flowName != null && !flowName.isEmpty()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Setting the flow name: " + flowName);
+        LOG.error("Temp", new RuntimeException());
       }
       collector.getTimelineEntityContext().setFlowName(flowName);
     }
     String flowVersion = response.getFlowVersion();
     if (flowVersion != null && !flowVersion.isEmpty()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Setting the flow version: " + flowVersion);
+        LOG.error("Temp", new RuntimeException());
       }
       collector.getTimelineEntityContext().setFlowVersion(flowVersion);
     }
     long flowRunId = response.getFlowRunId();
     if (flowRunId != 0L) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Setting the flow run id: " + flowRunId);
+        LOG.error("Temp", new RuntimeException());
       }
       collector.getTimelineEntityContext().setFlowRunId(flowRunId);
     }
@@ -381,7 +381,7 @@ public class NodeTimelineCollectorManager extends TimelineCollectorManager {
               YarnConfiguration.NM_COLLECTOR_SERVICE_ADDRESS,
               YarnConfiguration.DEFAULT_NM_COLLECTOR_SERVICE_ADDRESS,
               YarnConfiguration.DEFAULT_NM_COLLECTOR_SERVICE_PORT);
-          LOG.info("nmCollectorServiceAddress: " + nmCollectorServiceAddress);
+          LOG.error("Temp", new RuntimeException());
           final YarnRPC rpc = YarnRPC.create(conf);
 
           // TODO Security settings.
@@ -439,7 +439,7 @@ public class NodeTimelineCollectorManager extends TimelineCollectorManager {
       try {
         reportNewCollectorInfoToNM(appId, token);
       } catch (YarnException e) {
-        LOG.warn("Unable to report regenerated token to NM for " + appId);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

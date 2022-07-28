@@ -269,9 +269,9 @@ public class TestBlockRecovery {
       // Here its not failing, will again do the assertions for activeNN after
       // this waiting period and fails there if BPOS has not acknowledged
       // any NN as active.
-      LOG.warn("Failed to get active NN", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (InterruptedException e) {
-      LOG.warn("InterruptedException while waiting to see active NN", e);
+      LOG.error("Temp", new RuntimeException());
     }
     Assert.assertNotNull("Failed to get ActiveNN",
         dn.getAllBpOs().get(0).getActiveNN());
@@ -334,7 +334,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testFinalizedReplicas () throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     ReplicaRecoveryInfo replica1 = new ReplicaRecoveryInfo(BLOCK_ID, 
         REPLICA_LEN1, GEN_STAMP-1, ReplicaState.FINALIZED);
@@ -373,7 +373,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testFinalizedRbwReplicas() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     
     // rbw and finalized replicas have the same length
@@ -415,7 +415,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testFinalizedRwrReplicas() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     
     // rbw and finalized replicas have the same length
@@ -457,7 +457,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testRBWReplicas() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     ReplicaRecoveryInfo replica1 = new ReplicaRecoveryInfo(BLOCK_ID, 
         REPLICA_LEN1, GEN_STAMP-1, ReplicaState.RBW);
@@ -481,7 +481,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testRBW_RWRReplicas() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     ReplicaRecoveryInfo replica1 = new ReplicaRecoveryInfo(BLOCK_ID, 
         REPLICA_LEN1, GEN_STAMP-1, ReplicaState.RBW);
@@ -505,7 +505,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testRWRReplicas() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     ReplicaRecoveryInfo replica1 = new ReplicaRecoveryInfo(BLOCK_ID, 
         REPLICA_LEN1, GEN_STAMP-1, ReplicaState.RWR);
@@ -543,7 +543,7 @@ public class TestBlockRecovery {
   public void testRecoveryInProgressException()
     throws IOException, InterruptedException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     doThrow(new RecoveryInProgressException("Replica recovery is in progress")).
        when(spyDN).initReplicaRecovery(any(RecoveringBlock.class));
@@ -567,7 +567,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testErrorReplicas() throws IOException, InterruptedException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     doThrow(new IOException()).
        when(spyDN).initReplicaRecovery(any(RecoveringBlock.class));
@@ -594,7 +594,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testZeroLenReplicas() throws IOException, InterruptedException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     doReturn(new ReplicaRecoveryInfo(block.getBlockId(), 0,
         block.getGenerationStamp(), ReplicaState.FINALIZED)).when(spyDN).
@@ -634,7 +634,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testFailedReplicaUpdate() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     doThrow(new IOException()).when(spyDN).updateReplicaUnderRecovery(
         block, RECOVERY_ID, BLOCK_ID, block.getNumBytes());
@@ -656,7 +656,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testNoReplicaUnderRecovery() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     dn.data.createRbw(StorageType.DEFAULT, null, block, false);
     BlockRecoveryWorker.RecoveryTaskContiguous RecoveryTaskContiguous =
@@ -681,7 +681,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testNotMatchedReplicaID() throws IOException {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
     ReplicaInPipeline replicaInfo = dn.data.createRbw(
         StorageType.DEFAULT, null, block, false).getReplica();
@@ -782,7 +782,7 @@ public class TestBlockRecovery {
   @Test(timeout=60000)
   public void testRURReplicas() throws Exception {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Running " + GenericTestUtils.getMethodName());
+      LOG.error("Temp", new RuntimeException());
     }
 
     doReturn(new ReplicaRecoveryInfo(block.getBlockId(), block.getNumBytes(),
@@ -958,7 +958,7 @@ public class TestBlockRecovery {
    */
   private void testStopWorker(final TestStopWorkerRunnable tswr)
       throws Exception {
-    LOG.debug("Running " + currentTestName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
     // We need a long value for the data xceiver stop timeout.
     // Otherwise the timeout will trigger, and we will not have tested that
     // thread join was done locklessly.
@@ -981,15 +981,15 @@ public class TestBlockRecovery {
       public void run() {
         try {
           // Register this thread as the writer for the recoveringBlock.
-          LOG.debug("slowWriter creating rbw");
+          LOG.error("Temp", new RuntimeException());
           ReplicaHandler replicaHandler =
               spyDN.data.createRbw(StorageType.DISK, null, block, false);
           replicaHandler.close();
-          LOG.debug("slowWriter created rbw");
+          LOG.error("Temp", new RuntimeException());
           // Tell the parent thread to start progressing.
           progressParent.sem.release();
           terminateSlowWriter.uninterruptiblyAcquire(60000);
-          LOG.debug("slowWriter exiting");
+          LOG.error("Temp", new RuntimeException());
         } catch (Throwable t) {
           LOG.error("slowWriter got exception", t);
           failure.compareAndSet(null, "slowWriter got exception " +
@@ -1007,9 +1007,9 @@ public class TestBlockRecovery {
       @Override
       public void run() {
         try {
-          LOG.debug("initiating " + tswr.opName());
+          LOG.error("Temp", new RuntimeException());
           tswr.run(recoveringBlock);
-          LOG.debug("finished " + tswr.opName());
+          LOG.error("Temp", new RuntimeException());
         } catch (Throwable t) {
           LOG.error("stopWriterThread got unexpected exception for " +
               tswr.opName(), t);

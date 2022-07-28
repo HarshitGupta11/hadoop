@@ -39,7 +39,7 @@ public class
       int base) {
     super(base);
     schema = StripedFileTestUtil.getRandomNonDefaultECPolicy().getSchema();
-    LOG.info(schema.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

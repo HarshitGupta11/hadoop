@@ -124,7 +124,7 @@ class BinaryProtocol<K1 extends WritableComparable, V1 extends Writable,
             throw new InterruptedException();
           }
           int cmd = WritableUtils.readVInt(inStream);
-          LOG.debug("Handling uplink command " + cmd);
+          LOG.error("Temp", new RuntimeException());
           if (cmd == MessageType.AUTHENTICATION_RESP.code) {
             String digest = Text.readString(inStream);
             authPending = !handler.authenticate(digest);
@@ -155,7 +155,7 @@ class BinaryProtocol<K1 extends WritableComparable, V1 extends Writable,
             long amount = WritableUtils.readVLong(inStream);
             handler.incrementCounter(id, amount);
           } else if (cmd == MessageType.DONE.code) {
-            LOG.debug("Pipe child done");
+            LOG.error("Temp", new RuntimeException());
             handler.done();
             return;
           } else {
@@ -260,7 +260,7 @@ class BinaryProtocol<K1 extends WritableComparable, V1 extends Writable,
    * @throws InterruptedException
    */
   public void close() throws IOException, InterruptedException {
-    LOG.debug("closing connection");
+    LOG.error("Temp", new RuntimeException());
     stream.close();
     uplink.closeConnection();
     uplink.interrupt();
@@ -277,7 +277,7 @@ class BinaryProtocol<K1 extends WritableComparable, V1 extends Writable,
   }
 
   public void start() throws IOException {
-    LOG.debug("starting downlink");
+    LOG.error("Temp", new RuntimeException());
     WritableUtils.writeVInt(stream, MessageType.START.code);
     WritableUtils.writeVInt(stream, CURRENT_PROTOCOL_VERSION);
   }
@@ -335,12 +335,12 @@ class BinaryProtocol<K1 extends WritableComparable, V1 extends Writable,
 
   public void endOfInput() throws IOException {
     WritableUtils.writeVInt(stream, MessageType.CLOSE.code);
-    LOG.debug("Sent close command");
+    LOG.error("Temp", new RuntimeException());
   }
   
   public void abort() throws IOException {
     WritableUtils.writeVInt(stream, MessageType.ABORT.code);
-    LOG.debug("Sent abort command");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void flush() throws IOException {

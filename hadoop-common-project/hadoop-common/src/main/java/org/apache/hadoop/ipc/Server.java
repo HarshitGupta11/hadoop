@@ -859,7 +859,7 @@ public abstract class Server {
     @Override
     public Void run() throws Exception {
       if (!connection.channel.isOpen()) {
-        Server.LOG.info(Thread.currentThread().getName() + ": skipped " + this);
+        Server.LOG.error("Temp", new RuntimeException());
         return null;
       }
       Writable value = null;
@@ -878,7 +878,7 @@ public abstract class Server {
         sendResponse();
       } else {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Deferring response for callId: " + this.callId);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       return null;
@@ -1064,7 +1064,7 @@ public abstract class Server {
       
       @Override
       public void run() {
-        LOG.info("Starting " + Thread.currentThread().getName());
+        LOG.error("Temp", new RuntimeException());
         try {
           doRunLoop();
         } finally {
@@ -1108,7 +1108,7 @@ public abstract class Server {
             }
           } catch (InterruptedException e) {
             if (running) {                      // unexpected -- log it
-              LOG.info(Thread.currentThread().getName() + " unexpectedly interrupted", e);
+              LOG.error("Temp", new RuntimeException());
             }
           } catch (IOException ex) {
             LOG.error("Error in Reader", ex);
@@ -1143,7 +1143,7 @@ public abstract class Server {
 
     @Override
     public void run() {
-      LOG.info(Thread.currentThread().getName() + ": starting");
+      LOG.error("Temp", new RuntimeException());
       SERVER.set(Server.this);
       connectionManager.startIdleScan();
       while (running) {
@@ -1167,7 +1167,7 @@ public abstract class Server {
           // we can run out of memory if we have too many threads
           // log the event and sleep for a minute and give 
           // some thread(s) a chance to finish
-          LOG.warn("Out of Memory in server select", e);
+          LOG.error("Temp", new RuntimeException());
           closeCurrentConnection(key, e);
           connectionManager.closeIdle(true);
           try { Thread.sleep(60000); } catch (Exception ie) {}
@@ -1175,7 +1175,7 @@ public abstract class Server {
           closeCurrentConnection(key, e);
         }
       }
-      LOG.info("Stopping " + Thread.currentThread().getName());
+      LOG.error("Temp", new RuntimeException());
 
       synchronized (this) {
         try {
@@ -1241,7 +1241,7 @@ public abstract class Server {
       try {
         count = c.readAndProcess();
       } catch (InterruptedException ieo) {
-        LOG.info(Thread.currentThread().getName() + ": readAndProcess caught InterruptedException", ieo);
+        LOG.error("Temp", new RuntimeException());
         throw ieo;
       } catch (Exception e) {
         // Any exceptions that reach here are fatal unexpected internal errors
@@ -1271,7 +1271,7 @@ public abstract class Server {
         try {
           acceptChannel.socket().close();
         } catch (IOException e) {
-          LOG.info(Thread.currentThread().getName() + ":Exception in closing listener socket. " + e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       for (Reader r : readers) {
@@ -1304,12 +1304,12 @@ public abstract class Server {
 
     @Override
     public void run() {
-      LOG.info(Thread.currentThread().getName() + ": starting");
+      LOG.error("Temp", new RuntimeException());
       SERVER.set(Server.this);
       try {
         doRunLoop();
       } finally {
-        LOG.info("Stopping " + Thread.currentThread().getName());
+        LOG.error("Temp", new RuntimeException());
         try {
           writeSelector.close();
         } catch (IOException ioe) {
@@ -1343,7 +1343,7 @@ public abstract class Server {
                     ": connection aborted from " + call.connection);
               }
             } catch (IOException e) {
-              LOG.info(Thread.currentThread().getName() + ": doAsyncWrite threw exception " + e);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           long now = Time.now();
@@ -1356,7 +1356,7 @@ public abstract class Server {
           // long time, discard them.
           //
           if(LOG.isDebugEnabled()) {
-            LOG.debug("Checking for old call responses.");
+            LOG.error("Temp", new RuntimeException());
           }
           ArrayList<RpcCall> calls;
           
@@ -1382,10 +1382,10 @@ public abstract class Server {
           // log the event and sleep for a minute and give
           // some thread(s) a chance to finish
           //
-          LOG.warn("Out of Memory in server select", e);
+          LOG.error("Temp", new RuntimeException());
           try { Thread.sleep(60000); } catch (Exception ie) {}
         } catch (Exception e) {
-          LOG.warn("Exception in Responder", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -1409,7 +1409,7 @@ public abstract class Server {
              * ever fire.
              * This warning could be removed.
              */
-            LOG.warn("Exception while changing ops : " + e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -1458,7 +1458,7 @@ public abstract class Server {
           call = responseQueue.removeFirst();
           SocketChannel channel = call.connection.channel;
           if (LOG.isDebugEnabled()) {
-            LOG.debug(Thread.currentThread().getName() + ": responding to " + call);
+            LOG.error("Temp", new RuntimeException());
           }
           //
           // Send as much data as we can in the non-blocking fashion
@@ -1513,7 +1513,7 @@ public abstract class Server {
         }
       } finally {
         if (error && call != null) {
-          LOG.warn(Thread.currentThread().getName()+", call " + call + ": output error");
+          LOG.error("Temp", new RuntimeException());
           done = true;               // error. no more data for this channel.
           closeConnection(call.connection);
         }
@@ -1819,7 +1819,7 @@ public abstract class Server {
         } catch (IOException e) {
           rpcMetrics.incrAuthenticationFailures();
           if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtils.stringifyException(e));
+            LOG.error("Temp", new RuntimeException());
           }
           // attempting user could be null
           IOException tce = (IOException) getTrueCause(e);
@@ -1836,10 +1836,10 @@ public abstract class Server {
           }
           user = getAuthorizedUgi(saslServer.getAuthorizationID());
           if (LOG.isDebugEnabled()) {
-            LOG.debug("SASL server successfully authenticated client: " + user);
+            LOG.error("Temp", new RuntimeException());
           }
           rpcMetrics.incrAuthenticationSuccesses();
-          AUDITLOG.info(AUTH_SUCCESSFUL_FOR + user);
+          AUDITLOG.error("Temp", new RuntimeException());
           saslContextEstablished = true;
         }
       } catch (RpcServerException rse) { // don't re-wrap
@@ -2001,13 +2001,13 @@ public abstract class Server {
       if (dataLength < 0) {
         String error = "Unexpected data length " + dataLength +
                        "!! from " + getHostAddress();
-        LOG.warn(error);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(error);
       } else if (dataLength > maxDataLength) {
         String error = "Requested data length " + dataLength +
               " is longer than maximum configured RPC length " + 
             maxDataLength + ".  RPC came from " + getHostAddress();
-        LOG.warn(error);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(error);
       }
     }
@@ -2345,7 +2345,7 @@ public abstract class Server {
         callId = header.getCallId();
         retry = header.getRetryCount();
         if (LOG.isDebugEnabled()) {
-          LOG.debug(" got #" + callId);
+          LOG.error("Temp", new RuntimeException());
         }
         checkRpcHeaders(header);
 
@@ -2524,7 +2524,7 @@ public abstract class Server {
         }
         saslReadAndProcess(buffer);
       } else if (callId == PING_CALL_ID) {
-        LOG.debug("Received ping message");
+        LOG.error("Temp", new RuntimeException());
       } else {
         throw new FatalRpcServerException(
             RpcErrorCodeProto.FATAL_INVALID_RPC_HEADER,
@@ -2548,7 +2548,7 @@ public abstract class Server {
         }
         authorize(user, protocolName, getHostInetAddress());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Successfully authorized " + connectionContext);
+          LOG.error("Temp", new RuntimeException());
         }
         rpcMetrics.incrAuthorizationSuccesses();
       } catch (AuthorizationException ae) {
@@ -2609,7 +2609,7 @@ public abstract class Server {
       if (!channel.isOpen())
         return;
       try {socket.shutdownOutput();} catch(Exception e) {
-        LOG.debug("Ignoring socket shutdown exception", e);
+        LOG.error("Temp", new RuntimeException());
       }
       if (channel.isOpen()) {
         IOUtils.cleanup(null, channel);
@@ -2653,14 +2653,14 @@ public abstract class Server {
 
     @Override
     public void run() {
-      LOG.debug(Thread.currentThread().getName() + ": starting");
+      LOG.error("Temp", new RuntimeException());
       SERVER.set(Server.this);
       while (running) {
         TraceScope traceScope = null;
         try {
           final Call call = callQueue.take(); // pop the queue; maybe blocked here
           if (LOG.isDebugEnabled()) {
-            LOG.debug(Thread.currentThread().getName() + ": " + call + " for RpcKind " + call.rpcKind);
+            LOG.error("Temp", new RuntimeException());
           }
           CurCall.set(call);
           if (call.traceScope != null) {
@@ -2678,14 +2678,14 @@ public abstract class Server {
           }
         } catch (InterruptedException e) {
           if (running) {                          // unexpected -- log it
-            LOG.info(Thread.currentThread().getName() + " unexpectedly interrupted", e);
+            LOG.error("Temp", new RuntimeException());
             if (traceScope != null) {
               traceScope.getSpan().addTimelineAnnotation("unexpectedly interrupted: " +
                   StringUtils.stringifyException(e));
             }
           }
         } catch (Exception e) {
-          LOG.info(Thread.currentThread().getName() + " caught an exception", e);
+          LOG.error("Temp", new RuntimeException());
           if (traceScope != null) {
             traceScope.getSpan().addTimelineAnnotation("Exception: " +
                 StringUtils.stringifyException(e));
@@ -2695,7 +2695,7 @@ public abstract class Server {
           IOUtils.cleanupWithLogger(LOG, traceScope);
         }
       }
-      LOG.debug(Thread.currentThread().getName() + ": exiting");
+      LOG.error("Temp", new RuntimeException());
     }
 
   }
@@ -2873,7 +2873,7 @@ public abstract class Server {
     }
     authMethods.add(confAuthenticationMethod.getAuthMethod());        
     
-    LOG.debug("Server accepts auth methods:" + authMethods);
+    LOG.error("Temp", new RuntimeException());
     return authMethods;
   }
   
@@ -2912,7 +2912,7 @@ public abstract class Server {
       try {
         setupResponse(call, header, rv);
       } catch (Throwable t) {
-        LOG.warn("Error serializing call response for call " + call, t);
+        LOG.error("Temp", new RuntimeException());
         // Call back to same function - this is OK since the
         // buffer is reset at the top, and since status is changed
         // to ERROR it won't infinite loop.
@@ -3071,7 +3071,7 @@ public abstract class Server {
 
   /** Stops the service.  No new calls will be handled after this is called. */
   public synchronized void stop() {
-    LOG.info("Stopping server on " + port);
+    LOG.error("Temp", new RuntimeException());
     running = false;
     if (handlers != null) {
       for (int i = 0; i < handlerCount; i++) {
@@ -3492,7 +3492,7 @@ public abstract class Server {
             return;
           }
           if (LOG.isDebugEnabled()) {
-            LOG.debug(Thread.currentThread().getName()+": task running");
+            LOG.error("Temp", new RuntimeException());
           }
           try {
             closeIdle(false);

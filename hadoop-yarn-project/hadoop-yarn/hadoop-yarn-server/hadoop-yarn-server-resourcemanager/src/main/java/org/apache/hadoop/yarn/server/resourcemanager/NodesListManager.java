@@ -177,7 +177,7 @@ public class NodesListManager extends CompositeService implements
       clusterMetrics.decrNumRebootedNMs();
       break;
     default:
-      LOG.debug("Unexpected node state");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -199,10 +199,10 @@ public class NodesListManager extends CompositeService implements
 
     HostDetails hostDetails = hostsReader.getHostDetails();
     for (String include : hostDetails.getIncludedHosts()) {
-      LOG.debug("include: " + include);
+      LOG.error("Temp", new RuntimeException());
     }
     for (String exclude : hostDetails.getExcludedHosts()) {
-      LOG.debug("exclude: " + exclude);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -233,7 +233,7 @@ public class NodesListManager extends CompositeService implements
     excludesFile =
         yarnConf.get(YarnConfiguration.RM_NODES_EXCLUDE_FILE_PATH,
             YarnConfiguration.DEFAULT_RM_NODES_EXCLUDE_FILE_PATH);
-    LOG.info("refreshNodes excludesFile " + excludesFile);
+    LOG.error("Temp", new RuntimeException());
     hostsReader.refresh(includesFile, excludesFile);
     printConfiguredHosts();
 
@@ -283,7 +283,7 @@ public class NodesListManager extends CompositeService implements
       if (!isExcluded) {
         // Note that no action is needed for DECOMMISSIONED node.
         if (s == NodeState.DECOMMISSIONING) {
-          LOG.info("Recommission " + nodeStr);
+          LOG.error("Temp", new RuntimeException());
           nodesToRecom.add(n);
         }
         // Otherwise no-action needed.
@@ -295,19 +295,19 @@ public class NodesListManager extends CompositeService implements
               excludes.get(n.getHostName()) : timeout;
           if (s != NodeState.DECOMMISSIONED &&
               s != NodeState.DECOMMISSIONING) {
-            LOG.info("Gracefully decommission " + nodeStr);
+            LOG.error("Temp", new RuntimeException());
             nodesToDecom.add(n);
           } else if (s == NodeState.DECOMMISSIONING &&
                      !Objects.equals(n.getDecommissioningTimeout(),
                          timeoutToUse)) {
-            LOG.info("Update " + nodeStr + " timeout to be " + timeoutToUse);
+            LOG.error("Temp", new RuntimeException());
             nodesToDecom.add(n);
           } else {
-            LOG.info("No action for " + nodeStr);
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
           if (s != NodeState.DECOMMISSIONED) {
-            LOG.info("Forcefully decommission " + nodeStr);
+            LOG.error("Temp", new RuntimeException());
             nodesToDecom.add(n);
           }
         }
@@ -492,17 +492,17 @@ public class NodesListManager extends CompositeService implements
     RMNode eventNode = event.getNode();
     switch (event.getType()) {
     case NODE_UNUSABLE:
-      LOG.debug(eventNode + " reported unusable");
+      LOG.error("Temp", new RuntimeException());
       sendRMAppNodeUpdateEventToNonFinalizedApps(eventNode,
           RMAppNodeUpdateType.NODE_UNUSABLE);
       break;
     case NODE_USABLE:
-      LOG.debug(eventNode + " reported usable");
+      LOG.error("Temp", new RuntimeException());
       sendRMAppNodeUpdateEventToNonFinalizedApps(eventNode,
           RMAppNodeUpdateType.NODE_USABLE);
       break;
     case NODE_DECOMMISSIONING:
-      LOG.debug(eventNode + " reported decommissioning");
+      LOG.error("Temp", new RuntimeException());
       sendRMAppNodeUpdateEventToNonFinalizedApps(
           eventNode, RMAppNodeUpdateType.NODE_DECOMMISSIONING);
       break;
@@ -518,7 +518,7 @@ public class NodesListManager extends CompositeService implements
   }
 
   private void disableHostsFileReader(Exception ex) {
-    LOG.warn("Failed to init hostsReader, disabling", ex);
+    LOG.error("Temp", new RuntimeException());
     try {
       this.includesFile =
           conf.get(YarnConfiguration.DEFAULT_RM_NODES_INCLUDE_FILE_PATH);
@@ -642,7 +642,7 @@ public class NodesListManager extends CompositeService implements
             + defaultDecTimeoutSecs);
       }
     } catch (Exception e) {
-      LOG.warn("Error readDecommissioningTimeout " + e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
     return defaultDecTimeoutSecs;
   }

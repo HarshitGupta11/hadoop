@@ -244,7 +244,7 @@ public class ParentQueue extends AbstractCSQueue {
       this.childQueues.clear();
       this.childQueues.addAll(childQueues);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("setChildQueues: " + getChildQueuesToPrint());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       writeLock.unlock();
@@ -380,7 +380,7 @@ public class ParentQueue extends AbstractCSQueue {
           }
           // Re-init existing queues
           childQueue.reinitialize(newChildQueue, clusterResource);
-          LOG.info(getQueueName() + ": re-configured queue: " + childQueue);
+          LOG.error("Temp", new RuntimeException());
         } else{
           // New child queue, do not re-init
 

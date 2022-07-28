@@ -121,7 +121,7 @@ public class NNBench extends Configured implements Tool {
     
     // Delete the data directory only if it is the create/write operation
     if (operation.equals(OP_CREATE_WRITE)) {
-      LOG.info("Deleting data directory");
+      LOG.error("Temp", new RuntimeException());
       tempFS.delete(new Path(baseDir, DATA_DIR_NAME), true);
     }
     tempFS.delete(new Path(baseDir, CONTROL_DIR_NAME), true);
@@ -135,7 +135,7 @@ public class NNBench extends Configured implements Tool {
    * @throws IOException on error
    */
   private void createControlFiles() throws IOException {
-    LOG.info("Creating " + numberOfMaps + " control files");
+    LOG.error("Temp", new RuntimeException());
 
     for (int i = 0; i < numberOfMaps; i++) {
       String strFileName = "NNBench_Controlfile_" + i;
@@ -268,18 +268,18 @@ public class NNBench extends Configured implements Tool {
       }
     }
     
-    LOG.info("Test Inputs: ");
-    LOG.info("           Test Operation: " + operation);
-    LOG.info("               Start time: " + sdf.format(new Date(startTime)));
-    LOG.info("           Number of maps: " + numberOfMaps);
-    LOG.info("        Number of reduces: " + numberOfReduces);
-    LOG.info("               Block Size: " + blockSize);
-    LOG.info("           Bytes to write: " + bytesToWrite);
-    LOG.info("       Bytes per checksum: " + bytesPerChecksum);
-    LOG.info("          Number of files: " + numberOfFiles);
-    LOG.info("       Replication factor: " + replicationFactorPerFile);
-    LOG.info("                 Base dir: " + baseDir);
-    LOG.info("     Read file after open: " + readFileAfterOpen);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     
     // Set user-defined parameters, so the map method can access the values
     getConf().set("test.nnbench.operation", operation);
@@ -447,7 +447,7 @@ public class NNBench extends Configured implements Tool {
         new FileOutputStream(new File(DEFAULT_RES_FILE_NAME), true))) {
       // Write to a file and also dump to log
       for (String resultLine : resultLines) {
-        LOG.info(resultLine);
+        LOG.error("Temp", new RuntimeException());
         res.println(resultLine);
       }
     }
@@ -672,7 +672,7 @@ public class NNBench extends Configured implements Tool {
       
       // If the sleep time is greater than 0, then sleep and return
       if (sleepTime > 0) {
-        LOG.info("Waiting in barrier for: " + sleepTime + " ms");
+        LOG.error("Temp", new RuntimeException());
       
         try {
           Thread.sleep(sleepTime);
@@ -932,13 +932,13 @@ public class NNBench extends Configured implements Tool {
     protected String hostName;
 
     public NNBenchReducer () {
-      LOG.info("Starting NNBenchReducer !!!");
+      LOG.error("Temp", new RuntimeException());
       try {
         hostName = java.net.InetAddress.getLocalHost().getHostName();
       } catch(Exception e) {
         hostName = "localhost";
       }
-      LOG.info("Starting NNBenchReducer on " + hostName);
+      LOG.error("Temp", new RuntimeException());
     }
 
     /**

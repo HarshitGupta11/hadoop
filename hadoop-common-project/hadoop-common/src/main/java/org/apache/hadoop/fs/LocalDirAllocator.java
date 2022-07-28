@@ -316,10 +316,10 @@ public class LocalDirAllocator {
                 dirs.add(new Path(tmpFile.getPath()));
                 dfList.add(new DF(tmpFile, 30000));
               } catch (DiskErrorException de) {
-                LOG.warn(dirStrings[i] + " is not writable\n", de);
+                LOG.error("Temp", new RuntimeException());
               }
             } else {
-              LOG.warn("Failed to create " + dirStrings[i]);
+              LOG.error("Temp", new RuntimeException());
             }
           } catch (IOException ie) { 
             LOG.warn("Failed to create " + dirStrings[i] + ": " +
@@ -351,7 +351,7 @@ public class LocalDirAllocator {
           DiskChecker.checkDir(new File(file.getParent().toUri().getPath()));
           return file;
         } catch (DiskErrorException d) {
-          LOG.warn("Disk Error Exception: ", d);
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
       }

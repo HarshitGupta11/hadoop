@@ -174,7 +174,7 @@ public class TestMRTimelineEventHandling {
   @SuppressWarnings("deprecation")
   @Test
   public void testMRNewTimelineServiceEventHandling() throws Exception {
-    LOG.info("testMRNewTimelineServiceEventHandling start.");
+    LOG.error("Temp", new RuntimeException());
 
     String testDir =
         new File("target", getClass().getSimpleName() +
@@ -206,11 +206,11 @@ public class TestMRTimelineEventHandling {
           TestMRTimelineEventHandling.class.getSimpleName(), 1, true);
       cluster.init(conf);
       cluster.start();
-      LOG.info("A MiniMRYarnCluster get start.");
+      LOG.error("Temp", new RuntimeException());
 
       Path inDir = new Path(testDir, "input");
       Path outDir = new Path(testDir, "output");
-      LOG.info("Run 1st job which should be successful.");
+      LOG.error("Temp", new RuntimeException());
       JobConf successConf = new JobConf(conf);
       successConf.set("dummy_conf1",
           UtilsForTests.createConfigValue(51 * 1024));
@@ -239,7 +239,7 @@ public class TestMRTimelineEventHandling {
       UtilsForTests.waitForAppFinished(job, cluster);
       checkNewTimelineEvent(firstAppId, appReport, storageDir);
 
-      LOG.info("Run 2nd job which should be failed.");
+      LOG.error("Temp", new RuntimeException());
       job = UtilsForTests.runJobFail(new JobConf(conf), inDir, outDir);
       Assert.assertEquals(JobStatus.FAILED,
           job.getJobStatus().getState().getValue());
@@ -396,7 +396,7 @@ public class TestMRTimelineEventHandling {
                       org.apache.hadoop.yarn.api.records.timelineservice.
                           TimelineEntity.class);
 
-          LOG.info("strLine.trim()= " + strLine.trim());
+          LOG.error("Temp", new RuntimeException());
           if (checkIdPrefix) {
             Assert.assertTrue("Entity ID prefix expected to be > 0",
                 entity.getIdPrefix() > 0);

@@ -279,7 +279,7 @@ public class NameNodeConnector implements Closeable {
       try {
         fs.delete(idPath, true);
       } catch(IOException ioe) {
-        LOG.warn("Failed to delete " + idPath, ioe);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

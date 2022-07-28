@@ -91,7 +91,7 @@ public class NMAuditLogger {
   public static void logSuccess(String user, String operation, String target,
       ApplicationId appId, ContainerId containerId) {
     if (LOG.isInfoEnabled()) {
-      LOG.info(createSuccessLog(user, operation, target, appId, containerId));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -108,7 +108,7 @@ public class NMAuditLogger {
    */
   public static void logSuccess(String user, String operation, String target) {
     if (LOG.isInfoEnabled()) {
-      LOG.info(createSuccessLog(user, operation, target, null, null));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -152,7 +152,7 @@ public class NMAuditLogger {
   public static void logFailure(String user, String operation, String target, 
       String description, ApplicationId appId, ContainerId containerId) {
     if (LOG.isWarnEnabled()) {
-      LOG.warn(createFailureLog(user, operation, target, description, appId, containerId));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -172,7 +172,7 @@ public class NMAuditLogger {
   public static void logFailure(String user, String operation, 
                          String target, String description) {
     if (LOG.isWarnEnabled()) {
-      LOG.warn(createFailureLog(user, operation, target, description, null, null));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

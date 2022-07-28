@@ -227,11 +227,11 @@ public class WebHdfsFileSystem extends FileSystem
         HdfsClientConfigKeys.DFS_WEBHDFS_OAUTH_ENABLED_DEFAULT);
 
     if(isOAuth) {
-      LOG.debug("Enabling OAuth2 in WebHDFS");
+      LOG.error("Temp", new RuntimeException());
       connectionFactory = URLConnectionFactory
           .newOAuth2URLConnectionFactory(connectTimeout, readTimeout, conf);
     } else {
-      LOG.debug("Not enabling OAuth2 in WebHDFS");
+      LOG.error("Temp", new RuntimeException());
       connectionFactory = URLConnectionFactory
           .newDefaultURLConnectionFactory(connectTimeout, readTimeout, conf);
     }
@@ -358,13 +358,13 @@ public class WebHdfsFileSystem extends FileSystem
       // refetch tokens.  even if ugi has credentials, don't attempt
       // to get another token to match hdfs/rpc behavior
       if (token != null) {
-        LOG.debug("Using UGI token: {}", token);
+        LOG.error("Temp", new RuntimeException());
         canRefreshDelegationToken = false;
       } else {
         if (canRefreshDelegationToken) {
           token = getDelegationToken(null);
           if (token != null) {
-            LOG.debug("Fetched new token: {}", token);
+            LOG.error("Temp", new RuntimeException());
           } else { // security is disabled
             canRefreshDelegationToken = false;
           }
@@ -380,7 +380,7 @@ public class WebHdfsFileSystem extends FileSystem
     boolean replaced = false;
     if (canRefreshDelegationToken) {
       Token<?> token = getDelegationToken(null);
-      LOG.debug("Replaced expired token: {}", token);
+      LOG.error("Temp", new RuntimeException());
       setDelegationToken(token);
       replaced = (token != null);
     }
@@ -870,7 +870,7 @@ public class WebHdfsFileSystem extends FileSystem
             return;
           }
         } catch(Exception e) {
-          LOG.warn("Original exception is ", ioe);
+          LOG.error("Temp", new RuntimeException());
           throw toIOException(e);
         }
       }
@@ -960,7 +960,7 @@ public class WebHdfsFileSystem extends FileSystem
       } catch (Exception e) { // catch json parser errors
         final IOException ioe =
             new IOException("Response decoding failure: "+e.toString(), e);
-        LOG.debug("Response decoding failure.", e);
+        LOG.error("Temp", new RuntimeException());
         throw ioe;
       } finally {
         // Don't call conn.disconnect() to allow connection reuse
@@ -1509,7 +1509,7 @@ public class WebHdfsFileSystem extends FileSystem
         cancelDelegationToken(delegationToken);
       }
     } catch (IOException ioe) {
-      LOG.debug("Token cancel failed: ", ioe);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       super.close();
     }
@@ -1768,7 +1768,7 @@ public class WebHdfsFileSystem extends FileSystem
       }.run();
       return new Path(strTrashPath).makeQualified(getUri(), null);
     } catch(IOException e) {
-      LOG.warn("Cannot find trash root of " + path, e);
+      LOG.error("Temp", new RuntimeException());
       // keep the same behavior with dfs
       return super.getTrashRoot(path).makeQualified(getUri(), null);
     }
@@ -2269,7 +2269,7 @@ public class WebHdfsFileSystem extends FileSystem
       final String cl = conn.getHeaderField(HttpHeaders.CONTENT_LENGTH);
       InputStream inStream = conn.getInputStream();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("open file: " + conn.getURL());
+        LOG.error("Temp", new RuntimeException());
       }
       if (cl != null) {
         long streamLength = Long.parseLong(cl);

@@ -137,7 +137,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
     bindRolePolicy(conf, RESTRICTED_POLICY);
     try (AssumedRoleCredentialProvider provider
              = new AssumedRoleCredentialProvider(uri, conf)) {
-      LOG.info("Provider is {}", provider);
+      LOG.error("Temp", new RuntimeException());
       AWSCredentials credentials = provider.getCredentials();
       assertNotNull("Null credentials from " + provider, credentials);
     }
@@ -377,7 +377,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
       counter++;
       iterator.next();
     }
-    LOG.info("Found {} outstanding MPUs", counter);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -571,10 +571,10 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
         readOnlyDir, createdFiles);
 
     // try to rename the directory
-    LOG.info("Renaming readonly files {} to {}", readOnlyDir, destDir);
+    LOG.error("Temp", new RuntimeException());
     AccessDeniedException ex = forbidden("",
         () -> roleFS.rename(readOnlyDir, destDir));
-    LOG.info("Result of renaming read-only files is AccessDeniedException", ex);
+    LOG.error("Temp", new RuntimeException());
     assertFileCount("files copied to the destination", roleFS,
         destDir, createdFiles);
     assertFileCount("files in the source directory", roleFS,
@@ -673,7 +673,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
           });
 
       // fail of all list and abort of .pending files.
-      LOG.info("abortAllSinglePendingCommits({})", readOnlyDir);
+      LOG.error("Temp", new RuntimeException());
       assertCommitAccessDenied(readOnlyDir,
           operations.abortAllSinglePendingCommits(readOnlyDir, true));
 
@@ -691,7 +691,7 @@ public class ITestAssumeRole extends AbstractS3ATestBase {
       forbidden("",
           () -> operations.abortPendingUploadsUnderPath(readOnlyDir));
     } finally {
-      LOG.info("Cleanup");
+      LOG.error("Temp", new RuntimeException());
       fullOperations.abortPendingUploadsUnderPath(readOnlyDir);
     }
   }

@@ -225,7 +225,7 @@ class FilePool {
         }
       }
       size = fileSum;
-      LOG.debug(size + " bytes in " + thisDir.getPath());
+      LOG.error("Temp", new RuntimeException());
       subdir = subdirList.toArray(new Node[subdirList.size()]);
       Arrays.sort(subdir, nodeComparator);
       dist = new double[subdir.length];

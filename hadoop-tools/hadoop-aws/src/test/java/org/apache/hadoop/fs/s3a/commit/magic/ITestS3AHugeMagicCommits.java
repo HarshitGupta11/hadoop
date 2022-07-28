@@ -183,7 +183,7 @@ public class ITestS3AHugeMagicCommits extends AbstractSTestS3AHugeFiles {
       try {
         getFileSystem().abortOutstandingMultipartUploads(0);
       } catch (IOException e) {
-        LOG.info("Exception while purging old uploads", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     try {

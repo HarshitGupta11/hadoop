@@ -131,7 +131,7 @@ public class TestMultipleArchiveFiles extends TestStreaming
     Path[] fileList = FileUtil.stat2Paths(fileSys.listStatus(
                                             new Path(OUTPUT_DIR)));
     for (int i = 0; i < fileList.length; i++){
-      LOG.info("Adding output from file: " + fileList[i]);
+      LOG.error("Temp", new RuntimeException());
       output.append(StreamUtil.slurpHadoop(fileList[i], fileSys));
     }
     assertOutput(expectedOutput, output.toString());

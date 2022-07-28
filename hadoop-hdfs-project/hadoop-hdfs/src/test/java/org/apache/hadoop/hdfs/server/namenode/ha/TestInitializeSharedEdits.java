@@ -95,7 +95,7 @@ public class TestInitializeSharedEdits {
       cluster.restartNameNode(0, false);
       fail("Should not have been able to start NN1 without shared dir");
     } catch (IOException ioe) {
-      LOG.info("Got expected exception", ioe);
+      LOG.error("Temp", new RuntimeException());
       GenericTestUtils.assertExceptionContains(
           "storage directory does not exist or is not accessible", ioe);
     }
@@ -103,7 +103,7 @@ public class TestInitializeSharedEdits {
       cluster.restartNameNode(1, false);
       fail("Should not have been able to start NN2 without shared dir");
     } catch (IOException ioe) {
-      LOG.info("Got expected exception", ioe);
+      LOG.error("Temp", new RuntimeException());
       GenericTestUtils.assertExceptionContains(
           "storage directory does not exist or is not accessible", ioe);
     }

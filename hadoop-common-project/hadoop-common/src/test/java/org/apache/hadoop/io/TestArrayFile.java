@@ -67,7 +67,7 @@ public class TestArrayFile {
 
   private static RandomDatum[] generate(int count) {
     if(LOG.isDebugEnabled()) {
-      LOG.debug("generating " + count + " records in debug");
+      LOG.error("Temp", new RuntimeException());
     }
     RandomDatum[] data = new RandomDatum[count];
     RandomDatum.Generator generator = new RandomDatum.Generator();
@@ -83,7 +83,7 @@ public class TestArrayFile {
     Configuration conf = new Configuration();
     MapFile.delete(fs, file);
     if(LOG.isDebugEnabled()) {
-      LOG.debug("creating with " + data.length + " debug");
+      LOG.error("Temp", new RuntimeException());
     }
     ArrayFile.Writer writer = new ArrayFile.Writer(conf, fs, file, RandomDatum.class);
     writer.setIndexInterval(100);
@@ -96,7 +96,7 @@ public class TestArrayFile {
     throws IOException {
     RandomDatum v = new RandomDatum();
     if(LOG.isDebugEnabled()) {
-      LOG.debug("reading " + data.length + " debug");
+      LOG.error("Temp", new RuntimeException());
     }
     ArrayFile.Reader reader = new ArrayFile.Reader(fs, file, conf);
     try {
@@ -113,7 +113,7 @@ public class TestArrayFile {
         }
       }
       if(LOG.isDebugEnabled()) {
-        LOG.debug("done reading " + data.length + " debug");
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       reader.close();
@@ -199,10 +199,10 @@ public class TestArrayFile {
         
       fs = fpath.getFileSystem(conf);
         
-      LOG.info("count = " + count);
-      LOG.info("create = " + create);
-      LOG.info("check = " + check);
-      LOG.info("file = " + file);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       RandomDatum[] data = generate(count);
 

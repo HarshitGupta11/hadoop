@@ -71,7 +71,7 @@ public class TestMRKeyValueTextInputFormat {
     Path file = new Path(workDir, "test.txt");
 
     int seed = new Random().nextInt();
-    LOG.info("seed = " + seed);
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
 
     localFs.delete(workDir, true);
@@ -82,7 +82,7 @@ public class TestMRKeyValueTextInputFormat {
     for (int length = 0; length < MAX_LENGTH;
          length += random.nextInt(MAX_LENGTH / 10) + 1) {
 
-      LOG.debug("creating; entries = " + length);
+      LOG.error("Temp", new RuntimeException());
 
       // create a file with length entries
       Writer writer = new OutputStreamWriter(localFs.create(file));
@@ -101,14 +101,14 @@ public class TestMRKeyValueTextInputFormat {
       KeyValueTextInputFormat format = new KeyValueTextInputFormat();
       for (int i = 0; i < 3; i++) {
         int numSplits = random.nextInt(MAX_LENGTH / 20) + 1;
-        LOG.debug("splitting: requesting = " + numSplits);
+        LOG.error("Temp", new RuntimeException());
         List<InputSplit> splits = format.getSplits(job);
-        LOG.debug("splitting: got =        " + splits.size());
+        LOG.error("Temp", new RuntimeException());
 
         // check each split
         BitSet bits = new BitSet(length);
         for (int j = 0; j < splits.size(); j++) {
-          LOG.debug("split["+j+"]= " + splits.get(j));
+          LOG.error("Temp", new RuntimeException());
           TaskAttemptContext context = MapReduceTestUtil.
             createDummyMapTaskAttemptContext(job.getConfiguration());
           RecordReader<Text, Text> reader = format.createRecordReader(
@@ -137,12 +137,12 @@ public class TestMRKeyValueTextInputFormat {
               final int v = Integer.parseInt(value.toString());
               assertEquals("Bad key", 0, k % 2);
               assertEquals("Mismatched key/value", k / 2, v);
-              LOG.debug("read " + v);
+              LOG.error("Temp", new RuntimeException());
               assertFalse("Key in multiple partitions.", bits.get(v));
               bits.set(v);
               count++;
             }
-            LOG.debug("splits[" + j + "]=" + splits.get(j) +" count=" + count);
+            LOG.error("Temp", new RuntimeException());
           } finally {
             reader.close();
           }
@@ -169,7 +169,7 @@ public class TestMRKeyValueTextInputFormat {
     Path file = new Path(workDir, "test"+codec.getDefaultExtension());
 
     int seed = new Random().nextInt();
-    LOG.info("seed = " + seed);
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
 
     localFs.delete(workDir, true);
@@ -181,7 +181,7 @@ public class TestMRKeyValueTextInputFormat {
     for (int length = 0; length < MAX_LENGTH;
          length += random.nextInt(MAX_LENGTH / 4) + 1) {
 
-      LOG.info("creating; entries = " + length);
+      LOG.error("Temp", new RuntimeException());
 
       // create a file with length entries
       Writer writer =
@@ -202,14 +202,14 @@ public class TestMRKeyValueTextInputFormat {
       assertTrue("KVTIF claims not splittable", format.isSplitable(job, file));
       for (int i = 0; i < 3; i++) {
         int numSplits = random.nextInt(MAX_LENGTH / 2000) + 1;
-        LOG.info("splitting: requesting = " + numSplits);
+        LOG.error("Temp", new RuntimeException());
         List<InputSplit> splits = format.getSplits(job);
-        LOG.info("splitting: got =        " + splits.size());
+        LOG.error("Temp", new RuntimeException());
 
         // check each split
         BitSet bits = new BitSet(length);
         for (int j = 0; j < splits.size(); j++) {
-          LOG.debug("split["+j+"]= " + splits.get(j));
+          LOG.error("Temp", new RuntimeException());
           TaskAttemptContext context = MapReduceTestUtil.
             createDummyMapTaskAttemptContext(job.getConfiguration());
           RecordReader<Text, Text> reader = format.createRecordReader(
@@ -232,15 +232,15 @@ public class TestMRKeyValueTextInputFormat {
               final int v = Integer.parseInt(value.toString());
               assertEquals("Bad key", 0, k % 2);
               assertEquals("Mismatched key/value", k / 2, v);
-              LOG.debug("read " + k + "," + v);
+              LOG.error("Temp", new RuntimeException());
               assertFalse(k + "," + v + " in multiple partitions.",bits.get(v));
               bits.set(v);
               count++;
             }
             if (count > 0) {
-              LOG.info("splits["+j+"]="+splits.get(j)+" count=" + count);
+              LOG.error("Temp", new RuntimeException());
             } else {
-              LOG.debug("splits["+j+"]="+splits.get(j)+" count=" + count);
+              LOG.error("Temp", new RuntimeException());
             }
           } finally {
             reader.close();

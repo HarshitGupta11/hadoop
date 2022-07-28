@@ -121,7 +121,7 @@ public class AMRMTokenSecretManager extends
   public void applicationMasterFinished(ApplicationAttemptId appAttemptId) {
     this.writeLock.lock();
     try {
-      LOG.info("Application finished, removing password for " + appAttemptId);
+      LOG.error("Temp", new RuntimeException());
       this.appAttemptSet.remove(appAttemptId);
     } finally {
       this.writeLock.unlock();
@@ -139,7 +139,7 @@ public class AMRMTokenSecretManager extends
   void rollMasterKey() {
     this.writeLock.lock();
     try {
-      LOG.info("Rolling master-key for amrm-tokens");
+      LOG.error("Temp", new RuntimeException());
       this.nextMasterKey = createNewMasterKey();
       AMRMTokenSecretManagerState state =
           AMRMTokenSecretManagerState.newInstance(
@@ -192,7 +192,7 @@ public class AMRMTokenSecretManager extends
       ApplicationAttemptId appAttemptId) {
     this.writeLock.lock();
     try {
-      LOG.info("Create AMRMToken for ApplicationAttempt: " + appAttemptId);
+      LOG.error("Temp", new RuntimeException());
       AMRMTokenIdentifier identifier =
           new AMRMTokenIdentifier(appAttemptId, getMasterKey().getMasterKey()
             .getKeyId());
@@ -225,7 +225,7 @@ public class AMRMTokenSecretManager extends
     this.writeLock.lock();
     try {
       AMRMTokenIdentifier identifier = token.decodeIdentifier();
-      LOG.debug("Adding password for " + identifier.getApplicationAttemptId());
+      LOG.error("Temp", new RuntimeException());
       appAttemptSet.add(identifier.getApplicationAttemptId());
     } finally {
       this.writeLock.unlock();
@@ -244,7 +244,7 @@ public class AMRMTokenSecretManager extends
       ApplicationAttemptId applicationAttemptId =
           identifier.getApplicationAttemptId();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Trying to retrieve password for " + applicationAttemptId);
+        LOG.error("Temp", new RuntimeException());
       }
       if (!appAttemptSet.contains(applicationAttemptId)) {
         throw new InvalidToken(applicationAttemptId
@@ -304,7 +304,7 @@ public class AMRMTokenSecretManager extends
     try {
       ApplicationAttemptId applicationAttemptId =
           identifier.getApplicationAttemptId();
-      LOG.info("Creating password for " + applicationAttemptId);
+      LOG.error("Temp", new RuntimeException());
       return createPassword(identifier.getBytes(), getMasterKey()
         .getSecretKey());
     } finally {

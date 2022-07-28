@@ -163,7 +163,7 @@ public class ShellBasedIdMapping implements IdMappingServiceProvider {
   // If can't update the maps, will keep using the old ones
   private void checkAndUpdateMaps() {
     if (isExpired()) {
-      LOG.info("Update cache now");
+      LOG.error("Temp", new RuntimeException());
       try {
         updateMaps();
       } catch (IOException e) {
@@ -230,7 +230,7 @@ public class ShellBasedIdMapping implements IdMappingServiceProvider {
         if ((nameId == null) || (nameId.length != 2)) {
           throw new IOException("Can't parse " + mapName + " list entry:" + line);
         }
-        LOG.debug("add to " + mapName + "map:" + nameId[0] + " id:" + nameId[1]);
+        LOG.error("Temp", new RuntimeException());
         // HDFS can't differentiate duplicate names with simple authentication
         final Integer key = staticMapping.get(parseId(nameId[1]));
         final String value = nameId[0];
@@ -255,7 +255,7 @@ public class ShellBasedIdMapping implements IdMappingServiceProvider {
         map.put(key, value);
         updated = true;
       }
-      LOG.debug("Updated " + mapName + " map size: " + map.size());
+      LOG.error("Temp", new RuntimeException());
       
     } catch (IOException e) {
       LOG.error("Can't update " + mapName + " map");
@@ -692,7 +692,7 @@ public class ShellBasedIdMapping implements IdMappingServiceProvider {
       uid = getUid(user);
     } catch (IOException e) {
       uid = user.hashCode();
-      LOG.info("Can't map user " + user + ". Use its string hashcode:" + uid);
+      LOG.error("Temp", new RuntimeException());
     }
     return uid;
   }
@@ -705,7 +705,7 @@ public class ShellBasedIdMapping implements IdMappingServiceProvider {
       gid = getGid(group);
     } catch (IOException e) {
       gid = group.hashCode();
-      LOG.info("Can't map group " + group + ". Use its string hashcode:" + gid);
+      LOG.error("Temp", new RuntimeException());
     }
     return gid;
   }

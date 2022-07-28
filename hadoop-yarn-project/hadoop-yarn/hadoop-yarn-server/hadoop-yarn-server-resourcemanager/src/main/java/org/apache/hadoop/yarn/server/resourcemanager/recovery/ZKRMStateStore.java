@@ -416,7 +416,7 @@ public class ZKRMStateStore extends RMStateStore {
     }
 
     builder.append(getStat.toString());
-    LOG.debug(builder.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void setRootNodeAcls() throws Exception {
@@ -526,7 +526,7 @@ public class ZKRMStateStore extends RMStateStore {
 
     for (String planName : planNodes) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Loading plan from znode: " + planName);
+        LOG.error("Temp", new RuntimeException());
       }
 
       String planNodePath = getNodePath(reservationRoot, planName);
@@ -537,7 +537,7 @@ public class ZKRMStateStore extends RMStateStore {
             getNodePath(planNodePath, reservationNodeName);
 
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Loading reservation from znode: " + reservationNodePath);
+          LOG.error("Temp", new RuntimeException());
         }
 
         byte[] reservationData = getData(reservationNodePath);
@@ -561,7 +561,7 @@ public class ZKRMStateStore extends RMStateStore {
     byte[] data = getData(amrmTokenSecretManagerRoot);
 
     if (data == null) {
-      LOG.warn("There is no data saved");
+      LOG.error("Temp", new RuntimeException());
     } else {
       AMRMTokenSecretManagerStatePBImpl stateData =
           new AMRMTokenSecretManagerStatePBImpl(
@@ -587,7 +587,7 @@ public class ZKRMStateStore extends RMStateStore {
       byte[] childData = getData(childNodePath);
 
       if (childData == null) {
-        LOG.warn("Content of " + childNodePath + " is broken.");
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
 
@@ -663,7 +663,7 @@ public class ZKRMStateStore extends RMStateStore {
       throws Exception {
     byte[] data = getData(path);
     if (data == null) {
-      LOG.warn("Content of " + path + " is broken.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       ByteArrayInputStream is = new ByteArrayInputStream(data);
       try (DataInputStream fsIn = new DataInputStream(is)) {
@@ -686,7 +686,7 @@ public class ZKRMStateStore extends RMStateStore {
       String appIdStr) throws Exception {
     byte[] appData = getData(appNodePath);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Loading application from znode: " + appNodePath);
+      LOG.error("Temp", new RuntimeException());
     }
     ApplicationId appId = ApplicationId.fromString(appIdStr);
     ApplicationStateDataPBImpl appState = new ApplicationStateDataPBImpl(
@@ -755,7 +755,7 @@ public class ZKRMStateStore extends RMStateStore {
         appState.attempts.put(attemptState.getAttemptId(), attemptState);
       }
     }
-    LOG.debug("Done loading applications from ZK state store");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -819,7 +819,7 @@ public class ZKRMStateStore extends RMStateStore {
     String nodeCreatePath = getLeafAppIdNodePath(appId.toString(), true);
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing info for app: " + appId + " at: " + nodeCreatePath);
+      LOG.error("Temp", new RuntimeException());
     }
 
     byte[] appStateData = appStateDataPB.getProto().toByteArray();
@@ -1127,7 +1127,7 @@ public class ZKRMStateStore extends RMStateStore {
     String nodeCreatePath = getNodePath(dtMasterKeysRootPath,
         DELEGATION_KEY_PREFIX + delegationKey.getKeyId());
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing RMDelegationKey_" + delegationKey.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     try(DataOutputStream fsOut = new DataOutputStream(os)) {
@@ -1145,7 +1145,7 @@ public class ZKRMStateStore extends RMStateStore {
             + delegationKey.getKeyId());
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing RMDelegationKey_" + delegationKey.getKeyId());
+      LOG.error("Temp", new RuntimeException());
     }
 
     zkManager.safeDelete(nodeRemovePath, zkAcl, fencingNodePath);
@@ -1221,7 +1221,7 @@ public class ZKRMStateStore extends RMStateStore {
 
     if (!exists(planCreatePath)) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Creating plan node: " + planName + " at: " + planCreatePath);
+        LOG.error("Temp", new RuntimeException());
       }
 
       trx.create(planCreatePath, null, zkAcl, CreateMode.PERSISTENT);
@@ -1431,7 +1431,7 @@ public class ZKRMStateStore extends RMStateStore {
           Thread.sleep(zkSessionTimeout);
         }
       } catch (InterruptedException ie) {
-        LOG.info(getName() + " thread interrupted! Exiting!");
+        LOG.error("Temp", new RuntimeException());
         interrupt();
       } catch (Exception e) {
         notifyStoreOperationFailed(new StoreFencedException());

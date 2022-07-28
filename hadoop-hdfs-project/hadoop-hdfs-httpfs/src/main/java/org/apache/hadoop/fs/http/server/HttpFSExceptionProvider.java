@@ -91,8 +91,8 @@ public class HttpFSExceptionProvider extends ExceptionProvider {
     String method = MDC.get("method");
     String path = MDC.get("path");
     String message = getOneLineMessage(throwable);
-    AUDIT_LOG.warn("FAILED [{}:{}] response [{}] {}", new Object[]{method, path, status, message});
-    LOG.warn("[{}:{}] response [{}] {}", new Object[]{method, path, status, message}, throwable);
+    AUDIT_LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
 }

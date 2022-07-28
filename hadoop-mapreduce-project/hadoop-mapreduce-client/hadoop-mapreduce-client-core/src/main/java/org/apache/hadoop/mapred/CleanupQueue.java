@@ -87,7 +87,7 @@ class CleanupQueue {
     context.enablePathForCleanup();
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Trying to delete " + context.fullPath);
+      LOG.error("Temp", new RuntimeException());
     }
     if (context.fs.exists(new Path(context.fullPath))) {
       return context.fs.delete(new Path(context.fullPath), true);
@@ -122,7 +122,7 @@ class CleanupQueue {
 
     public void run() {
       if (LOG.isDebugEnabled()) {
-        LOG.debug(getName() + " started.");
+        LOG.error("Temp", new RuntimeException());
       }
       PathDeletionContext context = null;
       while (true) {
@@ -130,21 +130,21 @@ class CleanupQueue {
           context = queue.take();
           // delete the path.
           if (!deletePath(context)) {
-            LOG.warn("CleanupThread:Unable to delete path " + context.fullPath);
+            LOG.error("Temp", new RuntimeException());
           }
           else if (LOG.isDebugEnabled()) {
-            LOG.debug("DELETED " + context.fullPath);
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (InterruptedException t) {
           if (context == null) {
             LOG.warn("Interrupted deletion of an invalid path: Path deletion "
                 + "context is null.");
           } else {
-            LOG.warn("Interrupted deletion of " + context.fullPath);
+            LOG.error("Temp", new RuntimeException());
           }
           return;
         } catch (Exception e) {
-          LOG.warn("Error deleting path " + context.fullPath + ": " + e);
+          LOG.error("Temp", new RuntimeException());
         } 
       }
     }

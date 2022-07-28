@@ -99,7 +99,7 @@ class LocalFetcher<K,V> extends Fetcher<K, V> {
     Iterator<TaskAttemptID> iter = maps.iterator();
     while (iter.hasNext()) {
       TaskAttemptID map = iter.next();
-      LOG.debug("LocalFetcher " + id + " going to fetch: " + map);
+      LOG.error("Temp", new RuntimeException());
       if (copyMapOutput(map)) {
         // Successful copy. Remove this from our worklist.
         iter.remove();
@@ -137,7 +137,7 @@ class LocalFetcher<K,V> extends Fetcher<K, V> {
 
     // Check if we can shuffle *now* ...
     if (mapOutput == null) {
-      LOG.info("fetcher#" + id + " - MergeManager returned Status.WAIT ...");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 

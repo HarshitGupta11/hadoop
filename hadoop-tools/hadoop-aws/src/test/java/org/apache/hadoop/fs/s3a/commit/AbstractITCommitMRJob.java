@@ -192,7 +192,7 @@ public abstract class AbstractITCommitMRJob extends AbstractCommitITest {
     URL log4j = getClass().getClassLoader().getResource("log4j.properties");
     if (log4j != null && log4j.getProtocol().equals("file")) {
       Path log4jPath = new Path(log4j.toURI());
-      LOG.debug("Using log4j path {}", log4jPath);
+      LOG.error("Temp", new RuntimeException());
       mrJob.addFileToClassPath(log4jPath);
       String sysprops = String.format("-Xmx256m -Dlog4j.configuration=%s",
           log4j);
@@ -217,9 +217,9 @@ public abstract class AbstractITCommitMRJob extends AbstractCommitITest {
     int fileCount = results.length;
     List<String> actualFiles = new ArrayList<>(fileCount);
     assertTrue("No files in output directory", fileCount != 0);
-    LOG.info("Found {} files", fileCount);
+    LOG.error("Temp", new RuntimeException());
     for (FileStatus result : results) {
-      LOG.debug("result: {}", result);
+      LOG.error("Temp", new RuntimeException());
       actualFiles.add(result.getPath().toString());
     }
     Collections.sort(actualFiles);

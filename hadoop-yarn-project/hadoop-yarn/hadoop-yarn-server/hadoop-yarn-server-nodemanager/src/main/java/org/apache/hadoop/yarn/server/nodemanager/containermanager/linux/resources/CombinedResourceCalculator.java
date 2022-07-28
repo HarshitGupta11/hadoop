@@ -62,7 +62,7 @@ public class CombinedResourceCalculator  extends ResourceCalculatorProcessTree {
     float cgroupUsage = cgroup.getCpuUsagePercent();
     if (LOG.isDebugEnabled()) {
       float procfsUsage = procfs.getCpuUsagePercent();
-      LOG.debug("CPU Comparison:" + procfsUsage + " " + cgroupUsage);
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("Jiffy Comparison:" +
           procfs.getCumulativeCpuTime() + " " +
           cgroup.getCumulativeCpuTime());

@@ -106,7 +106,7 @@ public class MRDelegationTokenRenewer extends TokenRenewer {
       final InetSocketAddress hsAddress) throws IOException {
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Connecting to MRHistoryServer at: " + hsAddress);
+      LOG.error("Temp", new RuntimeException());
     }
     final YarnRPC rpc = YarnRPC.create(conf);
     UserGroupInformation currentUser = UserGroupInformation.getCurrentUser();

@@ -1192,7 +1192,7 @@ public class RMAppImpl implements RMApp, Recoverable {
       if (event instanceof RMAppFailedAttemptEvent) {
         msg = app.getAppAttemptFailedDiagnostics(event);
       }
-      LOG.info(msg);
+      LOG.error("Temp", new RuntimeException());
       app.diagnostics.append(msg);
       // Inform the node for app-finish
       new FinalTransition(RMAppState.FAILED).transition(app, event);
@@ -1254,7 +1254,7 @@ public class RMAppImpl implements RMApp, Recoverable {
       // non-blocking call so make sure that RM has stored the information
       // needed to restart the AM after RM restart without further client
       // communication
-      LOG.info("Storing application with id " + app.applicationId);
+      LOG.error("Temp", new RuntimeException());
       app.rmContext.getStateStore().storeNewApplication(app);
     }
   }
@@ -1564,7 +1564,7 @@ public class RMAppImpl implements RMApp, Recoverable {
         if (rmAppAttempt.getFinishTime() < (endTime
             - app.attemptFailuresValidityInterval)) {
           app.firstAttemptIdInStateStore++;
-          LOG.info("Remove attempt from state store : " + attemptId);
+          LOG.error("Temp", new RuntimeException());
           app.rmContext.getStateStore().removeApplicationAttempt(attemptId);
         } else {
           break;

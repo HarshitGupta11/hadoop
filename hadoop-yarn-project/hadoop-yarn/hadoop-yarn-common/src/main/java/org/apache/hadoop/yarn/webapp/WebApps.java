@@ -269,20 +269,20 @@ public class WebApps {
           webapp.setHostClass(application.getClass());
         } else {
           String cls = inferHostClass();
-          LOG.debug("setting webapp host class to {}", cls);
+          LOG.error("Temp", new RuntimeException());
           webapp.setHostClass(Class.forName(cls));
         }
         if (devMode) {
           if (port > 0) {
             try {
               new URL("http://localhost:"+ port +"/__stop").getContent();
-              LOG.info("stopping existing webapp instance");
+              LOG.error("Temp", new RuntimeException());
               Thread.sleep(100);
             } catch (ConnectException e) {
-              LOG.info("no existing webapp instance found: {}", e.toString());
+              LOG.error("Temp", new RuntimeException());
             } catch (Exception e) {
               // should not be fatal
-              LOG.warn("error stopping existing instance: {}", e.toString());
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             LOG.error("dev mode does NOT work with ephemeral port!");
@@ -384,12 +384,12 @@ public class WebApps {
           }
         }
       });
-      LOG.info("Registered webapp guice modules");
+      LOG.error("Temp", new RuntimeException());
       // save a guice filter instance for webapp stop (mostly for unit tests)
       webapp.setGuiceFilter(injector.getInstance(GuiceFilter.class));
       if (devMode) {
         injector.getInstance(Dispatcher.class).setDevMode(devMode);
-        LOG.info("in dev mode!");
+        LOG.error("Temp", new RuntimeException());
       }
       return webapp;
     }
@@ -465,7 +465,7 @@ public class WebApps {
         if (e.getClassName().equals(thisClass)) continue;
         return e.getClassName();
       }
-      LOG.warn("could not infer host class from", t);
+      LOG.error("Temp", new RuntimeException());
       return thisClass;
     }
   }

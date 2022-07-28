@@ -288,7 +288,7 @@ public class FileContext {
           try {
             fc.delete(path, true);
           } catch (IOException e) {
-            LOG.warn("Ignoring failure to deleteOnExit for path " + path);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

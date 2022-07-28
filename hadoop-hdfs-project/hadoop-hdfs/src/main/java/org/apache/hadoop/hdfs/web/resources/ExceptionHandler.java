@@ -109,7 +109,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
     } else if (e instanceof IllegalArgumentException) {
       s = Response.Status.BAD_REQUEST;
     } else {
-      LOG.warn("INTERNAL_SERVER_ERROR", e);
+      LOG.error("Temp", new RuntimeException());
       s = Response.Status.INTERNAL_SERVER_ERROR;
     }
  

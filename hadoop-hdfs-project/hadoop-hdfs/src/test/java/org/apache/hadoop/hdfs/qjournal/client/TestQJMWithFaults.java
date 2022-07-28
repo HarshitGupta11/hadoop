@@ -120,7 +120,7 @@ public class TestQJMWithFaults {
       assertEquals(1, ipcCounts.size());
       
       ret = ipcCounts.first();
-      LOG.info("Max IPC count = " + ret);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       IOUtils.closeStream(qjm);
       cluster.shutdown();
@@ -219,7 +219,7 @@ public class TestQJMWithFaults {
     long seed;
     Long userSpecifiedSeed = Long.getLong(RAND_SEED_PROPERTY);
     if (userSpecifiedSeed != null) {
-      LOG.info("Using seed specified in system property");
+      LOG.error("Temp", new RuntimeException());
       seed = userSpecifiedSeed;
       
       // If the user specifies a seed, then we should gather all the
@@ -229,7 +229,7 @@ public class TestQJMWithFaults {
     } else {
       seed = new Random().nextLong();
     }
-    LOG.info("Random seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
     
     Random r = new Random(seed);
     
@@ -248,7 +248,7 @@ public class TestQJMWithFaults {
       long lastAcked = 0;
       
       for (int i = 0; i < NUM_WRITER_ITERS; i++) {
-        LOG.info("Starting writer " + i + "\n-------------------");
+        LOG.error("Temp", new RuntimeException());
         
         QuorumJournalManager qjm = createRandomFaultyQJM(cluster, r);
         try {
@@ -256,7 +256,7 @@ public class TestQJMWithFaults {
           try {
             recovered = QJMTestUtil.recoverAndReturnLastTxn(qjm);
           } catch (Throwable t) {
-            LOG.info("Failed recovery", t);
+            LOG.error("Temp", new RuntimeException());
             checkException(t);
             continue;
           }
@@ -276,7 +276,7 @@ public class TestQJMWithFaults {
           for (int j = 0; j < SEGMENTS_PER_WRITER; j++) {
             lastAcked = writeSegmentUntilCrash(cluster, qjm, txid, 4, thrown);
             if (thrown.held != null) {
-              LOG.info("Failed write", thrown.held);
+              LOG.error("Temp", new RuntimeException());
               checkException(thrown.held);
               break;
             }
@@ -454,7 +454,7 @@ public class TestQJMWithFaults {
                     callStr);
                 inject.call();
               } else {
-                LOG.info("IPC call #" + rpcCount + ": " + callStr);
+                LOG.error("Temp", new RuntimeException());
               }
             }
           });

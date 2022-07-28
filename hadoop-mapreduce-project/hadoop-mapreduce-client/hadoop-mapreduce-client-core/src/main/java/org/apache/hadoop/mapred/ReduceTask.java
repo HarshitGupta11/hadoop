@@ -272,7 +272,7 @@ public class ReduceTask extends Task {
      private void mayBeSkip() throws IOException {
        hasNext = skipIt.hasNext();
        if(!hasNext) {
-         LOG.warn("Further groups got skipped.");
+         LOG.error("Temp", new RuntimeException());
          return;
        }
        grpIndex++;
@@ -360,7 +360,7 @@ public class ReduceTask extends Task {
           job.getClass(MRConfig.SHUFFLE_CONSUMER_PLUGIN, Shuffle.class, ShuffleConsumerPlugin.class);
 					
     shuffleConsumerPlugin = ReflectionUtils.newInstance(clazz, job);
-    LOG.info("Using ShuffleConsumerPlugin: " + shuffleConsumerPlugin);
+    LOG.error("Temp", new RuntimeException());
 
     ShuffleConsumerPlugin.Context shuffleContext = 
       new ShuffleConsumerPlugin.Context(getTaskID(), job, FileSystem.getLocal(job), umbilical, 
@@ -637,7 +637,7 @@ public class ReduceTask extends Task {
       try {
         c.close(r);
       } catch (Exception e) {
-        LOG.info("Exception in closing " + c, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

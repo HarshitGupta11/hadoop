@@ -117,7 +117,7 @@ public class Credentials implements Writable {
    */
   public void addToken(Text alias, Token<? extends TokenIdentifier> t) {
     if (t == null) {
-      LOG.warn("Null token ignored for " + alias);
+      LOG.error("Temp", new RuntimeException());
     } else if (tokenMap.put(alias, t) != null) {
       // Update private tokens
       Map<Text, Token<? extends TokenIdentifier>> tokensToAdd =

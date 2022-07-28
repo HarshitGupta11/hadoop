@@ -38,7 +38,7 @@ public class GpuNodeResourceUpdateHandler extends NodeResourceUpdaterPlugin {
 
   @Override
   public void updateConfiguredResource(Resource res) throws YarnException {
-    LOG.info("Initializing configured GPU resources for the NodeManager.");
+    LOG.error("Temp", new RuntimeException());
 
     List<GpuDevice> usableGpus =
         GpuDiscoverer.getInstance().getGpusUsableByYarn();

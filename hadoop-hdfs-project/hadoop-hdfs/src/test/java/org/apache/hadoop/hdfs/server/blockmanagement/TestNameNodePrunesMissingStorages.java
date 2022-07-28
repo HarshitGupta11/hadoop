@@ -245,7 +245,7 @@ public class TestNameNodePrunesMissingStorages {
       }
       cluster.restartDataNode(datanodeToRemoveStorageFromIdx);
       // Wait for the NameNode to remove the storage.
-      LOG.info("waiting for the datanode to remove " + storageIdToRemove);
+      LOG.error("Temp", new RuntimeException());
       GenericTestUtils.waitFor(new Supplier<Boolean>() {
         @Override
         public Boolean get() {

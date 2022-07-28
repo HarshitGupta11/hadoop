@@ -401,7 +401,7 @@ public class TestFifoScheduler {
 //  @Test
   public void testFifoScheduler() throws Exception {
 
-    LOG.info("--- START: testFifoScheduler ---");
+    LOG.error("Temp", new RuntimeException());
         
     final int GB = 1024;
     
@@ -458,7 +458,7 @@ public class TestFifoScheduler {
     application_1.addTask(task_1_0);
         
     // Send resource requests to the scheduler
-    LOG.info("Send resource requests to the scheduler");
+    LOG.error("Temp", new RuntimeException());
     application_0.schedule();
     application_1.schedule();
     
@@ -482,7 +482,7 @@ public class TestFifoScheduler {
     checkNodeResourceUsage(4*GB, nm_0);  // task_0_0 (1G) and task_1_0 (3G)
     checkNodeResourceUsage(0*GB, nm_1);  // no tasks, 2G available
     
-    LOG.info("Adding new tasks...");
+    LOG.error("Temp", new RuntimeException());
     
     Task task_1_1 = new Task(application_1, priority_1, 
         new String[] {ResourceRequest.ANY});
@@ -513,14 +513,14 @@ public class TestFifoScheduler {
     application_0.schedule();
 
     // Send a heartbeat to kick the tires on the Scheduler
-    LOG.info("Sending hb from " + nm_0.getHostName());
+    LOG.error("Temp", new RuntimeException());
     nm_0.heartbeat();                   // nothing new, used=4G
     
-    LOG.info("Sending hb from " + nm_1.getHostName());
+    LOG.error("Temp", new RuntimeException());
     nm_1.heartbeat();                   // task_0_3, used=2G
     
     // Get allocations from the scheduler
-    LOG.info("Trying to allocate...");
+    LOG.error("Temp", new RuntimeException());
     application_0.schedule();
     checkApplicationResourceUsage(3 * GB, application_0);
     application_1.schedule();
@@ -531,7 +531,7 @@ public class TestFifoScheduler {
     checkNodeResourceUsage(2*GB, nm_1);
     
     // Complete tasks
-    LOG.info("Finishing up task_0_0");
+    LOG.error("Temp", new RuntimeException());
     application_0.finishTask(task_0_0); // Now task_0_1
     application_0.schedule();
     application_1.schedule();
@@ -542,7 +542,7 @@ public class TestFifoScheduler {
     checkNodeResourceUsage(4*GB, nm_0);
     checkNodeResourceUsage(2*GB, nm_1);
 
-    LOG.info("Finishing up task_1_0");
+    LOG.error("Temp", new RuntimeException());
     application_1.finishTask(task_1_0);  // Now task_0_2
     application_0.schedule(); // final overcommit for app0 caused here
     application_1.schedule();
@@ -553,7 +553,7 @@ public class TestFifoScheduler {
     //checkNodeResourceUsage(1*GB, nm_0);  // final over-commit -> rm.node->1G, test.node=2G
     checkNodeResourceUsage(2*GB, nm_1);
 
-    LOG.info("Finishing up task_0_3");
+    LOG.error("Temp", new RuntimeException());
     application_0.finishTask(task_0_3); // No more
     application_0.schedule();
     application_1.schedule();
@@ -564,7 +564,7 @@ public class TestFifoScheduler {
     //checkNodeResourceUsage(2*GB, nm_0);  // final over-commit, rm.node->1G, test.node->2G
     checkNodeResourceUsage(0*GB, nm_1);
     
-    LOG.info("Finishing up task_0_1");
+    LOG.error("Temp", new RuntimeException());
     application_0.finishTask(task_0_1);
     application_0.schedule();
     application_1.schedule();
@@ -573,7 +573,7 @@ public class TestFifoScheduler {
     checkApplicationResourceUsage(1 * GB, application_0);
     checkApplicationResourceUsage(0 * GB, application_1);
     
-    LOG.info("Finishing up task_0_2");
+    LOG.error("Temp", new RuntimeException());
     application_0.finishTask(task_0_2); // now task_1_3 can go!
     application_0.schedule();
     application_1.schedule();
@@ -582,7 +582,7 @@ public class TestFifoScheduler {
     checkApplicationResourceUsage(0 * GB, application_0);
     checkApplicationResourceUsage(4 * GB, application_1);
     
-    LOG.info("Finishing up task_1_3");
+    LOG.error("Temp", new RuntimeException());
     application_1.finishTask(task_1_3); // now task_1_1
     application_0.schedule();
     application_1.schedule();
@@ -591,7 +591,7 @@ public class TestFifoScheduler {
     checkApplicationResourceUsage(0 * GB, application_0);
     checkApplicationResourceUsage(3 * GB, application_1);
     
-    LOG.info("Finishing up task_1_1");
+    LOG.error("Temp", new RuntimeException());
     application_1.finishTask(task_1_1);
     application_0.schedule();
     application_1.schedule();
@@ -600,7 +600,7 @@ public class TestFifoScheduler {
     checkApplicationResourceUsage(0 * GB, application_0);
     checkApplicationResourceUsage(3 * GB, application_1);
     
-    LOG.info("--- END: testFifoScheduler ---");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -724,12 +724,12 @@ public class TestFifoScheduler {
     // kick the scheduler, 1 GB and 3 GB given to AM1 and AM2, remaining 0
     nm1.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().size() < 1) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
       alloc1Response = am1.schedule();
     }
     while (alloc2Response.getAllocatedContainers().size() < 1) {
-      LOG.info("Waiting for containers to be created for app 2...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
       alloc2Response = am2.schedule();
     }
@@ -1128,7 +1128,7 @@ public class TestFifoScheduler {
     // kick the scheduler, 2 GB given to AM1, resource remaining 0
     nm1.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().size() < 1) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
       alloc1Response = am1.schedule();
     }

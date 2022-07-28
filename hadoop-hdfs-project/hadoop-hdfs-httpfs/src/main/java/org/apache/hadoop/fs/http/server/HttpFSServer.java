@@ -232,7 +232,7 @@ public class HttpFSServer {
           }
         });
       } catch (InterruptedException ie) {
-        LOG.info("Open interrupted.", ie);
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       }
       Long offset = params.get(OffsetParam.NAME, OffsetParam.class);
@@ -247,7 +247,7 @@ public class HttpFSServer {
     case GETFILESTATUS: {
       FSOperations.FSFileStatus command = new FSOperations.FSFileStatus(path);
       Map json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -256,7 +256,7 @@ public class HttpFSServer {
       FSOperations.FSListStatus command =
           new FSOperations.FSListStatus(path, filter);
       Map json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}] filter [{}]", path, (filter != null) ? filter : "-");
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -264,7 +264,7 @@ public class HttpFSServer {
       enforceRootPath(op.value(), path);
       FSOperations.FSHomeDir command = new FSOperations.FSHomeDir();
       JSONObject json = fsExecute(user, command);
-      AUDIT_LOG.info("");
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -286,7 +286,7 @@ public class HttpFSServer {
       FSOperations.FSContentSummary command =
           new FSOperations.FSContentSummary(path);
       Map json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -294,7 +294,7 @@ public class HttpFSServer {
       FSOperations.FSFileChecksum command =
           new FSOperations.FSFileChecksum(path);
       Map json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -305,7 +305,7 @@ public class HttpFSServer {
     case GETACLSTATUS: {
       FSOperations.FSAclStatus command = new FSOperations.FSAclStatus(path);
       Map json = fsExecute(user, command);
-      AUDIT_LOG.info("ACL status for [{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -317,14 +317,14 @@ public class HttpFSServer {
       FSOperations.FSGetXAttrs command =
           new FSOperations.FSGetXAttrs(path, xattrNames, encoding);
       @SuppressWarnings("rawtypes") Map json = fsExecute(user, command);
-      AUDIT_LOG.info("XAttrs for [{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
     case LISTXATTRS: {
       FSOperations.FSListXAttrs command = new FSOperations.FSListXAttrs(path);
       @SuppressWarnings("rawtypes") Map json = fsExecute(user, command);
-      AUDIT_LOG.info("XAttr names for [{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -339,14 +339,14 @@ public class HttpFSServer {
       FSOperations.FSListStatusBatch command = new FSOperations
           .FSListStatusBatch(path, token);
       @SuppressWarnings("rawtypes") Map json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}] token [{}]", path, token);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
     case GETTRASHROOT: {
       FSOperations.FSTrashRoot command = new FSOperations.FSTrashRoot(path);
       JSONObject json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -354,7 +354,7 @@ public class HttpFSServer {
       FSOperations.FSGetAllStoragePolicies command =
           new FSOperations.FSGetAllStoragePolicies();
       JSONObject json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -362,7 +362,7 @@ public class HttpFSServer {
       FSOperations.FSGetStoragePolicy command =
           new FSOperations.FSGetStoragePolicy(path);
       JSONObject json = fsExecute(user, command);
-      AUDIT_LOG.info("[{}]", path);
+      AUDIT_LOG.error("Temp", new RuntimeException());
       response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
       break;
     }
@@ -407,7 +407,7 @@ public class HttpFSServer {
       case DELETE: {
         Boolean recursive =
           params.get(RecursiveParam.NAME,  RecursiveParam.class);
-        AUDIT_LOG.info("[{}] recursive [{}]", path, recursive);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         FSOperations.FSDelete command =
           new FSOperations.FSDelete(path, recursive);
         JSONObject json = fsExecute(user, command);
@@ -420,7 +420,7 @@ public class HttpFSServer {
         FSOperations.FSDeleteSnapshot command =
                 new FSOperations.FSDeleteSnapshot(path, snapshotName);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] deleted snapshot [{}]", path, snapshotName);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -477,7 +477,7 @@ public class HttpFSServer {
           FSOperations.FSAppend command =
             new FSOperations.FSAppend(is, path);
           fsExecute(user, command);
-          AUDIT_LOG.info("[{}]", path);
+          AUDIT_LOG.error("Temp", new RuntimeException());
           response = Response.ok().type(MediaType.APPLICATION_JSON).build();
         }
         break;
@@ -489,7 +489,7 @@ public class HttpFSServer {
         FSOperations.FSConcat command =
             new FSOperations.FSConcat(path, sources.split(","));
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}]", path);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         System.out.println("SENT RESPONSE");
         response = Response.ok().build();
         break;
@@ -499,7 +499,7 @@ public class HttpFSServer {
         FSOperations.FSTruncate command = 
             new FSOperations.FSTruncate(path, newLength);
         JSONObject json = fsExecute(user, command);
-        AUDIT_LOG.info("Truncate [{}] to length [{}]", path, newLength);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
         break;
       }
@@ -507,7 +507,7 @@ public class HttpFSServer {
         FSOperations.FSUnsetStoragePolicy command =
              new FSOperations.FSUnsetStoragePolicy(path);
          fsExecute(user, command);
-         AUDIT_LOG.info("Unset storage policy [{}]", path);
+         AUDIT_LOG.error("Temp", new RuntimeException());
          response = Response.ok().build();
          break;
       }
@@ -606,7 +606,7 @@ public class HttpFSServer {
         FSOperations.FSCreateSnapshot command =
             new FSOperations.FSCreateSnapshot(path, snapshotName);
         String json = fsExecute(user, command);
-        AUDIT_LOG.info("[{}] snapshot created as [{}]", path, snapshotName);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
         break;
       }
@@ -621,7 +621,7 @@ public class HttpFSServer {
         FSOperations.FSSetXAttr command = new FSOperations.FSSetXAttr(
             path, xattrName, xattrValue, flag);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to xAttr [{}]", path, xattrName);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -644,7 +644,7 @@ public class HttpFSServer {
         FSOperations.FSRemoveXAttr command = new FSOperations.FSRemoveXAttr(
             path, xattrName);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] removed xAttr [{}]", path, xattrName);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -666,7 +666,7 @@ public class HttpFSServer {
         FSOperations.FSRename command =
           new FSOperations.FSRename(path, toPath);
         JSONObject json = fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to [{}]", path, toPath);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();
         break;
       }
@@ -676,7 +676,7 @@ public class HttpFSServer {
         FSOperations.FSSetOwner command =
           new FSOperations.FSSetOwner(path, owner, group);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to (O/G)[{}]", path, owner + ":" + group);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -686,7 +686,7 @@ public class HttpFSServer {
         FSOperations.FSSetPermission command =
           new FSOperations.FSSetPermission(path, permission);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to [{}]", path, permission);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -696,7 +696,7 @@ public class HttpFSServer {
         FSOperations.FSSetReplication command =
           new FSOperations.FSSetReplication(path, replication);
         JSONObject json = fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to [{}]", path, replication);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok(json).build();
         break;
       }
@@ -719,7 +719,7 @@ public class HttpFSServer {
         FSOperations.FSSetAcl command =
                 new FSOperations.FSSetAcl(path, aclSpec);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to acl [{}]", path, aclSpec);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -727,7 +727,7 @@ public class HttpFSServer {
         FSOperations.FSRemoveAcl command =
                 new FSOperations.FSRemoveAcl(path);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] removed acl", path);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -737,7 +737,7 @@ public class HttpFSServer {
         FSOperations.FSModifyAclEntries command =
                 new FSOperations.FSModifyAclEntries(path, aclSpec);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] modify acl entry with [{}]", path, aclSpec);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -747,7 +747,7 @@ public class HttpFSServer {
         FSOperations.FSRemoveAclEntries command =
                 new FSOperations.FSRemoveAclEntries(path, aclSpec);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] remove acl entry [{}]", path, aclSpec);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -755,7 +755,7 @@ public class HttpFSServer {
         FSOperations.FSRemoveDefaultAcl command =
                 new FSOperations.FSRemoveDefaultAcl(path);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] remove default acl", path);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }
@@ -765,7 +765,7 @@ public class HttpFSServer {
         FSOperations.FSSetStoragePolicy command =
             new FSOperations.FSSetStoragePolicy(path, policyName);
         fsExecute(user, command);
-        AUDIT_LOG.info("[{}] to policy [{}]", path, policyName);
+        AUDIT_LOG.error("Temp", new RuntimeException());
         response = Response.ok().build();
         break;
       }

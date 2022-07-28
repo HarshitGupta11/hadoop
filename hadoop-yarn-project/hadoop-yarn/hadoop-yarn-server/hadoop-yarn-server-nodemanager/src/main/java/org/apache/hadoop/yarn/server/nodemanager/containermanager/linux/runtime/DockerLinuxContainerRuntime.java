@@ -294,7 +294,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
     this.privilegedOperationExecutor = privilegedOperationExecutor;
 
     if (cGroupsHandler == null) {
-      LOG.info("cGroupsHandler is null - cgroups not in use.");
+      LOG.error("Temp", new RuntimeException());
     } else {
       this.cGroupsHandler = cGroupsHandler;
     }
@@ -520,7 +520,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
     if (!hostPidNamespaceEnabled) {
       String message = "Host pid namespace being requested but this is not "
           + "enabled on this cluster";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(message);
     }
 
@@ -551,7 +551,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
       validateHostname(name);
     }
 
-    LOG.info("setting hostname in container to: " + name);
+    LOG.error("Temp", new RuntimeException());
     runCommand.setHostname(name);
   }
 
@@ -582,14 +582,14 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
       }
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("using docker's cgroups options");
+        LOG.error("Temp", new RuntimeException());
       }
 
       String cGroupPath = "/"
           + cGroupsHandler.getRelativePathForCGroup(containerIdStr);
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("using cgroup parent: " + cGroupPath);
+        LOG.error("Temp", new RuntimeException());
       }
 
       runCommand.setCGroupParent(cGroupPath);
@@ -645,7 +645,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
     if (!privilegedContainersEnabledOnCluster) {
       String message = "Privileged container being requested but privileged "
           + "containers are not enabled on this cluster";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(message);
     }
 
@@ -657,7 +657,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
     if (!privilegedContainersAcl.isUserAllowed(submitterUgi)) {
       String message = "Cannot launch privileged container. Submitting user ("
           + submittingUser + ") fails ACL check.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(message);
     }
 
@@ -860,7 +860,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
         ENV_DOCKER_CONTAINER_RUN_OVERRIDE_DISABLE);
 
     if (disableOverride != null && disableOverride.equals("true")) {
-      LOG.info("command override disabled");
+      LOG.error("Temp", new RuntimeException());
     } else {
       List<String> overrideCommands = new ArrayList<>();
       Path launchDst =
@@ -897,8 +897,8 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
       privilegedOperationExecutor.executePrivilegedOperation(null,
           launchOp, null, null, false, false);
     } catch (PrivilegedOperationException e) {
-      LOG.warn("Launch container failed. Exception: ", e);
-      LOG.info("Docker command used: " + runCommand);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       throw new ContainerExecutionException("Launch container failed", e
           .getExitCode(), e.getOutput(), e.getErrorOutput());
@@ -946,7 +946,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
         }
       }
     } catch (ContainerExecutionException e) {
-      LOG.warn("Signal docker container failed. Exception: ", e);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException("Signal docker container failed",
           e.getExitCode(), e.getOutput(), e.getErrorOutput());
     }
@@ -1001,7 +1001,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
       String output = privilegedOperationExecutor
           .executePrivilegedOperation(null, privOp, null,
               null, true, false);
-      LOG.info("Docker inspect output for " + containerId + ": " + output);
+      LOG.error("Temp", new RuntimeException());
       // strip off quotes if any
       output = output.replaceAll("['\"]", "");
       int index = output.lastIndexOf(',');
@@ -1091,7 +1091,7 @@ public class DockerLinuxContainerRuntime implements LinuxContainerRuntime {
       launchOp.appendArgs(tcCommandFile);
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Launching container with cmd: " + runCommand);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return launchOp;

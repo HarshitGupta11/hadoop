@@ -58,7 +58,7 @@ class EventFetcher<K,V> extends Thread {
   @Override
   public void run() {
     int failures = 0;
-    LOG.info(reduce + " Thread started: " + getName());
+    LOG.error("Temp", new RuntimeException());
     
     try {
       while (!stopped && !Thread.currentThread().isInterrupted()) {
@@ -66,17 +66,17 @@ class EventFetcher<K,V> extends Thread {
           int numNewMaps = getMapCompletionEvents();
           failures = 0;
           if (numNewMaps > 0) {
-            LOG.info(reduce + ": " + "Got " + numNewMaps + " new map-outputs");
+            LOG.error("Temp", new RuntimeException());
           }
-          LOG.debug("GetMapEventsThread about to sleep for " + SLEEP_TIME);
+          LOG.error("Temp", new RuntimeException());
           if (!Thread.currentThread().isInterrupted()) {
             Thread.sleep(SLEEP_TIME);
           }
         } catch (InterruptedException e) {
-          LOG.info("EventFetcher is interrupted.. Returning");
+          LOG.error("Temp", new RuntimeException());
           return;
         } catch (IOException ie) {
-          LOG.info("Exception in getting events", ie);
+          LOG.error("Temp", new RuntimeException());
           // check to see whether to abort
           if (++failures >= MAX_RETRIES) {
             throw new IOException("too many failures downloading events", ie);
@@ -101,7 +101,7 @@ class EventFetcher<K,V> extends Thread {
     try {
       join(5000);
     } catch(InterruptedException ie) {
-      LOG.warn("Got interrupted while joining " + getName(), ie);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   

@@ -62,7 +62,7 @@ public class HSAuditLogger {
    */
   public static void logSuccess(String user, String operation, String target) {
     if (LOG.isInfoEnabled()) {
-      LOG.info(createSuccessLog(user, operation, target));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -130,7 +130,7 @@ public class HSAuditLogger {
   public static void logFailure(String user, String operation, String perm,
       String target, String description) {
     if (LOG.isWarnEnabled()) {
-      LOG.warn(createFailureLog(user, operation, perm, target, description));
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

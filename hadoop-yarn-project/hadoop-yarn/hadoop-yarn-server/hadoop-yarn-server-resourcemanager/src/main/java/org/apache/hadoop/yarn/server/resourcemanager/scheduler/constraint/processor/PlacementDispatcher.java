@@ -54,7 +54,7 @@ class PlacementDispatcher implements
 
   public void init(RMContext rmContext,
       ConstraintPlacementAlgorithm placementAlgorithm, int poolSize) {
-    LOG.info("Initializing Constraint Placement Planner:");
+    LOG.error("Temp", new RuntimeException());
     this.algorithm = placementAlgorithm;
     this.algorithm.init(rmContext);
     this.algorithmThreadPool = Executors.newFixedThreadPool(poolSize);

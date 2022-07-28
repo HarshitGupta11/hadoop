@@ -170,7 +170,7 @@ public class RpcServerFactoryPBImpl implements RpcServerFactory {
         .setPort(addr.getPort()).setNumHandlers(numHandlers).setVerbose(false)
         .setSecretManager(secretManager).setPortRangeConfig(portRangeConfig)
         .build();
-    LOG.info("Adding protocol "+pbProtocol.getCanonicalName()+" to the server");
+    LOG.error("Temp", new RuntimeException());
     server.addProtocol(RPC.RpcKind.RPC_PROTOCOL_BUFFER, pbProtocol, blockingService);
     return server;
   }

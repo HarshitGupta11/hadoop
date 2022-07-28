@@ -410,7 +410,7 @@ abstract public class Command extends Configured {
       // it's probably a nasty internal error where the backtrace would be
       // useful
       errorMessage = StringUtils.stringifyException(e);
-      LOG.debug(errorMessage);
+      LOG.error("Temp", new RuntimeException());
     } else {
       errorMessage = errorMessage.split("\n", 2)[0];
     }

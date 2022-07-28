@@ -142,7 +142,7 @@ public class AMRMProxyService extends CompositeService implements
 
   @Override
   protected void serviceStart() throws Exception {
-    LOG.info("Starting AMRMProxyService");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = getConfig();
     YarnRPC rpc = YarnRPC.create(conf);
     UserGroupInformation.setConfiguration(conf);
@@ -177,7 +177,7 @@ public class AMRMProxyService extends CompositeService implements
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping AMRMProxyService");
+    LOG.error("Temp", new RuntimeException());
     if (this.server != null) {
       this.server.stop();
     }
@@ -193,7 +193,7 @@ public class AMRMProxyService extends CompositeService implements
    * @throws IOException if recover fails
    */
   public void recover() throws IOException {
-    LOG.info("Recovering AMRMProxyService");
+    LOG.error("Temp", new RuntimeException());
 
     RecoveredAMRMProxyState state =
         this.nmContext.getNMStateStore().loadAMRMProxyState();
@@ -205,7 +205,7 @@ public class AMRMProxyService extends CompositeService implements
     for (Map.Entry<ApplicationAttemptId, Map<String, byte[]>> entry : state
         .getAppContexts().entrySet()) {
       ApplicationAttemptId attemptId = entry.getKey();
-      LOG.info("Recovering app attempt {}", attemptId);
+      LOG.error("Temp", new RuntimeException());
 
       // Try recover for the running application attempt
       try {
@@ -239,7 +239,7 @@ public class AMRMProxyService extends CompositeService implements
         // Retrieve the AM container credentials from NM context
         Credentials amCred = null;
         for (Container container : this.nmContext.getContainers().values()) {
-          LOG.debug("From NM Context container " + container.getContainerId());
+          LOG.error("Temp", new RuntimeException());
           if (container.getContainerId().getApplicationAttemptId().equals(
               attemptId) && container.getContainerTokenIdentifier() != null) {
             LOG.debug("Container type "
@@ -532,7 +532,7 @@ public class AMRMProxyService extends CompositeService implements
     // check to see if the RM has issued a new AMRMToken & accordingly update
     // the real ARMRMToken in the current context
     if (allocateResponse.getAMRMToken() != null) {
-      LOG.info("RM rolled master-key for amrm-tokens");
+      LOG.error("Temp", new RuntimeException());
 
       org.apache.hadoop.yarn.api.records.Token token =
           allocateResponse.getAMRMToken();
@@ -757,7 +757,7 @@ public class AMRMProxyService extends CompositeService implements
           break;
         default:
           if (LOG.isDebugEnabled()) {
-            LOG.debug("AMRMProxy is ignoring event: " + event.getType());
+            LOG.error("Temp", new RuntimeException());
           }
           break;
         }

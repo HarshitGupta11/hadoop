@@ -102,7 +102,7 @@ public class TestLocalRunner {
     protected void cleanup(Context context) {
       // Output this here, to ensure that the incrementing done in map()
       // cannot be optimized away.
-      LOG.debug("Busy loop counter: " + this.exposedState);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -323,11 +323,11 @@ public class TestLocalRunner {
         } catch (InterruptedException ie) {}
       }
     };
-    LOG.info("Submitting job...");
+    LOG.error("Temp", new RuntimeException());
     job.submit();
-    LOG.info("Starting thread to interrupt main thread in 2 minutes");
+    LOG.error("Temp", new RuntimeException());
     interrupter.start();
-    LOG.info("Waiting for job to complete...");
+    LOG.error("Temp", new RuntimeException());
     try {
       job.waitForCompletion(true);
     } catch (InterruptedException ie) {
@@ -339,14 +339,14 @@ public class TestLocalRunner {
       }
       throw ie;
     }
-    LOG.info("Job completed, stopping interrupter");
+    LOG.error("Temp", new RuntimeException());
     interrupter.interrupt();
     try {
       interrupter.join();
     } catch (InterruptedException ie) {
       // it might interrupt us right as we interrupt it
     }
-    LOG.info("Verifying output");
+    LOG.error("Temp", new RuntimeException());
 
     verifyOutput(outputPath);
   }
@@ -509,7 +509,7 @@ public class TestLocalRunner {
     int maxVal = NUMBER_FILE_VAL - 1;
     int expectedPerMapper = maxVal * (maxVal + 1) / 2;
     int expectedSum = expectedPerMapper * numMaps;
-    LOG.info("expected sum: " + expectedSum + ", got " + valueSum);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("Didn't get all our results back", expectedSum, valueSum);
   }
 

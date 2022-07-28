@@ -126,7 +126,7 @@ public class TestDatanodeReport {
 
       // bring down one datanode
       final DataNode last = datanodes.get(datanodes.size() - 1);
-      LOG.info("XXX shutdown datanode " + last.getDatanodeUuid());
+      LOG.error("Temp", new RuntimeException());
       last.shutdown();
 
       DatanodeInfo[] nodeInfo = client.datanodeReport(DatanodeReportType.DEAD);

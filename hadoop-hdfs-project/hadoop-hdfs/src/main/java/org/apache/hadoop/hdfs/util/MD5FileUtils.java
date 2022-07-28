@@ -159,7 +159,7 @@ public abstract class MD5FileUtils {
     afos.close();
 
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Saved MD5 " + digestString + " to " + md5File);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -174,7 +174,7 @@ public abstract class MD5FileUtils {
     saveMD5File(newDataFile, digestString);
 
     if (!fromFile.delete()) {
-      LOG.warn("deleting  " + fromFile.getAbsolutePath() + " FAILED");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

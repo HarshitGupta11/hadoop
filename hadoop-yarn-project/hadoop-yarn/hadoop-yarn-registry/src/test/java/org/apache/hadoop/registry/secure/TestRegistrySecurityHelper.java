@@ -179,7 +179,7 @@ public class TestRegistrySecurityHelper extends Assert {
   @Test
   public void testDefaultRealm() throws Throwable {
     String realm = RegistrySecurity.getDefaultRealmInJVM();
-    LOG.info("Realm {}", realm);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
@@ -187,7 +187,7 @@ public class TestRegistrySecurityHelper extends Assert {
     UserGroupInformation user = UserGroupInformation.getCurrentUser();
     ACL acl = registrySecurity.createACLForUser(user, ZooDefs.Perms.ALL);
     assertFalse(RegistrySecurity.ALL_READWRITE_ACCESS.equals(acl));
-    LOG.info("User {} has ACL {}", user, acl);
+    LOG.error("Temp", new RuntimeException());
   }
 
 

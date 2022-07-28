@@ -134,7 +134,7 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
     }
     setPathToExecutable(pathToExecutable);
     if (!diagnose(10*1000)) {
-      LOG.warn("Intel FPGA for OpenCL diagnose failed!");
+      LOG.error("Temp", new RuntimeException());
       this.initialized = false;
     } else {
       this.initialized = true;
@@ -163,15 +163,15 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
       Shell.ShellCommandExecutor shexec = new Shell.ShellCommandExecutor(
           new String[]{"stat", "-c", "%t:%T", "/dev/" + devName});
       try {
-        LOG.debug("Get FPGA major-minor numbers from /dev/" + devName);
+        LOG.error("Temp", new RuntimeException());
         shexec.execute();
         String[] strs = shexec.getOutput().trim().split(":");
-        LOG.debug("stat output:" + shexec.getOutput());
+        LOG.error("Temp", new RuntimeException());
         output = Integer.parseInt(strs[0], 16) + ":" + Integer.parseInt(strs[1], 16);
       } catch (IOException e) {
         String msg =
             "Failed to get major-minor number from reading /dev/" + devName;
-        LOG.warn(msg);
+        LOG.error("Temp", new RuntimeException());
         LOG.debug("Command output:" + shexec.getOutput() + ", exit code:" +
             shexec.getExitCode());
       }
@@ -190,8 +190,8 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
         String msg =
             "Failed to execute " + binary + " diagnose, exception message:" + e
                 .getMessage() +", output:" + output + ", continue ...";
-        LOG.warn(msg);
-        LOG.debug(shexec.getOutput());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       }
       return shexec.getOutput();
     }
@@ -263,7 +263,7 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
           break;
         }
         if (null == section) {
-          LOG.warn("Unsupported diagnose output");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
         // devName, \(.*\)
@@ -277,7 +277,7 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
         for (int i = 0; i < fieldRegexes.length; i++) {
           Matcher fieldMatcher = Pattern.compile(fieldRegexes[i]).matcher(section);
           if (!fieldMatcher.find()) {
-            LOG.warn("Couldn't find " + fieldRegexes[i] + " pattern");
+            LOG.error("Temp", new RuntimeException());
             fields[i] = "";
             continue;
           }
@@ -329,24 +329,24 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
     // Assume .aocx IP file is distributed by DS to local dir
     String r = "";
     Path path;
-    LOG.info("Got environment: " + id + ", search IP file in localized resources");
+    LOG.error("Temp", new RuntimeException());
     if (null == id || id.isEmpty()) {
-      LOG.warn("IP_ID environment is empty, skip downloading");
+      LOG.error("Temp", new RuntimeException());
       return r;
     }
     if (localizedResources != null) {
       for (Map.Entry<Path, List<String>> resourceEntry :
           localizedResources.entrySet()) {
         path = resourceEntry.getKey();
-        LOG.debug("Check:" + path.toUri().toString());
+        LOG.error("Temp", new RuntimeException());
         if (path.getName().toLowerCase().contains(id.toLowerCase()) && path.getName().endsWith(".aocx")) {
           r = path.toUri().toString();
-          LOG.debug("Found: " + r);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
     } else {
-      LOG.warn("Localized resource is null!");
+      LOG.error("Temp", new RuntimeException());
     }
     return r;
   }
@@ -371,8 +371,8 @@ public class IntelFpgaOpenclPlugin implements AbstractFpgaVendorPlugin {
     try {
       shexec.execute();
       if (0 == shexec.getExitCode()) {
-        LOG.debug(shexec.getOutput());
-        LOG.info("Intel aocl program " + ipPath + " to " + aclName + " successfully");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
       } else {
         return false;
       }

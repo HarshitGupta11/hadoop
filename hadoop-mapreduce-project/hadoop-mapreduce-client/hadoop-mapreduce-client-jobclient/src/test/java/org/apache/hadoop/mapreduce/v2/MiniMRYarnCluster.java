@@ -154,10 +154,10 @@ public class MiniMRYarnCluster extends MiniYARNCluster {
       }
       FileContext fc=FileContext.getFileContext(stagingPath.toUri(), conf);
       if (fc.util().exists(stagingPath)) {
-        LOG.info(stagingPath + " exists! deleting...");
+        LOG.error("Temp", new RuntimeException());
         fc.delete(stagingPath, true);
       }
-      LOG.info("mkdir: " + stagingPath);
+      LOG.error("Temp", new RuntimeException());
       //mkdir the staging directory so that right permissions are set while running as proxy user
       fc.mkdir(stagingPath, null, true);
       //mkdir done directory as well 

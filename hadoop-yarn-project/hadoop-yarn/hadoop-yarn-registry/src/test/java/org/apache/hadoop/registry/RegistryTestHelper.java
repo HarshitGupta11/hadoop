@@ -111,7 +111,7 @@ public class RegistryTestHelper extends Assert {
       LoginContext loginContext) {
     assertNotNull("Null login context", loginContext);
     Subject subject = loginContext.getSubject();
-    LOG.info("Logged in as {}:\n {}", name, subject);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -245,7 +245,7 @@ public class RegistryTestHelper extends Assert {
    */
   public static void logRecord(String name, ServiceRecord record) throws
       IOException {
-    LOG.info(" {} = \n{}\n", name, recordMarshal.toJson(record));
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -310,11 +310,11 @@ public class RegistryTestHelper extends Assert {
   public static LoginContext logout(LoginContext login) {
     try {
       if (login != null) {
-        LOG.debug("Logging out login context {}", login.toString());
+        LOG.error("Temp", new RuntimeException());
         login.logout();
       }
     } catch (LoginException e) {
-      LOG.warn("Exception logging out: {}", e, e);
+      LOG.error("Temp", new RuntimeException());
     }
     return null;
   }
@@ -328,7 +328,7 @@ public class RegistryTestHelper extends Assert {
    */
   public static UserGroupInformation loginUGI(String user, File keytab) throws
       IOException {
-    LOG.info("Logging in as {} from {}", user, keytab);
+    LOG.error("Temp", new RuntimeException());
     return UserGroupInformation.loginUserFromKeytabAndReturnUGI(user,
         keytab.getAbsolutePath());
   }

@@ -56,7 +56,7 @@ public final class DockerClient {
 
     File tmpDir = new File(tmpDirPath);
     if (!(tmpDir.exists() || tmpDir.mkdirs())) {
-      LOG.warn("Unable to create directory: " + tmpDirPath);
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException("Unable to create directory: " +
           tmpDirPath);
     }
@@ -93,7 +93,7 @@ public final class DockerClient {
 
       return dockerCommandFile.getAbsolutePath();
     } catch (IOException e) {
-      LOG.warn("Unable to write docker command to temporary file!");
+      LOG.error("Temp", new RuntimeException());
       throw new ContainerExecutionException(e);
     }
   }

@@ -573,7 +573,7 @@ public class SLSRunner extends Configured implements Tool {
     jobStartTimeMS -= baselineTimeMs;
     jobFinishTimeMS -= baselineTimeMs;
     if (jobStartTimeMS < 0) {
-      LOG.warn("Warning: reset job {} start time to 0.", oldJobId);
+      LOG.error("Temp", new RuntimeException());
       jobFinishTimeMS = jobFinishTimeMS - jobStartTimeMS;
       jobStartTimeMS = 0;
     }
@@ -659,7 +659,7 @@ public class SLSRunner extends Configured implements Tool {
       jobStartTimeMS -= baselineTimeMS;
       jobFinishTimeMS -= baselineTimeMS;
       if (jobStartTimeMS < 0) {
-        LOG.warn("Warning: reset job {} start time to 0.", oldJobId);
+        LOG.error("Temp", new RuntimeException());
         jobFinishTimeMS = jobFinishTimeMS - jobStartTimeMS;
         jobStartTimeMS = 0;
       }
@@ -780,31 +780,31 @@ public class SLSRunner extends Configured implements Tool {
   private void printSimulationInfo() {
     if (printSimulation) {
       // node
-      LOG.info("------------------------------------");
+      LOG.error("Temp", new RuntimeException());
       LOG.info("# nodes = {}, # racks = {}, capacity " +
               "of each node {}.",
               numNMs, numRacks, nodeManagerResource);
-      LOG.info("------------------------------------");
+      LOG.error("Temp", new RuntimeException());
       // job
       LOG.info("# applications = {}, # total " +
               "tasks = {}, average # tasks per application = {}",
               numAMs, numTasks, (int)(Math.ceil((numTasks + 0.0) / numAMs)));
-      LOG.info("JobId\tQueue\tAMType\tDuration\t#Tasks");
+      LOG.error("Temp", new RuntimeException());
       for (Map.Entry<String, AMSimulator> entry : amMap.entrySet()) {
         AMSimulator am = entry.getValue();
         LOG.info(entry.getKey() + "\t" + am.getQueue() + "\t" + am.getAMType()
             + "\t" + am.getDuration() + "\t" + am.getNumTasks());
       }
-      LOG.info("------------------------------------");
+      LOG.error("Temp", new RuntimeException());
       // queue
       LOG.info("number of queues = {}  average number of apps = {}",
           queueAppNumMap.size(),
           (int)(Math.ceil((numAMs + 0.0) / queueAppNumMap.size())));
-      LOG.info("------------------------------------");
+      LOG.error("Temp", new RuntimeException());
       // runtime
       LOG.info("estimated simulation time is {} seconds",
           (long)(Math.ceil(maxRuntime / 1000.0)));
-      LOG.info("------------------------------------");
+      LOG.error("Temp", new RuntimeException());
     }
     // package these information in the simulateInfoMap used by other places
     simulateInfoMap.put("Number of racks", numRacks);
@@ -832,7 +832,7 @@ public class SLSRunner extends Configured implements Tool {
     remainingApps--;
 
     if (remainingApps == 0) {
-      LOG.info("SLSRunner tears down.");
+      LOG.error("Temp", new RuntimeException());
       if (exitAtTheFinish) {
         System.exit(0);
       }

@@ -152,7 +152,7 @@ public class CGroupsMemoryResourceHandlerImpl implements MemoryResourceHandler {
         }
       } catch (ResourceHandlerException re) {
         cGroupsHandler.deleteCGroup(MEMORY, cgroupId);
-        LOG.warn("Could not update cgroup for container", re);
+        LOG.error("Temp", new RuntimeException());
         throw re;
       }
     }

@@ -132,7 +132,7 @@ public class TestWebHdfsTimeouts {
       try {
         serverSocket.close();
       } catch (IOException e) {
-        LOG.debug("Exception in closing " + serverSocket, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (serverThread != null) {

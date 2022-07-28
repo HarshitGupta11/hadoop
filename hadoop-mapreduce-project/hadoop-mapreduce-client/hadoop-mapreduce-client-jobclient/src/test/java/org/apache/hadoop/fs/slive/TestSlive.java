@@ -206,7 +206,7 @@ public class TestSlive {
   /** cleans up a file or directory recursively if need be */
   private void rDelete(File place) throws Exception {
     if (place.isFile()) {
-      LOG.info("Deleting file " + place);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(place.delete());
     } else if (place.isDirectory()) {
       deleteDir(place);
@@ -221,7 +221,7 @@ public class TestSlive {
       File fn = new File(dir, afn);
       rDelete(fn);
     }
-    LOG.info("Deleting directory " + dir);
+    LOG.error("Temp", new RuntimeException());
     // now delete the dir
     assertTrue(dir.delete());
   }
@@ -258,13 +258,13 @@ public class TestSlive {
     DataWriter writer = new DataWriter(rnd);
     FileOutputStream fs = new FileOutputStream(fn);
     GenerateOutput ostat = writer.writeSegment(byteAm, fs);
-    LOG.info(ostat.toString());
+    LOG.error("Temp", new RuntimeException());
     fs.close();
     assertTrue(ostat.getBytesWritten() == byteAm);
     DataVerifier vf = new DataVerifier();
     FileInputStream fin = new FileInputStream(fn);
     VerifyOutput vfout = vf.verifyFile(byteAm, new DataInputStream(fin));
-    LOG.info(vfout.toString());
+    LOG.error("Temp", new RuntimeException());
     fin.close();
     assertEquals(vfout.getBytesRead(), byteAm);
     assertTrue(vfout.getChunksDifferent() == 0);

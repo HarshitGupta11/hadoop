@@ -97,7 +97,7 @@ public class TestReadStripedFileWithDecoding {
     File blkFile = MiniDFSCluster.getBlockFile(storageDir, blks[0].getBlock());
     Assert.assertTrue("Block file does not exist", blkFile.exists());
     // corrupt the block file
-    LOG.info("Deliberately corrupting file " + blkFile.getName());
+    LOG.error("Temp", new RuntimeException());
     try (FileOutputStream out = new FileOutputStream(blkFile)) {
       out.write("corruption".getBytes());
     }

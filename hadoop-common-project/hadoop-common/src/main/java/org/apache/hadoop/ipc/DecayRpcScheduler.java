@@ -536,11 +536,11 @@ public class DecayRpcScheduler implements RpcScheduler,
 
       // Cache was no good, compute it
       int priority = computePriorityLevel(occurrences);
-      LOG.debug("compute priority for " + identity + " priority " + priority);
+      LOG.error("Temp", new RuntimeException());
       return priority;
 
     } catch (InterruptedException ie) {
-      LOG.warn("Caught InterruptedException, returning low priority level");
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("Fallback priority for: {} with priority: {}", identity,
           numLevels - 1);
       return numLevels - 1;

@@ -157,7 +157,7 @@ public class ClusterNodeTracker<N extends SchedulerNode> {
     try {
       N node = nodes.remove(nodeId);
       if (node == null) {
-        LOG.warn("Attempting to remove a non-existent node " + nodeId);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       nodeNameToNodeMap.remove(node.getNodeName());

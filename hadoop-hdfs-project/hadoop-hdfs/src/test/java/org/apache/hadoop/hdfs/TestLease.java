@@ -109,7 +109,7 @@ public class TestLease {
       // renewing.
       try {
         d_out.write(buf, 0, 1024);
-        LOG.info("Write worked beyond the soft limit as expected.");
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException e) {
         Assert.fail("Write failed.");
       }
@@ -125,7 +125,7 @@ public class TestLease {
         d_out.close();
         Assert.fail("Write did not fail even after the fatal lease renewal failure");
       } catch (IOException e) {
-        LOG.info("Write failed as expected. ", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // If aborted, the renewer should be empty. (no reference to clients)
@@ -181,7 +181,7 @@ public class TestLease {
       DistributedFileSystem fs2 = (DistributedFileSystem) FileSystem.newInstance(fs.getUri(), fs.getConf());
 
       // rename the file into an existing dir
-      LOG.info("DMS: rename file into dir");
+      LOG.error("Temp", new RuntimeException());
       Path pRenamed = new Path(d, p.getName());
       fs2.mkdirs(d);
       fs2.rename(p, pRenamed);
@@ -192,7 +192,7 @@ public class TestLease {
       Assert.assertEquals(1, leaseCount(cluster));
     
       // rename the parent dir to a new non-existent dir
-      LOG.info("DMS: rename parent dir");
+      LOG.error("Temp", new RuntimeException());
       Path pRenamedAgain = new Path(d2, pRenamed.getName());
       fs2.rename(d, d2);
       // src gone
@@ -206,7 +206,7 @@ public class TestLease {
 
       // rename the parent dir to existing dir
       // NOTE: rename w/o options moves paths into existing dir
-      LOG.info("DMS: rename parent again");
+      LOG.error("Temp", new RuntimeException());
       pRenamed = pRenamedAgain;
       pRenamedAgain = new Path(new Path(d, d2.getName()), p.getName());      
       fs2.mkdirs(d);

@@ -397,7 +397,7 @@ public abstract class Storage extends StorageInfo {
           return FileUtils.sizeOfDirectory(root);
         }
       } catch (Exception e) {
-        LOG.warn("Failed to get directory size : {}", root, e);
+        LOG.error("Temp", new RuntimeException());
       }
       return 0;
     }
@@ -428,7 +428,7 @@ public abstract class Storage extends StorageInfo {
       }
       if (curDir.exists()) {
         File[] files = FileUtil.listFiles(curDir);
-        LOG.info("Will remove files: {}", Arrays.toString(files));
+        LOG.error("Temp", new RuntimeException());
         if (!(FileUtil.fullyDelete(curDir)))
           throw new IOException("Cannot remove current directory: " + curDir);
       }
@@ -651,25 +651,25 @@ public abstract class Storage extends StorageInfo {
           // storage directory does not exist
           if (startOpt != StartupOption.FORMAT &&
               startOpt != StartupOption.HOTSWAP) {
-            LOG.warn("Storage directory {} does not exist", rootPath);
+            LOG.error("Temp", new RuntimeException());
             return StorageState.NON_EXISTENT;
           }
-          LOG.info("{} does not exist. Creating ...", rootPath);
+          LOG.error("Temp", new RuntimeException());
           if (!root.mkdirs())
             throw new IOException("Cannot create directory " + rootPath);
           hadMkdirs = true;
         }
         // or is inaccessible
         if (!root.isDirectory()) {
-          LOG.warn("{} is not a directory", rootPath);
+          LOG.error("Temp", new RuntimeException());
           return StorageState.NON_EXISTENT;
         }
         if (!FileUtil.canWrite(root)) {
-          LOG.warn("Cannot access storage directory {}", rootPath);
+          LOG.error("Temp", new RuntimeException());
           return StorageState.NON_EXISTENT;
         }
       } catch(SecurityException ex) {
-        LOG.warn("Cannot access storage directory {}", rootPath, ex);
+        LOG.error("Temp", new RuntimeException());
         return StorageState.NON_EXISTENT;
       }
 
@@ -861,14 +861,14 @@ public abstract class Storage extends StorageInfo {
      */
     public void lock() throws IOException {
       if (isShared()) {
-        LOG.info("Locking is disabled for {}", this.root);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       FileLock newLock = tryLock();
       if (newLock == null) {
         String msg = "Cannot lock storage " + this.root
           + ". The directory is already locked";
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(msg);
       }
       // Don't overwrite lock until success - this way if we accidentally
@@ -902,7 +902,7 @@ public abstract class Storage extends StorageInfo {
           throw new OverlappingFileLockException();
         }
         file.write(jvmName.getBytes(Charsets.UTF_8));
-        LOG.info("Lock on {} acquired by nodename {}", lockF, jvmName);
+        LOG.error("Temp", new RuntimeException());
       } catch(OverlappingFileLockException oe) {
         // Cannot read from the locked file on Windows.
         String lockingJvmName = Path.WINDOWS ? "" : (" " + file.readLine());

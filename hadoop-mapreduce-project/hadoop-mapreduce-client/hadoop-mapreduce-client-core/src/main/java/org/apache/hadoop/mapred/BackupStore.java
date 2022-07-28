@@ -113,7 +113,7 @@ public class BackupStore<K,V> {
     
     this.conf = conf;
     
-    LOG.info("Created a new BackupStore with a memory of " + maxSize);
+    LOG.error("Temp", new RuntimeException());
 
   }
 
@@ -167,7 +167,7 @@ public class BackupStore<K,V> {
       s.close();
       itr.remove();
       i++;
-      LOG.debug("Dropping a segment");
+      LOG.error("Temp", new RuntimeException());
     }
 
     // FirstSegmentOffset is the offset in the current segment from where we
@@ -176,7 +176,7 @@ public class BackupStore<K,V> {
     firstSegmentOffset = currentKVOffset;
     readSegmentIndex = 0;
 
-    LOG.debug("Setting the FirsSegmentOffset to " + currentKVOffset);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void reset() throws IOException {
@@ -408,7 +408,7 @@ public class BackupStore<K,V> {
       int allocatedSize = createNewMemoryBlock(defaultBlockSize, 
           defaultBlockSize);
       assert(allocatedSize == defaultBlockSize || allocatedSize == 0);
-      LOG.debug("Created a new mem block of " + allocatedSize);
+      LOG.error("Temp", new RuntimeException());
     }
 
     private int createNewMemoryBlock(int requestedSize, int minSize) {
@@ -477,7 +477,7 @@ public class BackupStore<K,V> {
       usedSize += keyLength + valueLength + 
         WritableUtils.getVIntSize(keyLength) +
         WritableUtils.getVIntSize(valueLength);
-      LOG.debug("ID: " + segmentList.size() + " WRITE TO MEM");
+      LOG.error("Temp", new RuntimeException());
     }
 
     /**
@@ -541,7 +541,7 @@ public class BackupStore<K,V> {
         writer = createSpillFile();
       }
       writer.append(key, value);
-      LOG.debug("ID: " + segmentList.size() + " WRITE TO DISK");
+      LOG.error("Temp", new RuntimeException());
     }
 
     void reinitialize() {
@@ -561,7 +561,7 @@ public class BackupStore<K,V> {
       Segment<K,V> s = new Segment<K, V>(conf, fs, file, null, true);
       writer = null;
       segmentList.add(s);
-      LOG.debug("Disk Segment added to List. Size is "  + segmentList.size());
+      LOG.error("Temp", new RuntimeException());
     }
 
     boolean isActive() { return isActive; }
@@ -571,7 +571,7 @@ public class BackupStore<K,V> {
           new Path(MRJobConfig.OUTPUT + "/backup_" + tid.getId() + "_"
               + (spillNumber++) + ".out");
 
-      LOG.info("Created file: " + tmp);
+      LOG.error("Temp", new RuntimeException());
 
       file = lDirAlloc.getLocalPathForWrite(tmp.toUri().getPath(), 
           -1, conf);
@@ -592,7 +592,7 @@ public class BackupStore<K,V> {
 
     public boolean reserve(int requestedSize, InputStream in) {
       // Not used
-      LOG.warn("Reserve(int, InputStream) not supported by BackupRamManager");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -602,7 +602,7 @@ public class BackupStore<K,V> {
       }
       int reservedSize = Math.min(requestedSize, availableSize);
       availableSize -= reservedSize;
-      LOG.debug("Reserving: " + reservedSize + " Requested: " + requestedSize);
+      LOG.error("Temp", new RuntimeException());
       return reservedSize;
     }
 

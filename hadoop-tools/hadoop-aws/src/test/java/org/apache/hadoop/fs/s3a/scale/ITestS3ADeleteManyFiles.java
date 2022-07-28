@@ -86,10 +86,10 @@ public class ITestS3ADeleteManyFiles extends S3AScaleTestBase {
         final Future<Boolean> future = completionService.take();
         try {
           if (!future.get()) {
-            LOG.warn("cannot create file");
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (ExecutionException e) {
-          LOG.warn("Error while uploading file", e.getCause());
+          LOG.error("Temp", new RuntimeException());
           throw e;
         }
       }

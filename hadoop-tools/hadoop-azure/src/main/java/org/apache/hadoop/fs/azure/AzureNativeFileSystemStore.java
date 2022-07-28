@@ -539,7 +539,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
 
     // Extract the directories that should contain page blobs
     pageBlobDirs = getDirectorySet(KEY_PAGE_BLOB_DIRECTORIES);
-    LOG.debug("Page blob directories:  {}", setToString(pageBlobDirs));
+    LOG.error("Temp", new RuntimeException());
 
     // User-agent
     userAgentId = conf.get(USER_AGENT_ID_KEY, USER_AGENT_ID_DEFAULT);
@@ -562,9 +562,9 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
         atomicRenameDirs.add(hbaseRoot);
       }
     } catch (URISyntaxException e) {
-      LOG.warn("Unable to initialize HBase root as an atomic rename directory.");
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.debug("Atomic rename directories: {} ", setToString(atomicRenameDirs));
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -1228,7 +1228,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
           }
         }
       } catch (URISyntaxException e) {
-        LOG.info("URI syntax error creating URI for {}", dir);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return false;
@@ -1507,7 +1507,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
   private InputStream openInputStream(CloudBlobWrapper blob)
       throws StorageException, IOException {
     if (blob instanceof CloudBlockBlobWrapper) {
-      LOG.debug("Using stream seek algorithm {}", inputStreamVersion);
+      LOG.error("Temp", new RuntimeException());
       switch(inputStreamVersion) {
       case 1:
         return blob.openInputStream(getDownloadOptions(),
@@ -2051,7 +2051,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
       throw new AssertionError(errMsg);
     }
 
-    LOG.debug("Retrieving metadata for {}", key);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       if (checkContainer(ContainerAccessType.PureRead) == ContainerState.DoesntExist) {
@@ -2075,7 +2075,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
       // exists.
       if (null != blob && blob.exists(getInstrumentedContext())) {
 
-        LOG.debug("Found {} as an explicit blob. Checking if it's a file or folder.", key);
+        LOG.error("Temp", new RuntimeException());
 
         try {
           // The blob exists, so capture the metadata from the blob
@@ -2084,12 +2084,12 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
           BlobProperties properties = blob.getProperties();
 
           if (retrieveFolderAttribute(blob)) {
-            LOG.debug("{} is a folder blob.", key);
+            LOG.error("Temp", new RuntimeException());
             return new FileMetadata(key, properties.getLastModified().getTime(),
                 getPermissionStatus(blob), BlobMaterialization.Explicit);
           } else {
 
-            LOG.debug("{} is a normal blob.", key);
+            LOG.error("Temp", new RuntimeException());
 
             return new FileMetadata(
                 key, // Always return denormalized key with metadata.
@@ -2528,7 +2528,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
           && "BlobNotFound".equals(e.getErrorCode())
           && operationContext.getRequestResults().size() > 1
           && operationContext.getRequestResults().get(0).getException() != null) {
-        LOG.debug("Swallowing delete exception on retry: {}", e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         return;
       } else {
         throw e;
@@ -2618,7 +2618,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
   public void rename(String srcKey, String dstKey, boolean acquireLease,
       SelfRenewingLease existingLease, boolean overwriteDestination) throws IOException {
 
-    LOG.debug("Moving {} to {}", srcKey, dstKey);
+    LOG.error("Temp", new RuntimeException());
 
     if (acquireLease && existingLease != null) {
       throw new IOException("Cannot acquire new lease if one already exists.");
@@ -2712,7 +2712,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
       safeDelete(srcBlob, lease);
     } catch (StorageException e) {
       if (e.getHttpStatusCode() == HttpURLConnection.HTTP_UNAVAILABLE) {
-        LOG.warn("Rename: CopyBlob: StorageException: ServerBusy: Retry complete, will attempt client side copy for page blob");
+        LOG.error("Temp", new RuntimeException());
         InputStream ipStream = null;
         OutputStream opStream = null;
         try {
@@ -2732,7 +2732,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
           }
           safeDelete(srcBlob, lease);
         } catch(StorageException se) {
-          LOG.warn("Rename: CopyBlob: StorageException: Failed");
+          LOG.error("Temp", new RuntimeException());
           throw new AzureException(se);
         } finally {
           IOUtils.closeStream(ipStream);
@@ -2854,7 +2854,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
    */
   @Override
   public SelfRenewingLease acquireLease(String key) throws AzureException {
-    LOG.debug("acquiring lease on {}", key);
+    LOG.error("Temp", new RuntimeException());
     try {
       checkContainer(ContainerAccessType.ReadThenWrite);
       CloudBlobWrapper blob = getBlobReference(key);
@@ -2911,7 +2911,7 @@ public class AzureNativeFileSystemStore implements NativeFileSystemStore {
   // Finalizer to ensure complete shutdown
   @Override
   protected void finalize() throws Throwable {
-    LOG.debug("finalize() called");
+    LOG.error("Temp", new RuntimeException());
     close();
     super.finalize();
   }

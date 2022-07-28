@@ -166,7 +166,7 @@ public class TestEditLogRace {
               .contains("SafeModeException")) {
             return;
           }
-          LOG.warn("Got error in transaction thread", e);
+          LOG.error("Temp", new RuntimeException());
           caught.compareAndSet(null, e);
           break;
         }
@@ -236,7 +236,7 @@ public class TestEditLogRace {
           Thread.sleep(20);
         } catch (InterruptedException e) {}
 
-        LOG.info("Starting roll " + i + ".");
+        LOG.error("Temp", new RuntimeException());
         CheckpointSignature sig = nn.rollEditLog();
         
         long nextLog = sig.curSegmentTxId;
@@ -317,7 +317,7 @@ public class TestEditLogRace {
         } catch (InterruptedException ignored) {}
 
 
-        LOG.info("Save " + i + ": entering safe mode");
+        LOG.error("Temp", new RuntimeException());
         namesystem.enterSafeMode(false);
 
         // Verify edit logs before the save
@@ -328,9 +328,9 @@ public class TestEditLogRace {
             logStartTxId);
 
 
-        LOG.info("Save " + i + ": saving namespace");
+        LOG.error("Temp", new RuntimeException());
         namesystem.saveNamespace(0, 0);
-        LOG.info("Save " + i + ": leaving safemode");
+        LOG.error("Temp", new RuntimeException());
 
         long savedImageTxId = fsimage.getStorage().getMostRecentCheckpointTxId();
         
@@ -345,7 +345,7 @@ public class TestEditLogRace {
                      editLog.getLastWrittenTxId() - 1);
 
         namesystem.leaveSafeMode(false);
-        LOG.info("Save " + i + ": complete");
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       stopTransactionWorkers();
@@ -412,11 +412,11 @@ public class TestEditLogRace {
         @Override
         public void run() {
           try {
-            LOG.info("Starting mkdirs");
+            LOG.error("Temp", new RuntimeException());
             namesystem.mkdirs("/test",
                 new PermissionStatus("test","test", new FsPermission((short)00755)),
                 true);
-            LOG.info("mkdirs complete");
+            LOG.error("Temp", new RuntimeException());
           } catch (Throwable ioe) {
             LOG.fatal("Got exception", ioe);
             deferredException.set(ioe);
@@ -428,17 +428,17 @@ public class TestEditLogRace {
       Answer<Void> blockingFlush = new Answer<Void>() {
         @Override
         public Void answer(InvocationOnMock invocation) throws Throwable {
-          LOG.info("Flush called");
+          LOG.error("Temp", new RuntimeException());
           if (useAsyncEditLog || Thread.currentThread() == doAnEditThread) {
-            LOG.info("edit thread: Telling main thread we made it to flush section...");
+            LOG.error("Temp", new RuntimeException());
             // Signal to main thread that the edit thread is in the racy section
             waitToEnterFlush.countDown();
-            LOG.info("edit thread: sleeping for " + BLOCK_TIME + "secs");
+            LOG.error("Temp", new RuntimeException());
             Thread.sleep(BLOCK_TIME*1000);
-            LOG.info("Going through to flush. This will allow the main thread to continue.");
+            LOG.error("Temp", new RuntimeException());
           }
           invocation.callRealMethod();
-          LOG.info("Flush complete");
+          LOG.error("Temp", new RuntimeException());
           return null;
         }
       };
@@ -446,24 +446,24 @@ public class TestEditLogRace {
       
       doAnEditThread.start();
       // Wait for the edit thread to get to the logsync unsynchronized section
-      LOG.info("Main thread: waiting to enter flush...");
+      LOG.error("Temp", new RuntimeException());
       waitToEnterFlush.await();
       assertNull(deferredException.get());
-      LOG.info("Main thread: detected that logSync is in unsynchronized section.");
-      LOG.info("Trying to enter safe mode.");
-      LOG.info("This should block for " + BLOCK_TIME + "sec, since flush will sleep that long");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       long st = Time.now();
       namesystem.setSafeMode(SafeModeAction.SAFEMODE_ENTER);
       long et = Time.now();
-      LOG.info("Entered safe mode");
+      LOG.error("Temp", new RuntimeException());
       // Make sure we really waited for the flush to complete!
       assertTrue(et - st > (BLOCK_TIME - 1)*1000);
 
       // Once we're in safe mode, save namespace.
       namesystem.saveNamespace(0, 0);
 
-      LOG.info("Joining on edit thread...");
+      LOG.error("Temp", new RuntimeException());
       doAnEditThread.join();
       assertNull(deferredException.get());
 
@@ -476,7 +476,7 @@ public class TestEditLogRace {
           NNStorage.getInProgressEditsFileName(4),
           4));
     } finally {
-      LOG.info("Closing nn");
+      LOG.error("Temp", new RuntimeException());
       if(namesystem != null) namesystem.close();
     }
   }
@@ -507,7 +507,7 @@ public class TestEditLogRace {
         @Override
         public void run() {
           try {
-            LOG.info("Starting setOwner");
+            LOG.error("Temp", new RuntimeException());
             namesystem.writeLock();
             try {
               editLog.logSetOwner("/","test","test");
@@ -515,10 +515,10 @@ public class TestEditLogRace {
               namesystem.writeUnlock();
             }
             sleepingBeforeSync.countDown();
-            LOG.info("edit thread: sleeping for " + BLOCK_TIME + "secs");
+            LOG.error("Temp", new RuntimeException());
             Thread.sleep(BLOCK_TIME*1000);
             editLog.logSync();
-            LOG.info("edit thread: logSync complete");
+            LOG.error("Temp", new RuntimeException());
           } catch (Throwable ioe) {
             LOG.fatal("Got exception", ioe);
             deferredException.set(ioe);
@@ -528,16 +528,16 @@ public class TestEditLogRace {
       };
       doAnEditThread.setDaemon(true);
       doAnEditThread.start();
-      LOG.info("Main thread: waiting to just before logSync...");
+      LOG.error("Temp", new RuntimeException());
       sleepingBeforeSync.await(200, TimeUnit.MILLISECONDS);
       assertNull(deferredException.get());
-      LOG.info("Main thread: detected that logSync about to be called.");
-      LOG.info("Trying to enter safe mode.");
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
 
       long st = Time.now();
       namesystem.setSafeMode(SafeModeAction.SAFEMODE_ENTER);
       long et = Time.now();
-      LOG.info("Entered safe mode after "+(et-st)+"ms");
+      LOG.error("Temp", new RuntimeException());
 
       // Make sure we didn't wait for the thread that did a logEdit but
       // not logSync.  Going into safemode does a logSyncAll that will flush
@@ -547,7 +547,7 @@ public class TestEditLogRace {
       // Once we're in safe mode, save namespace.
       namesystem.saveNamespace(0, 0);
 
-      LOG.info("Joining on edit thread...");
+      LOG.error("Temp", new RuntimeException());
       doAnEditThread.join();
       assertNull(deferredException.get());
 
@@ -560,7 +560,7 @@ public class TestEditLogRace {
           NNStorage.getInProgressEditsFileName(4),
           4));
     } finally {
-      LOG.info("Closing nn");
+      LOG.error("Temp", new RuntimeException());
       if(namesystem != null) namesystem.close();
     }
   }  

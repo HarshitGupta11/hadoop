@@ -168,7 +168,7 @@ public class VersionInfo {
   }
 
   public static void main(String[] args) {
-    LOG.debug("version: "+ getVersion());
+    LOG.error("Temp", new RuntimeException());
     System.out.println("Hadoop " + getVersion());
     System.out.println("Source code repository " + getUrl() + " -r " +
         getRevision());

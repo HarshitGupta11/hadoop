@@ -75,7 +75,7 @@ public class WeightedRoundRobinMultiplexer implements RpcMultiplexer {
     this.currentQueueIndex = new AtomicInteger(0);
     this.requestsLeft = new AtomicInteger(this.queueWeights[0]);
 
-    LOG.info("WeightedRoundRobinMultiplexer is being used.");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

@@ -292,7 +292,7 @@ public class ZlibCompressor implements Compressor {
                   strategy.compressionStrategy(), 
                   windowBits.windowBits());
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Reinit compressor with new compression configuration");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

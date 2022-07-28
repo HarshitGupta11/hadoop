@@ -134,7 +134,7 @@ public class ContainerRelaunch extends ContainerLaunch {
       getContext().getNodeStatusUpdater().reportException(e);
       return ret;
     } catch (Throwable e) {
-      LOG.warn("Failed to relaunch container.", e);
+      LOG.error("Temp", new RuntimeException());
       dispatcher.getEventHandler().handle(new ContainerExitEvent(
           containerId, ContainerEventType.CONTAINER_EXITED_WITH_FAILURE, ret,
           e.getMessage()));
@@ -208,7 +208,7 @@ public class ContainerRelaunch extends ContainerLaunch {
           .setSubDir(path)
           .build());
     } catch (Exception e) {
-      LOG.warn("Failed to delete " + path, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

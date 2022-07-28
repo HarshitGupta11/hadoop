@@ -726,7 +726,7 @@ public class DFSOutputStream extends FSOutputSummer
       // writer, but instead just propagate the error
       throw interrupt;
     } catch (IOException e) {
-      DFSClient.LOG.warn("Error while syncing", e);
+      DFSClient.LOG.error("Temp", new RuntimeException());
       synchronized (this) {
         if (!isClosed()) {
           getStreamer().getLastException().set(e);
@@ -952,7 +952,7 @@ public class DFSOutputStream extends FSOutputSummer
           String msg = "Unable to close file because dfsclient " +
               " was unable to contact the HDFS servers. clientRunning " +
               dfsClient.clientRunning + " hdfsTimeout " + hdfsTimeout;
-          DFSClient.LOG.info(msg);
+          DFSClient.LOG.error("Temp", new RuntimeException());
           throw new IOException(msg);
         }
         try {
@@ -964,10 +964,10 @@ public class DFSOutputStream extends FSOutputSummer
           Thread.sleep(sleeptime);
           sleeptime *= 2;
           if (Time.monotonicNow() - localstart > 5000) {
-            DFSClient.LOG.info("Could not complete " + src + " retrying...");
+            DFSClient.LOG.error("Temp", new RuntimeException());
           }
         } catch (InterruptedException ie) {
-          DFSClient.LOG.warn("Caught exception ", ie);
+          DFSClient.LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -1093,7 +1093,7 @@ public class DFSOutputStream extends FSOutputSummer
             throw e;
           } else {
             --retries;
-            LOG.info("Exception while adding a block", e);
+            LOG.error("Temp", new RuntimeException());
             long elapsed = Time.monotonicNow() - localstart;
             if (elapsed > 5000) {
               LOG.info("Waiting for replication for " + (elapsed / 1000)
@@ -1105,7 +1105,7 @@ public class DFSOutputStream extends FSOutputSummer
               Thread.sleep(sleeptime);
               sleeptime *= 2;
             } catch (InterruptedException ie) {
-              LOG.warn("Caught exception", ie);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         } else {

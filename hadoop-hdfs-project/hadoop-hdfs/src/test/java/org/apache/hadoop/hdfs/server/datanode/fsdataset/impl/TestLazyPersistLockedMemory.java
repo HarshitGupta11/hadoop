@@ -190,7 +190,7 @@ public class TestLazyPersistLockedMemory extends LazyPersistTestCase {
       @Override
       public Boolean get() {
         long cacheUsed = fsd.getCacheUsed();
-        LOG.info("cacheUsed=" + cacheUsed + ", waiting for it to be " + expectedLockedBytes);
+        LOG.error("Temp", new RuntimeException());
         if (cacheUsed < 0) {
           throw new IllegalStateException("cacheUsed unpexpectedly negative");
         }

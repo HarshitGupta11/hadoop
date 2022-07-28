@@ -306,7 +306,7 @@ public class LeaseRenewer {
               }
               LeaseRenewer.this.run(id);
             } catch(InterruptedException e) {
-              LOG.debug("LeaseRenewer is interrupted.", e);
+              LOG.error("Temp", new RuntimeException());
             } finally {
               synchronized(LeaseRenewer.this) {
                 Factory.INSTANCE.remove(LeaseRenewer.this);
@@ -371,7 +371,7 @@ public class LeaseRenewer {
     }
 
     if (daemonCopy != null) {
-      LOG.debug("Wait for lease checker to terminate");
+      LOG.error("Temp", new RuntimeException());
       daemonCopy.join();
     }
   }
@@ -393,11 +393,11 @@ public class LeaseRenewer {
       //skip if current client name is the same as the previous name.
       if (!c.getClientName().equals(previousName)) {
         if (!c.renewLease()) {
-          LOG.debug("Did not renew lease for client {}", c);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         previousName = c.getClientName();
-        LOG.debug("Lease renewed for client {}", previousName);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

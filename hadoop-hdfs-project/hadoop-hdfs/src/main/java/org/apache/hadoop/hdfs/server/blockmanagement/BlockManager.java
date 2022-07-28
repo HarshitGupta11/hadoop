@@ -561,13 +561,13 @@ public class BlockManager implements BlockStatsMXBean {
 
     bmSafeMode = new BlockManagerSafeMode(this, namesystem, haEnabled, conf);
 
-    LOG.info("defaultReplication         = {}", defaultReplication);
-    LOG.info("maxReplication             = {}", maxReplication);
-    LOG.info("minReplication             = {}", minReplication);
-    LOG.info("maxReplicationStreams      = {}", maxReplicationStreams);
-    LOG.info("redundancyRecheckInterval  = {}ms", redundancyRecheckIntervalMs);
-    LOG.info("encryptDataTransfer        = {}", encryptDataTransfer);
-    LOG.info("maxNumBlocksToLog          = {}", maxNumBlocksToLog);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static BlockTokenSecretManager createBlockTokenSecretManager(
@@ -1331,7 +1331,7 @@ public class BlockManager implements BlockStatsMXBean {
           Collections.<LocatedBlock> emptyList(), null, false, feInfo, ecPolicy);
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("blocks = {}", java.util.Arrays.asList(blocks));
+        LOG.error("Temp", new RuntimeException());
       }
       final AccessMode mode = needBlockToken? BlockTokenIdentifier.AccessMode.READ: null;
 
@@ -1931,7 +1931,7 @@ public class BlockManager implements BlockStatsMXBean {
         numReplicas);
     if(srcNodes == null || srcNodes.length == 0) {
       // block can not be reconstructed from any node
-      LOG.debug("Block {} cannot be reconstructed from any node", block);
+      LOG.error("Temp", new RuntimeException());
       NameNode.getNameNodeMetrics().incNumTimesReReplicationNotScheduled();
       return null;
     }
@@ -1994,7 +1994,7 @@ public class BlockManager implements BlockStatsMXBean {
     for (DatanodeDescriptor src : srcs) {
       if (!src.isDecommissionInProgress() &&
           src.getNetworkLocation().equals(target.getNetworkLocation())) {
-        LOG.debug("the target {} is in the same rack with src {}", target, src);
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     }
@@ -2328,11 +2328,11 @@ public class BlockManager implements BlockStatsMXBean {
     try {
       node = datanodeManager.getDatanode(nodeReg);
     } catch (UnregisteredNodeException e) {
-      LOG.warn("Unregistered datanode {}", nodeReg);
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     if (node == null) {
-      LOG.warn("Failed to find datanode {}", nodeReg);
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     // Request a new block report lease.  The BlockReportLeaseManager has
@@ -2907,7 +2907,7 @@ public class BlockManager implements BlockStatsMXBean {
     BlockUCState ucState = storedBlock.getBlockUCState();
 
     // Block is on the NN
-    LOG.debug("In memory blockUCState = {}", ucState);
+    LOG.error("Temp", new RuntimeException());
 
     // Ignore replicas already scheduled to be removed from the DN
     if (invalidateBlocks.contains(dn, replica)) {
@@ -2973,7 +2973,7 @@ public class BlockManager implements BlockStatsMXBean {
   private void processQueuedMessages(Iterable<ReportedBlockInfo> rbis)
       throws IOException {
     for (ReportedBlockInfo rbi : rbis) {
-      LOG.debug("Processing previouly queued message {}", rbi);
+      LOG.error("Temp", new RuntimeException());
       if (rbi.getReportedState() == null) {
         // This is a DELETE_BLOCK request
         DatanodeStorageInfo storageInfo = rbi.getStorageInfo();
@@ -3097,7 +3097,7 @@ public class BlockManager implements BlockStatsMXBean {
       + " for block: " + storedBlock + 
       " on " + dn + " size " + storedBlock.getNumBytes();
       // log here at WARN level since this is really a broken HDFS invariant
-      LOG.warn("{}", msg);
+      LOG.error("Temp", new RuntimeException());
       return new BlockToMarkCorrupt(new Block(reported), storedBlock, msg,
           Reason.INVALID_STATE);
     }
@@ -3353,7 +3353,7 @@ public class BlockManager implements BlockStatsMXBean {
         try {
           processMisReplicatesAsync();
         } catch (InterruptedException ie) {
-          LOG.info("Interrupted while processing reconstruction queues.");
+          LOG.error("Temp", new RuntimeException());
         } catch (Exception e) {
           LOG.error("Error while processing reconstruction queues async", e);
         }
@@ -3443,9 +3443,9 @@ public class BlockManager implements BlockStatsMXBean {
             / totalBlocks, 1.0);
 
         if (!blocksItr.hasNext()) {
-          LOG.info("Total number of blocks            = {}", blocksMap.size());
-          LOG.info("Number of invalid blocks          = {}", nrInvalid);
-          LOG.info("Number of under-replicated blocks = {}", nrUnderReplicated);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
           LOG.info("Number of  over-replicated blocks = {}{}", nrOverReplicated,
               ((nrPostponed > 0) ? (" (" + nrPostponed + " postponed)") : ""));
           LOG.info("Number of blocks being written    = {}",
@@ -3465,7 +3465,7 @@ public class BlockManager implements BlockStatsMXBean {
       }
     }
     if (Thread.currentThread().isInterrupted()) {
-      LOG.info("Interrupted while processing replication queues.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -3902,7 +3902,7 @@ public class BlockManager implements BlockStatsMXBean {
 
     BlockUCState ucState = storedBlock.getBlockUCState();
     // Block is on the NN
-    LOG.debug("In memory blockUCState = {}", ucState);
+    LOG.error("Temp", new RuntimeException());
 
     // Ignore replicas already scheduled to be removed from the DN
     if(invalidateBlocks.contains(node, block)) {
@@ -4172,7 +4172,7 @@ public class BlockManager implements BlockStatsMXBean {
    */
   boolean isNodeHealthyForDecommissionOrMaintenance(DatanodeDescriptor node) {
     if (!node.checkBlockReportReceived()) {
-      LOG.info("Node {} hasn't sent its first block report.", node);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -4317,7 +4317,7 @@ public class BlockManager implements BlockStatsMXBean {
     try {
       // blocks should not be replicated or removed if safe mode is on
       if (namesystem.isInSafeMode()) {
-        LOG.debug("In safemode, not computing reconstruction work");
+        LOG.error("Temp", new RuntimeException());
         return 0;
       }
       try {
@@ -4513,14 +4513,14 @@ public class BlockManager implements BlockStatsMXBean {
           TimeUnit.MILLISECONDS.sleep(redundancyRecheckIntervalMs);
         } catch (Throwable t) {
           if (!namesystem.isRunning()) {
-            LOG.info("Stopping RedundancyMonitor.");
+            LOG.error("Temp", new RuntimeException());
             if (!(t instanceof InterruptedException)) {
               LOG.info("RedundancyMonitor received an exception"
                   + " while shutting down.", t);
             }
             break;
           } else if (!checkNSRunning && t instanceof InterruptedException) {
-            LOG.info("Stopping RedundancyMonitor for testing.");
+            LOG.error("Temp", new RuntimeException());
             break;
           }
           LOG.error("RedundancyMonitor thread received Runtime exception. ",
@@ -4548,13 +4548,13 @@ public class BlockManager implements BlockStatsMXBean {
           Thread.sleep(storageInfoDefragmentInterval);
         } catch (Throwable t) {
           if (!namesystem.isRunning()) {
-            LOG.info("Stopping thread.");
+            LOG.error("Temp", new RuntimeException());
             if (!(t instanceof InterruptedException)) {
-              LOG.info("Received an exception while shutting down.", t);
+              LOG.error("Temp", new RuntimeException());
             }
             break;
           } else if (!checkNSRunning && t instanceof InterruptedException) {
-            LOG.info("Stopping for testing.");
+            LOG.error("Temp", new RuntimeException());
             break;
           }
           LOG.error("Thread received Runtime exception.", t);
@@ -4748,7 +4748,7 @@ public class BlockManager implements BlockStatsMXBean {
    * Initialize replication queues.
    */
   public void initializeReplQueues() {
-    LOG.info("initializing replication queues");
+    LOG.error("Temp", new RuntimeException());
     processMisReplicatedBlocks();
     initializedReplQueues = true;
   }
@@ -4907,7 +4907,7 @@ public class BlockManager implements BlockStatsMXBean {
         long now = Time.monotonicNow();
         if (now - lastFull > 4000) {
           lastFull = now;
-          LOG.info("Block report queue is full");
+          LOG.error("Temp", new RuntimeException());
         }
         queue.put(action);
       }

@@ -54,7 +54,7 @@ public class TestGetUriFromString {
   @Test
   public void testRelativePathAsURI() throws IOException {
     URI u = Util.stringAsURI(RELATIVE_FILE_PATH);
-    LOG.info("Uri: " + u);
+    LOG.error("Temp", new RuntimeException());
     assertNotNull(u);
   }
 
@@ -80,16 +80,16 @@ public class TestGetUriFromString {
    */
   @Test
   public void testURI() throws IOException {
-    LOG.info("Testing correct Unix URI: " + URI_UNIX);
+    LOG.error("Temp", new RuntimeException());
     URI u = Util.stringAsURI(URI_UNIX);
-    LOG.info("Uri: " + u);    
+    LOG.error("Temp", new RuntimeException());
     assertNotNull("Uri should not be null at this point", u);
     assertEquals(URI_FILE_SCHEMA, u.getScheme());
     assertEquals(URI_PATH_UNIX, u.getPath());
 
-    LOG.info("Testing correct windows URI: " + URI_WINDOWS);
+    LOG.error("Temp", new RuntimeException());
     u = Util.stringAsURI(URI_WINDOWS);
-    LOG.info("Uri: " + u);
+    LOG.error("Temp", new RuntimeException());
     assertNotNull("Uri should not be null at this point", u);
     assertEquals(URI_FILE_SCHEMA, u.getScheme());
     assertEquals(URI_PATH_WINDOWS.replace("%20", " "), u.getPath());

@@ -42,7 +42,7 @@ public abstract class Nfs3Base {
 
   protected Nfs3Base(RpcProgram rpcProgram, Configuration conf) {
     this.rpcProgram = rpcProgram;
-    LOG.info("NFS server port set to: " + rpcProgram.getPort());
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void start(boolean register) {

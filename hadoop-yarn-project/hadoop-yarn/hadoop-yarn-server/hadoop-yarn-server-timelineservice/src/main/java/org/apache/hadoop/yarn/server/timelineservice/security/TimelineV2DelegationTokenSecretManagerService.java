@@ -120,7 +120,7 @@ public class TimelineV2DelegationTokenSecretManagerService extends
     @Override
     protected void logExpireToken(TimelineDelegationTokenIdentifier ident)
         throws IOException {
-      LOG.info("Token " + ident + " expired.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

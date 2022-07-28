@@ -93,7 +93,7 @@ public class TableMapping extends CachedDNSToSwitchMapping {
   
       String filename = getConf().get(NET_TOPOLOGY_TABLE_MAPPING_FILE_KEY, null);
       if (StringUtils.isBlank(filename)) {
-        LOG.warn(NET_TOPOLOGY_TABLE_MAPPING_FILE_KEY + " not configured. ");
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
   
@@ -109,13 +109,13 @@ public class TableMapping extends CachedDNSToSwitchMapping {
             if (columns.length == 2) {
               loadMap.put(columns[0], columns[1]);
             } else {
-              LOG.warn("Line does not have two columns. Ignoring. " + line);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           line = reader.readLine();
         }
       } catch (Exception e) {
-        LOG.warn(filename + " cannot be read.", e);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
       return loadMap;

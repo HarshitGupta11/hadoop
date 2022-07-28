@@ -164,12 +164,12 @@ public class ThreadedMapBenchmark extends Configured implements Tool {
     FileSystem fs = FileSystem.get(job);
     fs.delete(BASE_DIR, true);
     
-    LOG.info("Generating random input for the benchmark");
-    LOG.info("Total data : " + totalDataSize + " mb");
-    LOG.info("Data per map: " + dataSizePerMap + " mb");
-    LOG.info("Number of spills : " + numSpillsPerMap);
-    LOG.info("Number of maps per host : " + numMapsPerHost);
-    LOG.info("Number of hosts : " + cluster.getTaskTrackers());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     
     JobClient.runJob(job); // generates the input for the benchmark
   }
@@ -183,7 +183,7 @@ public class ThreadedMapBenchmark extends Configured implements Tool {
    * @throws IOException 
    */
   public int run (String[] args) throws Exception {
-    LOG.info("Starting the benchmark for threaded spills");
+    LOG.error("Temp", new RuntimeException());
     String version = "ThreadedMapBenchmark.0.0.1";
     System.out.println(version);
     
@@ -252,7 +252,7 @@ public class ThreadedMapBenchmark extends Configured implements Tool {
       job.set(JobContext.IO_SORT_MB, String.valueOf(ioSortMb));
       fs = FileSystem.get(job);
       
-      LOG.info("Running sort with 1 spill per map");
+      LOG.error("Temp", new RuntimeException());
       long startTime = System.currentTimeMillis();
       JobClient.runJob(job);
       long endTime = System.currentTimeMillis();
@@ -270,7 +270,7 @@ public class ThreadedMapBenchmark extends Configured implements Tool {
       spilledJob.setJobName("threaded-map-benchmark-spilled");
       spilledJob.setJarByClass(ThreadedMapBenchmark.class);
       
-      LOG.info("Running sort with " + numSpillsPerMap + " spills per map");
+      LOG.error("Temp", new RuntimeException());
       startTime = System.currentTimeMillis();
       JobClient.runJob(spilledJob);
       endTime = System.currentTimeMillis();

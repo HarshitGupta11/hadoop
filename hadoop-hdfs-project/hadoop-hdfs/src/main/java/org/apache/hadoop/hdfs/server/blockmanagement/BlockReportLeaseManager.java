@@ -201,7 +201,7 @@ class BlockReportLeaseManager {
     NodeData node = new NodeData(dn.getDatanodeUuid());
     deferredHead.addToBeginning(node);
     nodes.put(dn.getDatanodeUuid(), node);
-    LOG.info("Registered DN {} ({}).", dn.getDatanodeUuid(), dn.getXferAddr());
+    LOG.error("Temp", new RuntimeException());
     return node;
   }
 
@@ -340,7 +340,7 @@ class BlockReportLeaseManager {
     }
     long id = node.leaseId;
     if (id == 0) {
-      LOG.debug("DN {} has no lease to remove.", dn.getDatanodeUuid());
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     remove(node);

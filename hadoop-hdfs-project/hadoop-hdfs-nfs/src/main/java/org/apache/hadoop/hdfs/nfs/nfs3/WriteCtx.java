@@ -105,7 +105,7 @@ class WriteCtx {
   public void trimWrite(int delta) {
     Preconditions.checkState(delta < count);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Trim write request by delta:" + delta + " " + toString());
+      LOG.error("Temp", new RuntimeException());
     }
     synchronized(this) {
       trimDelta = delta;
@@ -164,7 +164,7 @@ class WriteCtx {
     dumpFileOffset = dumpOut.getChannel().position();
     dumpOut.write(data.array(), 0, count);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("After dump, new dumpFileOffset:" + dumpFileOffset);
+      LOG.error("Temp", new RuntimeException());
     }
     // it is possible that while we dump the data, the data is also being
     // written back to HDFS. After dump, if the writing back has not finished

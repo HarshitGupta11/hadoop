@@ -100,7 +100,7 @@ public class PeerCache {
     this.expiryPeriod = e;
 
     if (capacity == 0 ) {
-      LOG.debug("SocketCache disabled.");
+      LOG.error("Temp", new RuntimeException());
     } else if (expiryPeriod == 0) {
       throw new IllegalStateException("Cannot initialize expiryPeriod to " +
          expiryPeriod + " when cache is enabled.");

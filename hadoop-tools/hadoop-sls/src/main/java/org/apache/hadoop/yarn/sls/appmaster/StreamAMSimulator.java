@@ -141,7 +141,7 @@ public class StreamAMSimulator extends AMSimulator {
               // am container released event (am container completed on success)
               isAMContainerRunning = false;
               isFinished = true;
-              LOG.info("Application {} goes to finish.", appId);
+              LOG.error("Temp", new RuntimeException());
             } else {
               // am container killed - wait for re allocation
               LOG.info("Application {}'s AM is "

@@ -130,7 +130,7 @@ public class NodeQueueLoadMonitor implements ClusterMonitor {
           sortedNodes.clear();
           sortedNodes.addAll(nodeIds);
         } catch (Exception ex) {
-          LOG.warn("Got Exception while sorting nodes..", ex);
+          LOG.error("Temp", new RuntimeException());
         }
         if (thresholdCalculator != null) {
           thresholdCalculator.update();
@@ -183,7 +183,7 @@ public class NodeQueueLoadMonitor implements ClusterMonitor {
   public void addNode(List<NMContainerStatus> containerStatuses,
       RMNode rmNode) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Node added event from: " + rmNode.getNode().getName());
+      LOG.error("Temp", new RuntimeException());
     }
     // Ignoring this currently : at least one NODE_UPDATE heartbeat is
     // required to ensure node eligibility.
@@ -191,7 +191,7 @@ public class NodeQueueLoadMonitor implements ClusterMonitor {
 
   @Override
   public void removeNode(RMNode removedRMNode) {
-    LOG.debug("Node delete event for: " + removedRMNode.getNode().getName());
+    LOG.error("Temp", new RuntimeException());
     ReentrantReadWriteLock.WriteLock writeLock = clusterNodesLock.writeLock();
     writeLock.lock();
     ClusterNode node;
@@ -202,16 +202,16 @@ public class NodeQueueLoadMonitor implements ClusterMonitor {
     }
     if (LOG.isDebugEnabled()) {
       if (node != null) {
-        LOG.debug("Delete ClusterNode: " + removedRMNode.getNodeID());
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.debug("Node not in list!");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
 
   @Override
   public void updateNode(RMNode rmNode) {
-    LOG.debug("Node update event from: " + rmNode.getNodeID());
+    LOG.error("Temp", new RuntimeException());
     OpportunisticContainersStatus opportunisticContainersStatus =
         rmNode.getOpportunisticContainersStatus();
     if (opportunisticContainersStatus == null) {
@@ -271,7 +271,7 @@ public class NodeQueueLoadMonitor implements ClusterMonitor {
 
   @Override
   public void updateNodeResource(RMNode rmNode, ResourceOption resourceOption) {
-    LOG.debug("Node resource update event from: " + rmNode.getNodeID());
+    LOG.error("Temp", new RuntimeException());
     // Ignoring this currently.
   }
 

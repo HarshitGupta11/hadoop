@@ -63,7 +63,7 @@ public class TestJobSummary {
     // verify newlines are escaped
     summary.setJobName("aa\rbb\ncc\r\ndd");
     String out = summary.getJobSummaryString();
-    LOG.info("summary: " + out);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(out.contains("\r"));
     Assert.assertFalse(out.contains("\n"));
     Assert.assertTrue(out.contains("aa\\rbb\\ncc\\r\\ndd"));

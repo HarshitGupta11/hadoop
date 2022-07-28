@@ -375,7 +375,7 @@ public class Listing {
       } else {
         // turn to file status that are only in provided list
         if (providedStatusIterator == null) {
-          LOG.debug("Start iterating the provided status.");
+          LOG.error("Temp", new RuntimeException());
           providedStatusIterator = providedStatus.iterator();
         }
         return false;
@@ -391,12 +391,12 @@ public class Listing {
         // We remove from provided list the file status listed by S3 so that
         // this does not return duplicate items.
         if (providedStatus.remove(status)) {
-          LOG.debug("Removed the status from provided file status {}", status);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         if (providedStatusIterator.hasNext()) {
           status = providedStatusIterator.next();
-          LOG.debug("Returning provided file status {}", status);
+          LOG.error("Temp", new RuntimeException());
         } else {
           throw new NoSuchElementException();
         }
@@ -423,7 +423,7 @@ public class Listing {
           // acceptors; declare that the request was successful
           return true;
         } else {
-          LOG.debug("All entries in batch were filtered...continuing");
+          LOG.error("Temp", new RuntimeException());
         }
       }
       // if this code is reached, it means that all remaining
@@ -449,17 +449,17 @@ public class Listing {
         String key = summary.getKey();
         Path keyPath = owner.keyToQualifiedPath(key);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("{}: {}", keyPath, stringify(summary));
+          LOG.error("Temp", new RuntimeException());
         }
         // Skip over keys that are ourselves and old S3N _$folder$ files
         if (acceptor.accept(keyPath, summary) && filter.accept(keyPath)) {
           FileStatus status = createFileStatus(keyPath, summary,
               owner.getDefaultBlockSize(keyPath), owner.getUsername());
-          LOG.debug("Adding: {}", status);
+          LOG.error("Temp", new RuntimeException());
           stats.add(status);
           added++;
         } else {
-          LOG.debug("Ignoring: {}", keyPath);
+          LOG.error("Temp", new RuntimeException());
           ignored++;
         }
       }
@@ -470,11 +470,11 @@ public class Listing {
         if (acceptor.accept(keyPath, prefix) && filter.accept(keyPath)) {
           FileStatus status = new S3AFileStatus(Tristate.FALSE, keyPath,
               owner.getUsername());
-          LOG.debug("Adding directory: {}", status);
+          LOG.error("Temp", new RuntimeException());
           added++;
           stats.add(status);
         } else {
-          LOG.debug("Ignoring directory: {}", keyPath);
+          LOG.error("Temp", new RuntimeException());
           ignored++;
         }
       }
@@ -599,7 +599,7 @@ public class Listing {
               listingCount, maxKeys, listPath);
           objects = owner.continueListObjects(request, objects);
           listingCount++;
-          LOG.debug("New listing status: {}", this);
+          LOG.error("Temp", new RuntimeException());
         } catch (AmazonClientException e) {
           throw translateException("listObjects()", listPath, e);
         }

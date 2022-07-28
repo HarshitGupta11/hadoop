@@ -166,13 +166,13 @@ public class LeveldbRMStateStore extends RMStateStore {
     Options options = new Options();
     options.createIfMissing(false);
     options.logger(new LeveldbLogger());
-    LOG.info("Using state database at " + storeRoot + " for recovery");
+    LOG.error("Temp", new RuntimeException());
     File dbfile = new File(storeRoot.toString());
     try {
       db = JniDBFactory.factory.open(dbfile, options);
     } catch (NativeDB.DBException e) {
       if (e.isNotFound() || e.getMessage().contains(" does not exist ")) {
-        LOG.info("Creating state database at " + dbfile);
+        LOG.error("Temp", new RuntimeException());
         options.createIfMissing(true);
         try {
           db = JniDBFactory.factory.open(dbfile, options);
@@ -297,7 +297,7 @@ public class LeveldbRMStateStore extends RMStateStore {
             key.substring(RM_RESERVATION_KEY_PREFIX.length());
         String[] parts = planReservationString.split(SEPARATOR);
         if (parts.length != 2) {
-          LOG.warn("Incorrect reservation state key " + key);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         String planName = parts[0];
@@ -321,14 +321,14 @@ public class LeveldbRMStateStore extends RMStateStore {
         iter.close();
       }
     }
-    LOG.info("Recovered " + numReservations + " reservations");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void loadRMDTSecretManagerState(RMState state) throws IOException {
     int numKeys = loadRMDTSecretManagerKeys(state);
-    LOG.info("Recovered " + numKeys + " RM delegation token master keys");
+    LOG.error("Temp", new RuntimeException());
     int numTokens = loadRMDTSecretManagerTokens(state);
-    LOG.info("Recovered " + numTokens + " RM delegation tokens");
+    LOG.error("Temp", new RuntimeException());
     loadRMDTSecretManagerTokenSequenceNumber(state);
   }
 
@@ -454,7 +454,7 @@ public class LeveldbRMStateStore extends RMStateStore {
 
         String appIdStr = key.substring(RM_APP_ROOT.length() + 1);
         if (appIdStr.contains(SEPARATOR)) {
-          LOG.warn("Skipping extraneous data " + key);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
 
@@ -492,7 +492,7 @@ public class LeveldbRMStateStore extends RMStateStore {
             createAttemptState(attemptId, entry.getValue());
         appState.attempts.put(attemptState.getAttemptId(), attemptState);
       } else {
-        LOG.warn("Ignoring unknown application key: " + key);
+        LOG.error("Temp", new RuntimeException());
       }
       iter.next();
     }
@@ -586,7 +586,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       ApplicationStateData appStateData) throws IOException {
     String key = getApplicationNodeKey(appId);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing state for app " + appId + " at " + key);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       db.put(bytes(key), appStateData.getProto().toByteArray());
@@ -607,7 +607,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       ApplicationAttemptStateData attemptStateData) throws IOException {
     String key = getApplicationAttemptNodeKey(attemptId);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing state for attempt " + attemptId + " at " + key);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       db.put(bytes(key), attemptStateData.getProto().toByteArray());
@@ -716,7 +716,7 @@ public class LeveldbRMStateStore extends RMStateStore {
     RMDelegationTokenIdentifierData tokenData =
         new RMDelegationTokenIdentifierData(tokenId, renewDate);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing token to " + tokenKey);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       WriteBatch batch = db.createWriteBatch();
@@ -761,7 +761,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       RMDelegationTokenIdentifier tokenId) throws IOException {
     String tokenKey = getRMDTTokenNodeKey(tokenId);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing token at " + tokenKey);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       db.delete(bytes(tokenKey));
@@ -775,7 +775,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       throws IOException {
     String dbKey = getRMDTMasterKeyNodeKey(masterKey);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Storing token master key to " + dbKey);
+      LOG.error("Temp", new RuntimeException());
     }
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     DataOutputStream out = new DataOutputStream(os);
@@ -796,7 +796,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       throws IOException {
     String dbKey = getRMDTMasterKeyNodeKey(masterKey);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Removing token master key at " + dbKey);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       db.delete(bytes(dbKey));
@@ -817,7 +817,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   @Override
   public void deleteStore() throws IOException {
     Path root = getStorageDir();
-    LOG.info("Deleting state database at " + root);
+    LOG.error("Temp", new RuntimeException());
     db.close();
     db = null;
     FileSystem fs = FileSystem.getLocal(getConfig());
@@ -828,7 +828,7 @@ public class LeveldbRMStateStore extends RMStateStore {
   public synchronized void removeApplication(ApplicationId removeAppId)
       throws IOException {
     String appKey = getApplicationNodeKey(removeAppId);
-    LOG.info("Removing state for app " + removeAppId);
+    LOG.error("Temp", new RuntimeException());
     try {
       db.delete(bytes(appKey));
     } catch (DBException e) {
@@ -845,7 +845,7 @@ public class LeveldbRMStateStore extends RMStateStore {
       iter.seekToFirst();
       while (iter.hasNext()) {
         Entry<byte[], byte[]> entry = iter.next();
-        LOG.info("entry: " + asString(entry.getKey()));
+        LOG.error("Temp", new RuntimeException());
         ++numEntries;
       }
     } catch (DBException e) {
@@ -862,14 +862,14 @@ public class LeveldbRMStateStore extends RMStateStore {
     @Override
     public void run() {
       long start = Time.monotonicNow();
-      LOG.info("Starting full compaction cycle");
+      LOG.error("Temp", new RuntimeException());
       try {
         db.compactRange(null, null);
       } catch (DBException e) {
         LOG.error("Error compacting database", e);
       }
       long duration = Time.monotonicNow() - start;
-      LOG.info("Full compaction cycle completed in " + duration + " msec");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -878,7 +878,7 @@ public class LeveldbRMStateStore extends RMStateStore {
 
     @Override
     public void log(String message) {
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

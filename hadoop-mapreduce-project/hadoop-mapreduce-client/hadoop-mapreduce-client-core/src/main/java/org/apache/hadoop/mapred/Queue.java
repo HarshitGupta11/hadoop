@@ -297,7 +297,7 @@ class Queue implements Comparable<Queue>{
   JobQueueInfo getJobQueueInfo() {
     JobQueueInfo queueInfo = new JobQueueInfo();
     queueInfo.setQueueName(name);
-    LOG.debug("created jobQInfo " + queueInfo.getQueueName());
+    LOG.error("Temp", new RuntimeException());
     queueInfo.setQueueState(state.getStateName());
     if (schedulingInfo != null) {
       queueInfo.setSchedulingInfo(schedulingInfo.toString());
@@ -335,13 +335,13 @@ class Queue implements Comparable<Queue>{
     }
     //First check if names are equal
     if(!(name.equals(newState.getName())) ) {
-      LOG.info(" current name " + name + " not equal to " + newState.getName());
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
     if (children == null || children.size() == 0) {
       if(newState.getChildren() != null && newState.getChildren().size() > 0) {
-        LOG.info( newState + " has added children in refresh ");
+        LOG.error("Temp", new RuntimeException());
         return false;
       }
     } else if(children.size() > 0) {
@@ -369,7 +369,7 @@ class Queue implements Comparable<Queue>{
         Queue q = itr1.next();
         Queue newq = itr2.next();
         if(! (q.isHierarchySameAs(newq)) ) {
-          LOG.info(" Queue " + q.getName() + " not equal to " + newq.getName());
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }

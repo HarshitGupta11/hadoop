@@ -151,7 +151,7 @@ class OnDiskMapOutput<K, V> extends IFileWrappedMapOutput<K, V> {
     try {
       fs.delete(tmpOutputPath, false);
     } catch (IOException ie) {
-      LOG.info("failure to clean up " + tmpOutputPath, ie);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

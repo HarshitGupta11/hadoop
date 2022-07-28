@@ -294,7 +294,7 @@ public class TestDFSIO implements Tool {
                                   long nrBytes, // in bytes
                                   int nrFiles
                                 ) throws IOException {
-    LOG.info("creating control file: "+nrBytes+" bytes, "+nrFiles+" files");
+    LOG.error("Temp", new RuntimeException());
     final int maxDirItems = config.getInt(
         DFSConfigKeys.DFS_NAMENODE_MAX_DIRECTORY_ITEMS_KEY,
         DFSConfigKeys.DFS_NAMENODE_MAX_DIRECTORY_ITEMS_DEFAULT);
@@ -326,7 +326,7 @@ public class TestDFSIO implements Tool {
         writer = null;
       }
     }
-    LOG.info("created control files for: " + nrFiles + " files");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static String getFileName(int fIdx) {
@@ -383,9 +383,9 @@ public class TestDFSIO implements Tool {
                       Long objSize) throws IOException {
       long totalSize = objSize.longValue();
       float ioRateMbSec = (float)totalSize * 1000 / (execTime * MEGA);
-      LOG.info("Number of bytes processed = " + totalSize);
-      LOG.info("Exec time = " + execTime);
-      LOG.info("IO rate = " + ioRateMbSec);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       output.collect(new Text(AccumulatingReducer.VALUE_TYPE_LONG + "tasks"),
           new Text(String.valueOf(1)));
@@ -421,7 +421,7 @@ public class TestDFSIO implements Tool {
       }
       if(compressionCodec != null)
         out = compressionCodec.createOutputStream(out);
-      LOG.info("out = " + out.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
       return out;
     }
 
@@ -492,7 +492,7 @@ public class TestDFSIO implements Tool {
           fs.append(new Path(getDataDir(getConf()), name), bufferSize);
       if(compressionCodec != null)
         out = compressionCodec.createOutputStream(out);
-      LOG.info("out = " + out.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
       return out;
     }
 
@@ -538,7 +538,7 @@ public class TestDFSIO implements Tool {
       InputStream in = fs.open(new Path(getDataDir(getConf()), name));
       if(compressionCodec != null)
         in = compressionCodec.createInputStream(in);
-      LOG.info("in = " + in.getClass().getName());
+      LOG.error("Temp", new RuntimeException());
       return in;
     }
 
@@ -603,8 +603,8 @@ public class TestDFSIO implements Tool {
       InputStream in = fs.open(filePath);
       if(compressionCodec != null)
         in = new FSDataInputStream(compressionCodec.createInputStream(in));
-      LOG.info("in = " + in.getClass().getName());
-      LOG.info("skipSize = " + skipSize);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       return in;
     }
 
@@ -764,7 +764,7 @@ public class TestDFSIO implements Tool {
     boolean isSequential = false;
     String version = TestDFSIO.class.getSimpleName() + ".1.8";
 
-    LOG.info(version);
+    LOG.error("Temp", new RuntimeException());
     if (args.length == 0) {
       System.err.println("Missing arguments.");
       return -1;
@@ -823,17 +823,17 @@ public class TestDFSIO implements Tool {
       skipSize = bufferSize;
     }
 
-    LOG.info("nrFiles = " + nrFiles);
-    LOG.info("nrBytes (MB) = " + toMB(nrBytes));
-    LOG.info("bufferSize = " + bufferSize);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     if (skipSize > 0) {
-      LOG.info("skipSize = " + skipSize);
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("baseDir = " + getBaseDir(config));
+    LOG.error("Temp", new RuntimeException());
     
     if (compressionClass != null) {
       config.set("test.io.compression.class", compressionClass);
-      LOG.info("compressionClass = " + compressionClass);
+      LOG.error("Temp", new RuntimeException());
     }
 
     config.setInt("test.io.file.buffer.size", bufferSize);
@@ -857,7 +857,7 @@ public class TestDFSIO implements Tool {
       sequentialTest(fs, testType, nrBytes, nrFiles);
       long execTime = System.currentTimeMillis() - tStart;
       String resultLine = "Seq Test exec time sec: " + msToSecs(execTime);
-      LOG.info(resultLine);
+      LOG.error("Temp", new RuntimeException());
       return 0;
     }
     if (testType == TestType.TEST_TYPE_CLEANUP) {
@@ -954,7 +954,7 @@ public class TestDFSIO implements Tool {
     }
 
     config.set(ERASURE_CODE_POLICY_NAME_KEY, erasureCodePolicyName);
-    LOG.info("erasureCodePolicy = " + erasureCodePolicyName);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -984,7 +984,7 @@ public class TestDFSIO implements Tool {
     }
 
     config.set(STORAGE_POLICY_NAME_KEY, storagePolicy);
-    LOG.info("storagePolicy = " + storagePolicy);
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -1067,7 +1067,7 @@ public class TestDFSIO implements Tool {
     try {
       res = new PrintStream(new FileOutputStream(new File(resFileName), true)); 
       for(int i = 0; i < resultLines.length; i++) {
-        LOG.info(resultLines[i]);
+        LOG.error("Temp", new RuntimeException());
         res.println(resultLines[i]);
       }
     } finally {
@@ -1102,7 +1102,7 @@ public class TestDFSIO implements Tool {
 
   private void cleanup(FileSystem fs)
   throws IOException {
-    LOG.info("Cleaning up test files");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(new Path(getBaseDir(config)), true);
   }
 }

@@ -55,7 +55,7 @@ class FsUrlConnection extends URLConnection {
   public void connect() throws IOException {
     Preconditions.checkState(is == null, "Already connected");
     try {
-      LOG.debug("Connecting to {}", url);
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = FileSystem.get(url.toURI(), conf);
       is = fs.open(new Path(url.getPath()));
     } catch (URISyntaxException e) {

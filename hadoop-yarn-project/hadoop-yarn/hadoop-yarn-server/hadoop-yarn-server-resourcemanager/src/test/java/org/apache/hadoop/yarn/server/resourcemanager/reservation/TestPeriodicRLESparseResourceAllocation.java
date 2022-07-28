@@ -42,7 +42,7 @@ public class TestPeriodicRLESparseResourceAllocation {
         .generateRLESparseResourceAllocation(alloc, timeSteps);
     PeriodicRLESparseResourceAllocation periodicVector =
         new PeriodicRLESparseResourceAllocation(rleSparseVector, 20L);
-    LOG.info(periodicVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(Resource.newInstance(5, 5),
         periodicVector.getCapacityAtTime(10L));
     Assert.assertEquals(Resource.newInstance(10, 10),
@@ -61,7 +61,7 @@ public class TestPeriodicRLESparseResourceAllocation {
         .generateRLESparseResourceAllocation(alloc, timeSteps);
     PeriodicRLESparseResourceAllocation periodicVector =
         new PeriodicRLESparseResourceAllocation(rleSparseVector, 8L);
-    LOG.info(periodicVector.toString());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(periodicVector.getMaximumPeriodicCapacity(0, 1),
         Resource.newInstance(10, 10));
     Assert.assertEquals(periodicVector.getMaximumPeriodicCapacity(8, 2),

@@ -177,7 +177,7 @@ class StripedBlockReader {
           corruptedBlocks.addCorruptedBlock(block, source);
           throw e;
         } catch (IOException e) {
-          LOG.info(e.getMessage());
+          LOG.error("Temp", new RuntimeException());
           throw e;
         }
       }

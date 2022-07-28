@@ -1101,7 +1101,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
   void logJobHistoryFinishedEvent() {
     this.setFinishTime();
     JobFinishedEvent jfe = createJobFinishedEvent(this);
-    LOG.info("Calling handler for JobFinishedEvent ");
+    LOG.error("Temp", new RuntimeException());
     this.getEventHandler().handle(new JobHistoryEvent(this.jobId, jfe));    
   }
   
@@ -1307,7 +1307,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
           msg.append(" too much CPU;");
       if (!notChainJob)
         msg.append(" chainjob;");
-      LOG.info(msg.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -1356,7 +1356,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
         for (TaskAttemptId id : taskAttemptIdList) {
           if (TaskType.MAP == id.getTaskId().getTaskType()) {
             // reschedule only map tasks because their outputs maybe unusable
-            LOG.info(mesg + ". AttemptId:" + id);
+            LOG.error("Temp", new RuntimeException());
             // Kill the attempt and indicate that next map attempt should be
             // rescheduled (i.e. considered as a fast fail map).
             eventHandler.handle(new TaskAttemptKillEvent(id, mesg, true));
@@ -1515,7 +1515,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
         job.metrics.endPreparingJob(job);
         return JobStateInternal.INITED;
       } catch (Exception e) {
-        LOG.warn("Job init failed", e);
+        LOG.error("Temp", new RuntimeException());
         job.metrics.endPreparingJob(job);
         job.addDiagnostic("Job init failed : "
             + StringUtils.stringifyException(e));
@@ -1532,7 +1532,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
         UserGroupInformation.getCurrentUser().getShortUserName();
       Path path = MRApps.getStagingAreaDir(job.conf, user);
       if(LOG.isDebugEnabled()) {
-        LOG.debug("startJobs: parent=" + path + " child=" + oldJobIDString);
+        LOG.error("Temp", new RuntimeException());
       }
 
       job.remoteJobSubmitDir =
@@ -1976,7 +1976,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
     public JobStateInternal transition(JobImpl job, JobEvent event) {
       job.completedTaskCount++;
       JobTaskEvent taskEvent = (JobTaskEvent) event;
-      LOG.info("Num completed Tasks: " + job.completedTaskCount);
+      LOG.error("Temp", new RuntimeException());
       Task task = job.tasks.get(taskEvent.getTaskID());
       if (taskEvent.getState() == TaskState.SUCCEEDED) {
         taskSucceeded(job, task);
@@ -2001,7 +2001,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
         this.job = job;
       }
       public void run() {
-        LOG.info("Sending event " + toSend + " to " + job.getID());
+        LOG.error("Temp", new RuntimeException());
         job.getEventHandler().handle(toSend);
       }
     }
@@ -2021,7 +2021,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
             " killedMaps:" + job.killedMapTaskCount +
             " killedReduces: " + job.killedReduceTaskCount;
 
-        LOG.info(diagnosticMsg);
+        LOG.error("Temp", new RuntimeException());
         job.addDiagnostic(diagnosticMsg);
 
         //Send kill signal to all unfinished tasks here.
@@ -2100,7 +2100,7 @@ public class JobImpl implements org.apache.hadoop.mapreduce.v2.app.job.Job,
           for (TaskId mapTaskId : job.mapTasks) {
             MapTaskImpl task = (MapTaskImpl) job.tasks.get(mapTaskId);
             if (!task.isFinished()) {
-              LOG.info("Killing map task " + task.getID());
+              LOG.error("Temp", new RuntimeException());
               job.eventHandler.handle(
                   new TaskEvent(task.getID(), TaskEventType.T_KILL));
             }

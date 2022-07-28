@@ -182,11 +182,11 @@ public class ITestS3ADirectoryPerformance extends S3AScaleTestBase {
       fs.getFileStatus(path);
     }
     timer.end("Time to execute %d getFileStatusCalls", attempts);
-    LOG.info("Time per call: {}", toHuman(timer.nanosPerOperation(attempts)));
-    LOG.info("metadata: {}", metadataRequests);
-    LOG.info("metadata per operation {}", metadataRequests.diff() / attempts);
-    LOG.info("listObjects: {}", listRequests);
-    LOG.info("listObjects: per operation {}", listRequests.diff() / attempts);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
 }

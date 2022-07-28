@@ -88,7 +88,7 @@ public class TestCompressionStreamReuse {
     } catch (ClassNotFoundException cnfe) {
       throw new IOException("Illegal codec!");
     }
-    LOG.info("Created a Codec object of type: " + codecClass);
+    LOG.error("Temp", new RuntimeException());
 
     // Generate data
     DataOutputBuffer data = new DataOutputBuffer();
@@ -101,7 +101,7 @@ public class TestCompressionStreamReuse {
       key.write(data);
       value.write(data);
     }
-    LOG.info("Generated " + count + " records");
+    LOG.error("Temp", new RuntimeException());
 
     // Compress data
     DataOutputBuffer compressedDataBuffer = new DataOutputBuffer();
@@ -112,11 +112,11 @@ public class TestCompressionStreamReuse {
     deflateFilter.write(data.getData(), 0, data.getLength());
     deflateFilter.finish();
     deflateFilter.flush();
-    LOG.info("Finished compressing data");
+    LOG.error("Temp", new RuntimeException());
 
     // reset deflator
     deflateFilter.resetState();
-    LOG.info("Finished reseting deflator");
+    LOG.error("Temp", new RuntimeException());
 
     // re-generate data
     data.reset();
@@ -143,7 +143,7 @@ public class TestCompressionStreamReuse {
     deflateFilter.write(data.getData(), 0, data.getLength());
     deflateFilter.finish();
     deflateFilter.flush();
-    LOG.info("Finished re-compressing data");
+    LOG.error("Temp", new RuntimeException());
 
     // De-compress data
     DataInputBuffer deCompressedDataBuffer = new DataInputBuffer();
@@ -169,6 +169,6 @@ public class TestCompressionStreamReuse {
           "original and compressed-then-decompressed-output not equal",
           k1.equals(k2) && v1.equals(v2));
     }
-    LOG.info("SUCCESS! Completed checking " + count + " records");
+    LOG.error("Temp", new RuntimeException());
   }
 }

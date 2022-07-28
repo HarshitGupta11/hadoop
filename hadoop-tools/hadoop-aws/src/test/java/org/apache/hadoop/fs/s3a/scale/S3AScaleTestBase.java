@@ -89,7 +89,7 @@ public class S3AScaleTestBase extends AbstractS3ATestBase {
   public void setup() throws Exception {
     super.setup();
     testPath = path("/tests3ascale");
-    LOG.debug("Scale test operation count = {}", getOperationCount());
+    LOG.error("Temp", new RuntimeException());
     enabled = getTestPropertyBool(
         getConf(),
         KEY_SCALE_TESTS_ENABLED,

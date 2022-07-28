@@ -172,7 +172,7 @@ public class TestFsck {
     PrintStream out = new PrintStream(bStream, true);
     GenericTestUtils.setLogLevel(FSPermissionChecker.LOG, Level.ALL);
     int errCode = ToolRunner.run(new DFSck(conf, out), path);
-    LOG.info("OUTPUT = " + bStream.toString());
+    LOG.error("Temp", new RuntimeException());
     if (checkErrorCode) {
       assertEquals(expectedErrCode, errCode);
     }
@@ -427,7 +427,7 @@ public class TestFsck {
 
     // Copy the non-corrupt blocks of corruptFileName to lost+found.
     outStr = runFsck(conf, 1, false, "/", "-move");
-    LOG.info("WATERMELON: outStr = " + outStr);
+    LOG.error("Temp", new RuntimeException());
     assertTrue(outStr.contains(NamenodeFsck.CORRUPT_STATUS));
 
     // Make sure that we properly copied the block files from the DataNodes
@@ -510,7 +510,7 @@ public class TestFsck {
                 new FileOutputStream(blockFile, false);
             blockFileStream.write("corrupt".getBytes());
             blockFileStream.close();
-            LOG.info("Corrupted block file " + blockFile);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -982,7 +982,7 @@ public class TestFsck {
             return true;
           }
         } catch (Exception e) {
-          LOG.warn("Unexpected exception: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return false;
@@ -1037,7 +1037,7 @@ public class TestFsck {
             return true;
           }
         } catch (Exception e) {
-          LOG.warn("Unexpected exception: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return false;
@@ -1637,7 +1637,7 @@ public class TestFsck {
             return true;
           }
         } catch (Exception e) {
-          LOG.warn("Unexpected exception: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return false;
@@ -1663,7 +1663,7 @@ public class TestFsck {
             return true;
           }
         } catch (Exception e) {
-          LOG.warn("Unexpected exception: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return false;
@@ -1950,7 +1950,7 @@ public class TestFsck {
             return true;
           }
         } catch (Exception e) {
-          LOG.warn("Unexpected exception: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return false;
@@ -1975,7 +1975,7 @@ public class TestFsck {
             return true;
           }
         } catch (Exception e) {
-          LOG.warn("Unexpected exception: " + e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
         return false;
@@ -2159,7 +2159,7 @@ public class TestFsck {
         .setNumFiles(1).build();
     util.createFiles(dfs, srcDir, (short) replication);
     final String[] fileNames = util.getFileNames(srcDir);
-    LOG.info("Created files: " + Arrays.toString(fileNames));
+    LOG.error("Temp", new RuntimeException());
 
     // Run fsck here. The output is automatically logged for easier debugging
     String outStr = runFsck(conf, 0, true, "/", "-files", "-blocks");
@@ -2203,7 +2203,7 @@ public class TestFsck {
     }, 1000, 60000);
 
     runFsck(conf, 1, true, "/", "-files", "-blocks", "-racks");
-    LOG.info("Moving blocks to lost+found");
+    LOG.error("Temp", new RuntimeException());
     // Fsck will return error since we corrupted a block
     runFsck(conf, 1, false, "/", "-move");
 
@@ -2213,7 +2213,7 @@ public class TestFsck {
     while (iter.hasNext()) {
       retVal.add(iter.next());
     }
-    LOG.info("Items in lost+found: " + retVal);
+    LOG.error("Temp", new RuntimeException());
 
     // Expect all good blocks moved, only corrupted block skipped.
     long totalLength = 0;

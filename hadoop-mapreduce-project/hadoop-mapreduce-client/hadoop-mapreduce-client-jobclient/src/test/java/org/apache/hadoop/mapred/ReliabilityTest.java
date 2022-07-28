@@ -134,7 +134,7 @@ public class ReliabilityTest extends Configured implements Tool {
     runTest(jc, conf, "org.apache.hadoop.mapreduce.SleepJob", sleepJobArgs,
         new KillTaskThread(jc, 2, 0.2f, false, 2),
         new KillTrackerThread(jc, 2, 0.4f, false, 1));
-    LOG.info("SleepJob done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void runSortJobTests(final JobClient jc, final Configuration conf)
@@ -155,7 +155,7 @@ public class ReliabilityTest extends Configured implements Tool {
     runTest(jc, conf, "org.apache.hadoop.examples.RandomWriter",
         new String[]{inputPath},
         null, new KillTrackerThread(jc, 0, 0.4f, false, 1));
-    LOG.info("RandomWriter job done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void runSortTest(final JobClient jc, final Configuration conf,
@@ -165,7 +165,7 @@ public class ReliabilityTest extends Configured implements Tool {
         new String[]{inputPath, outputPath},
         new KillTaskThread(jc, 2, 0.2f, false, 2),
         new KillTrackerThread(jc, 2, 0.8f, false, 1));
-    LOG.info("Sort job done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void runSortValidatorTest(final JobClient jc,
@@ -175,7 +175,7 @@ public class ReliabilityTest extends Configured implements Tool {
         "-sortInput", inputPath, "-sortOutput", outputPath},
         new KillTaskThread(jc, 2, 0.2f, false, 1),
         new KillTrackerThread(jc, 2, 0.8f, false, 1));
-    LOG.info("SortValidator job done");
+    LOG.error("Temp", new RuntimeException());
   }
 
   private String normalizeCommandPath(String command) {
@@ -188,10 +188,10 @@ public class ReliabilityTest extends Configured implements Tool {
 
   private void checkJobExitStatus(int status, String jobName) {
     if (status != 0) {
-      LOG.info(jobName + " job failed with status: " + status);
+      LOG.error("Temp", new RuntimeException());
       System.exit(status);
     } else {
-      LOG.info(jobName + " done.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -218,7 +218,7 @@ public class ReliabilityTest extends Configured implements Tool {
     JobStatus[] jobs;
     //get the job ID. This is the job that we just submitted
     while ((jobs = jc.jobsToComplete()).length == 0) {
-      LOG.info("Waiting for the job " + jobClass +" to start");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     JobID jobId = jobs[jobs.length - 1].getJobID();
@@ -230,7 +230,7 @@ public class ReliabilityTest extends Configured implements Tool {
       System.exit(-1);
     }
     while (rJob.getJobState() == JobStatus.PREP) {
-      LOG.info("JobID : " + jobId + " not started RUNNING yet");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
       rJob = jc.getJob(jobId);
     }
@@ -238,13 +238,13 @@ public class ReliabilityTest extends Configured implements Tool {
       killTaskThread.setRunningJob(rJob);
       killTaskThread.start();
       killTaskThread.join();
-      LOG.info("DONE WITH THE TASK KILL/FAIL TESTS");
+      LOG.error("Temp", new RuntimeException());
     }
     if (killTrackerThread != null) {
       killTrackerThread.setRunningJob(rJob);
       killTrackerThread.start();
       killTrackerThread.join();
-      LOG.info("DONE WITH THE TESTS TO DO WITH LOST TASKTRACKERS");
+      LOG.error("Temp", new RuntimeException());
     }
     t.join();
   }
@@ -339,11 +339,11 @@ public class ReliabilityTest extends Configured implements Tool {
       int count = 0;
 
       FileOutputStream fos = new FileOutputStream(new File(workersFile));
-      LOG.info(new Date() + " Stopping a few trackers");
+      LOG.error("Temp", new RuntimeException());
 
       for (String tracker : trackerNamesList) {
         String host = convertTrackerNameToHostName(tracker);
-        LOG.info(new Date() + " Marking tracker on host: " + host);
+        LOG.error("Temp", new RuntimeException());
         fos.write((host + "\n").getBytes());
         if (count++ >= trackerNamesList.size()/2) {
           break;
@@ -355,7 +355,7 @@ public class ReliabilityTest extends Configured implements Tool {
     }
 
     private void startTaskTrackers() throws Exception {
-      LOG.info(new Date() + " Resuming the stopped trackers");
+      LOG.error("Temp", new RuntimeException());
       runOperationOnTT("resume");
       new File(workersFile).delete();
     }
@@ -377,7 +377,7 @@ public class ReliabilityTest extends Configured implements Tool {
       }
       String output = Shell.execCommand(hMap, commandArgs);
       if (output != null && !output.equals("")) {
-        LOG.info(output);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -425,9 +425,9 @@ public class ReliabilityTest extends Configured implements Tool {
     private void killBasedOnProgress(boolean considerMaps) {
       boolean fail = false;
       if (considerMaps) {
-        LOG.info("Will kill tasks based on Maps' progress");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info("Will kill tasks based on Reduces' progress");
+        LOG.error("Temp", new RuntimeException());
       }
       LOG.info("Initial progress threshold: " + threshold +
           ". Threshold Multiplier: " + thresholdMultiplier +
@@ -453,7 +453,7 @@ public class ReliabilityTest extends Configured implements Tool {
             }
             ClusterStatus c = jc.getClusterStatus();
 
-            LOG.info(new Date() + " Killing a few tasks");
+            LOG.error("Temp", new RuntimeException());
 
             Collection<TaskAttemptID> runningTasks =
               new ArrayList<TaskAttemptID>();
@@ -466,7 +466,7 @@ public class ReliabilityTest extends Configured implements Tool {
             if (runningTasks.size() > c.getTaskTrackers()/2) {
               int count = 0;
               for (TaskAttemptID t : runningTasks) {
-                LOG.info(new Date() + " Killed task : " + t);
+                LOG.error("Temp", new RuntimeException());
                 rJob.killTask(t, fail);
                 if (count++ > runningTasks.size()/2) { //kill 50%
                   break;
@@ -483,7 +483,7 @@ public class ReliabilityTest extends Configured implements Tool {
             if (runningTasks.size() > c.getTaskTrackers()/2) {
               int count = 0;
               for (TaskAttemptID t : runningTasks) {
-                LOG.info(new Date() + " Killed task : " + t);
+                LOG.error("Temp", new RuntimeException());
                 rJob.killTask(t, fail);
                 if (count++ > runningTasks.size()/2) { //kill 50%
                   break;

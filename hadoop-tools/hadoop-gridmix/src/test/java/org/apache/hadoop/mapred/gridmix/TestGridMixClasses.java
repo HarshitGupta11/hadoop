@@ -854,12 +854,12 @@ public class TestGridMixClasses {
             .getMapContext(mapcontext);
 
     long start = System.currentTimeMillis();
-    LOG.info("start:" + start);
+    LOG.error("Temp", new RuntimeException());
     LongWritable key = new LongWritable(start + 2000);
     LongWritable value = new LongWritable(start + 2000);
     // should slip 2 sec
     test.map(key, value, context);
-    LOG.info("finish:" + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     assertTrue(System.currentTimeMillis() >= (start + 2000));
 
     test.cleanup(context);

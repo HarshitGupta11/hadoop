@@ -186,7 +186,7 @@ public class MRAMSimulator extends AMSimulator {
             } else if (amContainer.getId().equals(containerId)){
               // am container released event
               isFinished = true;
-              LOG.info("Application {} goes to finish.", appId);
+              LOG.error("Temp", new RuntimeException());
             }
 
             if (mapFinished >= mapTotal && reduceFinished >= reduceTotal) {

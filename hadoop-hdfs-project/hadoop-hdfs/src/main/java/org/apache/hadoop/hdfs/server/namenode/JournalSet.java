@@ -262,7 +262,7 @@ public class JournalSet implements JournalManager {
             EDIT_LOG_INPUT_STREAM_COMPARATOR);
     for (JournalAndStream jas : journals) {
       if (jas.isDisabled()) {
-        LOG.info("Skipping jas " + jas + " since it's disabled");
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
       try {
@@ -635,7 +635,7 @@ public class JournalSet implements JournalManager {
         try {
           allLogs.addAll(fjm.getRemoteEditLogs(fromTxId, false));
         } catch (Throwable t) {
-          LOG.warn("Cannot list edit logs in " + fjm, t);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

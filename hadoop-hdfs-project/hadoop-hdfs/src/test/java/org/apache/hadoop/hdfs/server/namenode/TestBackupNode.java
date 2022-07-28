@@ -169,7 +169,7 @@ public class TestBackupNode {
       DFSTestUtil.formatNameNode(nnconf);
       nn = NameNode.createNameNode(new String[] {}, nnconf);
     } catch (IOException e) {
-      LOG.info("IOException is thrown creating name node");
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
 
@@ -185,7 +185,7 @@ public class TestBackupNode {
           bn.getNamesystem() == null);
       fail("Incorrect authentication setting should throw IOException");
     } catch (IOException e) {
-      LOG.info("IOException thrown.", e);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(e.getMessage().contains("Running in secure mode"));
     } finally {
       if (nn != null) {
@@ -287,7 +287,7 @@ public class TestBackupNode {
       assertTrue(fileSys.mkdirs(new Path("/edit-while-bn-down-2")));
       
     } finally {
-      LOG.info("Shutting down...");
+      LOG.error("Temp", new RuntimeException());
       if (backup != null) backup.stop();
       if (fileSys != null) fileSys.close();
       if (cluster != null) cluster.shutdown();
@@ -306,14 +306,14 @@ public class TestBackupNode {
     // to the BN.
     for (int i = 0; i < 10; i++) {
       final String src = "/test_" + testIdx + "_" + i;
-      LOG.info("Creating " + src + " on NN");
+      LOG.error("Temp", new RuntimeException());
       Path p = new Path(src);
       assertTrue(fs.mkdirs(p));
       
       GenericTestUtils.waitFor(new Supplier<Boolean>() {
         @Override
         public Boolean get() {
-          LOG.info("Checking for " + src + " on BN");
+          LOG.error("Temp", new RuntimeException());
           try {
             boolean hasFile = backup.getNamesystem()
                 .getFileInfo(src, false, false, false) != null;
@@ -443,7 +443,7 @@ public class TestBackupNode {
         DFSTestUtil.createFile(bnFS, file3, fileSize, fileSize, blockSize,
             replication, seed);
       } catch (IOException eio) {
-        LOG.info("Write to " + backup.getRole() + " failed as expected: ", eio);
+        LOG.error("Temp", new RuntimeException());
         canWrite = false;
       }
       assertFalse("Write to BackupNode must be prohibited.", canWrite);
@@ -453,7 +453,7 @@ public class TestBackupNode {
       try {
         bnFS.exists(file2);
       } catch (IOException eio) {
-        LOG.info("Read from " + backup.getRole() + " failed: ", eio);
+        LOG.error("Temp", new RuntimeException());
         canRead = false;
       }
       assertEquals("Reads to BackupNode are allowed, but not CheckpointNode.",

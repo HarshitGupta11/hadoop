@@ -301,14 +301,14 @@ public class TestINodeAttributeProvider {
 
   @Test
   public void testAuthzDelegationToProvider() throws Exception {
-    LOG.info("Test not bypassing provider");
+    LOG.error("Temp", new RuntimeException());
     String[] users = {"u1"};
     testBypassProviderHelper(users, PROVIDER_PERMISSION, false);
   }
 
   @Test
   public void testAuthzBypassingProvider() throws Exception {
-    LOG.info("Test bypassing provider");
+    LOG.error("Temp", new RuntimeException());
     String[] users = {"u2", "u3"};
     testBypassProviderHelper(users, HDFS_PERMISSION, true);
   }

@@ -131,8 +131,8 @@ public class TestContainerManagerRecovery extends BaseContainerManagerTest {
     tmpDir.mkdir();
     localLogDir.mkdir();
     remoteLogDir.mkdir();
-    LOG.info("Created localDir in " + localDir.getAbsolutePath());
-    LOG.info("Created tmpDir in " + tmpDir.getAbsolutePath());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     String bindAddress = "0.0.0.0:"+ServerSocketUtil.getPort(49160, 10);
     conf.set(YarnConfiguration.NM_ADDRESS, bindAddress);

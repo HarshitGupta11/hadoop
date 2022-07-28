@@ -92,7 +92,7 @@ public class NMTokenSecretManagerInRM extends BaseNMTokenSecretManager {
   public void rollMasterKey() {
     super.writeLock.lock();
     try {
-      LOG.info("Rolling master-key for nm-tokens");
+      LOG.error("Temp", new RuntimeException());
       if (this.currentMasterKey == null) { // Setting up for the first time.
         this.currentMasterKey = createNewMasterKey();
       } else {
@@ -143,7 +143,7 @@ public class NMTokenSecretManagerInRM extends BaseNMTokenSecretManager {
     try {
       HashSet<NodeId> nodeSet = this.appAttemptToNodeKeyMap.get(attemptId);
       if (nodeSet != null) {
-        LOG.info("Clear node set for " + attemptId);
+        LOG.error("Temp", new RuntimeException());
         nodeSet.clear();
       }
     } finally {

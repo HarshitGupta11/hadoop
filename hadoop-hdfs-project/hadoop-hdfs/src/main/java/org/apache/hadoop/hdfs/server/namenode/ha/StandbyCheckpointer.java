@@ -149,7 +149,7 @@ public class StandbyCheckpointer {
     try {
       thread.join();
     } catch (InterruptedException e) {
-      LOG.warn("Edit log tailer thread exited with an exception");
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(e);
     }
   }
@@ -399,7 +399,7 @@ public class StandbyCheckpointer {
           boolean needCheckpoint = needRollbackCheckpoint;
 
           if (needCheckpoint) {
-            LOG.info("Triggering a rollback fsimage for rolling upgrade.");
+            LOG.error("Temp", new RuntimeException());
           } else if (uncheckpointed >= checkpointConf.getTxnCount()) {
             LOG.info("Triggering checkpoint because there have been {} txns " +
                 "since the last checkpoint, " +
@@ -416,7 +416,7 @@ public class StandbyCheckpointer {
           if (needCheckpoint) {
             synchronized (cancelLock) {
               if (now < preventCheckpointsUntil) {
-                LOG.info("But skipping this checkpoint since we are about to failover!");
+                LOG.error("Temp", new RuntimeException());
                 canceledCount++;
                 continue;
               }
@@ -439,13 +439,13 @@ public class StandbyCheckpointer {
               namesystem.setNeedRollbackFsImage(false);
             }
             lastCheckpointTime = now;
-            LOG.info("Checkpoint finished successfully.");
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (SaveNamespaceCancelledException ce) {
-          LOG.info("Checkpoint was cancelled: {}", ce.getMessage());
+          LOG.error("Temp", new RuntimeException());
           canceledCount++;
         } catch (InterruptedException ie) {
-          LOG.info("Interrupted during checkpointing", ie);
+          LOG.error("Temp", new RuntimeException());
           // Probably requested shutdown.
           continue;
         } catch (Throwable t) {

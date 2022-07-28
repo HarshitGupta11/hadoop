@@ -181,7 +181,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
 
     @Override
     public long renew(Token<?> token, Configuration conf) throws IOException {
-      LOG.debug("Renewing delegation token {}", token);
+      LOG.error("Temp", new RuntimeException());
       KeyProvider keyProvider = KMSUtil.createKeyProvider(conf,
           KeyProviderFactory.KEY_PROVIDER_PATH);
       try {
@@ -202,7 +202,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
 
     @Override
     public void cancel(Token<?> token, Configuration conf) throws IOException {
-      LOG.debug("Canceling delegation token {}", token);
+      LOG.error("Temp", new RuntimeException());
       KeyProvider keyProvider = KMSUtil.createKeyProvider(conf,
           KeyProviderFactory.KEY_PROVIDER_PATH);
       try {
@@ -479,7 +479,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
       });
     } catch (IOException ex) {
       if (ex instanceof SocketTimeoutException) {
-        LOG.warn("Failed to connect to {}:{}", url.getHost(), url.getPort());
+        LOG.error("Temp", new RuntimeException());
       }
       throw ex;
     } catch (UndeclaredThrowableException ex) {
@@ -1024,13 +1024,13 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
           public Token<?> run() throws Exception {
             // Not using the cached token here.. Creating a new token here
             // everytime.
-            LOG.debug("Getting new token from {}, renewer:{}", url, renewer);
+            LOG.error("Temp", new RuntimeException());
             return authUrl.getDelegationToken(url,
                 new DelegationTokenAuthenticatedURL.Token(), renewer, doAsUser);
           }
         });
         if (token != null) {
-          LOG.debug("New token received: ({})", token);
+          LOG.error("Temp", new RuntimeException());
           credentials.addToken(token.getService(), token);
           tokens = new Token<?>[] { token };
         } else {
@@ -1053,7 +1053,7 @@ public class KMSClientProvider extends KeyProvider implements CryptoExtension,
     // Add existing credentials from the UGI, since provider is cached.
     Credentials creds = ugi.getCredentials();
     if (!creds.getAllTokens().isEmpty()) {
-      LOG.debug("Searching for token that matches service: {}", dtService);
+      LOG.error("Temp", new RuntimeException());
       org.apache.hadoop.security.token.Token<? extends TokenIdentifier>
           dToken = creds.getToken(dtService);
       if (dToken != null) {

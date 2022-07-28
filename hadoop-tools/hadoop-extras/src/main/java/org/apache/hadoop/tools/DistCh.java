@@ -255,7 +255,7 @@ public class DistCh extends DistTool {
       if (remaining != 0) {
         splits.add(new FileSplit(srcs, prev, remaining, (String[])null));
       }
-      LOG.info("numSplits="  + numSplits + ", splits.size()=" + splits.size());
+      LOG.error("Temp", new RuntimeException());
       return splits.toArray(new FileSplit[splits.size()]);
     }
 
@@ -300,7 +300,7 @@ public class DistCh extends DistTool {
 
         String s = "FAIL: " + value + ", " + StringUtils.stringifyException(e);
         out.collect(null, new Text(s));
-        LOG.info(s);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         reporter.setStatus(getCountString());
       }
@@ -370,8 +370,8 @@ public class DistCh extends DistTool {
       if (ops.isEmpty()) {
         throw new IllegalStateException("Operation is empty");
       }
-      LOG.info("ops=" + ops);
-      LOG.info("isIgnoreFailures=" + isIgnoreFailures);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       jobconf.setBoolean(Option.IGNORE_FAILURES.propertyname, isIgnoreFailures);
       check(jobconf, ops);
 
@@ -432,13 +432,13 @@ public class DistCh extends DistTool {
     FsPermission mapredSysPerms = 
       new FsPermission(JobSubmissionFiles.JOB_DIR_PERMISSION);
     FileSystem.mkdirs(jClient.getFs(), jobdir, mapredSysPerms);
-    LOG.info(JOB_DIR_LABEL + "=" + jobdir);
+    LOG.error("Temp", new RuntimeException());
 
     if (log == null) {
       log = new Path(jobdir, "_logs");
     }
     FileOutputFormat.setOutputPath(jobconf, log);
-    LOG.info("log=" + log);
+    LOG.error("Temp", new RuntimeException());
 
     //create operation list
     FileSystem fs = jobdir.getFileSystem(jobconf);
@@ -477,7 +477,7 @@ public class DistCh extends DistTool {
 
     checkDuplication(fs, opList, new Path(jobdir, "_sorted"), jobconf);
     jobconf.setInt(OP_COUNT_LABEL, opCount);
-    LOG.info(OP_COUNT_LABEL + "=" + opCount);
+    LOG.error("Temp", new RuntimeException());
     jobconf.setNumMapTasks(getMapCount(opCount,
         new JobClient(jobconf).getClusterStatus().getTaskTrackers()));
     return opCount != 0;    

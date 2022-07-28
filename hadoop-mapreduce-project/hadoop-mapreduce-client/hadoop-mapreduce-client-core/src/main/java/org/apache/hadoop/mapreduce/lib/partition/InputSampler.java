@@ -201,7 +201,7 @@ public class InputSampler<K,V> extends Configured implements Tool  {
       Random r = new Random();
       long seed = r.nextLong();
       r.setSeed(seed);
-      LOG.debug("seed: " + seed);
+      LOG.error("Temp", new RuntimeException());
       // shuffle splits
       for (int i = 0; i < splits.size(); ++i) {
         InputSplit tmp = splits.get(i);
@@ -316,7 +316,7 @@ public class InputSampler<K,V> extends Configured implements Tool  {
         ReflectionUtils.newInstance(job.getInputFormatClass(), conf);
     int numPartitions = job.getNumReduceTasks();
     K[] samples = (K[])sampler.getSample(inf, job);
-    LOG.info("Using " + samples.length + " samples");
+    LOG.error("Temp", new RuntimeException());
     RawComparator<K> comparator =
       (RawComparator<K>) job.getSortComparator();
     Arrays.sort(samples, comparator);

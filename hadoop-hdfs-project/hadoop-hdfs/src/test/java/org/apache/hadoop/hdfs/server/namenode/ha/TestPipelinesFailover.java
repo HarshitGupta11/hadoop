@@ -156,7 +156,7 @@ public class TestPipelinesFailover {
       cluster.transitionToActive(0);
       Thread.sleep(500);
 
-      LOG.info("Starting with NN 0 active");
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = HATestUtil.configureFailoverFs(cluster, conf);
       stm = fs.create(TEST_PATH);
       
@@ -167,7 +167,7 @@ public class TestPipelinesFailover {
       // Make sure all of the blocks are written out before failover.
       stm.hflush();
 
-      LOG.info("Failing over to another NN");
+      LOG.error("Temp", new RuntimeException());
       int activeIndex = failover(cluster, scenario);
 
       // NOTE: explicitly do *not* make any further metadata calls
@@ -229,7 +229,7 @@ public class TestPipelinesFailover {
       cluster.transitionToActive(0);
       Thread.sleep(500);
 
-      LOG.info("Starting with NN 0 active");
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = HATestUtil.configureFailoverFs(cluster, conf);
       stm = fs.create(TEST_PATH);
       
@@ -249,7 +249,7 @@ public class TestPipelinesFailover {
       AppendTestUtil.write(stm, BLOCK_AND_A_HALF, BLOCK_AND_A_HALF);
       stm.hflush();
 
-      LOG.info("Failing back from NN " + nextActive + " to NN 0");
+      LOG.error("Temp", new RuntimeException());
       cluster.transitionToStandby(nextActive);
       cluster.transitionToActive(0);
       
@@ -288,7 +288,7 @@ public class TestPipelinesFailover {
       cluster.setBlockRecoveryTimeout(TimeUnit.SECONDS.toMillis(1));
       Thread.sleep(500);
 
-      LOG.info("Starting with NN 0 active");
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = HATestUtil.configureFailoverFs(cluster, conf);
       stm = fs.create(TEST_PATH);
       
@@ -296,7 +296,7 @@ public class TestPipelinesFailover {
       AppendTestUtil.write(stm, 0, BLOCK_AND_A_HALF);
       stm.hflush();
       
-      LOG.info("Failing over to NN 1");
+      LOG.error("Temp", new RuntimeException());
       
       cluster.transitionToStandby(0);
       cluster.transitionToActive(1);
@@ -339,7 +339,7 @@ public class TestPipelinesFailover {
       cluster.transitionToActive(0);
       Thread.sleep(500);
 
-      LOG.info("Starting with NN 0 active");
+      LOG.error("Temp", new RuntimeException());
       FileSystem fs = HATestUtil.configureFailoverFs(cluster, conf);
       stm = fs.create(TEST_PATH);
       
@@ -377,10 +377,10 @@ public class TestPipelinesFailover {
       DistributedFileSystem fsOtherUser = createFsAsOtherUser(cluster, conf);
       assertFalse(fsOtherUser.recoverLease(TEST_PATH));
       
-      LOG.info("Waiting for commitBlockSynchronization call from primary");
+      LOG.error("Temp", new RuntimeException());
       delayer.waitForCall();
 
-      LOG.info("Failing over to NN 1");
+      LOG.error("Temp", new RuntimeException());
       
       cluster.transitionToStandby(0);
       cluster.transitionToActive(1);
@@ -433,7 +433,7 @@ public class TestPipelinesFailover {
     // The following section of code is to help debug HDFS-6694 about
     // this test that fails from time to time due to "too many open files".
     //
-    LOG.info("HDFS-6694 Debug Data BEGIN");
+    LOG.error("Temp", new RuntimeException());
 
     String[][] scmds = new String[][] {
       {"/bin/sh", "-c", "ulimit -a"},
@@ -446,13 +446,13 @@ public class TestPipelinesFailover {
       try {
         ShellCommandExecutor sce = new ShellCommandExecutor(scmd);
         sce.execute();
-        LOG.info("'" + scmd_str + "' output:\n" + sce.getOutput());
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException e) {
-        LOG.warn("Error when running '" + scmd_str + "'", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
-    LOG.info("HDFS-6694 Debug Data END");
+    LOG.error("Temp", new RuntimeException());
 
     HAStressTestHarness harness = new HAStressTestHarness();
     // Disable permissions so that another user can recover the lease.
@@ -523,7 +523,7 @@ public class TestPipelinesFailover {
     if (nextActive == activeIndex) {
       nextActive = (nextActive + 1) % NN_COUNT;
     }
-    LOG.info("Failing over to a standby NN:" + nextActive + " from NN " + activeIndex);
+    LOG.error("Temp", new RuntimeException());
     scenario.run(cluster, activeIndex, nextActive);
     return nextActive;
   }
@@ -609,7 +609,7 @@ public class TestPipelinesFailover {
             throw new RuntimeException(e);
           }
           if (!success) {
-            LOG.info("Waiting to recover lease successfully");
+            LOG.error("Temp", new RuntimeException());
           }
           return success;
         }

@@ -226,7 +226,7 @@ public class TestFileConcurrentReader {
             out.hflush();
           }
         } catch (IOException e) {
-          LOG.warn("error in writer", e);
+          LOG.error("Temp", new RuntimeException());
         } finally {
           try {
             out.close();
@@ -410,7 +410,7 @@ public class TestFileConcurrentReader {
         "error occurred, see log above", error.get()
       );
     } catch (InterruptedException e) {
-      LOG.info("interrupted waiting for writer or tailer to complete");
+      LOG.error("Temp", new RuntimeException());
 
       Thread.currentThread().interrupt();
     }
@@ -440,7 +440,7 @@ public class TestFileConcurrentReader {
     byte[] buf = new byte[len];
     int read;
     while ((read = inputStream.read(buf)) > -1) {
-      LOG.info(String.format("read %d bytes", read));
+      LOG.error("Temp", new RuntimeException());
 
       if (!validateSequentialBytes(buf, (int) (startPos + numRead), read)) {
         LOG.error(String.format("invalid bytes: [%s]\n", Arrays.toString(buf)));

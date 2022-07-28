@@ -148,14 +148,14 @@ class CleanerTask implements Runnable {
       FileStatus[] resources =
           fs.globStatus(new Path(root, pattern));
       int numResources = resources == null ? 0 : resources.length;
-      LOG.info("Processing " + numResources + " resources in the shared cache");
+      LOG.error("Temp", new RuntimeException());
       long beginMs = System.currentTimeMillis();
       if (resources != null) {
         for (FileStatus resource : resources) {
           // check for interruption so it can abort in a timely manner in case
           // of shutdown
           if (Thread.currentThread().isInterrupted()) {
-            LOG.warn("The cleaner task was interrupted. Aborting.");
+            LOG.error("Temp", new RuntimeException());
             break;
           }
 
@@ -282,7 +282,7 @@ class CleanerTask implements Runnable {
     if (fs.rename(path, renamedPath)) {
       // the directory can be removed safely now
       // log the original path
-      LOG.info("Deleting " + path.toString());
+      LOG.error("Temp", new RuntimeException());
       return fs.delete(renamedPath, true);
     } else {
       // we were unable to remove it for some reason: it's best to leave

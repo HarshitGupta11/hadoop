@@ -125,7 +125,7 @@ public class TestSequentialBlockGroupId {
               + MAX_BLOCKS_IN_GROUP);
       long nextBlockExpectedId = blockGrpIdGenerator.getCurrentValue();
       long nextBlockGrpId = blocks.get(i).getBlock().getBlockId();
-      LOG.info("BlockGrp" + i + " id is " + nextBlockGrpId);
+      LOG.error("Temp", new RuntimeException());
       assertThat("BlockGrpId mismatches!", nextBlockGrpId,
           is(nextBlockExpectedId));
     }

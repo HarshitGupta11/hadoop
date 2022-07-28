@@ -155,7 +155,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
         IOException {
       NodeId nodeId = request.getNodeId();
       Resource resource = request.getResource();
-      LOG.info("Registering " + nodeId.toString());
+      LOG.error("Temp", new RuntimeException());
       // NOTE: this really should be checking against the config value
       InetSocketAddress expected = NetUtils.getConnectAddress(
           conf.getSocketAddr(YarnConfiguration.NM_ADDRESS, null, -1));
@@ -191,7 +191,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     public NodeHeartbeatResponse nodeHeartbeat(NodeHeartbeatRequest request)
         throws YarnException, IOException {
       NodeStatus nodeStatus = request.getNodeStatus();
-      LOG.info("Got heartbeat number " + heartBeatID);
+      LOG.error("Temp", new RuntimeException());
       NodeManagerMetrics mockMetrics = mock(NodeManagerMetrics.class);
       Dispatcher mockDispatcher = mock(Dispatcher.class);
       @SuppressWarnings("unchecked")
@@ -583,7 +583,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     @Override
     public NodeHeartbeatResponse nodeHeartbeat(NodeHeartbeatRequest request)
         throws YarnException, IOException {
-      LOG.info("Got heartBeatId: [" + heartBeatID +"]");
+      LOG.error("Temp", new RuntimeException());
       NodeStatus nodeStatus = request.getNodeStatus();
       nodeStatus.setResponseId(heartBeatID++);
       NodeHeartbeatResponse nhResponse = YarnServerBuilderUtils.
@@ -602,7 +602,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
         }
       }
       if (heartBeatID == 2) {
-        LOG.info("Sending FINISH_APP for application: [" + appId + "]");
+        LOG.error("Temp", new RuntimeException());
         this.context.getApplications().put(appId, mock(Application.class));
         nhResponse.addAllApplicationsToCleanup(Collections.singletonList(appId));
       }
@@ -852,7 +852,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
       } else {
         NodeId nodeId = request.getNodeId();
         Resource resource = request.getResource();
-        LOG.info("Registering " + nodeId.toString());
+        LOG.error("Temp", new RuntimeException());
         // NOTE: this really should be checking against the config value
         InetSocketAddress expected = NetUtils.getConnectAddress(
             conf.getSocketAddr(YarnConfiguration.NM_ADDRESS, null, -1));
@@ -1142,7 +1142,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
 
     int waitCount = 0;
     while (nm.getServiceState() == STATE.INITED && waitCount++ != 50) {
-      LOG.info("Waiting for NM to start..");
+      LOG.error("Temp", new RuntimeException());
       if (nmStartError != null) {
         LOG.error("Error during startup. ", nmStartError);
         Assert.fail(nmStartError.getCause().getMessage());
@@ -1214,7 +1214,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     // NM takes a while to reach the STOPPED state.
     waitCount = 0;
     while (nm.getServiceState() != STATE.STOPPED && waitCount++ != 20) {
-      LOG.info("Waiting for NM to stop..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
 
@@ -1223,7 +1223,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     // It further takes a while after NM reached the STOPPED state.
     waitCount = 0;
     while (numCleanups.get() == 0 && waitCount++ != 20) {
-      LOG.info("Waiting for NM shutdown..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertEquals(1, numCleanups.get());
@@ -1247,7 +1247,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     // NM takes a while to reach the STOPPED state.
     waitCount = 0;
     while (nm.getServiceState() != STATE.STOPPED && waitCount++ != 20) {
-      LOG.info("Waiting for NM to stop..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
 
@@ -1492,7 +1492,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
       rt.context.getApplications().remove(rt.appId);
       Assert.assertEquals(1, rt.keepAliveRequests.size());
       int numKeepAliveRequests = rt.keepAliveRequests.get(rt.appId).size();
-      LOG.info("Number of Keep Alive Requests: [" + numKeepAliveRequests + "]");
+      LOG.error("Temp", new RuntimeException());
       Assert.assertTrue(numKeepAliveRequests == 2 || numKeepAliveRequests == 3);
       while (heartBeatID < 20) {
         Thread.sleep(1000l);
@@ -1633,7 +1633,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
     // NM takes a while to reach the STARTED state.
     int waitCount = 0;
     while (nm.getServiceState() != STATE.STARTED && waitCount++ != 20) {
-      LOG.info("Waiting for NM to stop..");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(1000);
     }
     Assert.assertTrue(nm.getServiceState() == STATE.STARTED);
@@ -1673,7 +1673,7 @@ public class TestNodeStatusUpdater extends NodeManagerTestBase {
 
     int waitCount = 0;
     while (nm.getServiceState() == STATE.INITED && waitCount++ != 20) {
-      LOG.info("Waiting for NM to start..");
+      LOG.error("Temp", new RuntimeException());
       if (nmStartError != null) {
         LOG.error("Error during startup. ", nmStartError);
         Assert.fail(nmStartError.getCause().getMessage());

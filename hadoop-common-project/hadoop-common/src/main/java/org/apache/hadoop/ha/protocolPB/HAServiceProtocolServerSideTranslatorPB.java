@@ -92,7 +92,7 @@ public class HAServiceProtocolServerSideTranslatorPB implements
       src = RequestSource.REQUEST_BY_ZKFC;
       break;
     default:
-      LOG.warn("Unknown request source: " + proto.getReqSource());
+      LOG.error("Temp", new RuntimeException());
       src = null;
     }
     

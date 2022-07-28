@@ -99,20 +99,20 @@ class RenameOp extends Operation {
             ReportWriter.OK_TIME_TAKEN, timeTaken));
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.SUCCESSES, 1L));
-        LOG.info("Renamed " + src + " to " + target);
+        LOG.error("Temp", new RuntimeException());
       } else {
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.FAILURES, 1L));
-        LOG.warn("Could not rename " + src + " to " + target);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with renaming", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with renaming", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return out;
   }

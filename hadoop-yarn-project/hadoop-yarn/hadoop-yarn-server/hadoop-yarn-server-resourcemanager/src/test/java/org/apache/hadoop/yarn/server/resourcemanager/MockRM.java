@@ -252,7 +252,7 @@ public class MockRM extends ResourceManager {
       timeWaiting += WAIT_MS_PER_LOOP;
     }
 
-    LOG.info("App State is : " + app.getState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue("App State is not correct (timeout).",
         finalStates.contains(app.getState()));
   }
@@ -283,7 +283,7 @@ public class MockRM extends ResourceManager {
       timeWaiting += WAIT_MS_PER_LOOP;
     }
 
-    LOG.info("App State is : " + app.getState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("App State is not correct (timeout).", finalState,
       app.getState());
   }
@@ -357,7 +357,7 @@ public class MockRM extends ResourceManager {
       timeWaiting += WAIT_MS_PER_LOOP;
     }
 
-    LOG.info("Attempt State is : " + attempt.getAppAttemptState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Attempt state is not correct (timeout).", finalState,
         attempt.getState());
   }
@@ -368,7 +368,7 @@ public class MockRM extends ResourceManager {
     int timeWaiting = 0;
     while (timeWaiting < TIMEOUT_MS_FOR_CONTAINER_AND_NODE) {
       List<ContainerStatus> containers = attempt.getJustFinishedContainers();
-      LOG.info("Received completed containers " + containers);
+      LOG.error("Temp", new RuntimeException());
       for (ContainerStatus container : containers) {
         if (container.getContainerId().equals(
           completedContainer.getContainerId())) {
@@ -498,7 +498,7 @@ public class MockRM extends ResourceManager {
       timeWaiting += WAIT_MS_PER_LOOP;
     }
 
-    LOG.info("Container State is : " + container.getState());
+    LOG.error("Temp", new RuntimeException());
     return true;
   }
 
@@ -921,7 +921,7 @@ public class MockRM extends ResourceManager {
       timeWaiting += WAIT_MS_PER_LOOP;
     }
 
-    LOG.info("Node " + nodeId + " State is : " + node.getState());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals("Node state is not correct (timedout)", finalState,
         node.getState());
   }
@@ -1197,7 +1197,7 @@ public class MockRM extends ResourceManager {
       throws Exception {
     rm.drainEventsImplicitly();
     RMAppAttempt attempt = waitForAttemptScheduled(app, rm);
-    LOG.info("Launch AM " + attempt.getAppAttemptId());
+    LOG.error("Temp", new RuntimeException());
     nm.nodeHeartbeat(true);
     ((AbstractYarnScheduler)rm.getResourceScheduler()).update();
     rm.drainEventsImplicitly();
@@ -1214,7 +1214,7 @@ public class MockRM extends ResourceManager {
     rm.waitForState(app.getApplicationId(), RMAppState.ACCEPTED);
     RMAppAttempt attempt = app.getCurrentAppAttempt();
     waitForSchedulerAppAttemptAdded(attempt.getAppAttemptId(), rm);
-    LOG.info("Launch AM " + attempt.getAppAttemptId());
+    LOG.error("Temp", new RuntimeException());
     nm.nodeHeartbeat(true);
     ((AbstractYarnScheduler)rm.getResourceScheduler()).update();
     rm.drainEventsImplicitly();
@@ -1310,13 +1310,13 @@ public class MockRM extends ResourceManager {
       if (timeWaiting >= TIMEOUT_MS_FOR_APP_REMOVED) {
         break;
       }
-      LOG.info("wait for app removed, " + appId);
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(WAIT_MS_PER_LOOP);
       timeWaiting += WAIT_MS_PER_LOOP;
     }
     Assert.assertTrue("app is not removed from scheduler (timeout).",
         !apps.containsKey(appId));
-    LOG.info("app is removed from scheduler, " + appId);
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void drainEventsImplicitly() {

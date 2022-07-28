@@ -119,7 +119,7 @@ public class AWSCredentialProviderList implements AWSCredentialsProvider,
             credentials.getAWSSecretKey() != null)
             || (credentials instanceof AnonymousAWSCredentials)) {
           lastProvider = provider;
-          LOG.debug("Using credentials from {}", provider);
+          LOG.error("Temp", new RuntimeException());
           return credentials;
         }
       } catch (AmazonClientException e) {

@@ -94,7 +94,7 @@ public class FpgaResourceHandlerImpl implements ResourceHandler {
     if (!vendorPlugin.initPlugin(configuration)) {
       throw new ResourceHandlerException("FPGA plugin initialization failed", null);
     }
-    LOG.info("FPGA Plugin bootstrap success.");
+    LOG.error("Temp", new RuntimeException());
     // Get avialable devices minor numbers from toolchain or static configuration
     List<FpgaResourceAllocator.FpgaDevice> fpgaDeviceList = FpgaDiscoverer.getInstance().discover();
     allocator.addFpga(vendorPlugin.getFpgaType(), fpgaDeviceList);
@@ -116,7 +116,7 @@ public class FpgaResourceHandlerImpl implements ResourceHandler {
       containerIdStr);
 
     long deviceCount = requestedResource.getResourceValue(FPGA_URI);
-    LOG.info(containerIdStr + " requested " + deviceCount + " Intel FPGA(s)");
+    LOG.error("Temp", new RuntimeException());
     String ipFilePath = null;
     try {
 
@@ -124,7 +124,7 @@ public class FpgaResourceHandlerImpl implements ResourceHandler {
       FpgaResourceAllocator.FpgaAllocation allocation = allocator.assignFpga(
           vendorPlugin.getFpgaType(), deviceCount,
           container, getRequestedIPID(container));
-      LOG.info("FpgaAllocation:" + allocation);
+      LOG.error("Temp", new RuntimeException());
 
       PrivilegedOperation privilegedOperation = new PrivilegedOperation(PrivilegedOperation.OperationType.FPGA,
           Arrays.asList(CONTAINER_ID_CLI_OPTION, containerIdStr));
@@ -158,7 +158,7 @@ public class FpgaResourceHandlerImpl implements ResourceHandler {
           LOG.warn("FPGA plugin failed to download IP but continue, please check the value of environment viable: " +
               REQUEST_FPGA_IP_ID_KEY + " if you want yarn to help");
         } else {
-          LOG.info("IP file path:" + ipFilePath);
+          LOG.error("Temp", new RuntimeException());
           List<FpgaResourceAllocator.FpgaDevice> allowed = allocation.getAllowed();
           String majorMinorNumber;
           for (int i = 0; i < allowed.size(); i++) {
@@ -187,7 +187,7 @@ public class FpgaResourceHandlerImpl implements ResourceHandler {
     } catch (PrivilegedOperationException e) {
       allocator.cleanupAssignFpgas(containerIdStr);
       cGroupsHandler.deleteCGroup(CGroupsHandler.CGroupController.DEVICES, containerIdStr);
-      LOG.warn("Could not update cgroup for container", e);
+      LOG.error("Temp", new RuntimeException());
       throw new ResourceHandlerException(e);
     }
     //isolation operation

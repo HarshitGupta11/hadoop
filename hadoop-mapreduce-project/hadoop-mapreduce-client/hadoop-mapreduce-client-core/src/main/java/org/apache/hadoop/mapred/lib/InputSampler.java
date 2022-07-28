@@ -164,7 +164,7 @@ public class InputSampler<K,V> extends
       Random r = new Random();
       long seed = r.nextLong();
       r.setSeed(seed);
-      LOG.debug("seed: " + seed);
+      LOG.error("Temp", new RuntimeException());
       // shuffle splits
       for (int i = 0; i < splits.length; ++i) {
         InputSplit tmp = splits[i];

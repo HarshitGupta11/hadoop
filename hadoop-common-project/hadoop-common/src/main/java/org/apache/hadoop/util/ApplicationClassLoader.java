@@ -95,8 +95,8 @@ public class ApplicationClassLoader extends URLClassLoader {
     this.systemClasses = (systemClasses == null || systemClasses.isEmpty()) ?
         Arrays.asList(StringUtils.getTrimmedStrings(SYSTEM_CLASSES_DEFAULT)) :
         systemClasses;
-    LOG.info("classpath: " + Arrays.toString(urls));
-    LOG.info("system classes: " + this.systemClasses);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   public ApplicationClassLoader(String classpath, ClassLoader parent,
@@ -133,7 +133,7 @@ public class ApplicationClassLoader extends URLClassLoader {
       url= findResource(name);
       if (url == null && name.startsWith("/")) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Remove leading / off " + name);
+          LOG.error("Temp", new RuntimeException());
         }
         url= findResource(name.substring(1));
       }
@@ -145,7 +145,7 @@ public class ApplicationClassLoader extends URLClassLoader {
 
     if (url != null) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("getResource("+name+")=" + url);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
@@ -162,7 +162,7 @@ public class ApplicationClassLoader extends URLClassLoader {
       throws ClassNotFoundException {
     
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Loading class: " + name);
+      LOG.error("Temp", new RuntimeException());
     }
 
     Class<?> c = findLoadedClass(name);
@@ -175,11 +175,11 @@ public class ApplicationClassLoader extends URLClassLoader {
       try {
         c = findClass(name);
         if (LOG.isDebugEnabled() && c != null) {
-          LOG.debug("Loaded class: " + name + " ");
+          LOG.error("Temp", new RuntimeException());
         }
       } catch (ClassNotFoundException e) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug(e.toString());
+          LOG.error("Temp", new RuntimeException());
         }
         ex = e;
       }
@@ -188,7 +188,7 @@ public class ApplicationClassLoader extends URLClassLoader {
     if (c == null) { // try parent
       c = parent.loadClass(name);
       if (LOG.isDebugEnabled() && c != null) {
-        LOG.debug("Loaded class from parent: " + name + " ");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

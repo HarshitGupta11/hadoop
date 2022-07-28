@@ -549,7 +549,7 @@ public class TestDiskBalancer {
       CountDownLatch removeDiskLatch = new CountDownLatch(1);
       AtomicInteger errorCount = new AtomicInteger(0);
 
-      LOG.info("FSDataSet: " + node.getFSDataset());
+      LOG.error("Temp", new RuntimeException());
       final FsDatasetSpi<?> fsDatasetSpy = Mockito.spy(node.getFSDataset());
       doAnswer(new Answer<Object>() {
           public Object answer(InvocationOnMock invocation) {
@@ -573,13 +573,13 @@ public class TestDiskBalancer {
       doAnswer(new Answer<Object>() {
           public Object answer(InvocationOnMock invocation) {
             createWorkPlanLatch.countDown();
-            LOG.info("Waiting for the disk removal!");
+            LOG.error("Temp", new RuntimeException());
             try {
               removeDiskLatch.await();
             } catch (InterruptedException e) {
-              LOG.info("Encountered " + e);
+              LOG.error("Temp", new RuntimeException());
             }
-            LOG.info("Got disk removal notification, resuming copyBlocks!");
+            LOG.error("Temp", new RuntimeException());
             diskBalancerMover.copyBlocks((VolumePair)(invocation
                 .getArguments()[0]), (DiskBalancerWorkItem)(invocation
                 .getArguments()[1]));
@@ -594,19 +594,19 @@ public class TestDiskBalancer {
       List<String> oldDirs = new ArrayList<String>(node.getConf().
           getTrimmedStringCollection(DFSConfigKeys.DFS_DATANODE_DATA_DIR_KEY));
       final String newDirs = oldDirs.get(0);
-      LOG.info("Reconfigure newDirs:" + newDirs);
+      LOG.error("Temp", new RuntimeException());
       Thread reconfigThread = new Thread() {
         public void run() {
           try {
-            LOG.info("Waiting for work plan creation!");
+            LOG.error("Temp", new RuntimeException());
             createWorkPlanLatch.await();
-            LOG.info("Work plan created. Removing disk!");
+            LOG.error("Temp", new RuntimeException());
             assertThat(
                 "DN did not update its own config", node.
                 reconfigurePropertyImpl(DFS_DATANODE_DATA_DIR_KEY, newDirs),
                 is(node.getConf().get(DFS_DATANODE_DATA_DIR_KEY)));
             Thread.sleep(1000);
-            LOG.info("Removed disk!");
+            LOG.error("Temp", new RuntimeException());
             removeDiskLatch.countDown();
           } catch (ReconfigurationException | InterruptedException e) {
             Assert.fail("Unexpected error while reconfiguring: " + e);

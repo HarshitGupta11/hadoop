@@ -448,7 +448,7 @@ public class LdapGroupsMapping
       groups = lookupGroup(result, c, goUpHierarchy);
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("doGetGroups(" + user + ") returned " + groups);
+      LOG.error("Temp", new RuntimeException());
     }
     return groups;
   }
@@ -502,7 +502,7 @@ public class LdapGroupsMapping
         .append(dn).append(")");
     }
     filter.append("))");
-    LOG.debug("Ldap group query string: " + filter.toString());
+    LOG.error("Temp", new RuntimeException());
     NamingEnumeration<SearchResult> groupResults =
         context.search(groupbaseDN,
            filter.toString(),
@@ -595,13 +595,13 @@ public class LdapGroupsMapping
     //User search base which defaults to base dn.
     userbaseDN = conf.getTrimmed(USER_BASE_DN_KEY, baseDN);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Usersearch baseDN: " + userbaseDN);
+      LOG.error("Temp", new RuntimeException());
     }
 
     //Group search base which defaults to base dn.
     groupbaseDN = conf.getTrimmed(GROUP_BASE_DN_KEY, baseDN);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Groupsearch baseDN: " + userbaseDN);
+      LOG.error("Temp", new RuntimeException());
     }
 
     groupSearchFilter =

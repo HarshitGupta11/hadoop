@@ -103,7 +103,7 @@ public class TestUGIWithMiniKdc {
           () -> {
             final int count =
                 UserGroupInformation.metrics.getRenewalFailures().value();
-            UserGroupInformation.LOG.info("Renew failure count is {}", count);
+            UserGroupInformation.LOG.error("Temp", new RuntimeException());
             return count > 0;
           });
     } finally {

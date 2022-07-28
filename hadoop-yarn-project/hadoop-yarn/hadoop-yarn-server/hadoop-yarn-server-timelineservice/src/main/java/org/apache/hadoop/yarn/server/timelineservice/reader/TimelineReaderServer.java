@@ -100,7 +100,7 @@ public class TimelineReaderServer extends CompositeService {
     String timelineReaderClassName = conf.get(
         YarnConfiguration.TIMELINE_SERVICE_READER_CLASS,
         YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READER_CLASS);
-    LOG.info("Using store: " + timelineReaderClassName);
+    LOG.error("Temp", new RuntimeException());
     try {
       Class<?> timelineReaderClazz = Class.forName(timelineReaderClassName);
       if (TimelineReader.class.isAssignableFrom(timelineReaderClazz)) {
@@ -184,7 +184,7 @@ public class TimelineReaderServer extends CompositeService {
     String bindAddress = WebAppUtils
         .getWebAppBindURL(conf, hostProperty, webAppURLWithoutScheme);
 
-    LOG.info("Instantiating TimelineReaderWebApp at " + bindAddress);
+    LOG.error("Temp", new RuntimeException());
     try {
       HttpServer2.Builder builder = new HttpServer2.Builder()
             .setName("timeline")

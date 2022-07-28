@@ -143,8 +143,8 @@ public class CLITestHelper {
    * Display the summarized results
    */
   private void displayResults() {
-    LOG.info("Detailed results:");
-    LOG.info("----------------------------------\n");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     
     for (int i = 0; i < testsFromConfigFile.size(); i++) {
       CLITestData td = testsFromConfigFile.get(i);
@@ -153,10 +153,10 @@ public class CLITestHelper {
       
       // Display the details only if there is a failure
       if (!testResult) {
-        LOG.info("-------------------------------------------");
-        LOG.info("                    Test ID: [" + (i + 1) + "]");
-        LOG.info("           Test Description: [" + td.getTestDesc() + "]");
-        LOG.info("");
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
 
         ArrayList<CLICommand> testCommands = td.getTestCommands();
         for (CLICommand cmd : testCommands) {
@@ -164,14 +164,14 @@ public class CLITestHelper {
                    expandCommand(cmd.getCmd()) + "]");
         }
 
-        LOG.info("");
+        LOG.error("Temp", new RuntimeException());
         ArrayList<CLICommand> cleanupCommands = td.getCleanupCommands();
         for (CLICommand cmd : cleanupCommands) {
           LOG.info("           Cleanup Commands: [" +
                    expandCommand(cmd.getCmd()) + "]");
         }
 
-        LOG.info("");
+        LOG.error("Temp", new RuntimeException());
         ArrayList<ComparatorData> compdata = td.getComparatorData();
         for (ComparatorData cd : compdata) {
           boolean resultBoolean = cd.getTestResult();
@@ -184,12 +184,12 @@ public class CLITestHelper {
           LOG.info("              Actual output:   [" + 
                    cd.getActualOutput() + "]");
         }
-        LOG.info("");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
-    LOG.info("Summary results:");
-    LOG.info("----------------------------------\n");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     
     boolean overallResults = true;
     int totalPass = 0;
@@ -209,13 +209,13 @@ public class CLITestHelper {
     }
     
     
-    LOG.info("               Testing mode: " + testMode);
-    LOG.info("");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     LOG.info("             Overall result: " + 
     		(overallResults ? "+++ PASS +++" : "--- FAIL ---"));
     if ((totalPass + totalFail) == 0) {
-      LOG.info("               # Tests pass: " + 0);
-      LOG.info("               # Tests fail: " + 0);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
     else 
     {
@@ -228,9 +228,9 @@ public class CLITestHelper {
     LOG.info("         # Validations done: " + totalComparators + 
     		" (each test may do multiple validations)");
     
-    LOG.info("");
-    LOG.info("Failing tests:");
-    LOG.info("--------------");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     int i = 0;
     boolean foundTests = false;
     for (i = 0; i < testsFromConfigFile.size(); i++) {
@@ -242,13 +242,13 @@ public class CLITestHelper {
       }
     }
     if (!foundTests) {
-    	LOG.info("NONE");
+    	LOG.error("Temp", new RuntimeException());
     }
     
     foundTests = false;
-    LOG.info("");
-    LOG.info("Passing tests:");
-    LOG.info("--------------");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     for (i = 0; i < testsFromConfigFile.size(); i++) {
       boolean resultBoolean = testsFromConfigFile.get(i).getTestResult();
       if (resultBoolean) {
@@ -258,7 +258,7 @@ public class CLITestHelper {
       }
     }
     if (!foundTests) {
-    	LOG.info("NONE");
+    	LOG.error("Temp", new RuntimeException());
     }
 
     assertTrue("One of the tests failed. " +
@@ -292,7 +292,7 @@ public class CLITestHelper {
         compareOutput = comp.compare(cmdResult.getCommandOutput(), 
           expandCommand(compdata.getExpectedOutput()));
       } catch (Exception e) {
-        LOG.info("Error in instantiating the comparator" + e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
@@ -311,7 +311,7 @@ public class CLITestHelper {
   public void testAll() {
     assertTrue("Number of tests has to be greater then zero",
       testsFromConfigFile.size() > 0);
-    LOG.info("TestAll");
+    LOG.error("Temp", new RuntimeException());
     // Run the tests defined in the testConf.xml config file.
     for (int index = 0; index < testsFromConfigFile.size(); index++) {
       

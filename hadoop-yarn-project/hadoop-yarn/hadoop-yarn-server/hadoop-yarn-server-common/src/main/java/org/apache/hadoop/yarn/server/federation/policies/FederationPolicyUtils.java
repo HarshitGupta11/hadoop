@@ -165,7 +165,7 @@ public final class FederationPolicyUtils {
             federationFacade.getSubClusterResolver(), federationFacade,
             homeSubClusterId);
 
-    LOG.info("Creating policy manager of type: " + configuration.getType());
+    LOG.error("Temp", new RuntimeException());
     FederationPolicyManager federationPolicyManager =
         instantiatePolicyManager(configuration.getType());
     // set queue, reinit policy if required (implementation lazily check

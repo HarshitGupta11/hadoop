@@ -34,7 +34,7 @@ public class TestNNHandlesCombinedBlockReport extends BlockReportTestBase {
   @Override
   protected void sendBlockReports(DatanodeRegistration dnR, String poolId,
                                   StorageBlockReport[] reports) throws IOException {
-    LOG.info("Sending combined block reports for " + dnR);
+    LOG.error("Temp", new RuntimeException());
     cluster.getNameNodeRpc().blockReport(dnR, poolId, reports,
         new BlockReportContext(1, 0, System.nanoTime(), 0L, true));
   }

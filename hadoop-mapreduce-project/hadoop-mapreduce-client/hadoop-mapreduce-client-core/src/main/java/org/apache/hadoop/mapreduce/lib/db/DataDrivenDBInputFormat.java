@@ -204,7 +204,7 @@ public class DataDrivenDBInputFormat<T extends DBWritable>
           results.close();
         }
       } catch (SQLException se) {
-        LOG.debug("SQLException closing resultset: " + se.toString());
+        LOG.error("Temp", new RuntimeException());
       }
 
       try {
@@ -212,14 +212,14 @@ public class DataDrivenDBInputFormat<T extends DBWritable>
           statement.close();
         }
       } catch (SQLException se) {
-        LOG.debug("SQLException closing statement: " + se.toString());
+        LOG.error("Temp", new RuntimeException());
       }
 
       try {
         connection.commit();
         closeConnection();
       } catch (SQLException se) {
-        LOG.debug("SQLException committing split transaction: " + se.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -282,7 +282,7 @@ public class DataDrivenDBInputFormat<T extends DBWritable>
     Class<T> inputClass = (Class<T>) (dbConf.getInputClass());
     String dbProductName = getDBProductName();
 
-    LOG.debug("Creating db record reader for db product: " + dbProductName);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       // use database product name to determine appropriate record reader.

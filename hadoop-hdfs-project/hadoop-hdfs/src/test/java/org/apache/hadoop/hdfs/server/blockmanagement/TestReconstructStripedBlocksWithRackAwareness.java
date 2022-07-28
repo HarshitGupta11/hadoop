@@ -117,7 +117,7 @@ public class TestReconstructStripedBlocksWithRackAwareness {
       if (dn.getDatanodeId().getHostName().equals(hostname)) {
         dnProp = cluster.stopDataNode(i);
         cluster.setDataNodeDead(dn.getDatanodeId());
-        LOG.info("stop datanode " + dn.getDatanodeId().getHostName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return dnProp;

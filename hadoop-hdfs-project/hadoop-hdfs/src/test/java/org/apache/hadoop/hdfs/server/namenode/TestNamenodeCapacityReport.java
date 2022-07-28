@@ -135,7 +135,7 @@ public class TestNamenodeCapacityReport {
       bpUsed = namesystem.getBlockPoolUsedSpace();
       percentBpUsed = namesystem.getPercentBlockPoolUsed();
       
-      LOG.info("Data node directory " + cluster.getDataDirectory());
+      LOG.error("Temp", new RuntimeException());
            
       LOG.info("Name node diskCapacity " + diskCapacity + " configCapacity "
           + configCapacity + " reserved " + reserved + " used " + used 

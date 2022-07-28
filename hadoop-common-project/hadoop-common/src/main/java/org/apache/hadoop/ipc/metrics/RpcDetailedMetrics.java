@@ -45,7 +45,7 @@ public class RpcDetailedMetrics {
     name = "RpcDetailedActivityForPort"+ port;
     registry = new MetricsRegistry("rpcdetailed")
         .tag("port", "RPC port", String.valueOf(port));
-    LOG.debug(registry.info().toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   public String name() { return name; }

@@ -116,7 +116,7 @@ public class AllocationFileParser {
             textValues.put(tagName, getTrimmedTextData(element));
           }
         } else {
-          LOG.warn("Bad element in allocations file: " + tagName);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

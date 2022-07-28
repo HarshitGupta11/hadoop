@@ -466,7 +466,7 @@ public class NameNode extends ReconfigurableBase implements
       return;
     }
 
-    LOG.info("{} is {}", FS_DEFAULT_NAME_KEY, nnAddr);
+    LOG.error("Temp", new RuntimeException());
     URI nnUri = URI.create(nnAddr);
 
     String nnHost = nnUri.getHost();
@@ -504,7 +504,7 @@ public class NameNode extends ReconfigurableBase implements
    */
   public static void setServiceAddress(Configuration conf,
                                            String address) {
-    LOG.info("Setting ADDRESS {}", address);
+    LOG.error("Temp", new RuntimeException());
     conf.set(DFS_NAMENODE_SERVICE_RPC_ADDRESS_KEY, address);
   }
   
@@ -614,7 +614,7 @@ public class NameNode extends ReconfigurableBase implements
    */
   void setRpcLifelineServerAddress(Configuration conf,
       InetSocketAddress lifelineRPCAddress) {
-    LOG.info("Setting lifeline RPC address {}", lifelineRPCAddress);
+    LOG.error("Temp", new RuntimeException());
     conf.set(DFS_NAMENODE_LIFELINE_RPC_ADDRESS_KEY,
         NetUtils.getHostPortString(lifelineRPCAddress));
   }
@@ -843,10 +843,10 @@ public class NameNode extends ReconfigurableBase implements
       try {
         p.start(this);
       } catch (Throwable t) {
-        LOG.warn("ServicePlugin " + p + " could not be started", t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
-    LOG.info(getRole() + " RPC up at: " + getNameNodeAddress());
+    LOG.error("Temp", new RuntimeException());
     if (rpcServer.getServiceRpcAddress() != null) {
       LOG.info(getRole() + " service RPC up at: "
           + rpcServer.getServiceRpcAddress());
@@ -862,7 +862,7 @@ public class NameNode extends ReconfigurableBase implements
         try {
           p.stop();
         } catch (Throwable t) {
-          LOG.warn("ServicePlugin " + p + " could not be stopped", t);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }   
@@ -1013,7 +1013,7 @@ public class NameNode extends ReconfigurableBase implements
     try {
       rpcServer.join();
     } catch (InterruptedException ie) {
-      LOG.info("Caught interrupted exception ", ie);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1031,7 +1031,7 @@ public class NameNode extends ReconfigurableBase implements
         state.exitState(haContext);
       }
     } catch (ServiceFailedException e) {
-      LOG.warn("Encountered exception while exiting state ", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       stopMetricsLogger();
       stopCommonServices();
@@ -1118,7 +1118,7 @@ public class NameNode extends ReconfigurableBase implements
       try {
         httpServer.join();
       } catch (InterruptedException e) {
-        LOG.info("Caught InterruptedException joining NameNodeHttpServer", e);
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt();
       }
     }
@@ -1189,7 +1189,7 @@ public class NameNode extends ReconfigurableBase implements
 
       fsImage.format(fsn, clusterId);
     } catch (IOException ioe) {
-      LOG.warn("Encountered exception during format: ", ioe);
+      LOG.error("Temp", new RuntimeException());
       fsImage.close();
       throw ioe;
     }
@@ -1308,7 +1308,7 @@ public class NameNode extends ReconfigurableBase implements
         try {
           sharedEditsImage.close();
         }  catch (IOException ioe) {
-          LOG.warn("Could not close sharedEditsImage", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       // Have to unlock storage explicitly for the case when we're running in a
@@ -1317,7 +1317,7 @@ public class NameNode extends ReconfigurableBase implements
         try {
           existingStorage.unlockAll();
         } catch (IOException ioe) {
-          LOG.warn("Could not unlock storage directories", ioe);
+          LOG.error("Temp", new RuntimeException());
           return true; // aborted
         }
       }
@@ -1350,7 +1350,7 @@ public class NameNode extends ReconfigurableBase implements
 
       // Copy all edits after last CheckpointTxId to shared edits dir
       for (EditLogInputStream stream : streams) {
-        LOG.debug("Beginning to copy stream " + stream + " to shared edits");
+        LOG.error("Temp", new RuntimeException());
         FSEditLogOp op;
         boolean segmentOpen = false;
         while ((op = stream.readOp()) != null) {
@@ -1374,7 +1374,7 @@ public class NameNode extends ReconfigurableBase implements
         }
 
         if (segmentOpen) {
-          LOG.debug("ending log segment because of end of stream in " + stream);
+          LOG.error("Temp", new RuntimeException());
           newSharedEditLog.logSync();
           newSharedEditLog.endCurrentLogSegment(false);
           segmentOpen = false;
@@ -1571,19 +1571,19 @@ public class NameNode extends ReconfigurableBase implements
         return;
       }
     }
-    MetaRecoveryContext.LOG.info("starting recovery...");
+    MetaRecoveryContext.LOG.error("Temp", new RuntimeException());
     UserGroupInformation.setConfiguration(conf);
     NameNode.initMetrics(conf, startOpt.toNodeRole());
     FSNamesystem fsn = null;
     try {
       fsn = FSNamesystem.loadFromDisk(conf);
       fsn.getFSImage().saveNamespace(fsn);
-      MetaRecoveryContext.LOG.info("RECOVERY COMPLETE");
+      MetaRecoveryContext.LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
-      MetaRecoveryContext.LOG.info("RECOVERY FAILED: caught exception", e);
+      MetaRecoveryContext.LOG.error("Temp", new RuntimeException());
       throw e;
     } catch (RuntimeException e) {
-      MetaRecoveryContext.LOG.info("RECOVERY FAILED: caught exception", e);
+      MetaRecoveryContext.LOG.error("Temp", new RuntimeException());
       throw e;
     } finally {
       if (fsn != null)
@@ -1611,7 +1611,7 @@ public class NameNode extends ReconfigurableBase implements
 
   public static NameNode createNameNode(String argv[], Configuration conf)
       throws IOException {
-    LOG.info("createNameNode " + Arrays.asList(argv));
+    LOG.error("Temp", new RuntimeException());
     if (conf == null)
       conf = new HdfsConfiguration();
     // Parse out some generic args into Configuration.
@@ -1716,7 +1716,7 @@ public class NameNode extends ReconfigurableBase implements
           + conf.get(DFS_NAMENODE_RPC_ADDRESS_KEY));
       conf.set(FS_DEFAULT_NAME_KEY, defaultUri.toString());
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Setting " + FS_DEFAULT_NAME_KEY + " to " + defaultUri.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

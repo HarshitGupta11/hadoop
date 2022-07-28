@@ -154,7 +154,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
                 .getContainerToken());
         containerStartTime = containerTokenIdentifier.getCreationTime();
       } catch (Exception e) {
-        LOG.info("Could not get container creation time, using current time");
+        LOG.error("Temp", new RuntimeException());
       }
       org.apache.hadoop.yarn.service.api.records.Container container =
           new org.apache.hadoop.yarn.service.api.records.Container();
@@ -239,7 +239,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
         // append to global diagnostics that will be reported to RM.
         comp.getScheduler().getDiagnostics().append(containerDiag);
         comp.getScheduler().getDiagnostics().append(exitDiag);
-        LOG.warn(exitDiag);
+        LOG.error("Temp", new RuntimeException());
         shouldExit = true;
       }
 
@@ -412,7 +412,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
   // Release the container, dec running,
   // cleanup registry, hdfs dir, and send record to ATS
   public void destroy() {
-    LOG.info(getCompInstanceId() + ": Flexed down by user, destroying.");
+    LOG.error("Temp", new RuntimeException());
     diagnostics.append(getCompInstanceId() + ": Flexed down by user");
 
     // update metrics
@@ -470,7 +470,7 @@ public class ComponentInstance implements EventHandler<ComponentInstanceEvent>,
         }
       }
     } catch (IOException e) {
-      LOG.warn(getCompInstanceId() + ": Failed to delete directory", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

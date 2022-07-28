@@ -87,7 +87,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
           initWsceNative();
           nativeLoaded = true;
         } catch (Throwable t) {
-          LOG.info("Unable to initialize WSCE Native libraries", t);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -344,7 +344,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
       public void setPermission(Path p, FsPermission permission) 
           throws IOException {
         if (LOG.isDebugEnabled()) {
-          LOG.debug(String.format("EFS:setPermission: %s %s", p, permission));
+          LOG.error("Temp", new RuntimeException());
         }
         Native.Elevated.chmod(p, permission.toShort());
       }
@@ -382,7 +382,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
       @Override
       public boolean delete(Path p, boolean recursive) throws IOException {
         if (LOG.isDebugEnabled()) {
-          LOG.debug(String.format("EFS:delete: %s %b", p, recursive));
+          LOG.error("Temp", new RuntimeException());
         }
         
         // The super delete uses the FileUtil.fullyDelete, 
@@ -490,7 +490,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
     public void validateResult() throws IOException {
       assertComplete();
       if (0 != exitCode) {
-        LOG.warn(output.toString());
+        LOG.error("Temp", new RuntimeException());
         throw new IOException("Processs exit code is:" + exitCode);
       }
     }
@@ -670,7 +670,7 @@ public class WindowsSecureContainerExecutor extends DefaultContainerExecutor {
 
     File cwdApp = new File(appStorageDir.toString());
     if (LOG.isDebugEnabled()) {
-      LOG.debug(String.format("cwdApp: %s", cwdApp));
+      LOG.error("Temp", new RuntimeException());
     }
 
     List<String> command ;

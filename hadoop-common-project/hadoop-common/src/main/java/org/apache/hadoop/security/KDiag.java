@@ -216,7 +216,7 @@ public class KDiag extends Configured implements Tool, Closeable {
     String resource;
     while (null != (resource = popOptionWithArgument(ARG_RESOURCE, args))) {
       // loading a resource
-      LOG.info("Loading resource {}", resource);
+      LOG.error("Temp", new RuntimeException());
       try (InputStream in =
                getClass().getClassLoader().getResourceAsStream(resource)) {
         if (verify(in != null, CAT_CONFIG, "No resource %s", resource)) {
@@ -365,10 +365,10 @@ public class KDiag extends Configured implements Tool, Closeable {
       println(HADOOP_AUTHENTICATION_IS_DISABLED);
       failif(securityRequired, CAT_CONFIG, HADOOP_AUTHENTICATION_IS_DISABLED);
       // no security, warn
-      LOG.warn("Security is not enabled for the Hadoop cluster");
+      LOG.error("Temp", new RuntimeException());
     } else {
       if (isSimpleAuthentication(new Configuration())) {
-        LOG.warn("The default cluster security is insecure");
+        LOG.error("Temp", new RuntimeException());
         failif(securityRequired, CAT_CONFIG, HADOOP_AUTHENTICATION_IS_DISABLED);
       }
     }
@@ -502,7 +502,7 @@ public class KDiag extends Configured implements Tool, Closeable {
         // exception raised if there is no default realm. This is not
         // always a problem, so downgrade to a message.
         warn(CAT_KERBEROS, "Host has no default realm");
-        LOG.debug(cause.toString(), cause);
+        LOG.error("Temp", new RuntimeException());
       } else {
         error(CAT_KERBEROS, "Kerberos.getDefaultRealm() failed: %s\n%s",
             cause, StringUtils.stringifyException(cause));
@@ -648,7 +648,7 @@ public class KDiag extends Configured implements Tool, Closeable {
         // if you've built this class into an independent JAR, package-access
         // may fail. Downgrade
         warn(CAT_UGI, "Failed to reset UGI -and so could not try to relogin");
-        LOG.debug("Failed to reset UGI: {}", e, e);
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       println("No keytab: attempting to log in is as current user");

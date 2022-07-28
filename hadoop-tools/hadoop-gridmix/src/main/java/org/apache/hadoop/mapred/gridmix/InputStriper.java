@@ -56,7 +56,7 @@ class InputStriper {
       throws IOException {
     final long inputBytes = inputDir.getInputFiles(mapBytes, files);
     if (mapBytes > inputBytes) {
-      LOG.warn("Using " + inputBytes + "/" + mapBytes + " bytes");
+      LOG.error("Temp", new RuntimeException());
     }
     if (files.isEmpty() && mapBytes > 0) {
       throw new IOException("Failed to satisfy request for " + mapBytes);

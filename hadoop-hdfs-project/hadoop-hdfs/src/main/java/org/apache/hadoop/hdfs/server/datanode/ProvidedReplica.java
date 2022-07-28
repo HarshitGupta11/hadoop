@@ -95,7 +95,7 @@ public abstract class ProvidedReplica extends ReplicaInfo {
       try {
         this.remoteFS = FileSystem.get(fileURI, this.conf);
       } catch (IOException e) {
-        LOG.warn("Failed to obtain filesystem for " + fileURI);
+        LOG.error("Temp", new RuntimeException());
         this.remoteFS = null;
       }
     }
@@ -137,7 +137,7 @@ public abstract class ProvidedReplica extends ReplicaInfo {
       try {
         this.remoteFS = FileSystem.get(pathPrefix.toUri(), this.conf);
       } catch (IOException e) {
-        LOG.warn("Failed to obtain filesystem for " + pathPrefix);
+        LOG.error("Temp", new RuntimeException());
         this.remoteFS = null;
       }
     }

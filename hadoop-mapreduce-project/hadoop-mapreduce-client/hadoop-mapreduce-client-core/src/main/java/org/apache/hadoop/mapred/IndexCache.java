@@ -44,7 +44,7 @@ class IndexCache {
     this.conf = conf;
     totalMemoryAllowed =
       conf.getInt(TTConfig.TT_INDEX_CACHE, 10) * 1024 * 1024;
-    LOG.info("IndexCache created with max memory = " + totalMemoryAllowed);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -76,7 +76,7 @@ class IndexCache {
           }
         }
       }
-      LOG.debug("IndexCache HIT: MapId " + mapId + " found");
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (info.mapSpillRecord.size() == 0 ||
@@ -110,7 +110,7 @@ class IndexCache {
           }
         }
       }
-      LOG.debug("IndexCache HIT: MapId " + mapId + " found");
+      LOG.error("Temp", new RuntimeException());
       return info;
     }
     LOG.debug("IndexCache MISS: MapId " + mapId + " not found") ;
@@ -152,10 +152,10 @@ class IndexCache {
     if (info != null) {
       totalMemoryUsed.addAndGet(-info.getSize());
       if (!queue.remove(mapId)) {
-        LOG.warn("Map ID" + mapId + " not found in queue!!");
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
-      LOG.info("Map ID " + mapId + " not found in cache");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

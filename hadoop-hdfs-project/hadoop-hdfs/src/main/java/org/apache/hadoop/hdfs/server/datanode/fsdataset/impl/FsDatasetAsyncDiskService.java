@@ -186,9 +186,9 @@ class FsDatasetAsyncDiskService {
    */
   synchronized void shutdown() {
     if (executors == null) {
-      LOG.warn("AsyncDiskService has already shut down.");
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.info("Shutting down all async disk service threads");
+      LOG.error("Temp", new RuntimeException());
       
       for (Map.Entry<String, ThreadPoolExecutor> e : executors.entrySet()) {
         e.getValue().shutdown();
@@ -196,7 +196,7 @@ class FsDatasetAsyncDiskService {
       // clear the executor map so that calling execute again will fail.
       executors = null;
       
-      LOG.info("All async disk service threads have been shut down");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -209,7 +209,7 @@ class FsDatasetAsyncDiskService {
         try {
           streams.syncFileRangeIfPossible(offset, nbytes, flags);
         } catch (NativeIOException e) {
-          LOG.warn("sync_file_range error", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     });
@@ -234,7 +234,7 @@ class FsDatasetAsyncDiskService {
    */
   void deleteSync(FsVolumeReference volumeRef, ReplicaInfo replicaToDelete,
       ExtendedBlock block, String trashDirectory) {
-    LOG.info("Deleting " + block.getLocalBlock() + " replica " + replicaToDelete);
+    LOG.error("Temp", new RuntimeException());
     ReplicaFileDeleteTask deletionTask = new ReplicaFileDeleteTask(volumeRef,
         replicaToDelete, block, trashDirectory);
     deletionTask.run();

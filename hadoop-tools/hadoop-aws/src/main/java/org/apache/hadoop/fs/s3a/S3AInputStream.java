@@ -258,7 +258,7 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
           && diff <= forwardSeekLimit;
       if (skipForward) {
         // the forward seek range is within the limits
-        LOG.debug("Forward seek on {}, of {} bytes", uri, diff);
+        LOG.error("Temp", new RuntimeException());
         streamStatistics.seekForwards(diff);
         long skipped = wrappedStream.skip(diff);
         if (skipped > 0) {
@@ -282,7 +282,7 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
       // if the stream is in "Normal" mode, switch to random IO at this
       // point, as it is indicative of columnar format IO
       if (inputPolicy.equals(S3AInputPolicy.Normal)) {
-        LOG.info("Switching to Random IO seek policy");
+        LOG.error("Temp", new RuntimeException());
         setInputPolicy(S3AInputPolicy.Random);
       }
     } else {
@@ -488,7 +488,7 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
       try {
         // close or abort the stream
         closeStream("close() operation", this.contentRangeFinish, false);
-        LOG.debug("Statistics of stream {}\n{}", key, streamStatistics);
+        LOG.error("Temp", new RuntimeException());
         // this is actually a no-op
         super.close();
       } finally {
@@ -529,7 +529,7 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
           while (wrappedStream.read() >= 0) {
             drained++;
           }
-          LOG.debug("Drained stream of {} bytes", drained);
+          LOG.error("Temp", new RuntimeException());
 
           // now close it
           wrappedStream.close();
@@ -539,14 +539,14 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
           streamStatistics.streamClose(false, drained);
         } catch (IOException e) {
           // exception escalates to an abort
-          LOG.debug("When closing {} stream for {}", uri, reason, e);
+          LOG.error("Temp", new RuntimeException());
           shouldAbort = true;
         }
       }
       if (shouldAbort) {
         // Abort, rather than just close, the underlying stream.  Otherwise, the
         // remaining object payload is read from S3 while closing the stream.
-        LOG.debug("Aborting stream");
+        LOG.error("Temp", new RuntimeException());
         wrappedStream.abort();
         streamStatistics.streamClose(true, remaining);
       }
@@ -576,7 +576,7 @@ public class S3AInputStream extends FSInputStream implements CanSetReadahead {
     checkNotClosed();
     boolean connectionOpen = wrappedStream != null;
     if (connectionOpen) {
-      LOG.info("Forced reset of connection to {}", uri);
+      LOG.error("Temp", new RuntimeException());
       closeStream("reset()", contentRangeFinish, true);
     }
     return connectionOpen;

@@ -126,7 +126,7 @@ public final class RpcUtil {
         info = new RpcInfo(callHeader, dataBuffer, ctx, e.getChannel(),
             e.getRemoteAddress());
       } catch (Exception exc) {
-        LOG.info("Malformed RPC request from " + e.getRemoteAddress());
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (info != null) {

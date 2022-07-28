@@ -267,7 +267,7 @@ public class SlowDiskTracker {
       return WRITER.writeValueAsString(slowDisksReport);
     } catch (JsonProcessingException e) {
       // Failed to serialize. Don't log the exception call stack.
-      LOG.debug("Failed to serialize statistics" + e);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }

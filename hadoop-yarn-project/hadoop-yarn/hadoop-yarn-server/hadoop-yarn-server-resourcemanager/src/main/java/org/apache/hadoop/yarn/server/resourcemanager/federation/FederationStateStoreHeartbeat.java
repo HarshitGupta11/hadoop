@@ -70,7 +70,7 @@ public class FederationStateStoreHeartbeat implements Runnable {
           ClusterMetricsInfo.class);
       marshaller = jc.createJSONMarshaller();
     } catch (JAXBException e) {
-      LOG.warn("Exception while trying to initialize JAXB context.", e);
+      LOG.error("Temp", new RuntimeException());
     }
     LOG.info("Initialized Federation membership for cluster with timestamp:  "
         + ResourceManager.getClusterTimeStamp());
@@ -100,9 +100,9 @@ public class FederationStateStoreHeartbeat implements Runnable {
       SubClusterHeartbeatRequest request = SubClusterHeartbeatRequest
           .newInstance(subClusterId, SubClusterState.SC_RUNNING, capability);
       stateStoreService.subClusterHeartbeat(request);
-      LOG.debug("Sending the heartbeat with capability: {}", capability);
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
-      LOG.warn("Exception when trying to heartbeat: ", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

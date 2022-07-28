@@ -70,7 +70,7 @@ public class TestDeletedDirTracker extends Assert {
 
   @After
   public void teardown() {
-    LOG.info(tracker.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -157,7 +157,7 @@ public class TestDeletedDirTracker extends Assert {
       if (shouldDelete(status)) {
         AtomicInteger r = status.isDirectory() ? deletedDirs : deletedFiles;
         r.incrementAndGet();
-        LOG.info("Delete {}", status.getPath());
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

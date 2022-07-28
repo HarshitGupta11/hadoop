@@ -32,7 +32,7 @@ public class EchoUserResolver implements UserResolver {
   public static final Log LOG = LogFactory.getLog(Gridmix.class);
 
   public EchoUserResolver() {
-    LOG.info(" Current user resolver is EchoUserResolver ");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public synchronized boolean setTargetUsers(URI userdesc, Configuration conf)

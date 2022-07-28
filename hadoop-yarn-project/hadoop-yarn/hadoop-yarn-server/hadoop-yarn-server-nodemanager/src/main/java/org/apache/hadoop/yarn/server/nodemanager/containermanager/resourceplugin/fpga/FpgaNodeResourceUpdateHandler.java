@@ -43,14 +43,14 @@ public class FpgaNodeResourceUpdateHandler extends NodeResourceUpdaterPlugin {
 
   @Override
   public void updateConfiguredResource(Resource res) throws YarnException {
-    LOG.info("Initializing configured FPGA resources for the NodeManager.");
+    LOG.error("Temp", new RuntimeException());
     List<FpgaResourceAllocator.FpgaDevice> list = FpgaDiscoverer.getInstance().getCurrentFpgaInfo();
     List<Integer> minors = new LinkedList<>();
     for (FpgaResourceAllocator.FpgaDevice device : list) {
       minors.add(device.getMinor());
     }
     if (minors.isEmpty()) {
-      LOG.info("Didn't find any usable FPGAs on the NodeManager.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     long count = minors.size();

@@ -398,7 +398,7 @@ public abstract class HAAdmin extends Configured implements Tool {
     } catch (IOException ioe) {
       errOut.println("Operation failed: " + ioe.getLocalizedMessage());
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Operation failed", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
       return -1;
     }

@@ -119,7 +119,7 @@ public class TestListCorruptFileBlocks {
 
       // fetch bad file list from namenode. There should be one file.
       badFiles = namenode.getNamesystem().listCorruptFileBlocks("/", null);
-      LOG.info("Namenode has bad files. " + badFiles.size());
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Namenode has " + badFiles.size() + " bad files. Expecting 1.",
           badFiles.size() == 1);
       util.cleanup(fs, "/srcdat10");
@@ -201,7 +201,7 @@ public class TestListCorruptFileBlocks {
       // fetch bad file list from namenode. There should be one file.
       badFiles = cluster.getNameNode().getNamesystem().
         listCorruptFileBlocks("/", null);
-      LOG.info("Namenode has bad files. " + badFiles.size());
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Namenode has " + badFiles.size() + " bad files. Expecting 1.",
           badFiles.size() == 1);
  
@@ -213,7 +213,7 @@ public class TestListCorruptFileBlocks {
       while (!cluster.getNameNode().namesystem.getBlockManager()
           .isPopulatingReplQueues()) {
         try {
-          LOG.info("waiting for replication queues");
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(1000);
         } catch (InterruptedException ignore) {
         }
@@ -233,7 +233,7 @@ public class TestListCorruptFileBlocks {
       // fetch bad file list from namenode. There should be one file.
       badFiles = cluster.getNameNode().getNamesystem().
         listCorruptFileBlocks("/", null);
-      LOG.info("Namenode has bad files. " + badFiles.size());
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Namenode has " + badFiles.size() + " bad files. Expecting 1.",
           badFiles.size() == 1);
 
@@ -294,9 +294,9 @@ public class TestListCorruptFileBlocks {
           // (blocks.length > 0));
           for (File metadataFile : metadataFiles) {
             File blockFile = Block.metaToBlockFile(metadataFile);
-            LOG.info("Deliberately removing file " + blockFile.getName());
+            LOG.error("Temp", new RuntimeException());
             assertTrue("Cannot remove file.", blockFile.delete());
-            LOG.info("Deliberately removing file " + metadataFile.getName());
+            LOG.error("Temp", new RuntimeException());
             assertTrue("Cannot remove file.", metadataFile.delete());
             // break;
           }
@@ -317,7 +317,7 @@ public class TestListCorruptFileBlocks {
           break;
       }
       // Validate we get all the corrupt files
-      LOG.info("Namenode has bad files. " + numCorrupt);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(numCorrupt == 3);
       // test the paging here
 
@@ -359,7 +359,7 @@ public class TestListCorruptFileBlocks {
   private int countPaths(RemoteIterator<Path> iter) throws IOException {
     int i = 0;
     while (iter.hasNext()) {
-      LOG.info("PATH: " + iter.next().toUri().getPath());
+      LOG.error("Temp", new RuntimeException());
       i++;
     }
     return i;
@@ -405,9 +405,9 @@ public class TestListCorruptFileBlocks {
         // (blocks.length > 0));
         for (File metadataFile : metadataFiles) {
           File blockFile = Block.metaToBlockFile(metadataFile);
-          LOG.info("Deliberately removing file " + blockFile.getName());
+          LOG.error("Temp", new RuntimeException());
           assertTrue("Cannot remove file.", blockFile.delete());
-          LOG.info("Deliberately removing file " + metadataFile.getName());
+          LOG.error("Temp", new RuntimeException());
           assertTrue("Cannot remove file.", metadataFile.delete());
           // break;
         }
@@ -425,7 +425,7 @@ public class TestListCorruptFileBlocks {
           break;
       }
       // Validate we get all the corrupt files
-      LOG.info("Namenode has bad files. " + numCorrupt);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(numCorrupt == 3);
 
       util.cleanup(fs, "/corruptData");
@@ -474,7 +474,7 @@ public class TestListCorruptFileBlocks {
         for (int j=0; j<=1; j++) {
           File storageDir = cluster.getInstanceStorageDir(i, j);
           File data_dir = MiniDFSCluster.getFinalizedDir(storageDir, bpid);
-          LOG.info("Removing files from " + data_dir);
+          LOG.error("Temp", new RuntimeException());
           List<File> metadataFiles = MiniDFSCluster.getAllBlockMetadataFiles(
               data_dir);
           if (metadataFiles == null)
@@ -494,7 +494,7 @@ public class TestListCorruptFileBlocks {
       // Occasionally the BlockPoolSliceScanner can run before we have removed
       // the blocks. Restart the Datanode to trigger the scanner into running
       // once more.
-      LOG.info("Restarting Datanode to trigger BlockPoolSliceScanner");
+      LOG.error("Temp", new RuntimeException());
       cluster.restartDataNodes();
       cluster.waitActive();
 
@@ -502,14 +502,14 @@ public class TestListCorruptFileBlocks {
         namenode.getNamesystem().listCorruptFileBlocks("/srcdat2", null);
         
        while (badFiles.size() < maxCorruptFileBlocks) {
-        LOG.info("# of corrupt files is: " + badFiles.size());
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(10000);
         badFiles = namenode.getNamesystem().
           listCorruptFileBlocks("/srcdat2", null);
       }
       badFiles = namenode.getNamesystem().
         listCorruptFileBlocks("/srcdat2", null); 
-      LOG.info("Namenode has bad files. " + badFiles.size());
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Namenode has " + badFiles.size() + " bad files. Expecting " + 
           maxCorruptFileBlocks + ".",
           badFiles.size() == maxCorruptFileBlocks);
@@ -569,9 +569,9 @@ public class TestListCorruptFileBlocks {
           continue;
         for (File metadataFile : metadataFiles) {
           File blockFile = Block.metaToBlockFile(metadataFile);
-          LOG.info("Deliberately removing file " + blockFile.getName());
+          LOG.error("Temp", new RuntimeException());
           assertTrue("Cannot remove file.", blockFile.delete());
-          LOG.info("Deliberately removing file " + metadataFile.getName());
+          LOG.error("Temp", new RuntimeException());
           assertTrue("Cannot remove file.", metadataFile.delete());
         }
       }
@@ -588,7 +588,7 @@ public class TestListCorruptFileBlocks {
           break;
       }
       // Validate we get all the corrupt files
-      LOG.info("Namenode has bad files. " + numCorrupt);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Failed to get corrupt files!", numCorrupt == 3);
 
       util.cleanup(fs, "corruptData");

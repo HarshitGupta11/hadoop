@@ -77,7 +77,7 @@ public class RpcMetrics {
                 "latency", interval);
       }
     }
-    LOG.debug("Initialized " + registry);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public String name() { return name; }

@@ -128,7 +128,7 @@ public class DefaultSubClusterResolverImpl extends AbstractSubClusterResolver
             this.getNodeToSubCluster().put(nodeName, subClusterId);
             loadRackToSubCluster(rackName, subClusterId);
           } else {
-            LOG.warn("Skipping malformed line in machine list: " + line);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       } finally {
@@ -136,7 +136,7 @@ public class DefaultSubClusterResolverImpl extends AbstractSubClusterResolver
           reader.close();
         }
       }
-      LOG.info("Successfully loaded file {}", fileName);
+      LOG.error("Temp", new RuntimeException());
 
     } catch (Exception e) {
       LOG.error("Failed to parse file " + fileName, e);

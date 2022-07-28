@@ -53,7 +53,7 @@ public class TestCredentialProviderFactory {
 
   @Before
   public void announce() {
-    LOG.info("Running test " + test.getMethodName());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private static char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',

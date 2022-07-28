@@ -96,7 +96,7 @@ public class CompletedJob implements org.apache.hadoop.mapreduce.v2.app.job.Job 
       boolean loadTasks, String userName, HistoryFileInfo info,
       JobACLsManager aclsMgr) 
           throws IOException {
-    LOG.info("Loading job: " + jobId + " from file: " + historyFile);
+    LOG.error("Temp", new RuntimeException());
     this.conf = conf;
     this.jobId = jobId;
     this.user = userName;
@@ -369,7 +369,7 @@ public class CompletedJob implements org.apache.hadoop.mapreduce.v2.app.job.Job 
   //History data is leisurely loaded when task level data is requested
   protected synchronized void loadFullHistoryData(boolean loadTasks,
       Path historyFileAbsolute) throws IOException {
-    LOG.info("Loading history file: [" + historyFileAbsolute + "]");
+    LOG.error("Temp", new RuntimeException());
     if (this.jobInfo != null) {
       return;
     }
@@ -394,7 +394,7 @@ public class CompletedJob implements org.apache.hadoop.mapreduce.v2.app.job.Job 
     }
     if (loadTasks) {
       loadAllTasks();
-      LOG.info("TaskInfo loaded");
+      LOG.error("Temp", new RuntimeException());
     }    
   }
 

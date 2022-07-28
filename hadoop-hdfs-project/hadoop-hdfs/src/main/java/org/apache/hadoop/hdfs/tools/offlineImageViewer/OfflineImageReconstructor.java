@@ -1393,7 +1393,7 @@ class OfflineImageReconstructor {
     @Override
     public void process() throws IOException {
       // No header for this section type.
-      LOG.debug("Processing SnapshotDiffSection");
+      LOG.error("Temp", new RuntimeException());
       while (true) {
         XMLEvent ev = expectTag("[diff start tag]", true);
         if (ev.isEndElement()) {
@@ -1417,7 +1417,7 @@ class OfflineImageReconstructor {
     }
 
     private void processDirDiffEntry() throws IOException {
-      LOG.debug("Processing dirDiffEntry");
+      LOG.error("Temp", new RuntimeException());
       DiffEntry.Builder headerBld = DiffEntry.newBuilder();
       headerBld.setType(DiffEntry.Type.DIRECTORYDIFF);
       Node dirDiffHeader = new Node();
@@ -1524,7 +1524,7 @@ class OfflineImageReconstructor {
     }
 
     private void processFileDiffEntry() throws IOException {
-      LOG.debug("Processing fileDiffEntry");
+      LOG.error("Temp", new RuntimeException());
       DiffEntry.Builder headerBld = DiffEntry.newBuilder();
       headerBld.setType(DiffEntry.Type.FILEDIFF);
       Node fileDiffHeader = new Node();
@@ -1745,7 +1745,7 @@ class OfflineImageReconstructor {
    * Processes the XML file back into an fsimage.
    */
   private void processXml() throws Exception {
-    LOG.debug("Loading <fsimage>.");
+    LOG.error("Temp", new RuntimeException());
     expectTag("fsimage", false);
     // Read the <version> tag.
     readVersion();

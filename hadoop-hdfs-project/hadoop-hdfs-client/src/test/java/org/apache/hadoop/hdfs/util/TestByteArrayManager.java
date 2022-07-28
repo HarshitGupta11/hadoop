@@ -331,7 +331,7 @@ public class TestByteArrayManager {
     final Thread randomRecycler = new Thread() {
       @Override
       public void run() {
-        LOG.info("randomRecycler start");
+        LOG.error("Temp", new RuntimeException());
         for(int i = 0; shouldRun(); i++) {
           final int j = ThreadLocalRandom.current().nextInt(runners.length);
           try {
@@ -342,11 +342,11 @@ public class TestByteArrayManager {
           }
 
           if ((i & 0xFF) == 0) {
-            LOG.info("randomRecycler sleep, i=" + i);
+            LOG.error("Temp", new RuntimeException());
             sleepMs(100);
           }
         }
-        LOG.info("randomRecycler done");
+        LOG.error("Temp", new RuntimeException());
       }
       
       boolean shouldRun() {

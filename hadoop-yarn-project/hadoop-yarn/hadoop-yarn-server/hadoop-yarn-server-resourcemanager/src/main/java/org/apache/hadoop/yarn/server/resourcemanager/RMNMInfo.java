@@ -58,9 +58,9 @@ public class RMNMInfo implements RMNMInfoBeans {
         bean = new StandardMBean(this,RMNMInfoBeans.class);
         MBeans.register("ResourceManager", "RMNMInfo", bean);
     } catch (NotCompliantMBeanException e) {
-        LOG.warn("Error registering RMNMInfo MBean", e);
+        LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("Registered RMNMInfo MBean");
+    LOG.error("Temp", new RuntimeException());
   }
 
 

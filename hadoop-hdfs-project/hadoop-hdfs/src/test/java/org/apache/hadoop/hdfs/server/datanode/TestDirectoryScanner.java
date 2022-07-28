@@ -133,7 +133,7 @@ public class TestDirectoryScanner {
             s = new FileOutputStream(f);
             channel = s.getChannel();
             channel.truncate(0);
-            LOG.info("Truncated block file " + f.getAbsolutePath());
+            LOG.error("Temp", new RuntimeException());
             return b.getBlockId();
           } finally {
             IOUtils.cleanup(LOG, channel, s);
@@ -152,7 +152,7 @@ public class TestDirectoryScanner {
         File mf = new File(b.getMetadataURI());
         // Delete a block file that has corresponding metadata file
         if (f.exists() && mf.exists() && f.delete()) {
-          LOG.info("Deleting block file " + f.getAbsolutePath());
+          LOG.error("Temp", new RuntimeException());
           return b.getBlockId();
         }
       }
@@ -166,7 +166,7 @@ public class TestDirectoryScanner {
       for (ReplicaInfo b : FsDatasetTestUtil.getReplicas(fds, bpid)) {
         // Delete a metadata file
         if (b.metadataExists() && b.deleteMetadata()) {
-          LOG.info("Deleting metadata " + b.getMetadataURI());
+          LOG.error("Temp", new RuntimeException());
           return b.getBlockId();
         }
       }
@@ -212,8 +212,8 @@ public class TestDirectoryScanner {
           FileUtils.copyFile(sourceMeta, destMeta);
 
           if (destBlock.exists() && destMeta.exists()) {
-            LOG.info("Copied " + sourceBlock + " ==> " + destBlock);
-            LOG.info("Copied " + sourceMeta + " ==> " + destMeta);
+            LOG.error("Temp", new RuntimeException());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -251,7 +251,7 @@ public class TestDirectoryScanner {
           .getFinalizedDir(bpid);
       File file = new File(finalizedDir, getBlockFile(id));
       if (file.createNewFile()) {
-        LOG.info("Created block file " + file.getName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return id;
@@ -267,7 +267,7 @@ public class TestDirectoryScanner {
           .getFinalizedDir(bpid);
       File file = new File(finalizedDir, getMetaFile(id));
       if (file.createNewFile()) {
-        LOG.info("Created metafile " + file.getName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return id;
@@ -285,7 +285,7 @@ public class TestDirectoryScanner {
           ((FsVolumeImpl) refs.get(index)).getFinalizedDir(bpid);
       File file = new File(finalizedDir, getBlockFile(id));
       if (file.createNewFile()) {
-        LOG.info("Created block file " + file.getName());
+        LOG.error("Temp", new RuntimeException());
 
         // Create files with same prefix as block file but extension names
         // such that during sorting, these files appear around meta file
@@ -294,17 +294,17 @@ public class TestDirectoryScanner {
         String name2 = file.getAbsolutePath() + ".n";
         file = new File(name1);
         if (file.createNewFile()) {
-          LOG.info("Created extraneous file " + name1);
+          LOG.error("Temp", new RuntimeException());
         }
 
         file = new File(name2);
         if (file.createNewFile()) {
-          LOG.info("Created extraneous file " + name2);
+          LOG.error("Temp", new RuntimeException());
         }
 
         file = new File(finalizedDir, getMetaFile(id));
         if (file.createNewFile()) {
-          LOG.info("Created metafile " + file.getName());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -619,7 +619,7 @@ public class TestDirectoryScanner {
       }
 
       // Waiting should be about 9x running.
-      LOG.info("RATIO: " + ratio);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Throttle is too restrictive", ratio <= 10f);
       assertTrue("Throttle is too permissive", ratio >= 7f);
 
@@ -637,7 +637,7 @@ public class TestDirectoryScanner {
       }
 
       // Waiting should be about 4x running.
-      LOG.info("RATIO: " + ratio);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Throttle is too restrictive", ratio <= 4.5f);
       assertTrue("Throttle is too permissive", ratio >= 2.75f);
 
@@ -656,7 +656,7 @@ public class TestDirectoryScanner {
       }
 
       // Waiting should be about 9x running.
-      LOG.info("RATIO: " + ratio);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Throttle is too restrictive", ratio <= 10f);
       assertTrue("Throttle is too permissive", ratio >= 7f);
 
@@ -722,7 +722,7 @@ public class TestDirectoryScanner {
       }
 
       // We just want to test that it waits a lot, but it also runs some
-      LOG.info("RATIO: " + ratio);
+      LOG.error("Temp", new RuntimeException());
       assertTrue("Throttle is too permissive",
           ratio > 10);
       assertTrue("Report complier threads logged no execution time",

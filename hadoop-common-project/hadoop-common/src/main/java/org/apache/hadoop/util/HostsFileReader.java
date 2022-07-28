@@ -186,7 +186,7 @@ public class HostsFileReader {
 
   public void refresh(String includesFile, String excludesFile)
       throws IOException {
-    LOG.info("Refreshing hosts (include/exclude) list");
+    LOG.error("Temp", new RuntimeException());
     HostDetails oldDetails = current.get();
     Set<String> newIncludes = oldDetails.includes;
     Map<String, Integer> newExcludes = oldDetails.excludes;
@@ -208,7 +208,7 @@ public class HostsFileReader {
   @Private
   public void refresh(InputStream inFileInputStream,
       InputStream exFileInputStream) throws IOException {
-    LOG.info("Refreshing hosts (include/exclude) list");
+    LOG.error("Temp", new RuntimeException());
     HostDetails oldDetails = current.get();
     Set<String> newIncludes = oldDetails.includes;
     Map<String, Integer> newExcludes = oldDetails.excludes;
@@ -279,7 +279,7 @@ public class HostsFileReader {
   }
 
   public void setIncludesFile(String includesFile) {
-    LOG.info("Setting the includes file to " + includesFile);
+    LOG.error("Temp", new RuntimeException());
     HostDetails oldDetails = current.get();
     HostDetails newDetails = new HostDetails(includesFile, oldDetails.includes,
         oldDetails.excludesFile, oldDetails.excludes);
@@ -287,7 +287,7 @@ public class HostsFileReader {
   }
   
   public void setExcludesFile(String excludesFile) {
-    LOG.info("Setting the excludes file to " + excludesFile);
+    LOG.error("Temp", new RuntimeException());
     HostDetails oldDetails = current.get();
     HostDetails newDetails = new HostDetails(
         oldDetails.includesFile, oldDetails.includes,
@@ -296,8 +296,8 @@ public class HostsFileReader {
   }
 
   public void updateFileNames(String includesFile, String excludesFile) {
-    LOG.info("Setting the includes file to " + includesFile);
-    LOG.info("Setting the excludes file to " + excludesFile);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     HostDetails oldDetails = current.get();
     HostDetails newDetails = new HostDetails(includesFile, oldDetails.includes,
         excludesFile, oldDetails.excludes);

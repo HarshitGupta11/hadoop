@@ -71,7 +71,7 @@ public class DFSHAAdmin extends HAAdmin {
     String nameNodePrincipal = conf.get(
         DFSConfigKeys.DFS_NAMENODE_KERBEROS_PRINCIPAL_KEY, "");
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Using NN principal: " + nameNodePrincipal);
+      LOG.error("Temp", new RuntimeException());
     }
 
     conf.set(CommonConfigurationKeys.HADOOP_SECURITY_SERVICE_USER_NAME_KEY,

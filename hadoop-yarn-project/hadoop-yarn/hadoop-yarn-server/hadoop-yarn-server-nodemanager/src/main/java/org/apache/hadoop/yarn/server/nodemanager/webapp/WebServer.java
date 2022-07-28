@@ -96,7 +96,7 @@ public class WebServer extends AbstractService {
       targets.add(AuthenticationFilterInitializer.class.getName());
       conf.set(filterInitializerConfKey, StringUtils.join(",", targets));
     }
-    LOG.info("Instantiating NMWebApp at " + bindAddress);
+    LOG.error("Temp", new RuntimeException());
     try {
       this.webApp =
           WebApps
@@ -126,7 +126,7 @@ public class WebServer extends AbstractService {
   @Override
   protected void serviceStop() throws Exception {
     if (this.webApp != null) {
-      LOG.debug("Stopping webapp");
+      LOG.error("Temp", new RuntimeException());
       this.webApp.stop();
     }
     super.serviceStop();

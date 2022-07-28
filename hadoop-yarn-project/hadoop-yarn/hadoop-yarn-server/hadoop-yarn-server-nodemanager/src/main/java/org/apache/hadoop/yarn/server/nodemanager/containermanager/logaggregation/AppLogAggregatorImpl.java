@@ -425,7 +425,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
       doAppLogAggregationPostCleanUp();
     } finally {
       if (!this.appAggregationFinished.get() && !this.aborted.get()) {
-        LOG.warn("Log aggregation did not complete for application " + appId);
+        LOG.error("Temp", new RuntimeException());
         this.dispatcher.getEventHandler().handle(
             new ApplicationEvent(this.appId,
                 ApplicationEventType.APPLICATION_LOG_HANDLING_FAILED));
@@ -450,7 +450,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
             wait(THREAD_SLEEP_TIME);
           }
         } catch (InterruptedException e) {
-          LOG.warn("PendingContainers queue is interrupted");
+          LOG.error("Temp", new RuntimeException());
           this.appFinishing.set(true);
         }
       }
@@ -481,7 +481,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
         lfs.getFileStatus(logPath);
         localAppLogDirs.add(logPath);
       } catch (UnsupportedFileSystemException ue) {
-        LOG.warn("Log dir " + rootLogDir + "is an unsupported file system", ue);
+        LOG.error("Temp", new RuntimeException());
         continue;
       } catch (IOException fe) {
         continue;
@@ -517,14 +517,14 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
 
   @Override
   public synchronized void finishLogAggregation() {
-    LOG.info("Application just finished : " + this.applicationId);
+    LOG.error("Temp", new RuntimeException());
     this.appFinishing.set(true);
     this.notifyAll();
   }
 
   @Override
   public synchronized void abortLogAggregation() {
-    LOG.info("Aborting log aggregation for " + this.applicationId);
+    LOG.error("Temp", new RuntimeException());
     this.aborted.set(true);
     this.notifyAll();
   }
@@ -549,7 +549,7 @@ public class AppLogAggregatorImpl implements AppLogAggregator {
         // Do Nothing
       }
     }
-    LOG.info("Do OutOfBand log aggregation");
+    LOG.error("Temp", new RuntimeException());
     this.notifyAll();
   }
 

@@ -134,7 +134,7 @@ final public class AliyunOSSUtils {
       credentials = new AliyunCredentialsProvider(newConf);
     } else {
       try {
-        LOG.debug("Credential provider class is:" + className);
+        LOG.error("Temp", new RuntimeException());
         Class<?> credClass = Class.forName(className);
         try {
           credentials =

@@ -395,7 +395,7 @@ final class BlockChecksumHelper {
               checksumBlock(block, idx, liveBlkInfo.getToken(),
                   liveBlkInfo.getDn());
             } catch (IOException ioe) {
-              LOG.warn("Exception while reading checksum", ioe);
+              LOG.error("Temp", new RuntimeException());
               // reconstruct block and calculate checksum for the failed node
               recalculateChecksum(idx, block.getNumBytes());
             }
@@ -405,7 +405,7 @@ final class BlockChecksumHelper {
             break; // done with the computation, simply return.
           }
         } catch (IOException e) {
-          LOG.warn("Failed to get the checksum", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -466,7 +466,7 @@ final class BlockChecksumHelper {
         //read md5
         final MD5Hash md5 = new MD5Hash(checksumData.getMd5().toByteArray());
         md5.write(md5writer);
-        LOG.debug("got reply from datanode:{}, md5={}", targetDatanode, md5);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

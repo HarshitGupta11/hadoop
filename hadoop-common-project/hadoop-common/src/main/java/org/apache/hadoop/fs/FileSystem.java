@@ -3279,15 +3279,15 @@ public abstract class FileSystem extends Configured implements Closeable {
               LOGGER.info("Full exception loading: {}", fs, e);
             }
           } catch (ServiceConfigurationError ee) {
-            LOG.warn("Cannot load filesystem: " + ee);
+            LOG.error("Temp", new RuntimeException());
             Throwable cause = ee.getCause();
             // print all the nested exception messages
             while (cause != null) {
-              LOG.warn(cause.toString());
+              LOG.error("Temp", new RuntimeException());
               cause = cause.getCause();
             }
             // and at debug: the full stack
-            LOG.debug("Stack Trace", ee);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         FILE_SYSTEMS_LOADED = true;

@@ -370,7 +370,7 @@ public class TestDFSShell {
       }
       assertEquals(0, ret);
       String returnString = out.toString();
-      LOG.info("-du return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       // Check if size matches as expected
       assertTrue(returnString.contains(fileLength.toString()));
       assertTrue(returnString.contains(fileDiskUsed.toString()));
@@ -399,7 +399,7 @@ public class TestDFSShell {
       }
       assertEquals(0, ret);
       returnString = out.toString();
-      LOG.info("-du -s return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       Long combinedLength = fileLength + file2Length + newFileLength;
       Long combinedDiskUsed = fileDiskUsed + file2DiskUsed + newFileDiskUsed;
       assertTrue(returnString.contains(combinedLength.toString()));
@@ -416,7 +416,7 @@ public class TestDFSShell {
       }
       assertEquals(0, ret);
       returnString = out.toString();
-      LOG.info("-du return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(returnString.contains(combinedLength.toString()));
       assertTrue(returnString.contains(combinedDiskUsed.toString()));
       out.reset();
@@ -431,7 +431,7 @@ public class TestDFSShell {
       }
       assertEquals(0, ret);
       returnString = out.toString();
-      LOG.info("-du -s -x return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       Long exludeSnapshotLength = file2Length + newFileLength;
       Long excludeSnapshotDiskUsed = file2DiskUsed + newFileDiskUsed;
       assertTrue(returnString.contains(exludeSnapshotLength.toString()));
@@ -448,7 +448,7 @@ public class TestDFSShell {
       }
       assertEquals(0, ret);
       returnString = out.toString();
-      LOG.info("-du -x return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       assertTrue(returnString.contains(exludeSnapshotLength.toString()));
       assertTrue(returnString.contains(excludeSnapshotDiskUsed.toString()));
       out.reset();
@@ -509,7 +509,7 @@ public class TestDFSShell {
       }
       assertEquals(0, val);
       String returnString = out.toString();
-      LOG.info("-count return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       Scanner in = new Scanner(returnString);
       in.nextLine();
       assertEquals(3, in.nextLong()); //DIR_COUNT
@@ -529,7 +529,7 @@ public class TestDFSShell {
       }
       assertEquals(0, val);
       returnString = out.toString();
-      LOG.info("-count -x return is:\n" + returnString);
+      LOG.error("Temp", new RuntimeException());
       in = new Scanner(returnString);
       in.nextLine();
       assertEquals(2, in.nextLong()); //DIR_COUNT
@@ -1262,11 +1262,11 @@ public class TestDFSShell {
   private static int runCmd(FsShell shell, String... args) throws IOException {
     StringBuilder cmdline = new StringBuilder("RUN:");
     for (String arg : args) cmdline.append(" " + arg);
-    LOG.info(cmdline.toString());
+    LOG.error("Temp", new RuntimeException());
     try {
       int exitCode;
       exitCode = shell.run(args);
-      LOG.info("RUN: "+args[0]+" exit=" + exitCode);
+      LOG.error("Temp", new RuntimeException());
       return exitCode;
     } catch (IOException e) {
       LOG.error("RUN: "+args[0]+" IOException="+e.getMessage());
@@ -1317,7 +1317,7 @@ public class TestDFSShell {
         // test sticky bit on directories
         Path dir2 = new Path(dir, "stickybit");
         fs.mkdirs(dir2);
-        LOG.info("Testing sticky bit on: " + dir2);
+        LOG.error("Temp", new RuntimeException());
         LOG.info("Sticky bit directory initial mode: " +
             fs.getFileStatus(dir2).getPermission());
 
@@ -1341,7 +1341,7 @@ public class TestDFSShell {
         confirmPermissionChange("777", "rwxrwxrwx", fs, shell, dir2);
         fs.delete(dir2, true);
       } else {
-        LOG.info("Skipped sticky bit tests on Windows");
+        LOG.error("Temp", new RuntimeException());
       }
 
       fs.delete(dir, true);
@@ -1357,12 +1357,12 @@ public class TestDFSShell {
   // is the one you were expecting
   private void confirmPermissionChange(String toApply, String expected,
       FileSystem fs, FsShell shell, Path dir2) throws IOException {
-    LOG.info("Confirming permission change of " + toApply + " to " + expected);
+    LOG.error("Temp", new RuntimeException());
     runCmd(shell, "-chmod", toApply, dir2.toString());
 
     String result = fs.getFileStatus(dir2).getPermission().toString();
 
-    LOG.info("Permission change result: " + result);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(expected, result);
   }
 

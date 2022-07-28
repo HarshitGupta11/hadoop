@@ -122,7 +122,7 @@ public class KMSAudit {
     Collection<String> classes =
         conf.getTrimmedStringCollection(KMSConfiguration.KMS_AUDIT_LOGGER_KEY);
     if (classes.isEmpty()) {
-      LOG.info("No audit logger configured, using default.");
+      LOG.error("Temp", new RuntimeException());
       result.add(SimpleKMSAuditLogger.class);
       return result;
     }
@@ -154,7 +154,7 @@ public class KMSAudit {
     }
     for (KMSAuditLogger logger: auditLoggers) {
       try {
-        LOG.info("Initializing audit logger {}", logger.getClass());
+        LOG.error("Temp", new RuntimeException());
         logger.initialize(conf);
       } catch (Exception ex) {
         throw new RuntimeException(

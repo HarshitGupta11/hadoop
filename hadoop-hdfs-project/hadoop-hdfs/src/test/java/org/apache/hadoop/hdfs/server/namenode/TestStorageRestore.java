@@ -113,7 +113,7 @@ public class TestStorageRestore {
     while(it.hasNext()) {
       StorageDirectory sd = it.next();
       if(filesToInvalidate.contains(sd.getRoot())) {
-        LOG.info("causing IO error on " + sd.getRoot());
+        LOG.error("Temp", new RuntimeException());
         al.add(sd);
       }
     }
@@ -267,7 +267,7 @@ public class TestStorageRestore {
 
       // it is started with dfs.namenode.name.dir.restore set to true (in SetUp())
       boolean restore = fsi.getStorage().getRestoreFailedStorage();
-      LOG.info("Restore is " + restore);
+      LOG.error("Temp", new RuntimeException());
       assertEquals(restore, true);
 
       // now run DFSAdmnin command

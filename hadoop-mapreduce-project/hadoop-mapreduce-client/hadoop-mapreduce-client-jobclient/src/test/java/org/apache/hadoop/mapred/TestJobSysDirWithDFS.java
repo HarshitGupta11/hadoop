@@ -101,7 +101,7 @@ public class TestJobSysDirWithDFS {
 
  static void runWordCount(MiniMRCluster mr, JobConf jobConf, String sysDir) 
  throws IOException {
-    LOG.info("runWordCount");
+    LOG.error("Temp", new RuntimeException());
     // Run a word count example
     // Keeping tasks that match this pattern
     TestResult result;

@@ -119,7 +119,7 @@ public final class DockerClientConfigHandler {
         credentials.addToken(
             new Text(registryUrl + "-" + applicationId), token);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Added token: " + token.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -142,7 +142,7 @@ public final class DockerClientConfigHandler {
     tokens.rewind();
     if (LOG.isDebugEnabled()) {
       for (Token token : credentials.getAllTokens()) {
-        LOG.debug("Added token: " + token.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return credentials;
@@ -171,7 +171,7 @@ public final class DockerClientConfigHandler {
           registryCredNode.put(CONFIG_AUTH_KEY,
               new String(tk.getPassword(), Charset.forName("UTF-8")));
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Prepared token for write: " + tk.toString());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

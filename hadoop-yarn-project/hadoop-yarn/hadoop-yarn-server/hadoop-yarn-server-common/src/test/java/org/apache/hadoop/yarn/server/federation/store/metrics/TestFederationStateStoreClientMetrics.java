@@ -37,19 +37,19 @@ public class TestFederationStateStoreClientMetrics {
 
   @Test
   public void testAggregateMetricInit() {
-    LOG.info("Test: aggregate metrics are initialized correctly");
+    LOG.error("Temp", new RuntimeException());
 
     Assert.assertEquals(0,
         FederationStateStoreClientMetrics.getNumSucceededCalls());
     Assert.assertEquals(0,
         FederationStateStoreClientMetrics.getNumFailedCalls());
 
-    LOG.info("Test: aggregate metrics are updated correctly");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testSuccessfulCalls() {
-    LOG.info("Test: Aggregate and method successful calls updated correctly");
+    LOG.error("Temp", new RuntimeException());
 
     long totalGoodBefore =
         FederationStateStoreClientMetrics.getNumSucceededCalls();
@@ -67,7 +67,7 @@ public class TestFederationStateStoreClientMetrics {
     Assert.assertEquals(100, FederationStateStoreClientMetrics
         .getLatencySucceessfulCallsForMethod("registerSubCluster"), 0);
 
-    LOG.info("Test: Running stats correctly calculated for 2 metrics");
+    LOG.error("Temp", new RuntimeException());
 
     goodStateStore.registerSubCluster(200);
 
@@ -91,7 +91,7 @@ public class TestFederationStateStoreClientMetrics {
 
     badStateStore.registerSubCluster();
 
-    LOG.info("Test: Aggregate and method failed calls updated correctly");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(totalBadbefore + 1,
         FederationStateStoreClientMetrics.getNumFailedCalls());
     Assert.assertEquals(apiBadBefore + 1, FederationStateStoreClientMetrics
@@ -110,11 +110,11 @@ public class TestFederationStateStoreClientMetrics {
     long apiGoodBefore = FederationStateStoreClientMetrics
         .getNumSucceessfulCallsForMethod("registerSubCluster");
 
-    LOG.info("Calling Metrics class directly");
+    LOG.error("Temp", new RuntimeException());
     FederationStateStoreClientMetrics.failedStateStoreCall();
     FederationStateStoreClientMetrics.succeededStateStoreCall(100);
 
-    LOG.info("Test: Aggregate and method calls did not update");
+    LOG.error("Temp", new RuntimeException());
     Assert.assertEquals(totalBadbefore,
         FederationStateStoreClientMetrics.getNumFailedCalls());
     Assert.assertEquals(apiBadBefore, FederationStateStoreClientMetrics
@@ -130,7 +130,7 @@ public class TestFederationStateStoreClientMetrics {
   // Records failures for all calls
   private class MockBadFederationStateStore {
     public void registerSubCluster() {
-      LOG.info("Mocked: failed registerSubCluster call");
+      LOG.error("Temp", new RuntimeException());
       FederationStateStoreClientMetrics.failedStateStoreCall();
     }
   }

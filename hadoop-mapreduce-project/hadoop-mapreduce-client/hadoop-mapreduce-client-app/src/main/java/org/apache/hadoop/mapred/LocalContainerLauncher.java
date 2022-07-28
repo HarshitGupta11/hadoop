@@ -243,11 +243,11 @@ public class LocalContainerLauncher extends AbstractService implements
         try {
           event = eventQueue.take();
         } catch (InterruptedException e) {  // mostly via T_KILL? JOB_KILL?
-          LOG.warn("Returning, interrupted : " + e);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
 
-        LOG.info("Processing the event " + event.toString());
+        LOG.error("Temp", new RuntimeException());
 
         if (event.getType() == EventType.CONTAINER_REMOTE_LAUNCH) {
 
@@ -294,7 +294,7 @@ public class LocalContainerLauncher extends AbstractService implements
           TaskAttemptId taId = event.getTaskAttemptID();
           Future<?> future = futures.remove(taId);
           if (future != null) {
-            LOG.info("canceling the task attempt " + taId);
+            LOG.error("Temp", new RuntimeException());
             future.cancel(true);
           }
 
@@ -305,9 +305,9 @@ public class LocalContainerLauncher extends AbstractService implements
               new TaskAttemptEvent(taId,
                   TaskAttemptEventType.TA_CONTAINER_CLEANED));
         } else if (event.getType() == EventType.CONTAINER_COMPLETED) {
-          LOG.debug("Container completed " + event.toString());
+          LOG.error("Temp", new RuntimeException());
         } else {
-          LOG.warn("Ignoring unexpected event " + event.toString());
+          LOG.error("Temp", new RuntimeException());
         }
 
       }

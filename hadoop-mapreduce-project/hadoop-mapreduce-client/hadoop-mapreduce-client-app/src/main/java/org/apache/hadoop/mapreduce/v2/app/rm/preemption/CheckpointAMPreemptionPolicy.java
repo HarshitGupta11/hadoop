@@ -125,9 +125,9 @@ public class CheckpointAMPreemptionPolicy implements AMPreemptionPolicy {
             if (org.apache.hadoop.mapreduce.v2.api.records.TaskType.REDUCE
                 .equals(reqTask.getTaskId().getTaskType())) {
               toBePreempted.add(reqTask);
-              LOG.info("preempting " + reqCont + " running task:" + reqTask);
+              LOG.error("Temp", new RuntimeException());
             } else {
-              LOG.info("NOT preempting " + reqCont + " running task:" + reqTask);
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
@@ -169,7 +169,7 @@ public class CheckpointAMPreemptionPolicy implements AMPreemptionPolicy {
             continue;
           }
 
-          LOG.info("ResourceRequest:" + reqRsrc);
+          LOG.error("Temp", new RuntimeException());
           int reqCont = reqRsrc.getNumContainers();
           long reqMem = reqRsrc.getCapability().getMemorySize();
           long totalMemoryToRelease = reqCont * reqMem;
@@ -230,7 +230,7 @@ public class CheckpointAMPreemptionPolicy implements AMPreemptionPolicy {
 
   @Override
   public void handleCompletedContainer(TaskAttemptId attemptID){
-    LOG.info(" task completed:" + attemptID);
+    LOG.error("Temp", new RuntimeException());
     toBePreempted.remove(attemptID);
     pendingFlexiblePreemptions.remove(attemptID);
   }

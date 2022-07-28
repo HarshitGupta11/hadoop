@@ -139,7 +139,7 @@ public class ResourcePBImpl extends Resource {
     for (ResourceInformationProto entry : p.getResourceValueMapList()) {
       Integer index = indexMap.get(entry.getKey());
       if (index == null) {
-        LOG.warn("Got unknown resource type: " + entry.getKey() + "; skipping");
+        LOG.error("Temp", new RuntimeException());
       } else {
         resources[index] = newDefaultInformation(types[index], entry);
       }

@@ -220,7 +220,7 @@ public class TestApplicationMasterService {
     // kick the scheduler
     nm1.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().size() < 1) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       alloc1Response = am1.schedule();
       allocCount++;
@@ -271,7 +271,7 @@ public class TestApplicationMasterService {
     // kick the scheduler
     nm1.nodeHeartbeat(true);
     while (alloc1Response.getAllocatedContainers().size() < 1) {
-      LOG.info("Waiting for containers to be created for app 1...");
+      LOG.error("Temp", new RuntimeException());
       sleep(1000);
       alloc1Response = am1.schedule();
     }
@@ -346,7 +346,7 @@ public class TestApplicationMasterService {
       // kick the scheduler
       nm1.nodeHeartbeat(true);
       while (alloc1Response.getAllocatedContainers().size() < 1) {
-        LOG.info("Waiting for containers to be created for app 1...");
+        LOG.error("Temp", new RuntimeException());
         sleep(1000);
         alloc1Response = am1.schedule();
       }
@@ -405,42 +405,42 @@ public class TestApplicationMasterService {
     allocateRequest.setProgress(Float.POSITIVE_INFINITY);
     am1.allocate(allocateRequest);
     while(attempt1.getProgress()!=1){
-      LOG.info("Waiting for allocate event to be handled ...");
+      LOG.error("Temp", new RuntimeException());
       sleep(100);
     }
 
     allocateRequest.setProgress(Float.NaN);
     am1.allocate(allocateRequest);
     while(attempt1.getProgress()!=0){
-      LOG.info("Waiting for allocate event to be handled ...");
+      LOG.error("Temp", new RuntimeException());
       sleep(100);
     }
 
     allocateRequest.setProgress((float)9);
     am1.allocate(allocateRequest);
     while(attempt1.getProgress()!=1){
-      LOG.info("Waiting for allocate event to be handled ...");
+      LOG.error("Temp", new RuntimeException());
       sleep(100);
     }
 
     allocateRequest.setProgress(Float.NEGATIVE_INFINITY);
     am1.allocate(allocateRequest);
     while(attempt1.getProgress()!=0){
-      LOG.info("Waiting for allocate event to be handled ...");
+      LOG.error("Temp", new RuntimeException());
       sleep(100);
     }
 
     allocateRequest.setProgress((float)0.5);
     am1.allocate(allocateRequest);
     while(attempt1.getProgress()!=0.5){
-      LOG.info("Waiting for allocate event to be handled ...");
+      LOG.error("Temp", new RuntimeException());
       sleep(100);
     }
 
     allocateRequest.setProgress((float)-1);
     am1.allocate(allocateRequest);
     while(attempt1.getProgress()!=0){
-      LOG.info("Waiting for allocate event to be handled ...");
+      LOG.error("Temp", new RuntimeException());
       sleep(100);
     }
   }
@@ -522,7 +522,7 @@ public class TestApplicationMasterService {
       MockAM am1 = rm.sendAMLaunched(attempt1.getAppAttemptId());
       RegisterApplicationMasterResponse resp = am1.registerAppAttempt();
       EnumSet<SchedulerResourceTypes> types = resp.getSchedulerResourceTypes();
-      LOG.info("types = " + types.toString());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(expectedValue, types);
       rm.stop();
     }

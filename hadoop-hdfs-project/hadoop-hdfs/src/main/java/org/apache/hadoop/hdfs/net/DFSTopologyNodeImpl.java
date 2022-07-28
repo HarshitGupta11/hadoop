@@ -194,7 +194,7 @@ public class DFSTopologyNodeImpl extends InnerNodeImpl {
 
   @Override
   public boolean add(Node n) {
-    LOG.debug("adding node {}", n.getName());
+    LOG.error("Temp", new RuntimeException());
     if (!isAncestor(n)) {
       throw new IllegalArgumentException(n.getName()
           + ", which is located at " + n.getNetworkLocation()
@@ -294,7 +294,7 @@ public class DFSTopologyNodeImpl extends InnerNodeImpl {
 
   @Override
   public boolean remove(Node n) {
-    LOG.debug("removing node {}", n.getName());
+    LOG.error("Temp", new RuntimeException());
     if (!isAncestor(n)) {
       throw new IllegalArgumentException(n.getName()
           + ", which is located at " + n.getNetworkLocation()
@@ -379,7 +379,7 @@ public class DFSTopologyNodeImpl extends InnerNodeImpl {
    */
   public synchronized void childAddStorage(
       String childName, StorageType type) {
-    LOG.debug("child add storage: {}:{}", childName, type);
+    LOG.error("Temp", new RuntimeException());
     // childrenStorageInfo should definitely contain this node already
     // because updateStorage is called after node added
     Preconditions.checkArgument(childrenStorageInfo.containsKey(childName));
@@ -416,7 +416,7 @@ public class DFSTopologyNodeImpl extends InnerNodeImpl {
    */
   public synchronized void childRemoveStorage(
       String childName, StorageType type) {
-    LOG.debug("child remove storage: {}:{}", childName, type);
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkArgument(childrenStorageInfo.containsKey(childName));
     EnumMap<StorageType, Integer> typeCount =
         childrenStorageInfo.get(childName);

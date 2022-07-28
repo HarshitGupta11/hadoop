@@ -834,7 +834,7 @@ public class TestDistributedFileSystem {
           assertEquals("Unexpected op count from iterator!",
               numThreads + oldMkdirOpCount, opCount.getValue());
         }
-        LOG.info(opCount.getName() + "\t" + opCount.getValue());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       threadPool.shutdownNow();
@@ -1091,7 +1091,7 @@ public class TestDistributedFileSystem {
           webhdfs.getFileChecksum(webhdfsqualified);
           fail();
         } catch(IOException ioe) {
-          FileSystem.LOG.info("GOOD: getting an exception", ioe);
+          FileSystem.LOG.error("Temp", new RuntimeException());
         }
       }
       hdfs.setPermission(dir, new FsPermission((short)0777));
@@ -1498,7 +1498,7 @@ public class TestDistributedFileSystem {
       // Test create an empty file
       try (FSDataOutputStream out =
                fs.createFile(testFilePath).build()) {
-        LOG.info("Test create an empty file");
+        LOG.error("Temp", new RuntimeException());
       }
 
       // Test create a file with content, and verify the content

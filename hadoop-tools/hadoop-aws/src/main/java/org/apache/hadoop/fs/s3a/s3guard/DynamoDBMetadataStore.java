@@ -252,7 +252,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
         S3GUARD_DDB_CLIENT_FACTORY_IMPL,
         S3GUARD_DDB_CLIENT_FACTORY_IMPL_DEFAULT,
         DynamoDBClientFactory.class);
-    LOG.debug("Creating DynamoDB client {} with S3 region {}", cls, s3Region);
+    LOG.error("Temp", new RuntimeException());
     final AmazonDynamoDB dynamoDBClient = ReflectionUtils.newInstance(cls, conf)
         .createDynamoDBClient(s3Region);
     return new DynamoDB(dynamoDBClient);
@@ -274,7 +274,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
           region);
     } else {
       region = owner.getBucketLocation();
-      LOG.debug("Inferring DynamoDB region from S3 bucket: {}", region);
+      LOG.error("Temp", new RuntimeException());
     }
     username = owner.getUsername();
     dynamoDB = createDynamoDB(conf, region);
@@ -378,7 +378,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
 
     // deleting nonexistent item consumes 1 write capacity; skip it
     if (path.isRoot()) {
-      LOG.debug("Skip deleting root directory as it does not exist in table");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     // the policy on whether repeating delete operations is based
@@ -405,7 +405,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
 
     final PathMetadata meta = get(path);
     if (meta == null || meta.isDeleted()) {
-      LOG.debug("Subtree path {} does not exist; this will be a no-op", path);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -434,7 +434,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
   public PathMetadata get(Path path, boolean wantEmptyDirectoryFlag)
       throws IOException {
     checkPath(path);
-    LOG.debug("Get from table {} in region {}: {}", tableName, region, path);
+    LOG.error("Temp", new RuntimeException());
     return Invoker.once("get", path.toString(),
         () -> innerGet(path, wantEmptyDirectoryFlag));
   }
@@ -502,7 +502,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
   @Retries.OnceTranslated
   public DirListingMetadata listChildren(final Path path) throws IOException {
     checkPath(path);
-    LOG.debug("Listing table {} in region {}: {}", tableName, region, path);
+    LOG.error("Temp", new RuntimeException());
 
     // find the children in the table
     return Invoker.once("listChildren", path.toString(),
@@ -657,7 +657,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
             String.format("Max retries exceeded (%d) for DynamoDB",
                 retryCount));
       } else {
-        LOG.debug("Sleeping {} msec before next retry", action.delayMillis);
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(action.delayMillis);
       }
     } catch (InterruptedException e) {
@@ -678,7 +678,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
     // all its ancestors will also exist in the table.
     // For performance purpose, we generate the full paths to put and use batch
     // write item request to save the items.
-    LOG.debug("Saving to table {} in region {}: {}", tableName, region, meta);
+    LOG.error("Temp", new RuntimeException());
 
     Collection<PathMetadata> wrapper = new ArrayList<>(1);
     wrapper.add(meta);
@@ -752,7 +752,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
   @Override
   @Retries.OnceTranslated("retry(listFullPaths); once(batchWrite)")
   public void put(DirListingMetadata meta) throws IOException {
-    LOG.debug("Saving to table {} in region {}: {}", tableName, region, meta);
+    LOG.error("Temp", new RuntimeException());
 
     // directory path
     Path path = meta.getPath();
@@ -777,7 +777,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
       instrumentation.storeClosed();
     }
     if (dynamoDB != null) {
-      LOG.debug("Shutting down {}", this);
+      LOG.error("Temp", new RuntimeException());
       dynamoDB.shutdown();
       dynamoDB = null;
     }
@@ -787,10 +787,10 @@ public class DynamoDBMetadataStore implements MetadataStore {
   @Retries.OnceTranslated
   public void destroy() throws IOException {
     if (table == null) {
-      LOG.info("In destroy(): no table to delete");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
-    LOG.info("Deleting DynamoDB table {} in region {}", tableName, region);
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkNotNull(dynamoDB, "Not connected to DynamoDB");
     try {
       table.delete();
@@ -880,9 +880,9 @@ public class DynamoDBMetadataStore implements MetadataStore {
     table = dynamoDB.getTable(tableName);
     try {
       try {
-        LOG.debug("Binding to table {}", tableName);
+        LOG.error("Temp", new RuntimeException());
         TableDescription description = table.describe();
-        LOG.debug("Table state: {}", description);
+        LOG.error("Temp", new RuntimeException());
         final String status = description.getTableStatus();
         switch (status) {
         case "CREATING":
@@ -952,7 +952,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
         if (action.action == RetryPolicy.RetryAction.RetryDecision.FAIL) {
           break;
         } else {
-          LOG.debug("Sleeping {} ms before next retry", action.delayMillis);
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(action.delayMillis);
         }
       } catch (Exception e) {
@@ -974,7 +974,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
   static void verifyVersionCompatibility(String tableName,
       Item versionMarker) throws IOException {
     if (versionMarker == null) {
-      LOG.warn("Table {} contains no version marker", tableName);
+      LOG.error("Temp", new RuntimeException());
       throw new IOException(E_NO_VERSION_MARKER
       + " Table: " + tableName);
     } else {
@@ -1029,7 +1029,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
           .withKeySchema(keySchema())
           .withAttributeDefinitions(attributeDefinitions())
           .withProvisionedThroughput(capacity));
-      LOG.debug("Awaiting table becoming active");
+      LOG.error("Temp", new RuntimeException());
     } catch (ResourceInUseException e) {
       LOG.warn("ResourceInUseException while creating DynamoDB table {} "
               + "in region {}.  This may indicate that the table was "
@@ -1049,7 +1049,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
    */
   @Retries.OnceRaw
   PutItemOutcome putItem(Item item) {
-    LOG.debug("Putting item {}", item);
+    LOG.error("Temp", new RuntimeException());
     return table.putItem(item);
   }
 
@@ -1228,7 +1228,7 @@ public class DynamoDBMetadataStore implements MetadataStore {
       if (attempts == 1 && eventCount < THROTTLE_EVENT_LOG_LIMIT) {
         LOG.warn("DynamoDB IO limits reached in {};"
                 + " consider increasing capacity: {}", text, ex.toString());
-        LOG.debug("Throttled", ex);
+        LOG.error("Temp", new RuntimeException());
       } else {
         // user has been warned already, log at debug only.
         LOG.debug("DynamoDB IO limits reached in {};"
@@ -1236,8 +1236,8 @@ public class DynamoDBMetadataStore implements MetadataStore {
       }
     } else if (attempts == 1) {
       // not throttled. Log on the first attempt only
-      LOG.info("Retrying {}: {}", text, ex.toString());
-      LOG.debug("Retrying {}", text, ex);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (instrumentation != null) {

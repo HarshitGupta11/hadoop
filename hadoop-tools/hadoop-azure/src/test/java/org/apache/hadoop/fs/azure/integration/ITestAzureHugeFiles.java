@@ -170,7 +170,7 @@ public class ITestAzureHugeFiles extends AbstractAzureScaleTest {
         = statistics.getLongStatistics();
     while (longStatistics.hasNext()) {
       StorageStatistics.LongStatistic next = longStatistics.next();
-      LOG.info("{} = {}", next.getName(), next.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -240,7 +240,7 @@ public class ITestAzureHugeFiles extends AbstractAzureScaleTest {
         }
       }
       // now close the file
-      LOG.info("Closing stream {}", out);
+      LOG.error("Temp", new RuntimeException());
       ContractTestUtils.NanoTimer closeTimer
           = new ContractTestUtils.NanoTimer();
       out.close();
@@ -286,7 +286,7 @@ public class ITestAzureHugeFiles extends AbstractAzureScaleTest {
       in.readFully(0, buffer);
       readAtByte0Again.end("time to read data at start of file again");
       ops++;
-      LOG.info("Final stream state: {}", in);
+      LOG.error("Temp", new RuntimeException());
     }
     long mb = Math.max(filesize / S_1M, 1);
 
@@ -330,7 +330,7 @@ public class ITestAzureHugeFiles extends AbstractAzureScaleTest {
       for (long block = 0; block < blocks; block++) {
         in.readFully(data);
       }
-      LOG.info("Final stream state: {}", in);
+      LOG.error("Temp", new RuntimeException());
     }
 
     long mb = Math.max(filesize / S_1M, 1);
@@ -389,12 +389,12 @@ public class ITestAzureHugeFiles extends AbstractAzureScaleTest {
                 readTimer.nanosPerOperation(bytesRead),
                 readTimer.bandwidthDescription(bytesRead));
           } else {
-            LOG.warn("0 bytes returned by read() operation #{}", reads);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         blockTimer.end("Reading block %d in %d reads", blockId, reads);
         String bw = blockTimer.bandwidthDescription(blockSize);
-        LOG.info("Bandwidth of block {}: {} MB/s: ", blockId, bw);
+        LOG.error("Temp", new RuntimeException());
         if (bandwidthInBytes(blockTimer, blockSize) < minimumBandwidth) {
           LOG.warn("Bandwidth {} too low on block {}: resetting connection",
               bw, blockId);

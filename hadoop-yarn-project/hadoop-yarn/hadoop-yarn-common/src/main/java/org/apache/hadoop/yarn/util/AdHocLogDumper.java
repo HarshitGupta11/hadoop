@@ -56,7 +56,7 @@ public class AdHocLogDumper {
       throws YarnRuntimeException, IOException {
     synchronized (lock) {
       if (logFlag) {
-        LOG.info("Attempt to dump logs when appender is already running");
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException("Appender is already dumping logs");
       }
       Level targetLevel = Level.toLevel(level);
@@ -131,7 +131,7 @@ public class AdHocLogDumper {
           }
         }
         logFlag = false;
-        LOG.info("Done dumping adhoc logs for " + name);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }

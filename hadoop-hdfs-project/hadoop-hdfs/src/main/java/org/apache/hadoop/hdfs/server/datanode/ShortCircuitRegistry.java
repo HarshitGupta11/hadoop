@@ -186,7 +186,7 @@ public class ShortCircuitRegistry {
       }
     } catch (IOException e) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Disabling ShortCircuitRegistry", e);
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       this.enabled = enabled;
@@ -249,7 +249,7 @@ public class ShortCircuitRegistry {
         bld.append(prefix).append(slot.toString());
         prefix = ", ";
       }
-      LOG.info(bld.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

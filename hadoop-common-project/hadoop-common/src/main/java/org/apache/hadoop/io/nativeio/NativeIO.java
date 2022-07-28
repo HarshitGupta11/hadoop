@@ -162,7 +162,7 @@ public class NativeIO {
     public static class NoMlockCacheManipulator extends CacheManipulator {
       public void mlock(String identifier, ByteBuffer buffer,
           long len) throws IOException {
-        LOG.info("mlocking " + identifier);
+        LOG.error("Temp", new RuntimeException());
       }
 
       public long getMemlockLimit() {
@@ -200,7 +200,7 @@ public class NativeIO {
           // This can happen if the user has an older version of libhadoop.so
           // installed - in this case we can continue without native IO
           // after warning
-          PerformanceAdvisory.LOG.debug("Unable to initialize NativeIO libraries", t);
+          PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -442,7 +442,7 @@ public class NativeIO {
     public static Stat getStat(String path) throws IOException {
       if (path == null) {
         String errMessage = "Path is null";
-        LOG.warn(errMessage);
+        LOG.error("Temp", new RuntimeException());
         throw new IOException(errMessage);
       }
       Stat stat = null;
@@ -662,7 +662,7 @@ public class NativeIO {
           // This can happen if the user has an older version of libhadoop.so
           // installed - in this case we can continue without native IO
           // after warning
-          PerformanceAdvisory.LOG.debug("Unable to initialize NativeIO libraries", t);
+          PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -681,7 +681,7 @@ public class NativeIO {
         // This can happen if the user has an older version of libhadoop.so
         // installed - in this case we can continue without native IO
         // after warning
-        PerformanceAdvisory.LOG.debug("Unable to initialize NativeIO libraries", t);
+        PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -720,7 +720,7 @@ public class NativeIO {
       Unsafe unsafe = (Unsafe)f.get(null);
       return unsafe.pageSize();
     } catch (Throwable e) {
-      LOG.warn("Unable to get operating system page size.  Guessing 4096.", e);
+      LOG.error("Temp", new RuntimeException());
       return 4096;
     }
   }

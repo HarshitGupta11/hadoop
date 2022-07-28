@@ -79,7 +79,7 @@ import java.util.concurrent.TimeUnit;
         }
         final long initTime = TimeUnit.MILLISECONDS.convert(
           System.nanoTime(), TimeUnit.NANOSECONDS);
-        LOG.info("START REPLAY @ " + initTime);
+        LOG.error("Temp", new RuntimeException());
         long first = -1;
         long last = -1;
         while (!Thread.currentThread().isInterrupted()) {
@@ -93,7 +93,7 @@ import java.util.concurrent.TimeUnit;
             }
             final long current = job.getSubmissionTime();
             if (current < last) {
-              LOG.warn("Job " + job.getJobID() + " out of order");
+              LOG.error("Temp", new RuntimeException());
               continue;
             }
             last = current;

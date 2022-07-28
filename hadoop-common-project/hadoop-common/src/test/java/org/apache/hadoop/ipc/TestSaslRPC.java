@@ -150,9 +150,9 @@ public class TestSaslRPC extends TestRpcBase {
 
   @Before
   public void setup() {
-    LOG.info("---------------------------------");
-    LOG.info("Testing QOP:"+ getQOPNames(qop));
-    LOG.info("---------------------------------");
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     conf = new Configuration();
     // the specific tests for kerberos will enable kerberos.  forcing it
@@ -269,7 +269,7 @@ public class TestSaslRPC extends TestRpcBase {
     } catch (ServiceException e) {
       assertTrue(e.getCause() instanceof RemoteException);
       RemoteException re = (RemoteException) e.getCause();
-      LOG.info("LOGGING MESSAGE: " + re.getLocalizedMessage());
+      LOG.error("Temp", new RuntimeException());
       assertEquals(ERROR_MESSAGE, re.getLocalizedMessage());
       assertTrue(re.unwrapRemoteException() instanceof InvalidToken);
       succeeded = true;
@@ -772,7 +772,7 @@ public class TestSaslRPC extends TestRpcBase {
             // timeout if the postponing doesn't work (ie. free up handler)
             proxy.sendPostponed(null, newEmptyRequest());
             for (int i=0; i < futures.length; i++) {
-              LOG.info("waiting for future"+i);
+              LOG.error("Temp", new RuntimeException());
               futures[i].get();
             }
           } finally {
@@ -796,7 +796,7 @@ public class TestSaslRPC extends TestRpcBase {
     try {
       return internalGetAuthMethod(clientAuth, serverAuth, UseToken.NONE);
     } catch (Exception e) {
-      LOG.warn("Auth method failure", e);
+      LOG.error("Temp", new RuntimeException());
       return e.toString();
     }
   }
@@ -808,7 +808,7 @@ public class TestSaslRPC extends TestRpcBase {
     try {
       return internalGetAuthMethod(clientAuth, serverAuth, tokenType);
     } catch (Exception e) {
-      LOG.warn("Auth method failure", e);
+      LOG.error("Temp", new RuntimeException());
       return e.toString();
     }
   }
@@ -880,7 +880,7 @@ public class TestSaslRPC extends TestRpcBase {
     }
 
     try {
-      LOG.info("trying ugi:"+clientUgi+" tokens:"+clientUgi.getTokens());
+      LOG.error("Temp", new RuntimeException());
       return clientUgi.doAs(new PrivilegedExceptionAction<String>() {
         @Override
         public String run() throws IOException {

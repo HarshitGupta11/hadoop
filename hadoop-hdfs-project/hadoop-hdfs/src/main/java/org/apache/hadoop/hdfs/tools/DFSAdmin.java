@@ -2348,7 +2348,7 @@ public class DFSAdmin extends FsShell {
                          + e.getLocalizedMessage());
     }
     if (LOG.isDebugEnabled() && debugException != null) {
-      LOG.debug("Exception encountered:", debugException);
+      LOG.error("Temp", new RuntimeException());
     }
     return exitCode;
   }

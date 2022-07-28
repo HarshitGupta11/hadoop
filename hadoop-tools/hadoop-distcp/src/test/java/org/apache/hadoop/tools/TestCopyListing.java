@@ -293,7 +293,7 @@ public class TestCopyListing extends SimpleCopyListing {
                 + ", idx=" + idx, fs.makeQualified(srcFiles.get(idx)),
             currentVal.getPath());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("val=" + fs.makeQualified(srcFiles.get(idx)));
+          LOG.error("Temp", new RuntimeException());
         }
         idx++;
       }

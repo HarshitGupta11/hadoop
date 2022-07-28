@@ -99,7 +99,7 @@ class TimelineEntityConverterV2 {
     }
     // finally add configuration to the job
     addConfiguration(job, conf);
-    LOG.info("converted job " + jobInfo.getJobId() + " to a timeline entity");
+    LOG.error("Temp", new RuntimeException());
     return job;
   }
 

@@ -53,7 +53,7 @@ public class ITestS3AEncryptionAlgorithmValidation
         FileSystem fileSystem = contract.getTestFileSystem();
         assertNotNull("null filesystem", fileSystem);
         URI fsURI = fileSystem.getUri();
-        LOG.info("Test filesystem = {} implemented by {}", fsURI, fileSystem);
+        LOG.error("Temp", new RuntimeException());
         assertEquals("wrong filesystem of " + fsURI,
             contract.getScheme(), fsURI.getScheme());
         fileSystem.initialize(fsURI, conf);
@@ -80,7 +80,7 @@ public class ITestS3AEncryptionAlgorithmValidation
         FileSystem fileSystem = contract.getTestFileSystem();
         assertNotNull("null filesystem", fileSystem);
         URI fsURI = fileSystem.getUri();
-        LOG.info("Test filesystem = {} implemented by {}", fsURI, fileSystem);
+        LOG.error("Temp", new RuntimeException());
         assertEquals("wrong filesystem of " + fsURI,
             contract.getScheme(), fsURI.getScheme());
         fileSystem.initialize(fsURI, conf);
@@ -104,7 +104,7 @@ public class ITestS3AEncryptionAlgorithmValidation
         FileSystem fileSystem = contract.getTestFileSystem();
         assertNotNull("null filesystem", fileSystem);
         URI fsURI = fileSystem.getUri();
-        LOG.info("Test filesystem = {} implemented by {}", fsURI, fileSystem);
+        LOG.error("Temp", new RuntimeException());
         assertEquals("wrong filesystem of " + fsURI,
             contract.getScheme(), fsURI.getScheme());
         fileSystem.initialize(fsURI, conf);
@@ -131,7 +131,7 @@ public class ITestS3AEncryptionAlgorithmValidation
         FileSystem fileSystem = contract.getTestFileSystem();
         assertNotNull("null filesystem", fileSystem);
         URI fsURI = fileSystem.getUri();
-        LOG.info("Test filesystem = {} implemented by {}", fsURI, fileSystem);
+        LOG.error("Temp", new RuntimeException());
         assertEquals("wrong filesystem of " + fsURI,
             contract.getScheme(), fsURI.getScheme());
         fileSystem.initialize(fsURI, conf);

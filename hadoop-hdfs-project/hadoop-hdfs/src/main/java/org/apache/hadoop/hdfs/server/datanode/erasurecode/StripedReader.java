@@ -332,7 +332,7 @@ class StripedReader {
           }
         }
       } catch (InterruptedException e) {
-        LOG.info("Read data interrupted.", e);
+        LOG.error("Temp", new RuntimeException());
         cancelReads(futures.keySet());
         futures.clear();
         break;

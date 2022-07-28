@@ -222,7 +222,7 @@ public class TestUtils {
     when(rmNode.getRackName()).thenReturn(rack);
     
     FiCaSchedulerNode node = spy(new FiCaSchedulerNode(rmNode, false));
-    LOG.info("node = " + host + " avail=" + node.getUnallocatedResource());
+    LOG.error("Temp", new RuntimeException());
     
     when(node.getNodeID()).thenReturn(nodeId);
     return node;

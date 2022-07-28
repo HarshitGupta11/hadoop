@@ -118,7 +118,7 @@ public class IFile {
           this.out = new FSDataOutputStream(this.compressedOut,  null);
           this.compressOutput = true;
         } else {
-          LOG.warn("Could not obtain compressor from CodecPool");
+          LOG.error("Temp", new RuntimeException());
           this.out = new FSDataOutputStream(checksumOut,null);
         }
       } else {
@@ -341,7 +341,7 @@ public class IFile {
         if (decompressor != null) {
           this.in = codec.createInputStream(checksumIn, decompressor);
         } else {
-          LOG.warn("Could not obtain decompressor from CodecPool");
+          LOG.error("Temp", new RuntimeException());
           this.in = checksumIn;
         }
       } else {

@@ -167,7 +167,7 @@ public class CLI extends Configured implements Tool {
         try {
           jpvalue = Integer.parseInt(argv[2]);
         } catch (NumberFormatException ne) {
-          LOG.info("Error number format: ", ne);
+          LOG.error("Temp", new RuntimeException());
           displayUsage(cmd);
           return exitCode;
         }

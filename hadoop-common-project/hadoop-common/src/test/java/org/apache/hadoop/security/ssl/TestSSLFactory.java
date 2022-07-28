@@ -146,7 +146,7 @@ public class TestSSLFactory {
     if (result.getHandshakeStatus() ==
         SSLEngineResult.HandshakeStatus.NEED_TASK) {
       while ((runnable = engine.getDelegatedTask()) != null) {
-        LOG.info("running delegated task...");
+        LOG.error("Temp", new RuntimeException());
         runnable.run();
       }
       SSLEngineResult.HandshakeStatus hsStatus = engine.getHandshakeStatus();
@@ -217,12 +217,12 @@ public class TestSSLFactory {
        */
       while (!isEngineClosed(clientSSLEngine) ||
           !isEngineClosed(serverSSLEngine)) {
-        LOG.info("client wrap " + wrap(clientSSLEngine, clientOut, cTOs));
-        LOG.info("server wrap " + wrap(serverSSLEngine, serverOut, sTOc));
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         cTOs.flip();
         sTOc.flip();
-        LOG.info("client unwrap " + unwrap(clientSSLEngine, sTOc, clientIn));
-        LOG.info("server unwrap " + unwrap(serverSSLEngine, cTOs, serverIn));
+        LOG.error("Temp", new RuntimeException());
+        LOG.error("Temp", new RuntimeException());
         cTOs.compact();
         sTOc.compact();
         if (!dataDone && (clientOut.limit() == serverIn.position()) &&
@@ -230,7 +230,7 @@ public class TestSSLFactory {
           checkTransfer(serverOut, clientIn);
           checkTransfer(clientOut, serverIn);
 
-          LOG.info("closing client");
+          LOG.error("Temp", new RuntimeException());
           clientSSLEngine.closeOutbound();
           dataDone = true;
         }

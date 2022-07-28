@@ -123,7 +123,7 @@ public class TestHostsFiles {
       BlockLocation locs[] = fs.getFileBlockLocations(
           fs.getFileStatus(filePath), 0, Long.MAX_VALUE);
       String name = locs[0].getNames()[0];
-      LOG.info("adding '" + name + "' to decommission");
+      LOG.error("Temp", new RuntimeException());
       hostsFileWriter.initExcludeHost(name);
       ns.getBlockManager().getDatanodeManager().refreshNodes(conf);
       DFSTestUtil.waitForDecommission(fs, name);

@@ -50,13 +50,13 @@ public class GangliaSink31 extends GangliaSink30 {
     throws IOException {
 
     if (name == null) {
-      LOG.warn("Metric was emitted with no name.");
+      LOG.error("Temp", new RuntimeException());
       return;
     } else if (value == null) {
-      LOG.warn("Metric name " + name +" was emitted with a null value.");
+      LOG.error("Temp", new RuntimeException());
       return;
     } else if (type == null) {
-      LOG.warn("Metric name " + name + ", value " + value + " has no type.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 

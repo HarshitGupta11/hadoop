@@ -114,7 +114,7 @@ public class ZookeeperFederationStateStore implements FederationStateStore {
 
   @Override
   public void init(Configuration conf) throws YarnException {
-    LOG.info("Initializing ZooKeeper connection");
+    LOG.error("Temp", new RuntimeException());
 
     baseZNode = conf.get(
         YarnConfiguration.FEDERATION_STATESTORE_ZK_PARENT_PATH,
@@ -341,7 +341,7 @@ public class ZookeeperFederationStateStore implements FederationStateStore {
     try {
       subClusterInfo = getSubclusterInfo(subClusterId);
       if (subClusterInfo == null) {
-        LOG.warn("The queried SubCluster: {} does not exist.", subClusterId);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
     } catch (Exception e) {
@@ -388,7 +388,7 @@ public class ZookeeperFederationStateStore implements FederationStateStore {
     }
 
     if (policy == null) {
-      LOG.warn("Policy for queue: {} does not exist.", queue);
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
     return GetSubClusterPolicyConfigurationResponse
@@ -606,9 +606,9 @@ public class ZookeeperFederationStateStore implements FederationStateStore {
       FederationStateStoreUtils.logAndThrowStoreException(LOG, errMsg);
     }
     if (!created) {
-      LOG.debug("{} not created", znode);
+      LOG.error("Temp", new RuntimeException());
       if (!update) {
-        LOG.info("{} already existed and we are not updating", znode);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
     }

@@ -91,7 +91,7 @@ public class ResourceUtils {
         ResourceInformation.VCORES_URI };
     for(String key : keys) {
       if (resourceInformationMap.containsKey(key)) {
-        LOG.warn("Attempt to define resource '" + key + "', but it is not allowed.");
+        LOG.error("Temp", new RuntimeException());
         throw new YarnRuntimeException(
             "Attempt to re-define mandatory resource '" + key + "'.");
       }
@@ -411,11 +411,11 @@ public class ResourceUtils {
     try {
       InputStream ris = getConfInputStream(resourceFile, conf);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Found " + resourceFile + ", adding to configuration");
+        LOG.error("Temp", new RuntimeException());
       }
       conf.addResource(ris);
     } catch (FileNotFoundException fe) {
-      LOG.info("Unable to find '" + resourceFile + "'.");
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException | YarnException ex) {
       LOG.error("Exception trying to read resource types configuration '"
           + resourceFile + "'.", ex);
@@ -517,7 +517,7 @@ public class ResourceUtils {
   private static void addResourceTypeInformation(String prop, String value,
       Map<String, ResourceInformation> nodeResources) {
     if (prop.startsWith(YarnConfiguration.NM_RESOURCES_PREFIX)) {
-      LOG.info("Found resource entry " + prop);
+      LOG.error("Temp", new RuntimeException());
       String resourceType = prop.substring(
           YarnConfiguration.NM_RESOURCES_PREFIX.length());
       if (!nodeResources.containsKey(resourceType)) {

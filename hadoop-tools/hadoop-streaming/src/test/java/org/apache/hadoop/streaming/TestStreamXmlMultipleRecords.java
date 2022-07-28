@@ -113,7 +113,7 @@ public class TestStreamXmlMultipleRecords extends TestStreaming
       super.testCommandLine();
     }
     else {
-      LOG.warn("No perl; skipping test.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -133,7 +133,7 @@ public class TestStreamXmlMultipleRecords extends TestStreaming
       super.testCommandLine();
     }
     else {
-      LOG.warn("No perl; skipping test.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -152,7 +152,7 @@ public class TestStreamXmlMultipleRecords extends TestStreaming
       super.testCommandLine();
     }
     else {
-      LOG.warn("No perl; skipping test.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -172,7 +172,7 @@ public class TestStreamXmlMultipleRecords extends TestStreaming
       super.testCommandLine();
     }
     else {
-      LOG.warn("No perl; skipping test.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

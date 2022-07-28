@@ -300,7 +300,7 @@ public class FairScheduler extends
           continuousSchedulingAttempt();
           Thread.sleep(getContinuousSchedulingSleepMs());
         } catch (InterruptedException e) {
-          LOG.warn("Continuous scheduling thread interrupted. Exiting.", e);
+          LOG.error("Temp", new RuntimeException());
           return;
         }
       }
@@ -321,7 +321,7 @@ public class FairScheduler extends
             rootMetrics.getAvailableVirtualCores()) +
         "  Demand: " + rootQueue.getDemand());
 
-    STATE_DUMP_LOG.debug(rootQueue.dumpState());
+    STATE_DUMP_LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -449,7 +449,7 @@ public class FairScheduler extends
       String message =
           "Reject application " + applicationId + " submitted by user " + user
               + " with an empty queue name.";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       rmContext.getDispatcher().getEventHandler().handle(
           new RMAppEvent(applicationId, RMAppEventType.APP_REJECTED,
               message));
@@ -461,7 +461,7 @@ public class FairScheduler extends
           "Reject application " + applicationId + " submitted by user " + user
               + " with an illegal queue name " + queueName + ". "
               + "The queue name cannot start/end with period.";
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       rmContext.getDispatcher().getEventHandler().handle(
           new RMAppEvent(applicationId, RMAppEventType.APP_REJECTED,
               message));
@@ -485,7 +485,7 @@ public class FairScheduler extends
         String msg = "User " + userUgi.getUserName()
             + " cannot submit applications to queue " + queue.getName()
             + "(requested queuename is " + queueName + ")";
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         rmContext.getDispatcher().getEventHandler().handle(
             new RMAppEvent(applicationId, RMAppEventType.APP_REJECTED, msg));
         return;
@@ -624,7 +624,7 @@ public class FairScheduler extends
     SchedulerApplication<FSAppAttempt> application = applications.remove(
         applicationId);
     if (application == null) {
-      LOG.warn("Couldn't find application " + applicationId);
+      LOG.error("Temp", new RuntimeException());
     } else{
       application.stop(finalState);
     }
@@ -658,7 +658,7 @@ public class FairScheduler extends
             RMContainerState.RUNNING)) {
           // do not kill the running container in the case of work-preserving AM
           // restart.
-          LOG.info("Skip killing " + rmContainer.getContainerId());
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         super.completedContainer(rmContainer, SchedulerUtils
@@ -724,14 +724,14 @@ public class FairScheduler extends
         if (node != null) {
           application.unreserve(rmContainer.getReservedSchedulerKey(), node);
         } else if (LOG.isDebugEnabled()) {
-          LOG.debug("Skipping unreserve on removed node: " + nodeID);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         application.containerCompleted(rmContainer, containerStatus, event);
         if (node != null) {
           node.releaseContainer(rmContainer.getContainerId(), false);
         } else if (LOG.isDebugEnabled()) {
-          LOG.debug("Skipping container release on removed node: " + nodeID);
+          LOG.error("Temp", new RuntimeException());
         }
         updateRootQueueMetrics();
       }
@@ -825,7 +825,7 @@ public class FairScheduler extends
     ContainerStatus status = SchedulerUtils.createKilledContainerStatus(
         container.getContainerId(),
         "Killed by RM to simulate an AM container failure");
-    LOG.info("Killing container " + container);
+    LOG.error("Temp", new RuntimeException());
     completedContainer(container, status, RMContainerEventType.KILL);
   }
 
@@ -1610,7 +1610,7 @@ public class FairScheduler extends
         // Check if the attempt is already stopped: don't move stopped app
         // attempt. The attempt has already been removed from all queues.
         if (attempt.isStopped()) {
-          LOG.info("Application " + appId + " is stopped and can't be moved!");
+          LOG.error("Temp", new RuntimeException());
           throw new YarnException("Application " + appId
               + " is stopped and can't be moved!");
         }

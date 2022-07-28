@@ -97,7 +97,7 @@ public class DFSInotifyEventInputStream {
     try (TraceScope ignored = tracer.newScope("inotifyPoll")) {
       // need to keep retrying until the NN sends us the latest committed txid
       if (lastReadTxid == -1) {
-        LOG.debug("poll(): lastReadTxid is -1, reading current txid from NN");
+        LOG.error("Temp", new RuntimeException());
         lastReadTxid = namenode.getCurrentEditLogTxid();
         return null;
       }
@@ -180,7 +180,7 @@ public class DFSInotifyEventInputStream {
       while ((next = poll()) == null) {
         long timeLeft = totalWait - (Time.monotonicNow() - initialTime);
         if (timeLeft <= 0) {
-          LOG.debug("timed poll(): timed out");
+          LOG.error("Temp", new RuntimeException());
           break;
         } else if (timeLeft < nextWait * 2) {
           nextWait = timeLeft;
@@ -213,7 +213,7 @@ public class DFSInotifyEventInputStream {
         // sleep for a random period between nextWaitMin and nextWaitMin * 2
         // to avoid stampedes at the NN if there are multiple clients
         int sleepTime = nextWaitMin + rng.nextInt(nextWaitMin);
-        LOG.debug("take(): poll() returned null, sleeping for {} ms", sleepTime);
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(sleepTime);
         // the maximum sleep is 2 minutes
         nextWaitMin = Math.min(60000, nextWaitMin * 2);

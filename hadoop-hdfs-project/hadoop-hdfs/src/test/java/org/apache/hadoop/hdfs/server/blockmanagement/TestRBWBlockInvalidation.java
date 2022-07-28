@@ -104,7 +104,7 @@ public class TestRBWBlockInvalidation {
       while (true) {
         if ((liveReplicas = countReplicas(namesystem, blk).liveReplicas()) < 2) {
           // This confirms we have a corrupt replica
-          LOG.info("Live Replicas after corruption: " + liveReplicas);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
         Thread.sleep(100);
@@ -116,7 +116,7 @@ public class TestRBWBlockInvalidation {
         if ((liveReplicas =
               countReplicas(namesystem, blk).liveReplicas()) > 1) {
           //Wait till the live replica count becomes equal to Replication Factor
-          LOG.info("Live Replicas after Rereplication: " + liveReplicas);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
         Thread.sleep(100);
@@ -126,7 +126,7 @@ public class TestRBWBlockInvalidation {
       while (true) {
         Thread.sleep(100);
         if (countReplicas(namesystem, blk).corruptReplicas() == 0) {
-          LOG.info("Corrupt Replicas becomes 0");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
@@ -210,7 +210,7 @@ public class TestRBWBlockInvalidation {
         // and one current copy. This test wants to ensure that the old genstamp
         // copy is the one that is deleted.
 
-        LOG.info("=========================== restarting cluster");
+        LOG.error("Temp", new RuntimeException());
         DataNodeProperties otherNode = cluster.stopDataNode(0);
         cluster.restartNameNode();
         

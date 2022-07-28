@@ -152,7 +152,7 @@ public class ResourceProfilesManagerImpl implements ResourceProfilesManager {
                 + Arrays.toString(MANDATORY_PROFILES) + " must be present");
       }
     }
-    LOG.info("Loaded profiles: " + profiles.keySet());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private Resource parseResource(Map profileInfo) throws IOException {

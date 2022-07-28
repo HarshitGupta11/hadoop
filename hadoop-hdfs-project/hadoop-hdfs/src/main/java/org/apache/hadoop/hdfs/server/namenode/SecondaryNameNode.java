@@ -260,7 +260,7 @@ public class SecondaryNameNode implements Runnable,
 
     LOG.info("Checkpoint Period   :" + checkpointConf.getPeriod() + " secs "
         + "(" + checkpointConf.getPeriod() / 60 + " min)");
-    LOG.info("Log Size Trigger    :" + checkpointConf.getTxnCount() + " txns");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -271,7 +271,7 @@ public class SecondaryNameNode implements Runnable,
     try {
       infoServer.join();
     } catch (InterruptedException ie) {
-      LOG.debug("Exception ", ie);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -286,7 +286,7 @@ public class SecondaryNameNode implements Runnable,
       try {
         checkpointThread.join(10000);
       } catch (InterruptedException e) {
-        LOG.info("Interrupted waiting to join on checkpointer thread");
+        LOG.error("Temp", new RuntimeException());
         Thread.currentThread().interrupt(); // maintain status
       }
     }
@@ -296,7 +296,7 @@ public class SecondaryNameNode implements Runnable,
         infoServer = null;
       }
     } catch (Exception e) {
-      LOG.warn("Exception shutting down SecondaryNameNode", e);
+      LOG.error("Temp", new RuntimeException());
     }
     if (nameNodeStatusBeanName != null) {
       MBeans.unregister(nameNodeStatusBeanName);
@@ -308,7 +308,7 @@ public class SecondaryNameNode implements Runnable,
         checkpointImage = null;
       }
     } catch(IOException e) {
-      LOG.warn("Exception while closing CheckpointStorage", e);
+      LOG.error("Temp", new RuntimeException());
     }
     if (namesystem != null) {
       namesystem.shutdown();
@@ -416,9 +416,9 @@ public class SecondaryNameNode implements Runnable,
             // get fsimage
             if (sig.mostRecentCheckpointTxId ==
                 dstImage.getStorage().getMostRecentCheckpointTxId()) {
-              LOG.info("Image has not changed. Will not download image.");
+              LOG.error("Temp", new RuntimeException());
             } else {
-              LOG.info("Image has changed. Downloading updated image from NN.");
+              LOG.error("Temp", new RuntimeException());
               MD5Hash downloadedHash = TransferFsImage.downloadImageToStorage(
                   nnHostPort, sig.mostRecentCheckpointTxId,
                   dstImage.getStorage(), true, false);
@@ -459,7 +459,7 @@ public class SecondaryNameNode implements Runnable,
     final String scheme = DFSUtil.getHttpClientScheme(conf);
     URI address = DFSUtil.getInfoServerWithDefaultHost(fsName.getHost(), conf,
         scheme);
-    LOG.debug("Will connect to NameNode at " + address);
+    LOG.error("Temp", new RuntimeException());
     return address.toURL();
   }
 
@@ -497,7 +497,7 @@ public class SecondaryNameNode implements Runnable,
         ImageServlet.class, true);
     infoServer.start();
 
-    LOG.info("Web server init done");
+    LOG.error("Temp", new RuntimeException());
 
     HttpConfig.Policy policy = DFSUtil.getHttpPolicy(conf);
     int connIdx = 0;
@@ -590,7 +590,7 @@ public class SecondaryNameNode implements Runnable,
         checkpointImage.saveLegacyOIVImage(namesystem, legacyOivImageDir,
             new Canceler());
       } catch (IOException e) {
-        LOG.warn("Failed to write legacy OIV image: ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return loadImage;
@@ -984,7 +984,7 @@ public class SecondaryNameNode implements Runnable,
         
         if (format) {
           // Don't confirm, since this is just the secondary namenode.
-          LOG.info("Formatting storage directory " + sd);
+          LOG.error("Temp", new RuntimeException());
           sd.clearDirectory();
         }
         

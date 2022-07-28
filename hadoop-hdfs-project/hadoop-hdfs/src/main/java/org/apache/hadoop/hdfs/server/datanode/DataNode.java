@@ -477,23 +477,23 @@ public class DataNode extends ReconfigurableBase
               HdfsClientConfigKeys.Read.ShortCircuit.DEFAULT)) {
       String reason = DomainSocket.getLoadingFailureReason();
       if (reason != null) {
-        LOG.warn("File descriptor passing is disabled because {}", reason);
+        LOG.error("Temp", new RuntimeException());
         this.fileDescriptorPassingDisabledReason = reason;
       } else {
-        LOG.info("File descriptor passing is enabled.");
+        LOG.error("Temp", new RuntimeException());
         this.fileDescriptorPassingDisabledReason = null;
       }
     } else {
       this.fileDescriptorPassingDisabledReason =
           "File descriptor passing was not configured.";
-      LOG.debug(this.fileDescriptorPassingDisabledReason);
+      LOG.error("Temp", new RuntimeException());
     }
 
     this.socketFactory = NetUtils.getDefaultSocketFactory(conf);
 
     try {
       hostName = getHostName(conf);
-      LOG.info("Configured hostname is {}", hostName);
+      LOG.error("Temp", new RuntimeException());
       startDataNode(dataDirs, resources);
     } catch (IOException ie) {
       shutdown();
@@ -533,7 +533,7 @@ public class DataNode extends ReconfigurableBase
       case DFS_DATANODE_DATA_DIR_KEY: {
         IOException rootException = null;
         try {
-          LOG.info("Reconfiguring {} to {}", property, newVal);
+          LOG.error("Temp", new RuntimeException());
           this.refreshVolumes(newVal);
           return getConf().get(DFS_DATANODE_DATA_DIR_KEY);
         } catch (IOException e) {
@@ -561,7 +561,7 @@ public class DataNode extends ReconfigurableBase
       case DFS_DATANODE_BALANCE_MAX_NUM_CONCURRENT_MOVES_KEY: {
         ReconfigurationException rootException = null;
         try {
-          LOG.info("Reconfiguring {} to {}", property, newVal);
+          LOG.error("Temp", new RuntimeException());
           int movers;
           if (newVal == null) {
             // set to default
@@ -797,7 +797,7 @@ public class DataNode extends ReconfigurableBase
               LOG.error("Failed to add volume: {}", volume, ioe);
             } else {
               effectiveVolumes.add(volume.toString());
-              LOG.info("Successfully added volume: {}", volume);
+              LOG.error("Temp", new RuntimeException());
             }
           } catch (Exception e) {
             errorMessageBuilder.append(
@@ -975,9 +975,9 @@ public class DataNode extends ReconfigurableBase
     for (ServicePlugin p: plugins) {
       try {
         p.start(this);
-        LOG.info("Started plug-in {}", p);
+        LOG.error("Temp", new RuntimeException());
       } catch (Throwable t) {
-        LOG.warn("ServicePlugin {} could not be started", p, t);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -1027,7 +1027,7 @@ public class DataNode extends ReconfigurableBase
         traceAdminService,
         ipcServer);
 
-    LOG.info("Opened IPC server at {}", ipcServer.getListenerAddress());
+    LOG.error("Temp", new RuntimeException());
 
     // set service-level authorization security policy
     if (getConf().getBoolean(
@@ -1141,7 +1141,7 @@ public class DataNode extends ReconfigurableBase
           dnConf.getTransferSocketRecvBufferSize());
     }
     streamingAddr = tcpPeerServer.getStreamingAddr();
-    LOG.info("Opened streaming server at {}", streamingAddr);
+    LOG.error("Temp", new RuntimeException());
     this.threadGroup = new ThreadGroup("dataXceiverServer");
     xserver = new DataXceiverServer(tcpPeerServer, getConf(), this);
     this.dataXceiverServer = new Daemon(threadGroup, xserver);
@@ -1241,7 +1241,7 @@ public class DataNode extends ReconfigurableBase
   public void reportBadBlocks(ExtendedBlock block) throws IOException{
     FsVolumeSpi volume = getFSDataset().getVolume(block);
     if (volume == null) {
-      LOG.warn("Cannot find FsVolumeSpi to report bad block: {}", block);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     reportBadBlocks(block, volume);
@@ -1411,8 +1411,8 @@ public class DataNode extends ReconfigurableBase
 
     // Login is done by now. Set the DN user name.
     dnUserName = UserGroupInformation.getCurrentUser().getUserName();
-    LOG.info("dnUserName = {}", dnUserName);
-    LOG.info("supergroup = {}", supergroup);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     initIpcServer();
 
     metrics = DataNodeMetrics.create(getConf(), getDisplayName());
@@ -1934,7 +1934,7 @@ public class DataNode extends ReconfigurableBase
       fis[0] = (FileInputStream)data.getBlockInputStream(blk, 0);
       fis[1] = DatanodeUtil.getMetaDataInputStream(blk, data);
     } catch (ClassCastException e) {
-      LOG.debug("requestShortCircuitFdsForRead failed", e);
+      LOG.error("Temp", new RuntimeException());
       throw new ShortCircuitFdsUnsupportedException("This DataNode's " +
           "FsDatasetSpi does not support short-circuit local reads");
     }
@@ -1949,7 +1949,7 @@ public class DataNode extends ReconfigurableBase
       ByteArrayInputStream buf = new ByteArrayInputStream(token.getIdentifier());
       DataInputStream in = new DataInputStream(buf);
       id.readFields(in);
-      LOG.debug("Got: {}", id);
+      LOG.error("Temp", new RuntimeException());
       blockPoolTokenSecretManager.checkAccess(id, null, block, accessMode,
           null, null);
     }
@@ -1967,9 +1967,9 @@ public class DataNode extends ReconfigurableBase
       for (ServicePlugin p : plugins) {
         try {
           p.stop();
-          LOG.info("Stopped plug-in {}", p);
+          LOG.error("Temp", new RuntimeException());
         } catch (Throwable t) {
-          LOG.warn("ServicePlugin {} could not be stopped", p, t);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -2013,7 +2013,7 @@ public class DataNode extends ReconfigurableBase
       try {
         httpServer.close();
       } catch (Exception e) {
-        LOG.warn("Exception shutting down DataNode HttpServer", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -2093,7 +2093,7 @@ public class DataNode extends ReconfigurableBase
       try {
         this.blockPoolManager.shutDownAll(bposArray);
       } catch (InterruptedException ie) {
-        LOG.warn("Received exception in BlockPoolManager#shutDownAll", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     
@@ -2101,7 +2101,7 @@ public class DataNode extends ReconfigurableBase
       try {
         this.storage.unlockAll();
       } catch (IOException ie) {
-        LOG.warn("Exception when unlocking storage", ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (data != null) {
@@ -2118,7 +2118,7 @@ public class DataNode extends ReconfigurableBase
       dataNodeInfoBeanName = null;
     }
     if (shortCircuitRegistry != null) shortCircuitRegistry.shutdown();
-    LOG.info("Shutdown complete.");
+    LOG.error("Temp", new RuntimeException());
     synchronized(this) {
       // it is already false, but setting it again to avoid a findbug warning.
       this.shouldRun = false;
@@ -2139,7 +2139,7 @@ public class DataNode extends ReconfigurableBase
             LOG.warn("checkDiskErrorAsync callback got {} failed volumes: {}",
                 failedVolumes.size(), failedVolumes);
           } else {
-            LOG.debug("checkDiskErrorAsync: no volume failures detected");
+            LOG.error("Temp", new RuntimeException());
           }
           lastDiskErrorCheck = Time.monotonicNow();
           handleVolumeFailures(failedVolumes);
@@ -2197,7 +2197,7 @@ public class DataNode extends ReconfigurableBase
         curCount.put("networkErrors", curCount.get("networkErrors") + 1L);
         datanodeNetworkCounts.put(host, curCount);
       } catch (ExecutionException e) {
-        LOG.warn("failed to increment network error counts for " + host);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2247,12 +2247,12 @@ public class DataNode extends ReconfigurableBase
       final ExtendedBlock block, final String msg) {
     FsVolumeSpi volume = getFSDataset().getVolume(block);
     if (volume == null) {
-      LOG.warn("Cannot find FsVolumeSpi to report bad block: " + block);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     bpos.reportBadBlocks(
         block, volume.getStorageID(), volume.getStorageType());
-    LOG.warn(msg);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @VisibleForTesting
@@ -2286,7 +2286,7 @@ public class DataNode extends ReconfigurableBase
 
     if (replicaNotExist || replicaStateNotFinalized) {
       String errStr = "Can't send invalid block " + block;
-      LOG.info(errStr);
+      LOG.error("Temp", new RuntimeException());
       bpos.trySendErrorReport(DatanodeProtocol.INVALID_BLOCK, errStr);
       return;
     }
@@ -2329,7 +2329,7 @@ public class DataNode extends ReconfigurableBase
         transferBlock(new ExtendedBlock(poolId, blocks[i]), xferTargets[i],
             xferTargetStorageTypes[i], xferTargetStorageIDs[i]);
       } catch (IOException ie) {
-        LOG.warn("Failed to transfer block " + blocks[i], ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2481,7 +2481,7 @@ public class DataNode extends ReconfigurableBase
       try {
         final String dnAddr = targets[0].getXferAddr(connectToDnViaHostname);
         InetSocketAddress curTarget = NetUtils.createSocketAddr(dnAddr);
-        LOG.debug("Connecting to datanode {}", dnAddr);
+        LOG.error("Temp", new RuntimeException());
         sock = newSocket();
         NetUtils.connect(sock, curTarget, dnConf.socketTimeout);
         sock.setTcpNoDelay(dnConf.getDataTransferServerTcpNoDelay());
@@ -2533,7 +2533,7 @@ public class DataNode extends ReconfigurableBase
         if (isClient) {
           DNTransferAckProto closeAck = DNTransferAckProto.parseFrom(
               PBHelperClient.vintPrefixed(in));
-          LOG.debug("{}: close-ack={}", getClass().getSimpleName(), closeAck);
+          LOG.error("Temp", new RuntimeException());
           if (closeAck.getStatus() != Status.SUCCESS) {
             if (closeAck.getStatus() == Status.ERROR_ACCESS_TOKEN) {
               throw new InvalidBlockTokenException(
@@ -2552,7 +2552,7 @@ public class DataNode extends ReconfigurableBase
           // Add the block to the front of the scanning queue if metadata file
           // is corrupt. We already add the block to front of scanner if the
           // peer disconnects.
-          LOG.info("Adding block: {} for scanning", b);
+          LOG.error("Temp", new RuntimeException());
           blockScanner.markSuspectBlock(data.getVolume(b).getStorageID(), b);
         }
         LOG.warn("{}:Failed to transfer {} to {} got",
@@ -2736,7 +2736,7 @@ public class DataNode extends ReconfigurableBase
           wait(2000);
         }
       } catch (InterruptedException ex) {
-        LOG.warn("Received exception in Datanode#join: {}", ex.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -2874,7 +2874,7 @@ public class DataNode extends ReconfigurableBase
       // or some disk related conditions like volumes tolerated or volumes required
       // condition was not met. Also, In secure mode, control will go to Jsvc
       // and Datanode process hangs if it does not exit.
-      LOG.warn("Exiting Datanode");
+      LOG.error("Temp", new RuntimeException());
       terminate(errorCode);
     }
   }
@@ -2941,7 +2941,7 @@ public class DataNode extends ReconfigurableBase
       }
       for (TokenIdentifier tokenId : tokenIds) {
         BlockTokenIdentifier id = (BlockTokenIdentifier) tokenId;
-        LOG.debug("Got: {}", id);
+        LOG.error("Temp", new RuntimeException());
         blockPoolTokenSecretManager.checkAccess(id, null, block,
             BlockTokenIdentifier.AccessMode.READ, null, null);
       }
@@ -3134,7 +3134,7 @@ public class DataNode extends ReconfigurableBase
     try {
       return this.diskBalancer.queryWorkStatus().toJsonString();
     } catch (IOException ex) {
-      LOG.debug("Reading diskbalancer Status failed. ex:{}", ex);
+      LOG.error("Temp", new RuntimeException());
       return "";
     }
   }
@@ -3201,7 +3201,7 @@ public class DataNode extends ReconfigurableBase
   @Override //ClientDatanodeProtocol
   public void evictWriters() throws IOException {
     checkSuperuserPrivilege();
-    LOG.info("Evicting all writers.");
+    LOG.error("Temp", new RuntimeException());
     xserver.stopWriters();
   }
 
@@ -3345,7 +3345,7 @@ public class DataNode extends ReconfigurableBase
           unhealthyVolumes.size(), unhealthyVolumes);
       handleVolumeFailures(unhealthyVolumes);
     } else {
-      LOG.debug("checkDiskError encountered no failures");
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -3370,9 +3370,9 @@ public class DataNode extends ReconfigurableBase
       // Remove all unhealthy volumes from DataNode.
       removeVolumes(unhealthyLocations, false);
     } catch (IOException e) {
-      LOG.warn("Error occurred when removing unhealthy storage dirs", e);
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.debug("{}", sb);
+    LOG.error("Temp", new RuntimeException());
       // send blockreport regarding volume failure
     handleDiskError(sb.toString());
   }
@@ -3588,7 +3588,7 @@ public class DataNode extends ReconfigurableBase
     checkSuperuserPrivilege();
     Map<String, Object> volumeInfoMap = data.getVolumeInfoMap();
     if (volumeInfoMap == null) {
-      LOG.warn("DataNode volume info not available.");
+      LOG.error("Temp", new RuntimeException());
       return new ArrayList<>(0);
     }
     List<DatanodeVolumeInfo> volumeInfoList = new ArrayList<>();

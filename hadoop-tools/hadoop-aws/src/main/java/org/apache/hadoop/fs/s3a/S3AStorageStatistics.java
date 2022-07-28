@@ -60,7 +60,7 @@ public class S3AStorageStatistics extends StorageStatistics
    */
   public long incrementCounter(Statistic op, long count) {
     long updated = opsCount.get(op).addAndGet(count);
-    LOG.debug("{} += {}  ->  {}", op, count, updated);
+    LOG.error("Temp", new RuntimeException());
     return updated;
   }
 

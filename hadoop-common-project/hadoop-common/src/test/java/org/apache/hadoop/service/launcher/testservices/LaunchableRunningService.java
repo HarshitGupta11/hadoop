@@ -65,11 +65,11 @@ public class LaunchableRunningService extends RunningService implements
       Exception {
     Assert.assertEquals(STATE.NOTINITED, getServiceState());
     for (String arg : args) {
-      LOG.info(arg);
+      LOG.error("Temp", new RuntimeException());
     }
     Configuration newConf = new Configuration(config);
     if (args.contains(ARG_FAILING)) {
-      LOG.info("CLI contains " + ARG_FAILING);
+      LOG.error("Temp", new RuntimeException());
       failInRun = true;
       newConf.setInt(EXIT_CODE_PROP, LauncherExitCodes.EXIT_OTHER_FAILURE);
     }

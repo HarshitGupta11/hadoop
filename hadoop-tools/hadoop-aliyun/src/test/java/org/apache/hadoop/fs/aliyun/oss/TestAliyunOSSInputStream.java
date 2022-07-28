@@ -82,28 +82,28 @@ public class TestAliyunOSSInputStream {
     long size = 5 * 1024 * 1024;
 
     ContractTestUtils.generateTestFile(this.fs, smallSeekFile, size, 256, 255);
-    LOG.info("5MB file created: smallSeekFile.txt");
+    LOG.error("Temp", new RuntimeException());
 
     FSDataInputStream instream = this.fs.open(smallSeekFile);
     int seekTimes = 5;
-    LOG.info("multiple fold position seeking test...:");
+    LOG.error("Temp", new RuntimeException());
     for (int i = 0; i < seekTimes; i++) {
       long pos = size / (seekTimes - i) - 1;
-      LOG.info("begin seeking for pos: " + pos);
+      LOG.error("Temp", new RuntimeException());
       instream.seek(pos);
       assertTrue("expected position at:" + pos + ", but got:"
           + instream.getPos(), instream.getPos() == pos);
-      LOG.info("completed seeking at pos: " + instream.getPos());
+      LOG.error("Temp", new RuntimeException());
     }
-    LOG.info("random position seeking test...:");
+    LOG.error("Temp", new RuntimeException());
     Random rand = new Random();
     for (int i = 0; i < seekTimes; i++) {
       long pos = Math.abs(rand.nextLong()) % size;
-      LOG.info("begin seeking for pos: " + pos);
+      LOG.error("Temp", new RuntimeException());
       instream.seek(pos);
       assertTrue("expected position at:" + pos + ", but got:"
           + instream.getPos(), instream.getPos() == pos);
-      LOG.info("completed seeking at pos: " + instream.getPos());
+      LOG.error("Temp", new RuntimeException());
     }
     IOUtils.closeStream(instream);
   }
@@ -114,7 +114,7 @@ public class TestAliyunOSSInputStream {
     long size = 5 * 1024 * 1024;
 
     ContractTestUtils.generateTestFile(this.fs, smallSeekFile, size, 256, 255);
-    LOG.info("5MB file created: smallSeekFile.txt");
+    LOG.error("Temp", new RuntimeException());
 
     FSDataInputStream fsDataInputStream = this.fs.open(smallSeekFile);
     AliyunOSSInputStream in =
@@ -141,7 +141,7 @@ public class TestAliyunOSSInputStream {
     long size = 5 * 1024 * 1024;
 
     ContractTestUtils.generateTestFile(this.fs, smallSeekFile, size, 256, 255);
-    LOG.info("5MB file created: smallSeekFileOSSFileReader.txt");
+    LOG.error("Temp", new RuntimeException());
     ReadBuffer readBuffer = new ReadBuffer(12, 24);
     AliyunOSSFileReaderTask task = new AliyunOSSFileReaderTask("1",
         ((AliyunOSSFileSystem)this.fs).getStore(), readBuffer);
@@ -165,7 +165,7 @@ public class TestAliyunOSSInputStream {
     long size = sizeFlag * 1024 * 1024;
 
     ContractTestUtils.generateTestFile(this.fs, readTestFile, size, 256, 255);
-    LOG.info(sizeFlag + "MB file created: /test/" + filename);
+    LOG.error("Temp", new RuntimeException());
 
     FSDataInputStream instream = this.fs.open(readTestFile);
     byte[] buf = new byte[bufLen];

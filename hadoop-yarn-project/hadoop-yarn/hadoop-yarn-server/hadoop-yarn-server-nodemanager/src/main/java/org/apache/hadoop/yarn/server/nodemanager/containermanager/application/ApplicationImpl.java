@@ -351,7 +351,7 @@ public class ApplicationImpl implements Application {
       try {
         app.appStateStore.storeApplication(app.appId, buildAppProto(app));
       } catch (Exception ex) {
-        LOG.warn("failed to update application state in state store", ex);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -626,7 +626,7 @@ public class ApplicationImpl implements Application {
         // queue event requesting init of the same app
         newState = stateMachine.doTransition(event.getType(), event);
       } catch (InvalidStateTransitionException e) {
-        LOG.warn("Can't handle this event at current state", e);
+        LOG.error("Temp", new RuntimeException());
       }
       if (newState != null && oldState != newState) {
         LOG.info("Application " + applicationID + " transitioned from "

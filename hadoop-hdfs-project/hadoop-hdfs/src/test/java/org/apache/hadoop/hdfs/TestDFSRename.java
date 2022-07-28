@@ -41,9 +41,9 @@ public class TestDFSRename {
   final Path dir = new Path("/test/rename/");
 
   void list(FileSystem fs, String name) throws IOException {
-    FileSystem.LOG.info("\n\n" + name);
+    FileSystem.LOG.error("Temp", new RuntimeException());
     for(FileStatus s : fs.listStatus(dir)) {
-      FileSystem.LOG.info("" + s.getPath());
+      FileSystem.LOG.error("Temp", new RuntimeException());
     }
   }
 

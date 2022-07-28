@@ -186,7 +186,7 @@ public class TestClientRedirect {
     historyService.init(conf);
     historyService.start(conf);
 
-    LOG.info("services started");
+    LOG.error("Temp", new RuntimeException());
 
     Cluster cluster = new Cluster(conf);
     org.apache.hadoop.mapreduce.JobID jobID =
@@ -255,10 +255,10 @@ public class TestClientRedirect {
     Iterator<org.apache.hadoop.mapreduce.CounterGroup> it = counters.iterator();
     while (it.hasNext()) {
       org.apache.hadoop.mapreduce.CounterGroup group = it.next();
-      LOG.info("Group " + group.getDisplayName());
+      LOG.error("Temp", new RuntimeException());
       Iterator<org.apache.hadoop.mapreduce.Counter> itc = group.iterator();
       while (itc.hasNext()) {
-        LOG.info("Counter is " + itc.next().getDisplayName());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     Assert.assertEquals(1, counters.countCounters());

@@ -56,7 +56,7 @@ public class LocalizerSecurityInfo extends SecurityInfo {
       @Override
       public Class<? extends TokenSelector<? extends TokenIdentifier>>
           value() {
-        LOG.debug("Using localizerTokenSecurityInfo");
+        LOG.error("Temp", new RuntimeException());
         return LocalizerTokenSelector.class;
       }
     };

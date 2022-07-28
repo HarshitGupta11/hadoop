@@ -368,7 +368,7 @@ abstract public class LocalReplica extends ReplicaInfo {
 
     // rename meta file to new GS
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Renaming " + oldmeta + " to " + newmeta);
+      LOG.error("Temp", new RuntimeException());
     }
     try {
       // calling renameMeta on the ReplicaInfo doesn't work here

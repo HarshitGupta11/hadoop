@@ -160,7 +160,7 @@ public class CapacitySchedulerQueueManager implements SchedulerQueueManager<
     setQueueAcls(authorizer, appPriorityACLManager, queues);
     labelManager.reinitializeQueueLabels(getQueueToLabels());
     this.queueStateManager.initialize(this);
-    LOG.info("Initialized root queue " + root);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -295,7 +295,7 @@ public class CapacitySchedulerQueueManager implements SchedulerQueueManager<
     }
     queues.put(queueName, queue);
 
-    LOG.info("Initialized queue: " + queue);
+    LOG.error("Temp", new RuntimeException());
     return queue;
   }
 

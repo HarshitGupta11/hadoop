@@ -176,7 +176,7 @@ public class BootstrapStandby implements Tool, Configurable {
         LOG.warn("Unable to fetch namespace information from remote NN at " + otherIpcAddress
             + ": " + ioe.getMessage());
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Full exception trace", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -276,7 +276,7 @@ public class BootstrapStandby implements Tool, Configurable {
       }
     } catch (InconsistentFSStateException e) {
       // if the storage is in a bad state,
-      LOG.warn("The storage directory is in an inconsistent state", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       storage.unlockAll();
     }
@@ -414,7 +414,7 @@ public class BootstrapStandby implements Tool, Configurable {
     List<RemoteNameNodeInfo> remove = new ArrayList<RemoteNameNodeInfo>(remoteNNs.size());
     for (RemoteNameNodeInfo info : remoteNNs) {
       InetSocketAddress address = info.getIpcAddress();
-      LOG.info("Found nn: " + info.getNameNodeID() + ", ipc: " + info.getIpcAddress());
+      LOG.error("Temp", new RuntimeException());
       if (address.getPort() == 0 || address.getAddress().isAnyLocalAddress()) {
         LOG.error("Could not determine valid IPC address for other NameNode ("
             + info.getNameNodeID() + ") , got: " + address);

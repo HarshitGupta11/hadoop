@@ -110,7 +110,7 @@ public abstract class StreamBaseRecordReader extends RecordReader<Text, Text> {
           statusMaxRecordChars_), "UTF-8");
       nextStatusRec_ += 100;// *= 10;
       String status = getStatus(recordStr);
-      LOG.info(status);
+      LOG.error("Temp", new RuntimeException());
       context_.setStatus(status);
     }
   }

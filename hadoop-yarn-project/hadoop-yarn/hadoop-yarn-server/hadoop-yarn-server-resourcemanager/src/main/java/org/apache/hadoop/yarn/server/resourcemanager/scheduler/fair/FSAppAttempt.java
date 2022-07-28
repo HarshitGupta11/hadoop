@@ -905,7 +905,7 @@ public class FSAppAttempt extends SchedulerApplicationAttempt
       updateAMDiagnosticMsg(capability, " exceeds the available resources of "
           + "the node and the request is reserved)");
       if (LOG.isDebugEnabled()) {
-        LOG.debug(getName() + "'s resource request is reserved.");
+        LOG.error("Temp", new RuntimeException());
       }
       return FairScheduler.CONTAINER_RESERVED;
     } else {

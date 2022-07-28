@@ -84,7 +84,7 @@ public class ITestS3ATemporaryCredentials extends AbstractS3ATestBase {
     AWSSecurityTokenServiceClient stsClient;
     stsClient = new AWSSecurityTokenServiceClient(parentCredentials);
     if (!stsEndpoint.isEmpty()) {
-      LOG.debug("STS Endpoint ={}", stsEndpoint);
+      LOG.error("Temp", new RuntimeException());
       stsClient.setEndpoint(stsEndpoint);
     }
     GetSessionTokenRequest sessionTokenRequest = new GetSessionTokenRequest();
@@ -114,8 +114,8 @@ public class ITestS3ATemporaryCredentials extends AbstractS3ATestBase {
       fail("Expected an access exception, but file access to "
           + fs.getUri() + " was allowed: " + fs);
     } catch (AWSS3IOException | AWSBadRequestException ex) {
-      LOG.info("Expected Exception: {}", ex.toString());
-      LOG.debug("Expected Exception: {}", ex, ex);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

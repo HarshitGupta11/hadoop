@@ -100,17 +100,17 @@ class AppendOp extends Operation {
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with appending", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException | UnsupportedOperationException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with appending", e);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (os != null) {
         try {
           os.close();
         } catch (IOException e) {
-          LOG.warn("Error with closing append stream", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

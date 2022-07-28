@@ -52,7 +52,7 @@ public class JniBasedUnixGroupsNetgroupMapping
       throw new RuntimeException("Bailing out since native library couldn't " +
         "be loaded");
     }
-    LOG.debug("Using JniBasedUnixGroupsNetgroupMapping for Netgroup resolution");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -116,7 +116,7 @@ public class JniBasedUnixGroupsNetgroupMapping
       users = getUsersForNetgroupJNI(netgroup.substring(1));
     } catch (Exception e) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Error getting users for netgroup " + netgroup, e);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.info("Error getting users for netgroup " + netgroup + 
             ": " + e.getMessage());

@@ -103,7 +103,7 @@ public class LocalResolver extends RouterResolver<String, String> {
     if (subclusterInfo != null) {
       localSubcluster = subclusterInfo.get(clientAddr);
       if (localSubcluster != null) {
-        LOG.debug("Local namespace for {} is {}", clientAddr, localSubcluster);
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.error("Cannot get local namespace for {}", clientAddr);
       }

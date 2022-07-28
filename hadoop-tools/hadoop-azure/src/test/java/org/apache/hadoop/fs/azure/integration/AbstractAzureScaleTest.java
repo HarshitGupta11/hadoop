@@ -46,7 +46,7 @@ public abstract class AbstractAzureScaleTest
   @Override
   public void setUp() throws Exception {
     super.setUp();
-    LOG.debug("Scale test operation count = {}", getOperationCount());
+    LOG.error("Temp", new RuntimeException());
     assumeScaleTestsEnabled(getConfiguration());
   }
 

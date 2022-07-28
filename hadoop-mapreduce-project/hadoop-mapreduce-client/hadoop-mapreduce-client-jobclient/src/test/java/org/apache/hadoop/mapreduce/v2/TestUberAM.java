@@ -99,7 +99,7 @@ public class TestUberAM extends TestMRJobs {
   @Test
   public void testFailingMapper()
   throws IOException, InterruptedException, ClassNotFoundException {
-    LOG.info("\n\n\nStarting uberized testFailingMapper().");
+    LOG.error("Temp", new RuntimeException());
 
     if (!(new File(MiniMRYarnCluster.APPJAR)).exists()) {
       LOG.info("MRAppJar " + MiniMRYarnCluster.APPJAR

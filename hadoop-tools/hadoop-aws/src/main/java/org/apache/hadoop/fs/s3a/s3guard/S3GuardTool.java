@@ -267,7 +267,7 @@ public abstract class S3GuardTool extends Configured implements Tool {
     } else {
       getStore().initialize(filesystem);
     }
-    LOG.info("Metadata store {} is initialized.", getStore());
+    LOG.error("Temp", new RuntimeException());
     return getStore();
   }
 
@@ -298,7 +298,7 @@ public abstract class S3GuardTool extends Configured implements Tool {
         S3_METADATA_STORE_IMPL, S3GUARD_METASTORE_NULL);
     String updatedBucketOption = S3AUtils.getBucketOption(conf, bucket,
         S3_METADATA_STORE_IMPL);
-    LOG.debug("updated bucket store option {}", updatedBucketOption);
+    LOG.error("Temp", new RuntimeException());
     Preconditions.checkState(S3GUARD_METASTORE_NULL.equals(updatedBucketOption),
         "Expected bucket option to be %s but was %s",
         S3GUARD_METASTORE_NULL, updatedBucketOption);
@@ -550,7 +550,7 @@ public abstract class S3GuardTool extends Configured implements Tool {
       } catch (FileNotFoundException e) {
         // indication that the table was not found
         println(out, "Metadata Store does not exist.");
-        LOG.debug("Failed to bind to store to be destroyed", e);
+        LOG.error("Temp", new RuntimeException());
         return SUCCESS;
       }
 
@@ -1443,7 +1443,7 @@ public abstract class S3GuardTool extends Configured implements Tool {
       throw new ExitUtil.ExitException(E_USAGE, "No arguments provided");
     }
     final String subCommand = otherArgs[0];
-    LOG.debug("Executing command {}", subCommand);
+    LOG.error("Temp", new RuntimeException());
     switch (subCommand) {
     case Init.NAME:
       command = new Init(conf);

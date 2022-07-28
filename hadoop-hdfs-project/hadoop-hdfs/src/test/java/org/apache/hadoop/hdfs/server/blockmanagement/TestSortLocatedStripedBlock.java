@@ -91,7 +91,7 @@ public class TestSortLocatedStripedBlock {
    */
   @Test(timeout = 10000)
   public void testWithMultipleDecommnDatanodes() {
-    LOG.info("Starting test testSortWithMultipleDecommnDatanodes");
+    LOG.error("Temp", new RuntimeException());
     int lbsCount = 2; // two located block groups
     List<Integer> decommnNodeIndices = new ArrayList<>();
     decommnNodeIndices.add(0);
@@ -144,7 +144,7 @@ public class TestSortLocatedStripedBlock {
    */
   @Test(timeout = 10000)
   public void testTwoDatanodesWithSameBlockIndexAreDecommn() {
-    LOG.info("Starting test testTwoDatanodesWithSameBlockIndexAreDecommn");
+    LOG.error("Temp", new RuntimeException());
     int lbsCount = 2; // two located block groups
     List<Integer> decommnNodeIndices = new ArrayList<>();
     decommnNodeIndices.add(0);
@@ -200,7 +200,7 @@ public class TestSortLocatedStripedBlock {
   @Test(timeout = 10000)
   public void testSmallerThanOneStripeWithMultpleDecommnNodes()
       throws Exception {
-    LOG.info("Starting test testSmallerThanOneStripeWithDecommn");
+    LOG.error("Temp", new RuntimeException());
     int lbsCount = 2; // two located block groups
     List<Integer> decommnNodeIndices = new ArrayList<>();
     decommnNodeIndices.add(0);
@@ -259,7 +259,7 @@ public class TestSortLocatedStripedBlock {
    */
   @Test(timeout = 10000)
   public void testTargetDecommnDatanodeDoesntExists() {
-    LOG.info("Starting test testTargetDecommnDatanodeDoesntExists");
+    LOG.error("Temp", new RuntimeException());
     int lbsCount = 2; // two located block groups
     List<Integer> decommnNodeIndices = new ArrayList<>();
     decommnNodeIndices.add(0);
@@ -323,7 +323,7 @@ public class TestSortLocatedStripedBlock {
    */
   @Test(timeout = 10000)
   public void testWithMultipleInServiceAndDecommnDatanodes() {
-    LOG.info("Starting test testWithMultipleInServiceAndDecommnDatanodes");
+    LOG.error("Temp", new RuntimeException());
     int lbsCount = 2; // two located block groups
     List<Integer> decommnNodeIndices = new ArrayList<>();
     decommnNodeIndices.add(0);

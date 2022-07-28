@@ -90,7 +90,7 @@ public class ShellCommandFencer
       p = builder.start();
       p.getOutputStream().close();
     } catch (IOException e) {
-      LOG.warn("Unable to execute " + cmd, e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     
@@ -120,7 +120,7 @@ public class ShellCommandFencer
       errPumper.join();
       outPumper.join();
     } catch (InterruptedException ie) {
-      LOG.warn("Interrupted while waiting for fencing command: " + cmd);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     

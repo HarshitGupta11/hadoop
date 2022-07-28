@@ -100,7 +100,7 @@ public class TestMROldApiJobs {
   public void testJobSucceed() throws IOException, InterruptedException,
       ClassNotFoundException { 
 
-    LOG.info("\n\n\nStarting testJobSucceed().");
+    LOG.error("Temp", new RuntimeException());
 
     if (!(new File(MiniMRYarnCluster.APPJAR)).exists()) {
       LOG.info("MRAppJar " + MiniMRYarnCluster.APPJAR
@@ -129,7 +129,7 @@ public class TestMROldApiJobs {
   public void testJobFail() throws IOException, InterruptedException,
       ClassNotFoundException { 
 
-    LOG.info("\n\n\nStarting testJobFail().");
+    LOG.error("Temp", new RuntimeException());
 
     if (!(new File(MiniMRYarnCluster.APPJAR)).exists()) {
       LOG.info("MRAppJar " + MiniMRYarnCluster.APPJAR

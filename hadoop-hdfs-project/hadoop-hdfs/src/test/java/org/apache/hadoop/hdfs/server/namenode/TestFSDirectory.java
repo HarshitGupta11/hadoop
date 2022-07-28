@@ -121,7 +121,7 @@ public class TestFSDirectory {
   public void testDumpTree() throws Exception {
     final INode root = fsdir.getINode("/");
 
-    LOG.info("Original tree");
+    LOG.error("Temp", new RuntimeException());
     final StringBuffer b1 = root.dumpTreeRecursively();
     System.out.println("b1=" + b1);
 
@@ -266,7 +266,7 @@ public class TestFSDirectory {
     final Random rand = new Random(0xFEEDA);
     int numExpectedXAttrs = 0;
     while (numExpectedXAttrs < numGeneratedXAttrs) {
-      LOG.info("Currently have " + numExpectedXAttrs + " xattrs");
+      LOG.error("Temp", new RuntimeException());
       final int numToAdd = rand.nextInt(5)+1;
 
       List<XAttr> toAdd = Lists.newArrayListWithCapacity(numToAdd);
@@ -277,9 +277,9 @@ public class TestFSDirectory {
         toAdd.add(generatedXAttrs.get(numExpectedXAttrs));
         numExpectedXAttrs++;
       }
-      LOG.info("Attempting to add " + toAdd.size() + " XAttrs");
+      LOG.error("Temp", new RuntimeException());
       for (int i = 0; i < toAdd.size(); i++) {
-        LOG.info("Will add XAttr " + toAdd.get(i));
+        LOG.error("Temp", new RuntimeException());
       }
       List<XAttr> newXAttrs = FSDirXAttrOp.setINodeXAttrs(fsdir, existingXAttrs,
                                                           toAdd, EnumSet.of(
@@ -290,7 +290,7 @@ public class TestFSDirectory {
 
     // Keep removing a random number of xattrs and verifying until all gone
     while (numExpectedXAttrs > 0) {
-      LOG.info("Currently have " + numExpectedXAttrs + " xattrs");
+      LOG.error("Temp", new RuntimeException());
       final int numToRemove = rand.nextInt(5)+1;
       List<XAttr> toRemove = Lists.newArrayListWithCapacity(numToRemove);
       for (int i = 0; i < numToRemove; i++) {
@@ -301,7 +301,7 @@ public class TestFSDirectory {
         numExpectedXAttrs--;
       }
       final int expectedNumToRemove = toRemove.size();
-      LOG.info("Attempting to remove " + expectedNumToRemove + " XAttrs");
+      LOG.error("Temp", new RuntimeException());
       List<XAttr> removedXAttrs = Lists.newArrayList();
       List<XAttr> newXAttrs = FSDirXAttrOp.filterINodeXAttrs(existingXAttrs,
                                                              toRemove,

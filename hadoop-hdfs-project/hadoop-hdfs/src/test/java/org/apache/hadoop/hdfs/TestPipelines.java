@@ -89,13 +89,13 @@ public class TestPipelines {
   public void pipeline_01() throws IOException {
     final String METHOD_NAME = GenericTestUtils.getMethodName();
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Running " + METHOD_NAME);
+      LOG.error("Temp", new RuntimeException());
     }
     Path filePath = new Path("/" + METHOD_NAME + ".dat");
 
     DFSTestUtil.createFile(fs, filePath, FILE_SIZE, REPL_FACTOR, rand.nextLong());
     if(LOG.isDebugEnabled()) {
-      LOG.debug("Invoking append but doing nothing otherwise...");
+      LOG.error("Temp", new RuntimeException());
     }
     FSDataOutputStream ofs = fs.append(filePath);
     ofs.writeBytes("Some more stuff to write");
@@ -139,7 +139,7 @@ public class TestPipelines {
         bytesToWriteNext);
       written += bytesToWriteNext;
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Written: " + bytesToWriteNext + "; Total: " + written);
+        LOG.error("Temp", new RuntimeException());
       }
       bytesToWrite -= bytesToWriteNext;
     }

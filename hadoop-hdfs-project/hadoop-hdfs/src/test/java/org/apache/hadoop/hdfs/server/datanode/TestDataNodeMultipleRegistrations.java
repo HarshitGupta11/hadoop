@@ -94,7 +94,7 @@ public class TestDataNodeMultipleRegistrations {
       Assert.assertTrue("No volumes in the fsdataset", volInfos.size() > 0);
       int i = 0;
       for (Map.Entry<String, Object> e : volInfos.entrySet()) {
-        LOG.info("vol " + i++ + ") " + e.getKey() + ": " + e.getValue());
+        LOG.error("Temp", new RuntimeException());
       }
       // number of volumes should be 2 - [data1, data2]
       assertEquals("number of volumes is wrong",
@@ -102,7 +102,7 @@ public class TestDataNodeMultipleRegistrations {
           volInfos.size());
 
       for (BPOfferService bpos : dn.getAllBpOs()) {
-        LOG.info("BP: " + bpos);
+        LOG.error("Temp", new RuntimeException());
       }
 
       BPOfferService bpos1 = dn.getAllBpOs().get(0);
@@ -163,7 +163,7 @@ public class TestDataNodeMultipleRegistrations {
       Assert.assertTrue("No volumes in the fsdataset", volInfos.size() > 0);
       int i = 0;
       for (Map.Entry<String, Object> e : volInfos.entrySet()) {
-        LOG.info("vol " + i++ + ") " + e.getKey() + ": " + e.getValue());
+        LOG.error("Temp", new RuntimeException());
       }
       // number of volumes should be 2 - [data1, data2]
       assertEquals("number of volumes is wrong",
@@ -207,14 +207,14 @@ public class TestDataNodeMultipleRegistrations {
 
       DataNode dn = cluster.getDataNodes().get(0);
       List<BPOfferService> bposs = dn.getAllBpOs();
-      LOG.info("dn bpos len (should be 2):" + bposs.size());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals("should've registered with two namenodes", bposs.size(),2);
       
       // add another namenode
       cluster.addNameNode(conf, 9938);
       Thread.sleep(500);// lets wait for the registration to happen
       bposs = dn.getAllBpOs(); 
-      LOG.info("dn bpos len (should be 3):" + bposs.size());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals("should've registered with three namenodes", bposs.size(),3);
       
       // change cluster id and another Namenode
@@ -225,7 +225,7 @@ public class TestDataNodeMultipleRegistrations {
 
       Thread.sleep(500);// lets wait for the registration to happen
       bposs = dn.getAllBpOs(); 
-      LOG.info("dn bpos len (still should be 3):" + bposs.size());
+      LOG.error("Temp", new RuntimeException());
       Assert.assertEquals("should've registered with three namenodes", 3, bposs.size());
     } finally {
         cluster.shutdown();

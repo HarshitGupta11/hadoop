@@ -144,7 +144,7 @@ public class HistoryClientService extends AbstractService {
                                               JHAdminConfig.MR_HISTORY_ADDRESS,
                                               JHAdminConfig.DEFAULT_MR_HISTORY_ADDRESS,
                                               server.getListenerAddress());
-    LOG.info("Instantiated HistoryClientService at " + this.bindAddress);
+    LOG.error("Temp", new RuntimeException());
 
     super.serviceStart();
   }

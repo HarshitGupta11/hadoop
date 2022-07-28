@@ -124,7 +124,7 @@ public class TestFixedLengthInputFormat {
         reader.initialize(split, mcontext);
       } catch(IOException ioe) {
         exceptionThrown = true;
-        LOG.info("Exception message:" + ioe.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertTrue("Exception for not setting record length:", exceptionThrown);
@@ -160,7 +160,7 @@ public class TestFixedLengthInputFormat {
         reader.initialize(split, mcontext);
       } catch(IOException ioe) {
         exceptionThrown = true;
-        LOG.info("Exception message:" + ioe.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertTrue("Exception for zero record length:", exceptionThrown);
@@ -195,7 +195,7 @@ public class TestFixedLengthInputFormat {
         reader.initialize(split, mcontext);
       } catch(IOException ioe) {
         exceptionThrown = true;
-        LOG.info("Exception message:" + ioe.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertTrue("Exception for negative record length:", exceptionThrown);
@@ -286,14 +286,14 @@ public class TestFixedLengthInputFormat {
     localFs.delete(workDir, true);
     Path file = new Path(workDir, fileName.toString());
     int seed = new Random().nextInt();
-    LOG.info("Seed = " + seed);
+    LOG.error("Temp", new RuntimeException());
     Random random = new Random(seed);
     int MAX_TESTS = 20;
     LongWritable key;
     BytesWritable value;
 
     for (int i = 0; i < MAX_TESTS; i++) {
-      LOG.info("----------------------------------------------------------");
+      LOG.error("Temp", new RuntimeException());
       // Maximum total records of 999
       int totalRecords = random.nextInt(999)+1;
       // Test an empty file
@@ -339,7 +339,7 @@ public class TestFixedLengthInputFormat {
             numSplits = Math.max(1, fileSize/random.nextInt(Integer.MAX_VALUE));
           }
         }
-        LOG.info("Number of splits set to: " + numSplits);
+        LOG.error("Temp", new RuntimeException());
       }
       job.getConfiguration().setLong(
           "mapreduce.input.fileinputformat.split.maxsize", 
@@ -350,7 +350,7 @@ public class TestFixedLengthInputFormat {
       // Try splitting the file in a variety of sizes
       FixedLengthInputFormat format = new FixedLengthInputFormat();
       List<InputSplit> splits = format.getSplits(job);
-      LOG.info("Actual number of splits = " + splits.size());
+      LOG.error("Temp", new RuntimeException());
       // Test combined split lengths = total file size
       long recordOffset = 0;
       int recordNumber = 0;
@@ -457,7 +457,7 @@ public class TestFixedLengthInputFormat {
         List<String> results = readSplit(format, split, job);
       } catch(IOException ioe) {
         exceptionThrown = true;
-        LOG.info("Exception message:" + ioe.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertTrue("Exception for partial record:", exceptionThrown);

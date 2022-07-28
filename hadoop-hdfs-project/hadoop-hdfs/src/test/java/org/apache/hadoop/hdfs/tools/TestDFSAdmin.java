@@ -577,7 +577,7 @@ public class TestDFSAdmin {
           lbs.get(0) instanceof LocatedBlock);
       LocatedBlock locatedBlock = lbs.get(0);
       DatanodeInfo locatedDataNode = locatedBlock.getLocations()[0];
-      LOG.info("Replica block located on: " + locatedDataNode);
+      LOG.error("Temp", new RuntimeException());
 
       Path ecDir = new Path(baseDir, "ec");
       fs.mkdirs(ecDir);
@@ -611,7 +611,7 @@ public class TestDFSAdmin {
           dataNodeToShutdown != null);
 
       // Shut down the DataNode not hosting the replicated block
-      LOG.info("Shutting down: " + dataNodeToShutdown);
+      LOG.error("Temp", new RuntimeException());
       dataNodeToShutdown.shutdown();
       miniCluster.setDataNodeDead(dataNodeToShutdown.getDatanodeId());
 
@@ -795,7 +795,7 @@ public class TestDFSAdmin {
   private void verifyOpenFilesListing(HashSet<Path> closedFileSet,
       HashMap<Path, FSDataOutputStream> openFilesMap) {
     final String outStr = scanIntoString(out);
-    LOG.info("dfsadmin -listOpenFiles output: \n" + out);
+    LOG.error("Temp", new RuntimeException());
     if (closedFileSet != null) {
       for (Path closedFilePath : closedFileSet) {
         assertThat(outStr,

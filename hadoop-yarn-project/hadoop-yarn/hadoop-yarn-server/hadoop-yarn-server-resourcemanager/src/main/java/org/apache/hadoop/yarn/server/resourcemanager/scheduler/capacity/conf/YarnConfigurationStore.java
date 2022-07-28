@@ -156,7 +156,7 @@ public abstract class YarnConfigurationStore {
   public void checkVersion() throws Exception {
     // TODO this was taken from RMStateStore. Should probably refactor
     Version loadedVersion = getConfStoreVersion();
-    LOG.info("Loaded configuration store version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion != null && loadedVersion.equals(getCurrentVersion())) {
       return;
     }

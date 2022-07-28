@@ -242,8 +242,8 @@ public class TestWebAppProxyServlet {
         + "/proxy/application_00_0/test/tez?x=y&h=p");
       proxyConn = (HttpURLConnection) clientUrl.openConnection();
       proxyConn.connect();
-      LOG.info("" + proxyConn.getURL());
-      LOG.info("ProxyConn.getHeaderField(): " +  proxyConn.getHeaderField(ProxyUtils.LOCATION));
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       assertEquals("http://localhost:" + originalPort
           + "/foo/bar/test/tez?a=b&x=y&h=p#main", proxyConn.getURL().toString());
     } finally {

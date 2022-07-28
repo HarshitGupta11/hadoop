@@ -281,7 +281,7 @@ class BlockPoolSlice {
     } catch (IOException ioe) {
       // If write failed, the volume might be bad. Since the cache file is
       // not critical, log the error and continue.
-      FsDatasetImpl.LOG.warn("Failed to write dfsUsed to " + outFile, ioe);
+      FsDatasetImpl.LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -338,9 +338,9 @@ class BlockPoolSlice {
     final File targetBlockFile = new File(blockDir, blockFile.getName());
     final File targetMetaFile = new File(blockDir, metaFile.getName());
     fileIoProvider.moveFile(volume, blockFile, targetBlockFile);
-    FsDatasetImpl.LOG.info("Moved " + blockFile + " to " + targetBlockFile);
+    FsDatasetImpl.LOG.error("Temp", new RuntimeException());
     fileIoProvider.moveFile(volume, metaFile, targetMetaFile);
-    FsDatasetImpl.LOG.info("Moved " + metaFile + " to " + targetMetaFile);
+    FsDatasetImpl.LOG.error("Temp", new RuntimeException());
 
     ReplicaInfo newReplicaInfo =
         new ReplicaBuilder(ReplicaState.FINALIZED)
@@ -428,7 +428,7 @@ class BlockPoolSlice {
           try {
             fileIoProvider.mkdirsWithExistsCheck(volume, targetDir);
           } catch(IOException ioe) {
-            LOG.warn("Failed to mkdirs " + targetDir);
+            LOG.error("Temp", new RuntimeException());
             continue;
           }
 
@@ -454,7 +454,7 @@ class BlockPoolSlice {
             ++numRecovered;
           } else {
             // Failure should be rare.
-            LOG.warn("Failed to move " + blockFile + " to " + targetDir);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -667,10 +667,10 @@ class BlockPoolSlice {
   private void deleteReplica(final ReplicaInfo replicaToDelete) {
     // Delete the files on disk. Failure here is okay.
     if (!replicaToDelete.deleteBlockData()) {
-      LOG.warn("Failed to delete block file for replica " + replicaToDelete);
+      LOG.error("Temp", new RuntimeException());
     }
     if (!replicaToDelete.deleteMetadata()) {
-      LOG.warn("Failed to delete meta file for replica " + replicaToDelete);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -867,7 +867,7 @@ class BlockPoolSlice {
       // If write failed, the volume might be bad. Since the cache file is
       // not critical, log the error, delete both the files (tmp and cache)
       // and continue.
-      LOG.warn("Failed to write replicas to cache ", e);
+      LOG.error("Temp", new RuntimeException());
       fileIoProvider.deleteWithExistsCheck(volume, replicaCacheFile);
     } finally {
       IOUtils.closeStream(out);

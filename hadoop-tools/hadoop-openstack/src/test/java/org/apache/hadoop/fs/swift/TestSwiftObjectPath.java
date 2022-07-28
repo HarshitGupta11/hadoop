@@ -105,8 +105,8 @@ public class TestSwiftObjectPath implements SwiftTestConstants {
             ipath);
     URI endpoint = new URI(ENDPOINT);
     URI uri = SwiftRestClient.pathToURI(objectPath, endpoint);
-    LOG.info("Inital Hadoop Path =" + initialpath);
-    LOG.info("Merged URI=" + uri);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test(timeout = SWIFT_TEST_TIMEOUT)

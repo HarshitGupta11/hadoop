@@ -185,7 +185,7 @@ public class JvmPauseMonitor extends AbstractService {
     public void run() {
       StopWatch sw = new StopWatch();
       Map<String, GcTimes> gcTimesBeforeSleep = getGcTimes();
-      LOG.info("Starting JVM pause monitor");
+      LOG.error("Temp", new RuntimeException());
       while (shouldRun) {
         sw.reset().start();
         try {

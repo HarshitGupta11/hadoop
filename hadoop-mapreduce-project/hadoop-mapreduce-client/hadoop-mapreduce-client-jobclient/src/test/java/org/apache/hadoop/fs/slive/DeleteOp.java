@@ -69,22 +69,22 @@ class DeleteOp extends Operation {
       if (!deleteStatus) {
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.FAILURES, 1L));
-        LOG.info("Could not delete " + fn);
+        LOG.error("Temp", new RuntimeException());
       } else {
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.OK_TIME_TAKEN, timeTaken));
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.SUCCESSES, 1L));
-        LOG.info("Could delete " + fn);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with deleting", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with deleting", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return out;
   }

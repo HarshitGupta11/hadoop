@@ -114,7 +114,7 @@ public class LocalContainerAllocator extends RMCommunicator
       // Reset retry count if no exception occurred.
       retrystartTime = System.currentTimeMillis();
     } catch (ApplicationAttemptNotFoundException e) {
-      LOG.info("Event from RM: shutting down Application Master");
+      LOG.error("Temp", new RuntimeException());
       // This can happen if the RM has been restarted. If it is in that state,
       // this application must clean itself up.
       eventHandler.handle(new JobEvent(this.getJob().getID(),
@@ -170,7 +170,7 @@ public class LocalContainerAllocator extends RMCommunicator
   @Override
   public void handle(ContainerAllocatorEvent event) {
     if (event.getType() == ContainerAllocator.EventType.CONTAINER_REQ) {
-      LOG.info("Processing the event " + event.toString());
+      LOG.error("Temp", new RuntimeException());
       // Assign the same container ID as the AM
       ContainerId cID =
           ContainerId.newContainerId(getContext().getApplicationAttemptId(),

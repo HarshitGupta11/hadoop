@@ -282,7 +282,7 @@ public class FederationInterceptorREST extends AbstractRESTRequestInterceptor {
             .entity(e.getLocalizedMessage()).build();
       }
 
-      LOG.debug("getNewApplication try #{} on SubCluster {}", i, subClusterId);
+      LOG.error("Temp", new RuntimeException());
 
       DefaultRequestInterceptorREST interceptor =
           getOrCreateInterceptorForSubCluster(subClusterId,
@@ -722,7 +722,7 @@ public class FederationInterceptorREST extends AbstractRESTRequestInterceptor {
         }
       } catch (Throwable e) {
         routerMetrics.incrMultipleAppsFailedRetrieved();
-        LOG.warn("Failed to get application report", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -846,7 +846,7 @@ public class FederationInterceptorREST extends AbstractRESTRequestInterceptor {
           }
         }
       } catch (Throwable e) {
-        LOG.warn("Failed to get node report ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (nodeInfo == null) {
@@ -921,7 +921,7 @@ public class FederationInterceptorREST extends AbstractRESTRequestInterceptor {
           nodes.addAll(nodesResponse.getNodes());
         }
       } catch (Throwable e) {
-        LOG.warn("Failed to get nodes report ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -979,7 +979,7 @@ public class FederationInterceptorREST extends AbstractRESTRequestInterceptor {
           RouterWebServiceUtil.mergeMetrics(metrics, metricsResponse);
         }
       } catch (Throwable e) {
-        LOG.warn("Failed to get nodes report ", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

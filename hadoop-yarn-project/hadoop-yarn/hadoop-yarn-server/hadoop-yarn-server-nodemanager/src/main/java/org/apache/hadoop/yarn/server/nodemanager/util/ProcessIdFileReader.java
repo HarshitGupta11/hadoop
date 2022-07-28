@@ -50,7 +50,7 @@ public class ProcessIdFileReader {
       throw new IOException("Trying to access process id from a null path");
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Accessing pid from pid file " + path);
+      LOG.error("Temp", new RuntimeException());
     }
     String processId = null;
     BufferedReader bufReader = null;

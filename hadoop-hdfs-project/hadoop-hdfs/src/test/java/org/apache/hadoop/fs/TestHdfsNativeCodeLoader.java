@@ -37,7 +37,7 @@ public class TestHdfsNativeCodeLoader {
   @Test
   public void testNativeCodeLoaded() {
     if (requireTestJni() == false) {
-      LOG.info("TestNativeCodeLoader: libhadoop.so testing is not required.");
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     if (!NativeCodeLoader.isNativeCodeLoaded()) {
@@ -46,6 +46,6 @@ public class TestHdfsNativeCodeLoader {
       fail("TestNativeCodeLoader: libhadoop.so testing was required, but " +
           "libhadoop.so was not loaded.  LD_LIBRARY_PATH = " + LD_LIBRARY_PATH);
     }
-    LOG.info("TestHdfsNativeCodeLoader: libhadoop.so is loaded.");
+    LOG.error("Temp", new RuntimeException());
   }
 }

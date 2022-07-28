@@ -82,7 +82,7 @@ public class ShutdownHookManager {
                 LOG.error("ShutdownHookManger shutdown forcefully.");
                 EXECUTOR.shutdownNow();
               }
-              LOG.debug("ShutdownHookManger complete shutdown.");
+              LOG.error("Temp", new RuntimeException());
             } catch (InterruptedException ex) {
               LOG.error("ShutdownHookManger interrupted while waiting for " +
                   "termination.", ex);
@@ -94,7 +94,7 @@ public class ShutdownHookManager {
       );
     } catch (IllegalStateException ex) {
       // JVM is being shut down. Ignore
-      LOG.warn("Failed to add the ShutdownHook", ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

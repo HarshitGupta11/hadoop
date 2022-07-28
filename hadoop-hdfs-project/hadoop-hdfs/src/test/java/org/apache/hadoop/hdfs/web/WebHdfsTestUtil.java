@@ -82,7 +82,7 @@ public class WebHdfsTestUtil {
       final HttpOpParam.Op op, final Path fspath,
       final Param<?,?>... parameters) throws IOException {
     final URL url = webhdfs.toUrl(op, fspath, parameters);
-    WebHdfsTestUtil.LOG.info("url=" + url);
+    WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
     return url;
   }
 

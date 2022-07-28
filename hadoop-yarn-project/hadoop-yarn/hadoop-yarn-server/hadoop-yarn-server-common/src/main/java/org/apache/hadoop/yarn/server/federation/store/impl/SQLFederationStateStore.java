@@ -408,7 +408,7 @@ public class SQLFederationStateStore implements FederationStateStore {
 
       // first check if the subCluster exists
       if((amRMAddress == null) || (clientRMAddress == null)) {
-        LOG.warn("The queried SubCluster: {} does not exist.", subClusterId);
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
 
@@ -857,7 +857,7 @@ public class SQLFederationStateStore implements FederationStateStore {
               + subClusterPolicyConfiguration.toString());
         }
       } else {
-        LOG.warn("Policy for queue: {} does not exist.", request.getQueue());
+        LOG.error("Temp", new RuntimeException());
         return null;
       }
 

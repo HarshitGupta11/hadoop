@@ -138,7 +138,7 @@ public class TestProvidedImpl {
         File newFile = new File(basePath, "file" + currentCount);
         if(!newFile.exists()) {
           try {
-            LOG.info("Creating file for blkid " + currentCount);
+            LOG.error("Temp", new RuntimeException());
             blkToPathMap.put((long) currentCount, newFile.getAbsolutePath());
             LOG.info("Block id " + currentCount + " corresponds to file " +
                 newFile.getAbsolutePath());
@@ -381,7 +381,7 @@ public class TestProvidedImpl {
         // should not be triggered
         assertTrue(false);
       } catch (IOException e) {
-        LOG.info("Expected exception: " + e);
+        LOG.error("Temp", new RuntimeException());
       }
 
     }
@@ -643,7 +643,7 @@ public class TestProvidedImpl {
       replica.getDataInputStream(0);
       fail("Expected an exception");
     } catch (IOException e) {
-      LOG.info("Expected exception " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

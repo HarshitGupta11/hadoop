@@ -223,7 +223,7 @@ public class TestNestedSnapshots {
       hdfs.createSnapshot(dir, "s" + s);
       Assert.fail("Expected to fail to create snapshot, but didn't.");
     } catch(IOException ioe) {
-      SnapshotTestHelper.LOG.info("The exception is expected.", ioe);
+      SnapshotTestHelper.LOG.error("Temp", new RuntimeException());
     }
 
     for(int f = 0; f < SNAPSHOT_QUOTA_DEFAULT; f += step) {

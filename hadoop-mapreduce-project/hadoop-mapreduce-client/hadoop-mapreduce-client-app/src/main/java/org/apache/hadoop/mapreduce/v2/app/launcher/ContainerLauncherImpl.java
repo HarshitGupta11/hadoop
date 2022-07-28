@@ -132,7 +132,7 @@ public class ContainerLauncherImpl extends AbstractService implements
 
     @SuppressWarnings("unchecked")
     public synchronized void launch(ContainerRemoteLaunchEvent event) {
-      LOG.info("Launching " + taskAttemptID);
+      LOG.error("Temp", new RuntimeException());
       if(this.state == ContainerState.KILLED_BEFORE_LAUNCH) {
         state = ContainerState.DONE;
         sendContainerLaunchFailedMsg(taskAttemptID, 
@@ -205,7 +205,7 @@ public class ContainerLauncherImpl extends AbstractService implements
       if(this.state == ContainerState.PREP) {
         this.state = ContainerState.KILLED_BEFORE_LAUNCH;
       } else if (!isCompletelyDone()) {
-        LOG.info("KILLING " + taskAttemptID);
+        LOG.error("Temp", new RuntimeException());
 
         ContainerManagementProtocolProxyData proxy = null;
         try {
@@ -238,7 +238,7 @@ public class ContainerLauncherImpl extends AbstractService implements
               .handle(
                   new TaskAttemptDiagnosticsUpdateEvent(this.taskAttemptID,
                       message));
-          LOG.warn(message);
+          LOG.error("Temp", new RuntimeException());
         } finally {
           if (proxy != null) {
             cmProxy.mayBeCloseProxy(proxy);
@@ -264,12 +264,12 @@ public class ContainerLauncherImpl extends AbstractService implements
     this.limitOnPoolSize = conf.getInt(
         MRJobConfig.MR_AM_CONTAINERLAUNCHER_THREAD_COUNT_LIMIT,
         MRJobConfig.DEFAULT_MR_AM_CONTAINERLAUNCHER_THREAD_COUNT_LIMIT);
-    LOG.info("Upper limit on the thread pool size is " + this.limitOnPoolSize);
+    LOG.error("Temp", new RuntimeException());
 
     this.initialPoolSize = conf.getInt(
         MRJobConfig.MR_AM_CONTAINERLAUNCHER_THREADPOOL_INITIAL_SIZE,
         MRJobConfig.DEFAULT_MR_AM_CONTAINERLAUNCHER_THREADPOOL_INITIAL_SIZE);
-    LOG.info("The thread pool initial size is " + this.initialPoolSize);
+    LOG.error("Temp", new RuntimeException());
 
     super.serviceInit(conf);
     cmProxy = new ContainerManagementProtocolProxy(conf);
@@ -379,7 +379,7 @@ public class ContainerLauncherImpl extends AbstractService implements
 
     @Override
     public void run() {
-      LOG.info("Processing the event " + event.toString());
+      LOG.error("Temp", new RuntimeException());
 
       // Load ContainerManager tokens before creating a connection.
       // TODO: Do it only once per NodeManager.

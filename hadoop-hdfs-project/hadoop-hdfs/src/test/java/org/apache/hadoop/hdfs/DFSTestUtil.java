@@ -576,7 +576,7 @@ public class DFSTestUtil {
           }
           return true;
         } catch (IOException e) {
-          LOG.info("getFileStatus on path " + file + " failed!", e);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -1706,7 +1706,7 @@ public class DFSTestUtil {
   public static boolean verifyFileReplicasOnStorageType(FileSystem fs,
     DFSClient client, Path path, StorageType storageType) throws IOException {
     if (!fs.exists(path)) {
-      LOG.info("verifyFileReplicasOnStorageType: file " + path + "does not exist");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     long fileLength = client.getFileInfo(path.toString()).getLen();
@@ -1946,7 +1946,7 @@ public class DFSTestUtil {
       }
       return true;
     }
-    LOG.info("failed to change length of block " + blk);
+    LOG.error("Temp", new RuntimeException());
     return false;
   }
 
@@ -2343,7 +2343,7 @@ public class DFSTestUtil {
     for (Iterator<Entry<Path, FSDataOutputStream>> it =
          openFilesMap.entrySet().iterator(); it.hasNext();) {
       Entry<Path, FSDataOutputStream> entry = it.next();
-      LOG.info("Closing file: " + entry.getKey());
+      LOG.error("Temp", new RuntimeException());
       entry.getValue().close();
       closedFiles.add(entry.getKey());
       it.remove();

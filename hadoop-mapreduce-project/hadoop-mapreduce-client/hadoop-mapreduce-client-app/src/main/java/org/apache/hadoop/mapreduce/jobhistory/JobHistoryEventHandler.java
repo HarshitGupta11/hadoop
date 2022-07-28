@@ -266,7 +266,7 @@ public class JobHistoryEventHandler extends AbstractService
     // configuration status: off, on_with_v1 or on_with_v2.
     if (conf.getBoolean(MRJobConfig.MAPREDUCE_JOB_EMIT_TIMELINE_DATA,
         MRJobConfig.DEFAULT_MAPREDUCE_JOB_EMIT_TIMELINE_DATA)) {
-      LOG.info("Emitting job history data to the timeline service is enabled");
+      LOG.error("Temp", new RuntimeException());
       if (YarnConfiguration.timelineServiceEnabled(conf)) {
         boolean timelineServiceV2Enabled =
             ((int) YarnConfiguration.getTimelineServiceVersion(conf) == 2);
@@ -282,7 +282,7 @@ public class JobHistoryEventHandler extends AbstractService
         LOG.info("Timeline service is enabled; version: " +
             YarnConfiguration.getTimelineServiceVersion(conf));
       } else {
-        LOG.info("Timeline service is not enabled");
+        LOG.error("Temp", new RuntimeException());
       }
     } else {
       LOG.info("Emitting job history data to the timeline server is not " +
@@ -320,7 +320,7 @@ public class JobHistoryEventHandler extends AbstractService
           fs.setPermission(path, fsp);
         }
       } catch (FileAlreadyExistsException e) {
-        LOG.info("Directory: [" + path + "] already exists.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -350,7 +350,7 @@ public class JobHistoryEventHandler extends AbstractService
           try {
             event = eventQueue.take();
           } catch (InterruptedException e) {
-            LOG.info("EventQueue take interrupted. Returning");
+            LOG.error("Temp", new RuntimeException());
             return;
           }
           // If an event has been removed from the queue. Handle it.
@@ -363,7 +363,7 @@ public class JobHistoryEventHandler extends AbstractService
             boolean isInterrupted = Thread.interrupted();
             handleEvent(event);
             if (isInterrupted) {
-                LOG.debug("Event handling interrupted");
+                LOG.error("Temp", new RuntimeException());
                 Thread.currentThread().interrupt();
               }
             }
@@ -382,20 +382,20 @@ public class JobHistoryEventHandler extends AbstractService
     //do not interrupt while event handling is in progress
     synchronized(lock) {
       if (eventHandlingThread != null) {
-        LOG.debug("Interrupting Event Handling thread");
+        LOG.error("Temp", new RuntimeException());
         eventHandlingThread.interrupt();
       } else {
-        LOG.debug("Null event handling thread");
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
     try {
       if (eventHandlingThread != null) {
-        LOG.debug("Waiting for Event Handling thread to complete");
+        LOG.error("Temp", new RuntimeException());
         eventHandlingThread.join();
       }
     } catch (InterruptedException ie) {
-      LOG.info("Interrupted Exception while stopping", ie);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Cancel all timers - so that they aren't invoked during or after
@@ -403,7 +403,7 @@ public class JobHistoryEventHandler extends AbstractService
     for (MetaInfo mi : fileMap.values()) {
       try {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Shutting down timer for " + mi);
+          LOG.error("Temp", new RuntimeException());
         }
         mi.shutDownTimer();
       } catch (IOException e) {
@@ -416,7 +416,7 @@ public class JobHistoryEventHandler extends AbstractService
     Iterator<JobHistoryEvent> it = eventQueue.iterator();
     while(it.hasNext()) {
       JobHistoryEvent ev = it.next();
-      LOG.info("In stop, writing event " + ev.getType());
+      LOG.error("Temp", new RuntimeException());
       handleEvent(ev);
     }
 
@@ -458,7 +458,7 @@ public class JobHistoryEventHandler extends AbstractService
       try {
         mi.closeWriter();
       } catch (IOException e) {
-        LOG.info("Exception while closing file " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
     }
     if (timelineClient != null) {
@@ -466,7 +466,7 @@ public class JobHistoryEventHandler extends AbstractService
     } else if (timelineV2Client != null) {
       timelineV2Client.stop();
     }
-    LOG.info("Stopped JobHistoryEventHandler. super.stop()");
+    LOG.error("Temp", new RuntimeException());
     super.serviceStop();
   }
 
@@ -532,7 +532,7 @@ public class JobHistoryEventHandler extends AbstractService
               .create(logDirConfPath, true)) {
             redactedConf.writeXml(jobFileOut);
           } catch (IOException e) {
-            LOG.info("Failed to write the job configuration file", e);
+            LOG.error("Temp", new RuntimeException());
             throw e;
           }
         }
@@ -1418,10 +1418,10 @@ public class JobHistoryEventHandler extends AbstractService
     }
 
     if (mi.getHistoryFile() == null) {
-      LOG.warn("No file for job-history with " + jobId + " found in cache!");
+      LOG.error("Temp", new RuntimeException());
     }
     if (mi.getConfFile() == null) {
-      LOG.warn("No file for jobconf with " + jobId + " found in cache!");
+      LOG.error("Temp", new RuntimeException());
     }
       
     // Writing out the summary file.
@@ -1466,7 +1466,7 @@ public class JobHistoryEventHandler extends AbstractService
           String historyUrl = MRWebAppUtil.getApplicationWebURLOnJHSWithScheme(
               getConfig(), context.getApplicationID());
           context.setHistoryUrl(historyUrl);
-          LOG.info("Set historyUrl to " + historyUrl);
+          LOG.error("Temp", new RuntimeException());
         }
       }
 
@@ -1505,7 +1505,7 @@ public class JobHistoryEventHandler extends AbstractService
 
     @Override
     public void run() {
-      LOG.debug("In flush timer task");
+      LOG.error("Temp", new RuntimeException());
       synchronized (lock) {
         try {
           if (!metaInfo.isTimerShutDown() && shouldRun)
@@ -1586,7 +1586,7 @@ public class JobHistoryEventHandler extends AbstractService
     }
 
     void closeWriter() throws IOException {
-      LOG.debug("Closing Writer");
+      LOG.error("Temp", new RuntimeException());
       synchronized (lock) {
         if (writer != null) {
           writer.close();
@@ -1596,7 +1596,7 @@ public class JobHistoryEventHandler extends AbstractService
     }
 
     void writeEvent(HistoryEvent event) throws IOException {
-      LOG.debug("Writing event");
+      LOG.error("Temp", new RuntimeException());
       synchronized (lock) {
         if (writer != null) {
           writer.write(event);
@@ -1648,7 +1648,7 @@ public class JobHistoryEventHandler extends AbstractService
 
     void flush() throws IOException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Flushing " + toString());
+        LOG.error("Temp", new RuntimeException());
       }
       synchronized (lock) {
         if (numUnflushedCompletionEvents != 0) { // skipped timer cancel.
@@ -1661,7 +1661,7 @@ public class JobHistoryEventHandler extends AbstractService
 
     void shutDownTimer() throws IOException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Shutting down timer "+ toString());
+        LOG.error("Temp", new RuntimeException());
       }
       synchronized (lock) {
         isTimerShutDown = true;
@@ -1679,7 +1679,7 @@ public class JobHistoryEventHandler extends AbstractService
       String fileName = getFileNameFromTmpFN(tmpFileName);
       Path path = new Path(tmpPath.getParent(), fileName);
       doneDirFS.rename(tmpPath, path);
-      LOG.info("Moved tmp to done: " + tmpPath + " to " + path);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -1690,7 +1690,7 @@ public class JobHistoryEventHandler extends AbstractService
     boolean success = false;
     // check if path exists, in case of retries it may not exist
     if (stagingDirFS.exists(fromPath)) {
-      LOG.info("Copying " + fromPath.toString() + " to " + toPath.toString());
+      LOG.error("Temp", new RuntimeException());
       // TODO temporarily removing the existing dst
       doneDirFS.delete(toPath, true);
       boolean copied = FileUtil.copy(stagingDirFS, fromPath, doneDirFS, toPath,

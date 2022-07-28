@@ -113,7 +113,7 @@ public class NamenodeBeanMetrics
       // TODO this needs to be done with the Metrics from FSNamesystem
       StandardMBean bean = new StandardMBean(this, FSNamesystemMBean.class);
       this.fsBeanName = MBeans.register("NameNode", "FSNamesystem", bean);
-      LOG.info("Registered FSNamesystem MBean: {}", this.fsBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad FSNamesystem MBean setup", e);
     }
@@ -122,7 +122,7 @@ public class NamenodeBeanMetrics
       StandardMBean bean = new StandardMBean(this, FSNamesystemMBean.class);
       this.fsStateBeanName =
           MBeans.register("NameNode", "FSNamesystemState", bean);
-      LOG.info("Registered FSNamesystemState MBean: {}", this.fsStateBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad FSNamesystemState MBean setup", e);
     }
@@ -130,7 +130,7 @@ public class NamenodeBeanMetrics
     try {
       StandardMBean bean = new StandardMBean(this, NameNodeMXBean.class);
       this.nnInfoBeanName = MBeans.register("NameNode", "NameNodeInfo", bean);
-      LOG.info("Registered NameNodeInfo MBean: {}", this.nnInfoBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad NameNodeInfo MBean setup", e);
     }
@@ -139,7 +139,7 @@ public class NamenodeBeanMetrics
       StandardMBean bean = new StandardMBean(this, NameNodeStatusMXBean.class);
       this.nnStatusBeanName =
           MBeans.register("NameNode", "NameNodeStatus", bean);
-      LOG.info("Registered NameNodeStatus MBean: {}", this.nnStatusBeanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad NameNodeStatus MBean setup", e);
     }

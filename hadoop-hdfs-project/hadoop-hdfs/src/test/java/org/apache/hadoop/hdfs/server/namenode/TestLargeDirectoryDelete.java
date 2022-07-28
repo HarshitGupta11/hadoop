@@ -103,7 +103,7 @@ public class TestLargeDirectoryDelete {
               createOps++;
             }
           } catch (IOException ex) {
-            LOG.info("createFile exception ", ex);
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }
@@ -127,7 +127,7 @@ public class TestLargeDirectoryDelete {
               Thread.sleep(1);
             }
           } catch (InterruptedException ex) {
-            LOG.info("lockOperation exception ", ex);
+            LOG.error("Temp", new RuntimeException());
             break;
           }
         }
@@ -142,9 +142,9 @@ public class TestLargeDirectoryDelete {
     final long end = Time.now();
     threads[0].endThread();
     threads[1].endThread();
-    LOG.info("Deletion took " + (end - start) + "msecs");
-    LOG.info("createOperations " + createOps);
-    LOG.info("lockOperations " + lockOps);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(lockOps + createOps > 0);
     threads[0].rethrow();
     threads[1].rethrow();
@@ -168,7 +168,7 @@ public class TestLargeDirectoryDelete {
       try {
         execute();
       } catch (Throwable throwable) {
-        LOG.warn(throwable);
+        LOG.error("Temp", new RuntimeException());
         setThrown(throwable);
       } finally {
         synchronized (this) {
@@ -203,7 +203,7 @@ public class TestLargeDirectoryDelete {
         wait();
       } catch (InterruptedException e) {
         if(LOG.isDebugEnabled()) {
-          LOG.debug("Ignoring " + e, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

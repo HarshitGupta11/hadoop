@@ -105,7 +105,7 @@ abstract class JobFactory<T> implements Gridmix.Component<Void>,StatListener<T> 
     this.startFlag = startFlag;
     this.rThread = createReaderThread();
     if(LOG.isDebugEnabled()) {
-      LOG.debug(" The submission thread name is " + rThread.getName());
+      LOG.error("Temp", new RuntimeException());
     }
     this.userResolver = userResolver;
     this.jobCreator = JobCreator.getPolicy(conf, JobCreator.LOADJOB);

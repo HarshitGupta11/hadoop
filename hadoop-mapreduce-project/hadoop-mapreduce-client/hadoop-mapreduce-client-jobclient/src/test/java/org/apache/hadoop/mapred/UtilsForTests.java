@@ -748,13 +748,13 @@ public class UtilsForTests {
       for (PathDeletionContext context : contexts) {
         try {
           if (!deletePath(context)) {
-            LOG.warn("Stale path " + context.fullPath);
+            LOG.error("Temp", new RuntimeException());
             stalePaths.add(context.fullPath);
           }
         } catch (IOException e) {
           LOG.warn("Caught exception while deleting path "
               + context.fullPath);
-          LOG.info(StringUtils.stringifyException(e));
+          LOG.error("Temp", new RuntimeException());
           stalePaths.add(context.fullPath);
         }
       }

@@ -109,7 +109,7 @@ public class CGroupsCpuResourceHandlerImpl implements CpuResourceHandler {
       throw new ResourceHandlerException(ie);
     }
     if (systemProcessors != (int) yarnProcessors) {
-      LOG.info("YARN containers restricted to " + yarnProcessors + " cores");
+      LOG.error("Temp", new RuntimeException());
       int[] limits = getOverallLimits(yarnProcessors);
       cGroupsHandler
           .updateCGroupParam(CPU, "", CGroupsHandler.CGROUP_CPU_PERIOD_US,
@@ -118,7 +118,7 @@ public class CGroupsCpuResourceHandlerImpl implements CpuResourceHandler {
           .updateCGroupParam(CPU, "", CGroupsHandler.CGROUP_CPU_QUOTA_US,
               String.valueOf(limits[1]));
     } else if (existingCpuLimits) {
-      LOG.info("Removing CPU constraints for YARN containers.");
+      LOG.error("Temp", new RuntimeException());
       cGroupsHandler
           .updateCGroupParam(CPU, "", CGroupsHandler.CGROUP_CPU_QUOTA_US,
               String.valueOf(-1));
@@ -215,7 +215,7 @@ public class CGroupsCpuResourceHandlerImpl implements CpuResourceHandler {
       }
     } catch (ResourceHandlerException re) {
       cGroupsHandler.deleteCGroup(CPU, cgroupId);
-      LOG.warn("Could not update cgroup for container", re);
+      LOG.error("Temp", new RuntimeException());
       throw re;
     }
     List<PrivilegedOperation> ret = new ArrayList<>();

@@ -221,7 +221,7 @@ public class SchedulerUtils {
           || null == labelExp)) {
         String message = "NodeLabel is not enabled in cluster, but resource"
             + " request contains a label expression.";
-        LOG.warn(message);
+        LOG.error("Temp", new RuntimeException());
         if (!isRecovery) {
           throw new InvalidLabelResourceRequestException(
               "Invalid resource request, node label not enabled "

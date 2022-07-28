@@ -203,13 +203,13 @@ public class SecureWasbRemoteCallHelper extends WasbRemoteCallHelper {
           break;
         }
       }
-      LOG.debug("UGI Information: {}", userGroupInformation.toString());
+      LOG.error("Temp", new RuntimeException());
 
       // ugi tokens are usually indicative of a task which can't
       // refetch tokens.  even if ugi has credentials, don't attempt
       // to get another token to match hdfs/rpc behavior
       if (token != null) {
-        LOG.debug("Using UGI token: {}", token);
+        LOG.error("Temp", new RuntimeException());
         setDelegationToken(token);
       }
     }

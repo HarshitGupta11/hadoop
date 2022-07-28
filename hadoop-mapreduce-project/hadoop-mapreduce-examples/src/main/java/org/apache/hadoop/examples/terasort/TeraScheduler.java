@@ -144,7 +144,7 @@ class TeraScheduler {
     }
     if (result != null) {
       hosts.remove(result);
-      LOG.debug("picking " + result);
+      LOG.error("Temp", new RuntimeException());
     }
     return result;
   }
@@ -155,7 +155,7 @@ class TeraScheduler {
                                                hosts.size()));
     Split[] best = new Split[tasksToPick];
     for(Split cur: host.splits) {
-      LOG.debug("  examine: " + cur.filename + " " + cur.locations.size());
+      LOG.error("Temp", new RuntimeException());
       int i = 0;
       while (i < tasksToPick && best[i] != null && 
              best[i].locations.size() <= cur.locations.size()) {
@@ -171,7 +171,7 @@ class TeraScheduler {
     // for the chosen blocks, remove them from the other locations
     for(int i=0; i < tasksToPick; ++i) {
       if (best[i] != null) {
-        LOG.debug(" best: " + best[i].filename);
+        LOG.error("Temp", new RuntimeException());
         for (Host other: best[i].locations) {
           other.splits.remove(best[i]);
         }
@@ -233,7 +233,7 @@ class TeraScheduler {
     for(Host host: problem.hosts) {
       System.out.println(host);
     }
-    LOG.info("starting solve");
+    LOG.error("Temp", new RuntimeException());
     problem.solve();
     List<Split> leftOvers = new ArrayList<Split>();
     for(int i=0; i < problem.splits.length; ++i) {
@@ -247,7 +247,7 @@ class TeraScheduler {
       System.out.println("left: " + cur);
     }
     System.out.println("left over: " + leftOvers.size());
-    LOG.info("done");
+    LOG.error("Temp", new RuntimeException());
   }
 
 }

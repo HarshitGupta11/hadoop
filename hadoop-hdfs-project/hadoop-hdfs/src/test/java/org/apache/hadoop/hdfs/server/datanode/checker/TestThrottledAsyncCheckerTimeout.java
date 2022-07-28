@@ -78,7 +78,7 @@ public class TestThrottledAsyncCheckerTimeout {
 
   @Test
   public void testDiskCheckTimeout() throws Exception {
-    LOG.info("Executing {}", testName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
 
     final DummyCheckable target = new DummyCheckable();
     final FakeTimer timer = new FakeTimer();
@@ -128,7 +128,7 @@ public class TestThrottledAsyncCheckerTimeout {
 
   @Test
   public void testDiskCheckTimeoutInvokesOneCallbackOnly() throws Exception {
-    LOG.info("Executing {}", testName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
 
     final DummyCheckable target = new DummyCheckable();
     final FakeTimer timer = new FakeTimer();
@@ -172,7 +172,7 @@ public class TestThrottledAsyncCheckerTimeout {
 
   @Test
   public void testTimeoutExceptionIsNotThrownForGoodDisk() throws Exception {
-    LOG.info("Executing {}", testName.getMethodName());
+    LOG.error("Temp", new RuntimeException());
 
     final DummyCheckable target = new DummyCheckable();
     final FakeTimer timer = new FakeTimer();

@@ -289,7 +289,7 @@ public class Dispatcher {
             if (chooseProxySource()) {
               movedBlocks.put(block);
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Decided to move " + this);
+                LOG.error("Temp", new RuntimeException());
               }
               return true;
             }
@@ -346,7 +346,7 @@ public class Dispatcher {
 
     /** Dispatch the move to the proxy source & wait for the response. */
     private void dispatch() {
-      LOG.info("Start moving " + this);
+      LOG.error("Temp", new RuntimeException());
       assert !(reportedBlock instanceof DBlockStriped);
 
       Socket sock = new Socket();
@@ -385,9 +385,9 @@ public class Dispatcher {
         receiveResponse(in);
         nnc.getBytesMoved().addAndGet(reportedBlock.getNumBytes());
         target.getDDatanode().setHasSuccess();
-        LOG.info("Successfully moved " + this);
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException e) {
-        LOG.warn("Failed to move " + this, e);
+        LOG.error("Temp", new RuntimeException());
         target.getDDatanode().setHasFailure();
         // Check that the failure is due to block pinning errors.
         if (e instanceof BlockPinningException) {
@@ -685,7 +685,7 @@ public class Dispatcher {
 
     synchronized private void activateDelay(long delta) {
       delayUntil = Time.monotonicNow() + delta;
-      LOG.info(this + " activateDelay " + delta/1000.0 + " seconds");
+      LOG.error("Temp", new RuntimeException());
     }
 
     synchronized private boolean isDelayActive() {
@@ -948,7 +948,7 @@ public class Dispatcher {
           try {
             if(delay > 0) {
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Sleeping " + delay + "  msec.");
+                LOG.error("Temp", new RuntimeException());
               }
               Thread.sleep(delay);
             }
@@ -961,7 +961,7 @@ public class Dispatcher {
           } catch (InterruptedException ignored) {
             // nothing to do
           } catch (IOException e) {
-            LOG.warn("Exception while getting reportedBlock list", e);
+            LOG.error("Temp", new RuntimeException());
             return;
           } finally {
             delay = 0L;
@@ -1137,7 +1137,7 @@ public class Dispatcher {
       }
     }
     if (moveExecutor == null) {
-      LOG.warn("No mover threads available: skip moving " + p);
+      LOG.error("Temp", new RuntimeException());
       targetDn.removePendingBlock(p);
       p.proxySource.removePendingBlock(p);
       return;
@@ -1176,8 +1176,8 @@ public class Dispatcher {
         ((ThreadPoolExecutor)dispatchExecutor).getCorePoolSize());
     assert concurrentThreads > 0 : "Number of concurrent threads is 0.";
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Balancer allowed RPCs per sec = " + BALANCER_NUM_RPC_PER_SEC);
-      LOG.debug("Balancer concurrent threads = " + concurrentThreads);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       LOG.debug("Disperse Interval sec = " +
           concurrentThreads / BALANCER_NUM_RPC_PER_SEC);
     }
@@ -1194,10 +1194,10 @@ public class Dispatcher {
     } else {
       if  (threadsPerTarget > maxConcurrentMovesPerNode) {
         threadsPerTarget = maxConcurrentMovesPerNode;
-        LOG.info("Limiting threads per target to the specified max.");
+        LOG.error("Temp", new RuntimeException());
       }
       moverThreadAllocator.setLotSize(threadsPerTarget);
-      LOG.info("Allocating " + threadsPerTarget + " threads per target.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     long dSec = 0;
@@ -1224,7 +1224,7 @@ public class Dispatcher {
       try {
         future.get();
       } catch (ExecutionException e) {
-        LOG.warn("Dispatcher thread failed", e.getCause());
+        LOG.error("Temp", new RuntimeException());
       }
     }
 

@@ -216,13 +216,13 @@ public class NNStorageRetentionManager {
   static class DeletionStoragePurger implements StoragePurger {
     @Override
     public void purgeLog(EditLogFile log) {
-      LOG.info("Purging old edit log " + log);
+      LOG.error("Temp", new RuntimeException());
       deleteOrWarn(log.getFile());
     }
 
     @Override
     public void purgeImage(FSImageFile image) {
-      LOG.info("Purging old image " + image);
+      LOG.error("Temp", new RuntimeException());
       deleteOrWarn(image.getFile());
       deleteOrWarn(MD5FileUtils.getDigestFileForFile(image.getFile()));
     }
@@ -231,7 +231,7 @@ public class NNStorageRetentionManager {
       if (!file.delete()) {
         // It's OK if we fail to delete something -- we'll catch it
         // next time we swing through this directory.
-        LOG.warn("Could not delete " + file);
+        LOG.error("Temp", new RuntimeException());
       }      
     }
   }
@@ -271,7 +271,7 @@ public class NNStorageRetentionManager {
         } catch (NumberFormatException nfe) {
           // This should not happen since we have already filtered it.
           // Log and continue.
-          LOG.warn("Invalid file name. Skipping " + fName);
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         sortedTxIds.add(Long.valueOf(fTxId));
@@ -283,11 +283,11 @@ public class NNStorageRetentionManager {
     while (numFilesToDelete > 0 && iter.hasNext()) {
       long txIdVal = iter.next().longValue();
       String fileName = NNStorage.getLegacyOIVImageFileName(txIdVal);
-      LOG.info("Deleting " + fileName);
+      LOG.error("Temp", new RuntimeException());
       File fileToDelete = new File(oivImageDir, fileName);
       if (!fileToDelete.delete()) {
         // deletion failed.
-        LOG.warn("Failed to delete image file: " + fileToDelete);
+        LOG.error("Temp", new RuntimeException());
       }
       numFilesToDelete--;
     }

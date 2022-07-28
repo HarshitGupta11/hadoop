@@ -795,7 +795,7 @@ public class DFSUtilClient {
     try {
       sock = socketFactory.createSocket();
       String dnAddr = dn.getXferAddr(connectToDnViaHostname);
-      LOG.debug("Connecting to datanode {}", dnAddr);
+      LOG.error("Temp", new RuntimeException());
       NetUtils.connect(sock, NetUtils.createSocketAddr(dnAddr), timeout);
       sock.setTcpNoDelay(getClientDataTransferTcpNoDelay(conf));
       sock.setSoTimeout(timeout);

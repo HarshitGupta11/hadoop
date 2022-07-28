@@ -73,7 +73,7 @@ public class TestFileAppend3  {
 
   @BeforeClass
   public static void setUp() throws java.lang.Exception {
-    AppendTestUtil.LOG.info("setUp()");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     conf = new HdfsConfiguration();
     conf.setInt(DFSConfigKeys.DFS_BYTES_PER_CHECKSUM_KEY, 512);
     buffersize = conf.getInt(CommonConfigurationKeys.IO_FILE_BUFFER_SIZE_KEY, 4096);
@@ -83,7 +83,7 @@ public class TestFileAppend3  {
    
   @AfterClass
   public static void tearDown() throws Exception {
-    AppendTestUtil.LOG.info("tearDown()");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     if(fs != null) fs.close();
     if(cluster != null) cluster.shutdown();
   }
@@ -232,7 +232,7 @@ public class TestFileAppend3  {
       AppendTestUtil.createHdfsWithDifferentUsername(conf).append(p);
       fail("This should fail.");
     } catch(IOException ioe) {
-      AppendTestUtil.LOG.info("GOOD: got an exception", ioe);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
     }
 
     try {
@@ -241,7 +241,7 @@ public class TestFileAppend3  {
           EnumSet.of(CreateFlag.APPEND, CreateFlag.NEW_BLOCK), 4096, null);
       fail("This should fail.");
     } catch(IOException ioe) {
-      AppendTestUtil.LOG.info("GOOD: got an exception", ioe);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
     }
 
     //d. On Machine M1, close file.
@@ -271,14 +271,14 @@ public class TestFileAppend3  {
           EnumSet.of(CreateFlag.APPEND, CreateFlag.NEW_BLOCK), 4096, null);
       fail("This should fail.");
     } catch(IOException ioe) {
-      AppendTestUtil.LOG.info("GOOD: got an exception", ioe);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
     }
 
     try {
       AppendTestUtil.createHdfsWithDifferentUsername(conf).append(p);
       fail("This should fail.");
     } catch(IOException ioe) {
-      AppendTestUtil.LOG.info("GOOD: got an exception", ioe);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
     }
 
     // d. On Machine M1, close file.

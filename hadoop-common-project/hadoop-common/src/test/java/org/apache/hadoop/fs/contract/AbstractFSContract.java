@@ -55,9 +55,9 @@ public abstract class AbstractFSContract extends Configured {
   protected AbstractFSContract(Configuration conf) {
     super(conf);
     if (maybeAddConfResource(ContractOptions.CONTRACT_OPTIONS_RESOURCE)) {
-      LOG.debug("Loaded authentication keys from {}", ContractOptions.CONTRACT_OPTIONS_RESOURCE);
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.debug("Not loaded: {}", ContractOptions.CONTRACT_OPTIONS_RESOURCE);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

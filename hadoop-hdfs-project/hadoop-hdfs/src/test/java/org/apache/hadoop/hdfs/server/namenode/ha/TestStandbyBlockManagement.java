@@ -68,11 +68,11 @@ public class TestStandbyBlockManagement {
       FileSystem fs = HATestUtil.configureFailoverFs(cluster, conf);
 
       Thread.sleep(1000);
-      LOG.info("==================================");
+      LOG.error("Temp", new RuntimeException());
       DFSTestUtil.writeFile(fs, TEST_FILE_PATH, TEST_FILE_DATA);
       // Have to force an edit log roll so that the standby catches up
       nn1.getRpcServer().rollEditLog();
-      LOG.info("==================================");
+      LOG.error("Temp", new RuntimeException());
 
       // delete the file
       fs.delete(TEST_FILE_PATH, false);

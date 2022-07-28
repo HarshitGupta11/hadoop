@@ -94,74 +94,74 @@ public class TestRouterClientRMService extends BaseRouterClientRMTest {
 
     String user = "test1";
 
-    LOG.info("testRouterClientRMServiceE2E - Get New Application");
+    LOG.error("Temp", new RuntimeException());
 
     GetNewApplicationResponse responseGetNewApp = getNewApplication(user);
     Assert.assertNotNull(responseGetNewApp);
 
-    LOG.info("testRouterClientRMServiceE2E - Submit Application");
+    LOG.error("Temp", new RuntimeException());
 
     SubmitApplicationResponse responseSubmitApp =
         submitApplication(responseGetNewApp.getApplicationId(), user);
     Assert.assertNotNull(responseSubmitApp);
 
-    LOG.info("testRouterClientRMServiceE2E - Kill Application");
+    LOG.error("Temp", new RuntimeException());
 
     KillApplicationResponse responseKillApp =
         forceKillApplication(responseGetNewApp.getApplicationId(), user);
     Assert.assertNotNull(responseKillApp);
 
-    LOG.info("testRouterClientRMServiceE2E - Get Cluster Metrics");
+    LOG.error("Temp", new RuntimeException());
 
     GetClusterMetricsResponse responseGetClusterMetrics =
         getClusterMetrics(user);
     Assert.assertNotNull(responseGetClusterMetrics);
 
-    LOG.info("testRouterClientRMServiceE2E - Get Cluster Nodes");
+    LOG.error("Temp", new RuntimeException());
 
     GetClusterNodesResponse responseGetClusterNodes = getClusterNodes(user);
     Assert.assertNotNull(responseGetClusterNodes);
 
-    LOG.info("testRouterClientRMServiceE2E - Get Queue Info");
+    LOG.error("Temp", new RuntimeException());
 
     GetQueueInfoResponse responseGetQueueInfo = getQueueInfo(user);
     Assert.assertNotNull(responseGetQueueInfo);
 
-    LOG.info("testRouterClientRMServiceE2E - Get Queue User");
+    LOG.error("Temp", new RuntimeException());
 
     GetQueueUserAclsInfoResponse responseGetQueueUser = getQueueUserAcls(user);
     Assert.assertNotNull(responseGetQueueUser);
 
-    LOG.info("testRouterClientRMServiceE2E - Get Cluster Node");
+    LOG.error("Temp", new RuntimeException());
 
     GetClusterNodeLabelsResponse responseGetClusterNode =
         getClusterNodeLabels(user);
     Assert.assertNotNull(responseGetClusterNode);
 
-    LOG.info("testRouterClientRMServiceE2E - Move Application Across Queues");
+    LOG.error("Temp", new RuntimeException());
 
     MoveApplicationAcrossQueuesResponse responseMoveApp =
         moveApplicationAcrossQueues(user, responseGetNewApp.getApplicationId());
     Assert.assertNotNull(responseMoveApp);
 
-    LOG.info("testRouterClientRMServiceE2E - Get New Reservation");
+    LOG.error("Temp", new RuntimeException());
 
     GetNewReservationResponse getNewReservationResponse =
         getNewReservation(user);
 
-    LOG.info("testRouterClientRMServiceE2E - Submit Reservation");
+    LOG.error("Temp", new RuntimeException());
 
     ReservationSubmissionResponse responseSubmitReser =
         submitReservation(user, getNewReservationResponse.getReservationId());
     Assert.assertNotNull(responseSubmitReser);
 
-    LOG.info("testRouterClientRMServiceE2E - Update Reservation");
+    LOG.error("Temp", new RuntimeException());
 
     ReservationUpdateResponse responseUpdateReser =
         updateReservation(user, getNewReservationResponse.getReservationId());
     Assert.assertNotNull(responseUpdateReser);
 
-    LOG.info("testRouterClientRMServiceE2E - Delete Reservation");
+    LOG.error("Temp", new RuntimeException());
 
     ReservationDeleteResponse responseDeleteReser =
         deleteReservation(user, getNewReservationResponse.getReservationId());

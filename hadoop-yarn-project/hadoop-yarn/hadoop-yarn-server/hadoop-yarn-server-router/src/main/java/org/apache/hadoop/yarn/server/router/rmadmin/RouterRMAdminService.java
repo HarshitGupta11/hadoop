@@ -101,7 +101,7 @@ public class RouterRMAdminService extends AbstractService
 
   @Override
   protected void serviceStart() throws Exception {
-    LOG.info("Starting Router RMAdmin Service");
+    LOG.error("Temp", new RuntimeException());
     Configuration conf = getConfig();
     YarnRPC rpc = YarnRPC.create(conf);
     UserGroupInformation.setConfiguration(conf);
@@ -136,7 +136,7 @@ public class RouterRMAdminService extends AbstractService
 
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping Router RMAdminService");
+    LOG.error("Temp", new RuntimeException());
     if (this.server != null) {
       this.server.stop();
     }
@@ -256,7 +256,7 @@ public class RouterRMAdminService extends AbstractService
     // later because chain initialization can be expensive and we would like to
     // release the lock as soon as possible to prevent other applications from
     // blocking when one application's chain is initializing
-    LOG.info("Initializing request processing pipeline for the user: {}", user);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       RMAdminRequestInterceptor interceptorChain =

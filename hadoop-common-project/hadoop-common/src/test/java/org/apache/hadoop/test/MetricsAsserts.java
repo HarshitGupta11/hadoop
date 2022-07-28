@@ -72,7 +72,7 @@ public class MetricsAsserts {
           sb.append(String.valueOf(o));
         }
         String methodName = invocation.getMethod().getName();
-        LOG.debug(methodName +": "+ sb);
+        LOG.error("Temp", new RuntimeException());
         return methodName.equals("parent") || methodName.equals("endRecord") ?
                mc : invocation.getMock();
       }

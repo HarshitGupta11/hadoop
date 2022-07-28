@@ -145,7 +145,7 @@ public class ClientDatanodeProtocolTranslatorPB implements
       throws IOException {
     final String dnAddr = datanodeid.getIpcAddr(connectToDnViaHostname);
     InetSocketAddress addr = NetUtils.createSocketAddr(dnAddr);
-    LOG.debug("Connecting to datanode {} addr={}", dnAddr, addr);
+    LOG.error("Temp", new RuntimeException());
     rpcProxy = createClientDatanodeProtocolProxy(addr,
         UserGroupInformation.getCurrentUser(), conf,
         NetUtils.getDefaultSocketFactory(conf), socketTimeout);
@@ -157,7 +157,7 @@ public class ClientDatanodeProtocolTranslatorPB implements
       throws IOException {
     final String dnAddr = datanodeid.getIpcAddr(connectToDnViaHostname);
     InetSocketAddress addr = NetUtils.createSocketAddr(dnAddr);
-    LOG.debug("Connecting to datanode {} addr={}", dnAddr, addr);
+    LOG.error("Temp", new RuntimeException());
 
     // Since we're creating a new UserGroupInformation here, we know that no
     // future RPC proxies will be able to re-use the same connection. And

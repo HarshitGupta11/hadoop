@@ -602,7 +602,7 @@ public class BlockRecoveryWorker {
               new RecoveryTaskContiguous(b).recover();
             }
           } catch (IOException e) {
-            LOG.warn("recoverBlocks FAILED: " + b, e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

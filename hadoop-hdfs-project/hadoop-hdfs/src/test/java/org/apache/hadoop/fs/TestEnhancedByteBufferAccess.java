@@ -94,7 +94,7 @@ public class TestEnhancedByteBufferAccess {
       @Override
       public void mlock(String identifier,
           ByteBuffer mmap, long length) throws IOException {
-        LOG.info("mlocking " + identifier);
+        LOG.error("Temp", new RuntimeException());
       }
     });
   }

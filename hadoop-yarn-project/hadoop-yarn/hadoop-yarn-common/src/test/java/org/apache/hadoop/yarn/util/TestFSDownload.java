@@ -131,10 +131,10 @@ public class TestFSDownload {
 
   static LocalResource createJar(FileContext files, Path p,
       LocalResourceVisibility vis) throws IOException {
-    LOG.info("Create jar file " + p);
+    LOG.error("Temp", new RuntimeException());
     File jarFile = new File((files.makeQualified(p)).toUri());
     FileOutputStream stream = new FileOutputStream(jarFile);
-    LOG.info("Create jar out stream ");
+    LOG.error("Temp", new RuntimeException());
     JarOutputStream out = new JarOutputStream(stream, new Manifest());
     ZipEntry entry = new ZipEntry("classes/1.class");
     out.putNextEntry(entry);
@@ -148,7 +148,7 @@ public class TestFSDownload {
     out.write(2);
     out.write(3);
     out.closeEntry();
-    LOG.info("Done writing jar stream ");
+    LOG.error("Temp", new RuntimeException());
     out.close();
     LocalResource ret = recordFactory.newRecordInstance(LocalResource.class);
     ret.setResource(URL.fromPath(p));

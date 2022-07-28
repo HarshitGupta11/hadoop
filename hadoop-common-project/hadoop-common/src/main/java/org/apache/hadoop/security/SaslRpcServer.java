@@ -108,7 +108,7 @@ public class SaslRpcServer {
       case KERBEROS: {
         String fullName = UserGroupInformation.getCurrentUser().getUserName();
         if (LOG.isDebugEnabled())
-          LOG.debug("Kerberos principal name is " + fullName);
+          LOG.error("Temp", new RuntimeException());
         // don't use KerberosName because we don't want auth_to_local
         String[] parts = fullName.split("[/@]", 3);
         protocol = parts[0];
@@ -172,7 +172,7 @@ public class SaslRpcServer {
           "Unable to find SASL server implementation for " + mechanism);
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Created SASL server with mechanism = " + mechanism);
+      LOG.error("Temp", new RuntimeException());
     }
     return saslServer;
   }

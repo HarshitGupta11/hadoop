@@ -99,7 +99,7 @@ public class AuthenticatedURL {
             cookies = HttpCookie.parse(header);
           } catch (IllegalArgumentException iae) {
             // don't care. just skip malformed cookie headers.
-            LOG.debug("Cannot parse cookie header: " + header, iae);
+            LOG.error("Temp", new RuntimeException());
             continue;
           }
           for (HttpCookie cookie : cookies) {

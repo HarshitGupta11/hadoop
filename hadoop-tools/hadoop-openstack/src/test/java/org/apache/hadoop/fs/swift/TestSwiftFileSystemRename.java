@@ -52,8 +52,8 @@ public class TestSwiftFileSystemRename extends SwiftFileSystemBaseTest {
     Path newFile = path("/test/new/newdir/file");
     if (!fs.exists(newFile)) {
       String ls = ls(dst);
-      LOG.info(ls(path("/test/new")));
-      LOG.info(ls(path("/test/hadoop")));
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       fail("did not find " + newFile + " - directory: " + ls);
     }
     assertTrue("Destination changed",

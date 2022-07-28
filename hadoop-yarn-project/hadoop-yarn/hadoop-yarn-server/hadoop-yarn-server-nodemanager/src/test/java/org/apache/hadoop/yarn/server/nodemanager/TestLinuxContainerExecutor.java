@@ -274,7 +274,7 @@ public class TestLinuxContainerExecutor {
 
   private boolean shouldRun() {
     if (exec == null) {
-      LOG.warn("Not running test because container-executor.path is not set");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     return true;
@@ -456,7 +456,7 @@ public class TestLinuxContainerExecutor {
         try {
           runAndBlock(sleepId, "sleep", "100");
         } catch (IOException|ConfigurationException e) {
-          LOG.warn("Caught exception while running sleep", e);
+          LOG.error("Temp", new RuntimeException());
         }
       };
     };
@@ -468,19 +468,19 @@ public class TestLinuxContainerExecutor {
     String pid = null;
     int count = 10;
     while ((pid = exec.getProcessId(sleepId)) == null && count > 0) {
-      LOG.info("Sleeping for 200 ms before checking for pid ");
+      LOG.error("Temp", new RuntimeException());
       Thread.sleep(200);
       count--;
     }
     assertNotNull(pid);
 
-    LOG.info("Going to killing the process.");
+    LOG.error("Temp", new RuntimeException());
     exec.signalContainer(new ContainerSignalContext.Builder()
         .setUser(appSubmitter)
         .setPid(pid)
         .setSignal(Signal.TERM)
         .build());
-    LOG.info("sleeping for 100ms to let the sleep be killed");
+    LOG.error("Temp", new RuntimeException());
     Thread.sleep(100);
 
     assertFalse(t.isAlive());

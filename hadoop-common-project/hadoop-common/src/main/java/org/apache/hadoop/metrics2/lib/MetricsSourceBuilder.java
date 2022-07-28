@@ -107,7 +107,7 @@ public class MetricsSourceBuilder {
         hasRegistry = r != null;
         break;
       } catch (Exception e) {
-        LOG.warn("Error accessing field "+ field, e);
+        LOG.error("Temp", new RuntimeException());
         continue;
       }
     }

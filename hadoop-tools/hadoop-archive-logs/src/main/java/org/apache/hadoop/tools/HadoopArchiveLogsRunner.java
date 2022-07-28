@@ -88,7 +88,7 @@ public class HadoopArchiveLogsRunner implements Tool {
     try{
       ret = ToolRunner.run(halr, args);
     } catch(Exception e) {
-      LOG.debug("Exception", e);
+      LOG.error("Temp", new RuntimeException());
       System.err.println(e.getClass().getSimpleName());
       final String s = e.getLocalizedMessage();
       if (s != null) {
@@ -111,7 +111,7 @@ public class HadoopArchiveLogsRunner implements Tool {
     // (which might fail if user is not a proxyuser for themselves)
     // Also if !proxy is set
     if (!proxy || loginUser.getShortUserName().equals(user)) {
-      LOG.info("Running as " + user);
+      LOG.error("Temp", new RuntimeException());
       exitCode = runInternal();
     } else {
       // Otherwise impersonate user.  If we're not allowed to, then this will
@@ -150,10 +150,10 @@ public class HadoopArchiveLogsRunner implements Tool {
     for (String haArg : haArgs) {
       sb.append("\n\t").append(haArg);
     }
-    LOG.info(sb.toString());
+    LOG.error("Temp", new RuntimeException());
     int exitCode = hadoopArchives.run(haArgs);
     if (exitCode != 0) {
-      LOG.warn("Failed to create archives for " + appId);
+      LOG.error("Temp", new RuntimeException());
       return -1;
     }
 
@@ -169,9 +169,9 @@ public class HadoopArchiveLogsRunner implements Tool {
         return -1;
       }
       Path harDest = new Path(remoteAppLogDir, harName);
-      LOG.info("Moving har to original location");
+      LOG.error("Temp", new RuntimeException());
       fs.rename(harPath, harDest);
-      LOG.info("Deleting original logs");
+      LOG.error("Temp", new RuntimeException());
       for (FileStatus original : fs.listStatus(new Path(remoteAppLogDir),
           new PathFilter() {
             @Override

@@ -83,14 +83,14 @@ public final class OpensslCipher {
     String loadingFailure = null;
     try {
       if (!NativeCodeLoader.buildSupportsOpenssl()) {
-        PerformanceAdvisory.LOG.debug("Build does not support openssl");
+        PerformanceAdvisory.LOG.error("Temp", new RuntimeException());
         loadingFailure = "build does not support openssl.";
       } else {
         initIDs();
       }
     } catch (Throwable t) {
       loadingFailure = t.getMessage();
-      LOG.debug("Failed to load OpenSSL Cipher.", t);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       loadingFailureReason = loadingFailure;
     }

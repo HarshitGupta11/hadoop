@@ -358,7 +358,7 @@ public class RMContainerAllocator extends RMContainerRequestor
   public void handle(ContainerAllocatorEvent event) {
     int qSize = eventQueue.size();
     if (qSize != 0 && qSize % 1000 == 0) {
-      LOG.info("Size of event-queue in RMContainerAllocator is " + qSize);
+      LOG.error("Temp", new RuntimeException());
     }
     int remCapacity = eventQueue.remainingCapacity();
     if (remCapacity < 1000) {
@@ -387,7 +387,7 @@ public class RMContainerAllocator extends RMContainerRequestor
     } else if (
       event.getType() == ContainerAllocator.EventType.CONTAINER_DEALLOCATE) {
   
-      LOG.info("Processing the event " + event.toString());
+      LOG.error("Temp", new RuntimeException());
 
       TaskAttemptId aId = event.getAttemptID();
       
@@ -432,7 +432,7 @@ public class RMContainerAllocator extends RMContainerRequestor
           new NormalizedResourceEvent(
               org.apache.hadoop.mapreduce.TaskType.REDUCE,
               reduceResourceRequest.getMemorySize())));
-      LOG.info("reduceResourceRequest:" + reduceResourceRequest);
+      LOG.error("Temp", new RuntimeException());
     }
 
     boolean reduceContainerRequestAccepted = true;
@@ -465,7 +465,7 @@ public class RMContainerAllocator extends RMContainerRequestor
           "supported max container capability in the cluster. Killing" +
           " the Job. reduceResourceRequest: " + reduceResourceRequest +
           " maxContainerCapability:" + supportedMaxContainerCapability;
-      LOG.info(diagMsg);
+      LOG.error("Temp", new RuntimeException());
       eventHandler.handle(new JobDiagnosticsUpdateEvent(jobId, diagMsg));
       eventHandler.handle(new JobEvent(jobId, JobEventType.JOB_KILL));
     }
@@ -485,7 +485,7 @@ public class RMContainerAllocator extends RMContainerRequestor
           new NormalizedResourceEvent(
               org.apache.hadoop.mapreduce.TaskType.MAP,
               mapResourceRequest.getMemorySize())));
-      LOG.info("mapResourceRequest:" + mapResourceRequest);
+      LOG.error("Temp", new RuntimeException());
     }
 
     boolean mapContainerRequestAccepted = true;
@@ -509,7 +509,7 @@ public class RMContainerAllocator extends RMContainerRequestor
           "supported max container capability in the cluster. Killing" +
           " the Job. mapResourceRequest: " + mapResourceRequest +
           " maxContainerCapability:" + supportedMaxContainerCapability;
-      LOG.info(diagMsg);
+      LOG.error("Temp", new RuntimeException());
       eventHandler.handle(new JobDiagnosticsUpdateEvent(jobId, diagMsg));
       eventHandler.handle(new JobEvent(jobId, JobEventType.JOB_KILL));
     }
@@ -653,7 +653,7 @@ public class RMContainerAllocator extends RMContainerRequestor
     // get available resources for this job
     Resource headRoom = getAvailableResources();
 
-    LOG.info("Recalculating schedule, headroom=" + headRoom);
+    LOG.error("Temp", new RuntimeException());
     
     //check for slow start
     if (!getIsReduceStarted()) {//not set yet
@@ -665,7 +665,7 @@ public class RMContainerAllocator extends RMContainerRequestor
             completedMapsForReduceSlowstart);
         return;
       } else {
-        LOG.info("Reduce slow start threshold reached. Scheduling reduces.");
+        LOG.error("Temp", new RuntimeException());
         setIsReduceStarted(true);
       }
     }
@@ -737,12 +737,12 @@ public class RMContainerAllocator extends RMContainerRequestor
 
     if (rampUp > 0) {
       rampUp = Math.min(rampUp, numPendingReduces);
-      LOG.info("Ramping up " + rampUp);
+      LOG.error("Temp", new RuntimeException());
       rampUpReduces(rampUp);
     } else if (rampUp < 0) {
       int rampDown = -1 * rampUp;
       rampDown = Math.min(rampDown, scheduledReduces);
-      LOG.info("Ramping down " + rampDown);
+      LOG.error("Temp", new RuntimeException());
       rampDownReduces(rampDown);
     }
   }
@@ -814,7 +814,7 @@ public class RMContainerAllocator extends RMContainerRequestor
       // have access so killing job in this case.
       String diagMsg = "Requested node-label-expression is invalid: "
           + StringUtils.stringifyException(e);
-      LOG.info(diagMsg);
+      LOG.error("Temp", new RuntimeException());
       JobId jobId = this.getJob().getID();
       eventHandler.handle(new JobDiagnosticsUpdateEvent(jobId, diagMsg));
       eventHandler.handle(new JobEvent(jobId, JobEventType.JOB_KILL));
@@ -863,13 +863,13 @@ public class RMContainerAllocator extends RMContainerRequestor
       //something changed
       recalculateReduceSchedule = true;
       if (LOG.isDebugEnabled() && !headRoom.equals(newHeadRoom)) {
-        LOG.debug("headroom=" + newHeadRoom);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
     if (LOG.isDebugEnabled()) {
       for (Container cont : newContainers) {
-        LOG.debug("Received new Container :" + cont);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -894,7 +894,7 @@ public class RMContainerAllocator extends RMContainerRequestor
   @SuppressWarnings("unchecked")
   @VisibleForTesting
   void processFinishedContainer(ContainerStatus container) {
-    LOG.info("Received completed container " + container.getContainerId());
+    LOG.error("Temp", new RuntimeException());
     TaskAttemptId attemptID = assignedRequests.get(container.getContainerId());
     if (attemptID == null) {
       LOG.error("Container complete event for unknown container "
@@ -1105,7 +1105,7 @@ public class RMContainerAllocator extends RMContainerRequestor
         request =
             new ContainerRequest(event, PRIORITY_FAST_FAIL_MAP,
                 mapNodeLabelExpression);
-        LOG.info("Added "+event.getAttemptID()+" to list of failed maps");
+        LOG.error("Temp", new RuntimeException());
         // If its an earlier Failed attempt, do not retry as OPPORTUNISTIC
         maps.put(event.getAttemptID(), request);
         addContainerReq(request);
@@ -1127,7 +1127,7 @@ public class RMContainerAllocator extends RMContainerRequestor
             }
             list.add(event.getAttemptID());
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Added attempt req to host " + host);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           for (String rack : event.getRacks()) {
@@ -1138,7 +1138,7 @@ public class RMContainerAllocator extends RMContainerRequestor
             }
             list.add(event.getAttemptID());
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Added attempt req to rack " + rack);
+              LOG.error("Temp", new RuntimeException());
             }
           }
           maps.put(event.getAttemptID(), request);
@@ -1158,7 +1158,7 @@ public class RMContainerAllocator extends RMContainerRequestor
     // this method will change the list of allocatedContainers.
     private void assign(List<Container> allocatedContainers) {
       Iterator<Container> it = allocatedContainers.iterator();
-      LOG.info("Got allocated containers " + allocatedContainers.size());
+      LOG.error("Temp", new RuntimeException());
       containersAllocated += allocatedContainers.size();
       int reducePending = reduces.size();
       while (it.hasNext()) {
@@ -1261,7 +1261,7 @@ public class RMContainerAllocator extends RMContainerRequestor
       it = allocatedContainers.iterator();
       while (it.hasNext()) {
         Container allocated = it.next();
-        LOG.info("Releasing unassigned container " + allocated);
+        LOG.error("Temp", new RuntimeException());
         containerNotAssigned(allocated);
       }
     }
@@ -1296,11 +1296,11 @@ public class RMContainerAllocator extends RMContainerRequestor
       
       Priority priority = allocated.getPriority();
       if (PRIORITY_FAST_FAIL_MAP.equals(priority)) {
-        LOG.info("Assigning container " + allocated + " to fast fail map");
+        LOG.error("Temp", new RuntimeException());
         assigned = assignToFailedMap(allocated);
       } else if (PRIORITY_REDUCE.equals(priority)) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Assigning container " + allocated + " to reduce");
+          LOG.error("Temp", new RuntimeException());
         }
         assigned = assignToReduce(allocated);
       }
@@ -1323,21 +1323,21 @@ public class RMContainerAllocator extends RMContainerRequestor
     }
     
     private ContainerRequest getContainerReqToReplace(Container allocated) {
-      LOG.info("Finding containerReq for allocated container: " + allocated);
+      LOG.error("Temp", new RuntimeException());
       Priority priority = allocated.getPriority();
       ContainerRequest toBeReplaced = null;
       if (PRIORITY_FAST_FAIL_MAP.equals(priority)) {
-        LOG.info("Replacing FAST_FAIL_MAP container " + allocated.getId());
+        LOG.error("Temp", new RuntimeException());
         Iterator<TaskAttemptId> iter = earlierFailedMaps.iterator();
         while (toBeReplaced == null && iter.hasNext()) {
           toBeReplaced = maps.get(iter.next());
         }
-        LOG.info("Found replacement: " + toBeReplaced);
+        LOG.error("Temp", new RuntimeException());
         return toBeReplaced;
       }
       else if (PRIORITY_MAP.equals(priority)
           || PRIORITY_OPPORTUNISTIC_MAP.equals(priority)) {
-        LOG.info("Replacing MAP container " + allocated.getId());
+        LOG.error("Temp", new RuntimeException());
         // allocated container was for a map
         String host = allocated.getNodeId().getHost();
         LinkedList<TaskAttemptId> list = mapsHostMapping.get(host);
@@ -1356,7 +1356,7 @@ public class RMContainerAllocator extends RMContainerRequestor
         TaskAttemptId tId = reduces.keySet().iterator().next();
         toBeReplaced = reduces.remove(tId);    
       }
-      LOG.info("Found replacement: " + toBeReplaced);
+      LOG.error("Temp", new RuntimeException());
       return toBeReplaced;
     }
     
@@ -1374,7 +1374,7 @@ public class RMContainerAllocator extends RMContainerRequestor
             new JobCounterUpdateEvent(assigned.attemptID.getTaskId().getJobId());
           jce.addCounterUpdate(JobCounter.OTHER_LOCAL_MAPS, 1);
           eventHandler.handle(jce);
-          LOG.info("Assigned from earlierFailedMaps");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
@@ -1387,7 +1387,7 @@ public class RMContainerAllocator extends RMContainerRequestor
       if (assigned == null && reduces.size() > 0 && canAssignReduces()) {
         TaskAttemptId tId = reduces.keySet().iterator().next();
         assigned = reduces.remove(tId);
-        LOG.info("Assigned to reduce");
+        LOG.error("Temp", new RuntimeException());
       }
       return assigned;
     }
@@ -1408,7 +1408,7 @@ public class RMContainerAllocator extends RMContainerRequestor
           LinkedList<TaskAttemptId> list = mapsHostMapping.get(host);
           while (list != null && list.size() > 0) {
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Host matched to the request list " + host);
+              LOG.error("Temp", new RuntimeException());
             }
             TaskAttemptId tId = list.removeFirst();
             if (maps.containsKey(tId)) {
@@ -1422,7 +1422,7 @@ public class RMContainerAllocator extends RMContainerRequestor
               eventHandler.handle(jce);
               hostLocalAssigned++;
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Assigned based on host match " + host);
+                LOG.error("Temp", new RuntimeException());
               }
               break;
             }
@@ -1456,7 +1456,7 @@ public class RMContainerAllocator extends RMContainerRequestor
               eventHandler.handle(jce);
               rackLocalAssigned++;
               if (LOG.isDebugEnabled()) {
-                LOG.debug("Assigned based on rack match " + rack);
+                LOG.error("Temp", new RuntimeException());
               }
               break;
             }
@@ -1480,7 +1480,7 @@ public class RMContainerAllocator extends RMContainerRequestor
         jce.addCounterUpdate(JobCounter.OTHER_LOCAL_MAPS, 1);
         eventHandler.handle(jce);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Assigned based on * match");
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -1502,7 +1502,7 @@ public class RMContainerAllocator extends RMContainerRequestor
       new HashSet<TaskAttemptId>();
     
     void add(Container container, TaskAttemptId tId) {
-      LOG.info("Assigned container " + container.getId().toString() + " to " + tId);
+      LOG.error("Temp", new RuntimeException());
       containerToAttemptMap.put(container.getId(), tId);
       if (tId.getTaskId().getTaskType().equals(TaskType.MAP)) {
         maps.put(tId, container);
@@ -1528,7 +1528,7 @@ public class RMContainerAllocator extends RMContainerRequestor
       
       for (int i = 0; i < toPreempt && reduceList.size() > 0; i++) {
         TaskAttemptId id = reduceList.remove(0);//remove the one on top
-        LOG.info("Preempting " + id);
+        LOG.error("Temp", new RuntimeException());
         preemptionWaitingReduces.add(id);
         eventHandler.handle(new TaskAttemptKillEvent(id, RAMPDOWN_DIAGNOSTIC));
       }
@@ -1543,7 +1543,7 @@ public class RMContainerAllocator extends RMContainerRequestor
         if (containerId != null) {
           boolean preempted = preemptionWaitingReduces.remove(tId);
           if (preempted) {
-            LOG.info("Reduce preemption successful " + tId);
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

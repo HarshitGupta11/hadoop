@@ -144,7 +144,7 @@ public class JobBuilder {
       return;
     } else if (event instanceof NormalizedResourceEvent) {
       // Log an warn message as NormalizedResourceEvent shouldn't be written.
-      LOG.warn("NormalizedResourceEvent should be ignored in history server.");
+      LOG.error("Temp", new RuntimeException());
     } else if (event instanceof JobFinishedEvent) {
       processJobFinishedEvent((JobFinishedEvent) event);
     } else if (event instanceof JobInfoChangeEvent) {

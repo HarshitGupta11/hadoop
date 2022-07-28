@@ -122,14 +122,14 @@ public class GpuDiscoverer {
           "Failed to execute " + pathOfGpuBinary + " exception message:" + e
               .getMessage() + ", continue ...";
       if (LOG.isDebugEnabled()) {
-        LOG.debug(msg);
+        LOG.error("Temp", new RuntimeException());
       }
       throw new YarnException(e);
     } catch (YarnException e) {
       numOfErrorExecutionSinceLastSucceed++;
       String msg = "Failed to parse xml output" + e.getMessage();
       if (LOG.isDebugEnabled()) {
-        LOG.warn(msg, e);
+        LOG.error("Temp", new RuntimeException());
       }
       throw e;
     }
@@ -188,7 +188,7 @@ public class GpuDiscoverer {
               new GpuDevice(Integer.parseInt(kv[0]), Integer.parseInt(kv[1])));
         }
       }
-      LOG.info("Allowed GPU devices:" + gpuDevices);
+      LOG.error("Temp", new RuntimeException());
     }
 
     return gpuDevices;
@@ -237,14 +237,14 @@ public class GpuDiscoverer {
 
     // Try to discover GPU information once and print
     try {
-      LOG.info("Trying to discover GPU information ...");
+      LOG.error("Temp", new RuntimeException());
       GpuDeviceInformation info = getGpuDeviceInformation();
-      LOG.info(info.toString());
+      LOG.error("Temp", new RuntimeException());
     } catch (YarnException e) {
       String msg =
           "Failed to discover GPU information from system, exception message:"
               + e.getMessage() + " continue...";
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

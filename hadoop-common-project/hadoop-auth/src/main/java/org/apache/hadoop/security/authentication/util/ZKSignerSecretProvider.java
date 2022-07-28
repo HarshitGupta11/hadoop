@@ -194,9 +194,9 @@ public class ZKSignerSecretProvider extends RolloverSignerSecretProvider {
               .forPath(path, generateZKData(generateRandomSecret(),
               generateRandomSecret(), null));
       zkVersion = 0;
-      LOG.info("Creating secret znode");
+      LOG.error("Temp", new RuntimeException());
     } catch (KeeperException.NodeExistsException nee) {
-      LOG.info("The secret znode already exists, retrieving data");
+      LOG.error("Temp", new RuntimeException());
     }
     // Synchronize on the data from the znode
     // passing true tells it to parse out all the data for initing
@@ -257,7 +257,7 @@ public class ZKSignerSecretProvider extends RolloverSignerSecretProvider {
     try {
       client.setData().withVersion(zkVersion).forPath(path, bytes);
     } catch (KeeperException.BadVersionException bve) {
-      LOG.debug("Unable to push to znode; another server already did it");
+      LOG.error("Temp", new RuntimeException());
     } catch (Exception ex) {
       LOG.error("An unexpected exception occurred pushing data to ZooKeeper",
               ex);
@@ -374,7 +374,7 @@ public class ZKSignerSecretProvider extends RolloverSignerSecretProvider {
               "org.apache.zookeeper.server.auth.SASLAuthenticationProvider");
       aclProvider = new SASLOwnerACLProvider(principal);
     } else {  // "none"
-      LOG.info("Connecting to ZooKeeper without authentication");
+      LOG.error("Temp", new RuntimeException());
       aclProvider = new DefaultACLProvider();     // open to everyone
     }
     CuratorFramework cf = CuratorFrameworkFactory.builder()

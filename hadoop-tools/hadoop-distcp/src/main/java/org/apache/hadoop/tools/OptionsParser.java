@@ -48,7 +48,7 @@ public class OptionsParser {
   static {
     for (DistCpOptionSwitch option : DistCpOptionSwitch.values()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Adding option " + option.getOption());
+        LOG.error("Temp", new RuntimeException());
       }
       cliOptions.addOption(option.getOption());
     }
@@ -216,7 +216,7 @@ public class OptionsParser {
       try {
         int csize = Integer.parseInt(chunkSizeStr);
         csize = csize > 0 ? csize : 0;
-        LOG.info("Set distcp blocksPerChunk to " + csize);
+        LOG.error("Temp", new RuntimeException());
         builder.withBlocksPerChunk(csize);
       } catch (NumberFormatException e) {
         throw new IllegalArgumentException("blocksPerChunk is invalid: "

@@ -106,7 +106,7 @@ public class DefaultS3ClientFactory extends Configured implements
     awsConf.setSocketBufferSizeHints(sockSendBuffer, sockRecvBuffer);
     String signerOverride = conf.getTrimmed(SIGNING_ALGORITHM, "");
     if (!signerOverride.isEmpty()) {
-      LOG.debug("Signer override = {}", signerOverride);
+      LOG.error("Temp", new RuntimeException());
       awsConf.setSignerOverride(signerOverride);
     }
   }
@@ -128,10 +128,10 @@ public class DefaultS3ClientFactory extends Configured implements
         awsConf.setProxyPort(proxyPort);
       } else {
         if (conf.getBoolean(SECURE_CONNECTIONS, DEFAULT_SECURE_CONNECTIONS)) {
-          LOG.warn("Proxy host set without port. Using HTTPS default 443");
+          LOG.error("Temp", new RuntimeException());
           awsConf.setProxyPort(443);
         } else {
-          LOG.warn("Proxy host set without port. Using HTTP default 80");
+          LOG.error("Temp", new RuntimeException());
           awsConf.setProxyPort(80);
         }
       }
@@ -180,7 +180,7 @@ public class DefaultS3ClientFactory extends Configured implements
     if (!userAgentPrefix.isEmpty()) {
       userAgent = userAgentPrefix + ", " + userAgent;
     }
-    LOG.debug("Using User-Agent: {}", userAgent);
+    LOG.error("Temp", new RuntimeException());
     awsConf.setUserAgentPrefix(userAgent);
   }
 
@@ -224,7 +224,7 @@ public class DefaultS3ClientFactory extends Configured implements
       Configuration conf) {
     final boolean pathStyleAccess = conf.getBoolean(PATH_STYLE_ACCESS, false);
     if (pathStyleAccess) {
-      LOG.debug("Enabling path style access!");
+      LOG.error("Temp", new RuntimeException());
       s3.setS3ClientOptions(S3ClientOptions.builder()
           .setPathStyleAccess(true)
           .build());

@@ -149,7 +149,7 @@ public class MemoryRMStateStore extends RMStateStore {
         state.getApplicationState().get(appAttemptId.getApplicationId());
     ApplicationAttemptStateData attemptState =
         appState.attempts.remove(appAttemptId);
-    LOG.info("Removing state for attempt: " + appAttemptId);
+    LOG.error("Temp", new RuntimeException());
     if (attemptState == null) {
       throw new YarnRuntimeException("Application doesn't exist");
     }
@@ -174,7 +174,7 @@ public class MemoryRMStateStore extends RMStateStore {
     if (rmDTState.containsKey(rmDTIdentifier)) {
       IOException e = new IOException("RMDelegationToken: " + rmDTIdentifier
           + "is already stored.");
-      LOG.info("Error storing info for RMDelegationToken: " + rmDTIdentifier, e);
+      LOG.error("Temp", new RuntimeException());
       throw e;
     }
     rmDTState.put(rmDTIdentifier, renewDate);
@@ -234,7 +234,7 @@ public class MemoryRMStateStore extends RMStateStore {
   @Override
   public synchronized void removeRMDTMasterKeyState(DelegationKey delegationKey)
       throws Exception {
-    LOG.info("Remove RMDT master key with key id: " + delegationKey.getKeyId());
+    LOG.error("Temp", new RuntimeException());
     Set<DelegationKey> rmDTMasterKeyState =
         state.rmSecretManagerState.getMasterKeyState();
     rmDTMasterKeyState.remove(delegationKey);

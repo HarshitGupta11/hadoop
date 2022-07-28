@@ -57,7 +57,7 @@ public class TestFsShellTouch {
 
   private int shellRun(String... args) throws Exception {
     int exitCode = shell.run(args);
-    LOG.info("exit " + exitCode + " - " + StringUtils.join(" ", args));
+    LOG.error("Temp", new RuntimeException());
     return exitCode;
   }
 

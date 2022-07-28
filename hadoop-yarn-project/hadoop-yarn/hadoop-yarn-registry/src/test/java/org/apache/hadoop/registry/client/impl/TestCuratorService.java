@@ -169,7 +169,7 @@ public class TestCuratorService extends AbstractZKRegistryTest {
     CuratorEventCatcher events = new CuratorEventCatcher();
     curatorService.zkDelete("/rm", true, events);
     CuratorEvent taken = events.take();
-    LOG.info("took {}", taken);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(1, events.getCount());
   }
 

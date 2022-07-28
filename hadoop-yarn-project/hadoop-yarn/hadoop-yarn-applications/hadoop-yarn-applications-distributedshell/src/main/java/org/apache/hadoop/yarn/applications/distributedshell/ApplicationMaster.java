@@ -372,7 +372,7 @@ public class ApplicationMaster {
     boolean result = false;
     try {
       ApplicationMaster appMaster = new ApplicationMaster();
-      LOG.info("Initializing ApplicationMaster");
+      LOG.error("Temp", new RuntimeException());
       boolean doRun = appMaster.init(args);
       if (!doRun) {
         System.exit(0);
@@ -385,10 +385,10 @@ public class ApplicationMaster {
       ExitUtil.terminate(1, t);
     }
     if (result) {
-      LOG.info("Application Master completed successfully. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(0);
     } else {
-      LOG.info("Application Master failed. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(2);
     }
   }
@@ -398,10 +398,10 @@ public class ApplicationMaster {
    */
   private void dumpOutDebugInfo() {
 
-    LOG.info("Dump debug output");
+    LOG.error("Temp", new RuntimeException());
     Map<String, String> envs = System.getenv();
     for (Map.Entry<String, String> env : envs.entrySet()) {
-      LOG.info("System env: key=" + env.getKey() + ", val=" + env.getValue());
+      LOG.error("Temp", new RuntimeException());
       System.out.println("System env: key=" + env.getKey() + ", val="
           + env.getValue());
     }
@@ -413,7 +413,7 @@ public class ApplicationMaster {
       buf = new BufferedReader(new StringReader(lines));
       String line = "";
       while ((line = buf.readLine()) != null) {
-        LOG.info("System CWD content: " + line);
+        LOG.error("Temp", new RuntimeException());
         System.out.println("System CWD content: " + line);
       }
     } catch (IOException e) {
@@ -493,7 +493,7 @@ public class ApplicationMaster {
         Log4jPropertyHelper.updateLog4jConfiguration(ApplicationMaster.class,
             log4jPath);
       } catch (Exception e) {
-        LOG.warn("Can not set up custom log4j properties. " + e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -508,9 +508,9 @@ public class ApplicationMaster {
 
     if (cliParser.hasOption("placement_spec")) {
       String placementSpec = cliParser.getOptionValue("placement_spec");
-      LOG.info("Placement Spec received [{}]", placementSpec);
+      LOG.error("Temp", new RuntimeException());
       parsePlacementSpecs(placementSpec);
-      LOG.info("Total num containers requested [{}]", numTotalContainers);
+      LOG.error("Temp", new RuntimeException());
       if (numTotalContainers == 0) {
         throw new IllegalArgumentException(
             "Cannot run distributed shell with no containers");
@@ -670,7 +670,7 @@ public class ApplicationMaster {
     if (!YarnConfiguration.timelineServiceEnabled(conf)) {
       timelineClient = null;
       timelineV2Client = null;
-      LOG.warn("Timeline service is not enabled");
+      LOG.error("Temp", new RuntimeException());
     }
 
     return true;
@@ -682,7 +682,7 @@ public class ApplicationMaster {
     byte[] decodedBytes = decoder.decode(
         placementSpecifications.getBytes(StandardCharsets.UTF_8));
     String decodedSpec = new String(decodedBytes, StandardCharsets.UTF_8);
-    LOG.info("Decode placement spec: " + decodedSpec);
+    LOG.error("Temp", new RuntimeException());
     Map<String, PlacementSpec> pSpecs =
         PlacementSpec.parse(decodedSpec);
     this.placementSpecs = new HashMap<>();
@@ -710,7 +710,7 @@ public class ApplicationMaster {
    */
   @SuppressWarnings({ "unchecked" })
   public void run() throws YarnException, IOException, InterruptedException {
-    LOG.info("Starting ApplicationMaster");
+    LOG.error("Temp", new RuntimeException());
 
     // Note: Credentials, Token, UserGroupInformation, DataOutputBuffer class
     // are marked as LimitedPrivate
@@ -720,10 +720,10 @@ public class ApplicationMaster {
     credentials.writeTokenStorageToStream(dob);
     // Now remove the AM->RM token so that containers cannot access it.
     Iterator<Token<?>> iter = credentials.getAllTokens().iterator();
-    LOG.info("Executing with tokens:");
+    LOG.error("Temp", new RuntimeException());
     while (iter.hasNext()) {
       Token<?> token = iter.next();
-      LOG.info(token.toString());
+      LOG.error("Temp", new RuntimeException());
       if (token.getKind().equals(AMRMTokenIdentifier.KIND_NAME)) {
         iter.remove();
       }
@@ -788,10 +788,10 @@ public class ApplicationMaster {
     // Dump out information about cluster capability as seen by the
     // resource manager
     long maxMem = response.getMaximumResourceCapability().getMemorySize();
-    LOG.info("Max mem capability of resources in this cluster " + maxMem);
+    LOG.error("Temp", new RuntimeException());
     
     int maxVCores = response.getMaximumResourceCapability().getVirtualCores();
-    LOG.info("Max vcores capability of resources in this cluster " + maxVCores);
+    LOG.error("Temp", new RuntimeException());
 
     // A resource ask cannot exceed the max.
     if (containerMemory > maxMem) {
@@ -861,19 +861,19 @@ public class ApplicationMaster {
               timelineClient = TimelineClient.createTimelineClient();
               timelineClient.init(conf);
               timelineClient.start();
-              LOG.info("Timeline service V1 client is enabled");
+              LOG.error("Temp", new RuntimeException());
             }
             if (timelineServiceV2Enabled) {
               timelineV2Client = TimelineV2Client.createTimelineClient(
                   appAttemptID.getApplicationId());
               timelineV2Client.init(conf);
               timelineV2Client.start();
-              LOG.info("Timeline service V2 client is enabled");
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             timelineClient = null;
             timelineV2Client = null;
-            LOG.warn("Timeline service is not enabled");
+            LOG.error("Temp", new RuntimeException());
           }
           return null;
         }
@@ -915,18 +915,18 @@ public class ApplicationMaster {
       try {
         launchThread.join(10000);
       } catch (InterruptedException e) {
-        LOG.info("Exception thrown in thread join: " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
         e.printStackTrace();
       }
     }
 
     // When the application completes, it should stop all running containers
-    LOG.info("Application completed. Stopping running containers");
+    LOG.error("Temp", new RuntimeException());
     nmClientAsync.stop();
 
     // When the application completes, it should send a finish application
     // signal to the RM
-    LOG.info("Application completed. Signalling finish to RM");
+    LOG.error("Temp", new RuntimeException());
 
     FinalApplicationStatus appStatus;
     String appMessage = null;
@@ -940,7 +940,7 @@ public class ApplicationMaster {
           + ", completed=" + numCompletedContainers.get() + ", allocated="
           + numAllocatedContainers.get() + ", failed="
           + numFailedContainers.get();
-      LOG.info(appMessage);
+      LOG.error("Temp", new RuntimeException());
       success = false;
     }
     try {
@@ -1120,7 +1120,7 @@ public class ApplicationMaster {
       }
       totalRetries.addAndGet(-1 * reqsToRetry.size());
       if (totalRetries.get() <= 0) {
-        LOG.info("Exiting, since retries are exhausted !!");
+        LOG.error("Temp", new RuntimeException());
         done = true;
       } else {
         amRMClient.addSchedulingRequests(reqsToRetry);
@@ -1168,7 +1168,7 @@ public class ApplicationMaster {
     @Override
     public void onContainerStopped(ContainerId containerId) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Succeeded to stop Container " + containerId);
+        LOG.error("Temp", new RuntimeException());
       }
       containers.remove(containerId);
     }
@@ -1204,7 +1204,7 @@ public class ApplicationMaster {
     public void onContainerStarted(ContainerId containerId,
         Map<String, ByteBuffer> allServiceResponse) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Succeeded to start Container " + containerId);
+        LOG.error("Temp", new RuntimeException());
       }
       Container container = containers.get(containerId);
       if (container != null) {
@@ -1431,7 +1431,7 @@ public class ApplicationMaster {
         null, null, pri, 0, true, null,
         ExecutionTypeRequest.newInstance(containerType),
         containerResourceProfile);
-    LOG.info("Requested container ask: " + request.toString());
+    LOG.error("Temp", new RuntimeException());
     return request;
   }
 
@@ -1444,7 +1444,7 @@ public class ApplicationMaster {
         ResourceSizing.newInstance(
             getTaskResourceCapability()), null);
     sReq.setPlacementConstraint(spec.constraint);
-    LOG.info("Scheduling Request made: " + sReq.toString());
+    LOG.error("Temp", new RuntimeException());
     return sReq;
   }
 
@@ -1560,7 +1560,7 @@ public class ApplicationMaster {
       TimelinePutResponse response) {
     List<TimelinePutResponse.TimelinePutError> errors = response.getErrors();
     if (errors.size() == 0) {
-      LOG.debug("Timeline entities are successfully put");
+      LOG.error("Temp", new RuntimeException());
     } else {
       for (TimelinePutResponse.TimelinePutError error : errors) {
         LOG.error(

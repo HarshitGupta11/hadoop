@@ -150,7 +150,7 @@ public abstract class TimelineWriter implements Flushable {
     WebResource webResource = client.resource(resURI);
     if (path == null) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("POST to " + resURI);
+        LOG.error("Temp", new RuntimeException());
       }
       ClientResponse r = webResource.accept(MediaType.APPLICATION_JSON)
           .type(MediaType.APPLICATION_JSON)
@@ -159,7 +159,7 @@ public abstract class TimelineWriter implements Flushable {
       return r;
     } else if (path.equals("domain")) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("PUT to " + resURI +"/" + path);
+        LOG.error("Temp", new RuntimeException());
       }
       ClientResponse r = webResource.path(path).accept(MediaType.APPLICATION_JSON)
           .type(MediaType.APPLICATION_JSON)

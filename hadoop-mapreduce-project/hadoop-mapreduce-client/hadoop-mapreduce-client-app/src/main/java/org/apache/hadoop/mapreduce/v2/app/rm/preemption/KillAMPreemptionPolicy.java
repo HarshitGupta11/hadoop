@@ -73,7 +73,7 @@ public class KillAMPreemptionPolicy implements AMPreemptionPolicy {
   private void killContainer(Context ctxt, PreemptionContainer c){
     ContainerId reqCont = c.getId();
     TaskAttemptId reqTask = ctxt.getTaskAttempt(reqCont);
-    LOG.info("Evicting " + reqTask);
+    LOG.error("Temp", new RuntimeException());
     dispatcher.handle(new TaskAttemptEvent(reqTask,
         TaskAttemptEventType.TA_KILL));
 

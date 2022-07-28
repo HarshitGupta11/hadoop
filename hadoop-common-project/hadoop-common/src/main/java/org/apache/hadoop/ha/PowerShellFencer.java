@@ -47,7 +47,7 @@ public class PowerShellFencer extends Configured implements FenceMethod {
 
   @Override
   public void checkArgs(String argStr) throws BadFencingConfigurationException {
-    LOG.info("The parameter for the PowerShell fencer is " + argStr);
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -66,14 +66,14 @@ public class PowerShellFencer extends Configured implements FenceMethod {
     }
 
     // Execute PowerShell script
-    LOG.info("Executing " + ps1script);
+    LOG.error("Temp", new RuntimeException());
     ProcessBuilder builder = new ProcessBuilder("powershell.exe", ps1script);
     Process p = null;
     try {
       p = builder.start();
       p.getOutputStream().close();
     } catch (IOException e) {
-      LOG.warn("Unable to execute " + ps1script, e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -93,7 +93,7 @@ public class PowerShellFencer extends Configured implements FenceMethod {
       errPumper.join();
       outPumper.join();
     } catch (InterruptedException ie) {
-      LOG.warn("Interrupted while waiting for fencing command: " + ps1script);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
 
@@ -134,7 +134,7 @@ public class PowerShellFencer extends Configured implements FenceMethod {
       // Kill it
       cmd += " |% { $_.Terminate() }";
 
-      LOG.info("PowerShell command: " + cmd);
+      LOG.error("Temp", new RuntimeException());
       writer.write(cmd);
       writer.flush();
 

@@ -628,7 +628,7 @@ public class EncryptionZoneManager {
     final String zoneName = zoneIIP.getPath();
     checkEncryptionZoneRoot(zoneIIP.getLastINode(), zoneName);
     reencryptionHandler.cancelZone(zoneId, zoneName);
-    LOG.info("Cancelled zone {}({}) for re-encryption.", zoneName, zoneId);
+    LOG.error("Temp", new RuntimeException());
     return FSDirEncryptionZoneOp.updateReencryptionFinish(dir, zoneIIP,
         reencryptionStatus.getZoneStatus(zoneId));
   }

@@ -424,7 +424,7 @@ final class FileChecksumHelper {
             LOG.debug("set bytesPerCRC=" + getBytesPerCRC()
                 + ", crcPerBlock=" + getCrcPerBlock());
           }
-          LOG.debug("got reply from " + datanode + ": md5=" + md5);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -584,7 +584,7 @@ final class FileChecksumHelper {
             LOG.debug("set bytesPerCRC=" + getBytesPerCRC()
                 + ", crcPerBlock=" + getCrcPerBlock());
           }
-          LOG.debug("got reply from " + datanode + ": md5=" + md5);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

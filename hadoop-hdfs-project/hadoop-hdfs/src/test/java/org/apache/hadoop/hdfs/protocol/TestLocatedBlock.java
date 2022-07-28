@@ -40,7 +40,7 @@ public class TestLocatedBlock {
       l1.addCachedLoc(dn);
       fail("Adding dn when block is empty should throw");
     } catch (IllegalArgumentException e) {
-      LOG.info("Expected exception:", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

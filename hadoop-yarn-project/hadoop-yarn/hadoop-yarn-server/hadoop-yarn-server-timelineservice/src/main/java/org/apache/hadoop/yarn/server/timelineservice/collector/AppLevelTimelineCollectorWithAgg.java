@@ -96,7 +96,7 @@ public class AppLevelTimelineCollectorWithAgg
   protected void serviceStop() throws Exception {
     appAggregationExecutor.shutdown();
     if (!appAggregationExecutor.awaitTermination(10, TimeUnit.SECONDS)) {
-      LOG.info("App-level aggregator shutdown timed out, shutdown now. ");
+      LOG.error("Temp", new RuntimeException());
       appAggregationExecutor.shutdownNow();
     }
     // Perform one round of aggregation after the aggregation executor is done.
@@ -112,9 +112,9 @@ public class AppLevelTimelineCollectorWithAgg
   private class AppLevelAggregator implements Runnable {
 
     private void aggregate() {
-      LOG.debug("App-level real-time aggregating");
+      LOG.error("Temp", new RuntimeException());
       if (!isReadyToAggregate()) {
-        LOG.warn("App-level collector is not ready, skip aggregation. ");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
       try {
@@ -123,7 +123,7 @@ public class AppLevelTimelineCollectorWithAgg
             = getAggregationGroups();
         if (aggregationGroups == null
             || aggregationGroups.isEmpty()) {
-          LOG.debug("App-level collector is empty, skip aggregation. ");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
         TimelineEntity resultEntity = TimelineCollector.aggregateWithoutGroupId(
@@ -135,7 +135,7 @@ public class AppLevelTimelineCollectorWithAgg
       } catch (Exception e) {
         LOG.error("Error aggregating timeline metrics", e);
       }
-      LOG.debug("App-level real-time aggregation complete");
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override

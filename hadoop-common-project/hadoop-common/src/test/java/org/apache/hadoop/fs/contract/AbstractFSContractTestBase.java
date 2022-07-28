@@ -172,7 +172,7 @@ public abstract class AbstractFSContractTestBase extends Assert
    */
   @Before
   public void setup() throws Exception {
-    LOG.debug("== Setup ==");
+    LOG.error("Temp", new RuntimeException());
     contract = createContract(createConfiguration());
     contract.init();
     //skip tests if they aren't enabled
@@ -191,7 +191,7 @@ public abstract class AbstractFSContractTestBase extends Assert
     //create the test path
     testPath = getContract().getTestPath();
     mkdirs(testPath);
-    LOG.debug("== Setup complete ==");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -200,9 +200,9 @@ public abstract class AbstractFSContractTestBase extends Assert
    */
   @After
   public void teardown() throws Exception {
-    LOG.debug("== Teardown ==");
+    LOG.error("Temp", new RuntimeException());
     deleteTestDirInTeardown();
-    LOG.debug("== Teardown complete ==");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -252,7 +252,7 @@ public abstract class AbstractFSContractTestBase extends Assert
    * @param text description
    */
   protected void describe(String text) {
-    LOG.info(text);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**

@@ -67,7 +67,7 @@ public class InMemoryAliasMapProtocolClientSideTranslatorPB
 
     RPC.setProtocolEngine(conf, AliasMapProtocolPB.class,
         ProtobufRpcEngine.class);
-    LOG.info("Connecting to address: " + addr);
+    LOG.error("Temp", new RuntimeException());
     try {
       rpcProxy = RPC.getProxy(AliasMapProtocolPB.class,
           RPC.getProtocolVersion(AliasMapProtocolPB.class), aliasMapAddr, null,

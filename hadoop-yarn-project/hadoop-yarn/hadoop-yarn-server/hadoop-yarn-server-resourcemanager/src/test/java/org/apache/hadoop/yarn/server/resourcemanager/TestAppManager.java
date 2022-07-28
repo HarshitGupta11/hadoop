@@ -998,7 +998,7 @@ public class TestAppManager{
     RMAppManager.ApplicationSummary.SummaryBuilder summary =
         new RMAppManager.ApplicationSummary().createAppSummary(app);
     String msg = summary.toString();
-    LOG.info("summary: " + msg);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertFalse(msg.contains("\n"));
     Assert.assertFalse(msg.contains("\r"));
 

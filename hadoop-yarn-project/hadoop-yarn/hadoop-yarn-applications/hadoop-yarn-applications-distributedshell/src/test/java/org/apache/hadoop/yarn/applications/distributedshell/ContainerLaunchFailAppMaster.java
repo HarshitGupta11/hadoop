@@ -61,7 +61,7 @@ public class ContainerLaunchFailAppMaster extends ApplicationMaster {
     try {
       ContainerLaunchFailAppMaster appMaster =
         new ContainerLaunchFailAppMaster();
-      LOG.info("Initializing ApplicationMaster");
+      LOG.error("Temp", new RuntimeException());
       boolean doRun = appMaster.init(args);
       if (!doRun) {
         System.exit(0);
@@ -73,10 +73,10 @@ public class ContainerLaunchFailAppMaster extends ApplicationMaster {
       System.exit(1);
     }
     if (result) {
-      LOG.info("Application Master completed successfully. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(0);
     } else {
-      LOG.info("Application Master failed. exiting");
+      LOG.error("Temp", new RuntimeException());
       System.exit(2);
     }
   }

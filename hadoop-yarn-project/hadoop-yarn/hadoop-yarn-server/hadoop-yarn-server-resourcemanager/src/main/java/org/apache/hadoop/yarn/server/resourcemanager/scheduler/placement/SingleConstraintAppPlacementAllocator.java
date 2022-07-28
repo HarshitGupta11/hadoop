@@ -453,7 +453,7 @@ public class SingleConstraintAppPlacementAllocator<N extends SchedulerNode>
           appSchedulingInfo.getApplicationId(), schedulingRequest, node,
           placementConstraintManager, allocationTagsManager);
     } catch (InvalidAllocationTagsQueryException e) {
-      LOG.warn("Failed to query node cardinality:", e);
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
   }
@@ -511,7 +511,7 @@ public class SingleConstraintAppPlacementAllocator<N extends SchedulerNode>
     try {
       readLock.lock();
       if (schedulingRequest != null) {
-        LOG.info(schedulingRequest.toString());
+        LOG.error("Temp", new RuntimeException());
       }
     } finally {
       readLock.unlock();

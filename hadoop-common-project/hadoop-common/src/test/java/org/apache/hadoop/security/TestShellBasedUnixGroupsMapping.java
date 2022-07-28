@@ -65,7 +65,7 @@ public class TestShellBasedUnixGroupsMapping {
 
         when(executor.getOutput()).thenReturn("");
       } catch (IOException e) {
-        TESTLOG.warn(e.getMessage());
+        TESTLOG.error("Temp", new RuntimeException());
       }
       return executor;
     }
@@ -100,7 +100,7 @@ public class TestShellBasedUnixGroupsMapping {
 
         when(executor.getOutput()).thenReturn("9999\n9999 abc def");
       } catch (IOException e) {
-        TESTLOG.warn(e.getMessage());
+        TESTLOG.error("Temp", new RuntimeException());
       }
       return executor;
     }
@@ -143,7 +143,7 @@ public class TestShellBasedUnixGroupsMapping {
         doNothing().when(executor).execute();
         when(executor.getOutput()).thenReturn("23\n23 groupname zzz");
       } catch (IOException e) {
-        TESTLOG.warn(e.getMessage());
+        TESTLOG.error("Temp", new RuntimeException());
       }
       return executor;
     }
@@ -156,7 +156,7 @@ public class TestShellBasedUnixGroupsMapping {
         doNothing().when(executor).execute();
         when(executor.getOutput()).thenReturn("111\n111 112 113");
       } catch (IOException e) {
-        TESTLOG.warn(e.getMessage());
+        TESTLOG.error("Temp", new RuntimeException());
       }
       return executor;
     }
@@ -189,7 +189,7 @@ public class TestShellBasedUnixGroupsMapping {
         doNothing().when(executor).execute();
         when(executor.getOutput()).thenReturn("abc\ndef abc hij");
       } catch (IOException e) {
-        TESTLOG.warn(e.getMessage());
+        TESTLOG.error("Temp", new RuntimeException());
       }
       return executor;
     }
@@ -202,7 +202,7 @@ public class TestShellBasedUnixGroupsMapping {
         doNothing().when(executor).execute();
         when(executor.getOutput()).thenReturn("1\n1 2 3");
       } catch (IOException e) {
-        TESTLOG.warn(e.getMessage());
+        TESTLOG.error("Temp", new RuntimeException());
       }
       return executor;
     }

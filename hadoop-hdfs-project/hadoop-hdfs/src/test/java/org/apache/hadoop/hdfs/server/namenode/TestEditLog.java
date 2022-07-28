@@ -645,7 +645,7 @@ public class TestEditLog {
       assertTrue(editFile.exists());
   
       long fileLen = editFile.length();
-      LOG.debug("Corrupting Log File: " + editFile + " len: " + fileLen);
+      LOG.error("Temp", new RuntimeException());
       RandomAccessFile rwf = new RandomAccessFile(editFile, "rw");
       rwf.seek(fileLen-4); // seek to checksum bytes
       int b = rwf.readInt();
@@ -716,11 +716,11 @@ public class TestEditLog {
         File dfsDir = nameDir.getParentFile();
         assertEquals(dfsDir.getName(), "dfs"); // make sure we got right dir
         
-        LOG.info("Copying data directory aside to a hot backup");
+        LOG.error("Temp", new RuntimeException());
         File backupDir = new File(dfsDir.getParentFile(), "dfs.backup-while-running");
         FileUtils.copyDirectory(dfsDir, backupDir);
 
-        LOG.info("Shutting down cluster #1");
+        LOG.error("Temp", new RuntimeException());
         cluster.shutdown();
         cluster = null;
         
@@ -881,7 +881,7 @@ public class TestEditLog {
       }
     } catch (IOException ioe) {
       if (shouldSucceed) {
-        LOG.info("Should have succeeded in starting cluster, but failed", ioe);
+        LOG.error("Temp", new RuntimeException());
         throw ioe;
       } else {
         GenericTestUtils.assertExceptionContains(
@@ -1263,7 +1263,7 @@ public class TestEditLog {
       FSEditLogLoader.EditLogValidation val =
           FSEditLogLoader.scanEditLog(edits, Long.MAX_VALUE);
       long read = (val.getEndTxId() - edits.getFirstTxId()) + 1;
-      LOG.info("Loading edits " + edits + " read " + read);
+      LOG.error("Temp", new RuntimeException());
       assertEquals(startTxId, edits.getFirstTxId());
       startTxId += read;
       totaltxnread += read;
@@ -1477,7 +1477,7 @@ public class TestEditLog {
     assertEquals(1, files.length);
 
     long fileLen = files[0].length();
-    LOG.debug("Corrupting Log File: " + files[0] + " len: " + fileLen);
+    LOG.error("Temp", new RuntimeException());
     RandomAccessFile rwf = new RandomAccessFile(files[0], "rw");
     rwf.seek(fileLen-4); // seek to checksum bytes
     int b = rwf.readInt();

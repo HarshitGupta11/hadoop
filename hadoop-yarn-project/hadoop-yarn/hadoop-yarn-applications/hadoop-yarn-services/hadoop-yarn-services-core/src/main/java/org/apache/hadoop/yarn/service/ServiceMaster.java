@@ -102,7 +102,7 @@ public class ServiceMaster extends CompositeService {
     ContainerId amContainerId = getAMContainerId();
 
     ApplicationAttemptId attemptId = amContainerId.getApplicationAttemptId();
-    LOG.info("Service AppAttemptId: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     context.attemptId = attemptId;
 
     // configure AM to wait forever for RM
@@ -141,7 +141,7 @@ public class ServiceMaster extends CompositeService {
     Iterator<Token<?>> iter = copy.getAllTokens().iterator();
     while (iter.hasNext()) {
       Token<?> token = iter.next();
-      LOG.info(token.toString());
+      LOG.error("Temp", new RuntimeException());
       if (token.getKind().equals(AMRMTokenIdentifier.KIND_NAME)) {
         iter.remove();
       }
@@ -158,7 +158,7 @@ public class ServiceMaster extends CompositeService {
     File keytab = new File(String.format(KEYTAB_LOCATION,
         context.service.getName()));
     if (!keytab.exists()) {
-      LOG.info("No keytab localized at " + keytab);
+      LOG.error("Temp", new RuntimeException());
       // Check if there exists a pre-installed keytab at host
       String preInstalledKeytab = context.service.getKerberosPrincipal()
           .getKeytab();
@@ -172,7 +172,7 @@ public class ServiceMaster extends CompositeService {
       }
     }
     if (!keytab.exists()) {
-      LOG.info("No keytab exists: " + keytab);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
     String principal = context.service.getKerberosPrincipal()
@@ -214,7 +214,7 @@ public class ServiceMaster extends CompositeService {
       Token<? extends TokenIdentifier> token = iter.next();
       if (token.getKind().equals(
           DelegationTokenIdentifier.HDFS_DELEGATION_KIND)) {
-        LOG.info("Remove HDFS delegation token {}.", token);
+        LOG.error("Temp", new RuntimeException());
         iter.remove();
       }
     }
@@ -239,7 +239,7 @@ public class ServiceMaster extends CompositeService {
     context.service = ServiceApiUtil
         .loadServiceFrom(fs, new Path(serviceDefPath));
     context.service.setState(ServiceState.ACCEPTED);
-    LOG.info(context.service.toString());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override
@@ -255,7 +255,7 @@ public class ServiceMaster extends CompositeService {
   }
   @Override
   protected void serviceStop() throws Exception {
-    LOG.info("Stopping app master");
+    LOG.error("Temp", new RuntimeException());
     super.serviceStop();
   }
 
@@ -296,7 +296,7 @@ public class ServiceMaster extends CompositeService {
 
   private void printSystemEnv() {
     for (Map.Entry<String, String> envs : System.getenv().entrySet()) {
-      LOG.info("{} = {}", envs.getKey(), envs.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

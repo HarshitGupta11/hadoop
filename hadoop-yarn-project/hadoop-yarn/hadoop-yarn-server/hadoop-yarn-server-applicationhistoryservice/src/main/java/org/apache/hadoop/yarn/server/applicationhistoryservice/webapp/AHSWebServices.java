@@ -287,7 +287,7 @@ public class AHSWebServices extends WebServices {
           nodeHttpAddress = getNMWebAddressFromRM(conf, nmId);
         } catch (Exception ex) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug(ex.getMessage());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }
@@ -427,7 +427,7 @@ public class AHSWebServices extends WebServices {
           nodeHttpAddress = getNMWebAddressFromRM(conf, nmId);
         } catch (Exception ex) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug(ex.getMessage());
+            LOG.error("Temp", new RuntimeException());
           }
         }
       }

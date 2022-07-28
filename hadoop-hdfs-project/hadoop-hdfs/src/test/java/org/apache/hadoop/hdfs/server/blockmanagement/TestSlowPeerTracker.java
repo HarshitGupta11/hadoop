@@ -222,7 +222,7 @@ public class TestSlowPeerTracker {
   private Set<ReportForJson> getAndDeserializeJson()
       throws IOException {
     final String json = tracker.getJson();
-    LOG.info("Got JSON: {}", json);
+    LOG.error("Temp", new RuntimeException());
     return READER.readValue(json);
   }
 }

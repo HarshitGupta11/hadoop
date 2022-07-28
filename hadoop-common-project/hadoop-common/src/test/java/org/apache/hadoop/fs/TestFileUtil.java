@@ -438,7 +438,7 @@ public class TestFileUtil {
   public void testFailFullyDelete() throws IOException {
     // Windows Dir.setWritable(false) does not work for directories
     assumeNotWindows();
-    LOG.info("Running test to verify failure of fullyDelete()");
+    LOG.error("Temp", new RuntimeException());
     setupDirsAndNonWritablePermissions();
     boolean ret = FileUtil.fullyDelete(new MyFile(del));
     validateAndSetWritablePermissions(true, ret);
@@ -478,7 +478,7 @@ public class TestFileUtil {
      */
     @Override
     public boolean delete() {
-      LOG.info("Trying to delete myFile " + getAbsolutePath());
+      LOG.error("Temp", new RuntimeException());
       boolean bool = false;
       if (getName().equals(file1Name)) {
         bool = false;
@@ -486,9 +486,9 @@ public class TestFileUtil {
         bool = super.delete();
       }
       if (bool) {
-        LOG.info("Deleted " + getAbsolutePath() + " successfully");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info("Cannot delete " + getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
       }
       return bool;
     }
@@ -517,7 +517,7 @@ public class TestFileUtil {
   public void testFailFullyDeleteContents() throws IOException {
     // Windows Dir.setWritable(false) does not work for directories
     assumeNotWindows();
-    LOG.info("Running test to verify failure of fullyDeleteContents()");
+    LOG.error("Temp", new RuntimeException());
     setupDirsAndNonWritablePermissions();
     boolean ret = FileUtil.fullyDeleteContents(new MyFile(del));
     validateAndSetWritablePermissions(true, ret);
@@ -1062,7 +1062,7 @@ public class TestFileUtil {
         try {
           jarFile.close();
         } catch (IOException e) {
-          LOG.warn("exception closing jarFile: " + classPathJar, e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

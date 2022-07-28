@@ -49,7 +49,7 @@ public class TestLazyWriter extends LazyPersistTestCase {
     makeTestFile(path, BLOCK_SIZE * NUM_BLOCKS, true);
     LocatedBlocks locatedBlocks = ensureFileReplicasOnStorageType(path, RAM_DISK);
     waitForMetric("RamDiskBlocksLazyPersisted", NUM_BLOCKS);
-    LOG.info("Verifying copy was saved to lazyPersist/");
+    LOG.error("Temp", new RuntimeException());
 
     // Make sure that there is a saved copy of the replica on persistent
     // storage.
@@ -147,7 +147,7 @@ public class TestLazyWriter extends LazyPersistTestCase {
     Collections.shuffle(indexes);
 
     for (int i = 0; i < NUM_PATHS; ++i) {
-      LOG.info("Touching file " + paths[indexes.get(i)]);
+      LOG.error("Temp", new RuntimeException());
       DFSTestUtil.readFile(fs, paths[indexes.get(i)]);
     }
 

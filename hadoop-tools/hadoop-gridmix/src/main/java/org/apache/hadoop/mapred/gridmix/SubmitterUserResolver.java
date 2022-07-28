@@ -33,7 +33,7 @@ public class SubmitterUserResolver implements UserResolver {
   private UserGroupInformation ugi = null;
 
   public SubmitterUserResolver() throws IOException {
-    LOG.info(" Current user resolver is SubmitterUserResolver ");
+    LOG.error("Temp", new RuntimeException());
     ugi = UserGroupInformation.getLoginUser();
   }
 

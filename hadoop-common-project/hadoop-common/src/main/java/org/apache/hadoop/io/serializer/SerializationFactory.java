@@ -72,7 +72,7 @@ public class SerializationFactory extends Configured {
       serializations.add((Serialization)
       ReflectionUtils.newInstance(serializionClass, getConf()));
     } catch (ClassNotFoundException e) {
-      LOG.warn("Serialization class not found: ", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

@@ -89,9 +89,9 @@ public class TestCombineSequenceFileInputFormat {
     for (int i = 0; i < 3; i++) {
       int numSplits =
         random.nextInt(length/(SequenceFile.SYNC_INTERVAL/20)) + 1;
-      LOG.info("splitting: requesting = " + numSplits);
+      LOG.error("Temp", new RuntimeException());
       List<InputSplit> splits = format.getSplits(job);
-      LOG.info("splitting: got =        " + splits.size());
+      LOG.error("Temp", new RuntimeException());
 
       // we should have a single split as the length is comfortably smaller than
       // the block size
@@ -118,7 +118,7 @@ public class TestCombineSequenceFileInputFormat {
           BytesWritable value = reader.getCurrentValue();
           assertNotNull("Value should not be null.", value);
           final int k = key.get();
-          LOG.debug("read " + k);
+          LOG.error("Temp", new RuntimeException());
           assertFalse("Key in multiple partitions.", bits.get(k));
           bits.set(k);
         }

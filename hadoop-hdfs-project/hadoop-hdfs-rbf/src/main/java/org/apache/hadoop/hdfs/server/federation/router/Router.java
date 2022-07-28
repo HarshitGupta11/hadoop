@@ -485,7 +485,7 @@ public class Router extends CompositeService {
   protected NamenodeHeartbeatService createNamenodeHearbeatService(
       String nsId, String nnId) {
 
-    LOG.info("Creating heartbeat service for Namenode {} in {}", nnId, nsId);
+    LOG.error("Temp", new RuntimeException());
     NamenodeHeartbeatService ret = new NamenodeHeartbeatService(
         namenodeResolver, nsId, nnId);
     return ret;

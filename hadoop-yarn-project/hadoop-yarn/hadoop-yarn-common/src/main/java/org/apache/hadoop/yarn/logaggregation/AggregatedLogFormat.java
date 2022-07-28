@@ -238,7 +238,7 @@ public class AggregatedLogFormat {
         // We only aggregate top level files.
         // Ignore anything inside sub-folders.
         if (logFile.isDirectory()) {
-          LOG.warn(logFile.getAbsolutePath() + " is a directory. Ignore it.");
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
 
@@ -553,7 +553,7 @@ public class AggregatedLogFormat {
           writer.close();
         }
       } catch (Exception e) {
-        LOG.warn("Exception closing writer", e);
+        LOG.error("Temp", new RuntimeException());
       } finally {
         IOUtils.cleanupWithLogger(LOG, this.fsDataOStream);
       }

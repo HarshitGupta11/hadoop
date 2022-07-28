@@ -96,7 +96,7 @@ public class TestFileSystemApplicationHistoryStore extends
 
   @Test
   public void testReadWriteHistoryData() throws IOException {
-    LOG.info("Starting testReadWriteHistoryData");
+    LOG.error("Temp", new RuntimeException());
     testWriteHistoryData(5);
     testReadHistoryData(5);
   }
@@ -198,7 +198,7 @@ public class TestFileSystemApplicationHistoryStore extends
 
   @Test
   public void testWriteAfterApplicationFinish() throws IOException {
-    LOG.info("Starting testWriteAfterApplicationFinish");
+    LOG.error("Temp", new RuntimeException());
     ApplicationId appId = ApplicationId.newInstance(0, 1);
     writeApplicationStartData(appId);
     writeApplicationFinishData(appId);
@@ -235,7 +235,7 @@ public class TestFileSystemApplicationHistoryStore extends
 
   @Test
   public void testMassiveWriteContainerHistoryData() throws IOException {
-    LOG.info("Starting testMassiveWriteContainerHistoryData");
+    LOG.error("Temp", new RuntimeException());
     long mb = 1024 * 1024;
     long usedDiskBefore = fs.getContentSummary(fsWorkingPath).getLength() / mb;
     ApplicationId appId = ApplicationId.newInstance(0, 1);
@@ -254,21 +254,21 @@ public class TestFileSystemApplicationHistoryStore extends
 
   @Test
   public void testMissingContainerHistoryData() throws IOException {
-    LOG.info("Starting testMissingContainerHistoryData");
+    LOG.error("Temp", new RuntimeException());
     testWriteHistoryData(3, true, false);
     testReadHistoryData(3, true, false);
   }
   
   @Test
   public void testMissingApplicationAttemptHistoryData() throws IOException {
-    LOG.info("Starting testMissingApplicationAttemptHistoryData");
+    LOG.error("Temp", new RuntimeException());
     testWriteHistoryData(3, false, true);
     testReadHistoryData(3, false, true);
   }
 
   @Test
   public void testInitExistingWorkingDirectoryInSafeMode() throws Exception {
-    LOG.info("Starting testInitExistingWorkingDirectoryInSafeMode");
+    LOG.error("Temp", new RuntimeException());
     tearDown();
 
     // Setup file system to inject startup conditions
@@ -290,7 +290,7 @@ public class TestFileSystemApplicationHistoryStore extends
 
   @Test
   public void testInitNonExistingWorkingDirectoryInSafeMode() throws Exception {
-    LOG.info("Starting testInitNonExistingWorkingDirectoryInSafeMode");
+    LOG.error("Temp", new RuntimeException());
     tearDown();
 
     // Setup file system to inject startup conditions

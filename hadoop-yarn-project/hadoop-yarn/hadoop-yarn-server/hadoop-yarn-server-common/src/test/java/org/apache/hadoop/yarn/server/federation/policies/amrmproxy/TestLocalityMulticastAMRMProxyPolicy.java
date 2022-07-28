@@ -152,7 +152,7 @@ public class TestLocalityMulticastAMRMProxyPolicy
             .splitResourceRequests(resourceRequests);
 
     // pretty print requests
-    LOG.info("Initial headroom");
+    LOG.error("Temp", new RuntimeException());
     prettyPrintRequests(response);
 
     validateSplit(response, resourceRequests);
@@ -176,7 +176,7 @@ public class TestLocalityMulticastAMRMProxyPolicy
     response = ((FederationAMRMProxyPolicy) getPolicy())
         .splitResourceRequests(resourceRequests);
 
-    LOG.info("After headroom update");
+    LOG.error("Temp", new RuntimeException());
     prettyPrintRequests(response);
     validateSplit(response, resourceRequests);
 
@@ -512,7 +512,7 @@ public class TestLocalityMulticastAMRMProxyPolicy
             + rr.getResourceName() + " numCont:" + rr.getNumContainers()
             + "], ";
       }
-      LOG.info(entry.getKey() + " --> " + str);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

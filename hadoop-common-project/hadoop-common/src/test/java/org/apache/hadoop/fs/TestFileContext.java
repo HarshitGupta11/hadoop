@@ -36,7 +36,7 @@ public class TestFileContext {
       FileContext.getFileContext(conf);
       fail(UnsupportedFileSystemException.class + " not thrown!");
     } catch (UnsupportedFileSystemException ufse) {
-      LOG.info("Expected exception: ", ufse);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 }

@@ -156,7 +156,7 @@ public class YarnRegistryViewForProviders {
   public ServiceRecord getComponent(String componentName) throws IOException {
     String path = RegistryUtils.componentPath(
         user, serviceClass, instanceName, componentName);
-    LOG.info("Resolving path {}", path);
+    LOG.error("Temp", new RuntimeException());
     return registryOperations.resolve(path);
   }
 
@@ -222,7 +222,7 @@ public class YarnRegistryViewForProviders {
     String path = RegistryUtils.componentPath(
         user, serviceClass, instanceName,
         containerId);
-    LOG.info(instanceId + ": Deleting registry path " + path);
+    LOG.error("Temp", new RuntimeException());
     registryOperations.delete(path, false);
   }
 

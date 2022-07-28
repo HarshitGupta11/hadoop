@@ -259,7 +259,7 @@ public class TestMetricsSourceAdapter {
       try {
         // This resets lastRecs.
         sa.getMetrics(builder, true);
-        LOG.info("reset lastRecs");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
         // catch all errors
         hasError.set(true);
@@ -307,7 +307,7 @@ public class TestMetricsSourceAdapter {
         for (MBeanAttributeInfo mBeanAttributeInfo : info.getAttributes()) {
           // Found the new key, update the metric source and move on.
           if (mBeanAttributeInfo.getName().equals(key)) {
-            LOG.info("found key/val=" + cnt + "/" + cnt);
+            LOG.error("Temp", new RuntimeException());
             cnt++;
             src.setKV("key" + cnt, cnt);
             return;

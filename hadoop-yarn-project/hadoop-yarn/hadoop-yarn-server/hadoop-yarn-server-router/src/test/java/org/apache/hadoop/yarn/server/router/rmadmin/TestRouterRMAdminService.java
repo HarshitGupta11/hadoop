@@ -95,82 +95,82 @@ public class TestRouterRMAdminService extends BaseRouterRMAdminTest {
 
     String user = "test1";
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Queues");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshQueuesResponse responseRefreshQueues = refreshQueues(user);
     Assert.assertNotNull(responseRefreshQueues);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Nodes");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshNodesResponse responseRefreshNodes = refreshNodes(user);
     Assert.assertNotNull(responseRefreshNodes);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Super User");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshSuperUserGroupsConfigurationResponse responseRefreshSuperUser =
         refreshSuperUserGroupsConfiguration(user);
     Assert.assertNotNull(responseRefreshSuperUser);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh User to Group");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshUserToGroupsMappingsResponse responseRefreshUserToGroup =
         refreshUserToGroupsMappings(user);
     Assert.assertNotNull(responseRefreshUserToGroup);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Admin Acls");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshAdminAclsResponse responseRefreshAdminAcls = refreshAdminAcls(user);
     Assert.assertNotNull(responseRefreshAdminAcls);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Service Acls");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshServiceAclsResponse responseRefreshServiceAcls =
         refreshServiceAcls(user);
     Assert.assertNotNull(responseRefreshServiceAcls);
 
-    LOG.info("testRouterRMAdminServiceE2E - Update Node Resource");
+    LOG.error("Temp", new RuntimeException());
 
     UpdateNodeResourceResponse responseUpdateNodeResource =
         updateNodeResource(user);
     Assert.assertNotNull(responseUpdateNodeResource);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Nodes Resource");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshNodesResourcesResponse responseRefreshNodesResources =
         refreshNodesResources(user);
     Assert.assertNotNull(responseRefreshNodesResources);
 
-    LOG.info("testRouterRMAdminServiceE2E - Add To Cluster NodeLabels");
+    LOG.error("Temp", new RuntimeException());
 
     AddToClusterNodeLabelsResponse responseAddToClusterNodeLabels =
         addToClusterNodeLabels(user);
     Assert.assertNotNull(responseAddToClusterNodeLabels);
 
-    LOG.info("testRouterRMAdminServiceE2E - Remove To Cluster NodeLabels");
+    LOG.error("Temp", new RuntimeException());
 
     RemoveFromClusterNodeLabelsResponse responseRemoveFromClusterNodeLabels =
         removeFromClusterNodeLabels(user);
     Assert.assertNotNull(responseRemoveFromClusterNodeLabels);
 
-    LOG.info("testRouterRMAdminServiceE2E - Replace Labels On Node");
+    LOG.error("Temp", new RuntimeException());
 
     ReplaceLabelsOnNodeResponse responseReplaceLabelsOnNode =
         replaceLabelsOnNode(user);
     Assert.assertNotNull(responseReplaceLabelsOnNode);
 
-    LOG.info("testRouterRMAdminServiceE2E - Check For Decommissioning Nodes");
+    LOG.error("Temp", new RuntimeException());
 
     CheckForDecommissioningNodesResponse responseCheckForDecom =
         checkForDecommissioningNodes(user);
     Assert.assertNotNull(responseCheckForDecom);
 
-    LOG.info("testRouterRMAdminServiceE2E - Refresh Cluster Max Priority");
+    LOG.error("Temp", new RuntimeException());
 
     RefreshClusterMaxPriorityResponse responseRefreshClusterMaxPriority =
         refreshClusterMaxPriority(user);
     Assert.assertNotNull(responseRefreshClusterMaxPriority);
 
-    LOG.info("testRouterRMAdminServiceE2E - Get Groups For User");
+    LOG.error("Temp", new RuntimeException());
 
     String[] responseGetGroupsForUser = getGroupsForUser(user);
     Assert.assertNotNull(responseGetGroupsForUser);

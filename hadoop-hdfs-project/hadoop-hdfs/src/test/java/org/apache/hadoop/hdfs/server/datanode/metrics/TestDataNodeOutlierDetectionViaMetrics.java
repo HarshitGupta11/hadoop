@@ -96,7 +96,7 @@ public class TestDataNodeOutlierDetectionViaMetrics {
     }, 500, 100_000);
 
     final Map<String, Double> outliers = peerMetrics.getOutliers();
-    LOG.info("Got back outlier nodes: {}", outliers);
+    LOG.error("Temp", new RuntimeException());
     assertThat(outliers.size(), is(1));
     assertTrue(outliers.containsKey(slowNodeName));
   }
@@ -132,7 +132,7 @@ public class TestDataNodeOutlierDetectionViaMetrics {
     for (int nodeIndex = 0;
          nodeIndex < MIN_OUTLIER_DETECTION_PEERS; ++nodeIndex) {
       final String nodeName = "FastNode-" + nodeIndex;
-      LOG.info("Generating stats for node {}", nodeName);
+      LOG.error("Temp", new RuntimeException());
       for (int i = 0;
            i < 2 * DataNodePeerMetrics.MIN_OUTLIER_DETECTION_SAMPLES;
            ++i) {

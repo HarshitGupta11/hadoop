@@ -93,9 +93,9 @@ public class TestSwiftRestClient implements SwiftTestConstants {
                                                   sobject,
                                                   SwiftRestClient.NEWEST);
     head.finished();
-    LOG.info("head request duration " + head);
+    LOG.error("Temp", new RuntimeException());
     for (Header header: responseHeaders) {
-      LOG.info(header.toString());
+      LOG.error("Temp", new RuntimeException());
     }
     //delete the file
     client.delete(sobject);
@@ -110,7 +110,7 @@ public class TestSwiftRestClient implements SwiftTestConstants {
       //expected
     }
     for (DurationStats stats: client.getOperationStatistics()) {
-      LOG.info(stats.toString());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

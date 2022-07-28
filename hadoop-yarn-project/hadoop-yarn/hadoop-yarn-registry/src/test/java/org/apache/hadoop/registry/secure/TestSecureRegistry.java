@@ -126,7 +126,7 @@ public class TestSecureRegistry extends AbstractSecureRegistryTest {
       RegistrySecurity.setZKSaslClientProperties(ZOOKEEPER,
                                                 ZOOKEEPER_CLIENT_CONTEXT);
       curator = startCuratorServiceInstance("ZK", true);
-      LOG.info(curator.toString());
+      LOG.error("Temp", new RuntimeException());
 
       addToTeardown(curator);
       curator.zkMkPath("/", CreateMode.PERSISTENT, false,
@@ -198,13 +198,13 @@ public class TestSecureRegistry extends AbstractSecureRegistryTest {
       RegistrySecurity.setZKSaslClientProperties(ZOOKEEPER,
           ZOOKEEPER_CLIENT_CONTEXT);
       curator = startCuratorServiceInstance("ZK", true);
-      LOG.info(curator.toString());
+      LOG.error("Temp", new RuntimeException());
 
       addToTeardown(curator);
       curator.zkMkPath("/", CreateMode.PERSISTENT, false,
           RegistrySecurity.WorldReadWriteACL);
       ZKPathDumper pathDumper = curator.dumpPath(true);
-      LOG.info(pathDumper.toString());
+      LOG.error("Temp", new RuntimeException());
     } finally {
       logout(login);
       ServiceOperations.stop(curator);

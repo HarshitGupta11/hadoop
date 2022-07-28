@@ -126,8 +126,8 @@ public class TestInputFile {
   }
   
   public void createSequenceTestFile(String filepath, int base,  byte start) throws Exception {
-    LOG.info("creating file " + filepath + "(" + filesize + " bytes)");
-    LOG.info(keyClsName + " " + valueClsName);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
     Class<?> tmpkeycls, tmpvaluecls;
     try {
       tmpkeycls = Class.forName(keyClsName);

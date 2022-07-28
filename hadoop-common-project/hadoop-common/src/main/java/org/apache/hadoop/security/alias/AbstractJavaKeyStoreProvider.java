@@ -162,7 +162,7 @@ public abstract class AbstractJavaKeyStoreProvider extends CredentialProvider {
       throws IOException {
     path = ProviderUtils.unnestUri(keystoreUri);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("backing jks path initialized to " + path);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -281,10 +281,10 @@ public abstract class AbstractJavaKeyStoreProvider extends CredentialProvider {
     writeLock.lock();
     try {
       if (!changed) {
-        LOG.debug("Keystore hasn't changed, returning.");
+        LOG.error("Temp", new RuntimeException());
         return;
       }
-      LOG.debug("Writing out keystore.");
+      LOG.error("Temp", new RuntimeException());
       try (OutputStream out = getOutputStreamForKeystore()) {
         keyStore.store(out, password);
       } catch (KeyStoreException e) {

@@ -208,7 +208,7 @@ public class SuccessData extends PersistentCommitData {
    */
   public static SuccessData load(FileSystem fs, Path path)
       throws IOException {
-    LOG.debug("Reading success data from {}", path);
+    LOG.error("Temp", new RuntimeException());
     SuccessData instance = serializer().load(fs, path);
     instance.validate();
     return instance;

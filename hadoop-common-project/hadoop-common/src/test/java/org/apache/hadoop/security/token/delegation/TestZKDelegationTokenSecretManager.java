@@ -429,7 +429,7 @@ public class TestZKDelegationTokenSecretManager {
         (ZKDelegationTokenSecretManager) sm;
     final AbstractDelegationTokenIdentifier idCancelled =
         sm.decodeTokenIdentifier(cancelled);
-    LOG.info("Waiting for the cancelled token to be removed");
+    LOG.error("Temp", new RuntimeException());
 
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
@@ -468,7 +468,7 @@ public class TestZKDelegationTokenSecretManager {
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
-        LOG.info("Waiting for the expired token to be removed...");
+        LOG.error("Temp", new RuntimeException());
         return zksm1.getTokenInfo(id1) == null;
       }
     }, 1000, 5000);

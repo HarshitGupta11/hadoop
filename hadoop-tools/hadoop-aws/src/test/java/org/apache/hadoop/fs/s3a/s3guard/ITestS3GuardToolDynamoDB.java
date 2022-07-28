@@ -204,13 +204,13 @@ public class ITestS3GuardToolDynamoDB extends AbstractS3GuardToolTestBase {
       String capacityOut = exec(newSetCapacity(),
           S3GuardTool.SetCapacity.NAME,
           fsURI);
-      LOG.info("Set Capacity output=\n{}", capacityOut);
+      LOG.error("Temp", new RuntimeException());
       capacityOut = exec(newSetCapacity(),
           S3GuardTool.SetCapacity.NAME,
           "-" + READ_FLAG, original.getReadStr(),
           "-" + WRITE_FLAG, original.getWriteStr(),
           fsURI);
-      LOG.info("Set Capacity output=\n{}", capacityOut);
+      LOG.error("Temp", new RuntimeException());
 
       // that call does not change the values
       original.checkEquals("unchanged", getCapacities());
@@ -226,7 +226,7 @@ public class ITestS3GuardToolDynamoDB extends AbstractS3GuardToolTestBase {
           "-" + READ_FLAG, Long.toString(rc2),
           "-" + WRITE_FLAG, Long.toString(wc2),
           fsURI);
-      LOG.info("Set Capacity output=\n{}", capacityOut);
+      LOG.error("Temp", new RuntimeException());
 
       // to avoid race conditions, spin for the state change
       AtomicInteger c = new AtomicInteger(0);

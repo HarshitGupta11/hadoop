@@ -173,7 +173,7 @@ public class ITestS3AFileOperationCost extends AbstractS3ATestBase {
       putRequests.assertDiffEquals(1);
       putBytes.assertDiffEquals(len);
       // print final stats
-      LOG.info("Filesystem {}", s3a);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       tmpFile.delete();
     }

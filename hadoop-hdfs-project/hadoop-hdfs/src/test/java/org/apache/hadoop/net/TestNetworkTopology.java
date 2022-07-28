@@ -455,7 +455,7 @@ public class TestNetworkTopology {
           break;
         }
         if (info.length == 0) {
-          LOG.info("got no valid DNs");
+          LOG.error("Temp", new RuntimeException());
         } else if (info.length == 1) {
           LOG.info("got one valid DN: " + info[0].getHostName() +
               " (at " + info[0].getNetworkLocation() + ")");

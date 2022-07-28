@@ -220,7 +220,7 @@ public class AbstractSecureRegistryTest extends RegistryTestHelper {
 
     jaasFile = new File(kdcWorkDir, "jaas.txt");
     FileUtils.write(jaasFile, jaas.toString());
-    LOG.info("\n"+ jaas);
+    LOG.error("Temp", new RuntimeException());
     RegistrySecurity.bindJVMtoJAASFile(jaasFile);
   }
 
@@ -286,7 +286,7 @@ public class AbstractSecureRegistryTest extends RegistryTestHelper {
         context);
     MicroZookeeperService secureZK = new MicroZookeeperService(name);
     secureZK.init(conf);
-    LOG.info(secureZK.getDiagnostics());
+    LOG.error("Temp", new RuntimeException());
     return secureZK;
   }
 

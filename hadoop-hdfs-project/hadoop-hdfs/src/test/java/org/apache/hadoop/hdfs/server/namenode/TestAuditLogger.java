@@ -254,7 +254,7 @@ public class TestAuditLogger {
       // context-only
       CallerContext context = new CallerContext.Builder("setTimes").build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.setTimes(p, time, time);
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=setTimes%n")));
@@ -265,7 +265,7 @@ public class TestAuditLogger {
           .setSignature("L".getBytes(CallerContext.SIGNATURE_ENCODING))
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.setTimes(p, time, time);
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=setTimes:L%n")));
@@ -277,7 +277,7 @@ public class TestAuditLogger {
           .setSignature("L".getBytes(CallerContext.SIGNATURE_ENCODING))
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.setTimes(p, time, time);
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=%s:L%n", longContext.substring(0, 128))));
@@ -288,7 +288,7 @@ public class TestAuditLogger {
           .setSignature("L".getBytes(CallerContext.SIGNATURE_ENCODING))
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set empty caller context");
+      LOG.error("Temp", new RuntimeException());
       fs.setTimes(p, time, time);
       assertFalse(auditlog.getOutput().contains("callerContext="));
       auditlog.clearOutput();
@@ -298,7 +298,7 @@ public class TestAuditLogger {
           .setSignature("L".getBytes(CallerContext.SIGNATURE_ENCODING))
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       Thread child = new Thread(new Runnable()
       {
         @Override
@@ -325,7 +325,7 @@ public class TestAuditLogger {
           new CallerContext.Builder("setPermission")
               .setSignature("L".getBytes(CallerContext.SIGNATURE_ENCODING))
               .build();
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       child = new Thread(new Runnable()
       {
         @Override
@@ -352,7 +352,7 @@ public class TestAuditLogger {
        context = new CallerContext.Builder("mkdirs")
            .setSignature(CallerContext.getCurrent().getSignature()).build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.mkdirs(new Path("/reuse-context-signature"));
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=mkdirs:L%n")));
@@ -363,7 +363,7 @@ public class TestAuditLogger {
           .setSignature(new byte[41])
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.setTimes(p, time, time);
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=setTimes%n")));
@@ -373,7 +373,7 @@ public class TestAuditLogger {
       context = new CallerContext.Builder("setTimes").setSignature(null)
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.setTimes(p, time, time);
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=setTimes%n")));
@@ -384,7 +384,7 @@ public class TestAuditLogger {
           .setSignature("".getBytes(CallerContext.SIGNATURE_ENCODING))
           .build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.mkdirs(new Path("/empty-signature"));
       assertTrue(auditlog.getOutput().endsWith(
           String.format("callerContext=mkdirs%n")));
@@ -393,7 +393,7 @@ public class TestAuditLogger {
       // invalid context is not passed to the rpc
       context = new CallerContext.Builder(null).build();
       CallerContext.setCurrent(context);
-      LOG.info("Set current caller context as {}", CallerContext.getCurrent());
+      LOG.error("Temp", new RuntimeException());
       fs.mkdirs(new Path("/empty-signature"));
       assertFalse(auditlog.getOutput().contains("callerContext="));
       auditlog.clearOutput();

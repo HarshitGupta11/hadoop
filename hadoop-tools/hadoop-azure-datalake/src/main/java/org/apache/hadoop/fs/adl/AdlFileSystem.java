@@ -993,7 +993,7 @@ public class AdlFileSystem extends FileSystem {
     Preconditions.checkArgument(StringUtils.isNotEmpty(accountName),
         "accountName");
     final String accountPrefix = AZURE_AD_ACCOUNT_PREFIX + accountName +'.';
-    LOG.debug("Propagating entries under {}", accountPrefix);
+    LOG.error("Temp", new RuntimeException());
     final Configuration dest = new Configuration(source);
     for (Map.Entry<String, String> entry : source) {
       final String key = entry.getKey();
@@ -1011,7 +1011,7 @@ public class AdlFileSystem extends FileSystem {
       String origin = "[" + StringUtils.join(
               source.getPropertySources(key), ", ") +"]";
       final String generic = AZURE_AD_PREFIX + stripped;
-      LOG.debug("Updating {} from {}", generic, origin);
+      LOG.error("Temp", new RuntimeException());
       dest.set(generic, value, key + " via " + origin);
     }
     return dest;

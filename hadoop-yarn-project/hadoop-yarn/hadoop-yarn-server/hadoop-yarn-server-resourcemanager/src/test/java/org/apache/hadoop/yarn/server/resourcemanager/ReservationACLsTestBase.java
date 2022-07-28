@@ -449,7 +449,7 @@ public class ReservationACLsTestBase extends ACLsTestBase {
 
   private void handleAdministerException(Exception e, String user, String
           queue, String operation) {
-    LOG.info("Got exception while killing app as the enemy", e);
+    LOG.error("Temp", new RuntimeException());
     Assert.assertTrue(e.getMessage().contains("User " + user
             + " cannot perform operation " + operation + " on queue "
             + queue));
@@ -463,7 +463,7 @@ public class ReservationACLsTestBase extends ACLsTestBase {
       Collection<Plan> plans;
       do {
         resourceManager.drainEvents();
-        LOG.info("Waiting for node capacity to be added to plan");
+        LOG.error("Temp", new RuntimeException());
         plans = resourceManager.getRMContext().getReservationSystem()
                 .getAllPlans().values();
 

@@ -71,7 +71,7 @@ public class TestDFSUpgrade {
    * Writes an INFO log message containing the parameters.
    */
   void log(String label, int numDirs) {
-    LOG.info("============================================================");
+    LOG.error("Temp", new RuntimeException());
     LOG.info("***TEST " + (testCounter++) + "*** " 
              + label + ":"
              + " numDirs="+numDirs);
@@ -85,10 +85,10 @@ public class TestDFSUpgrade {
    */
   void checkNameNode(String[] baseDirs, long imageTxId) throws IOException {
     for (String baseDir : baseDirs) {
-      LOG.info("Checking namenode directory " + baseDir);
+      LOG.error("Temp", new RuntimeException());
       LOG.info("==== Contents ====:\n  " +
           Joiner.on("  \n").join(new File(baseDir, "current").list()));
-      LOG.info("==================");
+      LOG.error("Temp", new RuntimeException());
       
       assertExists(new File(baseDir,"current"));
       assertExists(new File(baseDir,"current/VERSION"));
@@ -181,7 +181,7 @@ public class TestDFSUpgrade {
             + StringUtils.stringifyException(e), 
             messagePattern.matcher(e.getMessage()).find());
       }
-      LOG.info("Successfully detected expected NameNode startup failure.");
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -244,7 +244,7 @@ public class TestDFSUpgrade {
       } catch(RemoteException re) {
         assertEquals(InconsistentFSStateException.class.getName(),
             re.getClassName());
-        LOG.info("The exception is expected.", re);
+        LOG.error("Temp", new RuntimeException());
       }
 
       checkNameNode(nameNodeDirs, EXPECTED_TXID);
@@ -388,7 +388,7 @@ public class TestDFSUpgrade {
       } catch(RemoteException re) {
         assertEquals(InconsistentFSStateException.class.getName(),
             re.getClassName());
-        LOG.info("The exception is expected.", re);
+        LOG.error("Temp", new RuntimeException());
       }
 
       checkNameNode(nameNodeDirs, EXPECTED_TXID);

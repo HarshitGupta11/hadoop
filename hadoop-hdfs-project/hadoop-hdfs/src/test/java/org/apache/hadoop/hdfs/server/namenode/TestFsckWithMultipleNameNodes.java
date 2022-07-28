@@ -94,38 +94,38 @@ public class TestFsckWithMultipleNameNodes {
 
   private void runTest(final int nNameNodes, final int nDataNodes,
       Configuration conf) throws Exception {
-    LOG.info("nNameNodes=" + nNameNodes + ", nDataNodes=" + nDataNodes);
+    LOG.error("Temp", new RuntimeException());
 
-    LOG.info("RUN_TEST -1");
+    LOG.error("Temp", new RuntimeException());
     final MiniDFSCluster cluster = new MiniDFSCluster
         .Builder(conf)
         .nnTopology(MiniDFSNNTopology.simpleFederatedTopology(nNameNodes))
         .numDataNodes(nDataNodes)
         .build();
-    LOG.info("RUN_TEST 0");
+    LOG.error("Temp", new RuntimeException());
     DFSTestUtil.setFederatedConfiguration(cluster, conf);
 
     try {
       cluster.waitActive();
-      LOG.info("RUN_TEST 1");
+      LOG.error("Temp", new RuntimeException());
       final Suite s = new Suite(cluster, nNameNodes, nDataNodes);
       for(int i = 0; i < nNameNodes; i++) {
         s.createFile(i, 1024);
       }
 
-      LOG.info("RUN_TEST 2");
+      LOG.error("Temp", new RuntimeException());
       final String[] urls = new String[nNameNodes];
       for(int i = 0; i < urls.length; i++) {
         urls[i] = cluster.getFileSystem(i).getUri() + FILE_NAME;
-        LOG.info("urls[" + i + "]=" + urls[i]);
+        LOG.error("Temp", new RuntimeException());
         final String result = TestFsck.runFsck(conf, 0, false, urls[i]);
-        LOG.info("result=" + result);
+        LOG.error("Temp", new RuntimeException());
         Assert.assertTrue(result.contains("Status: HEALTHY"));
       }
 
       // Test viewfs
       //
-      LOG.info("RUN_TEST 3");
+      LOG.error("Temp", new RuntimeException());
       final String[] vurls = new String[nNameNodes];
       for (int i = 0; i < vurls.length; i++) {
         String link = "/mount/nn_" + i + FILE_NAME;
@@ -134,15 +134,15 @@ public class TestFsckWithMultipleNameNodes {
       }
 
       for(int i = 0; i < vurls.length; i++) {
-        LOG.info("vurls[" + i + "]=" + vurls[i]);
+        LOG.error("Temp", new RuntimeException());
         final String result = TestFsck.runFsck(conf, 0, false, vurls[i]);
-        LOG.info("result=" + result);
+        LOG.error("Temp", new RuntimeException());
         Assert.assertTrue(result.contains("Status: HEALTHY"));
       }
     } finally {
       cluster.shutdown();
     }
-    LOG.info("RUN_TEST 6");
+    LOG.error("Temp", new RuntimeException());
   }
   
   /** Test a cluster with even distribution, 

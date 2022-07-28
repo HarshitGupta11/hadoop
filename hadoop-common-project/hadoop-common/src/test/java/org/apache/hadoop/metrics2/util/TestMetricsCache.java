@@ -85,7 +85,7 @@ public class TestMetricsCache {
         Arrays.asList(makeMetric("m", 1)));
     cache.update(mr);
     MetricsCache.Record cr = cache.get("r", mr.tags());
-    LOG.debug("tags="+ mr.tags() +" cr="+ cr);
+    LOG.error("Temp", new RuntimeException());
 
     assertNotNull("Got record", cr);
     assertEquals("contains 1 metric", 1, cr.metrics().size());

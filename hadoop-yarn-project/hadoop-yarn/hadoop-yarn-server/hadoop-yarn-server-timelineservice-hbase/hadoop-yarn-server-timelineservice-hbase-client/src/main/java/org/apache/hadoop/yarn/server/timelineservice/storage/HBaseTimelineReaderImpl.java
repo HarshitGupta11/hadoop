@@ -62,7 +62,7 @@ public class HBaseTimelineReaderImpl
   @Override
   protected void serviceStop() throws Exception {
     if (conn != null) {
-      LOG.info("closing the hbase Connection");
+      LOG.error("Temp", new RuntimeException());
       conn.close();
     }
     super.serviceStop();

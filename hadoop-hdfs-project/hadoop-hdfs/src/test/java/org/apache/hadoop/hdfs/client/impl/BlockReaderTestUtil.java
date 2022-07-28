@@ -157,14 +157,14 @@ public class BlockReaderTestUtil {
     byte buf[] = new byte[1024];
     int nRead = 0;
     while (nRead < length) {
-      DFSClient.LOG.info("So far read " + nRead + " - going to read more.");
+      DFSClient.LOG.error("Temp", new RuntimeException());
       int n = reader.read(buf, 0, buf.length);
       assertTrue(n > 0);
       nRead += n;
     }
 
     if (expectEof) {
-      DFSClient.LOG.info("Done reading, expect EOF for next read.");
+      DFSClient.LOG.error("Temp", new RuntimeException());
       assertEquals(-1, reader.read(buf, 0, buf.length));
     }
   }

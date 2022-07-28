@@ -128,7 +128,7 @@ public class TestKafkaMetrics {
     // Create the json object from the record.
     StringBuilder jsonLines = recordToJson(record);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("kafka message: " + jsonLines.toString());
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Send the record and store the result in a mock Future.
@@ -145,7 +145,7 @@ public class TestKafkaMetrics {
     ProducerRecord<Integer, byte[]> data = (argument.getValue());
     String jsonResult = new String(data.value());
     if (LOG.isDebugEnabled()) {
-      LOG.debug("kafka result: " + jsonResult);
+      LOG.error("Temp", new RuntimeException());
     }
     assertEquals(jsonLines.toString(), jsonResult);
   }
@@ -163,7 +163,7 @@ public class TestKafkaMetrics {
     try {
       hostname = InetAddress.getLocalHost().getHostName();
     } catch (Exception e) {
-      LOG.warn("Error getting Hostname, going to continue");
+      LOG.error("Temp", new RuntimeException());
     }
     jsonLines.append("{\"hostname\": \"" + hostname);
     jsonLines.append("\", \"timestamp\": " + timestamp);

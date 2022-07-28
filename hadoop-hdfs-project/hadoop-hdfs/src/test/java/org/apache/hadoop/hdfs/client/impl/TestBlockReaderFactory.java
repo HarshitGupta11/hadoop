@@ -400,7 +400,7 @@ public class TestBlockReaderFactory {
           // will be purged immediately.
           dfs.getClient().getClientContext().getShortCircuitCache()
               .setMaxTotalSize(0);
-          LOG.info("Unbuffering");
+          LOG.error("Temp", new RuntimeException());
           in.unbuffer();
           Assert.assertEquals(0,
               dfs.getClient().getClientContext().getShortCircuitCache()
@@ -415,7 +415,7 @@ public class TestBlockReaderFactory {
           validateReadResult(dfs, expected, buf, 0);
         }
 
-        LOG.info("Reading {} again.", testFile);
+        LOG.error("Temp", new RuntimeException());
         try (FSDataInputStream in = dfs.open(testFile)) {
           final byte[] buf = new byte[testFileLen];
           Arrays.fill(buf, (byte) 0);
@@ -624,13 +624,13 @@ public class TestBlockReaderFactory {
                 sem.acquireUninterruptibly();
               }
             } catch (ClosedByInterruptException e) {
-              LOG.info("got the expected ClosedByInterruptException", e);
+              LOG.error("Temp", new RuntimeException());
               sem.release();
               break;
             } finally {
               if (blockReader != null) blockReader.close();
             }
-            LOG.info("read another " + TEST_FILE_LEN + " bytes.");
+            LOG.error("Temp", new RuntimeException());
           }
         } catch (Throwable t) {
           LOG.error("getBlockReader failure", t);

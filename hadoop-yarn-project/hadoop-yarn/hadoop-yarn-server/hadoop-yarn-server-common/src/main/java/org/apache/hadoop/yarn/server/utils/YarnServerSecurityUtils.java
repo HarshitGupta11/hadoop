@@ -67,7 +67,7 @@ public final class YarnServerSecurityUtils {
       String msg =
           "Cannot obtain the user-name for authorizing ApplicationMaster. "
               + "Got exception: " + StringUtils.stringifyException(e);
-      LOG.warn(msg);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(msg);
     }
 
@@ -89,7 +89,7 @@ public final class YarnServerSecurityUtils {
     }
 
     if (!tokenFound) {
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(message);
     }
 
@@ -153,7 +153,7 @@ public final class YarnServerSecurityUtils {
       credentials.readTokenStorageStream(buf);
       if (LOG.isDebugEnabled()) {
         for (Token<? extends TokenIdentifier> tk : credentials.getAllTokens()) {
-          LOG.debug(tk.getService() + " = " + tk.toString());
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

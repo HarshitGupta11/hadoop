@@ -336,7 +336,7 @@ class CompressionEmulationUtil {
       }
     }
 
-    LOG.info("Gridmix is configured to use compressed input data.");
+    LOG.error("Temp", new RuntimeException());
     // publish the input data size
     LOG.info("Total size of compressed input data : " 
              + StringUtils.humanReadableInt(compressedDataSize));
@@ -359,7 +359,7 @@ class CompressionEmulationUtil {
       double ratio = ((double)compressedDataSize) / uncompressedDataSize;
 
       // publish the compression ratio
-      LOG.info("Input Data Compression Ratio : " + ratio);
+      LOG.error("Temp", new RuntimeException());
     }
     
     return new DataStatistics(compressedDataSize, numCompressedFiles, true);

@@ -154,7 +154,7 @@ public class TestHttpServer extends HttpServerFunctionalTest {
         JerseyResource.class.getPackage().getName(), "/jersey/*");
     server.start();
     baseUrl = getServerURL(server);
-    LOG.info("HTTP server started: "+ baseUrl);
+    LOG.error("Temp", new RuntimeException());
   }
   
   @AfterClass public static void cleanup() throws Exception {
@@ -521,13 +521,13 @@ public class TestHttpServer extends HttpServerFunctionalTest {
   }
 
   @Test public void testJersey() throws Exception {
-    LOG.info("BEGIN testJersey()");
+    LOG.error("Temp", new RuntimeException());
     final String js = readOutput(new URL(baseUrl, "/jersey/foo?op=bar"));
     final Map<String, Object> m = parse(js);
-    LOG.info("m=" + m);
+    LOG.error("Temp", new RuntimeException());
     assertEquals("foo", m.get(JerseyResource.PATH));
     assertEquals("bar", m.get(JerseyResource.OP));
-    LOG.info("END testJersey()");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test

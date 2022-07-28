@@ -303,7 +303,7 @@ public class YarnClientImpl extends YarnClient {
             throw new YarnException("Failed to submit " + applicationId + 
                 " to YARN : " + appReport.getDiagnostics());
           }
-          LOG.info("Submitted application " + applicationId);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
 
@@ -438,7 +438,7 @@ public class YarnClientImpl extends YarnClient {
   @Override
   public void failApplicationAttempt(ApplicationAttemptId attemptId)
       throws YarnException, IOException {
-    LOG.info("Failing application attempt " + attemptId);
+    LOG.error("Temp", new RuntimeException());
     FailApplicationAttemptRequest request =
         Records.newRecord(FailApplicationAttemptRequest.class);
     request.setApplicationAttemptId(attemptId);
@@ -471,7 +471,7 @@ public class YarnClientImpl extends YarnClient {
         KillApplicationResponse response =
             rmClient.forceKillApplication(request);
         if (response.getIsKillCompleted()) {
-          LOG.info("Killed application " + applicationId);
+          LOG.error("Temp", new RuntimeException());
           break;
         }
 
@@ -941,7 +941,7 @@ public class YarnClientImpl extends YarnClient {
   public void signalToContainer(ContainerId containerId,
       SignalContainerCommand command)
           throws YarnException, IOException {
-    LOG.info("Signalling container " + containerId + " with command " + command);
+    LOG.error("Temp", new RuntimeException());
     SignalContainerRequest request =
         SignalContainerRequest.newInstance(containerId, command);
     rmClient.signalToContainer(request);

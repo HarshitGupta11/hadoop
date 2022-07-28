@@ -67,7 +67,7 @@ abstract class HistoryEventEmitter {
     try {
       return parseCounters(counters);
     } catch (ParseException e) {
-      LOG.warn("The counter string, \"" + counters + "\" is badly formatted.");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
   }
@@ -75,7 +75,7 @@ abstract class HistoryEventEmitter {
   protected static Counters parseCounters(String counters)
       throws ParseException {
     if (counters == null) {
-      LOG.warn("HistoryEventEmitters: null counter detected:");
+      LOG.error("Temp", new RuntimeException());
       return null;
     }
 

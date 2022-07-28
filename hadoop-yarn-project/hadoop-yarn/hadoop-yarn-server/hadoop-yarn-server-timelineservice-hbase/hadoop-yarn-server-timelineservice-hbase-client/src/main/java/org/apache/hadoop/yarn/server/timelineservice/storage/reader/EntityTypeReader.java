@@ -86,7 +86,7 @@ public final class EntityTypeReader extends AbstractTimelineStorageReader {
     typeFilterList.addFilter(new FirstKeyOnlyFilter());
     typeFilterList.addFilter(new KeyOnlyFilter());
     typeFilterList.addFilter(new PageFilter(1));
-    LOG.debug("FilterList created for scan is - {}", typeFilterList);
+    LOG.error("Temp", new RuntimeException());
 
     int counter = 0;
     while (true) {
@@ -103,13 +103,13 @@ public final class EntityTypeReader extends AbstractTimelineStorageReader {
         }
         String currType = entity.getType();
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Current row key: " + Arrays.toString(currRowKey));
-          LOG.debug("New entity type discovered: " + currType);
+          LOG.error("Temp", new RuntimeException());
+          LOG.error("Temp", new RuntimeException());
         }
         currRowKey = getNextRowKey(prefix.getRowKeyPrefix(), currType);
       }
     }
-    LOG.debug("Scanned {} records for {} types", counter, types.size());
+    LOG.error("Temp", new RuntimeException());
     return types;
   }
 

@@ -165,7 +165,7 @@ public class TaskHeartbeatHandler extends AbstractService {
         try {
           Thread.sleep(taskTimeOutCheckInterval);
         } catch (InterruptedException e) {
-          LOG.info("TaskHeartbeatHandler thread interrupted");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }

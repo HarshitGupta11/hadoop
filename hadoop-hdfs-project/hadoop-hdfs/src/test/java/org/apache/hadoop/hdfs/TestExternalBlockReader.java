@@ -198,7 +198,7 @@ public class TestExternalBlockReader {
         buf[i++] = contents[ipos];
         nread++;
         totalRead++;
-        LOG.info("ipos = " + ipos + ", contents.length = " + contents.length + ", nread = " + nread + ", len = " + len);
+        LOG.error("Temp", new RuntimeException());
       }
       if ((nread == 0) && (ipos >= contents.length)) {
         return -1;

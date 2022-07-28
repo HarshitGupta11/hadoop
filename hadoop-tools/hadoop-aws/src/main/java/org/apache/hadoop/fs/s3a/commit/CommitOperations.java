@@ -142,26 +142,26 @@ public class CommitOperations {
    * @return the outcome
    */
   public MaybeIOE commit(SinglePendingCommit commit, String origin) {
-    LOG.debug("Committing single commit {}", commit);
+    LOG.error("Temp", new RuntimeException());
     MaybeIOE outcome;
     String destKey = "unknown destination";
     try {
       commit.validate();
       destKey = commit.getDestinationKey();
       long l = innerCommit(commit);
-      LOG.debug("Successful commit of file length {}", l);
+      LOG.error("Temp", new RuntimeException());
       outcome = MaybeIOE.NONE;
       statistics.commitCompleted(commit.getLength());
     } catch (IOException e) {
       String msg = String.format("Failed to commit upload against %s: %s",
           destKey, e);
-      LOG.warn(msg, e);
+      LOG.error("Temp", new RuntimeException());
       outcome = new MaybeIOE(e);
       statistics.commitFailed();
     } catch (Exception e) {
       String msg = String.format("Failed to commit upload against %s," +
           " described in %s: %s", destKey, origin, e);
-      LOG.warn(msg, e);
+      LOG.error("Temp", new RuntimeException());
       outcome = new MaybeIOE(new PathCommitException(origin, msg, e));
       statistics.commitFailed();
     }
@@ -222,7 +222,7 @@ public class CommitOperations {
       try {
         commits.add(SinglePendingCommit.load(fs, status.getPath()));
       } catch (IOException e) {
-        LOG.warn("Failed to load commit file {}", status.getPath(), e);
+        LOG.error("Temp", new RuntimeException());
         failures.add(Pair.of(status, e));
       }
     }
@@ -256,7 +256,7 @@ public class CommitOperations {
                     ? (" defined in " + commit.getFilename())
                     : "";
     String uploadId = commit.getUploadId();
-    LOG.info("Aborting commit to object {}{}", destKey, origin);
+    LOG.error("Temp", new RuntimeException());
     abortMultipartCommit(destKey, uploadId);
   }
 
@@ -294,12 +294,12 @@ public class CommitOperations {
     try {
       pendingFiles = ls(pendingDir, recursive);
     } catch (FileNotFoundException fnfe) {
-      LOG.info("No directory to abort {}", pendingDir);
+      LOG.error("Temp", new RuntimeException());
       return MaybeIOE.NONE;
     }
     MaybeIOE outcome = MaybeIOE.NONE;
     if (!pendingFiles.hasNext()) {
-      LOG.debug("No files to abort under {}", pendingDir);
+      LOG.error("Temp", new RuntimeException());
     }
     while (pendingFiles.hasNext()) {
       Path pendingFile = pendingFiles.next().getPath();
@@ -307,7 +307,7 @@ public class CommitOperations {
         try {
           abortSingleCommit(SinglePendingCommit.load(fs, pendingFile));
         } catch (FileNotFoundException e) {
-          LOG.debug("listed file already deleted: {}", pendingFile);
+          LOG.error("Temp", new RuntimeException());
         } catch (IOException | IllegalArgumentException e) {
           if (MaybeIOE.NONE.equals(outcome)) {
             outcome = new MaybeIOE(makeIOE(pendingFile.toString(), e));
@@ -401,7 +401,7 @@ public class CommitOperations {
    * @throws IOException failure
    */
   public void revertCommit(SinglePendingCommit commit) throws IOException {
-    LOG.warn("Revert {}", commit);
+    LOG.error("Temp", new RuntimeException());
     try {
       writeOperations.revertCommit(commit.getDestinationKey());
     } finally {

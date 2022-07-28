@@ -180,7 +180,7 @@ public class TestUnmanagedApplicationManager {
               RegisterApplicationMasterRequest.newInstance(null, 1001, null),
               attemptId);
         } catch (Exception e) {
-          LOG.info("Register thread exception", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     });
@@ -190,14 +190,14 @@ public class TestUnmanagedApplicationManager {
 
     // Wait for register call in the thread get into RM and then wake us
     synchronized (syncObj) {
-      LOG.info("Starting register thread");
+      LOG.error("Temp", new RuntimeException());
       registerAMThread.start();
       try {
-        LOG.info("Test main starts waiting");
+        LOG.error("Temp", new RuntimeException());
         syncObj.wait();
-        LOG.info("Test main wait finished");
+        LOG.error("Temp", new RuntimeException());
       } catch (Exception e) {
-        LOG.info("Test main wait interrupted", e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -210,9 +210,9 @@ public class TestUnmanagedApplicationManager {
       syncObj.notifyAll();
     }
 
-    LOG.info("Test main wait for register thread to finish");
+    LOG.error("Temp", new RuntimeException());
     registerAMThread.join();
-    LOG.info("Register thread finished");
+    LOG.error("Temp", new RuntimeException());
 
     // Second allocate, normal case
     allocateAsync(AllocateRequest.newInstance(0, 0, null, null, null), callback,

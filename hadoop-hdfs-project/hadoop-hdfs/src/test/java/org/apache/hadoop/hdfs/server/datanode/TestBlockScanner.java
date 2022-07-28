@@ -235,13 +235,13 @@ public class TestBlockScanner {
         if (!testedRewind) {
           testedRewind = true;
           blocksProcessed = 0;
-          LOG.info("Starting again at the beginning...");
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         if (!testedLoad) {
           testedLoad = true;
           blocksProcessed = savedBlocksProcessed;
-          LOG.info("Starting again at the load point...");
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         assertEquals(numFiles, blocksProcessed);
@@ -313,7 +313,7 @@ public class TestBlockScanner {
     public void setup(VolumeScanner scanner) {
       this.scanner = scanner;
       Info info = getInfo(scanner.volume);
-      LOG.info("about to start scanning.");
+      LOG.error("Temp", new RuntimeException());
       synchronized (info) {
         while (!info.shouldRun) {
           try {
@@ -322,12 +322,12 @@ public class TestBlockScanner {
           }
         }
       }
-      LOG.info("starting scanning.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     @Override
     public void handle(ExtendedBlock block, IOException e) {
-      LOG.info("handling block {} (exception {})", block, e);
+      LOG.error("Temp", new RuntimeException());
       Info info = getInfo(scanner.volume);
       Semaphore sem;
       synchronized (info) {
@@ -648,7 +648,7 @@ public class TestBlockScanner {
             return false;
           }
           if (!stats.eof) {
-            LOG.info("Waiting for eof.");
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
           return true;
@@ -727,16 +727,16 @@ public class TestBlockScanner {
       info.notify();
     }
     // Scan the first 4 blocks
-    LOG.info("Waiting for the first 4 blocks to be scanned.");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
         synchronized (info) {
           if (info.blocksScanned >= 4) {
-            LOG.info("info = {}.  blockScanned has now reached 4.", info);
+            LOG.error("Temp", new RuntimeException());
             return true;
           } else {
-            LOG.info("info = {}.  Waiting for blockScanned to reach 4.", info);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
         }
@@ -760,16 +760,16 @@ public class TestBlockScanner {
     // VolumeScanner to process.
     info.sem.release(2);
 
-    LOG.info("Waiting for 2 more blocks to be scanned.");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
         synchronized (info) {
           if (info.blocksScanned >= 2) {
-            LOG.info("info = {}.  blockScanned has now reached 2.", info);
+            LOG.error("Temp", new RuntimeException());
             return true;
           } else {
-            LOG.info("info = {}.  Waiting for blockScanned to reach 2.", info);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
         }
@@ -790,16 +790,16 @@ public class TestBlockScanner {
     ctx.datanode.getBlockScanner().markSuspectBlock(storageID, first);
     info.sem.release(10);
 
-    LOG.info("Waiting for 5 more blocks to be scanned.");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
         synchronized (info) {
           if (info.blocksScanned >= 5) {
-            LOG.info("info = {}.  blockScanned has now reached 5.", info);
+            LOG.error("Temp", new RuntimeException());
             return true;
           } else {
-            LOG.info("info = {}.  Waiting for blockScanned to reach 5.", info);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
         }
@@ -845,7 +845,7 @@ public class TestBlockScanner {
       info.notify();
     }
     // Scan the first 4 blocks
-    LOG.info("Waiting for the blocks to be scanned.");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
@@ -944,16 +944,16 @@ public class TestBlockScanner {
   private void waitForRescan(final TestScanResultHandler.Info info,
       final int numExpectedBlocks)
       throws TimeoutException, InterruptedException {
-    LOG.info("Waiting for the first 1 blocks to be scanned.");
+    LOG.error("Temp", new RuntimeException());
     GenericTestUtils.waitFor(new Supplier<Boolean>() {
       @Override
       public Boolean get() {
         synchronized (info) {
           if (info.blocksScanned >= numExpectedBlocks) {
-            LOG.info("info = {}.  blockScanned has now reached 1.", info);
+            LOG.error("Temp", new RuntimeException());
             return true;
           } else {
-            LOG.info("info = {}.  Waiting for blockScanned to reach 1.", info);
+            LOG.error("Temp", new RuntimeException());
             return false;
           }
         }

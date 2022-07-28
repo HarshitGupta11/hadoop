@@ -74,20 +74,20 @@ class MkdirOp extends Operation {
             ReportWriter.OK_TIME_TAKEN, timeTaken));
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.SUCCESSES, 1L));
-        LOG.info("Made directory " + dir);
+        LOG.error("Temp", new RuntimeException());
       } else {
         out.add(new OperationOutput(OutputType.LONG, getType(),
             ReportWriter.FAILURES, 1L));
-        LOG.warn("Could not make " + dir);
+        LOG.error("Temp", new RuntimeException());
       }
     } catch (FileNotFoundException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.NOT_FOUND, 1L));
-      LOG.warn("Error with mkdir", e);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
       out.add(new OperationOutput(OutputType.LONG, getType(),
           ReportWriter.FAILURES, 1L));
-      LOG.warn("Error with mkdir", e);
+      LOG.error("Temp", new RuntimeException());
     }
     return out;
   }

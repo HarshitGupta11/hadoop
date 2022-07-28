@@ -130,7 +130,7 @@ public class BigDecimalSplitter implements DBSplitter {
     BigDecimal splitSize = tryDivide(maxVal.subtract(minVal), (numSplits));
     if (splitSize.compareTo(MIN_INCREMENT) < 0) {
       splitSize = MIN_INCREMENT;
-      LOG.warn("Set BigDecimal splitSize to MIN_INCREMENT");
+      LOG.error("Temp", new RuntimeException());
     }
 
     BigDecimal curVal = minVal;

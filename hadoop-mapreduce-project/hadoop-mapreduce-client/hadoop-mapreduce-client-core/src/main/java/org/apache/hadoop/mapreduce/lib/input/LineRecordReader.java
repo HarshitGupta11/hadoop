@@ -162,7 +162,7 @@ public class LineRecordReader extends RecordReader<LongWritable, Text> {
     if ((textLength >= 3) && (textBytes[0] == (byte)0xEF) &&
         (textBytes[1] == (byte)0xBB) && (textBytes[2] == (byte)0xBF)) {
       // find UTF-8 BOM, strip it.
-      LOG.info("Found UTF-8 BOM and skipped it");
+      LOG.error("Temp", new RuntimeException());
       textLength -= 3;
       newSize -= 3;
       if (textLength > 0) {

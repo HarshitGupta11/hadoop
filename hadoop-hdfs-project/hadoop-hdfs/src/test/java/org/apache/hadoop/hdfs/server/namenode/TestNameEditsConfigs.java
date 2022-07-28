@@ -344,7 +344,7 @@ public class TestNameEditsConfigs {
           .build();
       fail("Successfully started cluster but should not have been able to.");
     } catch (IllegalArgumentException iae) { // expect to fail
-      LOG.info("EXPECTED: cluster start failed due to bad configuration" + iae);
+      LOG.error("Temp", new RuntimeException());
     } finally {
       if (cluster != null) {
         cluster.shutdown();

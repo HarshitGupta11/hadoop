@@ -58,7 +58,7 @@ public final class KMSUtil {
    */
   public static KeyProvider createKeyProvider(final Configuration conf,
       final String configKeyName) throws IOException {
-    LOG.debug("Creating key provider with config key {}", configKeyName);
+    LOG.error("Temp", new RuntimeException());
     final String providerUriStr = conf.getTrimmed(configKeyName);
     // No provider set in conf
     if (providerUriStr == null || providerUriStr.isEmpty()) {

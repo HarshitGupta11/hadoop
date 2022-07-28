@@ -221,7 +221,7 @@ public class TestFsDatasetImpl {
       for (int i = 0; i < numNewVolumes; i++) {
         String volumeName = volumes.get(numExistingVolumes + i).toString();
         actualVolumes.add(volumeName);
-        LOG.info("actualVolume " + i + " is " + volumeName);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     assertEquals(actualVolumes.size(), expectedVolumes.size());
@@ -558,11 +558,11 @@ public class TestFsDatasetImpl {
         try {
           volRemoveStartedLatch.await();
         } catch (Exception e) {
-          LOG.info("Unexpected exception when waiting for vol removal:", e);
+          LOG.error("Temp", new RuntimeException());
         }
-        LOG.info("Getting block report");
+        LOG.error("Temp", new RuntimeException());
         dataset.getBlockReports(eb.getBlockPoolId());
-        LOG.info("Successfully received block report");
+        LOG.error("Temp", new RuntimeException());
         blockReportReceivedLatch.countDown();
       }
     }
@@ -571,7 +571,7 @@ public class TestFsDatasetImpl {
       public void run() {
         try (ReplicaHandler replica = dataset
             .createRbw(StorageType.DEFAULT, null, eb, false)) {
-          LOG.info("CreateRbw finished");
+          LOG.error("Temp", new RuntimeException());
           startFinalizeLatch.countDown();
 
           // Slow down while we're holding the reference to the volume.
@@ -580,16 +580,16 @@ public class TestFsDatasetImpl {
           try {
             Thread.sleep(1000);
           } catch (InterruptedException ie) {
-            LOG.info("Ignoring ", ie);
+            LOG.error("Temp", new RuntimeException());
           }
 
           // Lets wait for the other thread finish getting block report
           blockReportReceivedLatch.await();
 
           dataset.finalizeBlock(eb, false);
-          LOG.info("FinalizeBlock finished");
+          LOG.error("Temp", new RuntimeException());
         } catch (Exception e) {
-          LOG.warn("Exception caught. This should not affect the test", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -600,14 +600,14 @@ public class TestFsDatasetImpl {
         try {
           volumesToRemove.add(dataset.getVolume(eb).getStorageLocation());
         } catch (Exception e) {
-          LOG.info("Problem preparing volumes to remove: ", e);
+          LOG.error("Temp", new RuntimeException());
           Assert.fail("Exception in remove volume thread, check log for " +
               "details.");
         }
-        LOG.info("Removing volume " + volumesToRemove);
+        LOG.error("Temp", new RuntimeException());
         dataset.removeVolumes(volumesToRemove, true);
         volRemoveCompletedLatch.countDown();
-        LOG.info("Removed volume " + volumesToRemove);
+        LOG.error("Temp", new RuntimeException());
       }
     }
 
@@ -783,7 +783,7 @@ public class TestFsDatasetImpl {
               + "should be monotonically increased.",
           () -> fsDataSetImpl.finalizeNewReplica(newReplicaInfo, block));
     } catch (Exception ex) {
-      LOG.info("Exception in testMoveBlockFailure ", ex);
+      LOG.error("Temp", new RuntimeException());
       fail("Exception while testing testMoveBlockFailure ");
     } finally {
       if (cluster.isClusterUp()) {
@@ -813,7 +813,7 @@ public class TestFsDatasetImpl {
       fsDataSetImpl.finalizeNewReplica(newReplicaInfo, block);
 
     } catch (Exception ex) {
-      LOG.info("Exception in testMoveBlockSuccess ", ex);
+      LOG.error("Temp", new RuntimeException());
       fail("MoveBlock operation should succeed");
     } finally {
       if (cluster.isClusterUp()) {

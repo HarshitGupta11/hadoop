@@ -1111,7 +1111,7 @@ public class TestUserGroupInformation {
         UserGroupInformation.getNextTgtRenewalTime(endTime, currentTime, rp);
     String str =
         "5th retry, now:" + currentTime + ", retry:" + lastRetry;
-    LOG.info(str);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(str, endTime - reloginIntervalMs, lastRetry);
 
     // make sure no more retries after (tgt endTime - login interval).
@@ -1119,7 +1119,7 @@ public class TestUserGroupInformation {
     lastRetry =
         UserGroupInformation.getNextTgtRenewalTime(endTime, currentTime, rp);
     str = "overflow retry, now:" + currentTime + ", retry:" + lastRetry;
-    LOG.info(str);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(str, endTime - reloginIntervalMs, lastRetry);
   }
 
@@ -1132,7 +1132,7 @@ public class TestUserGroupInformation {
     final String str = new String("Retry#" + (numFailures + 1) + ", now:" + now
         + ", lower bound:" + lower + ", upper bound:" + upper
         + ", retry:" + lastRetry);
-    LOG.info(str);
+    LOG.error("Temp", new RuntimeException());
     assertTrue(str, lower <= lastRetry && lastRetry < upper);
   }
 

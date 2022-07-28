@@ -202,13 +202,13 @@ public class Journal implements Closeable {
       return null;
     }
     
-    LOG.info("Scanning storage " + fjm);
+    LOG.error("Temp", new RuntimeException());
     List<EditLogFile> files = fjm.getLogFiles(0);
     
     while (!files.isEmpty()) {
       EditLogFile latestLog = files.remove(files.size() - 1);
       latestLog.scanLog(Long.MAX_VALUE, false);
-      LOG.info("Latest log is " + latestLog);
+      LOG.error("Temp", new RuntimeException());
       if (latestLog.getLastTxId() == HdfsServerConstants.INVALID_TXID) {
         // the log contains no transactions
         LOG.warn("Latest log " + latestLog + " has no transactions. " +
@@ -219,7 +219,7 @@ public class Journal implements Closeable {
       }
     }
     
-    LOG.info("No files in " + fjm);
+    LOG.error("Temp", new RuntimeException());
     return null;
   }
 
@@ -931,7 +931,7 @@ public class Journal implements Closeable {
             } finally {
               if (!success) {
                 if (!tmpFile.delete()) {
-                  LOG.warn("Failed to delete temporary file " + tmpFile);
+                  LOG.error("Temp", new RuntimeException());
                 }
               }
             }

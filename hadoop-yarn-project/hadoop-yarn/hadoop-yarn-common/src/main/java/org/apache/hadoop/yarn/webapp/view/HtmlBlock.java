@@ -65,7 +65,7 @@ public abstract class HtmlBlock extends TextView implements SubView {
   @Override
   public void render() {
     int nestLevel = context().nestLevel();
-    LOG.debug("Rendering {} @{}", getClass(), nestLevel);
+    LOG.error("Temp", new RuntimeException());
     render(block());
     if (block.nestLevel() != nestLevel) {
       throw new WebAppException("Error rendering block: nestLevel="+

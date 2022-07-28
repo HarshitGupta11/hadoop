@@ -742,7 +742,7 @@ public class TestShortCircuitCache {
     checkNumberOfSegmentsAndSlots(0, 0,
         cluster.getDataNodes().get(0).getShortCircuitRegistry());
 
-    LOG.info("Clearing failure injector and performing another read...");
+    LOG.error("Temp", new RuntimeException());
     DataNodeFaultInjector.set(prevInjector);
 
     fs.getClient().getClientContext().getDomainSocketFactory().clearPathMap();

@@ -86,7 +86,7 @@ public class FederationRegistryClient {
       applications = listDirRegistry(this.registry, this.user,
           getRegistryKey(null, null), false);
     } catch (YarnException e) {
-      LOG.warn("Unexpected exception from listDirRegistry", e);
+      LOG.error("Temp", new RuntimeException());
     }
     if (applications == null) {
       // It is valid for listDirRegistry to return null
@@ -104,7 +104,7 @@ public class FederationRegistryClient {
       removeKeyRegistry(this.registry, this.user, getRegistryKey(null, null),
           true, false);
     } catch (YarnException e) {
-      LOG.warn("Unexpected exception from removeKeyRegistry", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -164,17 +164,17 @@ public class FederationRegistryClient {
       subclusters = listDirRegistry(this.registry, this.user,
           getRegistryKey(appId, null), false);
     } catch (YarnException e) {
-      LOG.warn("Unexpected exception from listDirRegistry", e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (subclusters == null) {
-      LOG.info("Application {} does not exist in registry", appId);
+      LOG.error("Temp", new RuntimeException());
       return retMap;
     }
 
     // Read the amrmToken for each sub-cluster with an existing UAM
     for (String scId : subclusters) {
-      LOG.info("Reading amrmToken for subcluster {} for {}", scId, appId);
+      LOG.error("Temp", new RuntimeException());
       String key = getRegistryKey(appId, scId);
       try {
         String tokenString = readRegistry(this.registry, this.user, key, true);
@@ -206,7 +206,7 @@ public class FederationRegistryClient {
   public void removeAppFromRegistry(ApplicationId appId) {
     Map<String, Token<AMRMTokenIdentifier>> subClusterTokenMap =
         this.appSubClusterTokenMap.get(appId);
-    LOG.info("Removing all registry entries for {}", appId);
+    LOG.error("Temp", new RuntimeException());
 
     if (subClusterTokenMap == null || subClusterTokenMap.size() == 0) {
       return;

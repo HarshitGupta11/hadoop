@@ -137,7 +137,7 @@ public class AllocationFileLoaderService extends AbstractService {
               lastReloadAttemptFailed = true;
             }
           } catch (IOException e) {
-            LOG.info("Exception while loading allocation file: " + e);
+            LOG.error("Temp", new RuntimeException());
           }
           try {
             Thread.sleep(reloadIntervalMs);
@@ -169,7 +169,7 @@ public class AllocationFileLoaderService extends AbstractService {
       try {
         reloadThread.join(THREAD_JOIN_TIMEOUT_MS);
       } catch (InterruptedException e) {
-        LOG.warn("reloadThread fails to join.");
+        LOG.error("Temp", new RuntimeException());
       }
     }
     super.serviceStop();
@@ -193,7 +193,7 @@ public class AllocationFileLoaderService extends AbstractService {
       URL url = Thread.currentThread().getContextClassLoader()
           .getResource(allocFilePath);
       if (url == null) {
-        LOG.warn(allocFilePath + " not found on the classpath.");
+        LOG.error("Temp", new RuntimeException());
         allocPath = null;
       } else if (!url.getProtocol().equalsIgnoreCase("file")) {
         throw new RuntimeException("Allocation file " + url
@@ -227,7 +227,7 @@ public class AllocationFileLoaderService extends AbstractService {
       reloadListener.onReload(null);
       return;
     }
-    LOG.info("Loading allocation file " + allocFile);
+    LOG.error("Temp", new RuntimeException());
 
     // Read and parse the allocations file.
     DocumentBuilderFactory docBuilderFactory =

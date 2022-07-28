@@ -93,7 +93,7 @@ public class NMTokenIdentifier extends TokenIdentifier {
   
   @Override
   public void write(DataOutput out) throws IOException {
-    LOG.debug("Writing NMTokenIdentifier to RPC layer: " + this);
+    LOG.error("Temp", new RuntimeException());
     out.write(proto.toByteArray());
   }
 

@@ -424,7 +424,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
       if (LOG.isTraceEnabled()) {
         LOG.trace(message, e);
       } else {
-        LOG.warn(message + " " + e.getMessage());
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (avoidStaleNodes) {
@@ -812,7 +812,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
           if (detail.length() > 1) {
             // only log if there's more than "[", which is always appended at
             // the beginning of this method.
-            LOG.debug(detail);
+            LOG.error("Temp", new RuntimeException());
           }
           detail = "";
         }
@@ -820,7 +820,7 @@ public class BlockPlacementPolicyDefault extends BlockPlacementPolicy {
       final HashMap<NodeNotChosenReason, Integer> reasonMap =
           CHOOSE_RANDOM_REASONS.get();
       if (!reasonMap.isEmpty()) {
-        LOG.info("Not enough replicas was chosen. Reason:{}", reasonMap);
+        LOG.error("Temp", new RuntimeException());
       }
       throw new NotEnoughReplicasException(detail);
     }

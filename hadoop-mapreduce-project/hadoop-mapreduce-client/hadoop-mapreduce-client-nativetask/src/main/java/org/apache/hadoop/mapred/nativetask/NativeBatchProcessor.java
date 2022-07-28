@@ -68,7 +68,7 @@ public class NativeBatchProcessor implements INativeHandler {
     final int bufferSize = conf.getInt(Constants.NATIVE_PROCESSOR_BUFFER_KB,
         1024) * 1024;
 
-    LOG.info("NativeHandler: direct buffer size: " + bufferSize);
+    LOG.error("Temp", new RuntimeException());
 
     OutputBuffer out = null;
     InputBuffer in = null;

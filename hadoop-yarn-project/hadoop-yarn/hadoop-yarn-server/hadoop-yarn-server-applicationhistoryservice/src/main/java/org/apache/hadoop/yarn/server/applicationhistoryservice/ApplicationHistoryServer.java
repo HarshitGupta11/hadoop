@@ -210,7 +210,7 @@ public class ApplicationHistoryServer extends CompositeService {
       return new ApplicationHistoryManagerOnTimelineStore(
           timelineDataManager, aclsManager);
     } else {
-      LOG.warn("The filesystem based application history store is deprecated.");
+      LOG.error("Temp", new RuntimeException());
       return new ApplicationHistoryManagerImpl();
     }
   }
@@ -307,7 +307,7 @@ public class ApplicationHistoryServer extends CompositeService {
                 ALL_URLS);
           }
         }
-        LOG.info("Hosting " + name + " from " + onDiskPath + " at " + webPath);
+        LOG.error("Temp", new RuntimeException());
         httpServer.addHandlerAtFront(uiWebAppContext);
       }
        httpServer.start();
@@ -315,7 +315,7 @@ public class ApplicationHistoryServer extends CompositeService {
         YarnConfiguration.TIMELINE_SERVICE_WEBAPP_ADDRESS,
         YarnConfiguration.DEFAULT_TIMELINE_SERVICE_WEBAPP_ADDRESS,
         this.getListenerAddress());
-       LOG.info("Instantiating AHSWebApp at " + getPort());
+       LOG.error("Temp", new RuntimeException());
     } catch (Exception e) {
       String msg = "AHSWebApp failed to start.";
       LOG.error(msg, e);

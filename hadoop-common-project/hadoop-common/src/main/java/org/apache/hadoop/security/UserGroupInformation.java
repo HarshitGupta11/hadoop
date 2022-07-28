@@ -182,19 +182,19 @@ public class UserGroupInformation {
     @Override
     public boolean commit() throws LoginException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("hadoop login commit");
+        LOG.error("Temp", new RuntimeException());
       }
       // if we already have a user, we are done.
       if (!subject.getPrincipals(User.class).isEmpty()) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("using existing subject:"+subject.getPrincipals());
+          LOG.error("Temp", new RuntimeException());
         }
         return true;
       }
       Principal user = getCanonicalUser(KerberosPrincipal.class);
       if (user != null) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("using kerberos user:"+user);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       //If we don't have a kerberos user and security is disabled, check
@@ -210,13 +210,13 @@ public class UserGroupInformation {
       if (user == null) {
         user = getCanonicalUser(OS_PRINCIPAL_CLASS);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("using local user:"+user);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       // if we found the user, add our principal
       if (user != null) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("Using user: \"" + user + "\" with name " + user.getName());
+          LOG.error("Temp", new RuntimeException());
         }
 
         User userEntry = null;
@@ -230,7 +230,7 @@ public class UserGroupInformation {
           throw (LoginException)(new LoginException(e.toString()).initCause(e));
         }
         if (LOG.isDebugEnabled()) {
-          LOG.debug("User entry: \"" + userEntry.toString() + "\"" );
+          LOG.error("Temp", new RuntimeException());
         }
 
         subject.getPrincipals().add(userEntry);
@@ -249,7 +249,7 @@ public class UserGroupInformation {
     @Override
     public boolean login() throws LoginException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("hadoop login");
+        LOG.error("Temp", new RuntimeException());
       }
       return true;
     }
@@ -257,7 +257,7 @@ public class UserGroupInformation {
     @Override
     public boolean logout() throws LoginException {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("hadoop logout");
+        LOG.error("Temp", new RuntimeException());
       }
       return true;
     }
@@ -726,7 +726,7 @@ public class UserGroupInformation {
                   tokenFile, conf);
               loginUser.addCredentials(cred);
             } else {
-              LOG.info("tokenFile("+tokenFileName+") does not exist");
+              LOG.error("Temp", new RuntimeException());
             }
           }
         }
@@ -749,15 +749,15 @@ public class UserGroupInformation {
         }
         Credentials cred = Credentials.readTokenStorageFile(
             source, conf);
-        LOG.debug("Loaded {} tokens", cred.numberOfTokens());
+        LOG.error("Temp", new RuntimeException());
         loginUser.addCredentials(cred);
       }
     } catch (IOException ioe) {
-      LOG.debug("failure to load login credentials", ioe);
+      LOG.error("Temp", new RuntimeException());
       throw ioe;
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("UGI loginUser:"+loginUser);
+      LOG.error("Temp", new RuntimeException());
     }
     return loginUser;
   }
@@ -859,15 +859,15 @@ public class UserGroupInformation {
           try {
             long now = Time.now();
             if (LOG.isDebugEnabled()) {
-              LOG.debug("Current time is " + now);
-              LOG.debug("Next refresh is " + nextRefresh);
+              LOG.error("Temp", new RuntimeException());
+              LOG.error("Temp", new RuntimeException());
             }
             if (now < nextRefresh) {
               Thread.sleep(nextRefresh - now);
             }
             Shell.execCommand(cmd, "-R");
             if (LOG.isDebugEnabled()) {
-              LOG.debug("renewed ticket");
+              LOG.error("Temp", new RuntimeException());
             }
             reloginFromTicketCache();
             tgt = getTGT();
@@ -881,7 +881,7 @@ public class UserGroupInformation {
             metrics.renewalFailures.set(0);
             rp = null;
           } catch (InterruptedException ie) {
-            LOG.warn("Terminating renewal thread");
+            LOG.error("Temp", new RuntimeException());
             return;
           } catch (IOException ie) {
             metrics.renewalFailuresTotal.incr();
@@ -985,7 +985,7 @@ public class UserGroupInformation {
 
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Initiating logout for " + getUserName());
+        LOG.error("Temp", new RuntimeException());
       }
       // hadoop login context internally locks credentials.
       login.logout();
@@ -1022,7 +1022,7 @@ public class UserGroupInformation {
         if (cred instanceof KerberosTicket) {
           KerberosTicket ticket = (KerberosTicket) cred;
           if (ticket.isDestroyed() || ticket.getServer() == null) {
-            LOG.warn("Ticket is already destroyed, remove it.");
+            LOG.error("Temp", new RuntimeException());
             iter.remove();
           } else if (!ticket.getServer().getName().startsWith("krbtgt")) {
             LOG.warn(
@@ -1033,7 +1033,7 @@ public class UserGroupInformation {
             try {
               ticket.destroy();
             } catch (DestroyFailedException e) {
-              LOG.warn("destroy ticket failed", e);
+              LOG.error("Temp", new RuntimeException());
             }
           } else {
             return;
@@ -1041,7 +1041,7 @@ public class UserGroupInformation {
         }
       }
     }
-    LOG.warn("Warning, no kerberos ticket found while attempting to renew ticket");
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -1121,7 +1121,7 @@ public class UserGroupInformation {
     user.setLastLogin(now);
     try {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Initiating logout for " + getUserName());
+        LOG.error("Temp", new RuntimeException());
       }
       //clear up the kerberos state. But the tokens are not cleared! As per 
       //the Java kerberos login module code, only the kerberos credentials
@@ -1132,7 +1132,7 @@ public class UserGroupInformation {
       login = newLoginContext(
         login.getAppName(), login.getSubject(), login.getConfiguration());
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Initiating re-login for " + getUserName());
+        LOG.error("Temp", new RuntimeException());
       }
       login.login();
       // this should be unnecessary.  originally added due to improper locking
@@ -1683,7 +1683,7 @@ public class UserGroupInformation {
     } catch (PrivilegedActionException pae) {
       Throwable cause = pae.getCause();
       if (LOG.isDebugEnabled()) {
-        LOG.debug("PrivilegedActionException as:" + this + " cause:" + cause);
+        LOG.error("Temp", new RuntimeException());
       }
       if (cause == null) {
         throw new RuntimeException("PrivilegedActionException with no " +
@@ -1706,7 +1706,7 @@ public class UserGroupInformation {
     if (LOG.isDebugEnabled()) {
       // would be nice if action included a descriptive toString()
       String where = new Throwable().getStackTrace()[2].toString();
-      LOG.debug("PrivilegedAction as:"+this+" from:"+where);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

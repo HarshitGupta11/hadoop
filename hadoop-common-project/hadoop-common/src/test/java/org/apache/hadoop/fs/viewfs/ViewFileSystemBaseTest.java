@@ -1243,7 +1243,7 @@ abstract public class ViewFileSystemBaseTest {
       fsView.getLinkTarget(new Path("/linkToAFile"));
       fail("Resolving link target for a ViewFs mount link should fail!");
     } catch (Exception e) {
-      LOG.info("Expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
       assertThat(e.getMessage(),
           containsString("not a symbolic link"));
     }
@@ -1253,7 +1253,7 @@ abstract public class ViewFileSystemBaseTest {
           new Path(mountTargetRootPath, targetFileName)));
       fail("Resolving link target for a non sym link should fail!");
     } catch (Exception e) {
-      LOG.info("Expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
       assertThat(e.getMessage(),
           containsString("not a symbolic link"));
     }
@@ -1262,7 +1262,7 @@ abstract public class ViewFileSystemBaseTest {
       fsView.getLinkTarget(new Path("/targetRoot/non-existing-file"));
       fail("Resolving link target for a non existing link should fail!");
     } catch (Exception e) {
-      LOG.info("Expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
       assertThat(e.getMessage(),
           containsString("File does not exist:"));
     }

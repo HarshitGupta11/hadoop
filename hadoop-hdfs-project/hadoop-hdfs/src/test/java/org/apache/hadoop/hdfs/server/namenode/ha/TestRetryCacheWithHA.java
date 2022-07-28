@@ -1307,13 +1307,13 @@ public class TestRetryCacheWithHA {
         try {
           op.invoke();
           Object result = op.getResult();
-          LOG.info("Operation " + op.name + " finished");
+          LOG.error("Temp", new RuntimeException());
           synchronized (TestRetryCacheWithHA.this) {
             results.put(op.name, result == null ? "SUCCESS" : result);
             TestRetryCacheWithHA.this.notifyAll();
           }
         } catch (Exception e) {
-          LOG.info("Got Exception while calling " + op.name, e);
+          LOG.error("Temp", new RuntimeException());
         } finally {
           IOUtils.cleanup(null, op.client);
         }
@@ -1329,7 +1329,7 @@ public class TestRetryCacheWithHA {
     cluster.transitionToStandby(0);
     cluster.transitionToActive(1);
     // disable the block in DummyHandler
-    LOG.info("Setting block to false");
+    LOG.error("Temp", new RuntimeException());
     DummyRetryInvocationHandler.block.set(false);
     
     synchronized (this) {

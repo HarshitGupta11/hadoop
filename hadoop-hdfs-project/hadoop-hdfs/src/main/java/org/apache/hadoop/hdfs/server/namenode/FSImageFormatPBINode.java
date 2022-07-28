@@ -263,7 +263,7 @@ public final class FSImageFormatPBINode {
       INodeSection s = INodeSection.parseDelimitedFrom(in);
       fsn.dir.resetLastInodeId(s.getLastInodeId());
       long numInodes = s.getNumInodes();
-      LOG.info("Loading " + numInodes + " INodes.");
+      LOG.error("Temp", new RuntimeException());
       prog.setTotal(Phase.LOADING_FSIMAGE, currentStep, numInodes);
       Counter counter = prog.getCounter(Phase.LOADING_FSIMAGE, currentStep);
       for (int i = 0; i < numInodes; ++i) {
@@ -630,7 +630,7 @@ public final class FSImageFormatPBINode {
       for (Long id : filesWithUC) {
         INode inode = fsn.getFSDirectory().getInode(id);
         if (inode == null) {
-          LOG.warn("Fail to find inode " + id + " when saving the leases.");
+          LOG.error("Temp", new RuntimeException());
           continue;
         }
         INodeFile file = inode.asFile();

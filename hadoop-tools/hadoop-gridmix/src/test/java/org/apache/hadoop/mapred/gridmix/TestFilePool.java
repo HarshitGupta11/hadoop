@@ -64,7 +64,7 @@ public class TestFilePool {
     final Random r = new Random();
     final long seed = r.nextLong();
     r.setSeed(seed);
-    LOG.info("seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
     fs.mkdirs(base);
     for (int i = 0; i < NFILES; ++i) {
       Path file = base;

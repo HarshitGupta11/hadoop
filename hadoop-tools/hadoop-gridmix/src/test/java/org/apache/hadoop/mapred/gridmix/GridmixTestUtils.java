@@ -96,7 +96,7 @@ public class GridmixTestUtils {
       String path = "/user/" + user;
       Path homeDirectory = new Path(path);
       if (!fs.exists(homeDirectory)) {
-        LOG.info("Creating Home directory : " + homeDirectory);
+        LOG.error("Temp", new RuntimeException());
         fs.mkdirs(homeDirectory);
         changePermission(user, homeDirectory, fs);
 
@@ -105,7 +105,7 @@ public class GridmixTestUtils {
       Path stagingArea = new Path(
           conf.get("mapreduce.jobtracker.staging.root.dir",
               "/tmp/hadoop/mapred/staging"));
-      LOG.info("Creating Staging root directory : " + stagingArea);
+      LOG.error("Temp", new RuntimeException());
       fs.mkdirs(stagingArea);
       fs.setPermission(stagingArea, new FsPermission((short) 0777));
     } catch (IOException ioe) {

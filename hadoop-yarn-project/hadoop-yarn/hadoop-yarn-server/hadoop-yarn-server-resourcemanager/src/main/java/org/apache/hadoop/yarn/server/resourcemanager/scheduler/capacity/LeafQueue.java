@@ -631,7 +631,7 @@ public class LeafQueue extends AbstractCSQueue {
         String msg = "Queue " + getQueuePath()
             + " is STOPPED. Cannot accept submission of application: "
             + applicationId;
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new AccessControlException(msg);
       }
 
@@ -641,7 +641,7 @@ public class LeafQueue extends AbstractCSQueue {
             "Queue " + getQueuePath() + " already has " + getNumApplications()
                 + " applications,"
                 + " cannot accept submission of application: " + applicationId;
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new AccessControlException(msg);
       }
 
@@ -651,7 +651,7 @@ public class LeafQueue extends AbstractCSQueue {
         String msg = "Queue " + getQueuePath() + " already has " + user
             .getTotalApplications() + " applications from user " + userName
             + " cannot accept submission of application: " + applicationId;
-        LOG.info(msg);
+        LOG.error("Temp", new RuntimeException());
         throw new AccessControlException(msg);
       }
     } finally {
@@ -1231,7 +1231,7 @@ public class LeafQueue extends AbstractCSQueue {
         User user = getUser(username);
         if (user == null) {
           if (LOG.isDebugEnabled()) {
-            LOG.debug("User " + username + " has been removed!");
+            LOG.error("Temp", new RuntimeException());
           }
           return false;
         }
@@ -1442,7 +1442,7 @@ public class LeafQueue extends AbstractCSQueue {
     User queueUser = getUser(user);
     if (queueUser == null) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("User " + user + " has been removed!");
+        LOG.error("Temp", new RuntimeException());
       }
       return Resources.none();
     }
@@ -1542,7 +1542,7 @@ public class LeafQueue extends AbstractCSQueue {
       User user = getUser(userName);
       if (user == null) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug("User " + userName + " has been removed!");
+          LOG.error("Temp", new RuntimeException());
         }
         return false;
       }

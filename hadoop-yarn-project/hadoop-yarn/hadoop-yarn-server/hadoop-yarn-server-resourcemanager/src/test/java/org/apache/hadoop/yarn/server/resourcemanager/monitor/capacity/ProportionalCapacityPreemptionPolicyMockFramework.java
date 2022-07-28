@@ -349,7 +349,7 @@ public class ProportionalCapacityPreemptionPolicyMockFramework {
           .thenReturn(Resources.createResource(0, 0));
       mockContainers(strs[1], app, appAttemptId, queueName, reservedContainers,
           liveContainers);
-      LOG.debug("Application mock: queue: " + queueName + ", appId:" + appId);
+      LOG.error("Temp", new RuntimeException());
 
       when(app.getLiveContainers()).thenReturn(liveContainers);
       when(app.getReservedContainers()).thenReturn(reservedContainers);
@@ -491,7 +491,7 @@ public class ProportionalCapacityPreemptionPolicyMockFramework {
 
       nodeIdToSchedulerNodes.put(nodeId, sn);
 
-      LOG.debug("add scheduler node, id=" + nodeId + ", partition=" + partition);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -633,7 +633,7 @@ public class ProportionalCapacityPreemptionPolicyMockFramework {
 
   private void setupQueue(CSQueue queue, String q, String[] queueExprArray,
       int idx) {
-    LOG.debug("*** Setup queue, source=" + q);
+    LOG.error("Temp", new RuntimeException());
     String queuePath = null;
 
     int myLevel = getLevel(q);

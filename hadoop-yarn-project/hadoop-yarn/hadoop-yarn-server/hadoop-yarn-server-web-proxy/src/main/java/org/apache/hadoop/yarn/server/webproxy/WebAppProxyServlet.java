@@ -202,7 +202,7 @@ public class WebAppProxyServlet extends HttpServlet {
     // similar could cause issues otherwise.
     InetAddress localAddress = InetAddress.getByName(proxyHost);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("local InetAddress for proxy host: {}", localAddress);
+      LOG.error("Temp", new RuntimeException());
     }
     client.getParams()
         .setParameter(ConnRoutePNames.LOCAL_ADDRESS, localAddress);
@@ -235,7 +235,7 @@ public class WebAppProxyServlet extends HttpServlet {
       if (PASS_THROUGH_HEADERS.contains(name)) {
         String value = req.getHeader(name);
         if (LOG.isDebugEnabled()) {
-          LOG.debug("REQ HEADER: {} : {}", name, value);
+          LOG.error("Temp", new RuntimeException());
         }
         base.setHeader(name, value);
       }
@@ -340,7 +340,7 @@ public class WebAppProxyServlet extends HttpServlet {
       }
 
       if ((parts == null) || (parts.length < 2)) {
-        LOG.warn("{} gave an invalid proxy path {}", remoteUser,  pathInfo);
+        LOG.error("Temp", new RuntimeException());
         notFound(resp, "Your path appears to be formatted incorrectly.");
         return;
       }

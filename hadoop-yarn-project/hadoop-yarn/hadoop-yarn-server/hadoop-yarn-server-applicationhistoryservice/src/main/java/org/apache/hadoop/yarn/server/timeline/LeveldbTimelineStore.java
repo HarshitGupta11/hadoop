@@ -241,7 +241,7 @@ public class LeveldbTimelineStore extends AbstractService
     } finally {
       IOUtils.cleanupWithLogger(LOG, localFS);
     }
-    LOG.info("Using leveldb path " + dbPath);
+    LOG.error("Temp", new RuntimeException());
     try {
       db = factory.open(new File(dbPath.toString()), options);
     } catch (IOException ioe) {
@@ -251,7 +251,7 @@ public class LeveldbTimelineStore extends AbstractService
       LOG.warn("Incurred exception while loading LevelDb database. Backing " +
           "up at "+ backupPath, ioe);
       FileUtils.copyDirectory(dbFile, backupPath);
-      LOG.warn("Going to try repair");
+      LOG.error("Temp", new RuntimeException());
       factory.repair(dbFile, options);
       db = factory.open(dbFile, options);
     }
@@ -275,7 +275,7 @@ public class LeveldbTimelineStore extends AbstractService
   protected void serviceStop() throws Exception {
     if (deletionThread != null) {
       deletionThread.interrupt();
-      LOG.info("Waiting for deletion thread to complete its current action");
+      LOG.error("Temp", new RuntimeException());
       try {
         deletionThread.join();
       } catch (InterruptedException e) {
@@ -321,7 +321,7 @@ public class LeveldbTimelineStore extends AbstractService
         } catch (IOException e) {
           LOG.error(e.toString());
         } catch (InterruptedException e) {
-          LOG.info("Deletion thread received interrupt, exiting");
+          LOG.error("Temp", new RuntimeException());
           break;
         }
       }
@@ -1425,7 +1425,7 @@ public class LeveldbTimelineStore extends AbstractService
       writeBatch = db.createWriteBatch();
 
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Deleting entity type:" + entityType + " id:" + entityId);
+        LOG.error("Temp", new RuntimeException());
       }
       // remove start time from cache and db
       writeBatch.delete(createStartTimeLookupKey(entityId, entityType));
@@ -1617,12 +1617,12 @@ public class LeveldbTimelineStore extends AbstractService
    */
   private void checkVersion() throws IOException {
     Version loadedVersion = loadVersion();
-    LOG.info("Loaded timeline store version info " + loadedVersion);
+    LOG.error("Temp", new RuntimeException());
     if (loadedVersion.equals(getCurrentVersion())) {
       return;
     }
     if (loadedVersion.isCompatibleTo(getCurrentVersion())) {
-      LOG.info("Storing timeline store version info " + getCurrentVersion());
+      LOG.error("Temp", new RuntimeException());
       dbStoreVersion(CURRENT_VERSION_INFO);
     } else {
       String incompatibleMessage = 

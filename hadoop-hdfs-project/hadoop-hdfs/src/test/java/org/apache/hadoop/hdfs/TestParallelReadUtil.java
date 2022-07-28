@@ -71,7 +71,7 @@ public class TestParallelReadUtil {
     util = new BlockReaderTestUtil(replicationFactor, conf);
     dfsClient = util.getDFSClient();
     long seed = Time.now();
-    LOG.info("Random seed: " + seed);
+    LOG.error("Temp", new RuntimeException());
     rand = new Random(seed);
   }
 

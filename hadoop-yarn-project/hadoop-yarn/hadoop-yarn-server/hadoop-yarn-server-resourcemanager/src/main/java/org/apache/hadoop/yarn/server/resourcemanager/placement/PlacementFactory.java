@@ -39,7 +39,7 @@ public final class PlacementFactory {
       throws ClassNotFoundException {
     Class<? extends PlacementRule> ruleClass = Class.forName(ruleStr)
         .asSubclass(PlacementRule.class);
-    LOG.info("Using PlacementRule implementation - " + ruleClass);
+    LOG.error("Temp", new RuntimeException());
     return ReflectionUtils.newInstance(ruleClass, conf);
   }
 }

@@ -119,7 +119,7 @@ public class TestContainerResourceIncreaseRPC {
       try {
         proxy.updateContainer(request);
       } catch (Exception e) {
-        LOG.info(StringUtils.stringifyException(e));
+        LOG.error("Temp", new RuntimeException());
         Assert.assertEquals("Error, exception is not: "
             + SocketTimeoutException.class.getName(),
             SocketTimeoutException.class.getName(), e.getClass().getName());

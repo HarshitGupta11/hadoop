@@ -655,7 +655,7 @@ public class AdminService extends CompositeService implements
       RMNode node = this.rm.getRMContext().getRMNodes().get(nodeId);
 
       if (node == null) {
-        LOG.warn("Resource update get failed on an unrecognized node: " + nodeId);
+        LOG.error("Temp", new RuntimeException());
         allSuccess = false;
       } else {
         // update resource to RMNode
@@ -907,7 +907,7 @@ public class AdminService extends CompositeService implements
 
   private YarnException logAndWrapException(Exception exception, String user,
       String operation, String msg) throws YarnException {
-    LOG.warn("Exception " + msg, exception);
+    LOG.error("Temp", new RuntimeException());
     RMAuditLogger.logFailure(user, operation, "",
         "AdminService", "Exception " + msg);
     return RPCUtil.getRemoteException(exception);

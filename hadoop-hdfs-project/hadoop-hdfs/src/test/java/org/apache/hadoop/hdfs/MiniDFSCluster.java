@@ -1332,7 +1332,7 @@ public class MiniDFSCluster implements AutoCloseable {
     try {
       uri = new URI("hdfs://" + hostPort);
     } catch (URISyntaxException e) {
-      NameNode.LOG.warn("unexpected URISyntaxException", e);
+      NameNode.LOG.error("Temp", new RuntimeException());
     }
     return uri;
   }
@@ -1366,7 +1366,7 @@ public class MiniDFSCluster implements AutoCloseable {
   public void waitNameNodeUp(int nnIndex) {
     while (!isNameNodeUp(nnIndex)) {
       try {
-        LOG.warn("Waiting for namenode at " + nnIndex + " to start...");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(1000);
       } catch (InterruptedException e) {
       }
@@ -1381,7 +1381,7 @@ public class MiniDFSCluster implements AutoCloseable {
     if (numDataNodes > 0) {
       while (!isClusterUp()) {
         try {
-          LOG.warn("Waiting for the Mini HDFS Cluster to start...");
+          LOG.error("Temp", new RuntimeException());
           Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
@@ -1970,7 +1970,7 @@ public class MiniDFSCluster implements AutoCloseable {
    * Shutdown all the nodes in the cluster.
    */
   public void shutdown(boolean deleteDfsDir, boolean closeFileSystem) {
-    LOG.info("Shutting down the Mini HDFS Cluster");
+    LOG.error("Temp", new RuntimeException());
     if (checkExitOnShutdown)  {
       if (ExitUtil.terminateCalled()) {
         LOG.fatal("Test resulted in an unexpected exit",
@@ -1984,7 +1984,7 @@ public class MiniDFSCluster implements AutoCloseable {
         try {
           fs.close();
         } catch (IOException ioe) {
-          LOG.warn("Exception while closing file system", ioe);
+          LOG.error("Temp", new RuntimeException());
         }
       }
       fileSystems.clear();
@@ -2018,7 +2018,7 @@ public class MiniDFSCluster implements AutoCloseable {
    * Shutdown the datanode at a given index.
    */
   public void shutdownDataNode(int dnIndex) {
-    LOG.info("Shutting down DataNode " + dnIndex);
+    LOG.error("Temp", new RuntimeException());
     DataNode dn = dataNodes.remove(dnIndex).datanode;
     dn.shutdown();
     numDataNodes--;
@@ -2051,7 +2051,7 @@ public class MiniDFSCluster implements AutoCloseable {
     if (nn == null) {
       return;
     }
-    LOG.info("Shutting down the namenode");
+    LOG.error("Temp", new RuntimeException());
     nn.stop();
     nn.join();
     nn.joinHttpServer();
@@ -2112,7 +2112,7 @@ public class MiniDFSCluster implements AutoCloseable {
     info.setStartOpt(startOpt);
     if (waitActive) {
       waitClusterUp();
-      LOG.info("Restarted the namenode");
+      LOG.error("Temp", new RuntimeException());
       waitActive();
     }
   }
@@ -2435,7 +2435,7 @@ public class MiniDFSCluster implements AutoCloseable {
     for (int i = dataNodes.size() - 1; i >= 0; i--) {
       if (!restartDataNode(i, keepPort))
         return false;
-      LOG.info("Restarted DataNode " + i);
+      LOG.error("Temp", new RuntimeException());
     }
     return true;
   }
@@ -2595,7 +2595,7 @@ public class MiniDFSCluster implements AutoCloseable {
     // ensure all datanodes have registered and sent heartbeat to the namenode
     while (shouldWait(client.datanodeReport(DatanodeReportType.LIVE), addr)) {
       try {
-        LOG.info("Waiting for cluster to become active");
+        LOG.error("Temp", new RuntimeException());
         Thread.sleep(100);
       } catch (InterruptedException e) {
       }
@@ -2650,13 +2650,13 @@ public class MiniDFSCluster implements AutoCloseable {
         }
       }
     }
-    LOG.info("Cluster is active");
+    LOG.error("Temp", new RuntimeException());
   }
 
   public void printNNs() {
     for (int i = 0; i < namenodes.size(); i++) {
-      LOG.info("Have namenode " + i + ", info:" + getNN(i));
-      LOG.info(" has namenode: " + getNN(i).nameNode);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -2674,14 +2674,14 @@ public class MiniDFSCluster implements AutoCloseable {
     
     // Wait for expected number of datanodes to start
     if (dnInfo.length != numDataNodes) {
-      LOG.info("dnInfo.length != numDataNodes");
+      LOG.error("Temp", new RuntimeException());
       return true;
     }
     
     // if one of the data nodes is not fully started, continue to wait
     for (DataNodeProperties dn : dataNodes) {
       if (!dn.datanode.isDatanodeFullyStarted()) {
-        LOG.info("!dn.datanode.isDatanodeFullyStarted()");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }
@@ -2690,7 +2690,7 @@ public class MiniDFSCluster implements AutoCloseable {
     // using (capacity == 0) as proxy.
     for (DatanodeInfo dn : dnInfo) {
       if (dn.getCapacity() == 0 || dn.getLastUpdate() <= 0) {
-        LOG.info("No heartbeat from DataNode: " + dn.toString());
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }
@@ -2698,7 +2698,7 @@ public class MiniDFSCluster implements AutoCloseable {
     // If datanode dataset is not initialized then wait
     for (DataNodeProperties dn : dataNodes) {
       if (DataNodeTestUtils.getFSDataset(dn.datanode) == null) {
-        LOG.info("DataNodeTestUtils.getFSDataset(dn.datanode) == null");
+        LOG.error("Temp", new RuntimeException());
         return true;
       }
     }
@@ -3195,7 +3195,7 @@ public class MiniDFSCluster implements AutoCloseable {
         conf.set(DFS_DATANODE_ADDRESS_KEY, address);
       }
       addToFile(hostsFile, address);
-      LOG.info("Adding datanode " + address + " to hosts file " + hostsFile);
+      LOG.error("Temp", new RuntimeException());
     } else {
       if (checkDataNodeAddrConfig) {
         conf.setIfUnset(DFS_DATANODE_ADDRESS_KEY, "127.0.0.1:0");

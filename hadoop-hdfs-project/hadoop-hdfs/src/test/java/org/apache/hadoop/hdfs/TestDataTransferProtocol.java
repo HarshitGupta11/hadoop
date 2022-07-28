@@ -101,7 +101,7 @@ public class TestDataTransferProtocol {
     try {
       
       if ( testDescription != null ) {
-        LOG.info("Testing : " + testDescription);
+        LOG.error("Temp", new RuntimeException());
       }
       LOG.info("Going to write:" +
           StringUtils.byteToHexString(sendBuf.toByteArray()));
@@ -121,7 +121,7 @@ public class TestDataTransferProtocol {
         in.readFully(retBuf);
       } catch (EOFException eof) {
         if ( eofExpected ) {
-          LOG.info("Got EOF as expected.");
+          LOG.error("Temp", new RuntimeException());
           return;
         }
         throw eof;
@@ -129,8 +129,8 @@ public class TestDataTransferProtocol {
 
       String received = StringUtils.byteToHexString(retBuf);
       String expected = StringUtils.byteToHexString(recvBuf.toByteArray());
-      LOG.info("Received: " + received);
-      LOG.info("Expected: " + expected);
+      LOG.error("Temp", new RuntimeException());
+      LOG.error("Temp", new RuntimeException());
       
       if (eofExpected) {
         throw new IOException("Did not receive IOException when an exception " +

@@ -56,7 +56,7 @@ public class TestJobHistoryEvents {
     app.submit(conf);
     Job job = app.getContext().getAllJobs().values().iterator().next();
     JobId jobId = job.getID();
-    LOG.info("JOBID is " + TypeConverter.fromYarn(jobId).toString());
+    LOG.error("Temp", new RuntimeException());
     app.waitForState(job, JobState.SUCCEEDED);
     
     //make sure all events are flushed 
@@ -117,7 +117,7 @@ public class TestJobHistoryEvents {
     app.submit(conf);
     Job job = app.getContext().getAllJobs().values().iterator().next();
     JobId jobId = job.getID();
-    LOG.info("JOBID is " + TypeConverter.fromYarn(jobId).toString());
+    LOG.error("Temp", new RuntimeException());
     app.waitForState(job, JobState.SUCCEEDED);
 
     // make sure all events are flushed
@@ -165,7 +165,7 @@ public class TestJobHistoryEvents {
     app.submit(conf);
     Job job = app.getContext().getAllJobs().values().iterator().next();
     JobId jobId = job.getID();
-    LOG.info("JOBID is " + TypeConverter.fromYarn(jobId).toString());
+    LOG.error("Temp", new RuntimeException());
     app.waitForState(job, JobState.SUCCEEDED);
     
     //make sure all events are flushed 

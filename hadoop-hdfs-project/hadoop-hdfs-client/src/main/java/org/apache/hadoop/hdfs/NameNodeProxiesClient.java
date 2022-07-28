@@ -247,7 +247,7 @@ public class NameNodeProxiesClient {
     } catch (Exception e) {
       final String message = "Couldn't create proxy provider " +
           failoverProxyProviderClass;
-      LOG.debug(message, e);
+      LOG.error("Temp", new RuntimeException());
       if (e.getCause() instanceof IOException) {
         throw (IOException) e.getCause();
       } else {

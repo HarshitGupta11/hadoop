@@ -67,7 +67,7 @@ public class TestWebHdfsWithMultipleNameNodes {
 
   private static void setupCluster(final int nNameNodes, final int nDataNodes)
       throws Exception {
-    LOG.info("nNameNodes=" + nNameNodes + ", nDataNodes=" + nDataNodes);
+    LOG.error("Temp", new RuntimeException());
 
     cluster = new MiniDFSCluster.Builder(conf)
         .nnTopology(MiniDFSNNTopology.simpleFederatedTopology(nNameNodes))
@@ -102,7 +102,7 @@ public class TestWebHdfsWithMultipleNameNodes {
     final String[] strings = new String[webhdfs.length]; 
     for(int i = 0; i < webhdfs.length; i++) {
       strings[i] = createString(prefix, i);
-      LOG.info(name + "[" + i + "] = " + strings[i]);
+      LOG.error("Temp", new RuntimeException());
     }
     return strings;
   }

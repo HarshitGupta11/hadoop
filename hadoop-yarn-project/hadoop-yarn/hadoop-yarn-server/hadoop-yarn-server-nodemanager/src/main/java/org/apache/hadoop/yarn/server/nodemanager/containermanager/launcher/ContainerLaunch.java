@@ -326,7 +326,7 @@ public class ContainerLaunch implements Callable<Integer> {
       context.getNodeStatusUpdater().reportException(e);
       return ret;
     } catch (Throwable e) {
-      LOG.warn("Failed to launch container.", e);
+      LOG.error("Temp", new RuntimeException());
       dispatcher.getEventHandler().handle(new ContainerExitEvent(
           containerID, ContainerEventType.CONTAINER_EXITED_WITH_FAILURE, ret,
           e.getMessage()));
@@ -555,7 +555,7 @@ public class ContainerLaunch implements Callable<Integer> {
       handleContainerExitWithFailure(containerId, exitCode, containerLogDir,
           diagnosticInfo);
     } else {
-      LOG.info("Container " + containerId + " succeeded ");
+      LOG.error("Temp", new RuntimeException());
       dispatcher.getEventHandler().handle(
           new ContainerEvent(containerId,
               ContainerEventType.CONTAINER_EXITED_WITH_SUCCESS));
@@ -575,7 +575,7 @@ public class ContainerLaunch implements Callable<Integer> {
   @SuppressWarnings("unchecked")
   protected void handleContainerExitWithFailure(ContainerId containerID,
       int ret, Path containerLogDir, StringBuilder diagnosticInfo) {
-    LOG.warn("Container launch failed : " + diagnosticInfo.toString());
+    LOG.error("Temp", new RuntimeException());
 
     FileSystem fileSystem = null;
     long tailSizeInBytes =
@@ -711,7 +711,7 @@ public class ContainerLaunch implements Callable<Integer> {
   public void cleanupContainer() throws IOException {
     ContainerId containerId = container.getContainerId();
     String containerIdStr = containerId.toString();
-    LOG.info("Cleaning up container " + containerIdStr);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       context.getNMStateStore().storeContainerKilled(containerId);
@@ -729,7 +729,7 @@ public class ContainerLaunch implements Callable<Integer> {
       return;
     }
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Marking container " + containerIdStr + " as inactive");
+      LOG.error("Temp", new RuntimeException());
     }
     // this should ensure that if the container process has not launched 
     // by this time, it will never be launched
@@ -785,7 +785,7 @@ public class ContainerLaunch implements Callable<Integer> {
       String message =
           "Exception when trying to cleanup container " + containerIdStr
               + ": " + StringUtils.stringifyException(e);
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       dispatcher.getEventHandler().handle(
         new ContainerDiagnosticsUpdateEvent(containerId, message));
     } finally {
@@ -843,11 +843,11 @@ public class ContainerLaunch implements Callable<Integer> {
     String user = container.getUser();
     Signal signal = translateCommandToSignal(command);
     if (signal.equals(Signal.NULL)) {
-      LOG.info("ignore signal command " + command);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
-    LOG.info("Sending signal " + command + " to container " + containerIdStr);
+    LOG.error("Temp", new RuntimeException());
 
     boolean alreadyLaunched =
         !containerAlreadyLaunched.compareAndSet(false, true);
@@ -891,7 +891,7 @@ public class ContainerLaunch implements Callable<Integer> {
             + " as user " + user
             + " for container " + containerIdStr
             + ", result=" + (result ? "success" : "failed");
-        LOG.info(diagnostics);
+        LOG.error("Temp", new RuntimeException());
 
         dispatcher.getEventHandler().handle(
             new ContainerDiagnosticsUpdateEvent(containerId, diagnostics));
@@ -900,7 +900,7 @@ public class ContainerLaunch implements Callable<Integer> {
       String message =
           "Exception when sending signal to container " + containerIdStr
               + ": " + StringUtils.stringifyException(e);
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -977,7 +977,7 @@ public class ContainerLaunch implements Callable<Integer> {
   public void pauseContainer() throws IOException {
     ContainerId containerId = container.getContainerId();
     String containerIdStr = containerId.toString();
-    LOG.info("Pausing the container " + containerIdStr);
+    LOG.error("Temp", new RuntimeException());
 
     // The pause event is only handled if the container is in the running state
     // (the container state machine), so we don't check for
@@ -1010,7 +1010,7 @@ public class ContainerLaunch implements Callable<Integer> {
       String message =
           "Exception when trying to pause container " + containerIdStr
               + ": " + StringUtils.stringifyException(e);
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       container.handle(new ContainerKillEvent(container.getContainerId(),
           ContainerExitStatus.PREEMPTED, "Container preempted as there was "
           + " an exception in pausing it."));
@@ -1027,7 +1027,7 @@ public class ContainerLaunch implements Callable<Integer> {
   public void resumeContainer() throws IOException {
     ContainerId containerId = container.getContainerId();
     String containerIdStr = containerId.toString();
-    LOG.info("Resuming the container " + containerIdStr);
+    LOG.error("Temp", new RuntimeException());
 
     // The resume event is only handled if the container is in a paused state
     // so we don't check for the launched flag here.
@@ -1060,7 +1060,7 @@ public class ContainerLaunch implements Callable<Integer> {
       String message =
           "Exception when trying to resume container " + containerIdStr
               + ": " + StringUtils.stringifyException(e);
-      LOG.info(message);
+      LOG.error("Temp", new RuntimeException());
       container.handle(new ContainerKillEvent(container.getContainerId(),
           ContainerExitStatus.PREEMPTED, "Container preempted as there was "
           + " an exception in pausing it."));

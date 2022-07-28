@@ -264,7 +264,7 @@ public class TestAppendSnapshotTruncate {
     }
 
     void checkEverything() throws IOException {
-      LOG.info("checkEverything");
+      LOG.error("Temp", new RuntimeException());
       for(FileWorker f : files) { 
         f.checkFullFile();
         f.checkErrorState();
@@ -449,7 +449,7 @@ public class TestAppendSnapshotTruncate {
               if (s == State.RUNNING) {
                 isCalling.set(true);
                 try {
-                  LOG.info(call());
+                  LOG.error("Temp", new RuntimeException());
                 } catch(Throwable t) {
                   setErrorState(t);
                   return;

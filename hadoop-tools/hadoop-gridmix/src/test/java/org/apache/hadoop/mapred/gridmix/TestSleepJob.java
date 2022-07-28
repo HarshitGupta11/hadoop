@@ -95,25 +95,25 @@ public class TestSleepJob extends CommonJobTest {
   public void testSerialSubmit() throws Exception {
     // set policy
     policy = GridmixJobSubmissionPolicy.SERIAL;
-    LOG.info("Serial started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(JobCreator.SLEEPJOB.name(), false);
-    LOG.info("Serial ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testReplaySubmit() throws Exception {
     policy = GridmixJobSubmissionPolicy.REPLAY;
-    LOG.info(" Replay started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(JobCreator.SLEEPJOB.name(), false);
-    LOG.info(" Replay ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test
   public void testStressSubmit() throws Exception {
     policy = GridmixJobSubmissionPolicy.STRESS;
-    LOG.info(" Replay started at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
     doSubmission(JobCreator.SLEEPJOB.name(), false);
-    LOG.info(" Replay ended at " + System.currentTimeMillis());
+    LOG.error("Temp", new RuntimeException());
   }
 
   private void testRandomLocation(int locations, int njobs,

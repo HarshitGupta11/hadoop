@@ -89,7 +89,7 @@ public class TestDelegationTokenForProxyUser {
     }
     builder.append("127.0.1.1,");
     builder.append(InetAddress.getLocalHost().getCanonicalHostName());
-    LOG.info("Local Ip addresses: " + builder.toString());
+    LOG.error("Temp", new RuntimeException());
     conf.setStrings(DefaultImpersonationProvider.getTestProvider().
             getProxySuperuserIpConfKey(superUserShortName),
         builder.toString());
@@ -148,8 +148,8 @@ public class TestDelegationTokenForProxyUser {
   
   @Test(timeout=5000)
   public void testWebHdfsDoAs() throws Exception {
-    WebHdfsTestUtil.LOG.info("START: testWebHdfsDoAs()");
-    WebHdfsTestUtil.LOG.info("ugi.getShortUserName()=" + ugi.getShortUserName());
+    WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
+    WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
     final WebHdfsFileSystem webhdfs = WebHdfsTestUtil.getWebHdfsFileSystemAs(ugi, config, WebHdfsConstants.WEBHDFS_SCHEME);
     
     final Path root = new Path("/");
@@ -159,7 +159,7 @@ public class TestDelegationTokenForProxyUser {
 
     {
       Path responsePath = webhdfs.getHomeDirectory();
-      WebHdfsTestUtil.LOG.info("responsePath=" + responsePath);
+      WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(webhdfs.getUri() + "/user/" + PROXY_USER, responsePath.toString());
     }
 
@@ -170,7 +170,7 @@ public class TestDelegationTokenForProxyUser {
       out.close();
   
       final FileStatus status = webhdfs.getFileStatus(f);
-      WebHdfsTestUtil.LOG.info("status.getOwner()=" + status.getOwner());
+      WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(PROXY_USER, status.getOwner());
     }
 
@@ -180,8 +180,8 @@ public class TestDelegationTokenForProxyUser {
       out.close();
   
       final FileStatus status = webhdfs.getFileStatus(f);
-      WebHdfsTestUtil.LOG.info("status.getOwner()=" + status.getOwner());
-      WebHdfsTestUtil.LOG.info("status.getLen()  =" + status.getLen());
+      WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
+      WebHdfsTestUtil.LOG.error("Temp", new RuntimeException());
       Assert.assertEquals(PROXY_USER, status.getOwner());
     }
   }

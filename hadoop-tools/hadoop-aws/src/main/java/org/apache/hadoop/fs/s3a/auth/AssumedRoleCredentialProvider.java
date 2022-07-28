@@ -114,20 +114,20 @@ public class AssumedRoleCredentialProvider implements AWSCredentialsProvider,
         ASSUMED_ROLE_SESSION_DURATION_DEFAULT, TimeUnit.SECONDS);
     String policy = conf.getTrimmed(ASSUMED_ROLE_POLICY, "");
 
-    LOG.debug("{}", this);
+    LOG.error("Temp", new RuntimeException());
     STSAssumeRoleSessionCredentialsProvider.Builder builder
         = new STSAssumeRoleSessionCredentialsProvider.Builder(arn, sessionName);
     builder.withRoleSessionDurationSeconds((int) duration);
     if (StringUtils.isNotEmpty(policy)) {
-      LOG.debug("Scope down policy {}", policy);
+      LOG.error("Temp", new RuntimeException());
       builder.withScopeDownPolicy(policy);
     }
     String epr = conf.get(ASSUMED_ROLE_STS_ENDPOINT, "");
     if (StringUtils.isNotEmpty(epr)) {
-      LOG.debug("STS Endpoint: {}", epr);
+      LOG.error("Temp", new RuntimeException());
       builder.withServiceEndpoint(epr);
     }
-    LOG.debug("Credentials to obtain role credentials: {}", credentials);
+    LOG.error("Temp", new RuntimeException());
     builder.withLongLivedCredentialsProvider(credentials);
     stsProvider = builder.build();
     // and force in a fail-fast check just to keep the stack traces less

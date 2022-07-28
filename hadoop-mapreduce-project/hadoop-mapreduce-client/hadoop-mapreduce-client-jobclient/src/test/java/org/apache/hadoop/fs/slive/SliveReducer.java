@@ -52,7 +52,7 @@ public class SliveReducer extends MapReduceBase implements
    */
   private void logAndSetStatus(Reporter r, String msg) {
     r.setStatus(msg);
-    LOG.info(msg);
+    LOG.error("Temp", new RuntimeException());
   }
 
   /**
@@ -87,7 +87,7 @@ public class SliveReducer extends MapReduceBase implements
         } else {
           collector = OperationOutput.merge(collector, val);
         }
-        LOG.info("Combined " + val + " into/with " + collector);
+        LOG.error("Temp", new RuntimeException());
         ++reduceAm;
       } catch (Exception e) {
         ++errorAm;

@@ -223,7 +223,7 @@ public class TestDFSStripedOutputStreamWithFailure extends
       int fileLength = cellSize - 1000;
       final byte[] expected = StripedFileTestUtil.generateBytes(fileLength);
       DFSTestUtil.writeFile(dfs, srcPath, new String(expected));
-      LOG.info("writing finished. Seek and read the file to verify.");
+      LOG.error("Temp", new RuntimeException());
       StripedFileTestUtil.verifySeek(dfs, srcPath, fileLength, ecPolicy,
           blockGroupSize);
     } finally {

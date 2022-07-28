@@ -89,7 +89,7 @@ public final class SecurityUtil {
   @InterfaceAudience.Public
   @InterfaceStability.Evolving
   public static void setConfiguration(Configuration conf) {
-    LOG.info("Updating Configuration");
+    LOG.error("Temp", new RuntimeException());
     setConfigurationInternal(conf);
   }
 
@@ -424,10 +424,10 @@ public final class SecurityUtil {
     if (token != null) {
       token.setService(service);
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Acquired token "+token);  // Token#toString() prints service
+        LOG.error("Temp", new RuntimeException());  // Token#toString() prints service
       }
     } else {
-      LOG.warn("Failed to get token for service "+service);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   

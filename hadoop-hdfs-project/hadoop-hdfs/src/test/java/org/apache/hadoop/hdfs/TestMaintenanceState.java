@@ -89,7 +89,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test (timeout = 60000)
   public void testMaintenanceMinReplConfigRange() {
-    LOG.info("Setting testMaintenanceMinReplConfigRange");
+    LOG.error("Temp", new RuntimeException());
 
     // Case 1: Maintenance min replication less allowed minimum 0
     setMinMaintenanceR(-1);
@@ -98,7 +98,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
       fail("Cluster start should fail when 'dfs.namenode.maintenance" +
           ".replication.min=-1'");
     } catch (IOException e) {
-      LOG.info("Expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // Case 2: Maintenance min replication greater
@@ -112,7 +112,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
       fail("Cluster start should fail when 'dfs.namenode.maintenance" +
           ".replication.min > " + defaultRepl + "'");
     } catch (IOException e) {
-      LOG.info("Expected exception: " + e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -122,7 +122,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testTakeNodeOutOfEnteringMaintenance() throws Exception {
-    LOG.info("Starting testTakeNodeOutOfEnteringMaintenance");
+    LOG.error("Temp", new RuntimeException());
     final int replicas = 1;
     final Path file = new Path("/testTakeNodeOutOfEnteringMaintenance.dat");
 
@@ -151,7 +151,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testEnteringMaintenanceExpiration() throws Exception {
-    LOG.info("Starting testEnteringMaintenanceExpiration");
+    LOG.error("Temp", new RuntimeException());
     final int replicas = 1;
     final Path file = new Path("/testEnteringMaintenanceExpiration.dat");
 
@@ -175,7 +175,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testInvalidExpiration() throws Exception {
-    LOG.info("Starting testInvalidExpiration");
+    LOG.error("Temp", new RuntimeException());
     final int replicas = 1;
     final Path file = new Path("/testInvalidExpiration.dat");
 
@@ -197,7 +197,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testPutDeadNodeToMaintenance() throws Exception {
-    LOG.info("Starting testPutDeadNodeToMaintenance");
+    LOG.error("Temp", new RuntimeException());
     final int replicas = 1;
     final Path file = new Path("/testPutDeadNodeToMaintenance.dat");
 
@@ -231,7 +231,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testPutDeadNodeToMaintenanceWithExpiration() throws Exception {
-    LOG.info("Starting testPutDeadNodeToMaintenanceWithExpiration");
+    LOG.error("Temp", new RuntimeException());
     final Path file =
         new Path("/testPutDeadNodeToMaintenanceWithExpiration.dat");
 
@@ -268,7 +268,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testTransitionFromDecommissioned() throws IOException {
-    LOG.info("Starting testTransitionFromDecommissioned");
+    LOG.error("Temp", new RuntimeException());
     final Path file = new Path("/testTransitionFromDecommissioned.dat");
 
     startCluster(1, 4);
@@ -291,7 +291,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testTransitionFromDecommissionedAndExpired() throws IOException {
-    LOG.info("Starting testTransitionFromDecommissionedAndExpired");
+    LOG.error("Temp", new RuntimeException());
     final Path file =
         new Path("/testTransitionFromDecommissionedAndExpired.dat");
 
@@ -322,7 +322,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testNodeDeadWhenInEnteringMaintenance() throws Exception {
-    LOG.info("Starting testNodeDeadWhenInEnteringMaintenance");
+    LOG.error("Temp", new RuntimeException());
     final int numNamenodes = 1;
     final int numDatanodes = 1;
     final int replicas = 1;
@@ -368,7 +368,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testExpectedReplications() throws IOException {
-    LOG.info("Starting testExpectedReplications");
+    LOG.error("Temp", new RuntimeException());
     testExpectedReplication(1);
     testExpectedReplication(2);
     testExpectedReplication(3);
@@ -412,7 +412,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testZeroMinMaintenanceReplication() throws Exception {
-    LOG.info("Starting testZeroMinMaintenanceReplication");
+    LOG.error("Temp", new RuntimeException());
     setMinMaintenanceR(0);
     startCluster(1, 1);
 
@@ -436,7 +436,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
   @Test(timeout = 360000)
   public void testZeroMinMaintenanceReplicationWithExpiration()
       throws Exception {
-    LOG.info("Starting testZeroMinMaintenanceReplicationWithExpiration");
+    LOG.error("Temp", new RuntimeException());
     setMinMaintenanceR(0);
     startCluster(1, 1);
 
@@ -504,7 +504,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
     LOG.info("Starting testLargerMinMaintenanceReplication - maintMinRepl: "
         + maintenanceMinRepl + ", numDNs: " + numDataNodes + ", numNewDNs: "
         + numNewDataNodes + ", fileRepl: " + fileBlockRepl);
-    LOG.info("Setting maintenance minimum replication: " + maintenanceMinRepl);
+    LOG.error("Temp", new RuntimeException());
     setMinMaintenanceR(maintenanceMinRepl);
     startCluster(1, numDataNodes);
 
@@ -538,7 +538,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testTransitionToDecommission() throws IOException {
-    LOG.info("Starting testTransitionToDecommission");
+    LOG.error("Temp", new RuntimeException());
     final int numNamenodes = 1;
     final int numDatanodes = 4;
     startCluster(numNamenodes, numDatanodes);
@@ -582,7 +582,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testTransitionFromDecommissioning() throws IOException {
-    LOG.info("Starting testTransitionFromDecommissioning");
+    LOG.error("Temp", new RuntimeException());
     startCluster(1, 3);
 
     final Path file = new Path("/testTransitionFromDecommissioning.dat");
@@ -761,7 +761,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testTakeDeadNodeOutOfMaintenance() throws Exception {
-    LOG.info("Starting testTakeDeadNodeOutOfMaintenance");
+    LOG.error("Temp", new RuntimeException());
     final int numNamenodes = 1;
     final int numDatanodes = 4;
     startCluster(numNamenodes, numDatanodes);
@@ -817,7 +817,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testWithNNAndDNRestart() throws Exception {
-    LOG.info("Starting testWithNNAndDNRestart");
+    LOG.error("Temp", new RuntimeException());
     final int numNamenodes = 1;
     final int numDatanodes = 4;
     startCluster(numNamenodes, numDatanodes);
@@ -875,7 +875,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 3600000)
   public void testWriteAfterMaintenance() throws IOException {
-    LOG.info("Starting testWriteAfterMaintenance");
+    LOG.error("Temp", new RuntimeException());
     startCluster(1, 3);
 
     final Path file = new Path("/testWriteAfterMaintenance.dat");
@@ -907,7 +907,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testEnterMaintenanceWhenFileOpen() throws Exception {
-    LOG.info("Starting testEnterMaintenanceWhenFileOpen");
+    LOG.error("Temp", new RuntimeException());
     startCluster(1, 3);
 
     final Path file = new Path("/testEnterMaintenanceWhenFileOpen.dat");
@@ -926,7 +926,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
    */
   @Test(timeout = 360000)
   public void testInvalidation() throws IOException {
-    LOG.info("Starting testInvalidation");
+    LOG.error("Temp", new RuntimeException());
     int numNamenodes = 1;
     int numDatanodes = 3;
     startCluster(numNamenodes, numDatanodes);
@@ -958,7 +958,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
 
   @Test(timeout = 120000)
   public void testFileCloseAfterEnteringMaintenance() throws Exception {
-    LOG.info("Starting testFileCloseAfterEnteringMaintenance");
+    LOG.error("Temp", new RuntimeException());
     int expirationInMs = 30 * 1000;
     int numDataNodes = 3;
     int numNameNodes = 1;
@@ -1037,14 +1037,14 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
           //excluded node must not be in LocatedBlock.
           output = "For block " + blk.getBlock() + " replica on " +
               nodes[j] + " found in LocatedBlock.";
-          LOG.info(output);
+          LOG.error("Temp", new RuntimeException());
           return output;
         } else {
           if (nodes[j].isInMaintenance()) {
             //IN_MAINTENANCE node must not be in LocatedBlock.
             output = "For block " + blk.getBlock() + " replica on " +
                 nodes[j] + " which is in maintenance state.";
-            LOG.info(output);
+            LOG.error("Temp", new RuntimeException());
             return output;
           }
         }
@@ -1061,7 +1061,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
           output += "excluded node " + expectedExcludedNode;
         }
 
-        LOG.info(output);
+        LOG.error("Temp", new RuntimeException());
         return output;
       }
 
@@ -1079,13 +1079,13 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
       if (expectedMaintenanceNode != null) {
         if (!maintenanceNodes.contains(expectedMaintenanceNode)) {
           output = "No maintenance replica on " + expectedMaintenanceNode;
-          LOG.info(output);
+          LOG.error("Temp", new RuntimeException());
           return output;
         }
       } else {
         if (maintenanceNodes.size() != 0) {
           output = "Has maintenance replica(s)";
-          LOG.info(output);
+          LOG.error("Temp", new RuntimeException());
           return output;
         }
       }
@@ -1142,7 +1142,7 @@ public class TestMaintenanceState extends AdminStatesBaseTest {
     System.setOut(new PrintStream(out));
     System.setErr(new PrintStream(err));
 
-    LOG.info("Starting testReportMaintenanceNodes");
+    LOG.error("Temp", new RuntimeException());
     int expirationInMs = 30 * 1000;
     int numNodes = 2;
     setMinMaintenanceR(numNodes);

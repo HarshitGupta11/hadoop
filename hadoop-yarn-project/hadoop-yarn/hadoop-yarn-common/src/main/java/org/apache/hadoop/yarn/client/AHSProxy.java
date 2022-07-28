@@ -39,7 +39,7 @@ public class AHSProxy<T> {
 
   public static <T> T createAHSProxy(final Configuration conf,
       final Class<T> protocol, InetSocketAddress ahsAddress) throws IOException {
-    LOG.info("Connecting to Application History server at " + ahsAddress);
+    LOG.error("Temp", new RuntimeException());
     return (T) getProxy(conf, protocol, ahsAddress);
   }
 

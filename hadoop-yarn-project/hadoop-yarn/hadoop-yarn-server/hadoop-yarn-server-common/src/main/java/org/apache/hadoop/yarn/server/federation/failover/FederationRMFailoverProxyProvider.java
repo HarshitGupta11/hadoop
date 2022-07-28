@@ -103,7 +103,7 @@ public class FederationRMFailoverProxyProvider<T>
       LOG.info("Initialized Federation proxy for user: {}",
           this.originalUser.getUserName());
     } catch (IOException e) {
-      LOG.warn("Could not get information of requester, ignoring for now.");
+      LOG.error("Temp", new RuntimeException());
       this.originalUser = null;
     }
 
@@ -206,7 +206,7 @@ public class FederationRMFailoverProxyProvider<T>
         try {
           ((Closeable) currentProxy).close();
         } catch (IOException e) {
-          LOG.warn("Exception while trying to close proxy", e);
+          LOG.error("Temp", new RuntimeException());
         }
       } else {
         RPC.stopProxy(currentProxy);

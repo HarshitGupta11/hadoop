@@ -72,7 +72,7 @@ public final class ErasureCodingWorker {
   }
 
   private void initializeStripedReadThreadPool() {
-    LOG.debug("Using striped reads");
+    LOG.error("Temp", new RuntimeException());
 
     // Essentially, this is a cachedThreadPool.
     stripedReadPool = new ThreadPoolExecutor(0, Integer.MAX_VALUE,

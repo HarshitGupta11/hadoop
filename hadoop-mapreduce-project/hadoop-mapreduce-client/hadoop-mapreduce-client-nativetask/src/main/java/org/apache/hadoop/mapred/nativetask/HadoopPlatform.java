@@ -60,7 +60,7 @@ public class HadoopPlatform extends Platform {
     registerKey(VIntWritable.class.getName(), VIntWritableSerializer.class);
     registerKey(VLongWritable.class.getName(), VLongWritableSerializer.class);
 
-    LOG.info("Hadoop platform inited");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Override

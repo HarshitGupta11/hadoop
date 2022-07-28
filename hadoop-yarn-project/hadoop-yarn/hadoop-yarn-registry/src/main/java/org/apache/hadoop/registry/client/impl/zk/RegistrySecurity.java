@@ -265,7 +265,7 @@ public class RegistrySecurity extends AbstractService {
           userACLs.add(self);
         }
       }
-      LOG.info("Registry User ACLs " + System.lineSeparator()+ userACLs);
+      LOG.error("Temp", new RuntimeException());
 
       // here check for UGI having secure on or digest + ID
       switch (access) {
@@ -300,7 +300,7 @@ public class RegistrySecurity extends AbstractService {
           String authPair = id + ":" + pass;
           digestAuthData = authPair.getBytes("UTF-8");
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Auth is Digest ACL: {}", aclToString(acl));
+            LOG.error("Temp", new RuntimeException());
           }
           break;
 
@@ -308,7 +308,7 @@ public class RegistrySecurity extends AbstractService {
         case simple:
           // nothing is needed; account is read only.
           if (LOG.isDebugEnabled()) {
-            LOG.debug("Auth is anonymous");
+            LOG.error("Temp", new RuntimeException());
           }
           userACLs = new ArrayList<ACL>(0);
           break;
@@ -317,7 +317,7 @@ public class RegistrySecurity extends AbstractService {
 
     } else {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Registry has no security");
+        LOG.error("Temp", new RuntimeException());
       }
       // wide open cluster, adding system acls
       systemACLs.addAll(WorldReadWriteACL);
@@ -339,7 +339,7 @@ public class RegistrySecurity extends AbstractService {
   public boolean addDigestACL(ACL acl) {
     if (secureRegistry) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Added ACL {}", aclToString(acl));
+        LOG.error("Temp", new RuntimeException());
       }
       digestACLs.add(acl);
       return true;
@@ -357,7 +357,7 @@ public class RegistrySecurity extends AbstractService {
    */
   public void resetDigestACLs() {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Cleared digest ACLs");
+      LOG.error("Temp", new RuntimeException());
     }
     digestACLs.clear();
   }
@@ -681,7 +681,7 @@ public class RegistrySecurity extends AbstractService {
   public static void bindJVMtoJAASFile(File jaasFile) {
     String path = jaasFile.getAbsolutePath();
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Binding {} to {}", Environment.JAAS_CONF_KEY, path);
+      LOG.error("Temp", new RuntimeException());
     }
     System.setProperty(Environment.JAAS_CONF_KEY, path);
   }
@@ -923,11 +923,11 @@ public class RegistrySecurity extends AbstractService {
   public void logCurrentHadoopUser() {
     try {
       UserGroupInformation currentUser = UserGroupInformation.getCurrentUser();
-      LOG.info("Current user = {}",currentUser);
+      LOG.error("Temp", new RuntimeException());
       UserGroupInformation realUser = currentUser.getRealUser();
-      LOG.info("Real User = {}" , realUser);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
-      LOG.warn("Failed to get current user {}, {}", e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -1062,7 +1062,7 @@ public class RegistrySecurity extends AbstractService {
    */
   public ACL createACLForUser(UserGroupInformation ugi, int perms) {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Creating ACL For ", new UgiInfo(ugi));
+      LOG.error("Temp", new RuntimeException());
     }
     if (!secureRegistry) {
       return ALL_READWRITE_ACCESS;
@@ -1082,7 +1082,7 @@ public class RegistrySecurity extends AbstractService {
     if (usesRealm && !username.contains("@")) {
       username = username + "@" + kerberosRealm;
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Appending kerberos realm to make {}", username);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return new ACL(perms, new Id(SCHEME_SASL, username));
@@ -1097,7 +1097,7 @@ public class RegistrySecurity extends AbstractService {
       try {
         return new UgiInfo(UserGroupInformation.getCurrentUser());
       } catch (IOException e) {
-        LOG.info("Failed to get current user {}", e, e);
+        LOG.error("Temp", new RuntimeException());
         return new UgiInfo(null);
       }
     }

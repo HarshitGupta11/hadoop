@@ -206,9 +206,9 @@ public class RequestHedgingProxyProvider<T> extends
    */
   private void logProxyException(Exception ex, String proxyInfo) {
     if (isStandbyException(ex)) {
-      LOG.debug("Invocation returned standby exception on [{}]", proxyInfo, ex);
+      LOG.error("Temp", new RuntimeException());
     } else {
-      LOG.warn("Invocation returned exception on [{}]", proxyInfo, ex);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 

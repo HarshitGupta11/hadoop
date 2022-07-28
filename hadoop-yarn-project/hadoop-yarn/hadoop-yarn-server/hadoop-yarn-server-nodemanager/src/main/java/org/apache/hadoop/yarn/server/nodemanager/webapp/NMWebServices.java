@@ -291,7 +291,7 @@ public class NMWebServices {
         // Something wrong with we tries to access the remote fs for the logs.
         // Skip it and do nothing
         if (LOG.isDebugEnabled()) {
-          LOG.debug(ex.getMessage());
+          LOG.error("Temp", new RuntimeException());
         }
       }
       GenericEntity<List<ContainerLogsInfo>> meta = new GenericEntity<List<
@@ -480,7 +480,7 @@ public class NMWebServices {
               if (LOG.isDebugEnabled()) {
                 LOG.debug("Can not access the aggregated log for "
                     + "the container:" + containerId);
-                LOG.debug(ex.getMessage());
+                LOG.error("Temp", new RuntimeException());
               }
             }
           } finally {

@@ -117,7 +117,7 @@ public class JobHistoryCopyService extends CompositeService implements HistoryEv
     historyFile =
         fc.makeQualified(JobHistoryUtils.getStagingJobHistoryFile(histDirPath,
           jobId, (applicationAttemptId.getAttemptId() - 1)));
-    LOG.info("History file is at " + historyFile);
+    LOG.error("Temp", new RuntimeException());
     in = fc.open(historyFile);
     return in;
   }

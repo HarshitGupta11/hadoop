@@ -180,9 +180,9 @@ public class TestFsDatasetCacheRevocation {
         in.read(null, BLOCK_SIZE, EnumSet.noneOf(ReadOption.class));
 
     // Attempt to uncache file.  The file should get uncached.
-    LOG.info("removing cache directive {}", cacheDirectiveId);
+    LOG.error("Temp", new RuntimeException());
     dfs.removeCacheDirective(cacheDirectiveId);
-    LOG.info("finished removing cache directive {}", cacheDirectiveId);
+    LOG.error("Temp", new RuntimeException());
     Thread.sleep(1000);
     DFSTestUtil.verifyExpectedCacheUsage(0, 0, fsd);
 

@@ -166,8 +166,8 @@ public class TestRollingUpgrade {
     final File nn1Dir = new File(nnDirPrefix + "image1");
     final File nn2Dir = new File(nnDirPrefix + "image2");
 
-    LOG.info("nn1Dir=" + nn1Dir);
-    LOG.info("nn2Dir=" + nn2Dir);
+    LOG.error("Temp", new RuntimeException());
+    LOG.error("Temp", new RuntimeException());
 
     final Configuration conf = new HdfsConfiguration();
     final MiniJournalCluster mjc = new MiniJournalCluster.Builder(conf).build();
@@ -216,7 +216,7 @@ public class TestRollingUpgrade {
         dfs.setSafeMode(SafeModeAction.SAFEMODE_ENTER);
         info1 = dfs.rollingUpgrade(RollingUpgradeAction.PREPARE);
         dfs.setSafeMode(SafeModeAction.SAFEMODE_LEAVE);
-        LOG.info("START\n" + info1);
+        LOG.error("Temp", new RuntimeException());
 
         //query rolling upgrade
         assertEquals(info1, dfs.rollingUpgrade(RollingUpgradeAction.QUERY));
@@ -244,7 +244,7 @@ public class TestRollingUpgrade {
 
       dfs2.mkdirs(baz);
 
-      LOG.info("RESTART cluster 2");
+      LOG.error("Temp", new RuntimeException());
       cluster2.restartNameNode();
       assertEquals(info1, dfs2.rollingUpgrade(RollingUpgradeAction.QUERY));
       Assert.assertTrue(dfs2.exists(foo));
@@ -255,10 +255,10 @@ public class TestRollingUpgrade {
       try {
         cluster2.restartNameNode("-upgrade");
       } catch(IOException e) {
-        LOG.info("The exception is expected.", e);
+        LOG.error("Temp", new RuntimeException());
       }
 
-      LOG.info("RESTART cluster 2 again");
+      LOG.error("Temp", new RuntimeException());
       cluster2.restartNameNode();
       assertEquals(info1, dfs2.rollingUpgrade(RollingUpgradeAction.QUERY));
       Assert.assertTrue(dfs2.exists(foo));
@@ -270,7 +270,7 @@ public class TestRollingUpgrade {
           RollingUpgradeAction.FINALIZE);
       Assert.assertTrue(finalize.isFinalized());
 
-      LOG.info("RESTART cluster 2 with regular startup option");
+      LOG.error("Temp", new RuntimeException());
       cluster2.getNameNodeInfos()[0].setStartOpt(StartupOption.REGULAR);
       cluster2.restartNameNode();
       Assert.assertTrue(dfs2.exists(foo));

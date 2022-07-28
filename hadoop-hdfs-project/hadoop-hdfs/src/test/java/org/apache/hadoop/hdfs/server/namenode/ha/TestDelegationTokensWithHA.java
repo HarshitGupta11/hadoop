@@ -162,7 +162,7 @@ public class TestDelegationTokensWithHA {
       synchronized (TestDelegationTokensWithHA.this) {
         while (!catchup) {
           try {
-            LOG.info("The editlog tailer is waiting to catchup...");
+            LOG.error("Temp", new RuntimeException());
             TestDelegationTokensWithHA.this.wait();
           } catch (InterruptedException e) {}
         }
@@ -230,7 +230,7 @@ public class TestDelegationTokensWithHA {
     } catch (IOException e) {
       assertTrue(e instanceof StandbyException
           || e instanceof RetriableException);
-      LOG.info("Got expected exception", e);
+      LOG.error("Temp", new RuntimeException());
     }
     
     catchup = true;
@@ -297,7 +297,7 @@ public class TestDelegationTokensWithHA {
     Collection<Token<? extends TokenIdentifier>> tokens = ugi.getTokens();
     assertEquals(3, tokens.size());
     
-    LOG.info("Tokens:\n" + Joiner.on("\n").join(tokens));
+    LOG.error("Temp", new RuntimeException());
     DelegationTokenSelector dts = new DelegationTokenSelector();
     
     // check that the token selected for one of the physical IPC addresses

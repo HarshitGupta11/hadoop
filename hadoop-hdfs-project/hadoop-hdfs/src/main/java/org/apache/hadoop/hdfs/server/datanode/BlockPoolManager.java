@@ -99,13 +99,13 @@ class BlockPoolManager {
       BPOfferService bpos = it.next();
       if (bpos == t) {
         it.remove();
-        LOG.info("Removed " + bpos);
+        LOG.error("Temp", new RuntimeException());
         removed = true;
       }
     }
     
     if (!removed) {
-      LOG.warn("Couldn't remove BPOS " + t + " from bpByNameserviceId map");
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -158,7 +158,7 @@ class BlockPoolManager {
       newLifelineAddressMap =
           DFSUtil.getNNLifelineRpcAddressesForCluster(conf);
     } catch (IOException ioe) {
-      LOG.warn("Unable to get NameNode addresses.");
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (newAddressMap == null || newAddressMap.isEmpty()) {

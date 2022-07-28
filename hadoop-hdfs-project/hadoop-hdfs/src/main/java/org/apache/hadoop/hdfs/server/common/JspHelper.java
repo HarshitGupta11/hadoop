@@ -152,7 +152,7 @@ public class JspHelper {
     }
     
     if(LOG.isDebugEnabled())
-      LOG.debug("getUGI is returning: " + ugi.getShortUserName());
+      LOG.error("Temp", new RuntimeException());
     return ugi;
   }
 

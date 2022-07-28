@@ -175,21 +175,21 @@ public class TestLeaseRecovery2 {
   private Path createFile(final String filestr, final int size,
       final boolean triggerLeaseRenewerInterrupt)
   throws IOException, InterruptedException {
-    AppendTestUtil.LOG.info("filestr=" + filestr);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     Path filepath = new Path(filestr);
     FSDataOutputStream stm = dfs.create(filepath, true, BUF_SIZE,
       REPLICATION_NUM, BLOCK_SIZE);
     assertTrue(dfs.dfs.exists(filestr));
 
-    AppendTestUtil.LOG.info("size=" + size);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.write(buffer, 0, size);
 
     // hflush file
-    AppendTestUtil.LOG.info("hflush");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.hflush();
 
     if (triggerLeaseRenewerInterrupt) {
-      AppendTestUtil.LOG.info("leasechecker.interruptAndJoin()");
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
       dfs.dfs.getLeaseRenewer().interruptAndJoin();
     }
     return filepath;
@@ -202,7 +202,7 @@ public class TestLeaseRecovery2 {
     }
 
     while (!dfs.recoverLease(filepath)) {
-      AppendTestUtil.LOG.info("sleep " + 5000 + "ms");
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
       Thread.sleep(5000);
     }
   }
@@ -218,7 +218,7 @@ public class TestLeaseRecovery2 {
       throws IOException, InterruptedException {
     FileSystem dfs2 = getFSAsAnotherUser(conf);
     for(int i = 0; i < 10; i++) {
-      AppendTestUtil.LOG.info("i=" + i);
+      AppendTestUtil.LOG.error("Temp", new RuntimeException());
       try {
         dfs2.create(filepath, false, BUF_SIZE, (short)1, BLOCK_SIZE);
         fail("Creation of an existing file should never succeed.");
@@ -227,8 +227,8 @@ public class TestLeaseRecovery2 {
       } catch(AlreadyBeingCreatedException e) {
         return; // expected
       } catch(IOException ioe) {
-        AppendTestUtil.LOG.warn("UNEXPECTED ", ioe);
-        AppendTestUtil.LOG.info("sleep " + 5000 + "ms");
+        AppendTestUtil.LOG.error("Temp", new RuntimeException());
+        AppendTestUtil.LOG.error("Temp", new RuntimeException());
         try {Thread.sleep(5000);} catch (InterruptedException e) {}
       }
     }
@@ -281,7 +281,7 @@ public class TestLeaseRecovery2 {
   public void testHardLeaseRecovery() throws Exception {
     //create a file
     String filestr = "/hardLeaseRecovery";
-    AppendTestUtil.LOG.info("filestr=" + filestr);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     Path filepath = new Path(filestr);
     FSDataOutputStream stm = dfs.create(filepath, true,
         BUF_SIZE, REPLICATION_NUM, BLOCK_SIZE);
@@ -289,15 +289,15 @@ public class TestLeaseRecovery2 {
 
     // write bytes into the file.
     int size = AppendTestUtil.nextInt(FILE_SIZE);
-    AppendTestUtil.LOG.info("size=" + size);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.write(buffer, 0, size);
 
     // hflush file
-    AppendTestUtil.LOG.info("hflush");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.hflush();
     
     // kill the lease renewal thread
-    AppendTestUtil.LOG.info("leasechecker.interruptAndJoin()");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     dfs.dfs.getLeaseRenewer().interruptAndJoin();
 
     // set the hard limit to be 1 second 
@@ -348,7 +348,7 @@ public class TestLeaseRecovery2 {
     //create a file
     // create a random file name
     String filestr = "/foo" + AppendTestUtil.nextInt();
-    AppendTestUtil.LOG.info("filestr=" + filestr);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     Path filepath = new Path(filestr);
     FSDataOutputStream stm = dfs.create(filepath, true,
         BUF_SIZE, REPLICATION_NUM, BLOCK_SIZE);
@@ -356,13 +356,13 @@ public class TestLeaseRecovery2 {
 
     // write random number of bytes into it.
     int size = AppendTestUtil.nextInt(FILE_SIZE);
-    AppendTestUtil.LOG.info("size=" + size);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.write(buffer, 0, size);
 
     // hflush file
-    AppendTestUtil.LOG.info("hflush");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.hflush();
-    AppendTestUtil.LOG.info("leasechecker.interruptAndJoin()");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     dfs.dfs.getLeaseRenewer().interruptAndJoin();
 
     // set the soft limit to be 1 second so that the
@@ -380,20 +380,20 @@ public class TestLeaseRecovery2 {
 
       boolean done = false;
       for(int i = 0; i < 10 && !done; i++) {
-        AppendTestUtil.LOG.info("i=" + i);
+        AppendTestUtil.LOG.error("Temp", new RuntimeException());
         try {
           dfs2.create(filepath, false, BUF_SIZE, REPLICATION_NUM, BLOCK_SIZE);
           fail("Creation of an existing file should never succeed.");
         } catch (FileAlreadyExistsException ex) {
           done = true;
         } catch (AlreadyBeingCreatedException ex) {
-          AppendTestUtil.LOG.info("GOOD! got " + ex.getMessage());
+          AppendTestUtil.LOG.error("Temp", new RuntimeException());
         } catch (IOException ioe) {
-          AppendTestUtil.LOG.warn("UNEXPECTED IOException", ioe);
+          AppendTestUtil.LOG.error("Temp", new RuntimeException());
         }
 
         if (!done) {
-          AppendTestUtil.LOG.info("sleep " + 5000 + "ms");
+          AppendTestUtil.LOG.error("Temp", new RuntimeException());
           try {Thread.sleep(5000);} catch (InterruptedException e) {}
         }
       }
@@ -451,14 +451,14 @@ public class TestLeaseRecovery2 {
 
     //create a file
     String fileStr = "/hardLeaseRecovery";
-    AppendTestUtil.LOG.info("filestr=" + fileStr);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     Path filePath = new Path(fileStr);
     FSDataOutputStream stm = dfs.create(filePath, true,
         BUF_SIZE, REPLICATION_NUM, BLOCK_SIZE);
     assertTrue(dfs.dfs.exists(fileStr));
 
     // write bytes into the file.
-    AppendTestUtil.LOG.info("size=" + size);
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.write(buffer, 0, size);
     
     String originalLeaseHolder = NameNodeAdapter.getLeaseHolderForPath(
@@ -469,7 +469,7 @@ public class TestLeaseRecovery2 {
         HdfsServerConstants.NAMENODE_LEASE_HOLDER));
 
     // hflush file
-    AppendTestUtil.LOG.info("hflush");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     stm.hflush();
     
     // check visible length
@@ -485,7 +485,7 @@ public class TestLeaseRecovery2 {
     }
     
     // kill the lease renewal thread
-    AppendTestUtil.LOG.info("leasechecker.interruptAndJoin()");
+    AppendTestUtil.LOG.error("Temp", new RuntimeException());
     dfs.dfs.getLeaseRenewer().interruptAndJoin();
     
     // Make sure the DNs don't send a heartbeat for a while, so the blocks
@@ -543,14 +543,14 @@ public class TestLeaseRecovery2 {
       stm.hflush();
       fail("Should not be able to flush after we've lost the lease");
     } catch (IOException e) {
-      LOG.info("Expceted exception on write/hflush", e);
+      LOG.error("Temp", new RuntimeException());
     }
     
     try {
       stm.close();
       fail("Should not be able to close after we've lost the lease");
     } catch (IOException e) {
-      LOG.info("Expected exception on close", e);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // verify data

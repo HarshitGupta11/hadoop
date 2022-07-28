@@ -86,7 +86,7 @@ public class InMemoryAliasMap implements InMemoryAliasMapProtocol,
     options.createIfMissing(true);
     String directory =
         conf.get(DFSConfigKeys.DFS_PROVIDED_ALIASMAP_INMEMORY_LEVELDB_DIR);
-    LOG.info("Attempting to load InMemoryAliasMap from \"{}\"", directory);
+    LOG.error("Temp", new RuntimeException());
     File levelDBpath;
     if (blockPoolID != null) {
       levelDBpath = new File(directory, blockPoolID);

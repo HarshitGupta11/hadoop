@@ -133,7 +133,7 @@ public class TestDataNodeRollingUpgrade {
     assertFalse(trashFile.exists());
 
     // Now delete the file and ensure the corresponding block in trash
-    LOG.info("Deleting file " + pathToDelete + " during rolling upgrade");
+    LOG.error("Temp", new RuntimeException());
     fs.delete(pathToDelete, false);
     assert(!fs.exists(pathToDelete));
     triggerHeartBeats();
@@ -167,7 +167,7 @@ public class TestDataNodeRollingUpgrade {
   }
 
   private void startRollingUpgrade() throws Exception {
-    LOG.info("Starting rolling upgrade");
+    LOG.error("Temp", new RuntimeException());
     fs.setSafeMode(SafeModeAction.SAFEMODE_ENTER);
     final DFSAdmin dfsadmin = new DFSAdmin(conf);
     TestRollingUpgrade.runCmd(dfsadmin, true, "-rollingUpgrade", "prepare");
@@ -178,7 +178,7 @@ public class TestDataNodeRollingUpgrade {
   }
 
   private void finalizeRollingUpgrade() throws Exception {
-    LOG.info("Finalizing rolling upgrade");
+    LOG.error("Temp", new RuntimeException());
     final DFSAdmin dfsadmin = new DFSAdmin(conf);
     TestRollingUpgrade.runCmd(dfsadmin, true, "-rollingUpgrade", "finalize");
     triggerHeartBeats();
@@ -192,7 +192,7 @@ public class TestDataNodeRollingUpgrade {
   private void rollbackRollingUpgrade() throws Exception {
     // Shutdown datanodes and namenodes
     // Restart the namenode with rolling upgrade rollback
-    LOG.info("Starting rollback of the rolling upgrade");
+    LOG.error("Temp", new RuntimeException());
     MiniDFSCluster.DataNodeProperties dnprop = cluster.stopDataNode(0);
     dnprop.setDnArgs("-rollback");
     cluster.shutdownNameNodes();
@@ -202,7 +202,7 @@ public class TestDataNodeRollingUpgrade {
     nn = cluster.getNameNode(0);
     dn0 = cluster.getDataNodes().get(0);
     triggerHeartBeats();
-    LOG.info("The cluster is active after rollback");
+    LOG.error("Temp", new RuntimeException());
   }
 
   @Test (timeout=600000)
@@ -358,17 +358,17 @@ public class TestDataNodeRollingUpgrade {
       deleteAndEnsureInTrash(paths[0], blockFiles[0], trashFile0);
 
       // Restart the DN with a new layout version to trigger layout upgrade.
-      LOG.info("Shutting down the Datanode");
+      LOG.error("Temp", new RuntimeException());
       MiniDFSCluster.DataNodeProperties dnprop = cluster.stopDataNode(0);
       DFSTestUtil.addDataNodeLayoutVersion(
           DataNodeLayoutVersion.CURRENT_LAYOUT_VERSION - 1,
           "Test Layout for TestDataNodeRollingUpgrade");
-      LOG.info("Restarting the DataNode");
+      LOG.error("Temp", new RuntimeException());
       cluster.restartDataNode(dnprop, true);
       cluster.waitActive();
 
       dn0 = cluster.getDataNodes().get(0);
-      LOG.info("The DN has been restarted");
+      LOG.error("Temp", new RuntimeException());
       assertFalse(trashFile0.exists());
       assertFalse(dn0.getStorage().getBPStorage(blockPoolId).isTrashAllowed(blockFiles[0]));
 
@@ -419,17 +419,17 @@ public class TestDataNodeRollingUpgrade {
       deleteAndEnsureInTrash(paths[0], blockFiles[0], trashFile0);
 
       // Restart the DN with a new layout version to trigger layout upgrade.
-      LOG.info("Shutting down the Datanode");
+      LOG.error("Temp", new RuntimeException());
       MiniDFSCluster.DataNodeProperties dnprop = cluster.stopDataNode(0);
       DFSTestUtil.addDataNodeLayoutVersion(
           DataNodeLayoutVersion.CURRENT_LAYOUT_VERSION - 1,
           "Test Layout for TestDataNodeRollingUpgrade");
-      LOG.info("Restarting the DataNode");
+      LOG.error("Temp", new RuntimeException());
       cluster.restartDataNode(dnprop, true);
       cluster.waitActive();
 
       dn0 = cluster.getDataNodes().get(0);
-      LOG.info("The DN has been restarted");
+      LOG.error("Temp", new RuntimeException());
       assertFalse(trashFile0.exists());
       assertFalse(dn0.getStorage().getBPStorage(blockPoolId).isTrashAllowed(blockFiles[0]));
 

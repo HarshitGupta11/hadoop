@@ -182,9 +182,9 @@ class QuorumCall<KEY, RESULT> {
           msg += ". No responses yet.";
         }
         if (waited > millis * WAIT_PROGRESS_WARN_THRESHOLD) {
-          QuorumJournalManager.LOG.warn(msg);
+          QuorumJournalManager.LOG.error("Temp", new RuntimeException());
         } else {
-          QuorumJournalManager.LOG.info(msg);
+          QuorumJournalManager.LOG.error("Temp", new RuntimeException());
         }
         nextLogTime = now + WAIT_PROGRESS_INTERVAL_MILLIS;
       }

@@ -289,12 +289,12 @@ public class VolumeScanner extends Thread {
             volume, block);
         return;
       }
-      LOG.warn("Reporting bad {} on {}", block, volume);
+      LOG.error("Temp", new RuntimeException());
       try {
         scanner.datanode.reportBadBlocks(block, volume);
       } catch (IOException ie) {
         // This is bad, but not bad enough to shut down the scanner.
-        LOG.warn("Cannot report bad block " + block, ie);
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -321,7 +321,7 @@ public class VolumeScanner extends Thread {
     try {
       iter.save();
     } catch (IOException e) {
-      LOG.warn("{}: error saving {}.", this, iter, e);
+      LOG.error("Temp", new RuntimeException());
     }
   }
 
@@ -363,7 +363,7 @@ public class VolumeScanner extends Thread {
   private synchronized long findNextUsableBlockIter() {
     int numBlockIters = blockIters.size();
     if (numBlockIters == 0) {
-      LOG.debug("{}: no block pools are registered.", this);
+      LOG.error("Temp", new RuntimeException());
       return Long.MAX_VALUE;
     }
     int curIdx;
@@ -438,7 +438,7 @@ public class VolumeScanner extends Thread {
     if (block == null) {
       return -1; // block not found.
     }
-    LOG.debug("start scanning block {}", block);
+    LOG.error("Temp", new RuntimeException());
     BlockSender blockSender = null;
     try {
       blockSender = new BlockSender(block, 0, -1,
@@ -534,7 +534,7 @@ public class VolumeScanner extends Thread {
         } catch (IOException e) {
           // There was an error listing the next block in the volume.  This is a
           // serious issue.
-          LOG.warn("{}: nextBlock error on {}", this, curBlockIter);
+          LOG.error("Temp", new RuntimeException());
           // On the next loop iteration, curBlockIter#eof will be set to true, and
           // we will pick a different block iterator.
           return 0L;
@@ -622,7 +622,7 @@ public class VolumeScanner extends Thread {
               break;
             }
             if (timeout > 0) {
-              LOG.debug("{}: wait for {} milliseconds", this, timeout);
+              LOG.error("Temp", new RuntimeException());
               wait(timeout);
               if (stopping) {
                 break;
@@ -639,7 +639,7 @@ public class VolumeScanner extends Thread {
       } catch (Throwable e) {
         LOG.error("{} exiting because of exception ", this, e);
       }
-      LOG.info("{} exiting.", this);
+      LOG.error("Temp", new RuntimeException());
       // Save the current position of all block iterators and close them.
       for (BlockIterator iter : blockIters) {
         saveBlockIterator(iter);
@@ -687,7 +687,7 @@ public class VolumeScanner extends Thread {
     }
     suspectBlocks.add(block);
     recentSuspectBlocks.put(block, true);
-    LOG.debug("{}: Scheduling suspect block {} for rescanning.", this, block);
+    LOG.error("Temp", new RuntimeException());
     notify(); // wake scanner thread.
   }
 
@@ -699,7 +699,7 @@ public class VolumeScanner extends Thread {
   public synchronized void enableBlockPoolId(String bpid) {
     for (BlockIterator iter : blockIters) {
       if (iter.getBlockPoolId().equals(bpid)) {
-        LOG.warn("{}: already enabled scanning on block pool {}", this, bpid);
+        LOG.error("Temp", new RuntimeException());
         return;
       }
     }
@@ -709,9 +709,9 @@ public class VolumeScanner extends Thread {
       iter = volume.loadBlockIterator(bpid, BLOCK_ITERATOR_NAME);
       LOG.trace("{}: loaded block iterator for {}.", this, bpid);
     } catch (FileNotFoundException e) {
-      LOG.debug("{}: failed to load block iterator: " + e.getMessage(), this);
+      LOG.error("Temp", new RuntimeException());
     } catch (IOException e) {
-      LOG.warn("{}: failed to load block iterator.", this, e);
+      LOG.error("Temp", new RuntimeException());
     }
     if (iter == null) {
       iter = volume.newBlockIterator(bpid, BLOCK_ITERATOR_NAME);

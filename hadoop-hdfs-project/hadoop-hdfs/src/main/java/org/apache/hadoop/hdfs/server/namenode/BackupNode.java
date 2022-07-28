@@ -259,13 +259,13 @@ public class BackupNode extends NameNode {
       if (journalInfo.getNamespaceId() != expectedNamespaceID) {
         errorMsg = "Invalid namespaceID in journal request - expected " + expectedNamespaceID
             + " actual " + journalInfo.getNamespaceId();
-        LOG.warn(errorMsg);
+        LOG.error("Temp", new RuntimeException());
         throw new UnregisteredNodeException(journalInfo);
       } 
       if (!journalInfo.getClusterId().equals(namesystem.getClusterId())) {
         errorMsg = "Invalid clusterId in journal request - expected "
             + journalInfo.getClusterId() + " actual " + namesystem.getClusterId();
-        LOG.warn(errorMsg);
+        LOG.error("Temp", new RuntimeException());
         throw new UnregisteredNodeException(journalInfo);
       }
     }
@@ -296,7 +296,7 @@ public class BackupNode extends NameNode {
     @Override
     public FenceResponse fence(JournalInfo journalInfo, long epoch,
         String fencerInfo) throws IOException {
-      LOG.info("Fenced by " + fencerInfo + " with epoch " + epoch);
+      LOG.error("Temp", new RuntimeException());
       throw new UnsupportedOperationException(
           "BackupNode does not support fence");
     }
@@ -332,11 +332,11 @@ public class BackupNode extends NameNode {
         nsInfo = handshake(namenode);
         break;
       } catch(SocketTimeoutException e) {  // name-node is busy
-        LOG.info("Problem connecting to server: " + nnAddress);
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(1000);
         } catch (InterruptedException ie) {
-          LOG.warn("Encountered exception ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -384,11 +384,11 @@ public class BackupNode extends NameNode {
         nnReg = namenode.registerSubordinateNamenode(getRegistration());
         break;
       } catch(SocketTimeoutException e) {  // name-node is busy
-        LOG.info("Problem connecting to name-node: " + nnRpcAddress);
+        LOG.error("Temp", new RuntimeException());
         try {
           Thread.sleep(1000);
         } catch (InterruptedException ie) {
-          LOG.warn("Encountered exception ", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }

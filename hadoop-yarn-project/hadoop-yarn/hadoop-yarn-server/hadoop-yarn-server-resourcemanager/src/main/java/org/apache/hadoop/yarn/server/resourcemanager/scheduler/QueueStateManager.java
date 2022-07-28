@@ -88,13 +88,13 @@ public class QueueStateManager<T extends SchedulerQueue,
   public boolean canDelete(String queueName) {
     SchedulerQueue<T> queue = queueManager.getQueue(queueName);
     if (queue == null) {
-      LOG.info("The specified queue:" + queueName + " does not exist!");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     if (queue.getState() == QueueState.STOPPED){
       return true;
     }
-    LOG.info("Need to stop the specific queue:" + queueName + " first.");
+    LOG.error("Temp", new RuntimeException());
     return false;
   }
 }

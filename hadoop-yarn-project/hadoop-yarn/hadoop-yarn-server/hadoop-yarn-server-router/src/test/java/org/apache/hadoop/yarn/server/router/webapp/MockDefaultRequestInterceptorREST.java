@@ -88,7 +88,7 @@ public class MockDefaultRequestInterceptorREST
     validateRunning();
 
     ApplicationId appId = ApplicationId.fromString(newApp.getApplicationId());
-    LOG.info("Application submitted: " + appId);
+    LOG.error("Temp", new RuntimeException());
     applicationMap.add(appId);
     return Response.status(Status.ACCEPTED).header(HttpHeaders.LOCATION, "")
         .entity(getSubClusterId()).build();
@@ -146,7 +146,7 @@ public class MockDefaultRequestInterceptorREST
       return Response.status(Status.BAD_REQUEST).build();
     }
 
-    LOG.info("Force killing application: " + appId);
+    LOG.error("Temp", new RuntimeException());
     AppState ret = new AppState();
     ret.setState(targetState.toString());
     return Response.status(Status.OK).entity(ret).build();

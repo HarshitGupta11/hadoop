@@ -140,7 +140,7 @@ public class ServiceApiUtil {
           throw new IllegalArgumentException(
               RestApiErrorMessages.ERROR_ARTIFACT_ID_INVALID);
         }
-        LOG.info("Marking {} for removal", comp.getName());
+        LOG.error("Temp", new RuntimeException());
         componentsToRemove.add(comp);
         List<Component> externalComponents = getComponents(fs,
             comp.getArtifact().getId());
@@ -271,13 +271,13 @@ public class ServiceApiUtil {
   public static Service loadService(SliderFileSystem fs, String
       serviceName) throws IOException {
     Path serviceJson = getServiceJsonPath(fs, serviceName);
-    LOG.info("Loading service definition from " + serviceJson);
+    LOG.error("Temp", new RuntimeException());
     return jsonSerDeser.load(fs.getFileSystem(), serviceJson);
   }
 
   public static Service loadServiceFrom(SliderFileSystem fs,
       Path appDefPath) throws IOException {
-    LOG.info("Loading service definition from " + appDefPath);
+    LOG.error("Temp", new RuntimeException());
     return jsonSerDeser.load(fs.getFileSystem(), appDefPath);
   }
 

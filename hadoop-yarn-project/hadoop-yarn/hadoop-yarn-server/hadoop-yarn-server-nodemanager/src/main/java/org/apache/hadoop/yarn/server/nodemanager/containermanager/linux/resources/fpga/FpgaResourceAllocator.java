@@ -274,7 +274,7 @@ public class FpgaResourceAllocator {
         availableFpga.get(type).add(device);
       }
     }
-    LOG.info("Add a list of FPGA Devices: " + list);
+    LOG.error("Temp", new RuntimeException());
   }
 
   public synchronized void updateFpga(String requestor,

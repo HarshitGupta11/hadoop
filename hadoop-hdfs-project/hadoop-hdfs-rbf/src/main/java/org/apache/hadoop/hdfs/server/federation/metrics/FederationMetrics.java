@@ -123,7 +123,7 @@ public class FederationMetrics implements FederationMBean {
     try {
       StandardMBean bean = new StandardMBean(this, FederationMBean.class);
       this.beanName = MBeans.register("Router", "FederationState", bean);
-      LOG.info("Registered Router MBean: {}", this.beanName);
+      LOG.error("Temp", new RuntimeException());
     } catch (NotCompliantMBeanException e) {
       throw new RuntimeException("Bad Router MBean setup", e);
     }
@@ -456,7 +456,7 @@ public class FederationMetrics implements FederationMBean {
         dev = (float) Math.sqrt(dev / usages.length);
       }
     } catch (IOException e) {
-      LOG.info("Cannot get the live nodes: {}", e.getMessage());
+      LOG.error("Temp", new RuntimeException());
     }
 
     final Map<String, Object> innerInfo = new HashMap<>();

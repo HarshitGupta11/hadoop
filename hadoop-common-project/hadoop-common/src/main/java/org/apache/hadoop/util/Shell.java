@@ -518,7 +518,7 @@ public abstract class Shell {
       ex = null;
     } catch (IOException ioe) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Failed to detect a valid hadoop home directory", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
       ex = ioe;
       home = null;
@@ -691,9 +691,9 @@ public abstract class Shell {
         path = file.getCanonicalPath();
         ioe = null;
       } catch (IOException e) {
-        LOG.warn("Did not find {}: {}", WINUTILS_EXE, e);
+        LOG.error("Temp", new RuntimeException());
         // stack trace comes at debug level
-        LOG.debug("Failed to find " + WINUTILS_EXE, e);
+        LOG.error("Temp", new RuntimeException());
         file = null;
         path = null;
         ioe = e;
@@ -767,10 +767,10 @@ public abstract class Shell {
       shexec = new ShellCommandExecutor(args);
       shexec.execute();
     } catch (InterruptedIOException iioe) {
-      LOG.warn("Interrupted, unable to determine if bash is supported", iioe);
+      LOG.error("Temp", new RuntimeException());
       throw iioe;
     } catch (IOException ioe) {
-      LOG.warn("Bash is not supported by the OS", ioe);
+      LOG.error("Temp", new RuntimeException());
       supported = false;
     } catch (SecurityException se) {
       LOG.info("Bash execution is not allowed by the JVM " +
@@ -801,7 +801,7 @@ public abstract class Shell {
       shexec = new ShellCommandExecutor(args);
       shexec.execute();
     } catch (IOException ioe) {
-      LOG.debug("setsid is not available on this machine. So not using it.");
+      LOG.error("Temp", new RuntimeException());
       setsidSupported = false;
     } catch (SecurityException se) {
       LOG.debug("setsid is not allowed to run by the JVM "+
@@ -814,7 +814,7 @@ public abstract class Shell {
           && (Shell.FREEBSD || Shell.MAC)) {
         // HADOOP-11924: This is a workaround to avoid failure of class init
         // by JDK issue on TR locale(JDK-8047340).
-        LOG.info("Avoiding JDK-8047340 on BSD-based systems.", err);
+        LOG.error("Temp", new RuntimeException());
         setsidSupported = false;
       }
     }  finally { // handle the exit code
@@ -974,7 +974,7 @@ public abstract class Shell {
           // command timeouts destroying the underlying process
           // so only log a WARN if the command didn't time out
           if (!isTimedOut()) {
-            LOG.warn("Error reading the error stream", ioe);
+            LOG.error("Temp", new RuntimeException());
           } else {
             LOG.debug("Error reading the error stream due to shell "
                 + "command timeout", ioe);
@@ -1030,7 +1030,7 @@ public abstract class Shell {
           inReader.close();
         }
       } catch (IOException ioe) {
-        LOG.warn("Error while closing the input stream", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
       if (!completed.get()) {
         errThread.interrupt();
@@ -1042,7 +1042,7 @@ public abstract class Shell {
           errReader.close();
         }
       } catch (IOException ioe) {
-        LOG.warn("Error while closing the error stream", ioe);
+        LOG.error("Temp", new RuntimeException());
       }
       process.destroy();
       waitingThread = null;
@@ -1057,7 +1057,7 @@ public abstract class Shell {
         t.join();
       } catch (InterruptedException ie) {
         if (LOG.isWarnEnabled()) {
-          LOG.warn("Interrupted while joining on: " + t, ie);
+          LOG.error("Temp", new RuntimeException());
         }
         t.interrupt(); // propagate interrupt
       }

@@ -78,7 +78,7 @@ public final class AMRMClientUtils {
     } catch (Exception e) {
       if (e instanceof InvalidApplicationMasterRequestException
           && e.getMessage().contains(APP_ALREADY_REGISTERED_MESSAGE)) {
-        LOG.info("Concurrent thread successfully registered, moving on.");
+        LOG.error("Temp", new RuntimeException());
       } else {
         LOG.error("Error trying to re-register AM", e);
         throw new YarnException(e);

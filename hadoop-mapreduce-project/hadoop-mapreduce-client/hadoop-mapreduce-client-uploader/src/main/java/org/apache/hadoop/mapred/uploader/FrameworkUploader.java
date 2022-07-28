@@ -115,7 +115,7 @@ public class FrameworkUploader implements Runnable {
     try {
       collectPackages();
       buildPackage();
-      LOG.info("Uploaded " + target);
+      LOG.error("Temp", new RuntimeException());
       System.out.println("Suggested mapreduce.application.framework.path " +
           target);
       LOG.info(
@@ -133,9 +133,9 @@ public class FrameworkUploader implements Runnable {
     parseLists();
     String[] list = StringUtils.split(input, File.pathSeparatorChar);
     for (String item : list) {
-      LOG.info("Original source " + item);
+      LOG.error("Temp", new RuntimeException());
       String expanded = expandEnvironmentVariables(item, System.getenv());
-      LOG.info("Expanded source " + expanded);
+      LOG.error("Temp", new RuntimeException());
       if (expanded.endsWith("*")) {
         File path = new File(expanded.substring(0, expanded.length() - 1));
         if (path.isDirectory()) {
@@ -145,20 +145,20 @@ public class FrameworkUploader implements Runnable {
               if (!jar.isDirectory()) {
                 addJar(jar);
               } else {
-                LOG.info("Ignored " + jar + " because it is a directory");
+                LOG.error("Temp", new RuntimeException());
               }
             }
           } else {
-            LOG.warn("Could not list directory " + path);
+            LOG.error("Temp", new RuntimeException());
           }
         } else {
-          LOG.warn("Ignored " + expanded + ". It is not a directory");
+          LOG.error("Temp", new RuntimeException());
         }
       } else if (expanded.endsWith(".jar")) {
         File jarFile = new File(expanded);
         addJar(jarFile);
       } else if (!expanded.isEmpty()) {
-        LOG.warn("Ignored " + expanded + " only jars are supported");
+        LOG.error("Temp", new RuntimeException());
       }
     }
   }
@@ -175,14 +175,14 @@ public class FrameworkUploader implements Runnable {
       alias = lastIndex != -1 ?
           target.substring(lastIndex + 1) :
           targetPath.getName();
-      LOG.info("Target " + targetPath);
+      LOG.error("Temp", new RuntimeException());
       FileSystem fileSystem = targetPath.getFileSystem(conf);
 
       targetStream = null;
       if (fileSystem instanceof DistributedFileSystem) {
         LOG.info("Set replication to " +
             initialReplication + " for path: " + targetPath);
-        LOG.info("Disabling Erasure Coding for path: " + targetPath);
+        LOG.error("Temp", new RuntimeException());
         DistributedFileSystem dfs = (DistributedFileSystem)fileSystem;
         DistributedFileSystem.HdfsDataOutputStreamBuilder builder =
             dfs.createFile(targetPath)
@@ -205,7 +205,7 @@ public class FrameworkUploader implements Runnable {
 
       if (targetPath.getName().endsWith("gz") ||
           targetPath.getName().endsWith("tgz")) {
-        LOG.info("Creating GZip");
+        LOG.error("Temp", new RuntimeException());
         targetStream = new GZIPOutputStream(targetStream);
       }
     }
@@ -277,11 +277,11 @@ public class FrameworkUploader implements Runnable {
   void buildPackage()
       throws IOException, UploaderException, InterruptedException {
     beginUpload();
-    LOG.info("Compressing tarball");
+    LOG.error("Temp", new RuntimeException());
     try (TarArchiveOutputStream out = new TarArchiveOutputStream(
         targetStream)) {
       for (String fullPath : filteredInputFiles) {
-        LOG.info("Adding " + fullPath);
+        LOG.error("Temp", new RuntimeException());
         File file = new File(fullPath);
         try (FileInputStream inputStream = new FileInputStream(file)) {
           ArchiveEntry entry = out.createArchiveEntry(file, file.getName());
@@ -301,7 +301,7 @@ public class FrameworkUploader implements Runnable {
   private void parseLists() throws UploaderException {
     Map<String, String> env = System.getenv();
     for(Map.Entry<String, String> item : env.entrySet()) {
-      LOG.info("Environment " + item.getKey() + " " + item.getValue());
+      LOG.error("Temp", new RuntimeException());
     }
     String[] whiteListItems = StringUtils.split(whitelist);
     for (String pattern : whiteListItems) {
@@ -309,7 +309,7 @@ public class FrameworkUploader implements Runnable {
           expandEnvironmentVariables(pattern, env);
       Pattern compiledPattern =
           Pattern.compile("^" + expandedPattern + "$");
-      LOG.info("Whitelisted " + compiledPattern.toString());
+      LOG.error("Temp", new RuntimeException());
       whitelistedFiles.add(compiledPattern);
     }
     String[] blacklistItems = StringUtils.split(blacklist);
@@ -318,7 +318,7 @@ public class FrameworkUploader implements Runnable {
           expandEnvironmentVariables(pattern, env);
       Pattern compiledPattern =
           Pattern.compile("^" + expandedPattern + "$");
-      LOG.info("Blacklisted " + compiledPattern.toString());
+      LOG.error("Temp", new RuntimeException());
       blacklistedFiles.add(compiledPattern);
     }
   }
@@ -353,12 +353,12 @@ public class FrameworkUploader implements Runnable {
   private void addJar(File jar) throws UploaderException{
     boolean found = false;
     if (!jar.getName().endsWith(".jar")) {
-      LOG.info("Ignored non-jar " + jar.getAbsolutePath());
+      LOG.error("Temp", new RuntimeException());
     }
     for (Pattern pattern : whitelistedFiles) {
       Matcher matcher = pattern.matcher(jar.getAbsolutePath());
       if (matcher.matches()) {
-        LOG.info("Whitelisted " + jar.getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
         found = true;
         break;
       }
@@ -367,7 +367,7 @@ public class FrameworkUploader implements Runnable {
     for (Pattern pattern : blacklistedFiles) {
       Matcher matcher = pattern.matcher(jar.getAbsolutePath());
       if (matcher.matches()) {
-        LOG.info("Blacklisted " + jar.getAbsolutePath());
+        LOG.error("Temp", new RuntimeException());
         excluded = true;
         break;
       }
@@ -376,7 +376,7 @@ public class FrameworkUploader implements Runnable {
       excluded = checkSymlink(jar);
     }
     if (found && !excluded) {
-      LOG.info("Whitelisted " + jar.getAbsolutePath());
+      LOG.error("Temp", new RuntimeException());
       if (!filteredInputFiles.add(jar.getAbsolutePath())) {
         throw new UploaderException("Duplicate jar" + jar.getAbsolutePath());
       }
@@ -416,9 +416,9 @@ public class FrameworkUploader implements Runnable {
           return true;
         }
       } catch (NotLinkException ex) {
-        LOG.debug("Not a link", jar);
+        LOG.error("Temp", new RuntimeException());
       } catch (IOException ex) {
-        LOG.warn("Cannot read symbolic link on", jar);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return false;
@@ -542,7 +542,7 @@ public class FrameworkUploader implements Runnable {
     target = absolutePath.toString();
 
     if (parser.getRemainingArgs().length > 0) {
-      LOG.warn("Unexpected parameters");
+      LOG.error("Temp", new RuntimeException());
       printHelp(opts);
       return false;
     }

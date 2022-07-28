@@ -249,7 +249,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
 
     validateRunning();
     ApplicationAttemptId attemptId = getAppIdentifier();
-    LOG.info("Registering application attempt: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
 
     shouldReRegisterNext = false;
 
@@ -282,12 +282,12 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
       // We reuse the port number to indicate whether the unit test want us to
       // wait here
       if (request.getRpcPort() > 1000) {
-        LOG.info("Register call in RM start waiting");
+        LOG.error("Temp", new RuntimeException());
         try {
           syncObj.wait();
-          LOG.info("Register call in RM wait finished");
+          LOG.error("Temp", new RuntimeException());
         } catch (InterruptedException e) {
-          LOG.info("Register call in RM wait interrupted", e);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -304,11 +304,11 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     validateRunning();
 
     ApplicationAttemptId attemptId = getAppIdentifier();
-    LOG.info("Finishing application attempt: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
 
     if (shouldReRegisterNext) {
       String message = "AM is not registered, should re-register.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ApplicationMasterNotRegisteredException(message);
     }
 
@@ -347,11 +347,11 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     }
 
     ApplicationAttemptId attemptId = getAppIdentifier();
-    LOG.info("Allocate from application attempt: " + attemptId);
+    LOG.error("Temp", new RuntimeException());
 
     if (shouldReRegisterNext) {
       String message = "AM is not registered, should re-register.";
-      LOG.warn(message);
+      LOG.error("Temp", new RuntimeException());
       throw new ApplicationMasterNotRegisteredException(message);
     }
 
@@ -391,7 +391,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     List<ContainerStatus> completedList = new ArrayList<>();
     if (request.getReleaseList() != null
         && request.getReleaseList().size() > 0) {
-      LOG.info("Releasing containers: " + request.getReleaseList().size());
+      LOG.error("Temp", new RuntimeException());
       synchronized (applicationContainerIdMap) {
         Assert
             .assertTrue(
@@ -487,7 +487,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
     if (request.getApplicationSubmissionContext() != null) {
       appId = request.getApplicationSubmissionContext().getApplicationId();
     }
-    LOG.info("Application submitted: " + appId);
+    LOG.error("Temp", new RuntimeException());
     applicationMap.add(appId);
 
     if (request.getApplicationSubmissionContext().getUnmanagedAM()
@@ -513,7 +513,7 @@ public class MockResourceManagerFacade implements ApplicationClientProtocol,
       }
       keepContainerOnUams.remove(appId);
     }
-    LOG.info("Force killing application: " + appId);
+    LOG.error("Temp", new RuntimeException());
     return KillApplicationResponse.newInstance(true);
   }
 

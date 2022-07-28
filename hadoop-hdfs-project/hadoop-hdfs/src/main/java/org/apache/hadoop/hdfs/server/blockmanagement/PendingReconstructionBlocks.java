@@ -105,7 +105,7 @@ class PendingReconstructionBlocks {
     synchronized (pendingReconstructions) {
       PendingBlockInfo found = pendingReconstructions.get(block);
       if (found != null) {
-        LOG.debug("Removing pending reconstruction for {}", block);
+        LOG.error("Temp", new RuntimeException());
         found.decrementReplicas(dn);
         if (found.getNumReplicas() <= 0) {
           pendingReconstructions.remove(block);
@@ -245,7 +245,7 @@ class PendingReconstructionBlocks {
           pendingReconstructionCheck();
           Thread.sleep(period);
         } catch (InterruptedException ie) {
-          LOG.debug("PendingReconstructionMonitor thread is interrupted.", ie);
+          LOG.error("Temp", new RuntimeException());
         }
       }
     }
@@ -258,7 +258,7 @@ class PendingReconstructionBlocks {
         Iterator<Map.Entry<BlockInfo, PendingBlockInfo>> iter =
             pendingReconstructions.entrySet().iterator();
         long now = monotonicNow();
-        LOG.debug("PendingReconstructionMonitor checking Q");
+        LOG.error("Temp", new RuntimeException());
         while (iter.hasNext()) {
           Map.Entry<BlockInfo, PendingBlockInfo> entry = iter.next();
           PendingBlockInfo pendingBlock = entry.getValue();
@@ -267,7 +267,7 @@ class PendingReconstructionBlocks {
             synchronized (timedOutItems) {
               timedOutItems.add(block);
             }
-            LOG.warn("PendingReconstructionMonitor timed out " + block);
+            LOG.error("Temp", new RuntimeException());
             NameNode.getNameNodeMetrics().incTimeoutReReplications();
             iter.remove();
           }

@@ -39,7 +39,7 @@ public class TestGridmixRecord {
     final Random r = new Random();
     final long seed = r.nextLong();
     r.setSeed(seed);
-    LOG.info("length: " + seed);
+    LOG.error("Temp", new RuntimeException());
     final DataInputBuffer in = new DataInputBuffer();
     final DataOutputBuffer out1 = new DataOutputBuffer();
     final DataOutputBuffer out2 = new DataOutputBuffer();
@@ -68,7 +68,7 @@ public class TestGridmixRecord {
     final Random r = new Random();
     final long seed = r.nextLong();
     r.setSeed(seed);
-    LOG.info("randReplay: " + seed);
+    LOG.error("Temp", new RuntimeException());
     final DataOutputBuffer out1 = new DataOutputBuffer();
     for (int i = min; i < max; ++i) {
       final int s = out1.getLength();
@@ -99,7 +99,7 @@ public class TestGridmixRecord {
     final Random r = new Random();
     final long s = r.nextLong();
     r.setSeed(s);
-    LOG.info("eqSeed: " + s);
+    LOG.error("Temp", new RuntimeException());
     assertEquals(x.fixedBytes(), y.fixedBytes());
     final int min = x.fixedBytes() + 1;
     final DataOutputBuffer out1 = new DataOutputBuffer();
@@ -124,7 +124,7 @@ public class TestGridmixRecord {
     final Random r = new Random();
     final long s = r.nextLong();
     r.setSeed(s);
-    LOG.info("sort: " + s);
+    LOG.error("Temp", new RuntimeException());
     final DataOutputBuffer out1 = new DataOutputBuffer();
     final DataOutputBuffer out2 = new DataOutputBuffer();
     for (int i = min; i < max; ++i) {
@@ -162,7 +162,7 @@ public class TestGridmixRecord {
     final Random r = new Random();
     final long s = r.nextLong();
     r.setSeed(s);
-    LOG.info("spec: " + s);
+    LOG.error("Temp", new RuntimeException());
     final DataInputBuffer in = new DataInputBuffer();
     final DataOutputBuffer out = new DataOutputBuffer();
     a.setType(GridmixKey.REDUCE_SPEC);

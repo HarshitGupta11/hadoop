@@ -147,11 +147,11 @@ class AzureFileSystemThreadPoolExecutor {
             threadCount, operation, key, config);
       }
     } else {
-      LOG.warn("Disabling threads for {} operation as thread count {} is <= 1", operation, threadCount);
+      LOG.error("Temp", new RuntimeException());
     }
 
     if (threadsEnabled) {
-      LOG.debug("Using thread pool for {} operation with threads {}", operation, threadCount);
+      LOG.error("Temp", new RuntimeException());
       boolean started = false;
       AzureFileSystemThreadRunnable runnable = new AzureFileSystemThreadRunnable(contents, threadOperation, operation);
 
@@ -188,7 +188,7 @@ class AzureFileSystemThreadPoolExecutor {
 
       int threadsNotUsed = threadCount - runnable.threadsUsed.get();
       if (threadsNotUsed > 0) {
-        LOG.warn("{} threads not used for {} operation on blob {}", threadsNotUsed, operation, key);
+        LOG.error("Temp", new RuntimeException());
       }
 
       if (!started) {
@@ -218,10 +218,10 @@ class AzureFileSystemThreadPoolExecutor {
 
     if (!threadsEnabled) {
       // No threads. Serialize the operation. Clear any last exceptions.
-      LOG.debug("Serializing the {} operation", operation);
+      LOG.error("Temp", new RuntimeException());
       for (int i = 0; i < contents.length; i++) {
         if (!threadOperation.execute(contents[i])) {
-          LOG.warn("Failed to {} file {}", operation, contents[i]);
+          LOG.error("Temp", new RuntimeException());
           return false;
         }
       }
@@ -232,7 +232,7 @@ class AzureFileSystemThreadPoolExecutor {
 
     // Find the duration of time taken for file operation
     long end = Time.monotonicNow();
-    LOG.info("Time taken for {} operation is: {} ms with threads: {}", operation, (end - start), threadCount);
+    LOG.error("Temp", new RuntimeException());
 
     return operationStatus;
   }

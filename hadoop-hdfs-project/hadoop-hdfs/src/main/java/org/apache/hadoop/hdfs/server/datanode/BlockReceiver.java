@@ -391,7 +391,7 @@ class BlockReceiver implements Closeable {
   synchronized boolean packetSentInTime() {
     long diff = Time.monotonicNow() - lastSentTime;
     if (diff > maxSendIdleTime) {
-      LOG.info("A packet was last sent " + diff + " milliseconds ago.");
+      LOG.error("Temp", new RuntimeException());
       return false;
     }
     return true;
@@ -610,7 +610,7 @@ class BlockReceiver implements Closeable {
     
     if (lastPacketInBlock || len == 0) {
       if(LOG.isDebugEnabled()) {
-        LOG.debug("Receiving an empty packet or the end of the block " + block);
+        LOG.error("Temp", new RuntimeException());
       }
       // sync block if requested
       if (syncBlock) {
@@ -930,7 +930,7 @@ class BlockReceiver implements Closeable {
         }
       }
     } catch (Throwable t) {
-      LOG.warn("Error managing cache for writer of block " + block, t);
+      LOG.error("Temp", new RuntimeException());
     }
   }
   
@@ -1005,9 +1005,9 @@ class BlockReceiver implements Closeable {
       if (datanode.isRestarting()) {
         // Do not throw if shutting down for restart. Otherwise, it will cause
         // premature termination of responder.
-        LOG.info("Shutting down for restart (" + block + ").");
+        LOG.error("Temp", new RuntimeException());
       } else {
-        LOG.info("Exception for " + block, ioe);
+        LOG.error("Temp", new RuntimeException());
         throw ioe;
       }
     } finally {
@@ -1060,7 +1060,7 @@ class BlockReceiver implements Closeable {
           if (responder.isAlive()) {
             String msg = "Join on responder thread " + responder
                 + " timed out";
-            LOG.warn(msg + "\n" + StringUtils.getStackTrace(responder));
+            LOG.error("Temp", new RuntimeException());
             throw new IOException(msg);
           }
         } catch (InterruptedException e) {
@@ -1178,7 +1178,7 @@ class BlockReceiver implements Closeable {
         diskChecksum.getChecksumType(), diskChecksum.getBytesPerChecksum());
     partialCrc.update(buf, 0, sizePartialChunk);
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Read in partial CRC chunk from disk for " + block);
+      LOG.error("Temp", new RuntimeException());
     }
 
     // paranoia! verify that the pre-computed crc matches what we
@@ -1265,7 +1265,7 @@ class BlockReceiver implements Closeable {
       final Packet p = new Packet(seqno, lastPacketInBlock, offsetInBlock,
           System.nanoTime(), ackStatus);
       if(LOG.isDebugEnabled()) {
-        LOG.debug(myString + ": enqueue " + p);
+        LOG.error("Temp", new RuntimeException());
       }
       synchronized(ackQueue) {
         if (running) {
@@ -1304,7 +1304,7 @@ class BlockReceiver implements Closeable {
         sending = true;
       }
 
-      LOG.info("Sending an out of band ack of type " + ackStatus);
+      LOG.error("Temp", new RuntimeException());
       try {
         sendAckUpstreamUnprotected(null, PipelineAck.UNKOWN_SEQNO, 0L, 0L,
             PipelineAck.combineHeader(datanode.getECN(), ackStatus));
@@ -1348,7 +1348,7 @@ class BlockReceiver implements Closeable {
           }
         }
         if(LOG.isDebugEnabled()) {
-          LOG.debug(myString + ": closing");
+          LOG.error("Temp", new RuntimeException());
         }
         running = false;
         ackQueue.notifyAll();
@@ -1384,12 +1384,12 @@ class BlockReceiver implements Closeable {
               ack.readFields(downstreamIn);
               ackRecvNanoTime = System.nanoTime();
               if (LOG.isDebugEnabled()) {
-                LOG.debug(myString + " got " + ack);
+                LOG.error("Temp", new RuntimeException());
               }
               // Process an OOB ACK.
               Status oobStatus = ack.getOOBStatus();
               if (oobStatus != null) {
-                LOG.info("Relaying an out of band ack of type " + oobStatus);
+                LOG.error("Temp", new RuntimeException());
                 sendAckUpstream(ack, PipelineAck.UNKOWN_SEQNO, 0L, 0L,
                     PipelineAck.combineHeader(datanode.getECN(),
                       Status.SUCCESS));
@@ -1451,7 +1451,7 @@ class BlockReceiver implements Closeable {
               // notify client of the error
               // and wait for the client to shut down the pipeline
               mirrorError = true;
-              LOG.info(myString, ioe);
+              LOG.error("Temp", new RuntimeException());
             }
           }
 
@@ -1467,7 +1467,7 @@ class BlockReceiver implements Closeable {
              * The receiver thread can also interrupt this thread for sending
              * an out-of-band response upstream.
              */
-            LOG.info(myString + ": Thread is interrupted.");
+            LOG.error("Temp", new RuntimeException());
             running = false;
             continue;
           }
@@ -1486,10 +1486,10 @@ class BlockReceiver implements Closeable {
             removeAckHead();
           }
         } catch (IOException e) {
-          LOG.warn("IOException in BlockReceiver.run(): ", e);
+          LOG.error("Temp", new RuntimeException());
           if (running) {
             // Volume error check moved to FileIoProvider
-            LOG.info(myString, e);
+            LOG.error("Temp", new RuntimeException());
             running = false;
             if (!Thread.interrupted()) { // failure not caused by interruption
               receiverThread.interrupt();
@@ -1497,13 +1497,13 @@ class BlockReceiver implements Closeable {
           }
         } catch (Throwable e) {
           if (running) {
-            LOG.info(myString, e);
+            LOG.error("Temp", new RuntimeException());
             running = false;
             receiverThread.interrupt();
           }
         }
       }
-      LOG.info(myString + " terminating");
+      LOG.error("Temp", new RuntimeException());
     }
     
     /**
@@ -1642,7 +1642,7 @@ class BlockReceiver implements Closeable {
             + ", downstream DNs=" + Arrays.toString(downstreamDNs)
             + ", blockId=" + replicaInfo.getBlockId());
       } else if (LOG.isDebugEnabled()) {
-        LOG.debug(myString + ", replyAck=" + replyAck);
+        LOG.error("Temp", new RuntimeException());
       }
 
       // If a corruption was detected in the received data, terminate after

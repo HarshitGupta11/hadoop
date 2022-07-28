@@ -103,7 +103,7 @@ public class ApiServiceClient extends AppAdminClient {
             sb.append("?user.name=");
             sb.append(username);
           } catch (IOException e) {
-            LOG.debug("Fail to resolve username: {}", e);
+            LOG.error("Temp", new RuntimeException());
           }
         }
         WebResource webResource = client
@@ -118,7 +118,7 @@ public class ApiServiceClient extends AppAdminClient {
           break;
         }
       } catch (Exception e) {
-        LOG.debug("Fail to connect to: "+host, e);
+        LOG.error("Temp", new RuntimeException());
       }
     }
     return scheme+rmAddress;
@@ -203,7 +203,7 @@ public class ApiServiceClient extends AppAdminClient {
       output = response.getEntity(String.class);
     }
     if (response.getStatus() <= 299) {
-      LOG.info(output);
+      LOG.error("Temp", new RuntimeException());
       return EXIT_SUCCESS;
     } else {
       LOG.error(output);
@@ -258,7 +258,7 @@ public class ApiServiceClient extends AppAdminClient {
           fileName);
     }
     Path filePath = new Path(file.getAbsolutePath());
-    LOG.info("Loading service definition from local FS: " + filePath);
+    LOG.error("Temp", new RuntimeException());
     Service service = jsonSerDeser
         .load(FileSystem.getLocal(getConfig()), filePath);
     if (!StringUtils.isEmpty(serviceName)) {

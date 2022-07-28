@@ -175,7 +175,7 @@ public class TestSafeMode {
    */
   @Test(timeout=45000)
   public void testInitializeReplQueuesEarly() throws Exception {
-    LOG.info("Starting testInitializeReplQueuesEarly");
+    LOG.error("Temp", new RuntimeException());
     // Spray the blocks around the cluster when we add DNs instead of
     // concentrating all blocks on the first node.
     BlockManagerTestUtil.setWritingPrefersLocalNode(
@@ -184,10 +184,10 @@ public class TestSafeMode {
     cluster.startDataNodes(conf, 2, true, StartupOption.REGULAR, null);
     cluster.waitActive();
 
-    LOG.info("Creating files");
+    LOG.error("Temp", new RuntimeException());
     DFSTestUtil.createFile(fs, TEST_PATH, 15*BLOCK_SIZE, (short)1, 1L);
     
-    LOG.info("Stopping all DataNodes");
+    LOG.error("Temp", new RuntimeException());
     List<DataNodeProperties> dnprops = Lists.newLinkedList();
     dnprops.add(cluster.stopDataNode(0));
     dnprops.add(cluster.stopDataNode(0));
@@ -196,7 +196,7 @@ public class TestSafeMode {
     cluster.getConfiguration(0).setFloat(
         DFSConfigKeys.DFS_NAMENODE_REPL_QUEUE_THRESHOLD_PCT_KEY, 1f/15f);
     
-    LOG.info("Restarting NameNode");
+    LOG.error("Temp", new RuntimeException());
     cluster.restartNameNode();
     final NameNode nn = cluster.getNameNode();
     
@@ -210,7 +210,7 @@ public class TestSafeMode {
         "until threshold is crossed",
         NameNodeAdapter.safeModeInitializedReplQueues(nn));
     
-    LOG.info("Restarting one DataNode");
+    LOG.error("Temp", new RuntimeException());
     cluster.restartDataNode(dnprops.remove(0));
 
     // Wait for block reports from all attached storages of

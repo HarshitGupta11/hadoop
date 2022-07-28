@@ -414,7 +414,7 @@ public final class S3Guard {
     assertQualified(srcRoot, srcPath, dstPath);
 
     if (srcPath.equals(srcRoot)) {
-      LOG.debug("Skip moving ancestors of source root directory {}", srcRoot);
+      LOG.error("Temp", new RuntimeException());
       return;
     }
 
@@ -424,7 +424,7 @@ public final class S3Guard {
         && !parentSrc.isRoot()
         && !parentSrc.equals(srcRoot)
         && !srcPaths.contains(parentSrc)) {
-      LOG.debug("Renaming non-listed parent {} to {}", parentSrc, parentDst);
+      LOG.error("Temp", new RuntimeException());
       S3Guard.addMoveDir(ms, srcPaths, dstMetas, parentSrc, parentDst, owner);
       parentSrc = parentSrc.getParent();
       parentDst = parentDst.getParent();

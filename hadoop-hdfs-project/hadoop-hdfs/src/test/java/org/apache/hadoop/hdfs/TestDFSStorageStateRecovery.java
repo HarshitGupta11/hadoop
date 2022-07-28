@@ -108,7 +108,7 @@ public class TestDFSStorageStateRecovery {
    * the first 4 elements of the state array are included in the message.
    */
   void log(String label, int numDirs, int testCaseNum, boolean[] state) {
-    LOG.info("============================================================");
+    LOG.error("Temp", new RuntimeException());
     LOG.info("***TEST " + (testCounter++) + "*** " 
              + label + ":"
              + " numDirs="+numDirs
@@ -445,13 +445,13 @@ public class TestDFSStorageStateRecovery {
 
   @Before
   public void setUp() throws Exception {
-    LOG.info("Setting up the directory structures.");
+    LOG.error("Temp", new RuntimeException());
     UpgradeUtilities.initialize();
   }
 
   @After
   public void tearDown() throws Exception {
-    LOG.info("Shutting down MiniDFSCluster");
+    LOG.error("Temp", new RuntimeException());
     if (cluster != null) {
       cluster.shutdown();
       cluster = null;

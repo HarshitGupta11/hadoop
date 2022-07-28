@@ -158,7 +158,7 @@ public class TestDelegationTokenRenewer {
           ";this dfs=" + this.hashCode() + ";c=" + counter);
       if(tokenToRenewIn2Sec == token) { 
         // this token first renewal in 2 seconds
-        LOG.info("RENEW in 2 seconds");
+        LOG.error("Temp", new RuntimeException());
         tokenToRenewIn2Sec=null;
         return 2*1000 + System.currentTimeMillis();
       } else {
@@ -171,7 +171,7 @@ public class TestDelegationTokenRenewer {
       cancelled = true;
       if (t instanceof MyToken) {
         MyToken token = (MyToken) t;
-        LOG.info("Cancel token " + token);
+        LOG.error("Temp", new RuntimeException());
         token.cancelToken();
       }
    }
@@ -191,7 +191,7 @@ public class TestDelegationTokenRenewer {
     System.out.println("scheme is : " + uri.getScheme());
     conf.setClass("fs." + uri.getScheme() + ".impl", MyFS.class, DistributedFileSystem.class);
     FileSystem.setDefaultUri(conf, uri);
-    LOG.info("filesystem uri = " + FileSystem.getDefaultUri(conf).toString());
+    LOG.error("Temp", new RuntimeException());
   }
   
 
@@ -309,7 +309,7 @@ public class TestDelegationTokenRenewer {
     @Override 
     public MyToken getDelegationToken(String renewer) throws IOException {
       MyToken result = createTokens(new Text(renewer));
-      LOG.info("Called MYDFS.getdelegationtoken " + result);
+      LOG.error("Temp", new RuntimeException());
       return result;
     }
 
@@ -365,7 +365,7 @@ public class TestDelegationTokenRenewer {
   @Test(timeout=60000)
   public void testDTRenewal () throws Exception {
     MyFS dfs = (MyFS)FileSystem.get(conf);
-    LOG.info("dfs="+(Object)dfs.hashCode() + ";conf="+conf.hashCode());
+    LOG.error("Temp", new RuntimeException());
     // Test 1. - add three tokens - make sure exactly one get's renewed
     
     // get the delegation tokens
@@ -376,7 +376,7 @@ public class TestDelegationTokenRenewer {
 
     //to cause this one to be set for renew in 2 secs
     Renewer.tokenToRenewIn2Sec = token1;
-    LOG.info("token="+token1+" should be renewed for 2 secs");
+    LOG.error("Temp", new RuntimeException());
     
     // three distinct Namenodes
     String nn1 = DelegationTokenRenewer.SCHEME + "://host1:0";
@@ -427,7 +427,7 @@ public class TestDelegationTokenRenewer {
     
     //to cause this one to be set for renew in 2 secs
     Renewer.tokenToRenewIn2Sec = token4; 
-    LOG.info("token="+token4+" should be renewed for 2 secs");
+    LOG.error("Temp", new RuntimeException());
     
     String nn4 = DelegationTokenRenewer.SCHEME + "://host4:0";
     ts.addToken(new Text(nn4), token4);
@@ -443,7 +443,7 @@ public class TestDelegationTokenRenewer {
     try {
       Thread.sleep(6*1000); // sleep 6 seconds, so it has time to renew
     } catch (InterruptedException e) {}
-    LOG.info("Counter = " + Renewer.counter + ";t="+ Renewer.lastRenewed);
+    LOG.error("Temp", new RuntimeException());
     
     // counter and the token should stil be the old ones
     assertEquals("renew wasn't called as many times as expected",
@@ -461,7 +461,7 @@ public class TestDelegationTokenRenewer {
   @Test(timeout=60000)
   public void testAppRejectionWithCancelledDelegationToken() throws Exception {
     MyFS dfs = (MyFS)FileSystem.get(conf);
-    LOG.info("dfs="+(Object)dfs.hashCode() + ";conf="+conf.hashCode());
+    LOG.error("Temp", new RuntimeException());
 
     MyToken token = dfs.getDelegationToken("user1");
     token.cancelToken();
@@ -494,7 +494,7 @@ public class TestDelegationTokenRenewer {
   @Test(timeout=60000)
   public void testAppTokenWithNonRenewer() throws Exception {
     MyFS dfs = (MyFS)FileSystem.get(conf);
-    LOG.info("dfs="+(Object)dfs.hashCode() + ";conf="+conf.hashCode());
+    LOG.error("Temp", new RuntimeException());
 
     // Test would fail if using non-empty renewer string here
     MyToken token = dfs.getDelegationToken("");
@@ -521,14 +521,14 @@ public class TestDelegationTokenRenewer {
   @Test(timeout=60000)
   public void testDTRenewalWithNoCancel () throws Exception {
     MyFS dfs = (MyFS)FileSystem.get(conf);
-    LOG.info("dfs="+(Object)dfs.hashCode() + ";conf="+conf.hashCode());
+    LOG.error("Temp", new RuntimeException());
 
     Credentials ts = new Credentials();
     MyToken token1 = dfs.getDelegationToken("user1");
 
     //to cause this one to be set for renew in 2 secs
     Renewer.tokenToRenewIn2Sec = token1; 
-    LOG.info("token="+token1+" should be renewed for 2 secs");
+    LOG.error("Temp", new RuntimeException());
     
     String nn1 = DelegationTokenRenewer.SCHEME + "://host1:0";
     ts.addToken(new Text(nn1), token1);
@@ -544,7 +544,7 @@ public class TestDelegationTokenRenewer {
     try {
       Thread.sleep(6*1000); // sleep 6 seconds, so it has time to renew
     } catch (InterruptedException e) {}
-    LOG.info("Counter = " + Renewer.counter + ";t="+ Renewer.lastRenewed);
+    LOG.error("Temp", new RuntimeException());
     
     // counter and the token should still be the old ones
     assertEquals("renew wasn't called as many times as expected",
@@ -594,7 +594,7 @@ public class TestDelegationTokenRenewer {
     localDtr.start();
     
     MyFS dfs = (MyFS)FileSystem.get(lconf);
-    LOG.info("dfs="+(Object)dfs.hashCode() + ";conf="+lconf.hashCode());
+    LOG.error("Temp", new RuntimeException());
     
     Credentials ts = new Credentials();
     // get the delegation tokens
@@ -674,7 +674,7 @@ public class TestDelegationTokenRenewer {
     localDtr.start();
     
     MyFS dfs = (MyFS)FileSystem.get(lconf);
-    LOG.info("dfs="+(Object)dfs.hashCode() + ";conf="+lconf.hashCode());
+    LOG.error("Temp", new RuntimeException());
 
     Credentials ts = new Credentials();
     // get the delegation tokens

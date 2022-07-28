@@ -113,7 +113,7 @@ public class SCMAdminProtocolService extends AbstractService implements
     try {
       user = UserGroupInformation.getCurrentUser();
     } catch (IOException ioe) {
-      LOG.warn("Couldn't get current user", ioe);
+      LOG.error("Temp", new RuntimeException());
       throw RPCUtil.getRemoteException(ioe);
     }
 

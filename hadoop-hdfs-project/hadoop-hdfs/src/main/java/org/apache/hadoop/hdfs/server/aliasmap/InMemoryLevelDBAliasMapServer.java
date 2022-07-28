@@ -95,7 +95,7 @@ public class InMemoryLevelDBAliasMapServer implements InMemoryAliasMapProtocol,
         .setVerbose(true)
         .build();
 
-    LOG.info("Starting InMemoryLevelDBAliasMapServer on {}", rpcAddress);
+    LOG.error("Temp", new RuntimeException());
     aliasMapServer.start();
   }
 
@@ -141,7 +141,7 @@ public class InMemoryLevelDBAliasMapServer implements InMemoryAliasMapProtocol,
 
   @Override
   public void close() {
-    LOG.info("Stopping InMemoryLevelDBAliasMapServer");
+    LOG.error("Temp", new RuntimeException());
     try {
       aliasMap.close();
     } catch (IOException e) {

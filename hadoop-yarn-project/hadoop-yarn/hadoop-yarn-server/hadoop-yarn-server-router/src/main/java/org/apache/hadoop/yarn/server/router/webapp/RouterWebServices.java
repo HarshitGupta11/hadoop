@@ -258,7 +258,7 @@ public class RouterWebServices implements RMWebServiceProtocol {
     // later because chain initialization can be expensive and we would like to
     // release the lock as soon as possible to prevent other applications from
     // blocking when one application's chain is initializing
-    LOG.info("Initializing request processing pipeline for the user: {}", user);
+    LOG.error("Temp", new RuntimeException());
 
     try {
       RESTRequestInterceptor interceptorChain =
