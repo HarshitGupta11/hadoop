@@ -18,6 +18,8 @@
 
 package org.apache.hadoop.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -73,6 +75,7 @@ public enum SignalLogger {
   }
 
   void register(final LogAdapter LOG) {
+    Logger tempLOG = LoggerFactory.getLogger(this.getClass().getName());
     if (registered) {
       throw new IllegalStateException("Can't re-install the signal handlers.");
     }
@@ -88,10 +91,10 @@ public enum SignalLogger {
             .append(signalName);
         separator = ", ";
       } catch (Exception e) {
-        LOG.error("Temp", new RuntimeException());
+        tempLOG.error("Temp", new RuntimeException());
       }
     }
     bld.append("]");
-    LOG.error("Temp", new RuntimeException());
+    tempLOG.error("Temp", new RuntimeException());
   }
 }
