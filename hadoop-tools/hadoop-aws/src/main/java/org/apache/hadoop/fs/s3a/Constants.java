@@ -1267,5 +1267,5 @@ public final class Constants {
    * Default value for multipart uploads.
    * {@value}
    */
-  public static final boolean MULTIPART_UPLOAD_ENABLED_DEFAULT = true;
+  public static final boolean MULTIPART_UPLOAD_ENABLED_DEFAULT = false;
 }
