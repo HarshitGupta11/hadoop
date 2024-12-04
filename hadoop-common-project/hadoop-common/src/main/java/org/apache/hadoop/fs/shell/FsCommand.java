@@ -51,6 +51,7 @@ abstract public class FsCommand extends Command {
    */
   public static void registerCommands(CommandFactory factory) {
     factory.registerCommands(AclCommands.class);
+    factory.registerCommands(BulkDeleteCommand.class);
     factory.registerCommands(CopyCommands.class);
     factory.registerCommands(Count.class);
     factory.registerCommands(Delete.class);
@@ -71,7 +72,6 @@ abstract public class FsCommand extends Command {
     factory.registerCommands(SnapshotCommands.class);
     factory.registerCommands(XAttrCommands.class);
     factory.registerCommands(Concat.class);
-    factory.registerCommands(BulkDeleteCommand.class);
   }
 
   protected FsCommand() {}
