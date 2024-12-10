@@ -72,6 +72,18 @@ public interface BulkDelete extends IOStatisticsSource, Closeable {
 }
 
 ```
+### Shell Command `hadoop fs -bulkdelete <options> base_path`
+
+This is the command line implementation of the bulkdelete API, the user can specify a base path and the underlying 
+paths for deletion. The list of paths can also be read from a file with each line containing
+a separate path for deletion.
+
+```angular2html
+hadoop fs -bulkdelete <basePath> <path1> <path2> <path3>.....
+hadoop fs -bulkdelete -pageSize 10 <basePath> <path1> <path2> <path3>.....
+hadoop fs -bulkdelete -fileName <fileName> <basePath>
+```
+
 
 ### `bulkDelete(paths)`
 
