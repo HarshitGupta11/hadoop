@@ -18,23 +18,41 @@
 
 package org.apache.hadoop.fs.shell;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
+import com.jcraft.jsch.Buffer;
+import com.jcraft.jsch.IO;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.test.GenericTestUtils;
 import org.apache.hadoop.test.HadoopTestBase;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestBulkDeleteCommand extends HadoopTestBase  {
     private static Configuration conf;
+    private static FsShell shell;
+    private static LocalFileSystem lfs;
+    private static Path testRootDir;
 
     @BeforeClass
     public static void setup() throws IOException {
         conf = new Configuration();
+        shell = new FsShell(conf);
+        lfs = FileSystem.getLocal(conf);
+        testRootDir = lfs.makeQualified(new Path(GenericTestUtils.getTempPath(
+                "testFsShellBulkDelete")));
+        lfs.delete(testRootDir, true);
+        lfs.mkdirs(testRootDir);
+        lfs.setWorkingDirectory(testRootDir);
     }
 
     @Test
@@ -63,5 +81,53 @@ public class TestBulkDeleteCommand extends HadoopTestBase  {
                 isEqualTo(1);
         Assertions.assertThat(bulkDeleteCommand.childArgs.get(0)).
                 describedAs("Children arguments must match").isEqualTo(arg2);
+    }
+
+    @Test
+    public void testLocalFileDeletion() throws IOException {
+        String deletionDir = "toDelete";
+        String baseFileName = "file_";
+        Path baseDir = new Path(testRootDir, deletionDir);
+        List<String> listOfPaths = new ArrayList<>();
+        for(int i = 0; i < 100; i++) {
+            Path p = new Path(baseDir, baseFileName + i);
+            lfs.create(p);
+            listOfPaths.add(p.toUri().toString());
+        }
+        List<String> finalCommandList = new ArrayList<>();
+        finalCommandList.add("-bulkDelete");
+        finalCommandList.add(baseDir.toUri().toString());
+        finalCommandList.addAll(listOfPaths);
+        shell.run(finalCommandList.toArray(new String[0]));
+        Assertions.assertThat(lfs.listFiles(baseDir, false).hasNext())
+                .as("All the files should have been deleted").isEqualTo(false);
+
+    }
+
+    @Test
+    public void testLocalFileDeletionWithFileName() throws IOException {
+        String deletionDir = "toDelete";
+        String baseFileName = "file_";
+        Path baseDir = new Path(testRootDir, deletionDir);
+        Path fileWithDeletePaths = new Path(testRootDir, "fileWithDeletePaths");
+        FSDataOutputStream fsDataOutputStream = lfs.create(fileWithDeletePaths, true);
+        BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fsDataOutputStream));
+        for(int i = 0; i < 100; i++) {
+            Path p = new Path(baseDir, baseFileName + i);
+            lfs.create(p);
+            br.write(p.toUri().toString());
+            br.newLine();
+        }
+        br.flush(); // flush the file to write the contents
+        br.close(); // close the writer
+        List<String> finalCommandList = new ArrayList<>();
+        finalCommandList.add("-bulkDelete");
+        finalCommandList.add("-readFromFile");
+        finalCommandList.add(fileWithDeletePaths.toUri().toString());
+        finalCommandList.add(baseDir.toUri().toString());
+        shell.run(finalCommandList.toArray(new String[0]));
+        Assertions.assertThat(lfs.listFiles(baseDir, false).hasNext())
+                .as("All the files should have been deleted").isEqualTo(false);
+
     }
 }

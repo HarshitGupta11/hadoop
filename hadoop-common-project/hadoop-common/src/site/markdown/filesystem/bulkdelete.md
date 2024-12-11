@@ -81,7 +81,7 @@ a separate path for deletion.
 ```angular2html
 hadoop fs -bulkdelete <basePath> <path1> <path2> <path3>.....
 hadoop fs -bulkdelete -pageSize 10 <basePath> <path1> <path2> <path3>.....
-hadoop fs -bulkdelete -fileName <fileName> <basePath>
+hadoop fs -bulkdelete -readFromFile <fileName> <basePath>
 ```
 
 
