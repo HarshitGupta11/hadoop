@@ -22,18 +22,14 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jcraft.jsch.Buffer;
-import com.jcraft.jsch.IO;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.test.GenericTestUtils;
 import org.apache.hadoop.test.HadoopTestBase;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

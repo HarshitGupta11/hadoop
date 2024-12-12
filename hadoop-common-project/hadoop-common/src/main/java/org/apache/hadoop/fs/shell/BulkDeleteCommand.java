@@ -21,6 +21,7 @@ package org.apache.hadoop.fs.shell;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -81,7 +82,7 @@ public class BulkDeleteCommand extends FsCommand {
     /**
      * Processes the command line options and initialize the variables
      * @param args the command line arguments
-     * @throws IOException
+     * @throws IOException in case of wrong arguments passed
      */
     @Override
     protected void processOptions(LinkedList<String> args) throws IOException {
@@ -137,13 +138,15 @@ public class BulkDeleteCommand extends FsCommand {
         if(fileName != null) {
             LOG.info("Reading from file:{}", fileName);
             FileSystem localFile = FileSystem.get(getConf());
-            BufferedReader br = new BufferedReader(new InputStreamReader(localFile.open(new Path(fileName))));
+            BufferedReader br = new BufferedReader(new InputStreamReader(localFile.open(new Path(fileName)),
+                    StandardCharsets.UTF_8));
             String line;
             while((line = br.readLine()) != null) {
                 if(!line.startsWith("#")) {
                     pathList.add(new Path(line));
                 }
             }
+            br.close();
         } else {
             pathList.addAll(this.childArgs.stream().map(Path::new).collect(Collectors.toList()));
         }
