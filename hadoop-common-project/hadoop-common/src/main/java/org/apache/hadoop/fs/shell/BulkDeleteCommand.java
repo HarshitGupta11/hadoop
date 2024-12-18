@@ -40,22 +40,29 @@ public class BulkDeleteCommand extends FsCommand {
 
   private static final Logger LOG = LoggerFactory.getLogger(BulkDeleteCommand.class.getName());
 
-  public static final String name = "bulkDelete";
+  public static final String NAME = "bulkDelete";
 
   /**
-   * File Name parameter to be specified at command line
+   * File Name parameter to be specified at command line.
    */
   public static final String READ_FROM_FILE = "readFromFile";
 
   /**
-   * Page size parameter specified at command line
+   * Page size parameter specified at command line.
    */
   public static final String PAGE_SIZE = "pageSize";
 
 
-  public static final String USAGE = "-[ " + READ_FROM_FILE + "] [<file>] [" + PAGE_SIZE + "] [<pageSize>] [<basePath> <paths>]";
+  public static final String USAGE = "-[ " + READ_FROM_FILE + "] [<file>] [" + PAGE_SIZE
+          + "] [<pageSize>] [<basePath> <paths>]";
 
-  public static final String DESCRIPTION = "Deletes the set of files under the given <path>.\n" + "If a list of paths is provided at command line then the paths are deleted directly.\n" + "User can also point to the file where the paths are listed as full object names using the \"fileName\"" + "parameter. The presence of a file name takes precedence over the list of objects.\n" + "Page size refers to the size of each bulk delete batch." + "Users can specify the page size using \"pageSize\" command parameter." + "Default value is 1.\n";
+  public static final String DESCRIPTION = "Deletes the set of files under the given <path>.\n" +
+          "If a list of paths is provided at command line then the paths are deleted directly.\n" +
+          "User can also point to the file where the paths are listed as full object names using the \"fileName\"" +
+          "parameter. The presence of a file name takes precedence over the list of objects.\n" +
+          "Page size refers to the size of each bulk delete batch." +
+          "Users can specify the page size using \"pageSize\" command parameter." +
+          "Default value is 1.\n";
 
   private String fileName;
 
@@ -74,7 +81,7 @@ public class BulkDeleteCommand extends FsCommand {
   }
 
   /**
-   * Processes the command line options and initialize the variables
+   * Processes the command line options and initialize the variables.
    *
    * @param args the command line arguments
    * @throws IOException in case of wrong arguments passed
@@ -94,7 +101,7 @@ public class BulkDeleteCommand extends FsCommand {
   }
 
   /**
-   * Processes the command line arguments and stores the child arguments in a list
+   * Processes the command line arguments and stores the child arguments in a list.
    *
    * @param args strings to expand into {@link PathData} objects
    * @return the base path of the bulk delete command.
@@ -113,7 +120,7 @@ public class BulkDeleteCommand extends FsCommand {
   }
 
   /**
-   * Deletes the objects using the bulk delete api
+   * Deletes the objects using the bulk delete api.
    *
    * @param bulkDelete Bulkdelete object exposing the API
    * @param paths      list of paths to be deleted in the base path
@@ -139,7 +146,8 @@ public class BulkDeleteCommand extends FsCommand {
     if (fileName != null) {
       LOG.info("Reading from file:{}", fileName);
       FileSystem localFile = FileSystem.get(getConf());
-      BufferedReader br = new BufferedReader(new InputStreamReader(localFile.open(new Path(fileName)), StandardCharsets.UTF_8));
+      BufferedReader br = new BufferedReader(new InputStreamReader(
+              localFile.open(new Path(fileName)), StandardCharsets.UTF_8));
       String line;
       while ((line = br.readLine()) != null) {
         if (!line.startsWith("#")) {
