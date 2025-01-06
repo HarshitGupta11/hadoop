@@ -201,8 +201,6 @@ public class BulkDeleteCommand extends FsCommand {
         i++;
         currentLocation++;
       }
-      LOG.warn(ret.toString());
-      assert(ret.size() == this.batchSize);
       return ret;
     }
   }
