@@ -68,9 +68,10 @@ public class BulkDeleteCommand extends FsCommand {
 
   private int pageSize;
 
-  /*
-  Making the class stateful as the PathData initialization for all args is not needed
-   */ LinkedList<String> childArgs;
+  /**
+   * Making the class stateful as the PathData initialization for all args is not needed
+   */
+  LinkedList<String> childArgs;
 
   protected BulkDeleteCommand() {
     this.childArgs = new LinkedList<>();
@@ -78,6 +79,8 @@ public class BulkDeleteCommand extends FsCommand {
 
   protected BulkDeleteCommand(Configuration conf) {
     super(conf);
+    this.childArgs = new LinkedList<>();
+    this.pageSize = 1;
   }
 
   /**
@@ -134,6 +137,7 @@ public class BulkDeleteCommand extends FsCommand {
         LOG.debug("Deleted Result:{}", result.toString());
       } catch (IllegalArgumentException e) {
         LOG.error("Caught exception while deleting", e);
+        throw new IOException(e);
       }
     }
   }
@@ -197,6 +201,8 @@ public class BulkDeleteCommand extends FsCommand {
         i++;
         currentLocation++;
       }
+      LOG.warn(ret.toString());
+      assert(ret.size() == this.batchSize);
       return ret;
     }
   }
