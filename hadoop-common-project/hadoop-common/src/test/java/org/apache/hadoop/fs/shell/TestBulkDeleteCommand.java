@@ -18,7 +18,9 @@
 
 package org.apache.hadoop.fs.shell;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -26,15 +28,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.*;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FsShell;
+import org.apache.hadoop.fs.LocalFileSystem;
+import org.apache.hadoop.fs.LocatedFileStatus;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.RemoteIterator;
 import org.apache.hadoop.fs.contract.ContractTestUtils;
+import org.apache.hadoop.test.AbstractHadoopTestBase;
 import org.apache.hadoop.test.GenericTestUtils;
-import org.apache.hadoop.test.HadoopTestBase;
 import org.assertj.core.api.Assertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestBulkDeleteCommand extends HadoopTestBase {
+import static org.apache.hadoop.test.LambdaTestUtils.intercept;
+
+public class TestBulkDeleteCommand extends AbstractHadoopTestBase {
   private static Configuration conf;
   private static FsShell shell;
   private static LocalFileSystem lfs;
@@ -57,7 +67,8 @@ public class TestBulkDeleteCommand extends HadoopTestBase {
     LinkedList<String> options = new LinkedList<>();
     BulkDeleteCommand bulkDeleteCommand = new BulkDeleteCommand(conf);
     bulkDeleteCommand.processOptions(options);
-    assertTrue(bulkDeleteCommand.childArgs.isEmpty());
+    Assertions.assertThat(bulkDeleteCommand.childArgs).
+            describedAs("Children arguments should be empty").isEmpty();
   }
 
   @Test
@@ -69,26 +80,24 @@ public class TestBulkDeleteCommand extends HadoopTestBase {
     arguments.add(arg1);
     arguments.add(arg2);
     LinkedList<PathData> pathData = bulkDeleteCommand.expandArguments(arguments);
-    Assertions.assertThat(pathData.size()).
-            describedAs("Only one root path must be present").isEqualTo(1);
+    Assertions.assertThat(pathData).
+            describedAs("Only one root path must be present").hasSize(1);
     Assertions.assertThat(pathData.get(0).path.toUri().getPath()).
             describedAs("Base path of the command should match").isEqualTo(new URI(arg1).getPath());
-    Assertions.assertThat(bulkDeleteCommand.childArgs.size()).
+    Assertions.assertThat(bulkDeleteCommand.childArgs).
             describedAs("Only one other argument was passed to the command").
-            isEqualTo(1);
+            hasSize(1);
     Assertions.assertThat(bulkDeleteCommand.childArgs.get(0)).
             describedAs("Children arguments must match").isEqualTo(arg2);
   }
 
   @Test
-  public void testWrongArguments() throws IOException, URISyntaxException {
+  public void testWrongArguments() throws Exception {
     BulkDeleteCommand bulkDeleteCommand = new BulkDeleteCommand(conf);
     LinkedList<String> arguments = new LinkedList<>();
     String arg1 = "file:///file/name/1";
     arguments.add(arg1);
-    Assertions.assertThatThrownBy(() -> bulkDeleteCommand.expandArguments(arguments)).
-            describedAs("No children to be deleted specified in the command.").
-            isInstanceOf(IOException.class);
+    intercept(IOException.class, () -> bulkDeleteCommand.expandArguments(arguments));
   }
 
   @Test
@@ -100,6 +109,7 @@ public class TestBulkDeleteCommand extends HadoopTestBase {
     for (int i = 0; i < 100; i++) {
       Path p = new Path(baseDir, baseFileName + i);
       ContractTestUtils.touch(lfs, p);
+      ContractTestUtils.assertIsFile(lfs, p);
     }
     RemoteIterator<LocatedFileStatus> remoteIterator = lfs.listFiles(baseDir, false);
     while (remoteIterator.hasNext()) {
@@ -127,6 +137,7 @@ public class TestBulkDeleteCommand extends HadoopTestBase {
     for (int i = 0; i < 100; i++) {
       Path p = new Path(baseDir, baseFileName + i);
       ContractTestUtils.touch(lfs, p);
+      ContractTestUtils.assertIsFile(lfs, p);
       br.write(p.toUri().toString());
       br.newLine();
     }
@@ -145,7 +156,7 @@ public class TestBulkDeleteCommand extends HadoopTestBase {
   }
 
   @Test
-  public void testWrongArgumentsWithNonChildFile() throws IOException, URISyntaxException {
+  public void testWrongArgumentsWithNonChildFile() throws Exception {
     BulkDeleteCommand bulkDeleteCommand = new BulkDeleteCommand(conf);
     LinkedList<String> arguments = new LinkedList<>();
     String arg1 = "file:///file/name/1";
@@ -153,8 +164,6 @@ public class TestBulkDeleteCommand extends HadoopTestBase {
     arguments.add(arg1);
     arguments.add(arg2);
     LinkedList<PathData> pathData = bulkDeleteCommand.expandArguments(arguments);
-    Assertions.assertThatThrownBy(() -> bulkDeleteCommand.processArguments(pathData)).
-                                  describedAs("Child paths must be contained inside the base path").
-                                  isInstanceOf(IOException.class);
+    intercept(IOException.class, () -> bulkDeleteCommand.processArguments(pathData));
   }
 }

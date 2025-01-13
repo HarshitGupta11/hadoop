@@ -22,7 +22,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.hadoop.conf.Configuration;
@@ -69,7 +73,7 @@ public class BulkDeleteCommand extends FsCommand {
   private int pageSize;
 
   /**
-   * Making the class stateful as the PathData initialization for all args is not needed
+   * Making the class stateful as the PathData initialization for all args is not needed.
    */
   LinkedList<String> childArgs;
 
@@ -134,9 +138,10 @@ public class BulkDeleteCommand extends FsCommand {
     while (batches.hasNext()) {
       try {
         List<Map.Entry<Path, String>> result = bulkDelete.bulkDelete(batches.next());
+        LOG.warn("Number of failed deletions:{}", result.size());
         LOG.debug("Deleted Result:{}", result.toString());
       } catch (IllegalArgumentException e) {
-        LOG.error("Caught exception while deleting", e);
+        LOG.error("Exception while deleting", e);
         throw new IOException(e);
       }
     }
@@ -154,13 +159,16 @@ public class BulkDeleteCommand extends FsCommand {
               localFile.open(new Path(fileName)), StandardCharsets.UTF_8));
       String line;
       while ((line = br.readLine()) != null) {
-        if (!line.startsWith("#")) {
+        line = line.trim();
+        if (!line.isEmpty() && !line.startsWith("#")) {
           pathList.add(new Path(line));
         }
       }
       br.close();
     } else {
-      pathList.addAll(this.childArgs.stream().map(Path::new).collect(Collectors.toList()));
+      pathList.addAll(childArgs.stream().
+              map(Path::new).
+              collect(Collectors.toList()));
     }
     LOG.debug("Deleting:{}", pathList);
     BulkDelete bulkDelete = basePath.fs.createBulkDelete(basePath.path);
@@ -172,7 +180,7 @@ public class BulkDeleteCommand extends FsCommand {
    *
    * @param <T> template type for batches
    */
-  static class Batch<T> {
+  private static class Batch<T> {
     private final List<T> data;
     private final int batchSize;
     private int currentLocation;
