@@ -117,7 +117,7 @@ public class BulkDeleteCommand extends FsCommand {
   @Override
   protected LinkedList<PathData> expandArguments(LinkedList<String> args) throws IOException {
     if (fileName == null && args.size() < 2) {
-      throw new IOException("Invalid Number of Arguments. Expected more");
+      throw new IOException("Invalid Number of Arguments. Expected :" + USAGE);
     }
     LinkedList<PathData> pathData = new LinkedList<>();
     pathData.add(new PathData(args.get(0), getConf()));
@@ -138,11 +138,14 @@ public class BulkDeleteCommand extends FsCommand {
     while (batches.hasNext()) {
       try {
         List<Map.Entry<Path, String>> result = bulkDelete.bulkDelete(batches.next());
-        LOG.warn("Number of failed deletions:{}", result.size());
-        LOG.debug("Deleted Result:{}", result.toString());
+        if(!result.isEmpty()) {
+          LOG.warn("Number of failed deletions:{}", result.size());
+          for(Map.Entry<Path, String> singleResult: result) {
+            LOG.info("{}: {}", singleResult.getKey(), singleResult.getValue());
+          }
+        }
       } catch (IllegalArgumentException e) {
-        LOG.error("Exception while deleting", e);
-        throw new IOException(e);
+        throw new IOException("Exception while deleting: ", e);
       }
     }
   }
